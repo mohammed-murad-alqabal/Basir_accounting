@@ -43,17 +43,16 @@ class TraeDebugHttpErrorLogger implements ExternalErrorLogger {
   TraeDebugHttpErrorLogger({
     Dio? dio,
     this.endpoint = 'http://127.0.0.1:17373/log',
-  }) : _dio = dio ??
-            Dio(
-              BaseOptions(
-                connectTimeout: const Duration(milliseconds: 800),
-                sendTimeout: const Duration(milliseconds: 800),
-                receiveTimeout: const Duration(milliseconds: 1200),
-                headers: const {
-                  'Content-Type': 'application/json',
-                },
-              ),
-            );
+  }) : _dio =
+           dio ??
+           Dio(
+             BaseOptions(
+               connectTimeout: const Duration(milliseconds: 800),
+               sendTimeout: const Duration(milliseconds: 800),
+               receiveTimeout: const Duration(milliseconds: 1200),
+               headers: const {'Content-Type': 'application/json'},
+             ),
+           );
 
   final Dio _dio;
   final String endpoint;
@@ -143,14 +142,11 @@ class BasirProviderObserver extends ProviderObserver {
     try {
       final logger = container.read(externalErrorLoggerProvider);
       Future<void> dispatch() async => logger.captureException(
-            error,
-            stackTrace,
-            providerName: name,
-            context: {
-              'provider': name,
-              'time': DateTime.now().toIso8601String(),
-            },
-          );
+        error,
+        stackTrace,
+        providerName: name,
+        context: {'provider': name, 'time': DateTime.now().toIso8601String()},
+      );
       unawaited(dispatch());
     } on Exception catch (e) {
       // لا نبعث خطأً من داخل معالج الأخطاء نفسه

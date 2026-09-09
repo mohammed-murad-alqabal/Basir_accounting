@@ -94,8 +94,9 @@ class _WizardStepper extends StatelessWidget {
                     style: TextStyle(
                       fontSize: AppTextStyles.titleSmallSize,
                       fontWeight: active ? FontWeight.bold : FontWeight.normal,
-                      color:
-                          active ? AppColors.primary : AppColors.textSecondary,
+                      color: active
+                          ? AppColors.primary
+                          : AppColors.textSecondary,
                     ),
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
@@ -148,7 +149,6 @@ class _ScopeStep extends ConsumerWidget {
         AppEnhancedButton(
           label: l10n.bulkWizardNext,
           width: double.infinity,
-          type: AppEnhancedButtonType.primary,
           onPressed: ref.read(bulkChangeWizardProvider.notifier).nextStep,
         ),
       ],
@@ -164,11 +164,13 @@ class _ScopeStep extends ConsumerWidget {
     );
     if (selection == null) return;
     if (selection.isEmpty) {
-      ref.read(bulkChangeWizardProvider.notifier).updateScope(
-            const BulkPriceChangeScope.all(),
-          );
+      ref
+          .read(bulkChangeWizardProvider.notifier)
+          .updateScope(const BulkPriceChangeScope.all());
     } else {
-      ref.read(bulkChangeWizardProvider.notifier).updateScope(
+      ref
+          .read(bulkChangeWizardProvider.notifier)
+          .updateScope(
             BulkPriceChangeScope.items(
               selection.map((item) => item.id).toList(growable: false),
             ),
@@ -277,7 +279,6 @@ class _RuleStepState extends ConsumerState<_RuleStep> {
         AppEnhancedButton(
           label: l10n.bulkWizardNext,
           width: double.infinity,
-          type: AppEnhancedButtonType.primary,
           onPressed: notifier.nextStep,
         ),
       ],
@@ -391,7 +392,6 @@ class _PreviewStep extends ConsumerWidget {
           child: AppEnhancedButton(
             label: l10n.bulkWizardNext,
             width: double.infinity,
-            type: AppEnhancedButtonType.primary,
             onPressed: wizard.previewEntries.isEmpty ? null : notifier.nextStep,
           ),
         ),
@@ -432,8 +432,9 @@ class _PreviewEntryCard extends StatelessWidget {
             size: IconSizes.md,
           ),
         ),
-        backgroundColor:
-            blocked ? AppColors.error.withValues(alpha: 0.05) : null,
+        backgroundColor: blocked
+            ? AppColors.error.withValues(alpha: 0.05)
+            : null,
       ),
     );
   }
@@ -547,7 +548,6 @@ class _ApprovalStepState extends ConsumerState<_ApprovalStep> {
         AppEnhancedButton(
           label: l10n.bulkApprovalExecute,
           width: double.infinity,
-          type: AppEnhancedButtonType.primary,
           isLoading: wizard.executing,
           onPressed: wizard.confirmed && !wizard.executing
               ? () => _onExecute(context, ref)
@@ -641,23 +641,16 @@ class _SuccessStepState extends ConsumerState<_SuccessStep> {
     return remaining.inHours.toString();
   }
 
-  Future<void> _openCancellation(
-    BuildContext context,
-    WidgetRef ref,
-  ) async {
+  Future<void> _openCancellation(BuildContext context, WidgetRef ref) async {
     final l10n = AppLocalizations.of(context);
     final record = ref.read(bulkChangeWizardProvider).lastRecord;
     if (record == null) return;
     final notifier = ref.read(bulkChangeWizardProvider.notifier);
-    final canCancel = !record.isCancelled &&
-        record.isCancellableAt(
-          ref.read(bulkChangeNowProvider)(),
-        );
+    final canCancel =
+        !record.isCancelled &&
+        record.isCancellableAt(ref.read(bulkChangeNowProvider)());
     if (!canCancel && mounted) {
-      AppSnackbar.showInfo(
-        context,
-        l10n.bulkCancellationExpired,
-      );
+      AppSnackbar.showInfo(context, l10n.bulkCancellationExpired);
       return;
     }
     final operatorName = await _CancellationDialog.show(
@@ -733,11 +726,7 @@ class _SuccessStepState extends ConsumerState<_SuccessStep> {
             l10n: l10n,
           )
         else if (!record.isCancelled)
-          _CancellationStatusCard(
-            isCancelled: false,
-            hours: '0',
-            l10n: l10n,
-          ),
+          _CancellationStatusCard(isCancelled: false, hours: '0', l10n: l10n),
         const SizedBox(height: Spacing.lg),
         if (!record.isCancelled)
           AppEnhancedButton(
@@ -745,16 +734,15 @@ class _SuccessStepState extends ConsumerState<_SuccessStep> {
                 ? l10n.bulkCancellationExecute
                 : l10n.bulkCancellationExpired,
             width: double.infinity,
-            type: AppEnhancedButtonType.primary,
             backgroundColor: AppColors.warning,
-            onPressed:
-                cancellable ? () => _openCancellation(context, ref) : null,
+            onPressed: cancellable
+                ? () => _openCancellation(context, ref)
+                : null,
           ),
         if (record.isCancelled)
           AppEnhancedButton(
             label: l10n.bulkWizardReset,
             width: double.infinity,
-            type: AppEnhancedButtonType.primary,
             onPressed: () {
               ref.read(bulkChangeWizardProvider.notifier).reset();
             },
@@ -790,35 +778,36 @@ class _CancellationStatusCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Container(
-        padding: const EdgeInsets.all(Spacing.md),
-        decoration: BoxDecoration(
-          color: isCancelled
-              ? AppColors.info.withValues(alpha: 0.08)
-              : AppColors.warning.withValues(alpha: 0.08),
-          borderRadius: BorderRadius.circular(Radii.md),
-          border: Border.all(
-            color: (isCancelled ? AppColors.info : AppColors.warning)
-                .withValues(alpha: 0.3),
+    padding: const EdgeInsets.all(Spacing.md),
+    decoration: BoxDecoration(
+      color: isCancelled
+          ? AppColors.info.withValues(alpha: 0.08)
+          : AppColors.warning.withValues(alpha: 0.08),
+      borderRadius: BorderRadius.circular(Radii.md),
+      border: Border.all(
+        color: (isCancelled ? AppColors.info : AppColors.warning).withValues(
+          alpha: 0.3,
+        ),
+      ),
+    ),
+    child: Row(
+      children: [
+        Icon(
+          isCancelled ? Icons.check_circle_outline : Icons.timer_outlined,
+          color: isCancelled ? AppColors.info : AppColors.warning,
+          size: IconSizes.md,
+        ),
+        const SizedBox(width: Spacing.md),
+        Expanded(
+          child: Text(
+            isCancelled
+                ? l10n.bulkCancellationSuccess
+                : l10n.bulkSuccessCancellable(int.tryParse(hours) ?? 0),
           ),
         ),
-        child: Row(
-          children: [
-            Icon(
-              isCancelled ? Icons.check_circle_outline : Icons.timer_outlined,
-              color: isCancelled ? AppColors.info : AppColors.warning,
-              size: IconSizes.md,
-            ),
-            const SizedBox(width: Spacing.md),
-            Expanded(
-              child: Text(
-                isCancelled
-                    ? l10n.bulkCancellationSuccess
-                    : l10n.bulkSuccessCancellable(int.tryParse(hours) ?? 0),
-              ),
-            ),
-          ],
-        ),
-      );
+      ],
+    ),
+  );
 }
 
 /// حوار إدخال اسم المنفذ للإلغاء.
@@ -884,28 +873,28 @@ class _ConfirmationCheckbox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Semantics(
-        label: label,
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Checkbox(
-              value: value,
-              onChanged: onChanged,
-              activeColor: AppColors.primary,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(Radii.sm),
-              ),
-            ),
-            const SizedBox(width: Spacing.sm),
-            Expanded(
-              child: Text(
-                label,
-                style: const TextStyle(fontSize: AppTextStyles.titleSmallSize),
-              ),
-            ),
-          ],
+    label: label,
+    child: Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Checkbox(
+          value: value,
+          onChanged: onChanged,
+          activeColor: AppColors.primary,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(Radii.sm),
+          ),
         ),
-      );
+        const SizedBox(width: Spacing.sm),
+        Expanded(
+          child: Text(
+            label,
+            style: const TextStyle(fontSize: AppTextStyles.titleSmallSize),
+          ),
+        ),
+      ],
+    ),
+  );
 }
 
 /// شريط خطأ داخل الخطوات.
@@ -918,26 +907,24 @@ class _ErrorBanner extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Container(
-        padding: const EdgeInsets.all(Spacing.md),
-        decoration: BoxDecoration(
-          color: AppColors.error.withValues(alpha: 0.08),
-          borderRadius: BorderRadius.circular(Radii.md),
-          border: Border.all(
-            color: AppColors.error.withValues(alpha: 0.3),
-          ),
+    padding: const EdgeInsets.all(Spacing.md),
+    decoration: BoxDecoration(
+      color: AppColors.error.withValues(alpha: 0.08),
+      borderRadius: BorderRadius.circular(Radii.md),
+      border: Border.all(color: AppColors.error.withValues(alpha: 0.3)),
+    ),
+    child: Row(
+      children: [
+        const Icon(
+          Icons.error_outline,
+          color: AppColors.error,
+          size: IconSizes.md,
         ),
-        child: Row(
-          children: [
-            const Icon(
-              Icons.error_outline,
-              color: AppColors.error,
-              size: IconSizes.md,
-            ),
-            const SizedBox(width: Spacing.md),
-            Expanded(child: Text(message)),
-          ],
-        ),
-      );
+        const SizedBox(width: Spacing.md),
+        Expanded(child: Text(message)),
+      ],
+    ),
+  );
 }
 
 /// محدد أصناف المخزون المتعدد.
@@ -1009,10 +996,12 @@ class _InventoryMultiPickerState extends ConsumerState<_InventoryMultiPicker> {
   }
 
   void _finish() {
-    final itemsAsync = ref.read(filteredInventoryItemsProvider).value ??
+    final itemsAsync =
+        ref.read(filteredInventoryItemsProvider).value ??
         const <InventoryItem>[];
-    final selected =
-        itemsAsync.where((item) => _selectedIds.contains(item.id)).toList();
+    final selected = itemsAsync
+        .where((item) => _selectedIds.contains(item.id))
+        .toList();
     Navigator.pop<List<InventoryItem>>(context, selected);
   }
 }

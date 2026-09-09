@@ -84,10 +84,8 @@ class BulkChangeWizardState {
   final String? confirmationText;
 
   /// قاعدة محسوبة من المدخلات الحالية.
-  BulkPriceChangeRule get rule => BulkPriceChangeRule(
-        type: ruleType,
-        value: ruleValue,
-      );
+  BulkPriceChangeRule get rule =>
+      BulkPriceChangeRule(type: ruleType, value: ruleValue);
 
   /// نسخة جديدة مع تغيير الخطوة فقط.
   BulkChangeWizardState copyWithStep(BulkChangeWizardStep step) =>
@@ -146,86 +144,82 @@ class BulkChangeWizardState {
     BulkPriceChangeRuleType? ruleType,
     double? ruleValue,
     bool clearPreview = true,
-  }) =>
-      BulkChangeWizardState(
-        step: step,
-        scope: scope,
-        target: target,
-        ruleType: ruleType ?? this.ruleType,
-        ruleValue: ruleValue ?? this.ruleValue,
-        previewLoaded: !clearPreview && previewLoaded,
-        applying: applying,
-        executing: executing,
-        error: error,
-        lastRecord: lastRecord,
-        confirmed: confirmed,
-        confirmationText: confirmationText,
-      );
+  }) => BulkChangeWizardState(
+    step: step,
+    scope: scope,
+    target: target,
+    ruleType: ruleType ?? this.ruleType,
+    ruleValue: ruleValue ?? this.ruleValue,
+    previewLoaded: !clearPreview && previewLoaded,
+    applying: applying,
+    executing: executing,
+    error: error,
+    lastRecord: lastRecord,
+    confirmed: confirmed,
+    confirmationText: confirmationText,
+  );
 
   /// نسخة جديدة مع نتائج المعاينة.
   BulkChangeWizardState copyWithPreview({
     required List<BulkPriceChangePreviewEntry> entries,
     bool applying = false,
     String? error,
-  }) =>
-      BulkChangeWizardState(
-        step: step,
-        scope: scope,
-        target: target,
-        ruleType: ruleType,
-        ruleValue: ruleValue,
-        previewEntries: entries,
-        previewLoaded: true,
-        applying: applying,
-        executing: executing,
-        error: error,
-        lastRecord: lastRecord,
-        confirmed: confirmed,
-        confirmationText: confirmationText,
-      );
+  }) => BulkChangeWizardState(
+    step: step,
+    scope: scope,
+    target: target,
+    ruleType: ruleType,
+    ruleValue: ruleValue,
+    previewEntries: entries,
+    previewLoaded: true,
+    applying: applying,
+    executing: executing,
+    error: error,
+    lastRecord: lastRecord,
+    confirmed: confirmed,
+    confirmationText: confirmationText,
+  );
 
   /// نسخة جديدة مع الإقرار.
   BulkChangeWizardState copyWithConfirmation({
     required bool confirmed,
     String? confirmationText,
-  }) =>
-      BulkChangeWizardState(
-        step: step,
-        scope: scope,
-        target: target,
-        ruleType: ruleType,
-        ruleValue: ruleValue,
-        previewEntries: previewEntries,
-        previewLoaded: previewLoaded,
-        applying: applying,
-        executing: executing,
-        error: error,
-        lastRecord: lastRecord,
-        confirmed: confirmed,
-        confirmationText: confirmationText,
-      );
+  }) => BulkChangeWizardState(
+    step: step,
+    scope: scope,
+    target: target,
+    ruleType: ruleType,
+    ruleValue: ruleValue,
+    previewEntries: previewEntries,
+    previewLoaded: previewLoaded,
+    applying: applying,
+    executing: executing,
+    error: error,
+    lastRecord: lastRecord,
+    confirmed: confirmed,
+    confirmationText: confirmationText,
+  );
 
   /// نسخة جديدة مع سجل التنفيذ أو التنفيذ الجاري.
   BulkChangeWizardState copyWithExecution({
     BulkChangeExecutionRecord? record,
     bool executing = false,
     String? error,
-  }) =>
-      BulkChangeWizardState(
-        step: step,
-        scope: scope,
-        target: target,
-        ruleType: ruleType,
-        ruleValue: ruleValue,
-        previewEntries: previewEntries,
-        previewLoaded: previewLoaded,
-        applying: applying,
-        executing: executing,
-        error: error,
-        lastRecord: record ?? lastRecord,
-        confirmed: confirmed,
-        confirmationText: confirmationText,
-      );
+  }) => BulkChangeWizardState(
+    step: step,
+    scope: scope,
+    target: target,
+    ruleType: ruleType,
+    ruleValue: ruleValue,
+    previewEntries: previewEntries,
+    previewLoaded: previewLoaded,
+    applying: applying,
+    executing: executing,
+    error: error,
+    lastRecord: record ?? lastRecord,
+    confirmed: confirmed,
+    confirmationText: confirmationText,
+  );
 
   /// إعادة بناء الحالة الافتراضية دون بيانات.
   BulkChangeWizardState reset() => const BulkChangeWizardState();
@@ -234,8 +228,8 @@ class BulkChangeWizardState {
 /// مزود حالة المعالج.
 final bulkChangeWizardProvider =
     StateNotifierProvider<BulkChangeWizardNotifier, BulkChangeWizardState>(
-  BulkChangeWizardNotifier.new,
-);
+      BulkChangeWizardNotifier.new,
+    );
 
 /// معالج حالة خطوات تغيير الأسعار الجماعي.
 class BulkChangeWizardNotifier extends StateNotifier<BulkChangeWizardState> {
@@ -322,8 +316,10 @@ class BulkChangeWizardNotifier extends StateNotifier<BulkChangeWizardState> {
   /// يحدث المعاينة من جديد وفق القاعدة والنطاق الحاليين.
   Future<void> refreshPreview() async {
     final service = _ref.read(bulkPriceChangeServiceProvider);
-    state =
-        state.copyWithPreview(entries: state.previewEntries, applying: true);
+    state = state.copyWithPreview(
+      entries: state.previewEntries,
+      applying: true,
+    );
     final result = await service.preview(
       scope: state.scope,
       rule: state.rule,
@@ -385,7 +381,8 @@ class BulkChangeWizardNotifier extends StateNotifier<BulkChangeWizardState> {
       reason: reason,
     );
     if (result.success) {
-      final cancellation = result.auditTrail?.first ??
+      final cancellation =
+          result.auditTrail?.first ??
           AuditEntry(
             type: AuditEventType.cancelled,
             operatorName: operatorName,
@@ -416,8 +413,9 @@ class BulkChangeWizardNotifier extends StateNotifier<BulkChangeWizardState> {
 }
 
 /// مزود دالة الزمن الحالية لأغراض الإلغاء القابل للاختبار.
-final bulkChangeNowProvider =
-    Provider<DateTime Function()>((ref) => DateTime.now);
+final bulkChangeNowProvider = Provider<DateTime Function()>(
+  (ref) => DateTime.now,
+);
 
 /// ملحق سجل التنفيذ لإنتاج نسخة بإحداث إلغاء موثق.
 extension BulkChangeRecordCancellation on BulkChangeExecutionRecord {

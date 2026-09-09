@@ -12,7 +12,8 @@ part of 'auditor.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
+  'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models',
+);
 
 /// @nodoc
 mixin _$AnomalyDto {
@@ -20,62 +21,66 @@ mixin _$AnomalyDto {
   TResult when<TResult extends Object?>({
     required TResult Function(String expected, String found) sequenceGap,
     required TResult Function(
-            String accountId, String bookBalance, String physicalCount)
-        reconciliationMismatch,
+      String accountId,
+      String bookBalance,
+      String physicalCount,
+    )
+    reconciliationMismatch,
     required TResult Function(String entryId, String date) orphanedDraft,
-  }) =>
-      throw _privateConstructorUsedError;
+  }) => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(String expected, String found)? sequenceGap,
     TResult? Function(
-            String accountId, String bookBalance, String physicalCount)?
-        reconciliationMismatch,
+      String accountId,
+      String bookBalance,
+      String physicalCount,
+    )?
+    reconciliationMismatch,
     TResult? Function(String entryId, String date)? orphanedDraft,
-  }) =>
-      throw _privateConstructorUsedError;
+  }) => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(String expected, String found)? sequenceGap,
     TResult Function(
-            String accountId, String bookBalance, String physicalCount)?
-        reconciliationMismatch,
+      String accountId,
+      String bookBalance,
+      String physicalCount,
+    )?
+    reconciliationMismatch,
     TResult Function(String entryId, String date)? orphanedDraft,
     required TResult orElse(),
-  }) =>
-      throw _privateConstructorUsedError;
+  }) => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(AnomalyDto_SequenceGap value) sequenceGap,
     required TResult Function(AnomalyDto_ReconciliationMismatch value)
-        reconciliationMismatch,
+    reconciliationMismatch,
     required TResult Function(AnomalyDto_OrphanedDraft value) orphanedDraft,
-  }) =>
-      throw _privateConstructorUsedError;
+  }) => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(AnomalyDto_SequenceGap value)? sequenceGap,
     TResult? Function(AnomalyDto_ReconciliationMismatch value)?
-        reconciliationMismatch,
+    reconciliationMismatch,
     TResult? Function(AnomalyDto_OrphanedDraft value)? orphanedDraft,
-  }) =>
-      throw _privateConstructorUsedError;
+  }) => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(AnomalyDto_SequenceGap value)? sequenceGap,
     TResult Function(AnomalyDto_ReconciliationMismatch value)?
-        reconciliationMismatch,
+    reconciliationMismatch,
     TResult Function(AnomalyDto_OrphanedDraft value)? orphanedDraft,
     required TResult orElse(),
-  }) =>
-      throw _privateConstructorUsedError;
+  }) => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
 abstract class $AnomalyDtoCopyWith<$Res> {
   factory $AnomalyDtoCopyWith(
-          AnomalyDto value, $Res Function(AnomalyDto) then) =
-      _$AnomalyDtoCopyWithImpl<$Res, AnomalyDto>;
+    AnomalyDto value,
+    $Res Function(AnomalyDto) then,
+  ) = _$AnomalyDtoCopyWithImpl<$Res, AnomalyDto>;
 }
 
 /// @nodoc
@@ -92,9 +97,9 @@ class _$AnomalyDtoCopyWithImpl<$Res, $Val extends AnomalyDto>
 /// @nodoc
 abstract class _$$AnomalyDto_SequenceGapImplCopyWith<$Res> {
   factory _$$AnomalyDto_SequenceGapImplCopyWith(
-          _$AnomalyDto_SequenceGapImpl value,
-          $Res Function(_$AnomalyDto_SequenceGapImpl) then) =
-      __$$AnomalyDto_SequenceGapImplCopyWithImpl<$Res>;
+    _$AnomalyDto_SequenceGapImpl value,
+    $Res Function(_$AnomalyDto_SequenceGapImpl) then,
+  ) = __$$AnomalyDto_SequenceGapImplCopyWithImpl<$Res>;
   @useResult
   $Res call({String expected, String found});
 }
@@ -104,35 +109,35 @@ class __$$AnomalyDto_SequenceGapImplCopyWithImpl<$Res>
     extends _$AnomalyDtoCopyWithImpl<$Res, _$AnomalyDto_SequenceGapImpl>
     implements _$$AnomalyDto_SequenceGapImplCopyWith<$Res> {
   __$$AnomalyDto_SequenceGapImplCopyWithImpl(
-      _$AnomalyDto_SequenceGapImpl _value,
-      $Res Function(_$AnomalyDto_SequenceGapImpl) _then)
-      : super(_value, _then);
+    _$AnomalyDto_SequenceGapImpl _value,
+    $Res Function(_$AnomalyDto_SequenceGapImpl) _then,
+  ) : super(_value, _then);
 
   @pragma('vm:prefer-inline')
   @override
-  $Res call({
-    Object? expected = null,
-    Object? found = null,
-  }) {
-    return _then(_$AnomalyDto_SequenceGapImpl(
-      expected: null == expected
-          ? _value.expected
-          : expected // ignore: cast_nullable_to_non_nullable
-              as String,
-      found: null == found
-          ? _value.found
-          : found // ignore: cast_nullable_to_non_nullable
-              as String,
-    ));
+  $Res call({Object? expected = null, Object? found = null}) {
+    return _then(
+      _$AnomalyDto_SequenceGapImpl(
+        expected: null == expected
+            ? _value.expected
+            : expected // ignore: cast_nullable_to_non_nullable
+                  as String,
+        found: null == found
+            ? _value.found
+            : found // ignore: cast_nullable_to_non_nullable
+                  as String,
+      ),
+    );
   }
 }
 
 /// @nodoc
 
 class _$AnomalyDto_SequenceGapImpl extends AnomalyDto_SequenceGap {
-  const _$AnomalyDto_SequenceGapImpl(
-      {required this.expected, required this.found})
-      : super._();
+  const _$AnomalyDto_SequenceGapImpl({
+    required this.expected,
+    required this.found,
+  }) : super._();
 
   @override
   final String expected;
@@ -161,16 +166,22 @@ class _$AnomalyDto_SequenceGapImpl extends AnomalyDto_SequenceGap {
   @override
   @pragma('vm:prefer-inline')
   _$$AnomalyDto_SequenceGapImplCopyWith<_$AnomalyDto_SequenceGapImpl>
-      get copyWith => __$$AnomalyDto_SequenceGapImplCopyWithImpl<
-          _$AnomalyDto_SequenceGapImpl>(this, _$identity);
+  get copyWith =>
+      __$$AnomalyDto_SequenceGapImplCopyWithImpl<_$AnomalyDto_SequenceGapImpl>(
+        this,
+        _$identity,
+      );
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(String expected, String found) sequenceGap,
     required TResult Function(
-            String accountId, String bookBalance, String physicalCount)
-        reconciliationMismatch,
+      String accountId,
+      String bookBalance,
+      String physicalCount,
+    )
+    reconciliationMismatch,
     required TResult Function(String entryId, String date) orphanedDraft,
   }) {
     return sequenceGap(expected, found);
@@ -181,8 +192,11 @@ class _$AnomalyDto_SequenceGapImpl extends AnomalyDto_SequenceGap {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(String expected, String found)? sequenceGap,
     TResult? Function(
-            String accountId, String bookBalance, String physicalCount)?
-        reconciliationMismatch,
+      String accountId,
+      String bookBalance,
+      String physicalCount,
+    )?
+    reconciliationMismatch,
     TResult? Function(String entryId, String date)? orphanedDraft,
   }) {
     return sequenceGap?.call(expected, found);
@@ -193,8 +207,11 @@ class _$AnomalyDto_SequenceGapImpl extends AnomalyDto_SequenceGap {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(String expected, String found)? sequenceGap,
     TResult Function(
-            String accountId, String bookBalance, String physicalCount)?
-        reconciliationMismatch,
+      String accountId,
+      String bookBalance,
+      String physicalCount,
+    )?
+    reconciliationMismatch,
     TResult Function(String entryId, String date)? orphanedDraft,
     required TResult orElse(),
   }) {
@@ -209,7 +226,7 @@ class _$AnomalyDto_SequenceGapImpl extends AnomalyDto_SequenceGap {
   TResult map<TResult extends Object?>({
     required TResult Function(AnomalyDto_SequenceGap value) sequenceGap,
     required TResult Function(AnomalyDto_ReconciliationMismatch value)
-        reconciliationMismatch,
+    reconciliationMismatch,
     required TResult Function(AnomalyDto_OrphanedDraft value) orphanedDraft,
   }) {
     return sequenceGap(this);
@@ -220,7 +237,7 @@ class _$AnomalyDto_SequenceGapImpl extends AnomalyDto_SequenceGap {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(AnomalyDto_SequenceGap value)? sequenceGap,
     TResult? Function(AnomalyDto_ReconciliationMismatch value)?
-        reconciliationMismatch,
+    reconciliationMismatch,
     TResult? Function(AnomalyDto_OrphanedDraft value)? orphanedDraft,
   }) {
     return sequenceGap?.call(this);
@@ -231,7 +248,7 @@ class _$AnomalyDto_SequenceGapImpl extends AnomalyDto_SequenceGap {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(AnomalyDto_SequenceGap value)? sequenceGap,
     TResult Function(AnomalyDto_ReconciliationMismatch value)?
-        reconciliationMismatch,
+    reconciliationMismatch,
     TResult Function(AnomalyDto_OrphanedDraft value)? orphanedDraft,
     required TResult orElse(),
   }) {
@@ -243,37 +260,38 @@ class _$AnomalyDto_SequenceGapImpl extends AnomalyDto_SequenceGap {
 }
 
 abstract class AnomalyDto_SequenceGap extends AnomalyDto {
-  const factory AnomalyDto_SequenceGap(
-      {required final String expected,
-      required final String found}) = _$AnomalyDto_SequenceGapImpl;
+  const factory AnomalyDto_SequenceGap({
+    required final String expected,
+    required final String found,
+  }) = _$AnomalyDto_SequenceGapImpl;
   const AnomalyDto_SequenceGap._() : super._();
 
   String get expected;
   String get found;
   @JsonKey(ignore: true)
   _$$AnomalyDto_SequenceGapImplCopyWith<_$AnomalyDto_SequenceGapImpl>
-      get copyWith => throw _privateConstructorUsedError;
+  get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
 abstract class _$$AnomalyDto_ReconciliationMismatchImplCopyWith<$Res> {
   factory _$$AnomalyDto_ReconciliationMismatchImplCopyWith(
-          _$AnomalyDto_ReconciliationMismatchImpl value,
-          $Res Function(_$AnomalyDto_ReconciliationMismatchImpl) then) =
-      __$$AnomalyDto_ReconciliationMismatchImplCopyWithImpl<$Res>;
+    _$AnomalyDto_ReconciliationMismatchImpl value,
+    $Res Function(_$AnomalyDto_ReconciliationMismatchImpl) then,
+  ) = __$$AnomalyDto_ReconciliationMismatchImplCopyWithImpl<$Res>;
   @useResult
   $Res call({String accountId, String bookBalance, String physicalCount});
 }
 
 /// @nodoc
 class __$$AnomalyDto_ReconciliationMismatchImplCopyWithImpl<$Res>
-    extends _$AnomalyDtoCopyWithImpl<$Res,
-        _$AnomalyDto_ReconciliationMismatchImpl>
+    extends
+        _$AnomalyDtoCopyWithImpl<$Res, _$AnomalyDto_ReconciliationMismatchImpl>
     implements _$$AnomalyDto_ReconciliationMismatchImplCopyWith<$Res> {
   __$$AnomalyDto_ReconciliationMismatchImplCopyWithImpl(
-      _$AnomalyDto_ReconciliationMismatchImpl _value,
-      $Res Function(_$AnomalyDto_ReconciliationMismatchImpl) _then)
-      : super(_value, _then);
+    _$AnomalyDto_ReconciliationMismatchImpl _value,
+    $Res Function(_$AnomalyDto_ReconciliationMismatchImpl) _then,
+  ) : super(_value, _then);
 
   @pragma('vm:prefer-inline')
   @override
@@ -282,20 +300,22 @@ class __$$AnomalyDto_ReconciliationMismatchImplCopyWithImpl<$Res>
     Object? bookBalance = null,
     Object? physicalCount = null,
   }) {
-    return _then(_$AnomalyDto_ReconciliationMismatchImpl(
-      accountId: null == accountId
-          ? _value.accountId
-          : accountId // ignore: cast_nullable_to_non_nullable
-              as String,
-      bookBalance: null == bookBalance
-          ? _value.bookBalance
-          : bookBalance // ignore: cast_nullable_to_non_nullable
-              as String,
-      physicalCount: null == physicalCount
-          ? _value.physicalCount
-          : physicalCount // ignore: cast_nullable_to_non_nullable
-              as String,
-    ));
+    return _then(
+      _$AnomalyDto_ReconciliationMismatchImpl(
+        accountId: null == accountId
+            ? _value.accountId
+            : accountId // ignore: cast_nullable_to_non_nullable
+                  as String,
+        bookBalance: null == bookBalance
+            ? _value.bookBalance
+            : bookBalance // ignore: cast_nullable_to_non_nullable
+                  as String,
+        physicalCount: null == physicalCount
+            ? _value.physicalCount
+            : physicalCount // ignore: cast_nullable_to_non_nullable
+                  as String,
+      ),
+    );
   }
 }
 
@@ -303,11 +323,11 @@ class __$$AnomalyDto_ReconciliationMismatchImplCopyWithImpl<$Res>
 
 class _$AnomalyDto_ReconciliationMismatchImpl
     extends AnomalyDto_ReconciliationMismatch {
-  const _$AnomalyDto_ReconciliationMismatchImpl(
-      {required this.accountId,
-      required this.bookBalance,
-      required this.physicalCount})
-      : super._();
+  const _$AnomalyDto_ReconciliationMismatchImpl({
+    required this.accountId,
+    required this.bookBalance,
+    required this.physicalCount,
+  }) : super._();
 
   @override
   final String accountId;
@@ -342,17 +362,23 @@ class _$AnomalyDto_ReconciliationMismatchImpl
   @override
   @pragma('vm:prefer-inline')
   _$$AnomalyDto_ReconciliationMismatchImplCopyWith<
-          _$AnomalyDto_ReconciliationMismatchImpl>
-      get copyWith => __$$AnomalyDto_ReconciliationMismatchImplCopyWithImpl<
-          _$AnomalyDto_ReconciliationMismatchImpl>(this, _$identity);
+    _$AnomalyDto_ReconciliationMismatchImpl
+  >
+  get copyWith =>
+      __$$AnomalyDto_ReconciliationMismatchImplCopyWithImpl<
+        _$AnomalyDto_ReconciliationMismatchImpl
+      >(this, _$identity);
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(String expected, String found) sequenceGap,
     required TResult Function(
-            String accountId, String bookBalance, String physicalCount)
-        reconciliationMismatch,
+      String accountId,
+      String bookBalance,
+      String physicalCount,
+    )
+    reconciliationMismatch,
     required TResult Function(String entryId, String date) orphanedDraft,
   }) {
     return reconciliationMismatch(accountId, bookBalance, physicalCount);
@@ -363,8 +389,11 @@ class _$AnomalyDto_ReconciliationMismatchImpl
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(String expected, String found)? sequenceGap,
     TResult? Function(
-            String accountId, String bookBalance, String physicalCount)?
-        reconciliationMismatch,
+      String accountId,
+      String bookBalance,
+      String physicalCount,
+    )?
+    reconciliationMismatch,
     TResult? Function(String entryId, String date)? orphanedDraft,
   }) {
     return reconciliationMismatch?.call(accountId, bookBalance, physicalCount);
@@ -375,8 +404,11 @@ class _$AnomalyDto_ReconciliationMismatchImpl
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(String expected, String found)? sequenceGap,
     TResult Function(
-            String accountId, String bookBalance, String physicalCount)?
-        reconciliationMismatch,
+      String accountId,
+      String bookBalance,
+      String physicalCount,
+    )?
+    reconciliationMismatch,
     TResult Function(String entryId, String date)? orphanedDraft,
     required TResult orElse(),
   }) {
@@ -391,7 +423,7 @@ class _$AnomalyDto_ReconciliationMismatchImpl
   TResult map<TResult extends Object?>({
     required TResult Function(AnomalyDto_SequenceGap value) sequenceGap,
     required TResult Function(AnomalyDto_ReconciliationMismatch value)
-        reconciliationMismatch,
+    reconciliationMismatch,
     required TResult Function(AnomalyDto_OrphanedDraft value) orphanedDraft,
   }) {
     return reconciliationMismatch(this);
@@ -402,7 +434,7 @@ class _$AnomalyDto_ReconciliationMismatchImpl
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(AnomalyDto_SequenceGap value)? sequenceGap,
     TResult? Function(AnomalyDto_ReconciliationMismatch value)?
-        reconciliationMismatch,
+    reconciliationMismatch,
     TResult? Function(AnomalyDto_OrphanedDraft value)? orphanedDraft,
   }) {
     return reconciliationMismatch?.call(this);
@@ -413,7 +445,7 @@ class _$AnomalyDto_ReconciliationMismatchImpl
   TResult maybeMap<TResult extends Object?>({
     TResult Function(AnomalyDto_SequenceGap value)? sequenceGap,
     TResult Function(AnomalyDto_ReconciliationMismatch value)?
-        reconciliationMismatch,
+    reconciliationMismatch,
     TResult Function(AnomalyDto_OrphanedDraft value)? orphanedDraft,
     required TResult orElse(),
   }) {
@@ -425,11 +457,11 @@ class _$AnomalyDto_ReconciliationMismatchImpl
 }
 
 abstract class AnomalyDto_ReconciliationMismatch extends AnomalyDto {
-  const factory AnomalyDto_ReconciliationMismatch(
-          {required final String accountId,
-          required final String bookBalance,
-          required final String physicalCount}) =
-      _$AnomalyDto_ReconciliationMismatchImpl;
+  const factory AnomalyDto_ReconciliationMismatch({
+    required final String accountId,
+    required final String bookBalance,
+    required final String physicalCount,
+  }) = _$AnomalyDto_ReconciliationMismatchImpl;
   const AnomalyDto_ReconciliationMismatch._() : super._();
 
   String get accountId;
@@ -437,16 +469,17 @@ abstract class AnomalyDto_ReconciliationMismatch extends AnomalyDto {
   String get physicalCount;
   @JsonKey(ignore: true)
   _$$AnomalyDto_ReconciliationMismatchImplCopyWith<
-          _$AnomalyDto_ReconciliationMismatchImpl>
-      get copyWith => throw _privateConstructorUsedError;
+    _$AnomalyDto_ReconciliationMismatchImpl
+  >
+  get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
 abstract class _$$AnomalyDto_OrphanedDraftImplCopyWith<$Res> {
   factory _$$AnomalyDto_OrphanedDraftImplCopyWith(
-          _$AnomalyDto_OrphanedDraftImpl value,
-          $Res Function(_$AnomalyDto_OrphanedDraftImpl) then) =
-      __$$AnomalyDto_OrphanedDraftImplCopyWithImpl<$Res>;
+    _$AnomalyDto_OrphanedDraftImpl value,
+    $Res Function(_$AnomalyDto_OrphanedDraftImpl) then,
+  ) = __$$AnomalyDto_OrphanedDraftImplCopyWithImpl<$Res>;
   @useResult
   $Res call({String entryId, String date});
 }
@@ -456,35 +489,35 @@ class __$$AnomalyDto_OrphanedDraftImplCopyWithImpl<$Res>
     extends _$AnomalyDtoCopyWithImpl<$Res, _$AnomalyDto_OrphanedDraftImpl>
     implements _$$AnomalyDto_OrphanedDraftImplCopyWith<$Res> {
   __$$AnomalyDto_OrphanedDraftImplCopyWithImpl(
-      _$AnomalyDto_OrphanedDraftImpl _value,
-      $Res Function(_$AnomalyDto_OrphanedDraftImpl) _then)
-      : super(_value, _then);
+    _$AnomalyDto_OrphanedDraftImpl _value,
+    $Res Function(_$AnomalyDto_OrphanedDraftImpl) _then,
+  ) : super(_value, _then);
 
   @pragma('vm:prefer-inline')
   @override
-  $Res call({
-    Object? entryId = null,
-    Object? date = null,
-  }) {
-    return _then(_$AnomalyDto_OrphanedDraftImpl(
-      entryId: null == entryId
-          ? _value.entryId
-          : entryId // ignore: cast_nullable_to_non_nullable
-              as String,
-      date: null == date
-          ? _value.date
-          : date // ignore: cast_nullable_to_non_nullable
-              as String,
-    ));
+  $Res call({Object? entryId = null, Object? date = null}) {
+    return _then(
+      _$AnomalyDto_OrphanedDraftImpl(
+        entryId: null == entryId
+            ? _value.entryId
+            : entryId // ignore: cast_nullable_to_non_nullable
+                  as String,
+        date: null == date
+            ? _value.date
+            : date // ignore: cast_nullable_to_non_nullable
+                  as String,
+      ),
+    );
   }
 }
 
 /// @nodoc
 
 class _$AnomalyDto_OrphanedDraftImpl extends AnomalyDto_OrphanedDraft {
-  const _$AnomalyDto_OrphanedDraftImpl(
-      {required this.entryId, required this.date})
-      : super._();
+  const _$AnomalyDto_OrphanedDraftImpl({
+    required this.entryId,
+    required this.date,
+  }) : super._();
 
   @override
   final String entryId;
@@ -512,16 +545,21 @@ class _$AnomalyDto_OrphanedDraftImpl extends AnomalyDto_OrphanedDraft {
   @override
   @pragma('vm:prefer-inline')
   _$$AnomalyDto_OrphanedDraftImplCopyWith<_$AnomalyDto_OrphanedDraftImpl>
-      get copyWith => __$$AnomalyDto_OrphanedDraftImplCopyWithImpl<
-          _$AnomalyDto_OrphanedDraftImpl>(this, _$identity);
+  get copyWith =>
+      __$$AnomalyDto_OrphanedDraftImplCopyWithImpl<
+        _$AnomalyDto_OrphanedDraftImpl
+      >(this, _$identity);
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(String expected, String found) sequenceGap,
     required TResult Function(
-            String accountId, String bookBalance, String physicalCount)
-        reconciliationMismatch,
+      String accountId,
+      String bookBalance,
+      String physicalCount,
+    )
+    reconciliationMismatch,
     required TResult Function(String entryId, String date) orphanedDraft,
   }) {
     return orphanedDraft(entryId, date);
@@ -532,8 +570,11 @@ class _$AnomalyDto_OrphanedDraftImpl extends AnomalyDto_OrphanedDraft {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(String expected, String found)? sequenceGap,
     TResult? Function(
-            String accountId, String bookBalance, String physicalCount)?
-        reconciliationMismatch,
+      String accountId,
+      String bookBalance,
+      String physicalCount,
+    )?
+    reconciliationMismatch,
     TResult? Function(String entryId, String date)? orphanedDraft,
   }) {
     return orphanedDraft?.call(entryId, date);
@@ -544,8 +585,11 @@ class _$AnomalyDto_OrphanedDraftImpl extends AnomalyDto_OrphanedDraft {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(String expected, String found)? sequenceGap,
     TResult Function(
-            String accountId, String bookBalance, String physicalCount)?
-        reconciliationMismatch,
+      String accountId,
+      String bookBalance,
+      String physicalCount,
+    )?
+    reconciliationMismatch,
     TResult Function(String entryId, String date)? orphanedDraft,
     required TResult orElse(),
   }) {
@@ -560,7 +604,7 @@ class _$AnomalyDto_OrphanedDraftImpl extends AnomalyDto_OrphanedDraft {
   TResult map<TResult extends Object?>({
     required TResult Function(AnomalyDto_SequenceGap value) sequenceGap,
     required TResult Function(AnomalyDto_ReconciliationMismatch value)
-        reconciliationMismatch,
+    reconciliationMismatch,
     required TResult Function(AnomalyDto_OrphanedDraft value) orphanedDraft,
   }) {
     return orphanedDraft(this);
@@ -571,7 +615,7 @@ class _$AnomalyDto_OrphanedDraftImpl extends AnomalyDto_OrphanedDraft {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(AnomalyDto_SequenceGap value)? sequenceGap,
     TResult? Function(AnomalyDto_ReconciliationMismatch value)?
-        reconciliationMismatch,
+    reconciliationMismatch,
     TResult? Function(AnomalyDto_OrphanedDraft value)? orphanedDraft,
   }) {
     return orphanedDraft?.call(this);
@@ -582,7 +626,7 @@ class _$AnomalyDto_OrphanedDraftImpl extends AnomalyDto_OrphanedDraft {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(AnomalyDto_SequenceGap value)? sequenceGap,
     TResult Function(AnomalyDto_ReconciliationMismatch value)?
-        reconciliationMismatch,
+    reconciliationMismatch,
     TResult Function(AnomalyDto_OrphanedDraft value)? orphanedDraft,
     required TResult orElse(),
   }) {
@@ -594,14 +638,15 @@ class _$AnomalyDto_OrphanedDraftImpl extends AnomalyDto_OrphanedDraft {
 }
 
 abstract class AnomalyDto_OrphanedDraft extends AnomalyDto {
-  const factory AnomalyDto_OrphanedDraft(
-      {required final String entryId,
-      required final String date}) = _$AnomalyDto_OrphanedDraftImpl;
+  const factory AnomalyDto_OrphanedDraft({
+    required final String entryId,
+    required final String date,
+  }) = _$AnomalyDto_OrphanedDraftImpl;
   const AnomalyDto_OrphanedDraft._() : super._();
 
   String get entryId;
   String get date;
   @JsonKey(ignore: true)
   _$$AnomalyDto_OrphanedDraftImplCopyWith<_$AnomalyDto_OrphanedDraftImpl>
-      get copyWith => throw _privateConstructorUsedError;
+  get copyWith => throw _privateConstructorUsedError;
 }

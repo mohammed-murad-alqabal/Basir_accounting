@@ -38,7 +38,8 @@ class ReportData {
 
   /// Generates a SHA-256 hash of the report content.
   String get contentHash {
-    final content = '$title$subtitle'
+    final content =
+        '$title$subtitle'
         '${headers.join()}${rows.expand((r) => r).join()}';
     return sha256.convert(content.codeUnits).toString();
   }
@@ -61,10 +62,7 @@ class ForensicExportService {
 
     pdf.addPage(
       pw.MultiPage(
-        theme: pw.ThemeData.withFont(
-          base: font,
-          bold: fontBold,
-        ),
+        theme: pw.ThemeData.withFont(base: font, bold: fontBold),
         pageFormat: PdfPageFormat.a4,
         build: (context) => [
           pw.Header(

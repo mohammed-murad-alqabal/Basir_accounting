@@ -48,7 +48,8 @@ class ReportLineItem extends StatelessWidget {
     final amountStyle = TextStyle(
       fontWeight: isTotal ? FontWeight.bold : FontWeight.normal,
       // Hide amount for section headers if 0
-      color: isHeader //
+      color:
+          isHeader //
           ? Colors.transparent
           : null,
     );
@@ -113,10 +114,7 @@ class ReportLineItem extends StatelessWidget {
               ),
             ),
             if (showAmount)
-              Text(
-                FormatHelpers.formatCurrency(amount),
-                style: amountStyle,
-              ),
+              Text(FormatHelpers.formatCurrency(amount), style: amountStyle),
           ],
         ),
       ),

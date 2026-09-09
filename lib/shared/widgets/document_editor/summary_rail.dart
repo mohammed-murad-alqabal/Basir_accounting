@@ -134,8 +134,9 @@ class _PreviewSection extends StatelessWidget {
         liveRegion: true,
         child: Text(
           l10n.workDocumentPreviewRequired,
-          style:
-              AppTextStyles.bodySmall.copyWith(color: AppColors.textSecondary),
+          style: AppTextStyles.bodySmall.copyWith(
+            color: AppColors.textSecondary,
+          ),
         ),
       );
     }
@@ -208,29 +209,26 @@ class _TotalRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Expanded(
-            child: Text(
-              label,
-              style: emphasis
-                  ? AppTextStyles.titleSmall
-                  : AppTextStyles.bodyMedium,
-            ),
-          ),
-          const SizedBox(width: Spacing.sm),
-          Text(
-            _formatAmount(amount, currency),
-            textDirection: TextDirection.ltr,
-            style:
-                (emphasis ? AppTextStyles.titleSmall : AppTextStyles.bodyMedium)
-                    .copyWith(
+    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    children: [
+      Expanded(
+        child: Text(
+          label,
+          style: emphasis ? AppTextStyles.titleSmall : AppTextStyles.bodyMedium,
+        ),
+      ),
+      const SizedBox(width: Spacing.sm),
+      Text(
+        _formatAmount(amount, currency),
+        textDirection: TextDirection.ltr,
+        style: (emphasis ? AppTextStyles.titleSmall : AppTextStyles.bodyMedium)
+            .copyWith(
               color: emphasis ? AppColors.primary : AppColors.textPrimary,
               fontFeatures: const [FontFeature.tabularFigures()],
             ),
-          ),
-        ],
-      );
+      ),
+    ],
+  );
 }
 
 String _formatAmount(double amount, String currency) =>

@@ -14,8 +14,8 @@ class DriftInventoryShadowReadComparator {
   DriftInventoryShadowReadComparator({
     required DriftShadowReadRecorder recorder,
     DateTime Function()? clock,
-  })  : _recorder = recorder,
-        _clock = clock ?? DateTime.now;
+  }) : _recorder = recorder,
+       _clock = clock ?? DateTime.now;
 
   final DriftShadowReadRecorder _recorder;
   final DateTime Function() _clock;
@@ -24,79 +24,73 @@ class DriftInventoryShadowReadComparator {
     required String operation,
     required Future<List<Warehouse>> Function() sourceRead,
     required Future<List<Warehouse>> Function() candidateRead,
-  }) =>
-      _compareLists(
-        slice: 'warehouses',
-        operation: operation,
-        sourceRead: sourceRead,
-        candidateRead: candidateRead,
-        equals: _warehouseListsEqual,
-      );
+  }) => _compareLists(
+    slice: 'warehouses',
+    operation: operation,
+    sourceRead: sourceRead,
+    candidateRead: candidateRead,
+    equals: _warehouseListsEqual,
+  );
 
   Future<DriftShadowReadResult> compareWarehouse({
     required String operation,
     required Future<Warehouse?> Function() sourceRead,
     required Future<Warehouse?> Function() candidateRead,
-  }) =>
-      _compareNullable(
-        slice: 'warehouses',
-        operation: operation,
-        sourceRead: sourceRead,
-        candidateRead: candidateRead,
-        equals: _warehouseEqual,
-      );
+  }) => _compareNullable(
+    slice: 'warehouses',
+    operation: operation,
+    sourceRead: sourceRead,
+    candidateRead: candidateRead,
+    equals: _warehouseEqual,
+  );
 
   Future<DriftShadowReadResult> compareInventoryItems({
     required String operation,
     required Future<List<InventoryItem>> Function() sourceRead,
     required Future<List<InventoryItem>> Function() candidateRead,
-  }) =>
-      _compareLists(
-        slice: 'inventory-items',
-        operation: operation,
-        sourceRead: sourceRead,
-        candidateRead: candidateRead,
-        equals: _inventoryItemListsEqual,
-      );
+  }) => _compareLists(
+    slice: 'inventory-items',
+    operation: operation,
+    sourceRead: sourceRead,
+    candidateRead: candidateRead,
+    equals: _inventoryItemListsEqual,
+  );
 
   Future<DriftShadowReadResult> compareInventoryItem({
     required String operation,
     required Future<InventoryItem?> Function() sourceRead,
     required Future<InventoryItem?> Function() candidateRead,
-  }) =>
-      _compareNullable(
-        slice: 'inventory-items',
-        operation: operation,
-        sourceRead: sourceRead,
-        candidateRead: candidateRead,
-        equals: _inventoryItemEqual,
-      );
+  }) => _compareNullable(
+    slice: 'inventory-items',
+    operation: operation,
+    sourceRead: sourceRead,
+    candidateRead: candidateRead,
+    equals: _inventoryItemEqual,
+  );
 
   Future<DriftShadowReadResult> compareStockMovements({
     required String operation,
     required Future<List<StockMovement>> Function() sourceRead,
     required Future<List<StockMovement>> Function() candidateRead,
-  }) =>
-      _compareLists(
-        slice: 'stock-movements',
-        operation: operation,
-        sourceRead: sourceRead,
-        candidateRead: candidateRead,
-        equals: _stockMovementListsEqual,
-      );
+  }) => _compareLists(
+    slice: 'stock-movements',
+    operation: operation,
+    sourceRead: sourceRead,
+    candidateRead: candidateRead,
+    equals: _stockMovementListsEqual,
+  );
 
   Future<DriftShadowReadResult> compareStockLevel({
     required String operation,
     required Future<double> Function() sourceRead,
     required Future<double> Function() candidateRead,
-  }) =>
-      _compareValues(
-        slice: 'stock-movements',
-        operation: operation,
-        sourceRead: sourceRead,
-        candidateRead: candidateRead,
-        equals: _sameDouble,
-      );
+  }) => _compareValues(
+    slice: 'stock-movements',
+    operation: operation,
+    sourceRead: sourceRead,
+    candidateRead: candidateRead,
+    equals: _sameDouble,
+  );
 
   Future<DriftShadowReadResult> _compareLists<T>({
     required String slice,
@@ -234,16 +228,17 @@ class DriftInventoryShadowReadComparator {
 }
 
 /// Decorator اختياري. عند [enabled] = false لا يستدعي المرشح إطلاقًا.
+/// [DriftInventoryShadowReadComparator] is used to compare source and candidate data.
 class ShadowReadWarehouseRepository implements WarehouseRepository {
   ShadowReadWarehouseRepository({
     required WarehouseRepository source,
     required WarehouseRepository candidate,
     required DriftInventoryShadowReadComparator comparator,
     required bool enabled,
-  })  : _source = source,
-        _candidate = candidate,
-        _comparator = comparator,
-        _enabled = enabled;
+  }) : _source = source,
+       _candidate = candidate,
+       _comparator = comparator,
+       _enabled = enabled;
 
   final WarehouseRepository _source;
   final WarehouseRepository _candidate;
@@ -294,10 +289,10 @@ class ShadowReadInventoryRepository implements InventoryRepository {
     required InventoryRepository candidate,
     required DriftInventoryShadowReadComparator comparator,
     required bool enabled,
-  })  : _source = source,
-        _candidate = candidate,
-        _comparator = comparator,
-        _enabled = enabled;
+  }) : _source = source,
+       _candidate = candidate,
+       _comparator = comparator,
+       _enabled = enabled;
 
   final InventoryRepository _source;
   final InventoryRepository _candidate;
@@ -372,10 +367,10 @@ class ShadowReadStockMovementRepository implements StockMovementRepository {
     required StockMovementRepository candidate,
     required DriftInventoryShadowReadComparator comparator,
     required bool enabled,
-  })  : _source = source,
-        _candidate = candidate,
-        _comparator = comparator,
-        _enabled = enabled;
+  }) : _source = source,
+       _candidate = candidate,
+       _comparator = comparator,
+       _enabled = enabled;
 
   final StockMovementRepository _source;
   final StockMovementRepository _candidate;
@@ -474,8 +469,9 @@ bool _inventoryItemListsEqual(
   final sortedRight = [...right]..sort(_compareInventoryItems);
   if (sortedLeft.length != sortedRight.length) return false;
   for (var index = 0; index < sortedLeft.length; index += 1) {
-    if (!_inventoryItemEqual(sortedLeft[index], sortedRight[index]))
+    if (!_inventoryItemEqual(sortedLeft[index], sortedRight[index])) {
       return false;
+    }
   }
   return true;
 }
@@ -488,8 +484,9 @@ bool _stockMovementListsEqual(
   final sortedRight = [...right]..sort(_compareStockMovements);
   if (sortedLeft.length != sortedRight.length) return false;
   for (var index = 0; index < sortedLeft.length; index += 1) {
-    if (!_stockMovementEqual(sortedLeft[index], sortedRight[index]))
+    if (!_stockMovementEqual(sortedLeft[index], sortedRight[index])) {
       return false;
+    }
   }
   return true;
 }

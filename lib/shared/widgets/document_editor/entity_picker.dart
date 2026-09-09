@@ -18,9 +18,9 @@ class EntityPickerOption {
     this.enabled = true,
     this.disabledReason,
   }) : assert(
-          enabled || disabledReason != null,
-          'Provide a reason when an option is ineligible.',
-        );
+         enabled || disabledReason != null,
+         'Provide a reason when an option is ineligible.',
+       );
 
   /// المعرّف الدائم للكيان في طبقة المجال.
   final String id;
@@ -72,8 +72,9 @@ class EntityPicker extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
-    final selectedIsAvailable =
-        options.any((option) => option.id == selectedId);
+    final selectedIsAvailable = options.any(
+      (option) => option.id == selectedId,
+    );
     final value = selectedIsAvailable ? selectedId : null;
 
     return Semantics(
@@ -102,9 +103,9 @@ class EntityPicker extends StatelessWidget {
         onChanged: enabled && onChanged != null
             ? (id) {
                 final option = options.cast<EntityPickerOption?>().firstWhere(
-                      (option) => option?.id == id,
-                      orElse: () => null,
-                    );
+                  (option) => option?.id == id,
+                  orElse: () => null,
+                );
                 onChanged?.call(option);
               }
             : null,
@@ -125,18 +126,18 @@ class _EntityOptionLabel extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Column(
-        mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(option.label, overflow: TextOverflow.ellipsis),
-          if (option.subtitle != null || !option.enabled)
-            Text(
-              option.enabled
-                  ? option.subtitle!
-                  : option.disabledReason ?? defaultDisabledLabel,
-              overflow: TextOverflow.ellipsis,
-              style: Theme.of(context).textTheme.bodySmall,
-            ),
-        ],
-      );
+    mainAxisSize: MainAxisSize.min,
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: [
+      Text(option.label, overflow: TextOverflow.ellipsis),
+      if (option.subtitle != null || !option.enabled)
+        Text(
+          option.enabled
+              ? option.subtitle!
+              : option.disabledReason ?? defaultDisabledLabel,
+          overflow: TextOverflow.ellipsis,
+          style: Theme.of(context).textTheme.bodySmall,
+        ),
+    ],
+  );
 }

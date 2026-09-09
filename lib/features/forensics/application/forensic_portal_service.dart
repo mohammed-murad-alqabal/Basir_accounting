@@ -6,7 +6,6 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 part 'forensic_portal_service.g.dart';
 
 @riverpod
-
 /// Notifier for the forensic integrity pulse.
 class ForensicPortalNotifier extends _$ForensicPortalNotifier {
   @override
@@ -35,7 +34,6 @@ class ForensicPortalNotifier extends _$ForensicPortalNotifier {
 }
 
 @riverpod
-
 /// Provider for the historical ledger blocks.
 Future<List<LedgerBlock>> ledgerBlocks(LedgerBlocksRef ref) async {
   final repository = ref.watch(accountingRepositoryProvider);

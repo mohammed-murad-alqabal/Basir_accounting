@@ -8,7 +8,7 @@ import 'package:basir_drift_storage/basir_drift_storage.dart';
 /// على Isar هو المسار النشط حتى تثبت اختبارات التكافؤ وخطة cutover مستقلة.
 class DriftMarketPriceRepository implements MarketPriceRepository {
   DriftMarketPriceRepository(BasirDatabase database)
-      : _storage = MarketPriceStore(database);
+    : _storage = MarketPriceStore(database);
 
   /// منشئ اختبار/حقن؛ يبقي طبقة reports مستقلة عن أنواع Drift.
   DriftMarketPriceRepository.withStorage(this._storage);
@@ -37,18 +37,18 @@ class DriftMarketPriceRepository implements MarketPriceRepository {
   }
 
   static MarketPriceRecord _toRecord(MarketPrice price) => MarketPriceRecord(
-        id: price.id,
-        itemId: price.itemId,
-        price: price.price,
-        asOfDate: price.asOfDate,
-        createdAt: price.createdAt,
-      );
+    id: price.id,
+    itemId: price.itemId,
+    price: price.price,
+    asOfDate: price.asOfDate,
+    createdAt: price.createdAt,
+  );
 
   static MarketPrice _toEntity(MarketPriceRecord record) => MarketPrice(
-        id: record.id,
-        itemId: record.itemId,
-        price: record.price,
-        asOfDate: record.asOfDate,
-        createdAt: record.createdAt,
-      );
+    id: record.id,
+    itemId: record.itemId,
+    price: record.price,
+    asOfDate: record.asOfDate,
+    createdAt: record.createdAt,
+  );
 }

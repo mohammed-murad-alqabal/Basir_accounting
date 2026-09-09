@@ -25,14 +25,15 @@ _$PaymentReceiptImpl _$$PaymentReceiptImplFromJson(Map<String, dynamic> json) =>
       checkDueDate: json['checkDueDate'] == null
           ? null
           : DateTime.parse(json['checkDueDate'] as String),
-      status: $enumDecodeNullable(_$PaymentStatusEnumMap, json['status']) ??
+      status:
+          $enumDecodeNullable(_$PaymentStatusEnumMap, json['status']) ??
           PaymentStatus.cleared,
       journalEntryId: json['journalEntryId'] as String?,
       userId: json['userId'] as String?,
       warehouseId: json['warehouseId'] as String?,
       syncStatus:
           $enumDecodeNullable(_$SyncStatusEnumMap, json['syncStatus']) ??
-              SyncStatus.synced,
+          SyncStatus.synced,
       serverUpdatedAt: json['serverUpdatedAt'] == null
           ? null
           : DateTime.parse(json['serverUpdatedAt'] as String),
@@ -40,31 +41,31 @@ _$PaymentReceiptImpl _$$PaymentReceiptImplFromJson(Map<String, dynamic> json) =>
     );
 
 Map<String, dynamic> _$$PaymentReceiptImplToJson(
-        _$PaymentReceiptImpl instance) =>
-    <String, dynamic>{
-      'id': instance.id,
-      'receiptNumber': instance.receiptNumber,
-      'customerId': instance.customerId,
-      'customerName': instance.customerName,
-      'amount': instance.amount,
-      'receiptDate': instance.receiptDate.toIso8601String(),
-      'paymentMethod': _$PaymentMethodEnumMap[instance.paymentMethod]!,
-      'accountId': instance.accountId,
-      'createdBy': instance.createdBy,
-      'createdAt': instance.createdAt.toIso8601String(),
-      'reference': instance.reference,
-      'notes': instance.notes,
-      'bankAccountNumber': instance.bankAccountNumber,
-      'checkNumber': instance.checkNumber,
-      'checkDueDate': instance.checkDueDate?.toIso8601String(),
-      'status': _$PaymentStatusEnumMap[instance.status]!,
-      'journalEntryId': instance.journalEntryId,
-      'userId': instance.userId,
-      'warehouseId': instance.warehouseId,
-      'syncStatus': _$SyncStatusEnumMap[instance.syncStatus]!,
-      'serverUpdatedAt': instance.serverUpdatedAt?.toIso8601String(),
-      'isDeleted': instance.isDeleted,
-    };
+  _$PaymentReceiptImpl instance,
+) => <String, dynamic>{
+  'id': instance.id,
+  'receiptNumber': instance.receiptNumber,
+  'customerId': instance.customerId,
+  'customerName': instance.customerName,
+  'amount': instance.amount,
+  'receiptDate': instance.receiptDate.toIso8601String(),
+  'paymentMethod': _$PaymentMethodEnumMap[instance.paymentMethod]!,
+  'accountId': instance.accountId,
+  'createdBy': instance.createdBy,
+  'createdAt': instance.createdAt.toIso8601String(),
+  'reference': instance.reference,
+  'notes': instance.notes,
+  'bankAccountNumber': instance.bankAccountNumber,
+  'checkNumber': instance.checkNumber,
+  'checkDueDate': instance.checkDueDate?.toIso8601String(),
+  'status': _$PaymentStatusEnumMap[instance.status]!,
+  'journalEntryId': instance.journalEntryId,
+  'userId': instance.userId,
+  'warehouseId': instance.warehouseId,
+  'syncStatus': _$SyncStatusEnumMap[instance.syncStatus]!,
+  'serverUpdatedAt': instance.serverUpdatedAt?.toIso8601String(),
+  'isDeleted': instance.isDeleted,
+};
 
 const _$PaymentMethodEnumMap = {
   PaymentMethod.cash: 'cash',

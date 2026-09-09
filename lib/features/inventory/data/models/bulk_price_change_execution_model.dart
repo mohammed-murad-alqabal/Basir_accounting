@@ -18,17 +18,16 @@ class BulkPriceChangeExecutionModel {
   /// إنشاء نموذج من سجل التنفيذ الكياني.
   factory BulkPriceChangeExecutionModel.fromRecord(
     BulkChangeExecutionRecord record,
-  ) =>
-      BulkPriceChangeExecutionModel()
-        ..id = record.id
-        ..operatorName = record.operatorName
-        ..executedAt = record.executedAt
-        ..reason = record.reason
-        ..recordJson = jsonEncode(record.toJson())
-        ..effectiveAt = record.effectiveAt
-        ..cancellationDeadline = record.cancellationDeadline
-        ..cancelledAt = record.cancellation?.occurredAt
-        ..createdAt = DateTime.now();
+  ) => BulkPriceChangeExecutionModel()
+    ..id = record.id
+    ..operatorName = record.operatorName
+    ..executedAt = record.executedAt
+    ..reason = record.reason
+    ..recordJson = jsonEncode(record.toJson())
+    ..effectiveAt = record.effectiveAt
+    ..cancellationDeadline = record.cancellationDeadline
+    ..cancelledAt = record.cancellation?.occurredAt
+    ..createdAt = DateTime.now();
 
   /// معرّف Isar التلقائي.
   Id? isarId;
@@ -67,6 +66,6 @@ class BulkPriceChangeExecutionModel {
 
   /// تحويل النموذج إلى كيان سجل التنفيذ.
   BulkChangeExecutionRecord toRecord() => BulkChangeExecutionRecord.fromJson(
-        Map<String, dynamic>.from(jsonDecode(recordJson) as Map),
-      );
+    Map<String, dynamic>.from(jsonDecode(recordJson) as Map),
+  );
 }

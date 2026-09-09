@@ -18,14 +18,14 @@ String _$standardsEngineServiceHash() =>
 @ProviderFor(StandardsEngineService)
 final standardsEngineServiceProvider =
     AsyncNotifierProvider<StandardsEngineService, void>.internal(
-  StandardsEngineService.new,
-  name: r'standardsEngineServiceProvider',
-  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-      ? null
-      : _$standardsEngineServiceHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
+      StandardsEngineService.new,
+      name: r'standardsEngineServiceProvider',
+      debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+          ? null
+          : _$standardsEngineServiceHash,
+      dependencies: null,
+      allTransitiveDependencies: null,
+    );
 
 typedef _$StandardsEngineService = AsyncNotifier<void>;
 // ignore_for_file: type=lint

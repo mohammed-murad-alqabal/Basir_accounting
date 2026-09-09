@@ -17,10 +17,10 @@ class AppSkeleton extends StatelessWidget {
 
   /// إنشاء هيكل عظمي دائري
   const AppSkeleton.circle({super.key, double? size})
-      : width = size,
-        height = size,
-        borderRadius = null,
-        shape = BoxShape.circle;
+    : width = size,
+      height = size,
+      borderRadius = null,
+      shape = BoxShape.circle;
 
   /// العرض
   final double? width;
@@ -67,23 +67,23 @@ class AppStatSkeleton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Container(
-        padding: Spacing.paddingSm,
-        decoration: BoxDecoration(
-          color: AppColors.surface,
-          borderRadius: Radii.borderRadiusMd,
-          border: Border.all(color: AppColors.border.withValues(alpha: 0.5)),
-        ),
-        child: const Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            AppSkeleton.circle(size: 26),
-            SizedBox(height: Spacing.xs),
-            AppSkeleton(width: 60, height: 12),
-            SizedBox(height: Spacing.xs),
-            AppSkeleton(width: 80, height: 24),
-          ],
-        ),
-      );
+    padding: Spacing.paddingSm,
+    decoration: BoxDecoration(
+      color: AppColors.surface,
+      borderRadius: Radii.borderRadiusMd,
+      border: Border.all(color: AppColors.border.withValues(alpha: 0.5)),
+    ),
+    child: const Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        AppSkeleton.circle(size: 26),
+        SizedBox(height: Spacing.xs),
+        AppSkeleton(width: 60, height: 12),
+        SizedBox(height: Spacing.xs),
+        AppSkeleton(width: 80, height: 24),
+      ],
+    ),
+  );
 }
 
 /// هيكل عظمي لبطاقة قائمة
@@ -93,37 +93,37 @@ class AppListSkeleton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Padding(
-        padding: const EdgeInsets.only(bottom: Spacing.sm),
-        child: Container(
-          padding: Spacing.paddingMd,
-          decoration: BoxDecoration(
-            color: AppColors.surface,
-            borderRadius: Radii.borderRadiusMd,
-            border: Border.all(color: AppColors.border.withValues(alpha: 0.5)),
+    padding: const EdgeInsets.only(bottom: Spacing.sm),
+    child: Container(
+      padding: Spacing.paddingMd,
+      decoration: BoxDecoration(
+        color: AppColors.surface,
+        borderRadius: Radii.borderRadiusMd,
+        border: Border.all(color: AppColors.border.withValues(alpha: 0.5)),
+      ),
+      child: const Row(
+        children: [
+          AppSkeleton(
+            width: 40,
+            height: 40,
+            borderRadius: Radii.borderRadiusSm,
           ),
-          child: const Row(
-            children: [
-              AppSkeleton(
-                width: 40,
-                height: 40,
-                borderRadius: Radii.borderRadiusSm,
-              ),
-              SizedBox(width: Spacing.md),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    AppSkeleton(width: 120, height: 16),
-                    SizedBox(height: Spacing.xs),
-                    AppSkeleton(width: 180, height: 12),
-                  ],
-                ),
-              ),
-              SizedBox(width: Spacing.md),
-              AppSkeleton(width: 60, height: 16),
-            ],
+          SizedBox(width: Spacing.md),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                AppSkeleton(width: 120, height: 16),
+                SizedBox(height: Spacing.xs),
+                AppSkeleton(width: 180, height: 12),
+              ],
+            ),
           ),
-        ),
-      );
+          SizedBox(width: Spacing.md),
+          AppSkeleton(width: 60, height: 16),
+        ],
+      ),
+    ),
+  );
 }

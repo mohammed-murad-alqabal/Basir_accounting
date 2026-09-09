@@ -82,23 +82,24 @@ class _PulseIndicatorState extends State<_PulseIndicator>
 
   @override
   Widget build(BuildContext context) => ScaleTransition(
-        scale: Tween(begin: 0.8, end: 1.2).animate(
-          CurvedAnimation(parent: _controller, curve: Curves.easeInOut),
-        ),
-        child: Container(
-          width: 8,
-          height: 8,
-          decoration: BoxDecoration(
-            color: widget.color.withValues(alpha: 0.8),
-            shape: BoxShape.circle,
-            boxShadow: [
-              BoxShadow(
-                color: widget.color.withValues(alpha: 0.4),
-                blurRadius: 4,
-                spreadRadius: 2,
-              ),
-            ],
+    scale: Tween(
+      begin: 0.8,
+      end: 1.2,
+    ).animate(CurvedAnimation(parent: _controller, curve: Curves.easeInOut)),
+    child: Container(
+      width: 8,
+      height: 8,
+      decoration: BoxDecoration(
+        color: widget.color.withValues(alpha: 0.8),
+        shape: BoxShape.circle,
+        boxShadow: [
+          BoxShadow(
+            color: widget.color.withValues(alpha: 0.4),
+            blurRadius: 4,
+            spreadRadius: 2,
           ),
-        ),
-      );
+        ],
+      ),
+    ),
+  );
 }

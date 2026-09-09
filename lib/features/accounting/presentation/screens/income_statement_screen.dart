@@ -77,11 +77,7 @@ class IncomeStatementScreen extends ConsumerWidget {
               ),
               const SizedBox(height: Spacing.lg),
               ...lines.map(
-                (line) => _buildLineItem(
-                  context,
-                  line,
-                  currencyFormatter,
-                ),
+                (line) => _buildLineItem(context, line, currencyFormatter),
               ),
             ],
           );
@@ -121,9 +117,8 @@ class IncomeStatementScreen extends ConsumerWidget {
                 await Navigator.push(
                   context,
                   MaterialPageRoute<void>(
-                    builder: (context) => JournalEntriesScreen(
-                      accountId: line.accountId,
-                    ),
+                    builder: (context) =>
+                        JournalEntriesScreen(accountId: line.accountId),
                   ),
                 );
               }
@@ -173,8 +168,10 @@ class IncomeStatementScreen extends ConsumerWidget {
             mainAxisSize: MainAxisSize.min,
             children: [
               ListTile(
-                leading:
-                    const Icon(Icons.picture_as_pdf, color: AppColors.error),
+                leading: const Icon(
+                  Icons.picture_as_pdf,
+                  color: AppColors.error,
+                ),
                 title: const Text('Export as Signed PDF'),
                 subtitle: const Text('With cryptographic forensic seal'),
                 onTap: () async {
@@ -183,8 +180,10 @@ class IncomeStatementScreen extends ConsumerWidget {
                 },
               ),
               ListTile(
-                leading:
-                    const Icon(Icons.table_chart, color: AppColors.success),
+                leading: const Icon(
+                  Icons.table_chart,
+                  color: AppColors.success,
+                ),
                 title: const Text('Export as Excel'),
                 subtitle: const Text('With detailed audit trail metadata'),
                 onTap: () async {
@@ -245,8 +244,9 @@ class IncomeStatementScreen extends ConsumerWidget {
         await Share.shareXFiles(
           [XFile(ioFile.path)],
           text: 'Income Statement (Forensic Export)',
-          sharePositionOrigin:
-              box != null ? box.localToGlobal(Offset.zero) & box.size : null,
+          sharePositionOrigin: box != null
+              ? box.localToGlobal(Offset.zero) & box.size
+              : null,
         );
       }
     } on Exception catch (_) {
@@ -257,21 +257,18 @@ class IncomeStatementScreen extends ConsumerWidget {
   }
 
   ReportData _mapReportToExportData(FinancialReport report) => ReportData(
-        title: report.title,
-        subtitle:
-            'Period: ${intl.DateFormat.yMMMd().format(report.fromDate)} - ${intl.DateFormat.yMMMd().format(report.toDate)}',
-        headers: ['Account / Line Item', 'Amount'],
-        rows: report.lines
-            .map(
-              (line) => [
-                '  ' * line.indentLevel + line.label,
-                line.amount.toStringAsFixed(2),
-              ],
-            )
-            .toList(),
-        metadata: {
-          'Report Type': 'Income Statement (IFRS 18)',
-          'Currency': 'SAR',
-        },
-      );
+    title: report.title,
+    subtitle:
+        'Period: ${intl.DateFormat.yMMMd().format(report.fromDate)} - ${intl.DateFormat.yMMMd().format(report.toDate)}',
+    headers: ['Account / Line Item', 'Amount'],
+    rows: report.lines
+        .map(
+          (line) => [
+            '  ' * line.indentLevel + line.label,
+            line.amount.toStringAsFixed(2),
+          ],
+        )
+        .toList(),
+    metadata: {'Report Type': 'Income Statement (IFRS 18)', 'Currency': 'SAR'},
+  );
 }

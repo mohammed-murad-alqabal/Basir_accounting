@@ -12,7 +12,8 @@ part of 'account.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
+  'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models',
+);
 
 Account _$AccountFromJson(Map<String, dynamic> json) {
   return _Account.fromJson(json);
@@ -84,24 +85,25 @@ abstract class $AccountCopyWith<$Res> {
   factory $AccountCopyWith(Account value, $Res Function(Account) then) =
       _$AccountCopyWithImpl<$Res, Account>;
   @useResult
-  $Res call(
-      {String id,
-      String code,
-      String nameAr,
-      String nameEn,
-      AccountType type,
-      AccountNature nature,
-      Decimal balance,
-      String subType,
-      Ifrs18Category? ifrs18Category,
-      bool isParent,
-      String? parentId,
-      bool isActive,
-      bool isSystem,
-      String? userId,
-      SyncStatus syncStatus,
-      DateTime? serverUpdatedAt,
-      bool isDeleted});
+  $Res call({
+    String id,
+    String code,
+    String nameAr,
+    String nameEn,
+    AccountType type,
+    AccountNature nature,
+    Decimal balance,
+    String subType,
+    Ifrs18Category? ifrs18Category,
+    bool isParent,
+    String? parentId,
+    bool isActive,
+    bool isSystem,
+    String? userId,
+    SyncStatus syncStatus,
+    DateTime? serverUpdatedAt,
+    bool isDeleted,
+  });
 }
 
 /// @nodoc
@@ -135,104 +137,109 @@ class _$AccountCopyWithImpl<$Res, $Val extends Account>
     Object? serverUpdatedAt = freezed,
     Object? isDeleted = null,
   }) {
-    return _then(_value.copyWith(
-      id: null == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as String,
-      code: null == code
-          ? _value.code
-          : code // ignore: cast_nullable_to_non_nullable
-              as String,
-      nameAr: null == nameAr
-          ? _value.nameAr
-          : nameAr // ignore: cast_nullable_to_non_nullable
-              as String,
-      nameEn: null == nameEn
-          ? _value.nameEn
-          : nameEn // ignore: cast_nullable_to_non_nullable
-              as String,
-      type: null == type
-          ? _value.type
-          : type // ignore: cast_nullable_to_non_nullable
-              as AccountType,
-      nature: null == nature
-          ? _value.nature
-          : nature // ignore: cast_nullable_to_non_nullable
-              as AccountNature,
-      balance: null == balance
-          ? _value.balance
-          : balance // ignore: cast_nullable_to_non_nullable
-              as Decimal,
-      subType: null == subType
-          ? _value.subType
-          : subType // ignore: cast_nullable_to_non_nullable
-              as String,
-      ifrs18Category: freezed == ifrs18Category
-          ? _value.ifrs18Category
-          : ifrs18Category // ignore: cast_nullable_to_non_nullable
-              as Ifrs18Category?,
-      isParent: null == isParent
-          ? _value.isParent
-          : isParent // ignore: cast_nullable_to_non_nullable
-              as bool,
-      parentId: freezed == parentId
-          ? _value.parentId
-          : parentId // ignore: cast_nullable_to_non_nullable
-              as String?,
-      isActive: null == isActive
-          ? _value.isActive
-          : isActive // ignore: cast_nullable_to_non_nullable
-              as bool,
-      isSystem: null == isSystem
-          ? _value.isSystem
-          : isSystem // ignore: cast_nullable_to_non_nullable
-              as bool,
-      userId: freezed == userId
-          ? _value.userId
-          : userId // ignore: cast_nullable_to_non_nullable
-              as String?,
-      syncStatus: null == syncStatus
-          ? _value.syncStatus
-          : syncStatus // ignore: cast_nullable_to_non_nullable
-              as SyncStatus,
-      serverUpdatedAt: freezed == serverUpdatedAt
-          ? _value.serverUpdatedAt
-          : serverUpdatedAt // ignore: cast_nullable_to_non_nullable
-              as DateTime?,
-      isDeleted: null == isDeleted
-          ? _value.isDeleted
-          : isDeleted // ignore: cast_nullable_to_non_nullable
-              as bool,
-    ) as $Val);
+    return _then(
+      _value.copyWith(
+            id: null == id
+                ? _value.id
+                : id // ignore: cast_nullable_to_non_nullable
+                      as String,
+            code: null == code
+                ? _value.code
+                : code // ignore: cast_nullable_to_non_nullable
+                      as String,
+            nameAr: null == nameAr
+                ? _value.nameAr
+                : nameAr // ignore: cast_nullable_to_non_nullable
+                      as String,
+            nameEn: null == nameEn
+                ? _value.nameEn
+                : nameEn // ignore: cast_nullable_to_non_nullable
+                      as String,
+            type: null == type
+                ? _value.type
+                : type // ignore: cast_nullable_to_non_nullable
+                      as AccountType,
+            nature: null == nature
+                ? _value.nature
+                : nature // ignore: cast_nullable_to_non_nullable
+                      as AccountNature,
+            balance: null == balance
+                ? _value.balance
+                : balance // ignore: cast_nullable_to_non_nullable
+                      as Decimal,
+            subType: null == subType
+                ? _value.subType
+                : subType // ignore: cast_nullable_to_non_nullable
+                      as String,
+            ifrs18Category: freezed == ifrs18Category
+                ? _value.ifrs18Category
+                : ifrs18Category // ignore: cast_nullable_to_non_nullable
+                      as Ifrs18Category?,
+            isParent: null == isParent
+                ? _value.isParent
+                : isParent // ignore: cast_nullable_to_non_nullable
+                      as bool,
+            parentId: freezed == parentId
+                ? _value.parentId
+                : parentId // ignore: cast_nullable_to_non_nullable
+                      as String?,
+            isActive: null == isActive
+                ? _value.isActive
+                : isActive // ignore: cast_nullable_to_non_nullable
+                      as bool,
+            isSystem: null == isSystem
+                ? _value.isSystem
+                : isSystem // ignore: cast_nullable_to_non_nullable
+                      as bool,
+            userId: freezed == userId
+                ? _value.userId
+                : userId // ignore: cast_nullable_to_non_nullable
+                      as String?,
+            syncStatus: null == syncStatus
+                ? _value.syncStatus
+                : syncStatus // ignore: cast_nullable_to_non_nullable
+                      as SyncStatus,
+            serverUpdatedAt: freezed == serverUpdatedAt
+                ? _value.serverUpdatedAt
+                : serverUpdatedAt // ignore: cast_nullable_to_non_nullable
+                      as DateTime?,
+            isDeleted: null == isDeleted
+                ? _value.isDeleted
+                : isDeleted // ignore: cast_nullable_to_non_nullable
+                      as bool,
+          )
+          as $Val,
+    );
   }
 }
 
 /// @nodoc
 abstract class _$$AccountImplCopyWith<$Res> implements $AccountCopyWith<$Res> {
   factory _$$AccountImplCopyWith(
-          _$AccountImpl value, $Res Function(_$AccountImpl) then) =
-      __$$AccountImplCopyWithImpl<$Res>;
+    _$AccountImpl value,
+    $Res Function(_$AccountImpl) then,
+  ) = __$$AccountImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call(
-      {String id,
-      String code,
-      String nameAr,
-      String nameEn,
-      AccountType type,
-      AccountNature nature,
-      Decimal balance,
-      String subType,
-      Ifrs18Category? ifrs18Category,
-      bool isParent,
-      String? parentId,
-      bool isActive,
-      bool isSystem,
-      String? userId,
-      SyncStatus syncStatus,
-      DateTime? serverUpdatedAt,
-      bool isDeleted});
+  $Res call({
+    String id,
+    String code,
+    String nameAr,
+    String nameEn,
+    AccountType type,
+    AccountNature nature,
+    Decimal balance,
+    String subType,
+    Ifrs18Category? ifrs18Category,
+    bool isParent,
+    String? parentId,
+    bool isActive,
+    bool isSystem,
+    String? userId,
+    SyncStatus syncStatus,
+    DateTime? serverUpdatedAt,
+    bool isDeleted,
+  });
 }
 
 /// @nodoc
@@ -240,8 +247,9 @@ class __$$AccountImplCopyWithImpl<$Res>
     extends _$AccountCopyWithImpl<$Res, _$AccountImpl>
     implements _$$AccountImplCopyWith<$Res> {
   __$$AccountImplCopyWithImpl(
-      _$AccountImpl _value, $Res Function(_$AccountImpl) _then)
-      : super(_value, _then);
+    _$AccountImpl _value,
+    $Res Function(_$AccountImpl) _then,
+  ) : super(_value, _then);
 
   @pragma('vm:prefer-inline')
   @override
@@ -264,101 +272,103 @@ class __$$AccountImplCopyWithImpl<$Res>
     Object? serverUpdatedAt = freezed,
     Object? isDeleted = null,
   }) {
-    return _then(_$AccountImpl(
-      id: null == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as String,
-      code: null == code
-          ? _value.code
-          : code // ignore: cast_nullable_to_non_nullable
-              as String,
-      nameAr: null == nameAr
-          ? _value.nameAr
-          : nameAr // ignore: cast_nullable_to_non_nullable
-              as String,
-      nameEn: null == nameEn
-          ? _value.nameEn
-          : nameEn // ignore: cast_nullable_to_non_nullable
-              as String,
-      type: null == type
-          ? _value.type
-          : type // ignore: cast_nullable_to_non_nullable
-              as AccountType,
-      nature: null == nature
-          ? _value.nature
-          : nature // ignore: cast_nullable_to_non_nullable
-              as AccountNature,
-      balance: null == balance
-          ? _value.balance
-          : balance // ignore: cast_nullable_to_non_nullable
-              as Decimal,
-      subType: null == subType
-          ? _value.subType
-          : subType // ignore: cast_nullable_to_non_nullable
-              as String,
-      ifrs18Category: freezed == ifrs18Category
-          ? _value.ifrs18Category
-          : ifrs18Category // ignore: cast_nullable_to_non_nullable
-              as Ifrs18Category?,
-      isParent: null == isParent
-          ? _value.isParent
-          : isParent // ignore: cast_nullable_to_non_nullable
-              as bool,
-      parentId: freezed == parentId
-          ? _value.parentId
-          : parentId // ignore: cast_nullable_to_non_nullable
-              as String?,
-      isActive: null == isActive
-          ? _value.isActive
-          : isActive // ignore: cast_nullable_to_non_nullable
-              as bool,
-      isSystem: null == isSystem
-          ? _value.isSystem
-          : isSystem // ignore: cast_nullable_to_non_nullable
-              as bool,
-      userId: freezed == userId
-          ? _value.userId
-          : userId // ignore: cast_nullable_to_non_nullable
-              as String?,
-      syncStatus: null == syncStatus
-          ? _value.syncStatus
-          : syncStatus // ignore: cast_nullable_to_non_nullable
-              as SyncStatus,
-      serverUpdatedAt: freezed == serverUpdatedAt
-          ? _value.serverUpdatedAt
-          : serverUpdatedAt // ignore: cast_nullable_to_non_nullable
-              as DateTime?,
-      isDeleted: null == isDeleted
-          ? _value.isDeleted
-          : isDeleted // ignore: cast_nullable_to_non_nullable
-              as bool,
-    ));
+    return _then(
+      _$AccountImpl(
+        id: null == id
+            ? _value.id
+            : id // ignore: cast_nullable_to_non_nullable
+                  as String,
+        code: null == code
+            ? _value.code
+            : code // ignore: cast_nullable_to_non_nullable
+                  as String,
+        nameAr: null == nameAr
+            ? _value.nameAr
+            : nameAr // ignore: cast_nullable_to_non_nullable
+                  as String,
+        nameEn: null == nameEn
+            ? _value.nameEn
+            : nameEn // ignore: cast_nullable_to_non_nullable
+                  as String,
+        type: null == type
+            ? _value.type
+            : type // ignore: cast_nullable_to_non_nullable
+                  as AccountType,
+        nature: null == nature
+            ? _value.nature
+            : nature // ignore: cast_nullable_to_non_nullable
+                  as AccountNature,
+        balance: null == balance
+            ? _value.balance
+            : balance // ignore: cast_nullable_to_non_nullable
+                  as Decimal,
+        subType: null == subType
+            ? _value.subType
+            : subType // ignore: cast_nullable_to_non_nullable
+                  as String,
+        ifrs18Category: freezed == ifrs18Category
+            ? _value.ifrs18Category
+            : ifrs18Category // ignore: cast_nullable_to_non_nullable
+                  as Ifrs18Category?,
+        isParent: null == isParent
+            ? _value.isParent
+            : isParent // ignore: cast_nullable_to_non_nullable
+                  as bool,
+        parentId: freezed == parentId
+            ? _value.parentId
+            : parentId // ignore: cast_nullable_to_non_nullable
+                  as String?,
+        isActive: null == isActive
+            ? _value.isActive
+            : isActive // ignore: cast_nullable_to_non_nullable
+                  as bool,
+        isSystem: null == isSystem
+            ? _value.isSystem
+            : isSystem // ignore: cast_nullable_to_non_nullable
+                  as bool,
+        userId: freezed == userId
+            ? _value.userId
+            : userId // ignore: cast_nullable_to_non_nullable
+                  as String?,
+        syncStatus: null == syncStatus
+            ? _value.syncStatus
+            : syncStatus // ignore: cast_nullable_to_non_nullable
+                  as SyncStatus,
+        serverUpdatedAt: freezed == serverUpdatedAt
+            ? _value.serverUpdatedAt
+            : serverUpdatedAt // ignore: cast_nullable_to_non_nullable
+                  as DateTime?,
+        isDeleted: null == isDeleted
+            ? _value.isDeleted
+            : isDeleted // ignore: cast_nullable_to_non_nullable
+                  as bool,
+      ),
+    );
   }
 }
 
 /// @nodoc
 @JsonSerializable()
 class _$AccountImpl extends _Account {
-  const _$AccountImpl(
-      {required this.id,
-      required this.code,
-      required this.nameAr,
-      required this.nameEn,
-      required this.type,
-      required this.nature,
-      required this.balance,
-      this.subType = '',
-      this.ifrs18Category,
-      this.isParent = false,
-      this.parentId,
-      this.isActive = true,
-      this.isSystem = false,
-      this.userId,
-      this.syncStatus = SyncStatus.synced,
-      this.serverUpdatedAt,
-      this.isDeleted = false})
-      : super._();
+  const _$AccountImpl({
+    required this.id,
+    required this.code,
+    required this.nameAr,
+    required this.nameEn,
+    required this.type,
+    required this.nature,
+    required this.balance,
+    this.subType = '',
+    this.ifrs18Category,
+    this.isParent = false,
+    this.parentId,
+    this.isActive = true,
+    this.isSystem = false,
+    this.userId,
+    this.syncStatus = SyncStatus.synced,
+    this.serverUpdatedAt,
+    this.isDeleted = false,
+  }) : super._();
 
   factory _$AccountImpl.fromJson(Map<String, dynamic> json) =>
       _$$AccountImplFromJson(json);
@@ -480,24 +490,25 @@ class _$AccountImpl extends _Account {
   @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(
-      runtimeType,
-      id,
-      code,
-      nameAr,
-      nameEn,
-      type,
-      nature,
-      balance,
-      subType,
-      ifrs18Category,
-      isParent,
-      parentId,
-      isActive,
-      isSystem,
-      userId,
-      syncStatus,
-      serverUpdatedAt,
-      isDeleted);
+    runtimeType,
+    id,
+    code,
+    nameAr,
+    nameEn,
+    type,
+    nature,
+    balance,
+    subType,
+    ifrs18Category,
+    isParent,
+    parentId,
+    isActive,
+    isSystem,
+    userId,
+    syncStatus,
+    serverUpdatedAt,
+    isDeleted,
+  );
 
   @JsonKey(ignore: true)
   @override
@@ -507,104 +518,86 @@ class _$AccountImpl extends _Account {
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$AccountImplToJson(
-      this,
-    );
+    return _$$AccountImplToJson(this);
   }
 }
 
 abstract class _Account extends Account {
-  const factory _Account(
-      {required final String id,
-      required final String code,
-      required final String nameAr,
-      required final String nameEn,
-      required final AccountType type,
-      required final AccountNature nature,
-      required final Decimal balance,
-      final String subType,
-      final Ifrs18Category? ifrs18Category,
-      final bool isParent,
-      final String? parentId,
-      final bool isActive,
-      final bool isSystem,
-      final String? userId,
-      final SyncStatus syncStatus,
-      final DateTime? serverUpdatedAt,
-      final bool isDeleted}) = _$AccountImpl;
+  const factory _Account({
+    required final String id,
+    required final String code,
+    required final String nameAr,
+    required final String nameEn,
+    required final AccountType type,
+    required final AccountNature nature,
+    required final Decimal balance,
+    final String subType,
+    final Ifrs18Category? ifrs18Category,
+    final bool isParent,
+    final String? parentId,
+    final bool isActive,
+    final bool isSystem,
+    final String? userId,
+    final SyncStatus syncStatus,
+    final DateTime? serverUpdatedAt,
+    final bool isDeleted,
+  }) = _$AccountImpl;
   const _Account._() : super._();
 
   factory _Account.fromJson(Map<String, dynamic> json) = _$AccountImpl.fromJson;
 
   @override
-
   /// Unique internal identifier for the account.
   String get id;
   @override
-
   /// Unique accounting code for structured reporting (e.g., "1101" for Cash).
   String get code;
   @override
-
   /// Primary Arabic display name (e.g., "النقدية").
   String get nameAr;
   @override
-
   /// Primary English display name (e.g., "Cash").
   String get nameEn;
   @override
-
   /// High-level categorization (Asset, Liability, etc.).
   AccountType get type;
   @override
-
   /// Normal balance nature of the account (Debit/Credit).
   AccountNature get nature;
   @override
-
   /// Current net balance persisted as a high-precision [Decimal].
   Decimal get balance;
   @override
-
   /// Functional sub-type for automated processing (e.g., "cash", "bank",
   /// "ar").
   String get subType;
   @override
-
   /// IFRS 18 specific category mapping for optimized P&L presentation.
   Ifrs18Category? get ifrs18Category;
   @override
-
   /// Indicates if this is a grouping (Parent) account that aggregates child
   /// balances.
   bool get isParent;
   @override
-
   /// Reference to the immediate parent account for tree traversal.
   String? get parentId;
   @override
-
   /// Operational status: if false, the account is hidden from active posting.
   bool get isActive;
   @override
-
   /// If true, the account is a core system-defined account and cannot be
   /// deleted.
   bool get isSystem;
   @override
-
   /// Multi-tenant identifier isolating data per user.
   String? get userId;
   @override
-
   /// Local-to-Remote synchronization state.
   SyncStatus get syncStatus;
   @override
-
   /// Most recent synchronization timestamp from the server.
   DateTime? get serverUpdatedAt;
   @override
-
   /// Soft-deletion flag for audit trail preservation.
   bool get isDeleted;
   @override

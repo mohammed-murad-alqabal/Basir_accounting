@@ -215,8 +215,9 @@ final isarProvider = FutureProvider<Isar>((ref) async {
 });
 
 /// مزود مستودع العملاء (Customer Repository) - Performance Optimized
-final customerRepositoryProvider =
-    Provider.autoDispose<CustomerRepository>((ref) {
+final customerRepositoryProvider = Provider.autoDispose<CustomerRepository>((
+  ref,
+) {
   final isar = ref.watch(isarProvider.select((asyncIsar) => asyncIsar.value));
   if (isar == null) {
     throw Exception('قاعدة البيانات غير جاهزة');
@@ -226,8 +227,9 @@ final customerRepositoryProvider =
 });
 
 /// مزود مستودع الفواتير (Invoice Repository) - Performance Optimized
-final invoiceRepositoryProvider =
-    Provider.autoDispose<InvoiceRepository>((ref) {
+final invoiceRepositoryProvider = Provider.autoDispose<InvoiceRepository>((
+  ref,
+) {
   final isar = ref.watch(isarProvider.select((asyncIsar) => asyncIsar.value));
   if (isar == null) {
     throw Exception('قاعدة البيانات غير جاهزة');
@@ -319,28 +321,32 @@ final assetRepositoryProvider = Provider.autoDispose<AssetRepository>((ref) {
 /// مزود مستودع حركات المخزون (Stock Movement Repository) - Performance Optimized
 final stockMovementRepositoryProvider =
     Provider.autoDispose<StockMovementRepository>((ref) {
-  final isar = ref.watch(isarProvider.select((asyncIsar) => asyncIsar.value));
-  if (isar == null) throw Exception('قاعدة البيانات غير جاهزة');
-  final user = ref.watch(basirUserProvider);
-  return StockMovementRepositoryImpl(
-    isar: isar,
-    userId: user?.id,
-    warehouseId: user?.warehouseId,
-  );
-});
+      final isar = ref.watch(
+        isarProvider.select((asyncIsar) => asyncIsar.value),
+      );
+      if (isar == null) throw Exception('قاعدة البيانات غير جاهزة');
+      final user = ref.watch(basirUserProvider);
+      return StockMovementRepositoryImpl(
+        isar: isar,
+        userId: user?.id,
+        warehouseId: user?.warehouseId,
+      );
+    });
 
 /// مزود مستودع تحويلات المخزون (Warehouse Transfer Repository) - Performance Optimized
 final warehouseTransferRepositoryProvider =
     Provider.autoDispose<WarehouseTransferRepository>((ref) {
-  final isar = ref.watch(isarProvider.select((asyncIsar) => asyncIsar.value));
-  if (isar == null) throw Exception('قاعدة البيانات غير جاهزة');
-  final user = ref.watch(basirUserProvider);
-  return WarehouseTransferRepositoryImpl(
-    isar: isar,
-    userId: user?.id,
-    warehouseId: user?.warehouseId,
-  );
-});
+      final isar = ref.watch(
+        isarProvider.select((asyncIsar) => asyncIsar.value),
+      );
+      if (isar == null) throw Exception('قاعدة البيانات غير جاهزة');
+      final user = ref.watch(basirUserProvider);
+      return WarehouseTransferRepositoryImpl(
+        isar: isar,
+        userId: user?.id,
+        warehouseId: user?.warehouseId,
+      );
+    });
 
 /// مزود خدمة المخزون (Inventory Service) - Performance Optimized
 final inventoryServiceProvider = Provider.autoDispose<InventoryService>((ref) {
@@ -357,9 +363,7 @@ final inventoryServiceProvider = Provider.autoDispose<InventoryService>((ref) {
 
 /// مزود مستودع المستودعات (Warehouse Repository)
 final warehouseRepositoryProvider = Provider<WarehouseRepository>((ref) {
-  final isar = ref.watch(
-    isarProvider.select((asyncIsar) => asyncIsar.value),
-  );
+  final isar = ref.watch(isarProvider.select((asyncIsar) => asyncIsar.value));
   if (isar == null) throw Exception('قاعدة البيانات غير جاهزة');
   final user = ref.watch(basirUserProvider);
   return WarehouseRepositoryImpl(isar: isar, userId: user?.id);
@@ -367,9 +371,7 @@ final warehouseRepositoryProvider = Provider<WarehouseRepository>((ref) {
 
 /// مزود مستودع أسعار السوق (Market Price Repository)
 final marketPriceRepositoryProvider = Provider<MarketPriceRepository>((ref) {
-  final isar = ref.watch(
-    isarProvider.select((asyncIsar) => asyncIsar.value),
-  );
+  final isar = ref.watch(isarProvider.select((asyncIsar) => asyncIsar.value));
   if (isar == null) throw Exception('قاعدة البيانات غير جاهزة');
   return MarketPriceRepositoryImpl(isar: isar);
 });
@@ -395,8 +397,9 @@ final userRepositoryProvider = Provider<UserRepository>((ref) {
 });
 
 /// مزود مستودع إعدادات الباركود (Barcode Config Repository)
-final barcodeConfigRepositoryProvider =
-    Provider<BarcodeConfigRepository>((ref) {
+final barcodeConfigRepositoryProvider = Provider<BarcodeConfigRepository>((
+  ref,
+) {
   final isar = ref.watch(isarProvider.select((async) => async.value));
   if (isar == null) throw Exception('قاعدة البيانات غير جاهزة');
   return IsarBarcodeConfigRepository(isar);
@@ -431,21 +434,19 @@ final goalServiceProvider = Provider<GoalService>((ref) {
 });
 
 /// مزود تخزين سجلات تنفيذ تغيير الأسعار الجماعي (Isar).
-final bulkChangeExecutionStorageProvider =
-    Provider<BulkChangeExecutionStorage>((ref) {
-  final isar = ref.watch(isarProvider.select((async) => async.value));
-  if (isar == null) throw Exception('قاعدة البيانات غير جاهزة');
-  return IsarBulkChangeExecutionStorage(isar: isar);
-});
+final bulkChangeExecutionStorageProvider = Provider<BulkChangeExecutionStorage>(
+  (ref) {
+    final isar = ref.watch(isarProvider.select((async) => async.value));
+    if (isar == null) throw Exception('قاعدة البيانات غير جاهزة');
+    return IsarBulkChangeExecutionStorage(isar: isar);
+  },
+);
 
 /// مزود خدمة تغيير الأسعار الجماعي (المعاينة، التنفيذ، الإلغاء).
 final bulkPriceChangeServiceProvider = Provider<BulkPriceChangeService>((ref) {
   final repository = ref.watch(inventoryRepositoryProvider);
   final storage = ref.watch(bulkChangeExecutionStorageProvider);
-  return BulkPriceChangeService(
-    repository: repository,
-    storage: storage,
-  );
+  return BulkPriceChangeService(repository: repository, storage: storage);
 });
 
 /// Provider for Google Sign-In instance.

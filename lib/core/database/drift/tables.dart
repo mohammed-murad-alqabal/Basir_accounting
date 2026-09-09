@@ -17,9 +17,9 @@ class Tenants extends Table {
 
   @override
   List<String> get customConstraints => [
-        'CHECK (length(trim(id)) > 0)',
-        'CHECK (length(base_currency) = 3)',
-      ];
+    'CHECK (length(trim(id)) > 0)',
+    'CHECK (length(base_currency) = 3)',
+  ];
 }
 
 class FiscalPeriods extends Table {
@@ -37,16 +37,16 @@ class FiscalPeriods extends Table {
 
   @override
   List<Set<Column>> get uniqueKeys => [
-        {tenantId, code},
-        {tenantId, startDate, endDate},
-      ];
+    {tenantId, code},
+    {tenantId, startDate, endDate},
+  ];
 
   @override
   List<String> get customConstraints => [
-        'CHECK (end_date >= start_date)',
-        "CHECK (status IN ('OPEN', 'LOCKED', 'CLOSED'))",
-        "CHECK ((status = 'OPEN' AND closed_at IS NULL) OR status <> 'OPEN')",
-      ];
+    'CHECK (end_date >= start_date)',
+    "CHECK (status IN ('OPEN', 'LOCKED', 'CLOSED'))",
+    "CHECK ((status = 'OPEN' AND closed_at IS NULL) OR status <> 'OPEN')",
+  ];
 }
 
 class Accounts extends Table {
@@ -69,15 +69,15 @@ class Accounts extends Table {
 
   @override
   List<Set<Column>> get uniqueKeys => [
-        {tenantId, code},
-      ];
+    {tenantId, code},
+  ];
 
   @override
   List<String> get customConstraints => [
-        "CHECK (type IN ('ASSET', 'LIABILITY', 'EQUITY', 'REVENUE', 'EXPENSE'))",
-        "CHECK (nature IN ('DEBIT', 'CREDIT'))",
-        'CHECK (parent_id IS NULL OR parent_id <> id)',
-      ];
+    "CHECK (type IN ('ASSET', 'LIABILITY', 'EQUITY', 'REVENUE', 'EXPENSE'))",
+    "CHECK (nature IN ('DEBIT', 'CREDIT'))",
+    'CHECK (parent_id IS NULL OR parent_id <> id)',
+  ];
 }
 
 class SourceDocuments extends Table {
@@ -94,8 +94,8 @@ class SourceDocuments extends Table {
 
   @override
   List<Set<Column>> get uniqueKeys => [
-        {tenantId, sourceType, sourceId},
-      ];
+    {tenantId, sourceType, sourceId},
+  ];
 }
 
 class JournalEntries extends Table {
@@ -124,16 +124,16 @@ class JournalEntries extends Table {
 
   @override
   List<Set<Column>> get uniqueKeys => [
-        {tenantId, referenceNumber},
-        {tenantId, sourceType, sourceId},
-      ];
+    {tenantId, referenceNumber},
+    {tenantId, sourceType, sourceId},
+  ];
 
   @override
   List<String> get customConstraints => [
-        "CHECK (status IN ('DRAFT', 'POSTED', 'REVERSED', 'VOIDED'))",
-        "CHECK (source_id IS NOT NULL OR source_type = 'MANUAL')",
-        "CHECK ((status = 'POSTED' AND posted_at IS NOT NULL) OR status <> 'POSTED')",
-      ];
+    "CHECK (status IN ('DRAFT', 'POSTED', 'REVERSED', 'VOIDED'))",
+    "CHECK (source_id IS NOT NULL OR source_type = 'MANUAL')",
+    "CHECK ((status = 'POSTED' AND posted_at IS NOT NULL) OR status <> 'POSTED')",
+  ];
 }
 
 class JournalLines extends Table {
@@ -154,18 +154,18 @@ class JournalLines extends Table {
 
   @override
   List<Set<Column>> get uniqueKeys => [
-        {entryId, lineNumber},
-      ];
+    {entryId, lineNumber},
+  ];
 
   @override
   List<String> get customConstraints => [
-        'CHECK (debit_minor >= 0)',
-        'CHECK (credit_minor >= 0)',
-        'CHECK (NOT (debit_minor > 0 AND credit_minor > 0))',
-        'CHECK (debit_minor > 0 OR credit_minor > 0)',
-        'CHECK (original_amount_minor IS NULL OR original_amount_minor >= 0)',
-        'CHECK (exchange_rate_ppm IS NULL OR exchange_rate_ppm > 0)',
-      ];
+    'CHECK (debit_minor >= 0)',
+    'CHECK (credit_minor >= 0)',
+    'CHECK (NOT (debit_minor > 0 AND credit_minor > 0))',
+    'CHECK (debit_minor > 0 OR credit_minor > 0)',
+    'CHECK (original_amount_minor IS NULL OR original_amount_minor >= 0)',
+    'CHECK (exchange_rate_ppm IS NULL OR exchange_rate_ppm > 0)',
+  ];
 }
 
 class IdempotencyKeys extends Table {
@@ -184,13 +184,13 @@ class IdempotencyKeys extends Table {
 
   @override
   List<Set<Column>> get uniqueKeys => [
-        {tenantId, key},
-      ];
+    {tenantId, key},
+  ];
 
   @override
   List<String> get customConstraints => [
-        "CHECK (state IN ('ACCEPTED', 'APPLIED', 'FAILED'))",
-      ];
+    "CHECK (state IN ('ACCEPTED', 'APPLIED', 'FAILED'))",
+  ];
 }
 
 class PostingReceipts extends Table {
@@ -207,9 +207,9 @@ class PostingReceipts extends Table {
 
   @override
   List<Set<Column>> get uniqueKeys => [
-        {tenantId, entryId},
-        {tenantId, idempotencyKeyId},
-      ];
+    {tenantId, entryId},
+    {tenantId, idempotencyKeyId},
+  ];
 }
 
 class OutboxEvents extends Table {
@@ -231,15 +231,15 @@ class OutboxEvents extends Table {
 
   @override
   List<Set<Column>> get uniqueKeys => [
-        {tenantId, sequence},
-      ];
+    {tenantId, sequence},
+  ];
 
   @override
   List<String> get customConstraints => [
-        'CHECK (sequence > 0)',
-        'CHECK (attempts >= 0)',
-        "CHECK (state IN ('PENDING', 'SENT', 'FAILED'))",
-      ];
+    'CHECK (sequence > 0)',
+    'CHECK (attempts >= 0)',
+    "CHECK (state IN ('PENDING', 'SENT', 'FAILED'))",
+  ];
 }
 
 class AuditEvents extends Table {
@@ -274,12 +274,12 @@ class StockMovements extends Table {
 
   @override
   List<Set<Column>> get uniqueKeys => [
-        {tenantId, warehouseId, itemId, sequence},
-      ];
+    {tenantId, warehouseId, itemId, sequence},
+  ];
 
   @override
   List<String> get customConstraints => [
-        'CHECK (sequence > 0)',
-        'CHECK (quantity_minor <> 0)',
-      ];
+    'CHECK (sequence > 0)',
+    'CHECK (quantity_minor <> 0)',
+  ];
 }

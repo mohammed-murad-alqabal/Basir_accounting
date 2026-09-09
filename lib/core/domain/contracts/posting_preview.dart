@@ -161,14 +161,13 @@ class PostingPreview {
     required String approverName,
     required String reason,
     DateTime? occurredAt,
-  }) =>
-      AuditEntry(
-        type: AuditEventType.approved,
-        operatorName: approverName,
-        occurredAt: occurredAt ?? DateTime.now(),
-        reason: reason,
-        referenceId: documentId,
-      );
+  }) => AuditEntry(
+    type: AuditEventType.approved,
+    operatorName: approverName,
+    occurredAt: occurredAt ?? DateTime.now(),
+    reason: reason,
+    referenceId: documentId,
+  );
 
   @override
   String toString() =>

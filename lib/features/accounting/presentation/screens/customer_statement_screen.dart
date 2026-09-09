@@ -62,9 +62,9 @@ class _CustomerStatementScreenState
       });
     } on Exception catch (e) {
       if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Error loading statement: $e')),
-        );
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text('Error loading statement: $e')));
       }
       setState(() {
         _isLoading = false;
@@ -74,11 +74,9 @@ class _CustomerStatementScreenState
 
   Future<void> _selectDateRange(BuildContext context) async {
     final now = DateTime.now();
-    final initialRange = _dateRange ??
-        DateTimeRange(
-          start: DateTime(now.year, now.month - 3),
-          end: now,
-        );
+    final initialRange =
+        _dateRange ??
+        DateTimeRange(start: DateTime(now.year, now.month - 3), end: now);
 
     final selected = await showDateRangePicker(
       context: context,
@@ -95,15 +93,11 @@ class _CustomerStatementScreenState
     }
   }
 
-  Decimal _calculateTotalDebits() => _entries.fold<Decimal>(
-        Decimal.zero,
-        (sum, entry) => sum + entry.debit,
-      );
+  Decimal _calculateTotalDebits() =>
+      _entries.fold<Decimal>(Decimal.zero, (sum, entry) => sum + entry.debit);
 
-  Decimal _calculateTotalCredits() => _entries.fold<Decimal>(
-        Decimal.zero,
-        (sum, entry) => sum + entry.credit,
-      );
+  Decimal _calculateTotalCredits() =>
+      _entries.fold<Decimal>(Decimal.zero, (sum, entry) => sum + entry.credit);
 
   Decimal _calculateClosingBalance() {
     if (_entries.isEmpty) return Decimal.zero;
@@ -112,177 +106,169 @@ class _CustomerStatementScreenState
 
   @override
   Widget build(BuildContext context) => GlassScaffold(
-        title: 'Customer Statement',
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.picture_as_pdf),
-            onPressed: _entries.isEmpty ? null : _exportToPDF,
-            tooltip: 'Export PDF',
+    title: 'Customer Statement',
+    actions: [
+      IconButton(
+        icon: const Icon(Icons.picture_as_pdf),
+        onPressed: _entries.isEmpty ? null : _exportToPDF,
+        tooltip: 'Export PDF',
+      ),
+    ],
+    body: SingleChildScrollView(
+      padding: const EdgeInsets.all(16),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          // Customer Selection
+          InputDecorator(
+            decoration: const InputDecoration(
+              labelText: 'Customer',
+              prefixIcon: Icon(Icons.person),
+              border: OutlineInputBorder(),
+            ),
+            child: Text(
+              _selectedCustomer?.name(isArabic: context.isArabic) ??
+                  'Select Customer',
+            ),
           ),
+          const SizedBox(height: 16),
+
+          // Date Range Selection
+          InkWell(
+            onTap: () => _selectDateRange(context),
+            child: InputDecorator(
+              decoration: const InputDecoration(
+                labelText: 'Date Range',
+                prefixIcon: Icon(Icons.date_range),
+                border: OutlineInputBorder(),
+              ),
+              child: Text(
+                _dateRange == null
+                    ? 'Select Date Range (Optional)'
+                    : '${_dateRange!.start.toLocal().toString().split(' ')[0]} - ${_dateRange!.end.toLocal().toString().split(' ')[0]}',
+              ),
+            ),
+          ),
+          const SizedBox(height: 16),
+
+          // Load Button
+          ElevatedButton(
+            onPressed: _selectedCustomer == null ? null : _loadStatement,
+            child: const Text('Load Statement'),
+          ),
+          const SizedBox(height: 24),
+
+          // Summary Cards
+          if (_entries.isNotEmpty) ...[
+            _buildSummarySection(),
+            const SizedBox(height: 24),
+          ],
+
+          // Loading Indicator
+          if (_isLoading)
+            const Center(child: CircularProgressIndicator())
+          else if (_entries.isNotEmpty)
+            _buildEntriesTable()
+          else
+            const Center(
+              child: Padding(
+                padding: EdgeInsets.all(32),
+                child: Text('No entries to display'),
+              ),
+            ),
         ],
-        body: SingleChildScrollView(
-          padding: const EdgeInsets.all(16),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              // Customer Selection
-              InputDecorator(
-                decoration: const InputDecoration(
-                  labelText: 'Customer',
-                  prefixIcon: Icon(Icons.person),
-                  border: OutlineInputBorder(),
-                ),
-                child: Text(
-                  _selectedCustomer?.name(isArabic: context.isArabic) ??
-                      'Select Customer',
-                ),
-              ),
-              const SizedBox(height: 16),
-
-              // Date Range Selection
-              InkWell(
-                onTap: () => _selectDateRange(context),
-                child: InputDecorator(
-                  decoration: const InputDecoration(
-                    labelText: 'Date Range',
-                    prefixIcon: Icon(Icons.date_range),
-                    border: OutlineInputBorder(),
-                  ),
-                  child: Text(
-                    _dateRange == null
-                        ? 'Select Date Range (Optional)'
-                        : '${_dateRange!.start.toLocal().toString().split(' ')[0]} - ${_dateRange!.end.toLocal().toString().split(' ')[0]}',
-                  ),
-                ),
-              ),
-              const SizedBox(height: 16),
-
-              // Load Button
-              ElevatedButton(
-                onPressed: _selectedCustomer == null ? null : _loadStatement,
-                child: const Text('Load Statement'),
-              ),
-              const SizedBox(height: 24),
-
-              // Summary Cards
-              if (_entries.isNotEmpty) ...[
-                _buildSummarySection(),
-                const SizedBox(height: 24),
-              ],
-
-              // Loading Indicator
-              if (_isLoading)
-                const Center(child: CircularProgressIndicator())
-              else if (_entries.isNotEmpty)
-                _buildEntriesTable()
-              else
-                const Center(
-                  child: Padding(
-                    padding: EdgeInsets.all(32),
-                    child: Text('No entries to display'),
-                  ),
-                ),
-            ],
-          ),
-        ),
-      );
+      ),
+    ),
+  );
 
   Widget _buildSummarySection() => Card(
-        child: Padding(
-          padding: const EdgeInsets.all(16),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const Text(
-                'Account Summary',
-                style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              const Divider(),
-              _buildSummaryRow('Total Debits', _calculateTotalDebits()),
-              _buildSummaryRow('Total Credits', _calculateTotalCredits()),
-              const Divider(),
-              _buildSummaryRow(
-                'Closing Balance',
-                _calculateClosingBalance(),
-                isBold: true,
-              ),
-            ],
+    child: Padding(
+      padding: const EdgeInsets.all(16),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const Text(
+            'Account Summary',
+            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
           ),
-        ),
-      );
+          const Divider(),
+          _buildSummaryRow('Total Debits', _calculateTotalDebits()),
+          _buildSummaryRow('Total Credits', _calculateTotalCredits()),
+          const Divider(),
+          _buildSummaryRow(
+            'Closing Balance',
+            _calculateClosingBalance(),
+            isBold: true,
+          ),
+        ],
+      ),
+    ),
+  );
 
   Widget _buildSummaryRow(
     String label,
     Decimal amount, {
     bool isBold = false,
-  }) =>
-      Padding(
-        padding: const EdgeInsets.symmetric(vertical: 8),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text(
-              label,
-              style: TextStyle(
-                fontWeight: isBold ? FontWeight.bold : FontWeight.normal,
-              ),
-            ),
-            Text(
-              '$amount SAR',
-              style: TextStyle(
-                fontWeight: isBold ? FontWeight.bold : FontWeight.normal,
-              ),
-            ),
-          ],
-        ),
-      );
-
-  Widget _buildEntriesTable() => Card(
-        child: SingleChildScrollView(
-          scrollDirection: Axis.horizontal,
-          child: DataTable(
-            columns: const [
-              DataColumn(label: Text('Date')),
-              DataColumn(label: Text('Description')),
-              DataColumn(label: Text('Debit')),
-              DataColumn(label: Text('Credit')),
-              DataColumn(label: Text('Balance')),
-            ],
-            rows: _entries
-                .map(
-                  (entry) => DataRow(
-                    cells: [
-                      DataCell(
-                        Text(
-                          entry.entryDate.toLocal().toString().split(' ')[0],
-                        ),
-                      ),
-                      DataCell(Text(entry.description)),
-                      DataCell(
-                        Text(
-                          entry.debit > Decimal.zero
-                              ? entry.debit.toString()
-                              : '-',
-                        ),
-                      ),
-                      DataCell(
-                        Text(
-                          entry.credit > Decimal.zero
-                              ? entry.credit.toString()
-                              : '-',
-                        ),
-                      ),
-                      DataCell(Text(entry.balance.toString())),
-                    ],
-                  ),
-                )
-                .toList(),
+  }) => Padding(
+    padding: const EdgeInsets.symmetric(vertical: 8),
+    child: Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Text(
+          label,
+          style: TextStyle(
+            fontWeight: isBold ? FontWeight.bold : FontWeight.normal,
           ),
         ),
-      );
+        Text(
+          '$amount SAR',
+          style: TextStyle(
+            fontWeight: isBold ? FontWeight.bold : FontWeight.normal,
+          ),
+        ),
+      ],
+    ),
+  );
+
+  Widget _buildEntriesTable() => Card(
+    child: SingleChildScrollView(
+      scrollDirection: Axis.horizontal,
+      child: DataTable(
+        columns: const [
+          DataColumn(label: Text('Date')),
+          DataColumn(label: Text('Description')),
+          DataColumn(label: Text('Debit')),
+          DataColumn(label: Text('Credit')),
+          DataColumn(label: Text('Balance')),
+        ],
+        rows: _entries
+            .map(
+              (entry) => DataRow(
+                cells: [
+                  DataCell(
+                    Text(entry.entryDate.toLocal().toString().split(' ')[0]),
+                  ),
+                  DataCell(Text(entry.description)),
+                  DataCell(
+                    Text(
+                      entry.debit > Decimal.zero ? entry.debit.toString() : '-',
+                    ),
+                  ),
+                  DataCell(
+                    Text(
+                      entry.credit > Decimal.zero
+                          ? entry.credit.toString()
+                          : '-',
+                    ),
+                  ),
+                  DataCell(Text(entry.balance.toString())),
+                ],
+              ),
+            )
+            .toList(),
+      ),
+    ),
+  );
 
   Future<void> _exportToPDF() async {
     if (_entries.isEmpty || _selectedCustomer == null) return;
@@ -344,13 +330,14 @@ class _CustomerStatementScreenState
       final subtitle =
           'العميل: $customerName | من: ${dateFormat.format(fromDate)} إلى: ${dateFormat.format(toDate)}';
 
-      final pdfBytes =
-          await ref.read(reportExportServiceProvider.notifier).generateTablePdf(
-                title: 'كشف حساب العميل',
-                subtitle: subtitle,
-                headers: headers,
-                data: data,
-              );
+      final pdfBytes = await ref
+          .read(reportExportServiceProvider.notifier)
+          .generateTablePdf(
+            title: 'كشف حساب العميل',
+            subtitle: subtitle,
+            headers: headers,
+            data: data,
+          );
 
       await Printing.layoutPdf(
         onLayout: (_) async => pdfBytes,

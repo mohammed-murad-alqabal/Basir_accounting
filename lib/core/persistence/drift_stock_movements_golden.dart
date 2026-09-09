@@ -1,12 +1,7 @@
 import 'dart:convert';
 
 /// نوع حركة يسمح به parser، مع إبقاء transfer محجوبًا في clean fixtures.
-enum StockMovementGoldenType {
-  inbound,
-  outbound,
-  transfer,
-  adjustment,
-}
+enum StockMovementGoldenType { inbound, outbound, transfer, adjustment }
 
 /// سجل حركة اصطناعي معقم للاختبار؛ لا يرتبط بكيان Isar أو Drift.
 class StockMovementGoldenRecord {
@@ -138,31 +133,29 @@ class StockMovementGoldenFixture {
 
 StockMovementGoldenRecord _stockMovementGoldenRecordFromJson(
   Map<String, Object?> json,
-) =>
-    StockMovementGoldenRecord(
-      id: _requiredString(json, 'id'),
-      itemId: _requiredString(json, 'itemId'),
-      warehouseId: _optionalString(json, 'warehouseId'),
-      type: _movementType(_requiredString(json, 'type')),
-      quantity: _requiredPositiveFiniteNumber(json, 'quantity'),
-      unitCost: _requiredFiniteNumber(json, 'unitCost'),
-      date: _requiredUtcDate(json, 'date'),
-      createdAt: _requiredUtcDate(json, 'createdAt'),
-      referenceId: _requiredString(json, 'referenceId'),
-      description: _requiredString(json, 'description'),
-      userId: _requiredString(json, 'userId'),
-      syncStatus: _requiredSyncStatus(json, 'syncStatus'),
-    );
+) => StockMovementGoldenRecord(
+  id: _requiredString(json, 'id'),
+  itemId: _requiredString(json, 'itemId'),
+  warehouseId: _optionalString(json, 'warehouseId'),
+  type: _movementType(_requiredString(json, 'type')),
+  quantity: _requiredPositiveFiniteNumber(json, 'quantity'),
+  unitCost: _requiredFiniteNumber(json, 'unitCost'),
+  date: _requiredUtcDate(json, 'date'),
+  createdAt: _requiredUtcDate(json, 'createdAt'),
+  referenceId: _requiredString(json, 'referenceId'),
+  description: _requiredString(json, 'description'),
+  userId: _requiredString(json, 'userId'),
+  syncStatus: _requiredSyncStatus(json, 'syncStatus'),
+);
 
 StockMovementGoldenExpectedBalance _stockMovementGoldenExpectedBalanceFromJson(
   Map<String, Object?> json,
-) =>
-    StockMovementGoldenExpectedBalance(
-      asOfDate: _requiredUtcDate(json, 'asOfDate'),
-      warehouseId: _requiredString(json, 'warehouseId'),
-      quantity: _requiredFiniteNumber(json, 'quantity'),
-      userId: _optionalString(json, 'userId'),
-    );
+) => StockMovementGoldenExpectedBalance(
+  asOfDate: _requiredUtcDate(json, 'asOfDate'),
+  warehouseId: _requiredString(json, 'warehouseId'),
+  quantity: _requiredFiniteNumber(json, 'quantity'),
+  userId: _optionalString(json, 'userId'),
+);
 
 /// كتالوج كامل: clean fixtures قابلة للتشغيل وحالات blocked قابلة للتصنيف.
 class StockMovementGoldenCatalog {
@@ -207,12 +200,11 @@ class StockMovementGoldenCatalog {
 
 StockMovementGoldenBlockedFixture _stockMovementGoldenBlockedFixtureFromJson(
   Map<String, Object?> json,
-) =>
-    StockMovementGoldenBlockedFixture(
-      id: _requiredString(json, 'id'),
-      reason: _requiredString(json, 'reason'),
-      expectedOutcome: _requiredString(json, 'expectedOutcome'),
-    );
+) => StockMovementGoldenBlockedFixture(
+  id: _requiredString(json, 'id'),
+  reason: _requiredString(json, 'reason'),
+  expectedOutcome: _requiredString(json, 'expectedOutcome'),
+);
 
 /// Replay مرجعي مستقل عن SQLite/Isar، يستخدم تاريخ الحركة لا createdAt.
 class StockMovementGoldenReplay {
@@ -225,17 +217,18 @@ class StockMovementGoldenReplay {
     required DateTime asOfDate,
   }) {
     final cutoff = asOfDate.toUtc();
-    final movements = fixture.movements
-        .where(
-          (movement) =>
-              movement.userId == userId &&
-              movement.itemId == fixture.itemId &&
-              !movement.date.isAfter(cutoff) &&
-              (movement.warehouseId == null ||
-                  movement.warehouseId == warehouseId),
-        )
-        .toList()
-      ..sort(_compareMovements);
+    final movements =
+        fixture.movements
+            .where(
+              (movement) =>
+                  movement.userId == userId &&
+                  movement.itemId == fixture.itemId &&
+                  !movement.date.isAfter(cutoff) &&
+                  (movement.warehouseId == null ||
+                      movement.warehouseId == warehouseId),
+            )
+            .toList()
+          ..sort(_compareMovements);
 
     var balance = 0.0;
     for (final movement in movements) {
@@ -259,14 +252,12 @@ class StockMovementGoldenReplay {
     StockMovementGoldenFixture fixture, {
     required String userId,
     required String referenceId,
-  }) =>
-      fixture.movements
-          .where(
-            (movement) =>
-                movement.userId == userId &&
-                movement.referenceId == referenceId,
-          )
-          .length;
+  }) => fixture.movements
+      .where(
+        (movement) =>
+            movement.userId == userId && movement.referenceId == referenceId,
+      )
+      .length;
 
   static List<String> verifyFixture(StockMovementGoldenFixture fixture) {
     final errors = <String>[];
@@ -362,8 +353,12 @@ double _requiredPositiveFiniteNumber(Map<String, Object?> json, String key) {
 
 String _requiredSyncStatus(Map<String, Object?> json, String key) {
   final value = _requiredString(json, key);
-  if (!const {'synced', 'pendingPush', 'pendingPull', 'conflict'}
-      .contains(value)) {
+  if (!const {
+    'synced',
+    'pendingPush',
+    'pendingPull',
+    'conflict',
+  }.contains(value)) {
     throw FormatException('Golden field $key has an unsupported value.');
   }
   return value;

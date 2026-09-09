@@ -12,7 +12,8 @@ part of 'goal.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
+  'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models',
+);
 
 /// @nodoc
 mixin _$Goal {
@@ -55,17 +56,18 @@ abstract class $GoalCopyWith<$Res> {
   factory $GoalCopyWith(Goal value, $Res Function(Goal) then) =
       _$GoalCopyWithImpl<$Res, Goal>;
   @useResult
-  $Res call(
-      {String id,
-      String name,
-      GoalCategory category,
-      Decimal targetAmount,
-      Decimal currentAmount,
-      DateTime startDate,
-      DateTime targetDate,
-      bool isActive,
-      String? description,
-      String? userId});
+  $Res call({
+    String id,
+    String name,
+    GoalCategory category,
+    Decimal targetAmount,
+    Decimal currentAmount,
+    DateTime startDate,
+    DateTime targetDate,
+    bool isActive,
+    String? description,
+    String? userId,
+  });
 }
 
 /// @nodoc
@@ -92,69 +94,74 @@ class _$GoalCopyWithImpl<$Res, $Val extends Goal>
     Object? description = freezed,
     Object? userId = freezed,
   }) {
-    return _then(_value.copyWith(
-      id: null == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as String,
-      name: null == name
-          ? _value.name
-          : name // ignore: cast_nullable_to_non_nullable
-              as String,
-      category: null == category
-          ? _value.category
-          : category // ignore: cast_nullable_to_non_nullable
-              as GoalCategory,
-      targetAmount: null == targetAmount
-          ? _value.targetAmount
-          : targetAmount // ignore: cast_nullable_to_non_nullable
-              as Decimal,
-      currentAmount: null == currentAmount
-          ? _value.currentAmount
-          : currentAmount // ignore: cast_nullable_to_non_nullable
-              as Decimal,
-      startDate: null == startDate
-          ? _value.startDate
-          : startDate // ignore: cast_nullable_to_non_nullable
-              as DateTime,
-      targetDate: null == targetDate
-          ? _value.targetDate
-          : targetDate // ignore: cast_nullable_to_non_nullable
-              as DateTime,
-      isActive: null == isActive
-          ? _value.isActive
-          : isActive // ignore: cast_nullable_to_non_nullable
-              as bool,
-      description: freezed == description
-          ? _value.description
-          : description // ignore: cast_nullable_to_non_nullable
-              as String?,
-      userId: freezed == userId
-          ? _value.userId
-          : userId // ignore: cast_nullable_to_non_nullable
-              as String?,
-    ) as $Val);
+    return _then(
+      _value.copyWith(
+            id: null == id
+                ? _value.id
+                : id // ignore: cast_nullable_to_non_nullable
+                      as String,
+            name: null == name
+                ? _value.name
+                : name // ignore: cast_nullable_to_non_nullable
+                      as String,
+            category: null == category
+                ? _value.category
+                : category // ignore: cast_nullable_to_non_nullable
+                      as GoalCategory,
+            targetAmount: null == targetAmount
+                ? _value.targetAmount
+                : targetAmount // ignore: cast_nullable_to_non_nullable
+                      as Decimal,
+            currentAmount: null == currentAmount
+                ? _value.currentAmount
+                : currentAmount // ignore: cast_nullable_to_non_nullable
+                      as Decimal,
+            startDate: null == startDate
+                ? _value.startDate
+                : startDate // ignore: cast_nullable_to_non_nullable
+                      as DateTime,
+            targetDate: null == targetDate
+                ? _value.targetDate
+                : targetDate // ignore: cast_nullable_to_non_nullable
+                      as DateTime,
+            isActive: null == isActive
+                ? _value.isActive
+                : isActive // ignore: cast_nullable_to_non_nullable
+                      as bool,
+            description: freezed == description
+                ? _value.description
+                : description // ignore: cast_nullable_to_non_nullable
+                      as String?,
+            userId: freezed == userId
+                ? _value.userId
+                : userId // ignore: cast_nullable_to_non_nullable
+                      as String?,
+          )
+          as $Val,
+    );
   }
 }
 
 /// @nodoc
 abstract class _$$GoalImplCopyWith<$Res> implements $GoalCopyWith<$Res> {
   factory _$$GoalImplCopyWith(
-          _$GoalImpl value, $Res Function(_$GoalImpl) then) =
-      __$$GoalImplCopyWithImpl<$Res>;
+    _$GoalImpl value,
+    $Res Function(_$GoalImpl) then,
+  ) = __$$GoalImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call(
-      {String id,
-      String name,
-      GoalCategory category,
-      Decimal targetAmount,
-      Decimal currentAmount,
-      DateTime startDate,
-      DateTime targetDate,
-      bool isActive,
-      String? description,
-      String? userId});
+  $Res call({
+    String id,
+    String name,
+    GoalCategory category,
+    Decimal targetAmount,
+    Decimal currentAmount,
+    DateTime startDate,
+    DateTime targetDate,
+    bool isActive,
+    String? description,
+    String? userId,
+  });
 }
 
 /// @nodoc
@@ -162,7 +169,7 @@ class __$$GoalImplCopyWithImpl<$Res>
     extends _$GoalCopyWithImpl<$Res, _$GoalImpl>
     implements _$$GoalImplCopyWith<$Res> {
   __$$GoalImplCopyWithImpl(_$GoalImpl _value, $Res Function(_$GoalImpl) _then)
-      : super(_value, _then);
+    : super(_value, _then);
 
   @pragma('vm:prefer-inline')
   @override
@@ -178,66 +185,68 @@ class __$$GoalImplCopyWithImpl<$Res>
     Object? description = freezed,
     Object? userId = freezed,
   }) {
-    return _then(_$GoalImpl(
-      id: null == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as String,
-      name: null == name
-          ? _value.name
-          : name // ignore: cast_nullable_to_non_nullable
-              as String,
-      category: null == category
-          ? _value.category
-          : category // ignore: cast_nullable_to_non_nullable
-              as GoalCategory,
-      targetAmount: null == targetAmount
-          ? _value.targetAmount
-          : targetAmount // ignore: cast_nullable_to_non_nullable
-              as Decimal,
-      currentAmount: null == currentAmount
-          ? _value.currentAmount
-          : currentAmount // ignore: cast_nullable_to_non_nullable
-              as Decimal,
-      startDate: null == startDate
-          ? _value.startDate
-          : startDate // ignore: cast_nullable_to_non_nullable
-              as DateTime,
-      targetDate: null == targetDate
-          ? _value.targetDate
-          : targetDate // ignore: cast_nullable_to_non_nullable
-              as DateTime,
-      isActive: null == isActive
-          ? _value.isActive
-          : isActive // ignore: cast_nullable_to_non_nullable
-              as bool,
-      description: freezed == description
-          ? _value.description
-          : description // ignore: cast_nullable_to_non_nullable
-              as String?,
-      userId: freezed == userId
-          ? _value.userId
-          : userId // ignore: cast_nullable_to_non_nullable
-              as String?,
-    ));
+    return _then(
+      _$GoalImpl(
+        id: null == id
+            ? _value.id
+            : id // ignore: cast_nullable_to_non_nullable
+                  as String,
+        name: null == name
+            ? _value.name
+            : name // ignore: cast_nullable_to_non_nullable
+                  as String,
+        category: null == category
+            ? _value.category
+            : category // ignore: cast_nullable_to_non_nullable
+                  as GoalCategory,
+        targetAmount: null == targetAmount
+            ? _value.targetAmount
+            : targetAmount // ignore: cast_nullable_to_non_nullable
+                  as Decimal,
+        currentAmount: null == currentAmount
+            ? _value.currentAmount
+            : currentAmount // ignore: cast_nullable_to_non_nullable
+                  as Decimal,
+        startDate: null == startDate
+            ? _value.startDate
+            : startDate // ignore: cast_nullable_to_non_nullable
+                  as DateTime,
+        targetDate: null == targetDate
+            ? _value.targetDate
+            : targetDate // ignore: cast_nullable_to_non_nullable
+                  as DateTime,
+        isActive: null == isActive
+            ? _value.isActive
+            : isActive // ignore: cast_nullable_to_non_nullable
+                  as bool,
+        description: freezed == description
+            ? _value.description
+            : description // ignore: cast_nullable_to_non_nullable
+                  as String?,
+        userId: freezed == userId
+            ? _value.userId
+            : userId // ignore: cast_nullable_to_non_nullable
+                  as String?,
+      ),
+    );
   }
 }
 
 /// @nodoc
 
 class _$GoalImpl extends _Goal {
-  const _$GoalImpl(
-      {required this.id,
-      required this.name,
-      required this.category,
-      required this.targetAmount,
-      required this.currentAmount,
-      required this.startDate,
-      required this.targetDate,
-      this.isActive = true,
-      this.description,
-      this.userId})
-      : super._();
+  const _$GoalImpl({
+    required this.id,
+    required this.name,
+    required this.category,
+    required this.targetAmount,
+    required this.currentAmount,
+    required this.startDate,
+    required this.targetDate,
+    this.isActive = true,
+    this.description,
+    this.userId,
+  }) : super._();
 
   /// المعرف الفريد
   @override
@@ -310,8 +319,19 @@ class _$GoalImpl extends _Goal {
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, id, name, category, targetAmount,
-      currentAmount, startDate, targetDate, isActive, description, userId);
+  int get hashCode => Object.hash(
+    runtimeType,
+    id,
+    name,
+    category,
+    targetAmount,
+    currentAmount,
+    startDate,
+    targetDate,
+    isActive,
+    description,
+    userId,
+  );
 
   @JsonKey(ignore: true)
   @override
@@ -321,57 +341,48 @@ class _$GoalImpl extends _Goal {
 }
 
 abstract class _Goal extends Goal {
-  const factory _Goal(
-      {required final String id,
-      required final String name,
-      required final GoalCategory category,
-      required final Decimal targetAmount,
-      required final Decimal currentAmount,
-      required final DateTime startDate,
-      required final DateTime targetDate,
-      final bool isActive,
-      final String? description,
-      final String? userId}) = _$GoalImpl;
+  const factory _Goal({
+    required final String id,
+    required final String name,
+    required final GoalCategory category,
+    required final Decimal targetAmount,
+    required final Decimal currentAmount,
+    required final DateTime startDate,
+    required final DateTime targetDate,
+    final bool isActive,
+    final String? description,
+    final String? userId,
+  }) = _$GoalImpl;
   const _Goal._() : super._();
 
   @override
-
   /// المعرف الفريد
   String get id;
   @override
-
   /// اسم الهدف
   String get name;
   @override
-
   /// تصنيف الهدف
   GoalCategory get category;
   @override
-
   /// المبلغ المستهدف
   Decimal get targetAmount;
   @override
-
   /// المبلغ الحالي
   Decimal get currentAmount;
   @override
-
   /// تاريخ البداية
   DateTime get startDate;
   @override
-
   /// تاريخ النهاية المستهدف
   DateTime get targetDate;
   @override
-
   /// حالة النشاط
   bool get isActive;
   @override
-
   /// وصف اختياري
   String? get description;
   @override
-
   /// معرف المستخدم
   String? get userId;
   @override

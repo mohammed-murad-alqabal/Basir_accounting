@@ -29,13 +29,12 @@ class ExpenseService {
     DateTime? endDate,
     String? categoryId,
     String? status,
-  }) =>
-      _repository.getExpenses(
-        startDate: startDate,
-        endDate: endDate,
-        categoryId: categoryId,
-        status: status,
-      );
+  }) => _repository.getExpenses(
+    startDate: startDate,
+    endDate: endDate,
+    categoryId: categoryId,
+    status: status,
+  );
 
   /// Get expense by ID
   Future<Expense?> getExpenseById(String id) => _repository.getExpenseById(id);
@@ -92,9 +91,7 @@ class ExpenseService {
       throw Exception('Expense not found');
     }
 
-    return _repository.updateExpense(
-      expense.copyWith(status: 'approved'),
-    );
+    return _repository.updateExpense(expense.copyWith(status: 'approved'));
   }
 
   /// Reject an expense
@@ -125,21 +122,16 @@ class ExpenseService {
   Future<ExpenseSummary> getExpenseSummary({
     required DateTime startDate,
     required DateTime endDate,
-  }) =>
-      _repository.getExpenseSummary(
-        startDate: startDate,
-        endDate: endDate,
-      );
+  }) => _repository.getExpenseSummary(startDate: startDate, endDate: endDate);
 
   /// Get expenses by category for pie chart
   Future<Map<String, double>> getExpensesByCategories({
     required DateTime startDate,
     required DateTime endDate,
-  }) =>
-      _repository.getExpensesByCategories(
-        startDate: startDate,
-        endDate: endDate,
-      );
+  }) => _repository.getExpensesByCategories(
+    startDate: startDate,
+    endDate: endDate,
+  );
 
   /// Get current month expenses
   Future<List<Expense>> getCurrentMonthExpenses() {

@@ -55,10 +55,10 @@ class DriftSettingsParityVerifier {
     required BusinessSettingsMigrationReader businessSettingsSource,
     required ProfileStorage profileStorage,
     required BusinessSettingsStorage businessSettingsStorage,
-  })  : _profileSource = profileSource,
-        _businessSettingsSource = businessSettingsSource,
-        _profileStorage = profileStorage,
-        _businessSettingsStorage = businessSettingsStorage;
+  }) : _profileSource = profileSource,
+       _businessSettingsSource = businessSettingsSource,
+       _profileStorage = profileStorage,
+       _businessSettingsStorage = businessSettingsStorage;
 
   final ProfileMigrationReader _profileSource;
   final BusinessSettingsMigrationReader _businessSettingsSource;
@@ -74,18 +74,19 @@ class DriftSettingsParityVerifier {
     return DriftSettingsParityReport(
       profiles: _comparison(
         scope: 'settings/profiles/all',
-        expected:
-            _sortedProfiles(sourceProfiles).map(_canonicalProfile).toList(),
+        expected: _sortedProfiles(
+          sourceProfiles,
+        ).map(_canonicalProfile).toList(),
         actual: _sortedProfiles(actualProfiles).map(_canonicalProfile).toList(),
       ),
       businessSettings: _comparison(
         scope: 'settings/business-settings/all',
-        expected: _sortedBusinessSettings(sourceBusinessSettings)
-            .map(_canonicalBusinessSettings)
-            .toList(),
-        actual: _sortedBusinessSettings(actualBusinessSettings)
-            .map(_canonicalBusinessSettings)
-            .toList(),
+        expected: _sortedBusinessSettings(
+          sourceBusinessSettings,
+        ).map(_canonicalBusinessSettings).toList(),
+        actual: _sortedBusinessSettings(
+          actualBusinessSettings,
+        ).map(_canonicalBusinessSettings).toList(),
       ),
       ambiguousProfileScopes: _ambiguousScopes(
         sourceProfiles.map((record) => record.userId),
@@ -100,22 +101,20 @@ class DriftSettingsParityVerifier {
     required String scope,
     required List<String> expected,
     required List<String> actual,
-  }) =>
-      DriftSettingsParityComparison(
-        scope: scope,
-        expectedCount: expected.length,
-        actualCount: actual.length,
-        expectedFingerprint: _fingerprint(expected),
-        actualFingerprint: _fingerprint(actual),
-      );
+  }) => DriftSettingsParityComparison(
+    scope: scope,
+    expectedCount: expected.length,
+    actualCount: actual.length,
+    expectedFingerprint: _fingerprint(expected),
+    actualFingerprint: _fingerprint(actual),
+  );
 
   static List<ProfileRecord> _sortedProfiles(List<ProfileRecord> records) =>
       [...records]..sort(_compareProfiles);
 
   static List<BusinessSettingsRecord> _sortedBusinessSettings(
     List<BusinessSettingsRecord> records,
-  ) =>
-      [...records]..sort(_compareBusinessSettings);
+  ) => [...records]..sort(_compareBusinessSettings);
 
   static List<String> _ambiguousScopes(Iterable<String?> userIds) {
     final counts = <String, int>{};
@@ -132,31 +131,31 @@ class DriftSettingsParityVerifier {
 }
 
 String _canonicalProfile(ProfileRecord record) => [
-      record.id,
-      record.email,
-      _nullable(record.displayName),
-      _nullable(record.avatarUrl),
-      _nullable(record.phoneNumber),
-      _nullable(record.userId),
-      record.syncStatus,
-      _nullableDate(record.serverUpdatedAt),
-      record.isDeleted.toString(),
-    ].join('\u0000');
+  record.id,
+  record.email,
+  _nullable(record.displayName),
+  _nullable(record.avatarUrl),
+  _nullable(record.phoneNumber),
+  _nullable(record.userId),
+  record.syncStatus,
+  _nullableDate(record.serverUpdatedAt),
+  record.isDeleted.toString(),
+].join('\u0000');
 
 String _canonicalBusinessSettings(BusinessSettingsRecord record) => [
-      record.id,
-      record.companyName,
-      _nullable(record.taxNumber),
-      _nullable(record.address),
-      _nullable(record.logoUrl),
-      record.defaultTaxRate.toStringAsPrecision(17),
-      record.currencyCode,
-      record.currencySymbol,
-      _nullable(record.userId),
-      record.syncStatus,
-      _nullableDate(record.serverUpdatedAt),
-      record.isDeleted.toString(),
-    ].join('\u0000');
+  record.id,
+  record.companyName,
+  _nullable(record.taxNumber),
+  _nullable(record.address),
+  _nullable(record.logoUrl),
+  record.defaultTaxRate.toStringAsPrecision(17),
+  record.currencyCode,
+  record.currencySymbol,
+  _nullable(record.userId),
+  record.syncStatus,
+  _nullableDate(record.serverUpdatedAt),
+  record.isDeleted.toString(),
+].join('\u0000');
 
 String _nullable(String? value) => value == null ? '\u0001' : '\u0002$value';
 

@@ -20,50 +20,48 @@ class ConsensusVisualizationWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          _buildSummaryHeader(context),
-          const SizedBox(height: 16),
-          ...agentResults.map((agent) => _buildAgentTile(context, agent)),
-        ],
-      );
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: [
+      _buildSummaryHeader(context),
+      const SizedBox(height: 16),
+      ...agentResults.map((agent) => _buildAgentTile(context, agent)),
+    ],
+  );
 
   Widget _buildSummaryHeader(BuildContext context) => Container(
-        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-        decoration: BoxDecoration(
-          color: isConsensusAchieved
-              ? Colors.green.withValues(alpha: 0.1)
-              : Colors.orange.withValues(alpha: 0.1),
-          borderRadius: BorderRadius.circular(20),
-          border: Border.all(
-            color: isConsensusAchieved
-                ? Colors.green.withValues(alpha: 0.3)
-                : Colors.orange.withValues(alpha: 0.3),
+    padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+    decoration: BoxDecoration(
+      color: isConsensusAchieved
+          ? Colors.green.withValues(alpha: 0.1)
+          : Colors.orange.withValues(alpha: 0.1),
+      borderRadius: BorderRadius.circular(20),
+      border: Border.all(
+        color: isConsensusAchieved
+            ? Colors.green.withValues(alpha: 0.3)
+            : Colors.orange.withValues(alpha: 0.3),
+      ),
+    ),
+    child: Row(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Icon(
+          isConsensusAchieved ? Icons.verified : Icons.warning_amber,
+          size: 16,
+          color: isConsensusAchieved ? Colors.green : Colors.orange,
+        ),
+        const SizedBox(width: 8),
+        Text(
+          isConsensusAchieved
+              ? 'Consensus Achieved'
+              : 'Bypass Active / Partial Consensus',
+          style: context.textTheme.labelMedium?.copyWith(
+            fontWeight: FontWeight.bold,
+            color: isConsensusAchieved ? Colors.green[800] : Colors.orange[800],
           ),
         ),
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Icon(
-              isConsensusAchieved ? Icons.verified : Icons.warning_amber,
-              size: 16,
-              color: isConsensusAchieved ? Colors.green : Colors.orange,
-            ),
-            const SizedBox(width: 8),
-            Text(
-              isConsensusAchieved
-                  ? 'Consensus Achieved'
-                  : 'Bypass Active / Partial Consensus',
-              style: context.textTheme.labelMedium?.copyWith(
-                fontWeight: FontWeight.bold,
-                color: isConsensusAchieved
-                    ? Colors.green[800]
-                    : Colors.orange[800],
-              ),
-            ),
-          ],
-        ),
-      );
+      ],
+    ),
+  );
 
   Widget _buildAgentTile(BuildContext context, AgentResult agent) {
     final isAllowed = agent.isAllowed;
@@ -87,8 +85,9 @@ class ConsensusVisualizationWidget extends StatelessWidget {
                     children: [
                       Text(
                         _getAgentName(agent.agentId),
-                        style: context.textTheme.titleSmall
-                            ?.copyWith(fontWeight: FontWeight.bold),
+                        style: context.textTheme.titleSmall?.copyWith(
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                       Text(
                         'Confidence: ${(agent.confidenceScore * 100).toInt()}%',
@@ -110,8 +109,9 @@ class ConsensusVisualizationWidget extends StatelessWidget {
               const SizedBox(height: 8),
               Text(
                 agent.rationale,
-                style: context.textTheme.bodySmall
-                    ?.copyWith(fontStyle: FontStyle.italic),
+                style: context.textTheme.bodySmall?.copyWith(
+                  fontStyle: FontStyle.italic,
+                ),
               ),
             ],
           ],

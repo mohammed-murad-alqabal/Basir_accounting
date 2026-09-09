@@ -12,7 +12,8 @@ part of 'liquidity_forecast.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
+  'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models',
+);
 
 /// @nodoc
 mixin _$LiquidityForecast {
@@ -42,16 +43,18 @@ mixin _$LiquidityForecast {
 /// @nodoc
 abstract class $LiquidityForecastCopyWith<$Res> {
   factory $LiquidityForecastCopyWith(
-          LiquidityForecast value, $Res Function(LiquidityForecast) then) =
-      _$LiquidityForecastCopyWithImpl<$Res, LiquidityForecast>;
+    LiquidityForecast value,
+    $Res Function(LiquidityForecast) then,
+  ) = _$LiquidityForecastCopyWithImpl<$Res, LiquidityForecast>;
   @useResult
-  $Res call(
-      {DateTime startDate,
-      DateTime endDate,
-      Decimal totalInflow,
-      Decimal totalOutflow,
-      Decimal netChange,
-      List<DailyCashFlow> dailyBreakdown});
+  $Res call({
+    DateTime startDate,
+    DateTime endDate,
+    Decimal totalInflow,
+    Decimal totalOutflow,
+    Decimal netChange,
+    List<DailyCashFlow> dailyBreakdown,
+  });
 }
 
 /// @nodoc
@@ -74,59 +77,65 @@ class _$LiquidityForecastCopyWithImpl<$Res, $Val extends LiquidityForecast>
     Object? netChange = null,
     Object? dailyBreakdown = null,
   }) {
-    return _then(_value.copyWith(
-      startDate: null == startDate
-          ? _value.startDate
-          : startDate // ignore: cast_nullable_to_non_nullable
-              as DateTime,
-      endDate: null == endDate
-          ? _value.endDate
-          : endDate // ignore: cast_nullable_to_non_nullable
-              as DateTime,
-      totalInflow: null == totalInflow
-          ? _value.totalInflow
-          : totalInflow // ignore: cast_nullable_to_non_nullable
-              as Decimal,
-      totalOutflow: null == totalOutflow
-          ? _value.totalOutflow
-          : totalOutflow // ignore: cast_nullable_to_non_nullable
-              as Decimal,
-      netChange: null == netChange
-          ? _value.netChange
-          : netChange // ignore: cast_nullable_to_non_nullable
-              as Decimal,
-      dailyBreakdown: null == dailyBreakdown
-          ? _value.dailyBreakdown
-          : dailyBreakdown // ignore: cast_nullable_to_non_nullable
-              as List<DailyCashFlow>,
-    ) as $Val);
+    return _then(
+      _value.copyWith(
+            startDate: null == startDate
+                ? _value.startDate
+                : startDate // ignore: cast_nullable_to_non_nullable
+                      as DateTime,
+            endDate: null == endDate
+                ? _value.endDate
+                : endDate // ignore: cast_nullable_to_non_nullable
+                      as DateTime,
+            totalInflow: null == totalInflow
+                ? _value.totalInflow
+                : totalInflow // ignore: cast_nullable_to_non_nullable
+                      as Decimal,
+            totalOutflow: null == totalOutflow
+                ? _value.totalOutflow
+                : totalOutflow // ignore: cast_nullable_to_non_nullable
+                      as Decimal,
+            netChange: null == netChange
+                ? _value.netChange
+                : netChange // ignore: cast_nullable_to_non_nullable
+                      as Decimal,
+            dailyBreakdown: null == dailyBreakdown
+                ? _value.dailyBreakdown
+                : dailyBreakdown // ignore: cast_nullable_to_non_nullable
+                      as List<DailyCashFlow>,
+          )
+          as $Val,
+    );
   }
 }
 
 /// @nodoc
 abstract class _$$LiquidityForecastImplCopyWith<$Res>
     implements $LiquidityForecastCopyWith<$Res> {
-  factory _$$LiquidityForecastImplCopyWith(_$LiquidityForecastImpl value,
-          $Res Function(_$LiquidityForecastImpl) then) =
-      __$$LiquidityForecastImplCopyWithImpl<$Res>;
+  factory _$$LiquidityForecastImplCopyWith(
+    _$LiquidityForecastImpl value,
+    $Res Function(_$LiquidityForecastImpl) then,
+  ) = __$$LiquidityForecastImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call(
-      {DateTime startDate,
-      DateTime endDate,
-      Decimal totalInflow,
-      Decimal totalOutflow,
-      Decimal netChange,
-      List<DailyCashFlow> dailyBreakdown});
+  $Res call({
+    DateTime startDate,
+    DateTime endDate,
+    Decimal totalInflow,
+    Decimal totalOutflow,
+    Decimal netChange,
+    List<DailyCashFlow> dailyBreakdown,
+  });
 }
 
 /// @nodoc
 class __$$LiquidityForecastImplCopyWithImpl<$Res>
     extends _$LiquidityForecastCopyWithImpl<$Res, _$LiquidityForecastImpl>
     implements _$$LiquidityForecastImplCopyWith<$Res> {
-  __$$LiquidityForecastImplCopyWithImpl(_$LiquidityForecastImpl _value,
-      $Res Function(_$LiquidityForecastImpl) _then)
-      : super(_value, _then);
+  __$$LiquidityForecastImplCopyWithImpl(
+    _$LiquidityForecastImpl _value,
+    $Res Function(_$LiquidityForecastImpl) _then,
+  ) : super(_value, _then);
 
   @pragma('vm:prefer-inline')
   @override
@@ -138,46 +147,48 @@ class __$$LiquidityForecastImplCopyWithImpl<$Res>
     Object? netChange = null,
     Object? dailyBreakdown = null,
   }) {
-    return _then(_$LiquidityForecastImpl(
-      startDate: null == startDate
-          ? _value.startDate
-          : startDate // ignore: cast_nullable_to_non_nullable
-              as DateTime,
-      endDate: null == endDate
-          ? _value.endDate
-          : endDate // ignore: cast_nullable_to_non_nullable
-              as DateTime,
-      totalInflow: null == totalInflow
-          ? _value.totalInflow
-          : totalInflow // ignore: cast_nullable_to_non_nullable
-              as Decimal,
-      totalOutflow: null == totalOutflow
-          ? _value.totalOutflow
-          : totalOutflow // ignore: cast_nullable_to_non_nullable
-              as Decimal,
-      netChange: null == netChange
-          ? _value.netChange
-          : netChange // ignore: cast_nullable_to_non_nullable
-              as Decimal,
-      dailyBreakdown: null == dailyBreakdown
-          ? _value._dailyBreakdown
-          : dailyBreakdown // ignore: cast_nullable_to_non_nullable
-              as List<DailyCashFlow>,
-    ));
+    return _then(
+      _$LiquidityForecastImpl(
+        startDate: null == startDate
+            ? _value.startDate
+            : startDate // ignore: cast_nullable_to_non_nullable
+                  as DateTime,
+        endDate: null == endDate
+            ? _value.endDate
+            : endDate // ignore: cast_nullable_to_non_nullable
+                  as DateTime,
+        totalInflow: null == totalInflow
+            ? _value.totalInflow
+            : totalInflow // ignore: cast_nullable_to_non_nullable
+                  as Decimal,
+        totalOutflow: null == totalOutflow
+            ? _value.totalOutflow
+            : totalOutflow // ignore: cast_nullable_to_non_nullable
+                  as Decimal,
+        netChange: null == netChange
+            ? _value.netChange
+            : netChange // ignore: cast_nullable_to_non_nullable
+                  as Decimal,
+        dailyBreakdown: null == dailyBreakdown
+            ? _value._dailyBreakdown
+            : dailyBreakdown // ignore: cast_nullable_to_non_nullable
+                  as List<DailyCashFlow>,
+      ),
+    );
   }
 }
 
 /// @nodoc
 
 class _$LiquidityForecastImpl implements _LiquidityForecast {
-  const _$LiquidityForecastImpl(
-      {required this.startDate,
-      required this.endDate,
-      required this.totalInflow,
-      required this.totalOutflow,
-      required this.netChange,
-      required final List<DailyCashFlow> dailyBreakdown})
-      : _dailyBreakdown = dailyBreakdown;
+  const _$LiquidityForecastImpl({
+    required this.startDate,
+    required this.endDate,
+    required this.totalInflow,
+    required this.totalOutflow,
+    required this.netChange,
+    required final List<DailyCashFlow> dailyBreakdown,
+  }) : _dailyBreakdown = dailyBreakdown;
 
   /// Start date of the forecast period.
   @override
@@ -229,60 +240,59 @@ class _$LiquidityForecastImpl implements _LiquidityForecast {
                 other.totalOutflow == totalOutflow) &&
             (identical(other.netChange, netChange) ||
                 other.netChange == netChange) &&
-            const DeepCollectionEquality()
-                .equals(other._dailyBreakdown, _dailyBreakdown));
+            const DeepCollectionEquality().equals(
+              other._dailyBreakdown,
+              _dailyBreakdown,
+            ));
   }
 
   @override
   int get hashCode => Object.hash(
-      runtimeType,
-      startDate,
-      endDate,
-      totalInflow,
-      totalOutflow,
-      netChange,
-      const DeepCollectionEquality().hash(_dailyBreakdown));
+    runtimeType,
+    startDate,
+    endDate,
+    totalInflow,
+    totalOutflow,
+    netChange,
+    const DeepCollectionEquality().hash(_dailyBreakdown),
+  );
 
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
   _$$LiquidityForecastImplCopyWith<_$LiquidityForecastImpl> get copyWith =>
       __$$LiquidityForecastImplCopyWithImpl<_$LiquidityForecastImpl>(
-          this, _$identity);
+        this,
+        _$identity,
+      );
 }
 
 abstract class _LiquidityForecast implements LiquidityForecast {
-  const factory _LiquidityForecast(
-          {required final DateTime startDate,
-          required final DateTime endDate,
-          required final Decimal totalInflow,
-          required final Decimal totalOutflow,
-          required final Decimal netChange,
-          required final List<DailyCashFlow> dailyBreakdown}) =
-      _$LiquidityForecastImpl;
+  const factory _LiquidityForecast({
+    required final DateTime startDate,
+    required final DateTime endDate,
+    required final Decimal totalInflow,
+    required final Decimal totalOutflow,
+    required final Decimal netChange,
+    required final List<DailyCashFlow> dailyBreakdown,
+  }) = _$LiquidityForecastImpl;
 
   @override
-
   /// Start date of the forecast period.
   DateTime get startDate;
   @override
-
   /// End date of the forecast period.
   DateTime get endDate;
   @override
-
   /// Total expected cash inflow (Receivables).
   Decimal get totalInflow;
   @override
-
   /// Total expected cash outflow (Payables).
   Decimal get totalOutflow;
   @override
-
   /// Net cash flow (Inflow - Outflow).
   Decimal get netChange;
   @override
-
   /// Daily breakdown of cash flow.
   List<DailyCashFlow> get dailyBreakdown;
   @override
@@ -310,8 +320,9 @@ mixin _$DailyCashFlow {
 /// @nodoc
 abstract class $DailyCashFlowCopyWith<$Res> {
   factory $DailyCashFlowCopyWith(
-          DailyCashFlow value, $Res Function(DailyCashFlow) then) =
-      _$DailyCashFlowCopyWithImpl<$Res, DailyCashFlow>;
+    DailyCashFlow value,
+    $Res Function(DailyCashFlow) then,
+  ) = _$DailyCashFlowCopyWithImpl<$Res, DailyCashFlow>;
   @useResult
   $Res call({DateTime date, Decimal inflow, Decimal outflow});
 }
@@ -333,20 +344,23 @@ class _$DailyCashFlowCopyWithImpl<$Res, $Val extends DailyCashFlow>
     Object? inflow = null,
     Object? outflow = null,
   }) {
-    return _then(_value.copyWith(
-      date: null == date
-          ? _value.date
-          : date // ignore: cast_nullable_to_non_nullable
-              as DateTime,
-      inflow: null == inflow
-          ? _value.inflow
-          : inflow // ignore: cast_nullable_to_non_nullable
-              as Decimal,
-      outflow: null == outflow
-          ? _value.outflow
-          : outflow // ignore: cast_nullable_to_non_nullable
-              as Decimal,
-    ) as $Val);
+    return _then(
+      _value.copyWith(
+            date: null == date
+                ? _value.date
+                : date // ignore: cast_nullable_to_non_nullable
+                      as DateTime,
+            inflow: null == inflow
+                ? _value.inflow
+                : inflow // ignore: cast_nullable_to_non_nullable
+                      as Decimal,
+            outflow: null == outflow
+                ? _value.outflow
+                : outflow // ignore: cast_nullable_to_non_nullable
+                      as Decimal,
+          )
+          as $Val,
+    );
   }
 }
 
@@ -354,8 +368,9 @@ class _$DailyCashFlowCopyWithImpl<$Res, $Val extends DailyCashFlow>
 abstract class _$$DailyCashFlowImplCopyWith<$Res>
     implements $DailyCashFlowCopyWith<$Res> {
   factory _$$DailyCashFlowImplCopyWith(
-          _$DailyCashFlowImpl value, $Res Function(_$DailyCashFlowImpl) then) =
-      __$$DailyCashFlowImplCopyWithImpl<$Res>;
+    _$DailyCashFlowImpl value,
+    $Res Function(_$DailyCashFlowImpl) then,
+  ) = __$$DailyCashFlowImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({DateTime date, Decimal inflow, Decimal outflow});
@@ -366,8 +381,9 @@ class __$$DailyCashFlowImplCopyWithImpl<$Res>
     extends _$DailyCashFlowCopyWithImpl<$Res, _$DailyCashFlowImpl>
     implements _$$DailyCashFlowImplCopyWith<$Res> {
   __$$DailyCashFlowImplCopyWithImpl(
-      _$DailyCashFlowImpl _value, $Res Function(_$DailyCashFlowImpl) _then)
-      : super(_value, _then);
+    _$DailyCashFlowImpl _value,
+    $Res Function(_$DailyCashFlowImpl) _then,
+  ) : super(_value, _then);
 
   @pragma('vm:prefer-inline')
   @override
@@ -376,28 +392,33 @@ class __$$DailyCashFlowImplCopyWithImpl<$Res>
     Object? inflow = null,
     Object? outflow = null,
   }) {
-    return _then(_$DailyCashFlowImpl(
-      date: null == date
-          ? _value.date
-          : date // ignore: cast_nullable_to_non_nullable
-              as DateTime,
-      inflow: null == inflow
-          ? _value.inflow
-          : inflow // ignore: cast_nullable_to_non_nullable
-              as Decimal,
-      outflow: null == outflow
-          ? _value.outflow
-          : outflow // ignore: cast_nullable_to_non_nullable
-              as Decimal,
-    ));
+    return _then(
+      _$DailyCashFlowImpl(
+        date: null == date
+            ? _value.date
+            : date // ignore: cast_nullable_to_non_nullable
+                  as DateTime,
+        inflow: null == inflow
+            ? _value.inflow
+            : inflow // ignore: cast_nullable_to_non_nullable
+                  as Decimal,
+        outflow: null == outflow
+            ? _value.outflow
+            : outflow // ignore: cast_nullable_to_non_nullable
+                  as Decimal,
+      ),
+    );
   }
 }
 
 /// @nodoc
 
 class _$DailyCashFlowImpl implements _DailyCashFlow {
-  const _$DailyCashFlowImpl(
-      {required this.date, required this.inflow, required this.outflow});
+  const _$DailyCashFlowImpl({
+    required this.date,
+    required this.inflow,
+    required this.outflow,
+  });
 
   /// The date of the cash flow.
   @override
@@ -437,21 +458,19 @@ class _$DailyCashFlowImpl implements _DailyCashFlow {
 }
 
 abstract class _DailyCashFlow implements DailyCashFlow {
-  const factory _DailyCashFlow(
-      {required final DateTime date,
-      required final Decimal inflow,
-      required final Decimal outflow}) = _$DailyCashFlowImpl;
+  const factory _DailyCashFlow({
+    required final DateTime date,
+    required final Decimal inflow,
+    required final Decimal outflow,
+  }) = _$DailyCashFlowImpl;
 
   @override
-
   /// The date of the cash flow.
   DateTime get date;
   @override
-
   /// Cash inflow for the day.
   Decimal get inflow;
   @override
-
   /// Cash outflow for the day.
   Decimal get outflow;
   @override

@@ -12,8 +12,8 @@ class DriftCustomersVendorsShadowReadComparator {
   DriftCustomersVendorsShadowReadComparator({
     required DriftShadowReadRecorder recorder,
     DateTime Function()? clock,
-  })  : _recorder = recorder,
-        _clock = clock ?? DateTime.now;
+  }) : _recorder = recorder,
+       _clock = clock ?? DateTime.now;
 
   final DriftShadowReadRecorder _recorder;
   final DateTime Function() _clock;
@@ -22,53 +22,49 @@ class DriftCustomersVendorsShadowReadComparator {
     required String operation,
     required Future<List<Customer>> Function() sourceRead,
     required Future<List<Customer>> Function() candidateRead,
-  }) =>
-      _compare(
-        slice: 'customers',
-        operation: operation,
-        sourceRead: sourceRead,
-        candidateRead: candidateRead,
-        equals: _customerListsEqual,
-      );
+  }) => _compare(
+    slice: 'customers',
+    operation: operation,
+    sourceRead: sourceRead,
+    candidateRead: candidateRead,
+    equals: _customerListsEqual,
+  );
 
   Future<DriftShadowReadResult> compareCustomer({
     required String operation,
     required Future<Customer?> Function() sourceRead,
     required Future<Customer?> Function() candidateRead,
-  }) =>
-      _compare(
-        slice: 'customers',
-        operation: operation,
-        sourceRead: sourceRead,
-        candidateRead: candidateRead,
-        equals: _customerEqual,
-      );
+  }) => _compare(
+    slice: 'customers',
+    operation: operation,
+    sourceRead: sourceRead,
+    candidateRead: candidateRead,
+    equals: _customerEqual,
+  );
 
   Future<DriftShadowReadResult> compareVendors({
     required String operation,
     required Future<List<Vendor>> Function() sourceRead,
     required Future<List<Vendor>> Function() candidateRead,
-  }) =>
-      _compare(
-        slice: 'vendors',
-        operation: operation,
-        sourceRead: sourceRead,
-        candidateRead: candidateRead,
-        equals: _vendorListsEqual,
-      );
+  }) => _compare(
+    slice: 'vendors',
+    operation: operation,
+    sourceRead: sourceRead,
+    candidateRead: candidateRead,
+    equals: _vendorListsEqual,
+  );
 
   Future<DriftShadowReadResult> compareVendor({
     required String operation,
     required Future<Vendor?> Function() sourceRead,
     required Future<Vendor?> Function() candidateRead,
-  }) =>
-      _compare(
-        slice: 'vendors',
-        operation: operation,
-        sourceRead: sourceRead,
-        candidateRead: candidateRead,
-        equals: _vendorEqual,
-      );
+  }) => _compare(
+    slice: 'vendors',
+    operation: operation,
+    sourceRead: sourceRead,
+    candidateRead: candidateRead,
+    equals: _vendorEqual,
+  );
 
   Future<DriftShadowReadResult> _compare<T>({
     required String slice,
@@ -135,10 +131,10 @@ class ShadowReadCustomerRepository implements CustomerRepository {
     required CustomerRepository candidate,
     required DriftCustomersVendorsShadowReadComparator comparator,
     required bool enabled,
-  })  : _source = source,
-        _candidate = candidate,
-        _comparator = comparator,
-        _enabled = enabled;
+  }) : _source = source,
+       _candidate = candidate,
+       _comparator = comparator,
+       _enabled = enabled;
 
   final CustomerRepository _source;
   final CustomerRepository _candidate;
@@ -201,10 +197,10 @@ class ShadowReadVendorRepository implements VendorRepository {
     required VendorRepository candidate,
     required DriftCustomersVendorsShadowReadComparator comparator,
     required bool enabled,
-  })  : _source = source,
-        _candidate = candidate,
-        _comparator = comparator,
-        _enabled = enabled;
+  }) : _source = source,
+       _candidate = candidate,
+       _comparator = comparator,
+       _enabled = enabled;
 
   final VendorRepository _source;
   final VendorRepository _candidate;

@@ -88,9 +88,9 @@ class DriftStockMovementsParityVerifier {
     required StockMovementMigrationReader source,
     required StockMovementStorage storage,
     required List<StockMovementBalanceQuery> balanceQueries,
-  })  : _source = source,
-        _storage = storage,
-        _balanceQueries = balanceQueries;
+  }) : _source = source,
+       _storage = storage,
+       _balanceQueries = balanceQueries;
 
   final StockMovementMigrationReader _source;
   final StockMovementStorage _storage;
@@ -107,50 +107,56 @@ class DriftStockMovementsParityVerifier {
       actual.addAll(await _storage.readAllForUser(userId));
     }
 
-    final rawComparisons = userIds.map((userId) {
-      final expectedRows = expected
-          .where((record) => record.userId == userId)
-          .toList(growable: false);
-      final actualRows = actual
-          .where((record) => record.userId == userId)
-          .toList(growable: false);
-      return _comparison(
-        scope: 'stock-movements/${userScopeKey(userId)}',
-        expected: expectedRows,
-        actual: actualRows,
-      );
-    }).toList(growable: false);
+    final rawComparisons = userIds
+        .map((userId) {
+          final expectedRows = expected
+              .where((record) => record.userId == userId)
+              .toList(growable: false);
+          final actualRows = actual
+              .where((record) => record.userId == userId)
+              .toList(growable: false);
+          return _comparison(
+            scope: 'stock-movements/${userScopeKey(userId)}',
+            expected: expectedRows,
+            actual: actualRows,
+          );
+        })
+        .toList(growable: false);
 
     final references = <String>{
-      ...expected.where((record) => record.referenceId != null).map(
+      ...expected
+          .where((record) => record.referenceId != null)
+          .map(
             (record) =>
                 '${userScopeKey(record.userId)}\u0000${record.referenceId}',
           ),
     };
-    final referenceComparisons = references.map((key) {
-      final separator = key.indexOf('\u0000');
-      final scope = key.substring(0, separator);
-      final referenceId = key.substring(separator + 1);
-      final expectedRows = expected
-          .where(
-            (record) =>
-                userScopeKey(record.userId) == scope &&
-                record.referenceId == referenceId,
-          )
-          .toList(growable: false);
-      final actualRows = actual
-          .where(
-            (record) =>
-                userScopeKey(record.userId) == scope &&
-                record.referenceId == referenceId,
-          )
-          .toList(growable: false);
-      return _comparison(
-        scope: 'reference/$scope',
-        expected: expectedRows,
-        actual: actualRows,
-      );
-    }).toList(growable: false);
+    final referenceComparisons = references
+        .map((key) {
+          final separator = key.indexOf('\u0000');
+          final scope = key.substring(0, separator);
+          final referenceId = key.substring(separator + 1);
+          final expectedRows = expected
+              .where(
+                (record) =>
+                    userScopeKey(record.userId) == scope &&
+                    record.referenceId == referenceId,
+              )
+              .toList(growable: false);
+          final actualRows = actual
+              .where(
+                (record) =>
+                    userScopeKey(record.userId) == scope &&
+                    record.referenceId == referenceId,
+              )
+              .toList(growable: false);
+          return _comparison(
+            scope: 'reference/$scope',
+            expected: expectedRows,
+            actual: actualRows,
+          );
+        })
+        .toList(growable: false);
 
     final derived = <StockMovementDerivedBalanceComparison>[];
     for (final query in _balanceQueries) {
@@ -183,8 +189,8 @@ class DriftStockMovementsParityVerifier {
             actual: actualBalance,
             blocked:
                 (expectedBalance - query.expectedBalance).abs() > 0.000000001
-                    ? 'source-derived-mismatch'
-                    : null,
+                ? 'source-derived-mismatch'
+                : null,
           ),
         );
       } on StockMovementBlockedException catch (error) {
@@ -227,25 +233,25 @@ class DriftStockMovementsParityVerifier {
 
 List<StockMovementRecord> _sort(List<StockMovementRecord> records) =>
     [...records]..sort((left, right) {
-        final date = left.date.toUtc().compareTo(right.date.toUtc());
-        if (date != 0) return date;
-        return left.id.compareTo(right.id);
-      });
+      final date = left.date.toUtc().compareTo(right.date.toUtc());
+      if (date != 0) return date;
+      return left.id.compareTo(right.id);
+    });
 
 String _canonical(StockMovementRecord record) => [
-      record.id,
-      record.itemId,
-      _nullable(record.warehouseId),
-      record.type,
-      record.quantity.toStringAsPrecision(17),
-      record.unitCost.toStringAsPrecision(17),
-      record.date.toUtc().toIso8601String(),
-      _nullable(record.referenceId),
-      _nullable(record.description),
-      _nullable(record.userId),
-      record.syncStatus,
-      record.createdAt.toUtc().toIso8601String(),
-    ].join('\u0000');
+  record.id,
+  record.itemId,
+  _nullable(record.warehouseId),
+  record.type,
+  record.quantity.toStringAsPrecision(17),
+  record.unitCost.toStringAsPrecision(17),
+  record.date.toUtc().toIso8601String(),
+  _nullable(record.referenceId),
+  _nullable(record.description),
+  _nullable(record.userId),
+  record.syncStatus,
+  record.createdAt.toUtc().toIso8601String(),
+].join('\u0000');
 
 double _deriveBalance(List<StockMovementRecord> records) {
   var total = 0.0;
@@ -275,18 +281,19 @@ double _deriveBalance(List<StockMovementRecord> records) {
   return total;
 }
 
-List<String> _blockedReasons(List<StockMovementRecord> records) => records
-    .map((record) {
-      if (record.type == 'transfer') return 'standalone-transfer';
-      if (record.type == 'adjustment' && record.quantity <= 0) {
-        return 'signed-adjustment';
-      }
-      return null;
-    })
-    .whereType<String>()
-    .toSet()
-    .toList()
-  ..sort();
+List<String> _blockedReasons(List<StockMovementRecord> records) =>
+    records
+        .map((record) {
+          if (record.type == 'transfer') return 'standalone-transfer';
+          if (record.type == 'adjustment' && record.quantity <= 0) {
+            return 'signed-adjustment';
+          }
+          return null;
+        })
+        .whereType<String>()
+        .toSet()
+        .toList()
+      ..sort();
 
 List<String> _duplicateScopedKeys(List<StockMovementRecord> records) {
   final counts = <String, int>{};

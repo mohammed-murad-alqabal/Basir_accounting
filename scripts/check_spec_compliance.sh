@@ -91,14 +91,26 @@ if command -v flutter &> /dev/null; then
     if echo "$ANALYZE_OUTPUT" | grep -q "No issues found"; then
         echo -e "${GREEN}✓${NC} No issues found by flutter analyze"
     else
-        ERROR_COUNT=$(echo "$ANALYZE_OUTPUT" | grep -c "error •" || echo "0")
-        WARNING_COUNT=$(echo "$ANALYZE_OUTPUT" | grep -c "warning •" || echo "0")
-        INFO_COUNT=$(echo "$ANALYZE_OUTPUT" | grep -c "info •" || echo "0")
+        # Count issues (handle grep returning exit code 1 when no matches)
+        ERROR_COUNT=$(echo "$ANALYZE_OUTPUT" | grep -c "error •" || true)
+        WARNING_COUNT=$(echo "$ANALYZE_OUTPUT" | grep -c "warning •" || true)
+        INFO_COUNT=$(echo "$ANALYZE_OUTPUT" | grep -c "info •" || true)
+        
+        # Ensure they are integers (default to 0 if empty)
+        ERROR_COUNT=${ERROR_COUNT:-0}
+        WARNING_COUNT=${WARNING_COUNT:-0}
+        INFO_COUNT=${INFO_COUNT:-0}
         
         echo -e "${YELLOW}⚠${NC} Issues found:"
-        [ "$ERROR_COUNT" -gt 0 ] && echo -e "${RED}  ✗ Errors: $ERROR_COUNT${NC}"
-        [ "$WARNING_COUNT" -gt 0 ] && echo -e "${YELLOW}  ⚠ Warnings: $WARNING_COUNT${NC}"
-        [ "$INFO_COUNT" -gt 0 ] && echo -e "${BLUE}  ℹ Info: $INFO_COUNT${NC}"
+        if [ "$ERROR_COUNT" -gt 0 ] 2>/dev/null; then
+            echo -e "${RED}  ✗ Errors: $ERROR_COUNT${NC}"
+        fi
+        if [ "$WARNING_COUNT" -gt 0 ] 2>/dev/null; then
+            echo -e "${YELLOW}  ⚠ Warnings: $WARNING_COUNT${NC}"
+        fi
+        if [ "$INFO_COUNT" -gt 0 ] 2>/dev/null; then
+            echo -e "${BLUE}  ℹ Info: $INFO_COUNT${NC}"
+        fi
     fi
     
     # Check formatting

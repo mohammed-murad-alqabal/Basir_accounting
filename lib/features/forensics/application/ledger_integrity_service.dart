@@ -8,24 +8,26 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 /// Provider for the LedgerIntegrityService.
 final ledgerIntegrityServiceProvider =
     StateNotifierProvider<LedgerIntegrityService, LedgerHealth>(
-  LedgerIntegrityService.new,
-);
+      LedgerIntegrityService.new,
+    );
 
 /// Service responsible for monitoring the General Ledger and flagging anomalies for controlled remediation.
 class LedgerIntegrityService extends StateNotifier<LedgerHealth> {
   /// Creates the [LedgerIntegrityService].
   LedgerIntegrityService(this._ref)
-      : super(
-          LedgerHealth(
-            status: IntegrityStatus.healthy,
-            lastVerification: DateTime.now(),
-            verifiedCount: 0,
-            errorCount: 0,
-          ),
-        ) {
+    : super(
+        LedgerHealth(
+          status: IntegrityStatus.healthy,
+          lastVerification: DateTime.now(),
+          verifiedCount: 0,
+          errorCount: 0,
+        ),
+      ) {
     // Start periodic background verification
-    _verificationTimer =
-        Timer.periodic(const Duration(minutes: 5), (_) => verifyLedger());
+    _verificationTimer = Timer.periodic(
+      const Duration(minutes: 5),
+      (_) => verifyLedger(),
+    );
   }
 
   final Ref _ref;
@@ -50,10 +52,14 @@ class LedgerIntegrityService extends StateNotifier<LedgerHealth> {
 
       for (final entry in entries) {
         // 1. Verify double-entry balance
-        final totalDebit =
-            entry.lines.fold<double>(0, (s, l) => s + l.debit.toDouble());
-        final totalCredit =
-            entry.lines.fold<double>(0, (s, l) => s + l.credit.toDouble());
+        final totalDebit = entry.lines.fold<double>(
+          0,
+          (s, l) => s + l.debit.toDouble(),
+        );
+        final totalCredit = entry.lines.fold<double>(
+          0,
+          (s, l) => s + l.credit.toDouble(),
+        );
 
         if ((totalDebit - totalCredit).abs() > 0.0001) {
           anomalousIds.add(entry.id);

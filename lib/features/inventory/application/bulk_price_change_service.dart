@@ -1,5 +1,3 @@
-library;
-
 import 'package:basir_accounting_system/core/domain/contracts/audit_entry.dart';
 import 'package:basir_accounting_system/core/domain/contracts/operation_result.dart';
 import 'package:basir_accounting_system/features/inventory/domain/entities/bulk_price_change.dart';
@@ -32,9 +30,9 @@ class BulkPriceChangeService {
     required InventoryRepository repository,
     required BulkChangeExecutionStorage storage,
     DateTime Function()? now,
-  })  : _repository = repository,
-        _storage = storage,
-        _now = now ?? DateTime.now;
+  }) : _repository = repository,
+       _storage = storage,
+       _now = now ?? DateTime.now;
 
   /// رمز فشل عند نطاق بلا أصناف مشمولة.
   static const emptyScopeCode = 'bulk_price_change_empty_scope';
@@ -145,8 +143,9 @@ class BulkPriceChangeService {
         rule: rule,
         scopeItemIds: List.unmodifiable(selectedIds),
         affectedItemIds: List.unmodifiable(affected),
-        previousValues:
-            List.unmodifiable(previousByItemId.values.toList(growable: false)),
+        previousValues: List.unmodifiable(
+          previousByItemId.values.toList(growable: false),
+        ),
         auditTrail: [
           AuditEntry(
             type: AuditEventType.administrative,
@@ -197,11 +196,13 @@ class BulkPriceChangeService {
       final previous = previousByItemId[itemId];
       if (existing == null || existing.isDeleted || previous == null) continue;
 
-      restored.add(existing.copyWith(
-        salePrice: previous.previousSalePrice,
-        purchasePrice: previous.previousPurchasePrice,
-        updatedAt: _now(),
-      ));
+      restored.add(
+        existing.copyWith(
+          salePrice: previous.previousSalePrice,
+          purchasePrice: previous.previousPurchasePrice,
+          updatedAt: _now(),
+        ),
+      );
     }
 
     try {
@@ -243,25 +244,23 @@ class BulkPriceChangeService {
           .toList(growable: false);
 
   List<InventoryItem> _selectItems(
-          List<InventoryItem> items, BulkPriceChangeScope scope) =>
-      scope.isSpecific
-          ? items
-              .where((item) => scope.specificItemIds!.contains(item.id))
-              .toList(growable: false)
-          : items;
+    List<InventoryItem> items,
+    BulkPriceChangeScope scope,
+  ) => scope.isSpecific
+      ? items
+            .where((item) => scope.specificItemIds!.contains(item.id))
+            .toList(growable: false)
+      : items;
 
   String? _validateRule(BulkPriceChangeRule rule) {
     switch (rule.type) {
       case BulkPriceChangeRuleType.copyFromPurchase:
         if (rule.sourcePrice == null) return invalidRuleCode;
-        break;
       case BulkPriceChangeRuleType.percentage:
       case BulkPriceChangeRuleType.fixedAmount:
         if (!rule.value.isFinite) return invalidRuleCode;
-        break;
       case BulkPriceChangeRuleType.setTo:
         if (!rule.value.isFinite || rule.value < 0) return negativeResultCode;
-        break;
     }
     return null;
   }
@@ -309,8 +308,8 @@ class BulkPriceChangeService {
     BulkPriceChangeRule rule,
     BulkPriceTarget target,
   ) {
-    double? sale = item.salePrice;
-    double? purchase = item.purchasePrice;
+    var sale = item.salePrice;
+    var purchase = item.purchasePrice;
     if (target == BulkPriceTarget.sale || target == BulkPriceTarget.both) {
       sale = rule.value;
     }
@@ -328,8 +327,8 @@ class BulkPriceChangeService {
     final source = rule.sourcePrice == BulkPriceSource.sale
         ? item.salePrice
         : item.purchasePrice;
-    double? sale = item.salePrice;
-    double? purchase = item.purchasePrice;
+    var sale = item.salePrice;
+    var purchase = item.purchasePrice;
     if (target == BulkPriceTarget.sale || target == BulkPriceTarget.both) {
       sale = source;
     }
@@ -371,7 +370,8 @@ class BulkPriceChangeService {
     double? newSale,
     double? newPurchase,
   ) {
-    final blocked = (newSale != null && newSale < 0) ||
+    final blocked =
+        (newSale != null && newSale < 0) ||
         (newPurchase != null && newPurchase < 0) ||
         _missingTargetPrice(item, target, newSale, newPurchase);
     return BulkPriceChangePreviewEntry(
@@ -438,20 +438,17 @@ class BulkPriceChangeService {
     BulkPriceTarget target,
   ) {
     final preview = _previewForItem(item, rule, target);
-    if (preview.isBlocked == true) return null;
-    double? sale = item.salePrice;
-    double? purchase = item.purchasePrice;
+    if (preview.isBlocked ?? false) return null;
+    var sale = item.salePrice;
+    var purchase = item.purchasePrice;
     switch (target) {
       case BulkPriceTarget.sale:
         sale = preview.newSalePrice;
-        break;
       case BulkPriceTarget.purchase:
         purchase = preview.newPurchasePrice;
-        break;
       case BulkPriceTarget.both:
         sale = preview.newSalePrice;
         purchase = preview.newPurchasePrice;
-        break;
     }
     return item.copyWith(
       salePrice: sale,

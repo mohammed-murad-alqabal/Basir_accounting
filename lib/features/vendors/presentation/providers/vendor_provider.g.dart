@@ -17,13 +17,14 @@ String _$vendorsHash() => r'd34ea97e74d2f7556a120ce08fb8253e7292be8b';
 @ProviderFor(Vendors)
 final vendorsProvider =
     AutoDisposeAsyncNotifierProvider<Vendors, List<Vendor>>.internal(
-  Vendors.new,
-  name: r'vendorsProvider',
-  debugGetCreateSourceHash:
-      const bool.fromEnvironment('dart.vm.product') ? null : _$vendorsHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
+      Vendors.new,
+      name: r'vendorsProvider',
+      debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+          ? null
+          : _$vendorsHash,
+      dependencies: null,
+      allTransitiveDependencies: null,
+    );
 
 typedef _$Vendors = AutoDisposeAsyncNotifier<List<Vendor>>;
 // ignore_for_file: type=lint

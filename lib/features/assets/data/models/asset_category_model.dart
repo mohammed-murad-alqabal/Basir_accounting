@@ -44,10 +44,10 @@ class AssetCategoryModel {
 
   /// تحويل النموذج إلى كيان
   AssetCategory toEntity() => AssetCategory(
-        id: id,
-        nameAr: nameAr,
-        nameEn: nameEn,
-        defaultDepreciationMethod: defaultDepreciationMethod,
-        defaultUsefulLifeYears: defaultUsefulLifeYears,
-      );
+    id: id,
+    nameAr: nameAr,
+    nameEn: nameEn,
+    defaultDepreciationMethod: defaultDepreciationMethod,
+    defaultUsefulLifeYears: defaultUsefulLifeYears,
+  );
 }

@@ -98,8 +98,9 @@ class SustainabilityExpertService extends _$SustainabilityExpertService
       isAllowed: isAllowed,
       rationale: rationale.join('\n'),
       confidenceScore: 0.96,
-      suggestedAdjustments:
-          suggestedAdjustments.isNotEmpty ? suggestedAdjustments : null,
+      suggestedAdjustments: suggestedAdjustments.isNotEmpty
+          ? suggestedAdjustments
+          : null,
     );
   }
 }

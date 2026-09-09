@@ -302,7 +302,7 @@ class SyncService extends _$SyncService {
     final lastSyncDate = lastSync == null
         ? DateTime(1970).toIso8601String()
         : getServerUpdatedAt(lastSync)?.toIso8601String() ??
-            DateTime(1970).toIso8601String();
+              DateTime(1970).toIso8601String();
 
     try {
       final response = await _supabase

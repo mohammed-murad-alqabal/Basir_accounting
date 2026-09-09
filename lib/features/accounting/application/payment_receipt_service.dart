@@ -206,6 +206,5 @@ class PaymentReceiptService extends _$PaymentReceiptService {
     required String customerId,
     required DateTime fromDate,
     required DateTime toDate,
-  }) async =>
-      Decimal.zero; // To be implemented with repository
+  }) async => Decimal.zero; // To be implemented with repository
 }

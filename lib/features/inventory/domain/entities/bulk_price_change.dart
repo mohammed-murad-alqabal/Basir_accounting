@@ -1,8 +1,5 @@
-library;
-
-import 'package:flutter/foundation.dart';
-
 import 'package:basir_accounting_system/core/domain/contracts/audit_entry.dart';
+import 'package:flutter/foundation.dart';
 
 /// نطاق تغيير الأسعار الجماعي.
 ///
@@ -10,18 +7,30 @@ import 'package:basir_accounting_system/core/domain/contracts/audit_entry.dart';
 /// قائمة معرّفات محددة، وهو قابل للتمديد عند ظهور كيان الفئات.
 @immutable
 class BulkPriceChangeScope {
+  /// يبني النطاق من تمثيله السلسلةي.
+  factory BulkPriceChangeScope.fromJson(Map<String, dynamic> json) {
+    final isSpecific = json['isSpecific'] == true;
+    final ids = (json['specificItemIds'] as List? ?? const [])
+        .cast<String>()
+        .toList(growable: false);
+    if (!isSpecific) {
+      return const BulkPriceChangeScope.all();
+    }
+    return BulkPriceChangeScope.items(ids);
+  }
+
   /// يبني نطاقًا يُطبَّق على جميع الأصناف غير المحذوفة.
   const BulkPriceChangeScope.all()
-      : specificItemIds = const [],
-        isSpecific = false;
+    : specificItemIds = const [],
+      isSpecific = false;
 
   /// يبني نطاقًا محدودًا بأصناف معرّفة بمعرّفاتها فقط.
   ///
   /// يجب أن يحمل النطاق المحدد معرّفًا واحدًا على الأقل؛ النطاق الفارغ
   /// يُرفض لاحقًا عند المعاينة أو التنفيذ برمز النطاق الفارغ.
   const BulkPriceChangeScope.items(List<String> itemIds)
-      : specificItemIds = itemIds,
-        isSpecific = true;
+    : specificItemIds = itemIds,
+      isSpecific = true;
 
   /// معرّفات الأصناف المحددة (فارغة عند تطبيق التغيير على الكل).
   final List<String>? specificItemIds;
@@ -50,21 +59,9 @@ class BulkPriceChangeScope {
 
   /// تمثيل السلسلةية لاستخدام التخزين والعرض.
   Map<String, dynamic> toJson() => {
-        'isSpecific': isSpecific,
-        'specificItemIds': specificItemIds ?? const [],
-      };
-
-  /// يبني النطاق من تمثيله السلسلةي.
-  factory BulkPriceChangeScope.fromJson(Map<String, dynamic> json) {
-    final isSpecific = json['isSpecific'] == true;
-    final ids = (json['specificItemIds'] as List? ?? const [])
-        .cast<String>()
-        .toList(growable: false);
-    if (!isSpecific) {
-      return const BulkPriceChangeScope.all();
-    }
-    return BulkPriceChangeScope.items(ids);
-  }
+    'isSpecific': isSpecific,
+    'specificItemIds': specificItemIds ?? const [],
+  };
 }
 
 /// نوع قاعدة تغيير السعر.
@@ -92,6 +89,23 @@ class BulkPriceChangeRule {
     this.effectiveAt,
     this.sourcePrice,
   });
+
+  /// يبني القاعدة من تمثيلها السلسلةي.
+  factory BulkPriceChangeRule.fromJson(Map<String, dynamic> json) =>
+      BulkPriceChangeRule(
+        type: BulkPriceChangeRuleType.values.firstWhere(
+          (type) => type.name == json['type'],
+        ),
+        value: (json['value'] as num).toDouble(),
+        sourcePrice: json['sourcePrice'] == null
+            ? null
+            : BulkPriceSource.values.firstWhere(
+                (source) => source.name == json['sourcePrice'],
+              ),
+        effectiveAt: json['effectiveAt'] == null
+            ? null
+            : DateTime.parse(json['effectiveAt'] as String),
+      );
 
   /// نوع القاعدة.
   final BulkPriceChangeRuleType type;
@@ -123,28 +137,11 @@ class BulkPriceChangeRule {
 
   /// تمثيل السلسلةية لاستخدام التخزين.
   Map<String, dynamic> toJson() => {
-        'type': type.name,
-        'value': value,
-        if (sourcePrice != null) 'sourcePrice': sourcePrice!.name,
-        if (effectiveAt != null) 'effectiveAt': effectiveAt!.toIso8601String(),
-      };
-
-  /// يبني القاعدة من تمثيلها السلسلةي.
-  factory BulkPriceChangeRule.fromJson(Map<String, dynamic> json) =>
-      BulkPriceChangeRule(
-        type: BulkPriceChangeRuleType.values.firstWhere(
-          (type) => type.name == json['type'],
-        ),
-        value: (json['value'] as num).toDouble(),
-        sourcePrice: json['sourcePrice'] == null
-            ? null
-            : BulkPriceSource.values.firstWhere(
-                (source) => source.name == json['sourcePrice'],
-              ),
-        effectiveAt: json['effectiveAt'] == null
-            ? null
-            : DateTime.parse(json['effectiveAt'] as String),
-      );
+    'type': type.name,
+    'value': value,
+    if (sourcePrice != null) 'sourcePrice': sourcePrice!.name,
+    if (effectiveAt != null) 'effectiveAt': effectiveAt!.toIso8601String(),
+  };
 }
 
 /// مصدر السعر عند قواعد النسخ.
@@ -183,6 +180,22 @@ class BulkPriceChangePreviewEntry {
     this.isBlocked,
     this.blockReason,
   });
+
+  /// يبني المعاينة من تمثيلها السلسلةي.
+  factory BulkPriceChangePreviewEntry.fromJson(Map<String, dynamic> json) =>
+      BulkPriceChangePreviewEntry(
+        itemId: json['itemId'] as String,
+        itemName: json['itemName'] as String,
+        target: BulkPriceTarget.values.firstWhere(
+          (target) => target.name == json['target'],
+        ),
+        previousSalePrice: json['previousSalePrice'] as double?,
+        newSalePrice: json['newSalePrice'] as double?,
+        previousPurchasePrice: json['previousPurchasePrice'] as double?,
+        newPurchasePrice: json['newPurchasePrice'] as double?,
+        isBlocked: json['isBlocked'] as bool?,
+        blockReason: json['blockReason'] as String?,
+      );
 
   /// معرّف الصنف المشمول بالمعاينة.
   final String itemId;
@@ -235,16 +248,16 @@ class BulkPriceChangePreviewEntry {
 
   @override
   int get hashCode => Object.hash(
-        itemId,
-        itemName,
-        target,
-        previousSalePrice,
-        newSalePrice,
-        previousPurchasePrice,
-        newPurchasePrice,
-        isBlocked,
-        blockReason,
-      );
+    itemId,
+    itemName,
+    target,
+    previousSalePrice,
+    newSalePrice,
+    previousPurchasePrice,
+    newPurchasePrice,
+    isBlocked,
+    blockReason,
+  );
 
   @override
   String toString() =>
@@ -252,33 +265,17 @@ class BulkPriceChangePreviewEntry {
 
   /// تمثيل السلسلةية لتخزين القيمة السابقة لكل صنف.
   Map<String, dynamic> toJson() => {
-        'itemId': itemId,
-        'itemName': itemName,
-        'target': target.name,
-        if (previousSalePrice != null) 'previousSalePrice': previousSalePrice,
-        if (newSalePrice != null) 'newSalePrice': newSalePrice,
-        if (previousPurchasePrice != null)
-          'previousPurchasePrice': previousPurchasePrice,
-        if (newPurchasePrice != null) 'newPurchasePrice': newPurchasePrice,
-        if (isBlocked != null) 'isBlocked': isBlocked,
-        if (blockReason != null) 'blockReason': blockReason,
-      };
-
-  /// يبني المعاينة من تمثيلها السلسلةي.
-  factory BulkPriceChangePreviewEntry.fromJson(Map<String, dynamic> json) =>
-      BulkPriceChangePreviewEntry(
-        itemId: json['itemId'] as String,
-        itemName: json['itemName'] as String,
-        target: BulkPriceTarget.values.firstWhere(
-          (target) => target.name == json['target'],
-        ),
-        previousSalePrice: json['previousSalePrice'] as double?,
-        newSalePrice: json['newSalePrice'] as double?,
-        previousPurchasePrice: json['previousPurchasePrice'] as double?,
-        newPurchasePrice: json['newPurchasePrice'] as double?,
-        isBlocked: json['isBlocked'] as bool?,
-        blockReason: json['blockReason'] as String?,
-      );
+    'itemId': itemId,
+    'itemName': itemName,
+    'target': target.name,
+    if (previousSalePrice != null) 'previousSalePrice': previousSalePrice,
+    if (newSalePrice != null) 'newSalePrice': newSalePrice,
+    if (previousPurchasePrice != null)
+      'previousPurchasePrice': previousPurchasePrice,
+    if (newPurchasePrice != null) 'newPurchasePrice': newPurchasePrice,
+    if (isBlocked != null) 'isBlocked': isBlocked,
+    if (blockReason != null) 'blockReason': blockReason,
+  };
 }
 
 /// سجل تنفيذ تغيير أسعار جماعي معتمد، ويحمل أحداث التدقيق وصلاحية الإلغاء.
@@ -299,7 +296,47 @@ class BulkChangeExecutionRecord {
     DateTime? cancellationDeadline,
     this.cancellation,
   }) : cancellationDeadline =
-            cancellationDeadline ?? executedAt.add(const Duration(hours: 24));
+           cancellationDeadline ?? executedAt.add(const Duration(hours: 24));
+
+  /// يبني سجل التنفيذ من تمثيله السلسلةي.
+  factory BulkChangeExecutionRecord.fromJson(Map<String, dynamic> json) =>
+      BulkChangeExecutionRecord(
+        id: json['id'] as String,
+        operatorName: json['operatorName'] as String,
+        executedAt: DateTime.parse(json['executedAt'] as String),
+        reason: json['reason'] as String,
+        rule: BulkPriceChangeRule.fromJson(
+          Map<String, dynamic>.from(json['rule'] as Map),
+        ),
+        scopeItemIds: (json['scopeItemIds'] as List).cast<String>().toList(),
+        affectedItemIds: (json['affectedItemIds'] as List)
+            .cast<String>()
+            .toList(),
+        previousValues: (json['previousValues'] as List)
+            .map(
+              (raw) => BulkPriceChangePreviewEntry.fromJson(
+                Map<String, dynamic>.from(raw as Map),
+              ),
+            )
+            .toList(),
+        auditTrail: (json['auditTrail'] as List)
+            .map(
+              (raw) =>
+                  AuditEntry.fromJson(Map<String, dynamic>.from(raw as Map)),
+            )
+            .toList(),
+        effectiveAt: json['effectiveAt'] == null
+            ? null
+            : DateTime.parse(json['effectiveAt'] as String),
+        cancellationDeadline: DateTime.parse(
+          json['cancellationDeadline'] as String,
+        ),
+        cancellation: json['cancellation'] == null
+            ? null
+            : AuditEntry.fromJson(
+                Map<String, dynamic>.from(json['cancellation'] as Map),
+              ),
+      );
 
   /// المعرف الفريد لسجل التنفيذ.
   final String id;
@@ -365,52 +402,17 @@ class BulkChangeExecutionRecord {
 
   /// تمثيل السلسلةية لاستخدام التخزين في Isar.
   Map<String, dynamic> toJson() => {
-        'id': id,
-        'operatorName': operatorName,
-        'executedAt': executedAt.toIso8601String(),
-        'reason': reason,
-        'rule': rule.toJson(),
-        'scopeItemIds': scopeItemIds,
-        'affectedItemIds': affectedItemIds,
-        'previousValues':
-            previousValues.map((entry) => entry.toJson()).toList(),
-        'auditTrail': auditTrail.map((entry) => entry.toJson()).toList(),
-        if (effectiveAt != null) 'effectiveAt': effectiveAt!.toIso8601String(),
-        'cancellationDeadline': cancellationDeadline.toIso8601String(),
-        if (cancellation != null) 'cancellation': cancellation!.toJson(),
-      };
-
-  /// يبني سجل التنفيذ من تمثيله السلسلةي.
-  factory BulkChangeExecutionRecord.fromJson(Map<String, dynamic> json) =>
-      BulkChangeExecutionRecord(
-        id: json['id'] as String,
-        operatorName: json['operatorName'] as String,
-        executedAt: DateTime.parse(json['executedAt'] as String),
-        reason: json['reason'] as String,
-        rule: BulkPriceChangeRule.fromJson(
-            Map<String, dynamic>.from(json['rule'] as Map)),
-        scopeItemIds: (json['scopeItemIds'] as List).cast<String>().toList(),
-        affectedItemIds:
-            (json['affectedItemIds'] as List).cast<String>().toList(),
-        previousValues: (json['previousValues'] as List)
-            .map((raw) => BulkPriceChangePreviewEntry.fromJson(
-                Map<String, dynamic>.from(raw as Map)))
-            .toList(),
-        auditTrail: (json['auditTrail'] as List)
-            .map((raw) =>
-                AuditEntry.fromJson(Map<String, dynamic>.from(raw as Map)))
-            .toList(),
-        effectiveAt: json['effectiveAt'] == null
-            ? null
-            : DateTime.parse(json['effectiveAt'] as String),
-        cancellationDeadline:
-            DateTime.parse(json['cancellationDeadline'] as String),
-        cancellation: json['cancellation'] == null
-            ? null
-            : AuditEntry.fromJson(
-                Map<String, dynamic>.from(
-                  json['cancellation'] as Map,
-                ),
-              ),
-      );
+    'id': id,
+    'operatorName': operatorName,
+    'executedAt': executedAt.toIso8601String(),
+    'reason': reason,
+    'rule': rule.toJson(),
+    'scopeItemIds': scopeItemIds,
+    'affectedItemIds': affectedItemIds,
+    'previousValues': previousValues.map((entry) => entry.toJson()).toList(),
+    'auditTrail': auditTrail.map((entry) => entry.toJson()).toList(),
+    if (effectiveAt != null) 'effectiveAt': effectiveAt!.toIso8601String(),
+    'cancellationDeadline': cancellationDeadline.toIso8601String(),
+    if (cancellation != null) 'cancellation': cancellation!.toJson(),
+  };
 }

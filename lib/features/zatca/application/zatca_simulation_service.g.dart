@@ -19,14 +19,14 @@ String _$zatcaSimulationServiceHash() =>
 @ProviderFor(ZatcaSimulationService)
 final zatcaSimulationServiceProvider =
     AutoDisposeNotifierProvider<ZatcaSimulationService, void>.internal(
-  ZatcaSimulationService.new,
-  name: r'zatcaSimulationServiceProvider',
-  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-      ? null
-      : _$zatcaSimulationServiceHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
+      ZatcaSimulationService.new,
+      name: r'zatcaSimulationServiceProvider',
+      debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+          ? null
+          : _$zatcaSimulationServiceHash,
+      dependencies: null,
+      allTransitiveDependencies: null,
+    );
 
 typedef _$ZatcaSimulationService = AutoDisposeNotifier<void>;
 // ignore_for_file: type=lint

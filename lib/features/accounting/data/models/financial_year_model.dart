@@ -67,17 +67,17 @@ class FinancialYearModel {
 
   /// تحويل من Model إلى Entity
   FinancialYear toEntity() => FinancialYear(
-        id: id,
-        name: name,
-        startDate: startDate,
-        endDate: endDate,
-        isClosed: isClosed,
-        closedAt: closedAt,
-        closedBy: closedBy,
-        lockedPeriodIds: List.from(lockedPeriodIds),
-        userId: userId,
-        syncStatus: syncStatus,
-        serverUpdatedAt: serverUpdatedAt,
-        isDeleted: isDeleted,
-      );
+    id: id,
+    name: name,
+    startDate: startDate,
+    endDate: endDate,
+    isClosed: isClosed,
+    closedAt: closedAt,
+    closedBy: closedBy,
+    lockedPeriodIds: List.from(lockedPeriodIds),
+    userId: userId,
+    syncStatus: syncStatus,
+    serverUpdatedAt: serverUpdatedAt,
+    isDeleted: isDeleted,
+  );
 }

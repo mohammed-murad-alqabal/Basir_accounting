@@ -102,8 +102,9 @@ class _PatternDrawScreenState extends ConsumerState<PatternDrawScreen> {
             AppEnhancedButton(
               type: AppEnhancedButtonType.text,
               label: 'إلغاء',
-              onPressed:
-                  _isLoading ? null : () => Navigator.of(context).pop(false),
+              onPressed: _isLoading
+                  ? null
+                  : () => Navigator.of(context).pop(false),
             ),
           ],
         ),

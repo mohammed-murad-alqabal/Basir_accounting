@@ -74,8 +74,9 @@ class TreasuryDashboardScreen extends ConsumerWidget {
                     const SizedBox(height: Spacing.xl),
                     Text(
                       context.l10n.dashboardQuickActionsTitle,
-                      style: AppTextStyles.titleMedium
-                          .copyWith(fontWeight: FontWeight.bold),
+                      style: AppTextStyles.titleMedium.copyWith(
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                     const SizedBox(height: Spacing.md),
                     _buildQuickActions(context),
@@ -87,8 +88,9 @@ class TreasuryDashboardScreen extends ConsumerWidget {
                       children: [
                         Text(
                           context.l10n.labelAccounts,
-                          style: AppTextStyles.titleMedium
-                              .copyWith(fontWeight: FontWeight.bold),
+                          style: AppTextStyles.titleMedium.copyWith(
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
                         TextButton(
                           onPressed: () => Navigator.pushNamed(
@@ -110,7 +112,7 @@ class TreasuryDashboardScreen extends ConsumerWidget {
                         shrinkWrap: true,
                         physics: const NeverScrollableScrollPhysics(),
                         itemCount: treasuryAccounts.length,
-                        separatorBuilder: (_, __) =>
+                        separatorBuilder: (_, _) =>
                             const SizedBox(height: Spacing.sm),
                         itemBuilder: (context, index) {
                           final account = treasuryAccounts[index];
@@ -135,115 +137,118 @@ class TreasuryDashboardScreen extends ConsumerWidget {
   }
 
   Widget _buildLiquidityCard(BuildContext context, Decimal total) => GlassCard(
-        opacity: 0.2,
-        padding: const EdgeInsets.all(Spacing.xl),
-        child: Column(
-          children: [
-            Text(
-              context.l10n.labelTotalLiquidity,
-              style: AppTextStyles.labelLarge
-                  .copyWith(color: AppColors.textSecondary),
-            ),
-            const SizedBox(height: Spacing.sm),
-            Text(
-              FormatHelpers.formatCurrency(total),
-              style: AppTextStyles.headlineLarge.copyWith(
-                color: AppColors.primary,
-                fontWeight: FontWeights.extraBold,
-              ),
-            ),
-            const SizedBox(height: Spacing.xs),
-            Text(
-              context.l10n.labelAvailableCashBank,
-              style: AppTextStyles.bodySmall
-                  .copyWith(color: AppColors.textSecondary),
-            ),
-          ],
+    opacity: 0.2,
+    padding: const EdgeInsets.all(Spacing.xl),
+    child: Column(
+      children: [
+        Text(
+          context.l10n.labelTotalLiquidity,
+          style: AppTextStyles.labelLarge.copyWith(
+            color: AppColors.textSecondary,
+          ),
         ),
-      );
+        const SizedBox(height: Spacing.sm),
+        Text(
+          FormatHelpers.formatCurrency(total),
+          style: AppTextStyles.headlineLarge.copyWith(
+            color: AppColors.primary,
+            fontWeight: FontWeights.extraBold,
+          ),
+        ),
+        const SizedBox(height: Spacing.xs),
+        Text(
+          context.l10n.labelAvailableCashBank,
+          style: AppTextStyles.bodySmall.copyWith(
+            color: AppColors.textSecondary,
+          ),
+        ),
+      ],
+    ),
+  );
 
   Widget _buildQuickActions(BuildContext context) => Row(
+    children: [
+      Expanded(
+        child: AppEnhancedButton(
+          label: context.l10n.receiptVoucherAction,
+          icon: Icons.add_circle_outline,
+          onPressed: () async {
+            await _issueVoucher(context, VoucherType.receipt);
+          },
+        ),
+      ),
+      const SizedBox(width: Spacing.md),
+      Expanded(
+        child: AppEnhancedButton(
+          label: context.l10n.paymentVoucherAction,
+          icon: Icons.remove_circle_outline,
+          type: AppEnhancedButtonType.secondary,
+          onPressed: () async {
+            await _issueVoucher(context, VoucherType.payment);
+          },
+        ),
+      ),
+    ],
+  );
+
+  Widget _buildAdministrativeTools(BuildContext context) => Column(
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: [
+      Text(
+        'أدوات التدقيق والرقابة',
+        style: AppTextStyles.titleMedium.copyWith(fontWeight: FontWeight.bold),
+      ),
+      const SizedBox(height: Spacing.md),
+      Row(
         children: [
           Expanded(
             child: AppEnhancedButton(
-              label: context.l10n.receiptVoucherAction,
-              icon: Icons.add_circle_outline,
+              label: context.l10n.titleForensicPortal,
               onPressed: () async {
-                await _issueVoucher(context, VoucherType.receipt);
+                await Navigator.pushNamed(context, '/forensic-portal');
               },
+              icon: Icons.verified_user_outlined,
+              type: AppEnhancedButtonType.outlined,
             ),
           ),
           const SizedBox(width: Spacing.md),
           Expanded(
             child: AppEnhancedButton(
-              label: context.l10n.paymentVoucherAction,
-              icon: Icons.remove_circle_outline,
-              type: AppEnhancedButtonType.secondary,
+              label: context.l10n.titleStrategicOutlook,
               onPressed: () async {
-                await _issueVoucher(context, VoucherType.payment);
+                await Navigator.pushNamed(context, '/strategic-outlook');
               },
+              icon: Icons.insights_outlined,
+              type: AppEnhancedButtonType.outlined,
             ),
           ),
         ],
-      );
-
-  Widget _buildAdministrativeTools(BuildContext context) => Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            'أدوات التدقيق والرقابة',
-            style:
-                AppTextStyles.titleMedium.copyWith(fontWeight: FontWeight.bold),
-          ),
-          const SizedBox(height: Spacing.md),
-          Row(
-            children: [
-              Expanded(
-                child: AppEnhancedButton(
-                  label: context.l10n.titleForensicPortal,
-                  onPressed: () async {
-                    await Navigator.pushNamed(context, '/forensic-portal');
-                  },
-                  icon: Icons.verified_user_outlined,
-                  type: AppEnhancedButtonType.outlined,
-                ),
-              ),
-              const SizedBox(width: Spacing.md),
-              Expanded(
-                child: AppEnhancedButton(
-                  label: context.l10n.titleStrategicOutlook,
-                  onPressed: () async {
-                    await Navigator.pushNamed(context, '/strategic-outlook');
-                  },
-                  icon: Icons.insights_outlined,
-                  type: AppEnhancedButtonType.outlined,
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(height: Spacing.md),
-          AppEnhancedButton(
-            label: 'إدارة الفترات المالية',
-            icon: Icons.calendar_month_outlined,
-            type: AppEnhancedButtonType.outlined,
-            onPressed: () async {
-              await Navigator.pushNamed(context, '/fiscal-control-center');
-            },
-          ),
-        ],
-      );
+      ),
+      const SizedBox(height: Spacing.md),
+      AppEnhancedButton(
+        label: 'إدارة الفترات المالية',
+        icon: Icons.calendar_month_outlined,
+        type: AppEnhancedButtonType.outlined,
+        onPressed: () async {
+          await Navigator.pushNamed(context, '/fiscal-control-center');
+        },
+      ),
+    ],
+  );
 
   Widget _buildForecastSection(BuildContext context, WidgetRef ref) {
-    final forecastAsync =
-        ref.watch(accountingServiceProvider.notifier).getLiquidityForecast();
+    final forecastAsync = ref
+        .watch(accountingServiceProvider.notifier)
+        .getLiquidityForecast();
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
           context.l10n.labelForecast30Days,
-          style:
-              AppTextStyles.titleMedium.copyWith(fontWeight: FontWeight.bold),
+          style: AppTextStyles.titleMedium.copyWith(
+            fontWeight: FontWeight.bold,
+          ),
         ),
         const SizedBox(height: Spacing.md),
         FutureBuilder<LiquidityForecast>(
@@ -303,40 +308,42 @@ class TreasuryDashboardScreen extends ConsumerWidget {
     required Decimal amount,
     required Color color,
     required IconData icon,
-  }) =>
-      GlassCard(
-        padding: const EdgeInsets.all(Spacing.md),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+  }) => GlassCard(
+    padding: const EdgeInsets.all(Spacing.md),
+    child: Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Row(
           children: [
-            Row(
-              children: [
-                Icon(icon, size: 16, color: color),
-                const SizedBox(width: Spacing.xs),
-                Text(
-                  label,
-                  style: AppTextStyles.labelMedium
-                      .copyWith(color: AppColors.textSecondary),
-                ),
-              ],
-            ),
-            const SizedBox(height: Spacing.sm),
+            Icon(icon, size: 16, color: color),
+            const SizedBox(width: Spacing.xs),
             Text(
-              FormatHelpers.formatCurrency(amount),
-              style: AppTextStyles.titleLarge.copyWith(
-                color: color,
-                fontWeight: FontWeight.bold,
+              label,
+              style: AppTextStyles.labelMedium.copyWith(
+                color: AppColors.textSecondary,
               ),
             ),
           ],
         ),
-      );
+        const SizedBox(height: Spacing.sm),
+        Text(
+          FormatHelpers.formatCurrency(amount),
+          style: AppTextStyles.titleLarge.copyWith(
+            color: color,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+      ],
+    ),
+  );
 
   Widget _buildAccountRow(BuildContext context, Account account) {
-    final isBank = account.nameEn.toLowerCase().contains('bank') ||
+    final isBank =
+        account.nameEn.toLowerCase().contains('bank') ||
         account.subType == 'bank';
-    final icon =
-        isBank ? Icons.account_balance_outlined : Icons.attach_money_outlined;
+    final icon = isBank
+        ? Icons.account_balance_outlined
+        : Icons.attach_money_outlined;
 
     return GlassCard(
       padding: const EdgeInsets.all(Spacing.md),
@@ -357,13 +364,15 @@ class TreasuryDashboardScreen extends ConsumerWidget {
               children: [
                 Text(
                   account.name(isArabic: context.isArabic),
-                  style: AppTextStyles.bodyMedium
-                      .copyWith(fontWeight: FontWeight.bold),
+                  style: AppTextStyles.bodyMedium.copyWith(
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
                 Text(
                   account.code,
-                  style: AppTextStyles.bodySmall
-                      .copyWith(color: AppColors.textSecondary),
+                  style: AppTextStyles.bodySmall.copyWith(
+                    color: AppColors.textSecondary,
+                  ),
                 ),
               ],
             ),

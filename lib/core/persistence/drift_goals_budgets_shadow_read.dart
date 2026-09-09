@@ -9,8 +9,8 @@ class DriftGoalsBudgetsShadowReadComparator {
   DriftGoalsBudgetsShadowReadComparator({
     required DriftShadowReadRecorder recorder,
     DateTime Function()? clock,
-  })  : _recorder = recorder,
-        _clock = clock ?? DateTime.now;
+  }) : _recorder = recorder,
+       _clock = clock ?? DateTime.now;
 
   final DriftShadowReadRecorder _recorder;
   final DateTime Function() _clock;
@@ -19,53 +19,49 @@ class DriftGoalsBudgetsShadowReadComparator {
     required String operation,
     required Future<Goal?> Function() sourceRead,
     required Future<Goal?> Function() candidateRead,
-  }) =>
-      _compare(
-        slice: 'goals',
-        operation: operation,
-        sourceRead: sourceRead,
-        candidateRead: candidateRead,
-        equals: _goalsEqual,
-      );
+  }) => _compare(
+    slice: 'goals',
+    operation: operation,
+    sourceRead: sourceRead,
+    candidateRead: candidateRead,
+    equals: _goalsEqual,
+  );
 
   Future<DriftShadowReadResult> compareGoals({
     required String operation,
     required Future<List<Goal>> Function() sourceRead,
     required Future<List<Goal>> Function() candidateRead,
-  }) =>
-      _compare(
-        slice: 'goals',
-        operation: operation,
-        sourceRead: sourceRead,
-        candidateRead: candidateRead,
-        equals: _goalListsEqual,
-      );
+  }) => _compare(
+    slice: 'goals',
+    operation: operation,
+    sourceRead: sourceRead,
+    candidateRead: candidateRead,
+    equals: _goalListsEqual,
+  );
 
   Future<DriftShadowReadResult> compareBudget({
     required String operation,
     required Future<Budget?> Function() sourceRead,
     required Future<Budget?> Function() candidateRead,
-  }) =>
-      _compare(
-        slice: 'budgets',
-        operation: operation,
-        sourceRead: sourceRead,
-        candidateRead: candidateRead,
-        equals: _budgetsEqual,
-      );
+  }) => _compare(
+    slice: 'budgets',
+    operation: operation,
+    sourceRead: sourceRead,
+    candidateRead: candidateRead,
+    equals: _budgetsEqual,
+  );
 
   Future<DriftShadowReadResult> compareBudgets({
     required String operation,
     required Future<List<Budget>> Function() sourceRead,
     required Future<List<Budget>> Function() candidateRead,
-  }) =>
-      _compare(
-        slice: 'budgets',
-        operation: operation,
-        sourceRead: sourceRead,
-        candidateRead: candidateRead,
-        equals: _budgetListsEqual,
-      );
+  }) => _compare(
+    slice: 'budgets',
+    operation: operation,
+    sourceRead: sourceRead,
+    candidateRead: candidateRead,
+    equals: _budgetListsEqual,
+  );
 
   Future<DriftShadowReadResult> _compare<T>({
     required String slice,
@@ -133,10 +129,10 @@ class ShadowReadGoalRepository implements GoalRepository {
     required GoalRepository candidate,
     required DriftGoalsBudgetsShadowReadComparator comparator,
     required bool enabled,
-  })  : _source = source,
-        _candidate = candidate,
-        _comparator = comparator,
-        _enabled = enabled;
+  }) : _source = source,
+       _candidate = candidate,
+       _comparator = comparator,
+       _enabled = enabled;
 
   final GoalRepository _source;
   final GoalRepository _candidate;
@@ -187,10 +183,10 @@ class ShadowReadBudgetRepository implements BudgetRepository {
     required BudgetRepository candidate,
     required DriftGoalsBudgetsShadowReadComparator comparator,
     required bool enabled,
-  })  : _source = source,
-        _candidate = candidate,
-        _comparator = comparator,
-        _enabled = enabled;
+  }) : _source = source,
+       _candidate = candidate,
+       _comparator = comparator,
+       _enabled = enabled;
 
   final BudgetRepository _source;
   final BudgetRepository _candidate;
@@ -232,17 +228,15 @@ class ShadowReadBudgetRepository implements BudgetRepository {
 
 bool _goalListsEqual(List<Goal> left, List<Goal> right) =>
     left.length == right.length &&
-    left
-        .asMap()
-        .entries
-        .every((entry) => _goalsEqual(entry.value, right[entry.key]));
+    left.asMap().entries.every(
+      (entry) => _goalsEqual(entry.value, right[entry.key]),
+    );
 
 bool _budgetListsEqual(List<Budget> left, List<Budget> right) =>
     left.length == right.length &&
-    left
-        .asMap()
-        .entries
-        .every((entry) => _budgetsEqual(entry.value, right[entry.key]));
+    left.asMap().entries.every(
+      (entry) => _budgetsEqual(entry.value, right[entry.key]),
+    );
 
 bool _goalsEqual(Goal left, Goal right) =>
     left.id == right.id &&

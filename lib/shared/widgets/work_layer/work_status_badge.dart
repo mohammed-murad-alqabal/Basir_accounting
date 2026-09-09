@@ -30,9 +30,9 @@ class WorkStatusBadge extends StatelessWidget {
     this.icon,
     this.compact = false,
   }) : assert(
-          status != null || (label != null && backgroundColor != null),
-          'يجب تحديد الحالة الموحدة أو نص الشارة مع لونها.',
-        );
+         status != null || (label != null && backgroundColor != null),
+         'يجب تحديد الحالة الموحدة أو نص الشارة مع لونها.',
+       );
 
   /// الحالة الموحدة للوثيقة (تُشتق منها النصوص والألوان والأيقونات).
   final DocumentStatus? status;
@@ -76,8 +76,9 @@ class WorkStatusBadge extends StatelessWidget {
             vertical: Spacing.sm,
           );
     final iconSize = compact ? IconSizes.sm : IconSizes.md;
-    final fontSize =
-        compact ? AppTextStyles.labelSmallSize : AppTextStyles.labelMediumSize;
+    final fontSize = compact
+        ? AppTextStyles.labelSmallSize
+        : AppTextStyles.labelMediumSize;
 
     return Container(
       padding: padding,

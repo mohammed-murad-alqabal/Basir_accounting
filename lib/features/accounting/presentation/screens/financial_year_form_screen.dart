@@ -32,8 +32,9 @@ class _FinancialYearFormScreenState
   @override
   void initState() {
     super.initState();
-    _nameController =
-        TextEditingController(text: widget.financialYear?.name ?? '');
+    _nameController = TextEditingController(
+      text: widget.financialYear?.name ?? '',
+    );
     _startDate =
         widget.financialYear?.startDate ?? DateTime(DateTime.now().year);
     _endDate =
@@ -110,45 +111,45 @@ class _FinancialYearFormScreenState
 
   @override
   Widget build(BuildContext context) => GlassScaffold(
-        title: widget.financialYear == null
-            ? 'New Financial Year'
-            : 'Edit Financial Year',
-        body: SingleChildScrollView(
-          padding: const EdgeInsets.all(Spacing.xl),
-          child: Form(
-            key: _formKey,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                AppTextField(
-                  controller: _nameController,
-                  label: 'Year Name',
-                  hint: 'e.g. Fiscal Year 2026',
-                  validator: (v) => v!.isEmpty ? 'Name is required' : null,
-                ),
-                const SizedBox(height: Spacing.lg),
-                _buildDatePicker(
-                  'Start Date',
-                  _startDate,
-                  () => _selectDate(context, true),
-                ),
-                const SizedBox(height: Spacing.md),
-                _buildDatePicker(
-                  'End Date',
-                  _endDate,
-                  () => _selectDate(context, false),
-                ),
-                const SizedBox(height: Spacing.xxl),
-                AppEnhancedButton(
-                  label: 'Save Fiscal Year',
-                  onPressed: _save,
-                  isLoading: _isLoading,
-                ),
-              ],
+    title: widget.financialYear == null
+        ? 'New Financial Year'
+        : 'Edit Financial Year',
+    body: SingleChildScrollView(
+      padding: const EdgeInsets.all(Spacing.xl),
+      child: Form(
+        key: _formKey,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            AppTextField(
+              controller: _nameController,
+              label: 'Year Name',
+              hint: 'e.g. Fiscal Year 2026',
+              validator: (v) => v!.isEmpty ? 'Name is required' : null,
             ),
-          ),
+            const SizedBox(height: Spacing.lg),
+            _buildDatePicker(
+              'Start Date',
+              _startDate,
+              () => _selectDate(context, true),
+            ),
+            const SizedBox(height: Spacing.md),
+            _buildDatePicker(
+              'End Date',
+              _endDate,
+              () => _selectDate(context, false),
+            ),
+            const SizedBox(height: Spacing.xxl),
+            AppEnhancedButton(
+              label: 'Save Fiscal Year',
+              onPressed: _save,
+              isLoading: _isLoading,
+            ),
+          ],
         ),
-      );
+      ),
+    ),
+  );
 
   Widget _buildDatePicker(String label, DateTime date, VoidCallback onTap) =>
       Column(
@@ -165,8 +166,9 @@ class _FinancialYearFormScreenState
                 vertical: Spacing.md,
               ),
               decoration: BoxDecoration(
-                border:
-                    Border.all(color: AppColors.primary.withValues(alpha: 0.3)),
+                border: Border.all(
+                  color: AppColors.primary.withValues(alpha: 0.3),
+                ),
                 borderRadius: BorderRadius.circular(Radii.md),
               ),
               child: Row(

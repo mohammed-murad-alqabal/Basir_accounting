@@ -20,10 +20,10 @@ class IsarSalesInvoicePostingGateway implements SalesInvoicePostingGateway {
     required AccountingService accountingService,
     required String? userId,
     required String? warehouseId,
-  })  : _isar = isar,
-        _accountingService = accountingService,
-        _userId = userId,
-        _warehouseId = warehouseId;
+  }) : _isar = isar,
+       _accountingService = accountingService,
+       _userId = userId,
+       _warehouseId = warehouseId;
 
   final Isar _isar;
   final AccountingService _accountingService;
@@ -35,12 +35,11 @@ class IsarSalesInvoicePostingGateway implements SalesInvoicePostingGateway {
     required Invoice invoice,
     required String actorId,
     required DateTime recordedAt,
-  }) =>
-      _accountingService.prepareSalesInvoiceEntry(
-        invoice,
-        createdBy: actorId,
-        recordedAt: recordedAt,
-      );
+  }) => _accountingService.prepareSalesInvoiceEntry(
+    invoice,
+    createdBy: actorId,
+    recordedAt: recordedAt,
+  );
 
   @override
   Future<void> commitSalesInvoice({

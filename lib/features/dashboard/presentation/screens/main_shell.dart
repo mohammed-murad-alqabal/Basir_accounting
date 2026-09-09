@@ -27,10 +27,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 /// - حركات انتقالية سلسة بين الشاشات
 class MainShell extends ConsumerStatefulWidget {
   /// إنشاء الهيكل الرئيسي للتطبيق
-  const MainShell({
-    super.key,
-    this.screens,
-  });
+  const MainShell({super.key, this.screens});
 
   final List<Widget>? screens;
 
@@ -110,16 +107,14 @@ class _MainShellState extends ConsumerState<MainShell>
 
     _lockShowing = true;
     try {
-      final ok = await navigator.pushNamed<bool>(
+      final ok =
+          await navigator.pushNamed<bool>(
             '/mfa-challenge',
             arguments: const {'after': '/dashboard'},
           ) ??
           false;
       if (!ok && mounted) {
-        await navigator.pushNamedAndRemoveUntil(
-          '/login',
-          (route) => false,
-        );
+        await navigator.pushNamedAndRemoveUntil('/login', (route) => false);
       }
     } finally {
       _lockShowing = false;
@@ -142,44 +137,43 @@ class _MainShellState extends ConsumerState<MainShell>
   List<_NavItemData> _buildNavItems(
     AppIconsBase appIcons,
     AppLocalizations l10n,
-  ) =>
-      [
-        _NavItemData(
-          icon: appIcons.home,
-          label: l10n.navHome,
-          semanticLabel: 'الصفحة الرئيسية',
-        ),
-        _NavItemData(
-          icon: appIcons.invoices,
-          label: l10n.navInvoices,
-          semanticLabel: 'الفواتير',
-        ),
-        _NavItemData(
-          icon: Icons.business_center,
-          label: l10n.navVendors,
-          semanticLabel: 'الموردون',
-        ),
-        _NavItemData(
-          icon: appIcons.customers,
-          label: l10n.navCustomers,
-          semanticLabel: 'العملاء',
-        ),
-        _NavItemData(
-          icon: Icons.inventory_2,
-          label: l10n.navInventory,
-          semanticLabel: 'المخزون',
-        ),
-        _NavItemData(
-          icon: Icons.account_balance_wallet_outlined,
-          label: l10n.navAssets,
-          semanticLabel: 'الأصول',
-        ),
-        _NavItemData(
-          icon: appIcons.settings,
-          label: l10n.navSettings,
-          semanticLabel: 'الإعدادات',
-        ),
-      ];
+  ) => [
+    _NavItemData(
+      icon: appIcons.home,
+      label: l10n.navHome,
+      semanticLabel: 'الصفحة الرئيسية',
+    ),
+    _NavItemData(
+      icon: appIcons.invoices,
+      label: l10n.navInvoices,
+      semanticLabel: 'الفواتير',
+    ),
+    _NavItemData(
+      icon: Icons.business_center,
+      label: l10n.navVendors,
+      semanticLabel: 'الموردون',
+    ),
+    _NavItemData(
+      icon: appIcons.customers,
+      label: l10n.navCustomers,
+      semanticLabel: 'العملاء',
+    ),
+    _NavItemData(
+      icon: Icons.inventory_2,
+      label: l10n.navInventory,
+      semanticLabel: 'المخزون',
+    ),
+    _NavItemData(
+      icon: Icons.account_balance_wallet_outlined,
+      label: l10n.navAssets,
+      semanticLabel: 'الأصول',
+    ),
+    _NavItemData(
+      icon: appIcons.settings,
+      label: l10n.navSettings,
+      semanticLabel: 'الإعدادات',
+    ),
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -249,84 +243,82 @@ class _MainShellState extends ConsumerState<MainShell>
     required _NavItemData item,
     required int index,
     required bool isSelected,
-  }) =>
-      Semantics(
-        button: true,
-        selected: isSelected,
-        label: item.semanticLabel,
-        hint: isSelected ? 'عنصر التنقل المحدد حالياً' : 'اضغط للانتقال',
-        child: Material(
-          type: MaterialType.transparency,
-          child: InkWell(
-            onTap: () => _onItemTapped(index),
-            borderRadius: BorderRadius.circular(Radii.md),
-            splashColor: AppColors.primary.withValues(alpha: 0.12),
-            highlightColor: Colors.transparent,
-            child: SizedBox(
-              width: TouchTargets.minimum,
-              height: kBottomNavigationBarHeight,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  AnimatedScale(
-                    duration: _indicatorUpdateDuration,
-                    curve: AnimationCurves.fastOutSlowIn,
-                    scale: isSelected ? 1.1 : 1.0,
-                    child: AnimatedContainer(
-                      duration: _indicatorUpdateDuration,
-                      curve: AnimationCurves.fastOutSlowIn,
-                      padding: EdgeInsets.all(isSelected ? Spacing.xs : 0),
-                      decoration: BoxDecoration(
-                        color: isSelected
-                            ? AppColors.primaryLight
-                            : Colors.transparent,
-                        borderRadius: BorderRadius.circular(Radii.sm),
-                        boxShadow: isSelected
-                            ? [
-                                BoxShadow(
-                                  color: AppColors.primary.withValues(
-                                    alpha: 0.12,
-                                  ),
-                                  blurRadius: _indicatorElevationBoost,
-                                  offset: const Offset(0, Elevation.sm / 2),
-                                ),
-                              ]
-                            : null,
-                      ),
-                      child: Icon(
-                        item.icon,
-                        size: IconSizes.md,
-                        color: isSelected
-                            ? AppColors.primary
-                            : AppColors.textSecondary,
-                      ),
-                    ),
+  }) => Semantics(
+    button: true,
+    selected: isSelected,
+    label: item.semanticLabel,
+    hint: isSelected ? 'عنصر التنقل المحدد حالياً' : 'اضغط للانتقال',
+    child: Material(
+      type: MaterialType.transparency,
+      child: InkWell(
+        onTap: () => _onItemTapped(index),
+        borderRadius: BorderRadius.circular(Radii.md),
+        splashColor: AppColors.primary.withValues(alpha: 0.12),
+        highlightColor: Colors.transparent,
+        child: SizedBox(
+          width: TouchTargets.minimum,
+          height: kBottomNavigationBarHeight,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              AnimatedScale(
+                duration: _indicatorUpdateDuration,
+                curve: AnimationCurves.fastOutSlowIn,
+                scale: isSelected ? 1.1 : 1.0,
+                child: AnimatedContainer(
+                  duration: _indicatorUpdateDuration,
+                  curve: AnimationCurves.fastOutSlowIn,
+                  padding: EdgeInsets.all(isSelected ? Spacing.xs : 0),
+                  decoration: BoxDecoration(
+                    color: isSelected
+                        ? AppColors.primaryLight
+                        : Colors.transparent,
+                    borderRadius: BorderRadius.circular(Radii.sm),
+                    boxShadow: isSelected
+                        ? [
+                            BoxShadow(
+                              color: AppColors.primary.withValues(alpha: 0.12),
+                              blurRadius: _indicatorElevationBoost,
+                              offset: const Offset(0, Elevation.sm / 2),
+                            ),
+                          ]
+                        : null,
                   ),
-                  const SizedBox(height: 2),
-                  AnimatedDefaultTextStyle(
-                    duration: _indicatorUpdateDuration,
-                    curve: AnimationCurves.fastOutSlowIn,
-                    style: AppTextStyles.labelSmall.copyWith(
-                      color: isSelected
-                          ? AppColors.primary
-                          : AppColors.textSecondary,
-                      fontWeight:
-                          isSelected ? FontWeights.bold : FontWeights.medium,
-                    ),
-                    child: Text(
-                      item.label,
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      textScaler: TextScaler.noScaling,
-                    ),
+                  child: Icon(
+                    item.icon,
+                    size: IconSizes.md,
+                    color: isSelected
+                        ? AppColors.primary
+                        : AppColors.textSecondary,
                   ),
-                ],
+                ),
               ),
-            ),
+              const SizedBox(height: 2),
+              AnimatedDefaultTextStyle(
+                duration: _indicatorUpdateDuration,
+                curve: AnimationCurves.fastOutSlowIn,
+                style: AppTextStyles.labelSmall.copyWith(
+                  color: isSelected
+                      ? AppColors.primary
+                      : AppColors.textSecondary,
+                  fontWeight: isSelected
+                      ? FontWeights.bold
+                      : FontWeights.medium,
+                ),
+                child: Text(
+                  item.label,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  textScaler: TextScaler.noScaling,
+                ),
+              ),
+            ],
           ),
         ),
-      );
+      ),
+    ),
+  );
 }
 
 class _NavItemData {

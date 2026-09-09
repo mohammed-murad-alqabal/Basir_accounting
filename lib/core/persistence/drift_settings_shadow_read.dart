@@ -4,12 +4,7 @@ import 'package:basir_accounting_system/features/settings/domain/repositories/bu
 import 'package:basir_accounting_system/features/settings/domain/repositories/profile_repository.dart';
 
 /// نتيجة تشغيل shadow-read؛ لا تحمل قيم الأعمال أو هوية المستخدم.
-enum DriftShadowReadOutcome {
-  match,
-  mismatch,
-  sourceError,
-  candidateError,
-}
+enum DriftShadowReadOutcome { match, mismatch, sourceError, candidateError }
 
 /// حدث تشخيصي آمن؛ يتعمد عدم احتواء userId أو payload أو exception message.
 class DriftShadowReadEvent {
@@ -27,9 +22,8 @@ class DriftShadowReadEvent {
 }
 
 /// منفذ telemetry قابل للحقن، ويمكن ربطه لاحقًا بمراقبة المشروع بعد مراجعة.
-typedef DriftShadowReadRecorder = Future<void> Function(
-  DriftShadowReadEvent event,
-);
+typedef DriftShadowReadRecorder =
+    Future<void> Function(DriftShadowReadEvent event);
 
 /// sink ذاكراتي للاختبار فقط؛ لا يرسل أي بيانات إلى الشبكة.
 class InMemoryDriftShadowReadSink {
@@ -61,8 +55,8 @@ class DriftSettingsShadowReadComparator {
   DriftSettingsShadowReadComparator({
     required DriftShadowReadRecorder recorder,
     DateTime Function()? clock,
-  })  : _recorder = recorder,
-        _clock = clock ?? DateTime.now;
+  }) : _recorder = recorder,
+       _clock = clock ?? DateTime.now;
 
   final DriftShadowReadRecorder _recorder;
   final DateTime Function() _clock;
@@ -71,27 +65,25 @@ class DriftSettingsShadowReadComparator {
     required String operation,
     required Future<Profile?> Function() sourceRead,
     required Future<Profile?> Function() candidateRead,
-  }) =>
-      _compare(
-        slice: 'profiles',
-        operation: operation,
-        sourceRead: sourceRead,
-        candidateRead: candidateRead,
-        equals: _profilesEqual,
-      );
+  }) => _compare(
+    slice: 'profiles',
+    operation: operation,
+    sourceRead: sourceRead,
+    candidateRead: candidateRead,
+    equals: _profilesEqual,
+  );
 
   Future<DriftShadowReadResult> compareBusinessSettings({
     required String operation,
     required Future<BusinessSettings?> Function() sourceRead,
     required Future<BusinessSettings?> Function() candidateRead,
-  }) =>
-      _compare(
-        slice: 'business-settings',
-        operation: operation,
-        sourceRead: sourceRead,
-        candidateRead: candidateRead,
-        equals: _businessSettingsEqual,
-      );
+  }) => _compare(
+    slice: 'business-settings',
+    operation: operation,
+    sourceRead: sourceRead,
+    candidateRead: candidateRead,
+    equals: _businessSettingsEqual,
+  );
 
   Future<DriftShadowReadResult> _compare<T>({
     required String slice,
@@ -163,10 +155,7 @@ bool _profilesEqual(Profile left, Profile right) =>
     left.serverUpdatedAt?.toUtc() == right.serverUpdatedAt?.toUtc() &&
     left.isDeleted == right.isDeleted;
 
-bool _businessSettingsEqual(
-  BusinessSettings left,
-  BusinessSettings right,
-) =>
+bool _businessSettingsEqual(BusinessSettings left, BusinessSettings right) =>
     left.id == right.id &&
     left.companyName == right.companyName &&
     left.taxNumber == right.taxNumber &&
@@ -188,10 +177,10 @@ class ShadowReadProfileRepository implements ProfileRepository {
     required ProfileRepository candidate,
     required DriftSettingsShadowReadComparator comparator,
     required bool enabled,
-  })  : _source = source,
-        _candidate = candidate,
-        _comparator = comparator,
-        _enabled = enabled;
+  }) : _source = source,
+       _candidate = candidate,
+       _comparator = comparator,
+       _enabled = enabled;
 
   final ProfileRepository _source;
   final ProfileRepository _candidate;
@@ -228,10 +217,10 @@ class ShadowReadBusinessSettingsRepository
     required BusinessSettingsRepository candidate,
     required DriftSettingsShadowReadComparator comparator,
     required bool enabled,
-  })  : _source = source,
-        _candidate = candidate,
-        _comparator = comparator,
-        _enabled = enabled;
+  }) : _source = source,
+       _candidate = candidate,
+       _comparator = comparator,
+       _enabled = enabled;
 
   final BusinessSettingsRepository _source;
   final BusinessSettingsRepository _candidate;

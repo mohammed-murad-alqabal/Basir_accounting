@@ -52,13 +52,13 @@ class BarcodeConfigModel {
 
   /// التحويل إلى Entity
   BarcodeConfig toEntity() => BarcodeConfig(
-        id: id,
-        printerType: printerType,
-        columnsPerRow: columnsPerRow,
-        height: height,
-        width: width,
-        margin: margin,
-        showItemName: showItemName,
-        showPrice: showPrice,
-      );
+    id: id,
+    printerType: printerType,
+    columnsPerRow: columnsPerRow,
+    height: height,
+    width: width,
+    margin: margin,
+    showItemName: showItemName,
+    showPrice: showPrice,
+  );
 }

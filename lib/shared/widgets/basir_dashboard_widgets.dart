@@ -109,53 +109,53 @@ class GlassStatCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Semantics(
-        container: true,
-        label: '$label: $value',
-        button: onTap != null,
-        child: AppCard(
-          onTap: onTap,
-          statusColor: color.withValues(alpha: 0.7),
-          backgroundColor: AppColors.surface.withValues(alpha: 0.7),
-          padding: const EdgeInsets.all(Spacing.md),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Container(
-                padding: const EdgeInsets.all(Spacing.xs),
-                decoration: BoxDecoration(
-                  color: color.withValues(alpha: 0.1),
-                  shape: BoxShape.circle,
-                ),
-                child: Icon(icon, color: color, size: IconSizes.md),
-              ),
-              const SizedBox(height: Spacing.xs),
-              Flexible(
-                child: FittedBox(
-                  fit: BoxFit.scaleDown,
-                  child: Text(
-                    label,
-                    style: AppTextStyles.labelSmall.copyWith(
-                      color: AppColors.textSecondary,
-                    ),
-                    textAlign: TextAlign.center,
-                  ),
-                ),
-              ),
-              const SizedBox(height: 2),
-              Flexible(
-                child: FittedBox(
-                  fit: BoxFit.scaleDown,
-                  child: Text(
-                    value,
-                    style: AppTextStyles.headlineSmall.copyWith(
-                      color: AppColors.textPrimary,
-                      fontWeight: FontWeights.bold,
-                    ),
-                  ),
-                ),
-              ),
-            ],
+    container: true,
+    label: '$label: $value',
+    button: onTap != null,
+    child: AppCard(
+      onTap: onTap,
+      statusColor: color.withValues(alpha: 0.7),
+      backgroundColor: AppColors.surface.withValues(alpha: 0.7),
+      padding: const EdgeInsets.all(Spacing.md),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Container(
+            padding: const EdgeInsets.all(Spacing.xs),
+            decoration: BoxDecoration(
+              color: color.withValues(alpha: 0.1),
+              shape: BoxShape.circle,
+            ),
+            child: Icon(icon, color: color, size: IconSizes.md),
           ),
-        ),
-      );
+          const SizedBox(height: Spacing.xs),
+          Flexible(
+            child: FittedBox(
+              fit: BoxFit.scaleDown,
+              child: Text(
+                label,
+                style: AppTextStyles.labelSmall.copyWith(
+                  color: AppColors.textSecondary,
+                ),
+                textAlign: TextAlign.center,
+              ),
+            ),
+          ),
+          const SizedBox(height: 2),
+          Flexible(
+            child: FittedBox(
+              fit: BoxFit.scaleDown,
+              child: Text(
+                value,
+                style: AppTextStyles.headlineSmall.copyWith(
+                  color: AppColors.textPrimary,
+                  fontWeight: FontWeights.bold,
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
+    ),
+  );
 }

@@ -114,8 +114,8 @@ class _AppTextFieldState extends State<AppTextField> {
                 style: AppTextStyles.labelLarge.copyWith(
                   color: widget.isEnabled
                       ? (_isFocused
-                          ? BorderContrastDesign.getBorderFocused(brightness)
-                          : InputColors.label)
+                            ? BorderContrastDesign.getBorderFocused(brightness)
+                            : InputColors.label)
                       : AppColors.textDisabled,
                   fontWeight: FontWeights.semiBold,
                 ),
@@ -194,9 +194,9 @@ class _AppTextFieldState extends State<AppTextField> {
                 ),
                 focusedErrorBorder:
                     BorderContrastDesign.buildEnhancedInputBorder(
-                  color: BorderContrastDesign.getBorderError(brightness),
-                  width: BorderContrastDesign.borderWidthError,
-                ),
+                      color: BorderContrastDesign.getBorderError(brightness),
+                      width: BorderContrastDesign.borderWidthError,
+                    ),
                 disabledBorder: BorderContrastDesign.buildEnhancedInputBorder(
                   color: AppColors.borderLight,
                 ),

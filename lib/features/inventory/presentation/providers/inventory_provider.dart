@@ -11,8 +11,10 @@ final inventoryItemsProvider = FutureProvider<List<InventoryItem>>((ref) async {
 });
 
 /// مزود جلب صنف بواسطة الكود
-final itemBySkuProvider =
-    FutureProvider.family<InventoryItem?, String>((ref, sku) async {
+final itemBySkuProvider = FutureProvider.family<InventoryItem?, String>((
+  ref,
+  sku,
+) async {
   final repository = ref.watch(inventoryRepositoryProvider);
   return repository.getItemBySku(sku);
 });
@@ -23,31 +25,30 @@ final inventorySearchProvider = StateProvider<String>((ref) => '');
 /// مزود أصناف المخزون المفلترة بناءً على البحث
 final filteredInventoryItemsProvider =
     Provider<AsyncValue<List<InventoryItem>>>((ref) {
-  final itemsAsync = ref.watch(inventoryItemsProvider);
-  final searchQuery = ref.watch(inventorySearchProvider).toLowerCase();
+      final itemsAsync = ref.watch(inventoryItemsProvider);
+      final searchQuery = ref.watch(inventorySearchProvider).toLowerCase();
 
-  if (searchQuery.isEmpty) return itemsAsync;
+      if (searchQuery.isEmpty) return itemsAsync;
 
-  return itemsAsync.whenData(
-    (items) => items.where((item) {
-      final nameAr = item.nameAr.toLowerCase();
-      final nameEn = item.nameEn.toLowerCase();
-      final sku = (item.sku ?? '').toLowerCase();
-      final barcode = (item.barcode ?? '').toLowerCase();
+      return itemsAsync.whenData(
+        (items) => items.where((item) {
+          final nameAr = item.nameAr.toLowerCase();
+          final nameEn = item.nameEn.toLowerCase();
+          final sku = (item.sku ?? '').toLowerCase();
+          final barcode = (item.barcode ?? '').toLowerCase();
 
-      return nameAr.contains(searchQuery) ||
-          nameEn.contains(searchQuery) ||
-          sku.contains(searchQuery) ||
-          barcode.contains(searchQuery);
-    }).toList(),
-  );
-});
+          return nameAr.contains(searchQuery) ||
+              nameEn.contains(searchQuery) ||
+              sku.contains(searchQuery) ||
+              barcode.contains(searchQuery);
+        }).toList(),
+      );
+    });
 
 /// مزود سياسة إنشاء وتعديل البيانات الرئيسية للأصناف.
 final inventoryItemServiceProvider = Provider<InventoryItemService>(
-  (ref) => InventoryItemService(
-    repository: ref.watch(inventoryRepositoryProvider),
-  ),
+  (ref) =>
+      InventoryItemService(repository: ref.watch(inventoryRepositoryProvider)),
 );
 
 /// نوتيفاير لإدارة عمليات فهرس الأصناف.
@@ -61,10 +62,9 @@ class InventoryNotifier extends StateNotifier<AsyncValue<void>> {
   /// إضافة صنف رئيسي جديد عبر سياسة الخدمة الموحدة.
   Future<OperationResult<InventoryItem>> addItem(InventoryItem item) async {
     state = const AsyncValue.loading();
-    final result = await ref.read(inventoryItemServiceProvider).create(
-          item,
-          operatorName: _operatorName(),
-        );
+    final result = await ref
+        .read(inventoryItemServiceProvider)
+        .create(item, operatorName: _operatorName());
     if (result.success) ref.invalidate(inventoryItemsProvider);
     state = const AsyncValue.data(null);
     return result;
@@ -73,10 +73,9 @@ class InventoryNotifier extends StateNotifier<AsyncValue<void>> {
   /// تحديث بيانات صنف قائمة من دون السماح بتعديل الرصيد مباشرة.
   Future<OperationResult<InventoryItem>> updateItem(InventoryItem item) async {
     state = const AsyncValue.loading();
-    final result = await ref.read(inventoryItemServiceProvider).update(
-          item,
-          operatorName: _operatorName(),
-        );
+    final result = await ref
+        .read(inventoryItemServiceProvider)
+        .update(item, operatorName: _operatorName());
     if (result.success) ref.invalidate(inventoryItemsProvider);
     state = const AsyncValue.data(null);
     return result;
@@ -106,5 +105,5 @@ class InventoryNotifier extends StateNotifier<AsyncValue<void>> {
 /// مزود العمليات على المخزون
 final inventoryActionProvider =
     StateNotifierProvider<InventoryNotifier, AsyncValue<void>>(
-  (ref) => InventoryNotifier(ref: ref),
-);
+      (ref) => InventoryNotifier(ref: ref),
+    );

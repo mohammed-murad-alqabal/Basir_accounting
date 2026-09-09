@@ -6,10 +6,7 @@ import 'package:isar/isar.dart';
 /// تطبيق مستودع المستودعات باستخدام Isar
 class WarehouseRepositoryImpl implements WarehouseRepository {
   /// إنشاء نسخة من المستودع
-  WarehouseRepositoryImpl({
-    required this.isar,
-    this.userId,
-  });
+  WarehouseRepositoryImpl({required this.isar, this.userId});
 
   /// كائن Isar للاتصال بقاعدة البيانات
   final Isar isar;
@@ -66,14 +63,14 @@ class WarehouseRepositoryImpl implements WarehouseRepository {
   }
 
   Warehouse _toEntity(WarehouseModel model) => Warehouse(
-        id: model.id,
-        nameAr: model.nameAr,
-        nameEn: model.nameEn,
-        location: model.location,
-        userId: model.userId,
-        createdAt: model.createdAt,
-        updatedAt: model.updatedAt,
-      );
+    id: model.id,
+    nameAr: model.nameAr,
+    nameEn: model.nameEn,
+    location: model.location,
+    userId: model.userId,
+    createdAt: model.createdAt,
+    updatedAt: model.updatedAt,
+  );
 
   WarehouseModel _fromEntity(Warehouse entity) => WarehouseModel()
     ..id = entity.id

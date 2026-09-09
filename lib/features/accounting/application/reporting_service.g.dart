@@ -17,14 +17,14 @@ String _$reportingServiceHash() => r'5ee0f50dd269fa9182185365d89f794e279066e6';
 @ProviderFor(ReportingService)
 final reportingServiceProvider =
     AutoDisposeNotifierProvider<ReportingService, void>.internal(
-  ReportingService.new,
-  name: r'reportingServiceProvider',
-  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-      ? null
-      : _$reportingServiceHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
+      ReportingService.new,
+      name: r'reportingServiceProvider',
+      debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+          ? null
+          : _$reportingServiceHash,
+      dependencies: null,
+      allTransitiveDependencies: null,
+    );
 
 typedef _$ReportingService = AutoDisposeNotifier<void>;
 // ignore_for_file: type=lint

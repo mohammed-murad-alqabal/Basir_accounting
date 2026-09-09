@@ -159,8 +159,9 @@ class _AppEnhancedButtonState extends State<AppEnhancedButton>
       fontWeight: FontWeights.bold,
     );
 
-    final mouseCursor =
-        isEnabled ? SystemMouseCursors.click : SystemMouseCursors.forbidden;
+    final mouseCursor = isEnabled
+        ? SystemMouseCursors.click
+        : SystemMouseCursors.forbidden;
 
     Widget buttonChild = OverflowDetector(
       name: 'AppEnhancedButton(${widget.label})',
@@ -184,14 +185,14 @@ class _AppEnhancedButtonState extends State<AppEnhancedButton>
                 decoration: BoxDecoration(
                   color: gradient == null
                       ? _isHovered && isEnabled
-                          ? bgColor.withValues(alpha: 0.9)
-                          : bgColor
+                            ? bgColor.withValues(alpha: 0.9)
+                            : bgColor
                       : null,
                   gradient: gradient == null
                       ? null
                       : _isHovered && isEnabled
-                          ? _darkenGradient(gradient)
-                          : gradient,
+                      ? _darkenGradient(gradient)
+                      : gradient,
                   borderRadius: widget.borderRadius ?? Radii.borderRadiusMd,
                   border: widget.type == AppEnhancedButtonType.outlined
                       ? Border.all(
@@ -199,8 +200,8 @@ class _AppEnhancedButtonState extends State<AppEnhancedButton>
                           width: _isFocused ? 2.0 : 1.5,
                         )
                       : _isFocused
-                          ? Border.all(color: AppColors.primaryDark, width: 2)
-                          : null,
+                      ? Border.all(color: AppColors.primaryDark, width: 2)
+                      : null,
                   boxShadow: isEnabled && elevation > 0
                       ? [
                           BoxShadow(
@@ -240,11 +241,7 @@ class _AppEnhancedButtonState extends State<AppEnhancedButton>
                                 mainAxisSize: MainAxisSize.min,
                                 children: [
                                   if (widget.icon != null) ...[
-                                    Icon(
-                                      widget.icon,
-                                      color: fgColor,
-                                      size: 22,
-                                    ),
+                                    Icon(widget.icon, color: fgColor, size: 22),
                                     const SizedBox(width: Spacing.sm),
                                   ],
                                   Flexible(
@@ -288,8 +285,9 @@ class _AppEnhancedButtonState extends State<AppEnhancedButton>
   Gradient _darkenGradient(Gradient original) {
     if (original is LinearGradient) {
       final originalColors = original.colors;
-      final modifiedColors =
-          originalColors.map((color) => color.withValues(alpha: 0.9)).toList();
+      final modifiedColors = originalColors
+          .map((color) => color.withValues(alpha: 0.9))
+          .toList();
       return LinearGradient(
         colors: modifiedColors,
         begin: original.begin,
@@ -328,15 +326,15 @@ class _AppEnhancedButtonState extends State<AppEnhancedButton>
   }
 
   double _getDefaultElevation() => switch (widget.type) {
-        AppEnhancedButtonType.outlined => 0,
-        AppEnhancedButtonType.text => 0,
-        _ => 4.0,
-      };
+    AppEnhancedButtonType.outlined => 0,
+    AppEnhancedButtonType.text => 0,
+    _ => 4.0,
+  };
 
   Color _getShadowColor() => switch (widget.type) {
-        AppEnhancedButtonType.primary => AppColors.primary,
-        AppEnhancedButtonType.secondary => AppColors.secondary,
-        AppEnhancedButtonType.danger => AppColors.error,
-        _ => Colors.transparent,
-      };
+    AppEnhancedButtonType.primary => AppColors.primary,
+    AppEnhancedButtonType.secondary => AppColors.secondary,
+    AppEnhancedButtonType.danger => AppColors.error,
+    _ => Colors.transparent,
+  };
 }

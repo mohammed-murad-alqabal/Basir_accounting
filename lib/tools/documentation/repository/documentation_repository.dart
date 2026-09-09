@@ -220,8 +220,9 @@ class DocumentationRepository {
       return CoverageTrend(
         direction: TrendDirection.stable,
         changePercentage: 0,
-        currentCoverage:
-            history.isNotEmpty ? history.first.stats.coveragePercentage : 0,
+        currentCoverage: history.isNotEmpty
+            ? history.first.stats.coveragePercentage
+            : 0,
         previousCoverage: 0,
         period: period,
       );
@@ -245,8 +246,8 @@ class DocumentationRepository {
     final direction = change > 0.5
         ? TrendDirection.improving
         : change < -0.5
-            ? TrendDirection.declining
-            : TrendDirection.stable;
+        ? TrendDirection.declining
+        : TrendDirection.stable;
 
     return CoverageTrend(
       direction: direction,
@@ -308,17 +309,17 @@ class CoverageReport {
 
   /// تحويل إلى JSON
   Map<String, dynamic> toJson() => {
-        'timestamp': timestamp.toIso8601String(),
-        'stats': {
-          'totalElements': stats.totalElements,
-          'documentedElements': stats.documentedElements,
-          'undocumentedElements': stats.undocumentedElements,
-          'coveragePercentage': stats.coveragePercentage,
-        },
-        'analyzedFiles': analyzedFiles,
-        'lowCoverageFiles': lowCoverageFiles,
-        'notes': notes,
-      };
+    'timestamp': timestamp.toIso8601String(),
+    'stats': {
+      'totalElements': stats.totalElements,
+      'documentedElements': stats.documentedElements,
+      'undocumentedElements': stats.undocumentedElements,
+      'coveragePercentage': stats.coveragePercentage,
+    },
+    'analyzedFiles': analyzedFiles,
+    'lowCoverageFiles': lowCoverageFiles,
+    'notes': notes,
+  };
 }
 
 /// صيغة التقرير

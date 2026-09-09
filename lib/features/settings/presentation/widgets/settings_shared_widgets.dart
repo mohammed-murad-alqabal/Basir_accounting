@@ -48,13 +48,13 @@ class SettingsGroupCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => GlassCard(
-        child: Column(
-          children: [
-            for (var i = 0; i < children.length; i++) ...[
-              children[i],
-              if (i < children.length - 1) const Divider(height: 1),
-            ],
-          ],
-        ),
-      );
+    child: Column(
+      children: [
+        for (var i = 0; i < children.length; i++) ...[
+          children[i],
+          if (i < children.length - 1) const Divider(height: 1),
+        ],
+      ],
+    ),
+  );
 }

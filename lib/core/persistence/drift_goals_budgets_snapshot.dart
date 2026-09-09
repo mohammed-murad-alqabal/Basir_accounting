@@ -46,12 +46,14 @@ class DriftGoalsBudgetsSnapshot {
     if (value is! List<Object?>) {
       throw const FormatException('Snapshot collection is missing.');
     }
-    return value.map((item) {
-      if (item is! Map<String, Object?>) {
-        throw const FormatException('Snapshot record must be an object.');
-      }
-      return decode(item);
-    }).toList(growable: false);
+    return value
+        .map((item) {
+          if (item is! Map<String, Object?>) {
+            throw const FormatException('Snapshot record must be an object.');
+          }
+          return decode(item);
+        })
+        .toList(growable: false);
   }
 }
 
@@ -108,31 +110,31 @@ class DriftGoalsBudgetsSnapshotRunner {
 }
 
 GoalRecord _goalFromJson(Map<String, Object?> json) => GoalRecord(
-      id: _requiredString(json, 'id'),
-      name: _requiredString(json, 'name'),
-      category: _requiredString(json, 'category'),
-      targetAmount: _requiredDecimalString(json, 'targetAmount'),
-      currentAmount: _requiredDecimalString(json, 'currentAmount'),
-      startDate: _requiredDate(json, 'startDate'),
-      targetDate: _requiredDate(json, 'targetDate'),
-      isActive: _requiredBool(json, 'isActive'),
-      description: _optionalString(json, 'description'),
-      userId: _optionalString(json, 'userId'),
-    );
+  id: _requiredString(json, 'id'),
+  name: _requiredString(json, 'name'),
+  category: _requiredString(json, 'category'),
+  targetAmount: _requiredDecimalString(json, 'targetAmount'),
+  currentAmount: _requiredDecimalString(json, 'currentAmount'),
+  startDate: _requiredDate(json, 'startDate'),
+  targetDate: _requiredDate(json, 'targetDate'),
+  isActive: _requiredBool(json, 'isActive'),
+  description: _optionalString(json, 'description'),
+  userId: _optionalString(json, 'userId'),
+);
 
 BudgetRecord _budgetFromJson(Map<String, Object?> json) => BudgetRecord(
-      id: _requiredString(json, 'id'),
-      name: _requiredString(json, 'name'),
-      category: _requiredString(json, 'category'),
-      limitAmount: _requiredDecimalString(json, 'limitAmount'),
-      spentAmount: _requiredDecimalString(json, 'spentAmount'),
-      startDate: _requiredDate(json, 'startDate'),
-      endDate: _requiredDate(json, 'endDate'),
-      alertThreshold: _requiredFiniteNumber(json, 'alertThreshold'),
-      isRollover: _requiredBool(json, 'isRollover'),
-      isActive: _requiredBool(json, 'isActive'),
-      userId: _optionalString(json, 'userId'),
-    );
+  id: _requiredString(json, 'id'),
+  name: _requiredString(json, 'name'),
+  category: _requiredString(json, 'category'),
+  limitAmount: _requiredDecimalString(json, 'limitAmount'),
+  spentAmount: _requiredDecimalString(json, 'spentAmount'),
+  startDate: _requiredDate(json, 'startDate'),
+  endDate: _requiredDate(json, 'endDate'),
+  alertThreshold: _requiredFiniteNumber(json, 'alertThreshold'),
+  isRollover: _requiredBool(json, 'isRollover'),
+  isActive: _requiredBool(json, 'isActive'),
+  userId: _optionalString(json, 'userId'),
+);
 
 String _requiredString(Map<String, Object?> json, String key) {
   final value = json[key];

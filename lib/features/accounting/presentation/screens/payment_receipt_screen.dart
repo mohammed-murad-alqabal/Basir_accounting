@@ -86,9 +86,9 @@ class _PaymentReceiptScreenState extends ConsumerState<PaymentReceiptScreen> {
   Future<void> _saveReceipt() async {
     if (!_formKey.currentState!.validate()) return;
     if (_selectedCustomerId == null || _selectedCustomerName == null) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Please select a customer')),
-      );
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(const SnackBar(content: Text('Please select a customer')));
       return;
     }
     if (_selectedAccountId == null) {
@@ -122,199 +122,196 @@ class _PaymentReceiptScreenState extends ConsumerState<PaymentReceiptScreen> {
       }
     } on Exception catch (e) {
       if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Error saving receipt: $e')),
-        );
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text('Error saving receipt: $e')));
       }
     }
   }
 
   @override
   Widget build(BuildContext context) => GlassScaffold(
-        title: widget.receipt == null
-            ? 'New Payment Receipt'
-            : 'Edit Payment Receipt',
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.save),
-            onPressed: _saveReceipt,
-            tooltip: 'Save',
-          ),
-        ],
-        body: SingleChildScrollView(
-          padding: const EdgeInsets.all(16),
-          child: Form(
-            key: _formKey,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                // Receipt Number
-                TextFormField(
-                  controller: _receiptNumberController,
-                  decoration: const InputDecoration(
-                    labelText: 'Receipt Number',
-                    prefixIcon: Icon(Icons.receipt),
-                    border: OutlineInputBorder(),
-                  ),
-                  validator: (value) {
-                    if (value == null || value.trim().isEmpty) {
-                      return 'Please enter receipt number';
-                    }
-                    return null;
-                  },
-                ),
-                const SizedBox(height: 16),
-
-                // Date
-                InkWell(
-                  onTap: () => _selectDate(context),
-                  child: InputDecorator(
-                    decoration: const InputDecoration(
-                      labelText: 'Date',
-                      prefixIcon: Icon(Icons.calendar_today),
-                      border: OutlineInputBorder(),
-                    ),
-                    child: Text(
-                      '${_selectedDate.toLocal()}'.split(' ')[0],
-                    ),
-                  ),
-                ),
-                const SizedBox(height: 16),
-
-                // Amount
-                TextFormField(
-                  controller: _amountController,
-                  decoration: const InputDecoration(
-                    labelText: 'Amount (SAR)',
-                    prefixIcon: Icon(Icons.attach_money),
-                    border: OutlineInputBorder(),
-                  ),
-                  keyboardType:
-                      const TextInputType.numberWithOptions(decimal: true),
-                  inputFormatters: [
-                    FilteringTextInputFormatter.allow(
-                      RegExp(r'^\d*\.?\d{0,2}'),
-                    ),
-                  ],
-                  validator: (value) {
-                    if (value == null || value.trim().isEmpty) {
-                      return 'Please enter amount';
-                    }
-                    try {
-                      final amount = Decimal.parse(value);
-                      if (amount <= Decimal.zero) {
-                        return 'Amount must be greater than zero';
-                      }
-                      _amount = amount;
-                    } on Exception {
-                      return 'Please enter a valid amount';
-                    }
-                    return null;
-                  },
-                ),
-                const SizedBox(height: 16),
-
-                // Customer Selection (Simplified - would normally show a dialog)
-                InputDecorator(
-                  decoration: const InputDecoration(
-                    labelText: 'Customer',
-                    prefixIcon: Icon(Icons.person),
-                    border: OutlineInputBorder(),
-                  ),
-                  child: Text(
-                    _selectedCustomerName ?? 'Select Customer (Tap to select)',
-                  ),
-                ),
-                const SizedBox(height: 16),
-
-                // Payment Method
-                DropdownButtonFormField<PaymentMethod>(
-                  initialValue: _selectedMethod,
-                  decoration: const InputDecoration(
-                    labelText: 'Payment Method',
-                    prefixIcon: Icon(Icons.payment),
-                    border: OutlineInputBorder(),
-                  ),
-                  items: PaymentMethod.values
-                      .map(
-                        (method) => DropdownMenuItem(
-                          value: method,
-                          child: Text(_getPaymentMethodLabel(method)),
-                        ),
-                      )
-                      .toList(),
-                  onChanged: (value) {
-                    if (value != null) {
-                      setState(() {
-                        _selectedMethod = value;
-                      });
-                    }
-                  },
-                ),
-                const SizedBox(height: 16),
-
-                // Status
-                DropdownButtonFormField<PaymentStatus>(
-                  initialValue: _selectedStatus,
-                  decoration: const InputDecoration(
-                    labelText: 'Status',
-                    prefixIcon: Icon(Icons.info),
-                    border: OutlineInputBorder(),
-                  ),
-                  items: PaymentStatus.values
-                      .map(
-                        (status) => DropdownMenuItem(
-                          value: status,
-                          child: Text(_getPaymentStatusLabel(status)),
-                        ),
-                      )
-                      .toList(),
-                  onChanged: (value) {
-                    if (value != null) {
-                      setState(() {
-                        _selectedStatus = value;
-                      });
-                    }
-                  },
-                ),
-                const SizedBox(height: 16),
-
-                // Reference
-                TextFormField(
-                  controller: _referenceController,
-                  decoration: const InputDecoration(
-                    labelText: 'Reference Number (Optional)',
-                    prefixIcon: Icon(Icons.tag),
-                    border: OutlineInputBorder(),
-                  ),
-                ),
-                const SizedBox(height: 16),
-
-                // Notes
-                TextFormField(
-                  controller: _notesController,
-                  decoration: const InputDecoration(
-                    labelText: 'Notes (Optional)',
-                    prefixIcon: Icon(Icons.note),
-                    border: OutlineInputBorder(),
-                  ),
-                  maxLines: 3,
-                ),
-                const SizedBox(height: 32),
-
-                // Save Button
-                ElevatedButton(
-                  onPressed: _saveReceipt,
-                  child: const Padding(
-                    padding: EdgeInsets.all(16),
-                    child: Text('Save Payment Receipt'),
-                  ),
-                ),
-              ],
+    title: widget.receipt == null
+        ? 'New Payment Receipt'
+        : 'Edit Payment Receipt',
+    actions: [
+      IconButton(
+        icon: const Icon(Icons.save),
+        onPressed: _saveReceipt,
+        tooltip: 'Save',
+      ),
+    ],
+    body: SingleChildScrollView(
+      padding: const EdgeInsets.all(16),
+      child: Form(
+        key: _formKey,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            // Receipt Number
+            TextFormField(
+              controller: _receiptNumberController,
+              decoration: const InputDecoration(
+                labelText: 'Receipt Number',
+                prefixIcon: Icon(Icons.receipt),
+                border: OutlineInputBorder(),
+              ),
+              validator: (value) {
+                if (value == null || value.trim().isEmpty) {
+                  return 'Please enter receipt number';
+                }
+                return null;
+              },
             ),
-          ),
+            const SizedBox(height: 16),
+
+            // Date
+            InkWell(
+              onTap: () => _selectDate(context),
+              child: InputDecorator(
+                decoration: const InputDecoration(
+                  labelText: 'Date',
+                  prefixIcon: Icon(Icons.calendar_today),
+                  border: OutlineInputBorder(),
+                ),
+                child: Text('${_selectedDate.toLocal()}'.split(' ')[0]),
+              ),
+            ),
+            const SizedBox(height: 16),
+
+            // Amount
+            TextFormField(
+              controller: _amountController,
+              decoration: const InputDecoration(
+                labelText: 'Amount (SAR)',
+                prefixIcon: Icon(Icons.attach_money),
+                border: OutlineInputBorder(),
+              ),
+              keyboardType: const TextInputType.numberWithOptions(
+                decimal: true,
+              ),
+              inputFormatters: [
+                FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d{0,2}')),
+              ],
+              validator: (value) {
+                if (value == null || value.trim().isEmpty) {
+                  return 'Please enter amount';
+                }
+                try {
+                  final amount = Decimal.parse(value);
+                  if (amount <= Decimal.zero) {
+                    return 'Amount must be greater than zero';
+                  }
+                  _amount = amount;
+                } on Exception {
+                  return 'Please enter a valid amount';
+                }
+                return null;
+              },
+            ),
+            const SizedBox(height: 16),
+
+            // Customer Selection (Simplified - would normally show a dialog)
+            InputDecorator(
+              decoration: const InputDecoration(
+                labelText: 'Customer',
+                prefixIcon: Icon(Icons.person),
+                border: OutlineInputBorder(),
+              ),
+              child: Text(
+                _selectedCustomerName ?? 'Select Customer (Tap to select)',
+              ),
+            ),
+            const SizedBox(height: 16),
+
+            // Payment Method
+            DropdownButtonFormField<PaymentMethod>(
+              initialValue: _selectedMethod,
+              decoration: const InputDecoration(
+                labelText: 'Payment Method',
+                prefixIcon: Icon(Icons.payment),
+                border: OutlineInputBorder(),
+              ),
+              items: PaymentMethod.values
+                  .map(
+                    (method) => DropdownMenuItem(
+                      value: method,
+                      child: Text(_getPaymentMethodLabel(method)),
+                    ),
+                  )
+                  .toList(),
+              onChanged: (value) {
+                if (value != null) {
+                  setState(() {
+                    _selectedMethod = value;
+                  });
+                }
+              },
+            ),
+            const SizedBox(height: 16),
+
+            // Status
+            DropdownButtonFormField<PaymentStatus>(
+              initialValue: _selectedStatus,
+              decoration: const InputDecoration(
+                labelText: 'Status',
+                prefixIcon: Icon(Icons.info),
+                border: OutlineInputBorder(),
+              ),
+              items: PaymentStatus.values
+                  .map(
+                    (status) => DropdownMenuItem(
+                      value: status,
+                      child: Text(_getPaymentStatusLabel(status)),
+                    ),
+                  )
+                  .toList(),
+              onChanged: (value) {
+                if (value != null) {
+                  setState(() {
+                    _selectedStatus = value;
+                  });
+                }
+              },
+            ),
+            const SizedBox(height: 16),
+
+            // Reference
+            TextFormField(
+              controller: _referenceController,
+              decoration: const InputDecoration(
+                labelText: 'Reference Number (Optional)',
+                prefixIcon: Icon(Icons.tag),
+                border: OutlineInputBorder(),
+              ),
+            ),
+            const SizedBox(height: 16),
+
+            // Notes
+            TextFormField(
+              controller: _notesController,
+              decoration: const InputDecoration(
+                labelText: 'Notes (Optional)',
+                prefixIcon: Icon(Icons.note),
+                border: OutlineInputBorder(),
+              ),
+              maxLines: 3,
+            ),
+            const SizedBox(height: 32),
+
+            // Save Button
+            ElevatedButton(
+              onPressed: _saveReceipt,
+              child: const Padding(
+                padding: EdgeInsets.all(16),
+                child: Text('Save Payment Receipt'),
+              ),
+            ),
+          ],
         ),
-      );
+      ),
+    ),
+  );
 
   String _getPaymentMethodLabel(PaymentMethod method) {
     switch (method) {

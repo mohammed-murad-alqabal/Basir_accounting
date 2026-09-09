@@ -265,13 +265,13 @@ class _UsersSettingsTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => ListTile(
-        leading: Icon(
-          Icons.group_outlined,
-          color: Theme.of(context).colorScheme.primary,
-        ),
-        title: const Text('إدارة المستخدمين'),
-        subtitle: const Text('الصلاحيات والحسابات'),
-        trailing: const Icon(Icons.chevron_right),
-        onTap: () => Navigator.pushNamed(context, '/users'),
-      );
+    leading: Icon(
+      Icons.group_outlined,
+      color: Theme.of(context).colorScheme.primary,
+    ),
+    title: const Text('إدارة المستخدمين'),
+    subtitle: const Text('الصلاحيات والحسابات'),
+    trailing: const Icon(Icons.chevron_right),
+    onTap: () => Navigator.pushNamed(context, '/users'),
+  );
 }

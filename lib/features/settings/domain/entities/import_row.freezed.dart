@@ -12,7 +12,8 @@ part of 'import_row.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
+  'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models',
+);
 
 /// @nodoc
 mixin _$ImportRow {
@@ -44,13 +45,14 @@ abstract class $ImportRowCopyWith<$Res> {
   factory $ImportRowCopyWith(ImportRow value, $Res Function(ImportRow) then) =
       _$ImportRowCopyWithImpl<$Res, ImportRow>;
   @useResult
-  $Res call(
-      {String name,
-      Decimal balance,
-      AccountNature nature,
-      String? phone,
-      String? address,
-      String? error});
+  $Res call({
+    String name,
+    Decimal balance,
+    AccountNature nature,
+    String? phone,
+    String? address,
+    String? error,
+  });
 }
 
 /// @nodoc
@@ -73,32 +75,35 @@ class _$ImportRowCopyWithImpl<$Res, $Val extends ImportRow>
     Object? address = freezed,
     Object? error = freezed,
   }) {
-    return _then(_value.copyWith(
-      name: null == name
-          ? _value.name
-          : name // ignore: cast_nullable_to_non_nullable
-              as String,
-      balance: null == balance
-          ? _value.balance
-          : balance // ignore: cast_nullable_to_non_nullable
-              as Decimal,
-      nature: null == nature
-          ? _value.nature
-          : nature // ignore: cast_nullable_to_non_nullable
-              as AccountNature,
-      phone: freezed == phone
-          ? _value.phone
-          : phone // ignore: cast_nullable_to_non_nullable
-              as String?,
-      address: freezed == address
-          ? _value.address
-          : address // ignore: cast_nullable_to_non_nullable
-              as String?,
-      error: freezed == error
-          ? _value.error
-          : error // ignore: cast_nullable_to_non_nullable
-              as String?,
-    ) as $Val);
+    return _then(
+      _value.copyWith(
+            name: null == name
+                ? _value.name
+                : name // ignore: cast_nullable_to_non_nullable
+                      as String,
+            balance: null == balance
+                ? _value.balance
+                : balance // ignore: cast_nullable_to_non_nullable
+                      as Decimal,
+            nature: null == nature
+                ? _value.nature
+                : nature // ignore: cast_nullable_to_non_nullable
+                      as AccountNature,
+            phone: freezed == phone
+                ? _value.phone
+                : phone // ignore: cast_nullable_to_non_nullable
+                      as String?,
+            address: freezed == address
+                ? _value.address
+                : address // ignore: cast_nullable_to_non_nullable
+                      as String?,
+            error: freezed == error
+                ? _value.error
+                : error // ignore: cast_nullable_to_non_nullable
+                      as String?,
+          )
+          as $Val,
+    );
   }
 }
 
@@ -106,17 +111,19 @@ class _$ImportRowCopyWithImpl<$Res, $Val extends ImportRow>
 abstract class _$$ImportRowImplCopyWith<$Res>
     implements $ImportRowCopyWith<$Res> {
   factory _$$ImportRowImplCopyWith(
-          _$ImportRowImpl value, $Res Function(_$ImportRowImpl) then) =
-      __$$ImportRowImplCopyWithImpl<$Res>;
+    _$ImportRowImpl value,
+    $Res Function(_$ImportRowImpl) then,
+  ) = __$$ImportRowImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call(
-      {String name,
-      Decimal balance,
-      AccountNature nature,
-      String? phone,
-      String? address,
-      String? error});
+  $Res call({
+    String name,
+    Decimal balance,
+    AccountNature nature,
+    String? phone,
+    String? address,
+    String? error,
+  });
 }
 
 /// @nodoc
@@ -124,8 +131,9 @@ class __$$ImportRowImplCopyWithImpl<$Res>
     extends _$ImportRowCopyWithImpl<$Res, _$ImportRowImpl>
     implements _$$ImportRowImplCopyWith<$Res> {
   __$$ImportRowImplCopyWithImpl(
-      _$ImportRowImpl _value, $Res Function(_$ImportRowImpl) _then)
-      : super(_value, _then);
+    _$ImportRowImpl _value,
+    $Res Function(_$ImportRowImpl) _then,
+  ) : super(_value, _then);
 
   @pragma('vm:prefer-inline')
   @override
@@ -137,46 +145,48 @@ class __$$ImportRowImplCopyWithImpl<$Res>
     Object? address = freezed,
     Object? error = freezed,
   }) {
-    return _then(_$ImportRowImpl(
-      name: null == name
-          ? _value.name
-          : name // ignore: cast_nullable_to_non_nullable
-              as String,
-      balance: null == balance
-          ? _value.balance
-          : balance // ignore: cast_nullable_to_non_nullable
-              as Decimal,
-      nature: null == nature
-          ? _value.nature
-          : nature // ignore: cast_nullable_to_non_nullable
-              as AccountNature,
-      phone: freezed == phone
-          ? _value.phone
-          : phone // ignore: cast_nullable_to_non_nullable
-              as String?,
-      address: freezed == address
-          ? _value.address
-          : address // ignore: cast_nullable_to_non_nullable
-              as String?,
-      error: freezed == error
-          ? _value.error
-          : error // ignore: cast_nullable_to_non_nullable
-              as String?,
-    ));
+    return _then(
+      _$ImportRowImpl(
+        name: null == name
+            ? _value.name
+            : name // ignore: cast_nullable_to_non_nullable
+                  as String,
+        balance: null == balance
+            ? _value.balance
+            : balance // ignore: cast_nullable_to_non_nullable
+                  as Decimal,
+        nature: null == nature
+            ? _value.nature
+            : nature // ignore: cast_nullable_to_non_nullable
+                  as AccountNature,
+        phone: freezed == phone
+            ? _value.phone
+            : phone // ignore: cast_nullable_to_non_nullable
+                  as String?,
+        address: freezed == address
+            ? _value.address
+            : address // ignore: cast_nullable_to_non_nullable
+                  as String?,
+        error: freezed == error
+            ? _value.error
+            : error // ignore: cast_nullable_to_non_nullable
+                  as String?,
+      ),
+    );
   }
 }
 
 /// @nodoc
 
 class _$ImportRowImpl extends _ImportRow {
-  const _$ImportRowImpl(
-      {required this.name,
-      required this.balance,
-      required this.nature,
-      this.phone,
-      this.address,
-      this.error})
-      : super._();
+  const _$ImportRowImpl({
+    required this.name,
+    required this.balance,
+    required this.nature,
+    this.phone,
+    this.address,
+    this.error,
+  }) : super._();
 
   /// The name of the account or customer.
   @override
@@ -232,37 +242,32 @@ class _$ImportRowImpl extends _ImportRow {
 }
 
 abstract class _ImportRow extends ImportRow {
-  const factory _ImportRow(
-      {required final String name,
-      required final Decimal balance,
-      required final AccountNature nature,
-      final String? phone,
-      final String? address,
-      final String? error}) = _$ImportRowImpl;
+  const factory _ImportRow({
+    required final String name,
+    required final Decimal balance,
+    required final AccountNature nature,
+    final String? phone,
+    final String? address,
+    final String? error,
+  }) = _$ImportRowImpl;
   const _ImportRow._() : super._();
 
   @override
-
   /// The name of the account or customer.
   String get name;
   @override
-
   /// The opening balance amount.
   Decimal get balance;
   @override
-
   /// The accounting nature (Debit/Credit).
   AccountNature get nature;
   @override
-
   /// Optional phone number.
   String? get phone;
   @override
-
   /// Optional address.
   String? get address;
   @override
-
   /// Validation error message if any.
   String? get error;
   @override

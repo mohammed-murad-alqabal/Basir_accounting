@@ -49,7 +49,7 @@ void main() {
         try {
           StockMovementGoldenFixture.fromJson(
             entry.payload.map<String, Object?>(
-              (key, value) => MapEntry(key, value),
+              MapEntry.new,
             ),
           );
         } on Object catch (error) {

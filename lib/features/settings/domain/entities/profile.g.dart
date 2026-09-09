@@ -16,7 +16,7 @@ _$ProfileImpl _$$ProfileImplFromJson(Map<String, dynamic> json) =>
       userId: json['userId'] as String?,
       syncStatus:
           $enumDecodeNullable(_$SyncStatusEnumMap, json['syncStatus']) ??
-              SyncStatus.synced,
+          SyncStatus.synced,
       serverUpdatedAt: json['serverUpdatedAt'] == null
           ? null
           : DateTime.parse(json['serverUpdatedAt'] as String),

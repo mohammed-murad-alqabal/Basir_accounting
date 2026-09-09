@@ -68,9 +68,7 @@ class _ResetPasswordScreenState extends ConsumerState<ResetPasswordScreen> {
               TextFormField(
                 controller: _passwordController,
                 obscureText: true,
-                decoration: const InputDecoration(
-                  border: OutlineInputBorder(),
-                ),
+                decoration: const InputDecoration(border: OutlineInputBorder()),
                 validator: (value) {
                   if (value == null || value.isEmpty || value.length < 6) {
                     return 'At least 6 characters';
@@ -82,9 +80,7 @@ class _ResetPasswordScreenState extends ConsumerState<ResetPasswordScreen> {
               TextFormField(
                 controller: _confirmController,
                 obscureText: true,
-                decoration: const InputDecoration(
-                  border: OutlineInputBorder(),
-                ),
+                decoration: const InputDecoration(border: OutlineInputBorder()),
                 validator: (value) {
                   if (value != _passwordController.text) {
                     return 'Passwords do not match';

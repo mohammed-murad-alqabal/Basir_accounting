@@ -103,9 +103,10 @@ class _InvoiceFormScreenState extends ConsumerState<InvoiceFormScreen> {
     final isEditing = widget.invoice != null;
     final customersAsync = ref.watch(customersProvider);
     final appIcons = ref.watch(appIconsProvider);
-    final canPost = ref.watch(currentUserProfileProvider)?.hasPermission(
-              Permission.postJournalEntry,
-            ) ??
+    final canPost =
+        ref
+            .watch(currentUserProfileProvider)
+            ?.hasPermission(Permission.postJournalEntry) ??
         false;
     final calendarType =
         ref.watch(calendarProvider).value ?? CalendarType.gregorian;
@@ -156,9 +157,8 @@ class _InvoiceFormScreenState extends ConsumerState<InvoiceFormScreen> {
                 GlassCard(
                   child: customersAsync.when(
                     data: _buildCustomerSelector,
-                    loading: () => const Center(
-                      child: CircularProgressIndicator(),
-                    ),
+                    loading: () =>
+                        const Center(child: CircularProgressIndicator()),
                     error: (error, stack) => Text(
                       context.l10n.errLoadCustomers(error.toString()),
                       style: const TextStyle(color: AppColors.error),
@@ -234,56 +234,57 @@ class _InvoiceFormScreenState extends ConsumerState<InvoiceFormScreen> {
   }
 
   Widget _buildCustomerSelector(List<Customer> customers) => EntityPicker(
-        label: context.l10n.labelCustomer,
-        hint: context.l10n.hintSelectCustomer,
-        selectedId: _selectedCustomer?.id,
-        options: customers
-            .map(
-              (customer) => EntityPickerOption(
-                id: customer.id,
-                label: customer.name(isArabic: context.isArabic),
-              ),
-            )
-            .toList(growable: false),
-        onChanged: (option) {
-          final customer = customers.firstWhere(
-            (candidate) => candidate.id == option?.id,
-          );
-          setState(() => _selectedCustomer = customer);
-        },
+    label: context.l10n.labelCustomer,
+    hint: context.l10n.hintSelectCustomer,
+    selectedId: _selectedCustomer?.id,
+    options: customers
+        .map(
+          (customer) => EntityPickerOption(
+            id: customer.id,
+            label: customer.name(isArabic: context.isArabic),
+          ),
+        )
+        .toList(growable: false),
+    onChanged: (option) {
+      final customer = customers.firstWhere(
+        (candidate) => candidate.id == option?.id,
       );
+      setState(() => _selectedCustomer = customer);
+    },
+  );
 
   DocumentDraft _buildDocumentDraft() => DocumentDraft(
-        id: _draftId,
-        documentType: _type == InvoiceType.sales
-            ? 'sales_invoice'
-            : 'invoice_${_type.name}',
-        currencyCode: _currency,
-        headerNote: _notesController.text.trim().isEmpty
-            ? null
-            : _notesController.text.trim(),
-        lines: _items
-            .map(
-              (item) => DraftLineItem(
-                id: item.id,
-                description: item.name,
-                quantity: double.parse(item.quantity.toString()),
-                unitPrice: double.parse(item.price.toString()),
-                taxRate: double.parse(item.taxRate.toString()),
-              ),
-            )
-            .toList(growable: false),
-      );
+    id: _draftId,
+    documentType: _type == InvoiceType.sales
+        ? 'sales_invoice'
+        : 'invoice_${_type.name}',
+    currencyCode: _currency,
+    headerNote: _notesController.text.trim().isEmpty
+        ? null
+        : _notesController.text.trim(),
+    lines: _items
+        .map(
+          (item) => DraftLineItem(
+            id: item.id,
+            description: item.name,
+            quantity: double.parse(item.quantity.toString()),
+            unitPrice: double.parse(item.price.toString()),
+            taxRate: double.parse(item.taxRate.toString()),
+          ),
+        )
+        .toList(growable: false),
+  );
 
   String _documentFingerprint(DocumentDraft draft) => [
-        draft.documentType,
-        draft.currencyCode,
-        draft.headerNote ?? '',
-        ...draft.lines.map(
-          (line) => '${line.id}:${line.quantity}:${line.unitPrice}:'
-              '${line.taxRate}:${line.discount}',
-        ),
-      ].join('|');
+    draft.documentType,
+    draft.currencyCode,
+    draft.headerNote ?? '',
+    ...draft.lines.map(
+      (line) =>
+          '${line.id}:${line.quantity}:${line.unitPrice}:'
+          '${line.taxRate}:${line.discount}',
+    ),
+  ].join('|');
 
   void _requestPostingPreview() {
     if (_selectedCustomer == null) {
@@ -301,18 +302,15 @@ class _InvoiceFormScreenState extends ConsumerState<InvoiceFormScreen> {
       draft: draft,
       customerName: _selectedCustomer!.name(isArabic: context.isArabic),
     );
-    result.fold(
-      (preview) {
-        setState(() {
-          _postingPreview = preview;
-          _previewFingerprint = _documentFingerprint(draft);
-        });
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text(context.l10n.workDocumentPreviewImpact)),
-        );
-      },
-      (_) => _showFormError(context.l10n.errGeneric('preview-unavailable')),
-    );
+    result.fold((preview) {
+      setState(() {
+        _postingPreview = preview;
+        _previewFingerprint = _documentFingerprint(draft);
+      });
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text(context.l10n.workDocumentPreviewImpact)),
+      );
+    }, (_) => _showFormError(context.l10n.errGeneric('preview-unavailable')));
   }
 
   Future<void> _confirmPosting() async {
@@ -330,7 +328,7 @@ class _InvoiceFormScreenState extends ConsumerState<InvoiceFormScreen> {
         content: Text(
           preview.requiresAdditionalApproval
               ? preview.approvalReason ??
-                  context.l10n.workDocumentApprovalRequired
+                    context.l10n.workDocumentApprovalRequired
               : context.l10n.workDocumentPost,
         ),
         actions: [
@@ -417,62 +415,58 @@ class _InvoiceFormScreenState extends ConsumerState<InvoiceFormScreen> {
   }
 
   Widget _buildCurrencySelector(AppIconsBase appIcons) => Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: [
+      Row(
         children: [
-          Row(
-            children: [
-              Icon(appIcons.currencyExchange, color: AppColors.primary),
-              const SizedBox(width: Spacing.md),
-              Text(
-                context.l10n.labelCurrency,
-                style: AppTextStyles.bodyLarge.copyWith(
-                  fontWeight: FontWeight.w600,
-                  color: AppColors.textPrimary,
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(height: Spacing.sm),
-          DropdownButtonFormField<String>(
-            initialValue: _currency,
-            items: ['SAR', 'USD', 'EUR']
-                .map(
-                  (c) => DropdownMenuItem(
-                    value: c,
-                    child: Text(c),
-                  ),
-                )
-                .toList(),
-            onChanged: (value) {
-              if (value != null) {
-                setState(() {
-                  _currency = value;
-                  if (value == 'SAR') {
-                    _exchangeRateController.text = '1.0';
-                  } else if (value == 'USD') {
-                    _exchangeRateController.text = '3.75';
-                  } else if (value == 'EUR') {
-                    _exchangeRateController.text = '4.10';
-                  }
-                });
-              }
-            },
-            decoration: const InputDecoration(border: OutlineInputBorder()),
-          ),
-          if (_currency != 'SAR') ...[
-            const SizedBox(height: Spacing.md),
-            AppTextField(
-              controller: _exchangeRateController,
-              label: context.l10n.labelExchangeRate,
-              hint: '1.0',
-              keyboardType:
-                  const TextInputType.numberWithOptions(decimal: true),
-              prefixIcon: Icon(appIcons.numbers),
-              onChanged: (value) => setState(() {}),
+          Icon(appIcons.currencyExchange, color: AppColors.primary),
+          const SizedBox(width: Spacing.md),
+          Text(
+            context.l10n.labelCurrency,
+            style: AppTextStyles.bodyLarge.copyWith(
+              fontWeight: FontWeight.w600,
+              color: AppColors.textPrimary,
             ),
-          ],
+          ),
         ],
-      );
+      ),
+      const SizedBox(height: Spacing.sm),
+      DropdownButtonFormField<String>(
+        initialValue: _currency,
+        items: [
+          'SAR',
+          'USD',
+          'EUR',
+        ].map((c) => DropdownMenuItem(value: c, child: Text(c))).toList(),
+        onChanged: (value) {
+          if (value != null) {
+            setState(() {
+              _currency = value;
+              if (value == 'SAR') {
+                _exchangeRateController.text = '1.0';
+              } else if (value == 'USD') {
+                _exchangeRateController.text = '3.75';
+              } else if (value == 'EUR') {
+                _exchangeRateController.text = '4.10';
+              }
+            });
+          }
+        },
+        decoration: const InputDecoration(border: OutlineInputBorder()),
+      ),
+      if (_currency != 'SAR') ...[
+        const SizedBox(height: Spacing.md),
+        AppTextField(
+          controller: _exchangeRateController,
+          label: context.l10n.labelExchangeRate,
+          hint: '1.0',
+          keyboardType: const TextInputType.numberWithOptions(decimal: true),
+          prefixIcon: Icon(appIcons.numbers),
+          onChanged: (value) => setState(() {}),
+        ),
+      ],
+    ],
+  );
 
   Widget _buildDateField({
     required String label,
@@ -480,215 +474,212 @@ class _InvoiceFormScreenState extends ConsumerState<InvoiceFormScreen> {
     required VoidCallback onTap,
     required IconData icon,
     required CalendarType calendarType,
-  }) =>
-      InkWell(
-        onTap: onTap,
-        child: Row(
-          children: [
-            Icon(icon, color: AppColors.primary),
-            const SizedBox(width: Spacing.md),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    label,
-                    style: AppTextStyles.bodyMedium.copyWith(
-                      color: AppColors.textSecondary,
-                    ),
-                  ),
-                  const SizedBox(height: 4),
-                  Text(
-                    FormatHelpers.formatDate(
-                      date,
-                      locale: context.l10n.localeName,
-                      calendarType: calendarType,
-                    ),
-                    style: AppTextStyles.bodyLarge.copyWith(
-                      fontWeight: FontWeight.w600,
-                      color: AppColors.textPrimary,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ],
-        ),
-      );
-
-  Widget _buildTaxRateField(AppIconsBase appIcons) => Row(
-        children: [
-          Icon(appIcons.percent, color: AppColors.primary),
-          const SizedBox(width: Spacing.md),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  context.l10n.labelTaxRate,
-                  style: AppTextStyles.bodyMedium.copyWith(
-                    color: AppColors.textSecondary,
-                  ),
+  }) => InkWell(
+    onTap: onTap,
+    child: Row(
+      children: [
+        Icon(icon, color: AppColors.primary),
+        const SizedBox(width: Spacing.md),
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                label,
+                style: AppTextStyles.bodyMedium.copyWith(
+                  color: AppColors.textSecondary,
                 ),
-                const SizedBox(height: 4),
-                Text(
-                  '${(_taxRate * Decimal.fromInt(100)).toStringAsFixed(0)}%',
-                  style: AppTextStyles.bodyLarge.copyWith(
-                    fontWeight: FontWeight.w600,
-                    color: AppColors.textPrimary,
-                  ),
+              ),
+              const SizedBox(height: 4),
+              Text(
+                FormatHelpers.formatDate(
+                  date,
+                  locale: context.l10n.localeName,
+                  calendarType: calendarType,
                 ),
-              ],
-            ),
-          ),
-          IconButton(
-            icon: Icon(appIcons.edit, size: 20),
-            tooltip: context.l10n.tooltipEditTaxRate,
-            onPressed: _showTaxRateDialog,
-          ),
-        ],
-      );
-
-  Widget _buildStatusSelector() => Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            context.l10n.labelInvoiceStatus,
-            style: AppTextStyles.bodyLarge.copyWith(
-              fontWeight: FontWeight.w600,
-              color: AppColors.textPrimary,
-            ),
-          ),
-          const SizedBox(height: Spacing.sm),
-          DropdownButtonFormField<InvoiceStatus>(
-            initialValue: _status,
-            decoration: const InputDecoration(border: OutlineInputBorder()),
-            items: [
-              DropdownMenuItem(
-                value: InvoiceStatus.draft,
-                child: Text(context.l10n.filterDraft),
-              ),
-              DropdownMenuItem(
-                value: InvoiceStatus.sent,
-                child: Text(context.l10n.filterIssued),
-              ),
-              DropdownMenuItem(
-                value: InvoiceStatus.paid,
-                child: Text(context.l10n.filterPaid),
-              ),
-              DropdownMenuItem(
-                value: InvoiceStatus.overdue,
-                child: Text(context.l10n.filterOverdue),
-              ),
-              DropdownMenuItem(
-                value: InvoiceStatus.cancelled,
-                child: Text(context.l10n.statusCancelled),
+                style: AppTextStyles.bodyLarge.copyWith(
+                  fontWeight: FontWeight.w600,
+                  color: AppColors.textPrimary,
+                ),
               ),
             ],
-            onChanged: (value) {
-              if (value != null) {
-                setState(() => _status = value);
-              }
-            },
           ),
-        ],
-      );
+        ),
+      ],
+    ),
+  );
 
-  Widget _buildItemsSection(AppIconsBase appIcons) => AppCard(
+  Widget _buildTaxRateField(AppIconsBase appIcons) => Row(
+    children: [
+      Icon(appIcons.percent, color: AppColors.primary),
+      const SizedBox(width: Spacing.md),
+      Expanded(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  context.l10n.labelInvoiceItems,
-                  style: AppTextStyles.bodyLarge.copyWith(
-                    fontWeight: FontWeight.w600,
-                    color: AppColors.textPrimary,
-                  ),
-                ),
-                IconButton(
-                  icon: Icon(appIcons.addCircle, color: AppColors.primary),
-                  tooltip: context.l10n.tooltipAddItem,
-                  onPressed: _addItem,
-                ),
-              ],
-            ),
-            const SizedBox(height: Spacing.sm),
-            if (_items.isEmpty)
-              Center(
-                child: Padding(
-                  padding: const EdgeInsets.all(Spacing.lg),
-                  child: Text(
-                    context.l10n.msgNoItems,
-                    style: AppTextStyles.bodyMedium.copyWith(
-                      color: AppColors.textSecondary,
-                    ),
-                  ),
-                ),
-              )
-            else
-              ListView.builder(
-                shrinkWrap: true,
-                physics: const NeverScrollableScrollPhysics(),
-                itemCount: _items.length,
-                itemBuilder: (context, index) {
-                  final item = _items[index];
-                  final priceStr = FormatHelpers.formatCurrency(
-                    item.price,
-                    locale: context.l10n.localeName,
-                  );
-                  final totalStr = FormatHelpers.formatCurrency(
-                    item.total,
-                    locale: context.l10n.localeName,
-                  );
-                  final itemSemantics = '${item.name}, '
-                      '${context.l10n.labelQuantity}: '
-                      '${item.quantity}, '
-                      '${context.l10n.labelPrice}: $priceStr, '
-                      '${context.l10n.labelTotal}: $totalStr';
-
-                  return Semantics(
-                    label: itemSemantics,
-                    child: Card(
-                      margin: const EdgeInsets.only(bottom: Spacing.sm),
-                      child: ListTile(
-                        title: Text(item.name, overflow: TextOverflow.ellipsis),
-                        subtitle: Text(
-                          '${context.l10n.labelQuantity}: ${item.quantity} × '
-                          '$priceStr',
-                        ),
-                        trailing: Row(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            Text(
-                              totalStr,
-                              style: const TextStyle(
-                                fontWeight: FontWeight.bold,
-                                color: AppColors.primary,
-                              ),
-                            ),
-                            IconButton(
-                              icon: Icon(
-                                appIcons.delete,
-                                color: AppColors.error,
-                              ),
-                              padding: EdgeInsets.zero,
-                              constraints: const BoxConstraints(),
-                              tooltip: context.l10n.tooltipDeleteItem,
-                              onPressed: () => _removeItem(index),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  );
-                },
+            Text(
+              context.l10n.labelTaxRate,
+              style: AppTextStyles.bodyMedium.copyWith(
+                color: AppColors.textSecondary,
               ),
+            ),
+            const SizedBox(height: 4),
+            Text(
+              '${(_taxRate * Decimal.fromInt(100)).toStringAsFixed(0)}%',
+              style: AppTextStyles.bodyLarge.copyWith(
+                fontWeight: FontWeight.w600,
+                color: AppColors.textPrimary,
+              ),
+            ),
           ],
         ),
-      );
+      ),
+      IconButton(
+        icon: Icon(appIcons.edit, size: 20),
+        tooltip: context.l10n.tooltipEditTaxRate,
+        onPressed: _showTaxRateDialog,
+      ),
+    ],
+  );
+
+  Widget _buildStatusSelector() => Column(
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: [
+      Text(
+        context.l10n.labelInvoiceStatus,
+        style: AppTextStyles.bodyLarge.copyWith(
+          fontWeight: FontWeight.w600,
+          color: AppColors.textPrimary,
+        ),
+      ),
+      const SizedBox(height: Spacing.sm),
+      DropdownButtonFormField<InvoiceStatus>(
+        initialValue: _status,
+        decoration: const InputDecoration(border: OutlineInputBorder()),
+        items: [
+          DropdownMenuItem(
+            value: InvoiceStatus.draft,
+            child: Text(context.l10n.filterDraft),
+          ),
+          DropdownMenuItem(
+            value: InvoiceStatus.sent,
+            child: Text(context.l10n.filterIssued),
+          ),
+          DropdownMenuItem(
+            value: InvoiceStatus.paid,
+            child: Text(context.l10n.filterPaid),
+          ),
+          DropdownMenuItem(
+            value: InvoiceStatus.overdue,
+            child: Text(context.l10n.filterOverdue),
+          ),
+          DropdownMenuItem(
+            value: InvoiceStatus.cancelled,
+            child: Text(context.l10n.statusCancelled),
+          ),
+        ],
+        onChanged: (value) {
+          if (value != null) {
+            setState(() => _status = value);
+          }
+        },
+      ),
+    ],
+  );
+
+  Widget _buildItemsSection(AppIconsBase appIcons) => AppCard(
+    child: Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(
+              context.l10n.labelInvoiceItems,
+              style: AppTextStyles.bodyLarge.copyWith(
+                fontWeight: FontWeight.w600,
+                color: AppColors.textPrimary,
+              ),
+            ),
+            IconButton(
+              icon: Icon(appIcons.addCircle, color: AppColors.primary),
+              tooltip: context.l10n.tooltipAddItem,
+              onPressed: _addItem,
+            ),
+          ],
+        ),
+        const SizedBox(height: Spacing.sm),
+        if (_items.isEmpty)
+          Center(
+            child: Padding(
+              padding: const EdgeInsets.all(Spacing.lg),
+              child: Text(
+                context.l10n.msgNoItems,
+                style: AppTextStyles.bodyMedium.copyWith(
+                  color: AppColors.textSecondary,
+                ),
+              ),
+            ),
+          )
+        else
+          ListView.builder(
+            shrinkWrap: true,
+            physics: const NeverScrollableScrollPhysics(),
+            itemCount: _items.length,
+            itemBuilder: (context, index) {
+              final item = _items[index];
+              final priceStr = FormatHelpers.formatCurrency(
+                item.price,
+                locale: context.l10n.localeName,
+              );
+              final totalStr = FormatHelpers.formatCurrency(
+                item.total,
+                locale: context.l10n.localeName,
+              );
+              final itemSemantics =
+                  '${item.name}, '
+                  '${context.l10n.labelQuantity}: '
+                  '${item.quantity}, '
+                  '${context.l10n.labelPrice}: $priceStr, '
+                  '${context.l10n.labelTotal}: $totalStr';
+
+              return Semantics(
+                label: itemSemantics,
+                child: Card(
+                  margin: const EdgeInsets.only(bottom: Spacing.sm),
+                  child: ListTile(
+                    title: Text(item.name, overflow: TextOverflow.ellipsis),
+                    subtitle: Text(
+                      '${context.l10n.labelQuantity}: ${item.quantity} × '
+                      '$priceStr',
+                    ),
+                    trailing: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Text(
+                          totalStr,
+                          style: const TextStyle(
+                            fontWeight: FontWeight.bold,
+                            color: AppColors.primary,
+                          ),
+                        ),
+                        IconButton(
+                          icon: Icon(appIcons.delete, color: AppColors.error),
+                          padding: EdgeInsets.zero,
+                          constraints: const BoxConstraints(),
+                          tooltip: context.l10n.tooltipDeleteItem,
+                          onPressed: () => _removeItem(index),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              );
+            },
+          ),
+      ],
+    ),
+  );
 
   Future<void> _selectDate(BuildContext context, bool isIssuedDate) async {
     final initialDate = isIssuedDate ? _issuedDate : _dueDate;
@@ -804,8 +795,8 @@ class _InvoiceFormScreenState extends ConsumerState<InvoiceFormScreen> {
                             nameController.text = item.name(
                               isArabic: context.l10n.localeName == 'ar',
                             );
-                            priceController.text =
-                                (item.salePrice ?? 0.0).toString();
+                            priceController.text = (item.salePrice ?? 0.0)
+                                .toString();
                             selectedTaxCategory = item.taxCategory;
                             // Update rate based on category
                             if (selectedTaxCategory == 'S') {
@@ -826,24 +817,20 @@ class _InvoiceFormScreenState extends ConsumerState<InvoiceFormScreen> {
                   ),
                   onSubmitted: (sku) async {
                     if (sku.isEmpty) return;
-                    final item = await ref.read(
-                      itemBySkuProvider(sku).future,
-                    );
+                    final item = await ref.read(itemBySkuProvider(sku).future);
                     if (item != null) {
                       setDialogState(() {
                         nameController.text = item.name(
                           isArabic: context.l10n.localeName == 'ar',
                         );
-                        priceController.text =
-                            (item.salePrice ?? 0.0).toString();
+                        priceController.text = (item.salePrice ?? 0.0)
+                            .toString();
                         selectedTaxCategory = item.taxCategory;
                       });
                     } else {
                       if (context.mounted) {
                         ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(
-                            content: Text(context.l10n.msgItemNotFound),
-                          ),
+                          SnackBar(content: Text(context.l10n.msgItemNotFound)),
                         );
                       }
                     }
@@ -891,22 +878,13 @@ class _InvoiceFormScreenState extends ConsumerState<InvoiceFormScreen> {
                     labelText: context.l10n.labelTaxCategory,
                   ),
                   items: const [
-                    DropdownMenuItem(
-                      value: 'S',
-                      child: Text('Standard (15%)'),
-                    ),
+                    DropdownMenuItem(value: 'S', child: Text('Standard (15%)')),
                     DropdownMenuItem(
                       value: 'Z',
                       child: Text('Zero Rated (0%)'),
                     ),
-                    DropdownMenuItem(
-                      value: 'E',
-                      child: Text('Exempt (0%)'),
-                    ),
-                    DropdownMenuItem(
-                      value: 'O',
-                      child: Text('Out of Scope'),
-                    ),
+                    DropdownMenuItem(value: 'E', child: Text('Exempt (0%)')),
+                    DropdownMenuItem(value: 'O', child: Text('Out of Scope')),
                   ],
                   onChanged: (val) {
                     if (val != null) {
@@ -925,8 +903,9 @@ class _InvoiceFormScreenState extends ConsumerState<InvoiceFormScreen> {
                   const SizedBox(height: Spacing.md),
                   AppTextField(
                     label: context.l10n.labelTaxRate,
-                    controller:
-                        TextEditingController(text: selectedTaxRate.toString()),
+                    controller: TextEditingController(
+                      text: selectedTaxRate.toString(),
+                    ),
                     keyboardType: TextInputType.number,
                     onChanged: (val) {
                       selectedTaxRate =
@@ -950,9 +929,7 @@ class _InvoiceFormScreenState extends ConsumerState<InvoiceFormScreen> {
               child: TextButton(
                 onPressed: () {
                   final name = nameController.text.trim();
-                  final quantity = Decimal.tryParse(
-                    quantityController.text,
-                  );
+                  final quantity = Decimal.tryParse(quantityController.text);
                   final price = Decimal.tryParse(priceController.text);
 
                   if (name.isNotEmpty && quantity != null && price != null) {
@@ -1010,7 +987,8 @@ class _InvoiceFormScreenState extends ConsumerState<InvoiceFormScreen> {
 
     return Invoice(
       id: widget.invoice?.id ?? _draftId,
-      invoiceNumber: widget.invoice?.invoiceNumber ??
+      invoiceNumber:
+          widget.invoice?.invoiceNumber ??
           'INV-${DateTime.now().millisecondsSinceEpoch}',
       customerId: _selectedCustomer!.id,
       customerName: _selectedCustomer!.name(isArabic: context.isArabic),
@@ -1062,9 +1040,7 @@ class _InvoiceFormScreenState extends ConsumerState<InvoiceFormScreen> {
     setState(() => _isLoading = true);
 
     try {
-      final invoice = _buildInvoice(
-        status: statusOverride ?? _status,
-      );
+      final invoice = _buildInvoice(status: statusOverride ?? _status);
 
       final isEditing = widget.invoice != null;
       final result = isEditing
@@ -1244,48 +1220,48 @@ class _SuccessDialogState extends State<_SuccessDialog>
 
   @override
   Widget build(BuildContext context) => Dialog(
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-        child: ScaleTransition(
-          scale: _scaleAnimation,
-          child: Container(
-            padding: const EdgeInsets.all(Spacing.xl),
-            decoration: BoxDecoration(
-              color: Theme.of(context).cardColor,
-              borderRadius: BorderRadius.circular(Radii.lg),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black.withValues(alpha: 0.1),
-                  blurRadius: 20,
-                  offset: const Offset(0, 10),
-                ),
-              ],
+    backgroundColor: Colors.transparent,
+    elevation: 0,
+    child: ScaleTransition(
+      scale: _scaleAnimation,
+      child: Container(
+        padding: const EdgeInsets.all(Spacing.xl),
+        decoration: BoxDecoration(
+          color: Theme.of(context).cardColor,
+          borderRadius: BorderRadius.circular(Radii.lg),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withValues(alpha: 0.1),
+              blurRadius: 20,
+              offset: const Offset(0, 10),
             ),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Container(
-                  padding: const EdgeInsets.all(Spacing.lg),
-                  decoration: BoxDecoration(
-                    color: AppColors.success.withValues(alpha: 0.1),
-                    shape: BoxShape.circle,
-                  ),
-                  child: const Icon(
-                    Icons.check_rounded,
-                    color: AppColors.success,
-                    size: 48,
-                  ),
-                ),
-                const SizedBox(height: Spacing.lg),
-                Text(
-                  context.l10n.msgOperationSuccess,
-                  style: AppTextStyles.headlineMedium.copyWith(
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ],
-            ),
-          ),
+          ],
         ),
-      );
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Container(
+              padding: const EdgeInsets.all(Spacing.lg),
+              decoration: BoxDecoration(
+                color: AppColors.success.withValues(alpha: 0.1),
+                shape: BoxShape.circle,
+              ),
+              child: const Icon(
+                Icons.check_rounded,
+                color: AppColors.success,
+                size: 48,
+              ),
+            ),
+            const SizedBox(height: Spacing.lg),
+            Text(
+              context.l10n.msgOperationSuccess,
+              style: AppTextStyles.headlineMedium.copyWith(
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ],
+        ),
+      ),
+    ),
+  );
 }

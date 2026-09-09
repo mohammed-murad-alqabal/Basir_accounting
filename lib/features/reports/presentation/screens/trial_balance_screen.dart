@@ -29,14 +29,12 @@ class _TrialBalanceScreenState extends ConsumerState<TrialBalanceScreen> {
   @override
   Widget build(BuildContext context) {
     final reportAsync = ref.watch(
-      _trialBalanceProvider(
-        (
-          asOfDate: DateFormat('yyyy-MM-dd').format(_asOfDate),
-          periodStart: _periodStart != null
-              ? DateFormat('yyyy-MM-dd').format(_periodStart!)
-              : null,
-        ),
-      ),
+      _trialBalanceProvider((
+        asOfDate: DateFormat('yyyy-MM-dd').format(_asOfDate),
+        periodStart: _periodStart != null
+            ? DateFormat('yyyy-MM-dd').format(_periodStart!)
+            : null,
+      )),
     );
 
     return GlassScaffold(
@@ -56,12 +54,10 @@ class _TrialBalanceScreenState extends ConsumerState<TrialBalanceScreen> {
               error: (err, stack) => AppErrorWidget(
                 message: err.toString(),
                 onRetry: () => ref.refresh(
-                  _trialBalanceProvider(
-                    (
-                      asOfDate: DateFormat('yyyy-MM-dd').format(_asOfDate),
-                      periodStart: null,
-                    ),
-                  ).future,
+                  _trialBalanceProvider((
+                    asOfDate: DateFormat('yyyy-MM-dd').format(_asOfDate),
+                    periodStart: null,
+                  )).future,
                 ),
               ),
               data: (report) => _buildReportContent(context, report),
@@ -177,13 +173,13 @@ class _HeaderCell extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Padding(
-        padding: const EdgeInsets.all(12),
-        child: Text(
-          text,
-          style: const TextStyle(fontWeight: FontWeight.bold),
-          textAlign: TextAlign.center,
-        ),
-      );
+    padding: const EdgeInsets.all(12),
+    child: Text(
+      text,
+      style: const TextStyle(fontWeight: FontWeight.bold),
+      textAlign: TextAlign.center,
+    ),
+  );
 }
 
 class _ContentCell extends StatelessWidget {
@@ -198,29 +194,29 @@ class _ContentCell extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Padding(
-        padding: const EdgeInsets.all(12),
-        child: Text(
-          text,
-          maxLines: 1,
-          overflow: TextOverflow.ellipsis,
-          style: TextStyle(
-            fontWeight: isBold ? FontWeight.bold : FontWeight.normal,
-            fontSize: 13,
-          ),
-          textAlign: align,
-        ),
-      );
+    padding: const EdgeInsets.all(12),
+    child: Text(
+      text,
+      maxLines: 1,
+      overflow: TextOverflow.ellipsis,
+      style: TextStyle(
+        fontWeight: isBold ? FontWeight.bold : FontWeight.normal,
+        fontSize: 13,
+      ),
+      textAlign: align,
+    ),
+  );
 }
 
 // Internal provider for fetching TB data
 final _trialBalanceProvider = FutureProvider.autoDispose
     .family<TrialBalanceDto, ({String asOfDate, String? periodStart})>((
-  ref,
-  params,
-) {
-  final service = ref.watch(nativeReportingServiceProvider);
-  return service.generateTrialBalance(
-    asOfDate: params.asOfDate,
-    periodStart: params.periodStart,
-  );
-});
+      ref,
+      params,
+    ) {
+      final service = ref.watch(nativeReportingServiceProvider);
+      return service.generateTrialBalance(
+        asOfDate: params.asOfDate,
+        periodStart: params.periodStart,
+      );
+    });

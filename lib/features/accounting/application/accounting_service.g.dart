@@ -29,14 +29,14 @@ String _$accountingServiceHash() => r'ec2ebf36a5dcbc8347d5af42cd212607c312f330';
 @ProviderFor(AccountingService)
 final accountingServiceProvider =
     AsyncNotifierProvider<AccountingService, List<JournalEntry>>.internal(
-  AccountingService.new,
-  name: r'accountingServiceProvider',
-  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-      ? null
-      : _$accountingServiceHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
+      AccountingService.new,
+      name: r'accountingServiceProvider',
+      debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+          ? null
+          : _$accountingServiceHash,
+      dependencies: null,
+      allTransitiveDependencies: null,
+    );
 
 typedef _$AccountingService = AsyncNotifier<List<JournalEntry>>;
 // ignore_for_file: type=lint

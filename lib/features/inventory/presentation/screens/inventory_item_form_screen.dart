@@ -45,8 +45,9 @@ class _InventoryItemFormScreenState
     _nameArController = TextEditingController(text: widget.item?.nameAr ?? '');
     _nameEnController = TextEditingController(text: widget.item?.nameEn ?? '');
     _skuController = TextEditingController(text: widget.item?.sku ?? '');
-    _barcodeController =
-        TextEditingController(text: widget.item?.barcode ?? '');
+    _barcodeController = TextEditingController(
+      text: widget.item?.barcode ?? '',
+    );
     _purchasePriceController = TextEditingController(
       text: widget.item?.purchasePrice?.toString() ?? '',
     );
@@ -149,13 +150,14 @@ class _InventoryItemFormScreenState
                   const SizedBox(width: Spacing.md),
                   Expanded(
                     child: Semantics(
-                      label: '${context.l10n.labelQuantity}: '
+                      label:
+                          '${context.l10n.labelQuantity}: '
                           '${widget.item?.currentQuantity ?? 0}. '
                           '${context.l10n.inventoryItemQuantityMustUseMovement}',
                       child: AppTextField(
                         label: context.l10n.labelQuantity,
-                        initialValue:
-                            (widget.item?.currentQuantity ?? 0).toString(),
+                        initialValue: (widget.item?.currentQuantity ?? 0)
+                            .toString(),
                         isEnabled: false,
                       ),
                     ),
@@ -324,19 +326,17 @@ class _InventoryItemFormScreenState
     required String? value,
     required List<Account> accounts,
     required ValueChanged<String?> onChanged,
-  }) =>
-      DropdownButtonFormField<String>(
-        initialValue: value,
-        decoration: InputDecoration(labelText: label),
-        items: accounts
-            .map(
-              (a) => DropdownMenuItem(
-                value: a.id,
-                child:
-                    Text('${a.code} - ${a.name(isArabic: context.isArabic)}'),
-              ),
-            )
-            .toList(),
-        onChanged: onChanged,
-      );
+  }) => DropdownButtonFormField<String>(
+    initialValue: value,
+    decoration: InputDecoration(labelText: label),
+    items: accounts
+        .map(
+          (a) => DropdownMenuItem(
+            value: a.id,
+            child: Text('${a.code} - ${a.name(isArabic: context.isArabic)}'),
+          ),
+        )
+        .toList(),
+    onChanged: onChanged,
+  );
 }

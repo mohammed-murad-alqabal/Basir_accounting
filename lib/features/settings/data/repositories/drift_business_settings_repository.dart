@@ -9,7 +9,7 @@ import 'package:basir_drift_storage/basir_drift_storage.dart';
 /// المعتمد على Isar المسار النشط حتى اجتياز بوابات الموجة الثانية.
 class DriftBusinessSettingsRepository implements BusinessSettingsRepository {
   DriftBusinessSettingsRepository(BasirDatabase database, {this.userId})
-      : _storage = BusinessSettingsStore(database);
+    : _storage = BusinessSettingsStore(database);
 
   /// منشئ اختبار/حقن يحافظ على عزل طبقة domain عن أنواع Drift.
   DriftBusinessSettingsRepository.withStorage(this._storage, {this.userId});
@@ -24,23 +24,23 @@ class DriftBusinessSettingsRepository implements BusinessSettingsRepository {
 
   @override
   Future<void> saveSettings(BusinessSettings settings) => _storage.save(
-        _toRecord(
-          BusinessSettings(
-            id: settings.id,
-            companyName: settings.companyName,
-            taxNumber: settings.taxNumber,
-            address: settings.address,
-            logoUrl: settings.logoUrl,
-            defaultTaxRate: settings.defaultTaxRate,
-            currencyCode: settings.currencyCode,
-            currencySymbol: settings.currencySymbol,
-            userId: userId,
-            syncStatus: settings.syncStatus,
-            serverUpdatedAt: settings.serverUpdatedAt,
-            isDeleted: settings.isDeleted,
-          ),
-        ),
-      );
+    _toRecord(
+      BusinessSettings(
+        id: settings.id,
+        companyName: settings.companyName,
+        taxNumber: settings.taxNumber,
+        address: settings.address,
+        logoUrl: settings.logoUrl,
+        defaultTaxRate: settings.defaultTaxRate,
+        currencyCode: settings.currencyCode,
+        currencySymbol: settings.currencySymbol,
+        userId: userId,
+        syncStatus: settings.syncStatus,
+        serverUpdatedAt: settings.serverUpdatedAt,
+        isDeleted: settings.isDeleted,
+      ),
+    ),
+  );
 
   static BusinessSettingsRecord _toRecord(BusinessSettings settings) =>
       BusinessSettingsRecord(
@@ -75,10 +75,10 @@ class DriftBusinessSettingsRepository implements BusinessSettingsRepository {
       );
 
   static SyncStatus _syncStatusFromStorage(String value) => switch (value) {
-        'synced' => SyncStatus.synced,
-        'pendingPush' => SyncStatus.pendingPush,
-        'pendingPull' => SyncStatus.pendingPull,
-        'conflict' => SyncStatus.conflict,
-        _ => throw StateError('Unsupported persisted sync status: $value'),
-      };
+    'synced' => SyncStatus.synced,
+    'pendingPush' => SyncStatus.pendingPush,
+    'pendingPull' => SyncStatus.pendingPull,
+    'conflict' => SyncStatus.conflict,
+    _ => throw StateError('Unsupported persisted sync status: $value'),
+  };
 }

@@ -12,27 +12,10 @@ import 'package:riverpod/riverpod.dart';
 import '../../../../mocks/mock_accounting_repository.dart';
 import '../../../../mocks/mock_customer_repository.dart';
 
-class _FilePickerFake extends FilePicker {
+class _FilePickerFake extends Mock implements FilePicker {
   _FilePickerFake(this.result);
 
   final FilePickerResult? result;
-
-  @override
-  Future<FilePickerResult?> pickFiles({
-    String? dialogTitle,
-    String? initialDirectory,
-    FileType type = FileType.any,
-    List<String>? allowedExtensions,
-    void Function(FilePickerStatus)? onFileLoading,
-    bool allowCompression = false,
-    int compressionQuality = 0,
-    bool allowMultiple = false,
-    bool withData = false,
-    bool withReadStream = false,
-    bool lockParentWindow = false,
-    bool readSequential = false,
-  }) async =>
-      result;
 }
 
 Future<File> _createWorkbook() async {
@@ -62,8 +45,7 @@ Future<File> _createWorkbook() async {
   sheet.appendRow([TextCellValue('')]);
   sheet.appendRow([TextCellValue('صف ناقص')]);
 
-  final directory =
-      await Directory.systemTemp.createTemp('basir_excel_import_');
+  final directory = await Directory.systemTemp.createTemp('basir_excel_import_');
   final file = File('${directory.path}/customers.xlsx');
   await file.writeAsBytes(excel.encode()!);
   return file;
@@ -72,13 +54,12 @@ Future<File> _createWorkbook() async {
 ProviderContainer _container({
   required MockCustomerRepository customerRepository,
   required MockAccountingRepository accountingRepository,
-}) =>
-    ProviderContainer(
-      overrides: [
-        customerRepositoryProvider.overrideWithValue(customerRepository),
-        accountingRepositoryProvider.overrideWithValue(accountingRepository),
-      ],
-    );
+}) => ProviderContainer(
+  overrides: [
+    customerRepositoryProvider.overrideWithValue(customerRepository),
+    accountingRepositoryProvider.overrideWithValue(accountingRepository),
+  ],
+);
 
 void main() {
   tearDown(() {
@@ -91,11 +72,7 @@ void main() {
       addTearDown(() => file.parent.delete(recursive: true));
       FilePicker.platform = _FilePickerFake(
         FilePickerResult([
-          PlatformFile(
-            name: 'customers.xlsx',
-            path: file.path,
-            size: await file.length(),
-          ),
+          PlatformFile(name: 'customers.xlsx', path: file.path, size: await file.length()),
         ]),
       );
       final container = _container(
@@ -121,31 +98,26 @@ void main() {
     });
 
     test('يعيد قائمة فارغة عندما يلغي المستخدم اختيار الملف', () async {
-      FilePicker.platform = _FilePickerFake(null);
       final container = _container(
         customerRepository: MockCustomerRepository(customers: []),
         accountingRepository: MockAccountingRepository(),
       );
       addTearDown(container.dispose);
 
+      final mockFilePicker = _FilePickerFake(null);
       await container.read(excelImportServiceProvider.future);
       await container.read(excelImportServiceProvider.notifier).pickAndParse();
 
       expect(container.read(excelImportServiceProvider).requireValue, isEmpty);
     });
 
-    test('يحفظ الصفوف الصالحة وينشئ الحسابات وقيود الأرصدة الافتتاحية',
-        () async {
+    test('يحفظ الصفوف الصالحة وينشئ الحسابات وقيود الأرصدة الافتتاحية', () async {
       final file = await _createWorkbook();
       addTearDown(() => file.parent.delete(recursive: true));
-      FilePicker.platform = _FilePickerFake(
-        FilePickerResult([
-          PlatformFile(
-            name: 'customers.xlsx',
-            path: file.path,
-            size: await file.length(),
-          ),
-        ]),
+      final mockFilePicker = _FilePickerFake(
+        FilePickerResult(
+          files: [PlatformFile(name: 'customers.xlsx', path: file.path, size: await file.length())],
+        ),
       );
       final customerRepository = MockCustomerRepository(customers: []);
       final accountingRepository = MockAccountingRepository();
@@ -162,10 +134,7 @@ void main() {
 
       expect(customerRepository.count, 3);
       expect(accountingRepository.accounts, hasLength(3));
-      expect(
-        accountingRepository.accounts.first.balance,
-        Decimal.parse('1500.50'),
-      );
+      expect(accountingRepository.accounts.first.balance, Decimal.parse('1500.50'));
       expect(accountingRepository.journalEntries, hasLength(1));
       final entry = accountingRepository.journalEntries.single;
       expect(entry.lines.first.credit, Decimal.parse('1500.50'));
@@ -176,17 +145,12 @@ void main() {
     test('يسجل حالة خطأ عند فشل حفظ الاستيراد', () async {
       final file = await _createWorkbook();
       addTearDown(() => file.parent.delete(recursive: true));
-      FilePicker.platform = _FilePickerFake(
-        FilePickerResult([
-          PlatformFile(
-            name: 'customers.xlsx',
-            path: file.path,
-            size: await file.length(),
-          ),
-        ]),
+      final mockFilePicker = _FilePickerFake(
+        FilePickerResult(
+          files: [PlatformFile(name: 'customers.xlsx', path: file.path, size: await file.length())],
+        ),
       );
-      final accountingRepository = MockAccountingRepository()
-        ..shouldThrowError = true;
+      final accountingRepository = MockAccountingRepository()..shouldThrowError = true;
       final container = _container(
         customerRepository: MockCustomerRepository(customers: []),
         accountingRepository: accountingRepository,

@@ -288,7 +288,7 @@ void main() {
         result.when(
           data: (customers) => customers.length,
           loading: () => throw StateError('Should not be loading'),
-          error: (_, __) => throw StateError('Should not have error'),
+          error: (_, _) => throw StateError('Should not have error'),
         ),
         equals(3),
       );
@@ -306,7 +306,7 @@ void main() {
       final customers = result.when(
         data: (customers) => customers,
         loading: () => throw StateError('Should not be loading'),
-        error: (_, __) => throw StateError('Should not have error'),
+        error: (_, _) => throw StateError('Should not have error'),
       );
 
       expect(customers.length, 2); // أحمد محمد و محمد أحمد
@@ -330,7 +330,7 @@ void main() {
       final customers = result.when(
         data: (customers) => customers,
         loading: () => throw StateError('Should not be loading'),
-        error: (_, __) => throw StateError('Should not have error'),
+        error: (_, _) => throw StateError('Should not have error'),
       );
 
       expect(customers.length, 1);
@@ -349,7 +349,7 @@ void main() {
       final customers = result.when(
         data: (customers) => customers,
         loading: () => throw StateError('Should not be loading'),
-        error: (_, __) => throw StateError('Should not have error'),
+        error: (_, _) => throw StateError('Should not have error'),
       );
 
       expect(customers.length, 1);
@@ -368,7 +368,7 @@ void main() {
       final customers = result.when(
         data: (customers) => customers,
         loading: () => throw StateError('Should not be loading'),
-        error: (_, __) => throw StateError('Should not have error'),
+        error: (_, _) => throw StateError('Should not have error'),
       );
 
       expect(customers, isEmpty);
@@ -388,14 +388,14 @@ void main() {
       final customers1 = result1.when(
         data: (customers) => customers,
         loading: () => throw StateError('Should not be loading'),
-        error: (_, __) => throw StateError('Should not have error'),
+        error: (_, _) => throw StateError('Should not have error'),
       );
       expect(customers1.length, 2);
 
       final customers2 = result2.when(
         data: (customers) => customers,
         loading: () => throw StateError('Should not be loading'),
-        error: (_, __) => throw StateError('Should not have error'),
+        error: (_, _) => throw StateError('Should not have error'),
       );
       expect(customers2.length, 1);
       expect(customers2.first.nameAr, 'فاطمة علي');

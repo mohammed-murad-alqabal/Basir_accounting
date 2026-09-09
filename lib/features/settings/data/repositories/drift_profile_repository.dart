@@ -9,7 +9,7 @@ import 'package:basir_drift_storage/basir_drift_storage.dart';
 /// على Isar المسار النشط حتى تجتاز الموجة بوابات الاستيراد والتكافؤ والـcanary.
 class DriftProfileRepository implements ProfileRepository {
   DriftProfileRepository(BasirDatabase database, {this.userId})
-      : _storage = ProfileStore(database);
+    : _storage = ProfileStore(database);
 
   /// منشئ اختبار/حقن يحافظ على عزل طبقة domain عن أنواع Drift.
   DriftProfileRepository.withStorage(this._storage, {this.userId});
@@ -24,53 +24,53 @@ class DriftProfileRepository implements ProfileRepository {
 
   @override
   Future<void> saveProfile(Profile profile) => _storage.save(
-        _toRecord(
-          Profile(
-            id: profile.id,
-            email: profile.email,
-            displayName: profile.displayName,
-            avatarUrl: profile.avatarUrl,
-            phoneNumber: profile.phoneNumber,
-            userId: userId,
-            syncStatus: profile.syncStatus,
-            serverUpdatedAt: profile.serverUpdatedAt,
-            isDeleted: profile.isDeleted,
-          ),
-        ),
-      );
-
-  @override
-  Future<void> deleteProfile() => _storage.deleteForUser(userId);
-
-  static ProfileRecord _toRecord(Profile profile) => ProfileRecord(
+    _toRecord(
+      Profile(
         id: profile.id,
         email: profile.email,
         displayName: profile.displayName,
         avatarUrl: profile.avatarUrl,
         phoneNumber: profile.phoneNumber,
-        userId: profile.userId,
-        syncStatus: profile.syncStatus.name,
+        userId: userId,
+        syncStatus: profile.syncStatus,
         serverUpdatedAt: profile.serverUpdatedAt,
         isDeleted: profile.isDeleted,
-      );
+      ),
+    ),
+  );
+
+  @override
+  Future<void> deleteProfile() => _storage.deleteForUser(userId);
+
+  static ProfileRecord _toRecord(Profile profile) => ProfileRecord(
+    id: profile.id,
+    email: profile.email,
+    displayName: profile.displayName,
+    avatarUrl: profile.avatarUrl,
+    phoneNumber: profile.phoneNumber,
+    userId: profile.userId,
+    syncStatus: profile.syncStatus.name,
+    serverUpdatedAt: profile.serverUpdatedAt,
+    isDeleted: profile.isDeleted,
+  );
 
   static Profile _toEntity(ProfileRecord record) => Profile(
-        id: record.id,
-        email: record.email,
-        displayName: record.displayName,
-        avatarUrl: record.avatarUrl,
-        phoneNumber: record.phoneNumber,
-        userId: record.userId,
-        syncStatus: _syncStatusFromStorage(record.syncStatus),
-        serverUpdatedAt: record.serverUpdatedAt,
-        isDeleted: record.isDeleted,
-      );
+    id: record.id,
+    email: record.email,
+    displayName: record.displayName,
+    avatarUrl: record.avatarUrl,
+    phoneNumber: record.phoneNumber,
+    userId: record.userId,
+    syncStatus: _syncStatusFromStorage(record.syncStatus),
+    serverUpdatedAt: record.serverUpdatedAt,
+    isDeleted: record.isDeleted,
+  );
 
   static SyncStatus _syncStatusFromStorage(String value) => switch (value) {
-        'synced' => SyncStatus.synced,
-        'pendingPush' => SyncStatus.pendingPush,
-        'pendingPull' => SyncStatus.pendingPull,
-        'conflict' => SyncStatus.conflict,
-        _ => throw StateError('Unsupported persisted sync status: $value'),
-      };
+    'synced' => SyncStatus.synced,
+    'pendingPush' => SyncStatus.pendingPush,
+    'pendingPull' => SyncStatus.pendingPull,
+    'conflict' => SyncStatus.conflict,
+    _ => throw StateError('Unsupported persisted sync status: $value'),
+  };
 }

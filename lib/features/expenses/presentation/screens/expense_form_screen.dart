@@ -122,13 +122,11 @@ class _ExpenseFormScreenState extends ConsumerState<ExpenseFormScreen> {
               prefixIcon: const Icon(Icons.attach_money),
               suffixIcon: Padding(
                 padding: const EdgeInsetsDirectional.only(end: Spacing.md),
-                child: Center(
-                  widthFactor: 1,
-                  child: Text(_currencyCode),
-                ),
+                child: Center(widthFactor: 1, child: Text(_currencyCode)),
               ),
-              keyboardType:
-                  const TextInputType.numberWithOptions(decimal: true),
+              keyboardType: const TextInputType.numberWithOptions(
+                decimal: true,
+              ),
               validator: (value) {
                 if (value == null || value.isEmpty) {
                   return l10n ? 'مطلوب' : 'Required';
@@ -174,9 +172,9 @@ class _ExpenseFormScreenState extends ConsumerState<ExpenseFormScreen> {
                               width: 24,
                               height: 24,
                               decoration: BoxDecoration(
-                                color: _getCategoryColor(cat.color).withValues(
-                                  alpha: 0.2,
-                                ),
+                                color: _getCategoryColor(
+                                  cat.color,
+                                ).withValues(alpha: 0.2),
                                 borderRadius: BorderRadius.circular(4),
                               ),
                               child: Icon(
@@ -256,14 +254,17 @@ class _ExpenseFormScreenState extends ConsumerState<ExpenseFormScreen> {
     setState(() => _isLoading = true);
 
     try {
-      await ref.read(expensesNotifierProvider.notifier).addExpense(
+      await ref
+          .read(expensesNotifierProvider.notifier)
+          .addExpense(
             description: _descriptionController.text,
             amount: Decimal.parse(_amountController.text),
             currencyCode: _currencyCode,
             expenseDate: _selectedDate,
             categoryId: _selectedCategoryId,
-            vendorName:
-                _vendorController.text.isEmpty ? null : _vendorController.text,
+            vendorName: _vendorController.text.isEmpty
+                ? null
+                : _vendorController.text,
             notes: _notesController.text.isEmpty ? null : _notesController.text,
           );
 

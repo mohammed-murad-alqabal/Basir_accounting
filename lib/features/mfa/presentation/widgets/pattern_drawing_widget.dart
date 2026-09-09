@@ -68,10 +68,7 @@ class _PatternDrawingWidgetState extends State<PatternDrawingWidget> {
       return Offset.zero;
     }
     final pos = _pointPositions[index];
-    return Offset(
-      pos.dx * widget.size,
-      pos.dy * widget.size,
-    );
+    return Offset(pos.dx * widget.size, pos.dy * widget.size);
   }
 
   // التحقق مما إذا كان النمط صالحاً

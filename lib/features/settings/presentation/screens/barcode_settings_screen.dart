@@ -115,113 +115,106 @@ class _BarcodeSettingsScreenState extends ConsumerState<BarcodeSettingsScreen> {
   }
 
   Widget _buildHeaderSection(ThemeData theme) => Column(
-        children: [
-          Icon(
-            Icons.settings_overscan,
-            size: 48,
-            color: theme.colorScheme.primary,
-          ),
-          const SizedBox(height: Spacing.md),
-          const Text(
-            'تكوين قياسات وتنسيق ملصقات الباركود',
-            textAlign: TextAlign.center,
-            style: TextStyle(fontSize: 14, color: Colors.grey),
-          ),
-        ],
-      );
+    children: [
+      Icon(Icons.settings_overscan, size: 48, color: theme.colorScheme.primary),
+      const SizedBox(height: Spacing.md),
+      const Text(
+        'تكوين قياسات وتنسيق ملصقات الباركود',
+        textAlign: TextAlign.center,
+        style: TextStyle(fontSize: 14, color: Colors.grey),
+      ),
+    ],
+  );
 
   Widget _buildTypeSelector(ThemeData theme) => Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: [
+      const Text(
+        'نوع الطابعة والورق',
+        style: TextStyle(fontWeight: FontWeight.bold),
+      ),
+      const SizedBox(height: Spacing.md),
+      Row(
         children: [
-          const Text(
-            'نوع الطابعة والورق',
-            style: TextStyle(fontWeight: FontWeight.bold),
+          Expanded(
+            child: ChoiceChip(
+              label: const Text('طابعة حرارية'),
+              selected: _printerType == PrinterType.thermal,
+              onSelected: (val) =>
+                  setState(() => _printerType = PrinterType.thermal),
+            ),
           ),
-          const SizedBox(height: Spacing.md),
-          Row(
-            children: [
-              Expanded(
-                child: ChoiceChip(
-                  label: const Text('طابعة حرارية'),
-                  selected: _printerType == PrinterType.thermal,
-                  onSelected: (val) =>
-                      setState(() => _printerType = PrinterType.thermal),
-                ),
-              ),
-              const SizedBox(width: Spacing.md),
-              Expanded(
-                child: ChoiceChip(
-                  label: const Text('ورق A4 عادى'),
-                  selected: _printerType == PrinterType.a4,
-                  onSelected: (val) =>
-                      setState(() => _printerType = PrinterType.a4),
-                ),
-              ),
-            ],
+          const SizedBox(width: Spacing.md),
+          Expanded(
+            child: ChoiceChip(
+              label: const Text('ورق A4 عادى'),
+              selected: _printerType == PrinterType.a4,
+              onSelected: (val) =>
+                  setState(() => _printerType = PrinterType.a4),
+            ),
           ),
         ],
-      );
+      ),
+    ],
+  );
 
   Widget _buildDimensionSettings(ThemeData theme) => Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const Text(
-            'أبعاد الملصق (ملم)',
-            style: TextStyle(fontWeight: FontWeight.bold),
-          ),
-          const SizedBox(height: Spacing.md),
-          _buildSliderSetting(
-            'العرض',
-            _width,
-            10,
-            100,
-            (v) => setState(() => _width = v),
-          ),
-          _buildSliderSetting(
-            'الطول',
-            _height,
-            10,
-            100,
-            (v) => setState(() => _height = v),
-          ),
-          _buildSliderSetting(
-            'الهامش',
-            _margin,
-            0,
-            10,
-            (v) => setState(() => _margin = v),
-          ),
-          if (_printerType == PrinterType.a4)
-            _buildSliderSetting(
-              'أعمدة في الصف',
-              _columnsPerRow.toDouble(),
-              1,
-              5,
-              (v) => setState(() => _columnsPerRow = v.toInt()),
-              isDiscrete: true,
-            ),
-        ],
-      );
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: [
+      const Text(
+        'أبعاد الملصق (ملم)',
+        style: TextStyle(fontWeight: FontWeight.bold),
+      ),
+      const SizedBox(height: Spacing.md),
+      _buildSliderSetting(
+        'العرض',
+        _width,
+        10,
+        100,
+        (v) => setState(() => _width = v),
+      ),
+      _buildSliderSetting(
+        'الطول',
+        _height,
+        10,
+        100,
+        (v) => setState(() => _height = v),
+      ),
+      _buildSliderSetting(
+        'الهامش',
+        _margin,
+        0,
+        10,
+        (v) => setState(() => _margin = v),
+      ),
+      if (_printerType == PrinterType.a4)
+        _buildSliderSetting(
+          'أعمدة في الصف',
+          _columnsPerRow.toDouble(),
+          1,
+          5,
+          (v) => setState(() => _columnsPerRow = v.toInt()),
+          isDiscrete: true,
+        ),
+    ],
+  );
 
   Widget _buildPreferenceSettings(ThemeData theme) => Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const Text(
-            'خيارات العرض',
-            style: TextStyle(fontWeight: FontWeight.bold),
-          ),
-          SwitchListTile(
-            title: const Text('إظهار اسم الصنف'),
-            value: _showItemName,
-            onChanged: (val) => setState(() => _showItemName = val),
-          ),
-          SwitchListTile(
-            title: const Text('إظهار سعر البيع'),
-            value: _showPrice,
-            onChanged: (val) => setState(() => _showPrice = val),
-          ),
-        ],
-      );
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: [
+      const Text('خيارات العرض', style: TextStyle(fontWeight: FontWeight.bold)),
+      SwitchListTile(
+        title: const Text('إظهار اسم الصنف'),
+        value: _showItemName,
+        onChanged: (val) => setState(() => _showItemName = val),
+      ),
+      SwitchListTile(
+        title: const Text('إظهار سعر البيع'),
+        value: _showPrice,
+        onChanged: (val) => setState(() => _showPrice = val),
+      ),
+    ],
+  );
 
   Widget _buildSliderSetting(
     String label,
@@ -230,23 +223,22 @@ class _BarcodeSettingsScreenState extends ConsumerState<BarcodeSettingsScreen> {
     double max,
     ValueChanged<double> onChanged, {
     bool isDiscrete = false,
-  }) =>
-      Column(
+  }) => Column(
+    children: [
+      Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(label),
-              Text('${value.toStringAsFixed(isDiscrete ? 0 : 1)} ملم'),
-            ],
-          ),
-          Slider(
-            value: value,
-            min: min,
-            max: max,
-            divisions: isDiscrete ? (max - min).toInt() : 90,
-            onChanged: onChanged,
-          ),
+          Text(label),
+          Text('${value.toStringAsFixed(isDiscrete ? 0 : 1)} ملم'),
         ],
-      );
+      ),
+      Slider(
+        value: value,
+        min: min,
+        max: max,
+        divisions: isDiscrete ? (max - min).toInt() : 90,
+        onChanged: onChanged,
+      ),
+    ],
+  );
 }

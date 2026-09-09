@@ -7,63 +7,55 @@ class NativeReportingApi {
   Future<rust.TrialBalanceDto> generateTrialBalance({
     required String asOfDate,
     String? periodStart,
-  }) =>
-      rust.generateTrialBalance(asOfDate: asOfDate, periodStart: periodStart);
+  }) => rust.generateTrialBalance(asOfDate: asOfDate, periodStart: periodStart);
 
   /// Drill down into account entries.
   Future<List<rust.DrillDownEntryDto>> getAccountEntries({
     required String accountId,
     required String periodEnd,
     String? periodStart,
-  }) =>
-      rust.getAccountEntries(
-        accountId: accountId,
-        periodStart: periodStart,
-        periodEnd: periodEnd,
-      );
+  }) => rust.getAccountEntries(
+    accountId: accountId,
+    periodStart: periodStart,
+    periodEnd: periodEnd,
+  );
 
   /// Generate an Income Statement.
   Future<rust.FinancialReportDto> generateIncomeStatement({
     required String fromDate,
     required String toDate,
-  }) =>
-      rust.generateIncomeStatement(fromDate: fromDate, toDate: toDate);
+  }) => rust.generateIncomeStatement(fromDate: fromDate, toDate: toDate);
 
   /// Generate a Balance Sheet.
   Future<rust.FinancialReportDto> generateBalanceSheet({
     required String asOfDate,
     Map<String, String>? fairValuationUpdates,
-  }) =>
-      rust.generateBalanceSheet(
-        asOfDate: asOfDate,
-        fairValuationUpdates: fairValuationUpdates,
-      );
+  }) => rust.generateBalanceSheet(
+    asOfDate: asOfDate,
+    fairValuationUpdates: fairValuationUpdates,
+  );
 
   /// Generate a Statement of Cash Flows.
   Future<rust.FinancialReportDto> generateCashFlowStatement({
     required String fromDate,
     required String toDate,
-  }) =>
-      rust.generateCashFlowStatement(fromDate: fromDate, toDate: toDate);
+  }) => rust.generateCashFlowStatement(fromDate: fromDate, toDate: toDate);
 
   /// Generate Accounts Receivable Aging Report.
   Future<List<rust.AgingReportLineDto>> getReceivablesAging({
     required String asOfDate,
-  }) =>
-      rust.getReceivablesAging(asOfDate: asOfDate);
+  }) => rust.getReceivablesAging(asOfDate: asOfDate);
 
   /// Generate Accounts Payable Aging Report.
   Future<List<rust.AgingReportLineDto>> getPayablesAging({
     required String asOfDate,
-  }) =>
-      rust.getPayablesAging(asOfDate: asOfDate);
+  }) => rust.getPayablesAging(asOfDate: asOfDate);
 
   /// Generate Zakah Statement.
   Future<rust.FinancialReportDto> generateZakahStatement({
     required String asOfDate,
     required rust.ZakahCalendarDto calendar,
-  }) =>
-      rust.generateZakahStatement(asOfDate: asOfDate, calendar: calendar);
+  }) => rust.generateZakahStatement(asOfDate: asOfDate, calendar: calendar);
 }
 
 /// خدمة جلب التقارير المالية من المحرك الأساسي (Rust).
@@ -72,9 +64,8 @@ class NativeReportingApi {
 /// إلى استثناءات واضحة المعنى يمكن للمستودع أو طبقة العرض التعامل معها.
 class ReportingService {
   /// Creates a reporting service.
-  ReportingService({
-    NativeReportingApi? api,
-  }) : _api = api ?? NativeReportingApi();
+  ReportingService({NativeReportingApi? api})
+    : _api = api ?? NativeReportingApi();
 
   final NativeReportingApi _api;
 
@@ -117,10 +108,7 @@ class ReportingService {
         periodEnd: periodEnd,
       );
     } catch (e) {
-      _wrapError(
-        'جلب سجلات الحساب $accountId',
-        e,
-      );
+      _wrapError('جلب سجلات الحساب $accountId', e);
     }
   }
 
@@ -135,10 +123,7 @@ class ReportingService {
         toDate: toDate,
       );
     } catch (e) {
-      _wrapError(
-        'إنشاء قائمة الدخل ($fromDate — $toDate)',
-        e,
-      );
+      _wrapError('إنشاء قائمة الدخل ($fromDate — $toDate)', e);
     }
   }
 
@@ -168,10 +153,7 @@ class ReportingService {
         toDate: toDate,
       );
     } catch (e) {
-      _wrapError(
-        'إنشاء قائمة التدفقات النقدية ($fromDate — $toDate)',
-        e,
-      );
+      _wrapError('إنشاء قائمة التدفقات النقدية ($fromDate — $toDate)', e);
     }
   }
 

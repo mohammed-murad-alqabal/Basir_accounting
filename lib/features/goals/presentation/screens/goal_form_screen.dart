@@ -35,13 +35,15 @@ class _GoalFormScreenState extends ConsumerState<GoalFormScreen> {
   void initState() {
     super.initState();
     _nameController = TextEditingController(text: widget.goal?.name ?? '');
-    _targetAmountController =
-        TextEditingController(text: widget.goal?.targetAmount.toString() ?? '');
+    _targetAmountController = TextEditingController(
+      text: widget.goal?.targetAmount.toString() ?? '',
+    );
     _currentAmountController = TextEditingController(
       text: widget.goal?.currentAmount.toString() ?? '0',
     );
-    _descController =
-        TextEditingController(text: widget.goal?.description ?? '');
+    _descController = TextEditingController(
+      text: widget.goal?.description ?? '',
+    );
     if (widget.goal != null) {
       _category = widget.goal!.category;
       _startDate = widget.goal!.startDate;
@@ -88,94 +90,93 @@ class _GoalFormScreenState extends ConsumerState<GoalFormScreen> {
 
   @override
   Widget build(BuildContext context) => GlassScaffold(
-        title: widget.goal == null ? 'إضافة هدف مالي' : 'تعديل الهدف',
-        body: Form(
-          key: _formKey,
-          child: ListView(
-            padding: const EdgeInsets.all(24),
-            children: [
-              AppTextField(
-                controller: _nameController,
-                label: 'اسم الهدف',
-                prefixIcon: const Icon(Icons.flag_outlined),
-                validator: (v) => v!.isEmpty ? 'يرجى إدخال اسم الهدف' : null,
-              ),
-              const SizedBox(height: 16),
-              AppTextField(
-                controller: _targetAmountController,
-                label: 'المبلغ المستهدف',
-                prefixIcon: const Icon(Icons.track_changes),
-                keyboardType: TextInputType.number,
-                validator: (v) => Decimal.tryParse(v ?? '') == null
-                    ? 'يرجى إدخال مبلغ صحيح'
-                    : null,
-              ),
-              const SizedBox(height: 16),
-              AppTextField(
-                controller: _currentAmountController,
-                label: 'المبلغ المتوفر حالياً',
-                prefixIcon: const Icon(Icons.account_balance_wallet_outlined),
-                keyboardType: TextInputType.number,
-                validator: (v) => Decimal.tryParse(v ?? '') == null
-                    ? 'يرجى إدخال مبلغ صحيح'
-                    : null,
-              ),
-              const SizedBox(height: 16),
-              DropdownButtonFormField<GoalCategory>(
-                initialValue: _category,
-                decoration:
-                    _inputDecoration('تصنيف الهدف', Icons.category_outlined),
-                items: GoalCategory.values
-                    .map(
-                      (c) => DropdownMenuItem(
-                        value: c,
-                        child: Text(_getCategoryName(c)),
-                      ),
-                    )
-                    .toList(),
-                onChanged: (v) => setState(() => _category = v!),
-              ),
-              const SizedBox(height: 24),
-              AppCard(
-                child: ListTile(
-                  contentPadding: EdgeInsets.zero,
-                  title: const Text('تاريخ الإنجاز المستهدف'),
-                  subtitle: Text(
-                    '${_targetDate.year}-${_targetDate.month}-${_targetDate.day}',
-                  ),
-                  trailing: const Icon(
-                    Icons.calendar_month,
-                    color: AppColors.primary,
-                  ),
-                  onTap: () async {
-                    final picked = await showDatePicker(
-                      context: context,
-                      initialDate: _targetDate,
-                      firstDate: DateTime.now(),
-                      lastDate: DateTime(2100),
-                    );
-                    if (picked != null) {
-                      setState(() => _targetDate = picked);
-                    }
-                  },
-                ),
-              ),
-              const SizedBox(height: 16),
-              AppTextField(
-                controller: _descController,
-                label: 'وصف (اختياري)',
-                prefixIcon: const Icon(Icons.description_outlined),
-                maxLines: 3,
-              ),
-              const SizedBox(height: 32),
-              AppEnhancedButton(
-                onPressed: _save,
-                label: 'حفظ الهدف',
-              ),
-            ],
+    title: widget.goal == null ? 'إضافة هدف مالي' : 'تعديل الهدف',
+    body: Form(
+      key: _formKey,
+      child: ListView(
+        padding: const EdgeInsets.all(24),
+        children: [
+          AppTextField(
+            controller: _nameController,
+            label: 'اسم الهدف',
+            prefixIcon: const Icon(Icons.flag_outlined),
+            validator: (v) => v!.isEmpty ? 'يرجى إدخال اسم الهدف' : null,
           ),
-        ),
-      );
+          const SizedBox(height: 16),
+          AppTextField(
+            controller: _targetAmountController,
+            label: 'المبلغ المستهدف',
+            prefixIcon: const Icon(Icons.track_changes),
+            keyboardType: TextInputType.number,
+            validator: (v) => Decimal.tryParse(v ?? '') == null
+                ? 'يرجى إدخال مبلغ صحيح'
+                : null,
+          ),
+          const SizedBox(height: 16),
+          AppTextField(
+            controller: _currentAmountController,
+            label: 'المبلغ المتوفر حالياً',
+            prefixIcon: const Icon(Icons.account_balance_wallet_outlined),
+            keyboardType: TextInputType.number,
+            validator: (v) => Decimal.tryParse(v ?? '') == null
+                ? 'يرجى إدخال مبلغ صحيح'
+                : null,
+          ),
+          const SizedBox(height: 16),
+          DropdownButtonFormField<GoalCategory>(
+            initialValue: _category,
+            decoration: _inputDecoration(
+              'تصنيف الهدف',
+              Icons.category_outlined,
+            ),
+            items: GoalCategory.values
+                .map(
+                  (c) => DropdownMenuItem(
+                    value: c,
+                    child: Text(_getCategoryName(c)),
+                  ),
+                )
+                .toList(),
+            onChanged: (v) => setState(() => _category = v!),
+          ),
+          const SizedBox(height: 24),
+          AppCard(
+            child: ListTile(
+              contentPadding: EdgeInsets.zero,
+              title: const Text('تاريخ الإنجاز المستهدف'),
+              subtitle: Text(
+                '${_targetDate.year}-${_targetDate.month}-${_targetDate.day}',
+              ),
+              trailing: const Icon(
+                Icons.calendar_month,
+                color: AppColors.primary,
+              ),
+              onTap: () async {
+                final picked = await showDatePicker(
+                  context: context,
+                  initialDate: _targetDate,
+                  firstDate: DateTime.now(),
+                  lastDate: DateTime(2100),
+                );
+                if (picked != null) {
+                  setState(() => _targetDate = picked);
+                }
+              },
+            ),
+          ),
+          const SizedBox(height: 16),
+          AppTextField(
+            controller: _descController,
+            label: 'وصف (اختياري)',
+            prefixIcon: const Icon(Icons.description_outlined),
+            maxLines: 3,
+          ),
+          const SizedBox(height: 32),
+          AppEnhancedButton(onPressed: _save, label: 'حفظ الهدف'),
+        ],
+      ),
+    ),
+  );
 
   InputDecoration _inputDecoration(String label, IconData icon) =>
       InputDecoration(
@@ -193,12 +194,12 @@ class _GoalFormScreenState extends ConsumerState<GoalFormScreen> {
       );
 
   String _getCategoryName(GoalCategory category) => switch (category) {
-        GoalCategory.emergencyFund => 'صندوق الطوارئ',
-        GoalCategory.savings => 'ادخار',
-        GoalCategory.investment => 'استثمار',
-        GoalCategory.bigPurchase => 'شراء كبير',
-        GoalCategory.debtRepayment => 'سداد ديون',
-        GoalCategory.travel => 'سفر وترفيه',
-        GoalCategory.other => 'أخرى',
-      };
+    GoalCategory.emergencyFund => 'صندوق الطوارئ',
+    GoalCategory.savings => 'ادخار',
+    GoalCategory.investment => 'استثمار',
+    GoalCategory.bigPurchase => 'شراء كبير',
+    GoalCategory.debtRepayment => 'سداد ديون',
+    GoalCategory.travel => 'سفر وترفيه',
+    GoalCategory.other => 'أخرى',
+  };
 }

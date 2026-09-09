@@ -120,32 +120,31 @@ class InventoryDatabase extends _$InventoryDatabase {
   }
 
   domain.InventoryItem _toEntity(InventoryItem row) => domain.InventoryItem(
-        id: row.id,
-        nameAr: row.nameAr,
-        nameEn: row.nameEn,
-        sku: row.sku,
-        barcode: row.barcode,
-        description: row.description,
-        purchasePrice: row.purchasePrice,
-        salePrice: row.salePrice,
-        currentQuantity: row.currentQuantity,
-        unit: row.unit,
-        categoryId: row.categoryId,
-        valuationMethod:
-            domain.ValuationMethod.values.byName(row.valuationMethod),
-        assetAccountId: row.assetAccountId,
-        cogsAccountId: row.cogsAccountId,
-        revenueAccountId: row.revenueAccountId,
-        primaryAccountId: row.primaryAccountId,
-        syncStatus: SyncStatus.values.byName(row.syncStatus),
-        serverUpdatedAt: row.serverUpdatedAt,
-        isDeleted: row.isDeleted,
-        createdAt: row.createdAt,
-        updatedAt: row.updatedAt,
-        userId: row.userId,
-        warehouseId: row.warehouseId,
-        taxCategory: row.taxCategory,
-      );
+    id: row.id,
+    nameAr: row.nameAr,
+    nameEn: row.nameEn,
+    sku: row.sku,
+    barcode: row.barcode,
+    description: row.description,
+    purchasePrice: row.purchasePrice,
+    salePrice: row.salePrice,
+    currentQuantity: row.currentQuantity,
+    unit: row.unit,
+    categoryId: row.categoryId,
+    valuationMethod: domain.ValuationMethod.values.byName(row.valuationMethod),
+    assetAccountId: row.assetAccountId,
+    cogsAccountId: row.cogsAccountId,
+    revenueAccountId: row.revenueAccountId,
+    primaryAccountId: row.primaryAccountId,
+    syncStatus: SyncStatus.values.byName(row.syncStatus),
+    serverUpdatedAt: row.serverUpdatedAt,
+    isDeleted: row.isDeleted,
+    createdAt: row.createdAt,
+    updatedAt: row.updatedAt,
+    userId: row.userId,
+    warehouseId: row.warehouseId,
+    taxCategory: row.taxCategory,
+  );
 }
 
 class InventoryReadRepository {
@@ -159,28 +158,15 @@ class InventoryReadRepository {
   final String? userId;
   final String? warehouseId;
 
-  Future<List<domain.InventoryItem>> getAllItems() => database.getAllItems(
-        userId: userId,
-        warehouseId: warehouseId,
-      );
+  Future<List<domain.InventoryItem>> getAllItems() =>
+      database.getAllItems(userId: userId, warehouseId: warehouseId);
 
-  Future<domain.InventoryItem?> getItemById(String id) => database.getItemById(
-        id: id,
-        userId: userId,
-        warehouseId: warehouseId,
-      );
+  Future<domain.InventoryItem?> getItemById(String id) =>
+      database.getItemById(id: id, userId: userId, warehouseId: warehouseId);
 
-  Future<List<domain.InventoryItem>> searchItems(String query) =>
-      database.searchItems(
-        query: query,
-        userId: userId,
-        warehouseId: warehouseId,
-      );
+  Future<List<domain.InventoryItem>> searchItems(String query) => database
+      .searchItems(query: query, userId: userId, warehouseId: warehouseId);
 
   Future<domain.InventoryItem?> getItemBySku(String sku) =>
-      database.getItemBySku(
-        sku: sku,
-        userId: userId,
-        warehouseId: warehouseId,
-      );
+      database.getItemBySku(sku: sku, userId: userId, warehouseId: warehouseId);
 }

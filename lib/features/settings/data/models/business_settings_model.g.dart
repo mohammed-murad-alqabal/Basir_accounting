@@ -18,11 +18,7 @@ const BusinessSettingsModelSchema = CollectionSchema(
   name: r'BusinessSettingsModel',
   id: 3717291649633824759,
   properties: {
-    r'address': PropertySchema(
-      id: 0,
-      name: r'address',
-      type: IsarType.string,
-    ),
+    r'address': PropertySchema(id: 0, name: r'address', type: IsarType.string),
     r'companyName': PropertySchema(
       id: 1,
       name: r'companyName',
@@ -43,21 +39,13 @@ const BusinessSettingsModelSchema = CollectionSchema(
       name: r'defaultTaxRate',
       type: IsarType.double,
     ),
-    r'id': PropertySchema(
-      id: 5,
-      name: r'id',
-      type: IsarType.string,
-    ),
+    r'id': PropertySchema(id: 5, name: r'id', type: IsarType.string),
     r'isDeleted': PropertySchema(
       id: 6,
       name: r'isDeleted',
       type: IsarType.bool,
     ),
-    r'logoUrl': PropertySchema(
-      id: 7,
-      name: r'logoUrl',
-      type: IsarType.string,
-    ),
+    r'logoUrl': PropertySchema(id: 7, name: r'logoUrl', type: IsarType.string),
     r'serverUpdatedAt': PropertySchema(
       id: 8,
       name: r'serverUpdatedAt',
@@ -74,11 +62,7 @@ const BusinessSettingsModelSchema = CollectionSchema(
       name: r'taxNumber',
       type: IsarType.string,
     ),
-    r'userId': PropertySchema(
-      id: 11,
-      name: r'userId',
-      type: IsarType.string,
-    )
+    r'userId': PropertySchema(id: 11, name: r'userId', type: IsarType.string),
   },
   estimateSize: _businessSettingsModelEstimateSize,
   serialize: _businessSettingsModelSerialize,
@@ -96,7 +80,7 @@ const BusinessSettingsModelSchema = CollectionSchema(
           name: r'id',
           type: IndexType.hash,
           caseSensitive: true,
-        )
+        ),
       ],
     ),
     r'userId': IndexSchema(
@@ -109,9 +93,9 @@ const BusinessSettingsModelSchema = CollectionSchema(
           name: r'userId',
           type: IndexType.hash,
           caseSensitive: true,
-        )
+        ),
       ],
-    )
+    ),
   },
   links: {},
   embeddedSchemas: {},
@@ -195,8 +179,10 @@ BusinessSettingsModel _businessSettingsModelDeserialize(
   object.isarId = id;
   object.logoUrl = reader.readStringOrNull(offsets[7]);
   object.serverUpdatedAt = reader.readDateTimeOrNull(offsets[8]);
-  object.syncStatus = _BusinessSettingsModelsyncStatusValueEnumMap[
-          reader.readByteOrNull(offsets[9])] ??
+  object.syncStatus =
+      _BusinessSettingsModelsyncStatusValueEnumMap[reader.readByteOrNull(
+        offsets[9],
+      )] ??
       SyncStatus.synced;
   object.taxNumber = reader.readStringOrNull(offsets[10]);
   object.userId = reader.readStringOrNull(offsets[11]);
@@ -229,9 +215,10 @@ P _businessSettingsModelDeserializeProp<P>(
     case 8:
       return (reader.readDateTimeOrNull(offset)) as P;
     case 9:
-      return (_BusinessSettingsModelsyncStatusValueEnumMap[
-              reader.readByteOrNull(offset)] ??
-          SyncStatus.synced) as P;
+      return (_BusinessSettingsModelsyncStatusValueEnumMap[reader
+                  .readByteOrNull(offset)] ??
+              SyncStatus.synced)
+          as P;
     case 10:
       return (reader.readStringOrNull(offset)) as P;
     case 11:
@@ -259,12 +246,16 @@ Id _businessSettingsModelGetId(BusinessSettingsModel object) {
 }
 
 List<IsarLinkBase<dynamic>> _businessSettingsModelGetLinks(
-    BusinessSettingsModel object) {
+  BusinessSettingsModel object,
+) {
   return [];
 }
 
 void _businessSettingsModelAttach(
-    IsarCollection<dynamic> col, Id id, BusinessSettingsModel object) {
+  IsarCollection<dynamic> col,
+  Id id,
+  BusinessSettingsModel object,
+) {
   object.isarId = id;
 }
 
@@ -318,8 +309,10 @@ extension BusinessSettingsModelByIndex
     return putAllByIndex(r'id', objects);
   }
 
-  List<Id> putAllByIdSync(List<BusinessSettingsModel> objects,
-      {bool saveLinks = true}) {
+  List<Id> putAllByIdSync(
+    List<BusinessSettingsModel> objects, {
+    bool saveLinks = true,
+  }) {
     return putAllByIndexSync(r'id', objects, saveLinks: saveLinks);
   }
 }
@@ -327,27 +320,31 @@ extension BusinessSettingsModelByIndex
 extension BusinessSettingsModelQueryWhereSort
     on QueryBuilder<BusinessSettingsModel, BusinessSettingsModel, QWhere> {
   QueryBuilder<BusinessSettingsModel, BusinessSettingsModel, QAfterWhere>
-      anyIsarId() {
+  anyIsarId() {
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(const IdWhereClause.any());
     });
   }
 }
 
-extension BusinessSettingsModelQueryWhere on QueryBuilder<BusinessSettingsModel,
-    BusinessSettingsModel, QWhereClause> {
+extension BusinessSettingsModelQueryWhere
+    on
+        QueryBuilder<
+          BusinessSettingsModel,
+          BusinessSettingsModel,
+          QWhereClause
+        > {
   QueryBuilder<BusinessSettingsModel, BusinessSettingsModel, QAfterWhereClause>
-      isarIdEqualTo(Id isarId) {
+  isarIdEqualTo(Id isarId) {
     return QueryBuilder.apply(this, (query) {
-      return query.addWhereClause(IdWhereClause.between(
-        lower: isarId,
-        upper: isarId,
-      ));
+      return query.addWhereClause(
+        IdWhereClause.between(lower: isarId, upper: isarId),
+      );
     });
   }
 
   QueryBuilder<BusinessSettingsModel, BusinessSettingsModel, QAfterWhereClause>
-      isarIdNotEqualTo(Id isarId) {
+  isarIdNotEqualTo(Id isarId) {
     return QueryBuilder.apply(this, (query) {
       if (query.whereSort == Sort.asc) {
         return query
@@ -370,7 +367,7 @@ extension BusinessSettingsModelQueryWhere on QueryBuilder<BusinessSettingsModel,
   }
 
   QueryBuilder<BusinessSettingsModel, BusinessSettingsModel, QAfterWhereClause>
-      isarIdGreaterThan(Id isarId, {bool include = false}) {
+  isarIdGreaterThan(Id isarId, {bool include = false}) {
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(
         IdWhereClause.greaterThan(lower: isarId, includeLower: include),
@@ -379,7 +376,7 @@ extension BusinessSettingsModelQueryWhere on QueryBuilder<BusinessSettingsModel,
   }
 
   QueryBuilder<BusinessSettingsModel, BusinessSettingsModel, QAfterWhereClause>
-      isarIdLessThan(Id isarId, {bool include = false}) {
+  isarIdLessThan(Id isarId, {bool include = false}) {
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(
         IdWhereClause.lessThan(upper: isarId, includeUpper: include),
@@ -388,203 +385,252 @@ extension BusinessSettingsModelQueryWhere on QueryBuilder<BusinessSettingsModel,
   }
 
   QueryBuilder<BusinessSettingsModel, BusinessSettingsModel, QAfterWhereClause>
-      isarIdBetween(
+  isarIdBetween(
     Id lowerIsarId,
     Id upperIsarId, {
     bool includeLower = true,
     bool includeUpper = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addWhereClause(IdWhereClause.between(
-        lower: lowerIsarId,
-        includeLower: includeLower,
-        upper: upperIsarId,
-        includeUpper: includeUpper,
-      ));
+      return query.addWhereClause(
+        IdWhereClause.between(
+          lower: lowerIsarId,
+          includeLower: includeLower,
+          upper: upperIsarId,
+          includeUpper: includeUpper,
+        ),
+      );
     });
   }
 
   QueryBuilder<BusinessSettingsModel, BusinessSettingsModel, QAfterWhereClause>
-      idEqualTo(String id) {
+  idEqualTo(String id) {
     return QueryBuilder.apply(this, (query) {
-      return query.addWhereClause(IndexWhereClause.equalTo(
-        indexName: r'id',
-        value: [id],
-      ));
+      return query.addWhereClause(
+        IndexWhereClause.equalTo(indexName: r'id', value: [id]),
+      );
     });
   }
 
   QueryBuilder<BusinessSettingsModel, BusinessSettingsModel, QAfterWhereClause>
-      idNotEqualTo(String id) {
+  idNotEqualTo(String id) {
     return QueryBuilder.apply(this, (query) {
       if (query.whereSort == Sort.asc) {
         return query
-            .addWhereClause(IndexWhereClause.between(
-              indexName: r'id',
-              lower: [],
-              upper: [id],
-              includeUpper: false,
-            ))
-            .addWhereClause(IndexWhereClause.between(
-              indexName: r'id',
-              lower: [id],
-              includeLower: false,
-              upper: [],
-            ));
+            .addWhereClause(
+              IndexWhereClause.between(
+                indexName: r'id',
+                lower: [],
+                upper: [id],
+                includeUpper: false,
+              ),
+            )
+            .addWhereClause(
+              IndexWhereClause.between(
+                indexName: r'id',
+                lower: [id],
+                includeLower: false,
+                upper: [],
+              ),
+            );
       } else {
         return query
-            .addWhereClause(IndexWhereClause.between(
-              indexName: r'id',
-              lower: [id],
-              includeLower: false,
-              upper: [],
-            ))
-            .addWhereClause(IndexWhereClause.between(
-              indexName: r'id',
-              lower: [],
-              upper: [id],
-              includeUpper: false,
-            ));
+            .addWhereClause(
+              IndexWhereClause.between(
+                indexName: r'id',
+                lower: [id],
+                includeLower: false,
+                upper: [],
+              ),
+            )
+            .addWhereClause(
+              IndexWhereClause.between(
+                indexName: r'id',
+                lower: [],
+                upper: [id],
+                includeUpper: false,
+              ),
+            );
       }
     });
   }
 
   QueryBuilder<BusinessSettingsModel, BusinessSettingsModel, QAfterWhereClause>
-      userIdIsNull() {
+  userIdIsNull() {
     return QueryBuilder.apply(this, (query) {
-      return query.addWhereClause(IndexWhereClause.equalTo(
-        indexName: r'userId',
-        value: [null],
-      ));
+      return query.addWhereClause(
+        IndexWhereClause.equalTo(indexName: r'userId', value: [null]),
+      );
     });
   }
 
   QueryBuilder<BusinessSettingsModel, BusinessSettingsModel, QAfterWhereClause>
-      userIdIsNotNull() {
+  userIdIsNotNull() {
     return QueryBuilder.apply(this, (query) {
-      return query.addWhereClause(IndexWhereClause.between(
-        indexName: r'userId',
-        lower: [null],
-        includeLower: false,
-        upper: [],
-      ));
+      return query.addWhereClause(
+        IndexWhereClause.between(
+          indexName: r'userId',
+          lower: [null],
+          includeLower: false,
+          upper: [],
+        ),
+      );
     });
   }
 
   QueryBuilder<BusinessSettingsModel, BusinessSettingsModel, QAfterWhereClause>
-      userIdEqualTo(String? userId) {
+  userIdEqualTo(String? userId) {
     return QueryBuilder.apply(this, (query) {
-      return query.addWhereClause(IndexWhereClause.equalTo(
-        indexName: r'userId',
-        value: [userId],
-      ));
+      return query.addWhereClause(
+        IndexWhereClause.equalTo(indexName: r'userId', value: [userId]),
+      );
     });
   }
 
   QueryBuilder<BusinessSettingsModel, BusinessSettingsModel, QAfterWhereClause>
-      userIdNotEqualTo(String? userId) {
+  userIdNotEqualTo(String? userId) {
     return QueryBuilder.apply(this, (query) {
       if (query.whereSort == Sort.asc) {
         return query
-            .addWhereClause(IndexWhereClause.between(
-              indexName: r'userId',
-              lower: [],
-              upper: [userId],
-              includeUpper: false,
-            ))
-            .addWhereClause(IndexWhereClause.between(
-              indexName: r'userId',
-              lower: [userId],
-              includeLower: false,
-              upper: [],
-            ));
+            .addWhereClause(
+              IndexWhereClause.between(
+                indexName: r'userId',
+                lower: [],
+                upper: [userId],
+                includeUpper: false,
+              ),
+            )
+            .addWhereClause(
+              IndexWhereClause.between(
+                indexName: r'userId',
+                lower: [userId],
+                includeLower: false,
+                upper: [],
+              ),
+            );
       } else {
         return query
-            .addWhereClause(IndexWhereClause.between(
-              indexName: r'userId',
-              lower: [userId],
-              includeLower: false,
-              upper: [],
-            ))
-            .addWhereClause(IndexWhereClause.between(
-              indexName: r'userId',
-              lower: [],
-              upper: [userId],
-              includeUpper: false,
-            ));
+            .addWhereClause(
+              IndexWhereClause.between(
+                indexName: r'userId',
+                lower: [userId],
+                includeLower: false,
+                upper: [],
+              ),
+            )
+            .addWhereClause(
+              IndexWhereClause.between(
+                indexName: r'userId',
+                lower: [],
+                upper: [userId],
+                includeUpper: false,
+              ),
+            );
       }
     });
   }
 }
 
-extension BusinessSettingsModelQueryFilter on QueryBuilder<
-    BusinessSettingsModel, BusinessSettingsModel, QFilterCondition> {
-  QueryBuilder<BusinessSettingsModel, BusinessSettingsModel,
-      QAfterFilterCondition> addressIsNull() {
+extension BusinessSettingsModelQueryFilter
+    on
+        QueryBuilder<
+          BusinessSettingsModel,
+          BusinessSettingsModel,
+          QFilterCondition
+        > {
+  QueryBuilder<
+    BusinessSettingsModel,
+    BusinessSettingsModel,
+    QAfterFilterCondition
+  >
+  addressIsNull() {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const FilterCondition.isNull(
-        property: r'address',
-      ));
+      return query.addFilterCondition(
+        const FilterCondition.isNull(property: r'address'),
+      );
     });
   }
 
-  QueryBuilder<BusinessSettingsModel, BusinessSettingsModel,
-      QAfterFilterCondition> addressIsNotNull() {
+  QueryBuilder<
+    BusinessSettingsModel,
+    BusinessSettingsModel,
+    QAfterFilterCondition
+  >
+  addressIsNotNull() {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const FilterCondition.isNotNull(
-        property: r'address',
-      ));
+      return query.addFilterCondition(
+        const FilterCondition.isNotNull(property: r'address'),
+      );
     });
   }
 
-  QueryBuilder<BusinessSettingsModel, BusinessSettingsModel,
-      QAfterFilterCondition> addressEqualTo(
-    String? value, {
-    bool caseSensitive = true,
-  }) {
+  QueryBuilder<
+    BusinessSettingsModel,
+    BusinessSettingsModel,
+    QAfterFilterCondition
+  >
+  addressEqualTo(String? value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'address',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.equalTo(
+          property: r'address',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
-  QueryBuilder<BusinessSettingsModel, BusinessSettingsModel,
-      QAfterFilterCondition> addressGreaterThan(
+  QueryBuilder<
+    BusinessSettingsModel,
+    BusinessSettingsModel,
+    QAfterFilterCondition
+  >
+  addressGreaterThan(
     String? value, {
     bool include = false,
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        include: include,
-        property: r'address',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.greaterThan(
+          include: include,
+          property: r'address',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
-  QueryBuilder<BusinessSettingsModel, BusinessSettingsModel,
-      QAfterFilterCondition> addressLessThan(
+  QueryBuilder<
+    BusinessSettingsModel,
+    BusinessSettingsModel,
+    QAfterFilterCondition
+  >
+  addressLessThan(
     String? value, {
     bool include = false,
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.lessThan(
-        include: include,
-        property: r'address',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.lessThan(
+          include: include,
+          property: r'address',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
-  QueryBuilder<BusinessSettingsModel, BusinessSettingsModel,
-      QAfterFilterCondition> addressBetween(
+  QueryBuilder<
+    BusinessSettingsModel,
+    BusinessSettingsModel,
+    QAfterFilterCondition
+  >
+  addressBetween(
     String? lower,
     String? upper, {
     bool includeLower = true,
@@ -592,137 +638,180 @@ extension BusinessSettingsModelQueryFilter on QueryBuilder<
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.between(
-        property: r'address',
-        lower: lower,
-        includeLower: includeLower,
-        upper: upper,
-        includeUpper: includeUpper,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.between(
+          property: r'address',
+          lower: lower,
+          includeLower: includeLower,
+          upper: upper,
+          includeUpper: includeUpper,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
-  QueryBuilder<BusinessSettingsModel, BusinessSettingsModel,
-      QAfterFilterCondition> addressStartsWith(
-    String value, {
-    bool caseSensitive = true,
-  }) {
+  QueryBuilder<
+    BusinessSettingsModel,
+    BusinessSettingsModel,
+    QAfterFilterCondition
+  >
+  addressStartsWith(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.startsWith(
-        property: r'address',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.startsWith(
+          property: r'address',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
-  QueryBuilder<BusinessSettingsModel, BusinessSettingsModel,
-      QAfterFilterCondition> addressEndsWith(
-    String value, {
-    bool caseSensitive = true,
-  }) {
+  QueryBuilder<
+    BusinessSettingsModel,
+    BusinessSettingsModel,
+    QAfterFilterCondition
+  >
+  addressEndsWith(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.endsWith(
-        property: r'address',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.endsWith(
+          property: r'address',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
-  QueryBuilder<BusinessSettingsModel, BusinessSettingsModel,
-          QAfterFilterCondition>
-      addressContains(String value, {bool caseSensitive = true}) {
+  QueryBuilder<
+    BusinessSettingsModel,
+    BusinessSettingsModel,
+    QAfterFilterCondition
+  >
+  addressContains(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.contains(
-        property: r'address',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.contains(
+          property: r'address',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
-  QueryBuilder<BusinessSettingsModel, BusinessSettingsModel,
-          QAfterFilterCondition>
-      addressMatches(String pattern, {bool caseSensitive = true}) {
+  QueryBuilder<
+    BusinessSettingsModel,
+    BusinessSettingsModel,
+    QAfterFilterCondition
+  >
+  addressMatches(String pattern, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.matches(
-        property: r'address',
-        wildcard: pattern,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.matches(
+          property: r'address',
+          wildcard: pattern,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
-  QueryBuilder<BusinessSettingsModel, BusinessSettingsModel,
-      QAfterFilterCondition> addressIsEmpty() {
+  QueryBuilder<
+    BusinessSettingsModel,
+    BusinessSettingsModel,
+    QAfterFilterCondition
+  >
+  addressIsEmpty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'address',
-        value: '',
-      ));
+      return query.addFilterCondition(
+        FilterCondition.equalTo(property: r'address', value: ''),
+      );
     });
   }
 
-  QueryBuilder<BusinessSettingsModel, BusinessSettingsModel,
-      QAfterFilterCondition> addressIsNotEmpty() {
+  QueryBuilder<
+    BusinessSettingsModel,
+    BusinessSettingsModel,
+    QAfterFilterCondition
+  >
+  addressIsNotEmpty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        property: r'address',
-        value: '',
-      ));
+      return query.addFilterCondition(
+        FilterCondition.greaterThan(property: r'address', value: ''),
+      );
     });
   }
 
-  QueryBuilder<BusinessSettingsModel, BusinessSettingsModel,
-      QAfterFilterCondition> companyNameEqualTo(
-    String value, {
-    bool caseSensitive = true,
-  }) {
+  QueryBuilder<
+    BusinessSettingsModel,
+    BusinessSettingsModel,
+    QAfterFilterCondition
+  >
+  companyNameEqualTo(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'companyName',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.equalTo(
+          property: r'companyName',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
-  QueryBuilder<BusinessSettingsModel, BusinessSettingsModel,
-      QAfterFilterCondition> companyNameGreaterThan(
+  QueryBuilder<
+    BusinessSettingsModel,
+    BusinessSettingsModel,
+    QAfterFilterCondition
+  >
+  companyNameGreaterThan(
     String value, {
     bool include = false,
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        include: include,
-        property: r'companyName',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.greaterThan(
+          include: include,
+          property: r'companyName',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
-  QueryBuilder<BusinessSettingsModel, BusinessSettingsModel,
-      QAfterFilterCondition> companyNameLessThan(
+  QueryBuilder<
+    BusinessSettingsModel,
+    BusinessSettingsModel,
+    QAfterFilterCondition
+  >
+  companyNameLessThan(
     String value, {
     bool include = false,
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.lessThan(
-        include: include,
-        property: r'companyName',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.lessThan(
+          include: include,
+          property: r'companyName',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
-  QueryBuilder<BusinessSettingsModel, BusinessSettingsModel,
-      QAfterFilterCondition> companyNameBetween(
+  QueryBuilder<
+    BusinessSettingsModel,
+    BusinessSettingsModel,
+    QAfterFilterCondition
+  >
+  companyNameBetween(
     String lower,
     String upper, {
     bool includeLower = true,
@@ -730,137 +819,180 @@ extension BusinessSettingsModelQueryFilter on QueryBuilder<
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.between(
-        property: r'companyName',
-        lower: lower,
-        includeLower: includeLower,
-        upper: upper,
-        includeUpper: includeUpper,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.between(
+          property: r'companyName',
+          lower: lower,
+          includeLower: includeLower,
+          upper: upper,
+          includeUpper: includeUpper,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
-  QueryBuilder<BusinessSettingsModel, BusinessSettingsModel,
-      QAfterFilterCondition> companyNameStartsWith(
-    String value, {
-    bool caseSensitive = true,
-  }) {
+  QueryBuilder<
+    BusinessSettingsModel,
+    BusinessSettingsModel,
+    QAfterFilterCondition
+  >
+  companyNameStartsWith(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.startsWith(
-        property: r'companyName',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.startsWith(
+          property: r'companyName',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
-  QueryBuilder<BusinessSettingsModel, BusinessSettingsModel,
-      QAfterFilterCondition> companyNameEndsWith(
-    String value, {
-    bool caseSensitive = true,
-  }) {
+  QueryBuilder<
+    BusinessSettingsModel,
+    BusinessSettingsModel,
+    QAfterFilterCondition
+  >
+  companyNameEndsWith(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.endsWith(
-        property: r'companyName',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.endsWith(
+          property: r'companyName',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
-  QueryBuilder<BusinessSettingsModel, BusinessSettingsModel,
-          QAfterFilterCondition>
-      companyNameContains(String value, {bool caseSensitive = true}) {
+  QueryBuilder<
+    BusinessSettingsModel,
+    BusinessSettingsModel,
+    QAfterFilterCondition
+  >
+  companyNameContains(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.contains(
-        property: r'companyName',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.contains(
+          property: r'companyName',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
-  QueryBuilder<BusinessSettingsModel, BusinessSettingsModel,
-          QAfterFilterCondition>
-      companyNameMatches(String pattern, {bool caseSensitive = true}) {
+  QueryBuilder<
+    BusinessSettingsModel,
+    BusinessSettingsModel,
+    QAfterFilterCondition
+  >
+  companyNameMatches(String pattern, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.matches(
-        property: r'companyName',
-        wildcard: pattern,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.matches(
+          property: r'companyName',
+          wildcard: pattern,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
-  QueryBuilder<BusinessSettingsModel, BusinessSettingsModel,
-      QAfterFilterCondition> companyNameIsEmpty() {
+  QueryBuilder<
+    BusinessSettingsModel,
+    BusinessSettingsModel,
+    QAfterFilterCondition
+  >
+  companyNameIsEmpty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'companyName',
-        value: '',
-      ));
+      return query.addFilterCondition(
+        FilterCondition.equalTo(property: r'companyName', value: ''),
+      );
     });
   }
 
-  QueryBuilder<BusinessSettingsModel, BusinessSettingsModel,
-      QAfterFilterCondition> companyNameIsNotEmpty() {
+  QueryBuilder<
+    BusinessSettingsModel,
+    BusinessSettingsModel,
+    QAfterFilterCondition
+  >
+  companyNameIsNotEmpty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        property: r'companyName',
-        value: '',
-      ));
+      return query.addFilterCondition(
+        FilterCondition.greaterThan(property: r'companyName', value: ''),
+      );
     });
   }
 
-  QueryBuilder<BusinessSettingsModel, BusinessSettingsModel,
-      QAfterFilterCondition> currencyCodeEqualTo(
-    String value, {
-    bool caseSensitive = true,
-  }) {
+  QueryBuilder<
+    BusinessSettingsModel,
+    BusinessSettingsModel,
+    QAfterFilterCondition
+  >
+  currencyCodeEqualTo(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'currencyCode',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.equalTo(
+          property: r'currencyCode',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
-  QueryBuilder<BusinessSettingsModel, BusinessSettingsModel,
-      QAfterFilterCondition> currencyCodeGreaterThan(
+  QueryBuilder<
+    BusinessSettingsModel,
+    BusinessSettingsModel,
+    QAfterFilterCondition
+  >
+  currencyCodeGreaterThan(
     String value, {
     bool include = false,
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        include: include,
-        property: r'currencyCode',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.greaterThan(
+          include: include,
+          property: r'currencyCode',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
-  QueryBuilder<BusinessSettingsModel, BusinessSettingsModel,
-      QAfterFilterCondition> currencyCodeLessThan(
+  QueryBuilder<
+    BusinessSettingsModel,
+    BusinessSettingsModel,
+    QAfterFilterCondition
+  >
+  currencyCodeLessThan(
     String value, {
     bool include = false,
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.lessThan(
-        include: include,
-        property: r'currencyCode',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.lessThan(
+          include: include,
+          property: r'currencyCode',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
-  QueryBuilder<BusinessSettingsModel, BusinessSettingsModel,
-      QAfterFilterCondition> currencyCodeBetween(
+  QueryBuilder<
+    BusinessSettingsModel,
+    BusinessSettingsModel,
+    QAfterFilterCondition
+  >
+  currencyCodeBetween(
     String lower,
     String upper, {
     bool includeLower = true,
@@ -868,137 +1000,180 @@ extension BusinessSettingsModelQueryFilter on QueryBuilder<
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.between(
-        property: r'currencyCode',
-        lower: lower,
-        includeLower: includeLower,
-        upper: upper,
-        includeUpper: includeUpper,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.between(
+          property: r'currencyCode',
+          lower: lower,
+          includeLower: includeLower,
+          upper: upper,
+          includeUpper: includeUpper,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
-  QueryBuilder<BusinessSettingsModel, BusinessSettingsModel,
-      QAfterFilterCondition> currencyCodeStartsWith(
-    String value, {
-    bool caseSensitive = true,
-  }) {
+  QueryBuilder<
+    BusinessSettingsModel,
+    BusinessSettingsModel,
+    QAfterFilterCondition
+  >
+  currencyCodeStartsWith(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.startsWith(
-        property: r'currencyCode',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.startsWith(
+          property: r'currencyCode',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
-  QueryBuilder<BusinessSettingsModel, BusinessSettingsModel,
-      QAfterFilterCondition> currencyCodeEndsWith(
-    String value, {
-    bool caseSensitive = true,
-  }) {
+  QueryBuilder<
+    BusinessSettingsModel,
+    BusinessSettingsModel,
+    QAfterFilterCondition
+  >
+  currencyCodeEndsWith(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.endsWith(
-        property: r'currencyCode',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.endsWith(
+          property: r'currencyCode',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
-  QueryBuilder<BusinessSettingsModel, BusinessSettingsModel,
-          QAfterFilterCondition>
-      currencyCodeContains(String value, {bool caseSensitive = true}) {
+  QueryBuilder<
+    BusinessSettingsModel,
+    BusinessSettingsModel,
+    QAfterFilterCondition
+  >
+  currencyCodeContains(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.contains(
-        property: r'currencyCode',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.contains(
+          property: r'currencyCode',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
-  QueryBuilder<BusinessSettingsModel, BusinessSettingsModel,
-          QAfterFilterCondition>
-      currencyCodeMatches(String pattern, {bool caseSensitive = true}) {
+  QueryBuilder<
+    BusinessSettingsModel,
+    BusinessSettingsModel,
+    QAfterFilterCondition
+  >
+  currencyCodeMatches(String pattern, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.matches(
-        property: r'currencyCode',
-        wildcard: pattern,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.matches(
+          property: r'currencyCode',
+          wildcard: pattern,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
-  QueryBuilder<BusinessSettingsModel, BusinessSettingsModel,
-      QAfterFilterCondition> currencyCodeIsEmpty() {
+  QueryBuilder<
+    BusinessSettingsModel,
+    BusinessSettingsModel,
+    QAfterFilterCondition
+  >
+  currencyCodeIsEmpty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'currencyCode',
-        value: '',
-      ));
+      return query.addFilterCondition(
+        FilterCondition.equalTo(property: r'currencyCode', value: ''),
+      );
     });
   }
 
-  QueryBuilder<BusinessSettingsModel, BusinessSettingsModel,
-      QAfterFilterCondition> currencyCodeIsNotEmpty() {
+  QueryBuilder<
+    BusinessSettingsModel,
+    BusinessSettingsModel,
+    QAfterFilterCondition
+  >
+  currencyCodeIsNotEmpty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        property: r'currencyCode',
-        value: '',
-      ));
+      return query.addFilterCondition(
+        FilterCondition.greaterThan(property: r'currencyCode', value: ''),
+      );
     });
   }
 
-  QueryBuilder<BusinessSettingsModel, BusinessSettingsModel,
-      QAfterFilterCondition> currencySymbolEqualTo(
-    String value, {
-    bool caseSensitive = true,
-  }) {
+  QueryBuilder<
+    BusinessSettingsModel,
+    BusinessSettingsModel,
+    QAfterFilterCondition
+  >
+  currencySymbolEqualTo(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'currencySymbol',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.equalTo(
+          property: r'currencySymbol',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
-  QueryBuilder<BusinessSettingsModel, BusinessSettingsModel,
-      QAfterFilterCondition> currencySymbolGreaterThan(
+  QueryBuilder<
+    BusinessSettingsModel,
+    BusinessSettingsModel,
+    QAfterFilterCondition
+  >
+  currencySymbolGreaterThan(
     String value, {
     bool include = false,
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        include: include,
-        property: r'currencySymbol',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.greaterThan(
+          include: include,
+          property: r'currencySymbol',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
-  QueryBuilder<BusinessSettingsModel, BusinessSettingsModel,
-      QAfterFilterCondition> currencySymbolLessThan(
+  QueryBuilder<
+    BusinessSettingsModel,
+    BusinessSettingsModel,
+    QAfterFilterCondition
+  >
+  currencySymbolLessThan(
     String value, {
     bool include = false,
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.lessThan(
-        include: include,
-        property: r'currencySymbol',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.lessThan(
+          include: include,
+          property: r'currencySymbol',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
-  QueryBuilder<BusinessSettingsModel, BusinessSettingsModel,
-      QAfterFilterCondition> currencySymbolBetween(
+  QueryBuilder<
+    BusinessSettingsModel,
+    BusinessSettingsModel,
+    QAfterFilterCondition
+  >
+  currencySymbolBetween(
     String lower,
     String upper, {
     bool includeLower = true,
@@ -1006,137 +1181,180 @@ extension BusinessSettingsModelQueryFilter on QueryBuilder<
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.between(
-        property: r'currencySymbol',
-        lower: lower,
-        includeLower: includeLower,
-        upper: upper,
-        includeUpper: includeUpper,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.between(
+          property: r'currencySymbol',
+          lower: lower,
+          includeLower: includeLower,
+          upper: upper,
+          includeUpper: includeUpper,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
-  QueryBuilder<BusinessSettingsModel, BusinessSettingsModel,
-      QAfterFilterCondition> currencySymbolStartsWith(
-    String value, {
-    bool caseSensitive = true,
-  }) {
+  QueryBuilder<
+    BusinessSettingsModel,
+    BusinessSettingsModel,
+    QAfterFilterCondition
+  >
+  currencySymbolStartsWith(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.startsWith(
-        property: r'currencySymbol',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.startsWith(
+          property: r'currencySymbol',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
-  QueryBuilder<BusinessSettingsModel, BusinessSettingsModel,
-      QAfterFilterCondition> currencySymbolEndsWith(
-    String value, {
-    bool caseSensitive = true,
-  }) {
+  QueryBuilder<
+    BusinessSettingsModel,
+    BusinessSettingsModel,
+    QAfterFilterCondition
+  >
+  currencySymbolEndsWith(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.endsWith(
-        property: r'currencySymbol',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.endsWith(
+          property: r'currencySymbol',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
-  QueryBuilder<BusinessSettingsModel, BusinessSettingsModel,
-          QAfterFilterCondition>
-      currencySymbolContains(String value, {bool caseSensitive = true}) {
+  QueryBuilder<
+    BusinessSettingsModel,
+    BusinessSettingsModel,
+    QAfterFilterCondition
+  >
+  currencySymbolContains(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.contains(
-        property: r'currencySymbol',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.contains(
+          property: r'currencySymbol',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
-  QueryBuilder<BusinessSettingsModel, BusinessSettingsModel,
-          QAfterFilterCondition>
-      currencySymbolMatches(String pattern, {bool caseSensitive = true}) {
+  QueryBuilder<
+    BusinessSettingsModel,
+    BusinessSettingsModel,
+    QAfterFilterCondition
+  >
+  currencySymbolMatches(String pattern, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.matches(
-        property: r'currencySymbol',
-        wildcard: pattern,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.matches(
+          property: r'currencySymbol',
+          wildcard: pattern,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
-  QueryBuilder<BusinessSettingsModel, BusinessSettingsModel,
-      QAfterFilterCondition> currencySymbolIsEmpty() {
+  QueryBuilder<
+    BusinessSettingsModel,
+    BusinessSettingsModel,
+    QAfterFilterCondition
+  >
+  currencySymbolIsEmpty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'currencySymbol',
-        value: '',
-      ));
+      return query.addFilterCondition(
+        FilterCondition.equalTo(property: r'currencySymbol', value: ''),
+      );
     });
   }
 
-  QueryBuilder<BusinessSettingsModel, BusinessSettingsModel,
-      QAfterFilterCondition> currencySymbolIsNotEmpty() {
+  QueryBuilder<
+    BusinessSettingsModel,
+    BusinessSettingsModel,
+    QAfterFilterCondition
+  >
+  currencySymbolIsNotEmpty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        property: r'currencySymbol',
-        value: '',
-      ));
+      return query.addFilterCondition(
+        FilterCondition.greaterThan(property: r'currencySymbol', value: ''),
+      );
     });
   }
 
-  QueryBuilder<BusinessSettingsModel, BusinessSettingsModel,
-      QAfterFilterCondition> defaultTaxRateEqualTo(
-    double value, {
-    double epsilon = Query.epsilon,
-  }) {
+  QueryBuilder<
+    BusinessSettingsModel,
+    BusinessSettingsModel,
+    QAfterFilterCondition
+  >
+  defaultTaxRateEqualTo(double value, {double epsilon = Query.epsilon}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'defaultTaxRate',
-        value: value,
-        epsilon: epsilon,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.equalTo(
+          property: r'defaultTaxRate',
+          value: value,
+          epsilon: epsilon,
+        ),
+      );
     });
   }
 
-  QueryBuilder<BusinessSettingsModel, BusinessSettingsModel,
-      QAfterFilterCondition> defaultTaxRateGreaterThan(
+  QueryBuilder<
+    BusinessSettingsModel,
+    BusinessSettingsModel,
+    QAfterFilterCondition
+  >
+  defaultTaxRateGreaterThan(
     double value, {
     bool include = false,
     double epsilon = Query.epsilon,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        include: include,
-        property: r'defaultTaxRate',
-        value: value,
-        epsilon: epsilon,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.greaterThan(
+          include: include,
+          property: r'defaultTaxRate',
+          value: value,
+          epsilon: epsilon,
+        ),
+      );
     });
   }
 
-  QueryBuilder<BusinessSettingsModel, BusinessSettingsModel,
-      QAfterFilterCondition> defaultTaxRateLessThan(
+  QueryBuilder<
+    BusinessSettingsModel,
+    BusinessSettingsModel,
+    QAfterFilterCondition
+  >
+  defaultTaxRateLessThan(
     double value, {
     bool include = false,
     double epsilon = Query.epsilon,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.lessThan(
-        include: include,
-        property: r'defaultTaxRate',
-        value: value,
-        epsilon: epsilon,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.lessThan(
+          include: include,
+          property: r'defaultTaxRate',
+          value: value,
+          epsilon: epsilon,
+        ),
+      );
     });
   }
 
-  QueryBuilder<BusinessSettingsModel, BusinessSettingsModel,
-      QAfterFilterCondition> defaultTaxRateBetween(
+  QueryBuilder<
+    BusinessSettingsModel,
+    BusinessSettingsModel,
+    QAfterFilterCondition
+  >
+  defaultTaxRateBetween(
     double lower,
     double upper, {
     bool includeLower = true,
@@ -1144,65 +1362,82 @@ extension BusinessSettingsModelQueryFilter on QueryBuilder<
     double epsilon = Query.epsilon,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.between(
-        property: r'defaultTaxRate',
-        lower: lower,
-        includeLower: includeLower,
-        upper: upper,
-        includeUpper: includeUpper,
-        epsilon: epsilon,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.between(
+          property: r'defaultTaxRate',
+          lower: lower,
+          includeLower: includeLower,
+          upper: upper,
+          includeUpper: includeUpper,
+          epsilon: epsilon,
+        ),
+      );
     });
   }
 
-  QueryBuilder<BusinessSettingsModel, BusinessSettingsModel,
-      QAfterFilterCondition> idEqualTo(
-    String value, {
-    bool caseSensitive = true,
-  }) {
+  QueryBuilder<
+    BusinessSettingsModel,
+    BusinessSettingsModel,
+    QAfterFilterCondition
+  >
+  idEqualTo(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'id',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.equalTo(
+          property: r'id',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
-  QueryBuilder<BusinessSettingsModel, BusinessSettingsModel,
-      QAfterFilterCondition> idGreaterThan(
-    String value, {
-    bool include = false,
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        include: include,
-        property: r'id',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<BusinessSettingsModel, BusinessSettingsModel,
-      QAfterFilterCondition> idLessThan(
+  QueryBuilder<
+    BusinessSettingsModel,
+    BusinessSettingsModel,
+    QAfterFilterCondition
+  >
+  idGreaterThan(
     String value, {
     bool include = false,
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.lessThan(
-        include: include,
-        property: r'id',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.greaterThan(
+          include: include,
+          property: r'id',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
-  QueryBuilder<BusinessSettingsModel, BusinessSettingsModel,
-      QAfterFilterCondition> idBetween(
+  QueryBuilder<
+    BusinessSettingsModel,
+    BusinessSettingsModel,
+    QAfterFilterCondition
+  >
+  idLessThan(String value, {bool include = false, bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        FilterCondition.lessThan(
+          include: include,
+          property: r'id',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<
+    BusinessSettingsModel,
+    BusinessSettingsModel,
+    QAfterFilterCondition
+  >
+  idBetween(
     String lower,
     String upper, {
     bool includeLower = true,
@@ -1210,239 +1445,316 @@ extension BusinessSettingsModelQueryFilter on QueryBuilder<
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.between(
-        property: r'id',
-        lower: lower,
-        includeLower: includeLower,
-        upper: upper,
-        includeUpper: includeUpper,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.between(
+          property: r'id',
+          lower: lower,
+          includeLower: includeLower,
+          upper: upper,
+          includeUpper: includeUpper,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
-  QueryBuilder<BusinessSettingsModel, BusinessSettingsModel,
-      QAfterFilterCondition> idStartsWith(
-    String value, {
-    bool caseSensitive = true,
-  }) {
+  QueryBuilder<
+    BusinessSettingsModel,
+    BusinessSettingsModel,
+    QAfterFilterCondition
+  >
+  idStartsWith(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.startsWith(
-        property: r'id',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.startsWith(
+          property: r'id',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
-  QueryBuilder<BusinessSettingsModel, BusinessSettingsModel,
-      QAfterFilterCondition> idEndsWith(
-    String value, {
-    bool caseSensitive = true,
-  }) {
+  QueryBuilder<
+    BusinessSettingsModel,
+    BusinessSettingsModel,
+    QAfterFilterCondition
+  >
+  idEndsWith(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.endsWith(
-        property: r'id',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.endsWith(
+          property: r'id',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
-  QueryBuilder<BusinessSettingsModel, BusinessSettingsModel,
-          QAfterFilterCondition>
-      idContains(String value, {bool caseSensitive = true}) {
+  QueryBuilder<
+    BusinessSettingsModel,
+    BusinessSettingsModel,
+    QAfterFilterCondition
+  >
+  idContains(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.contains(
-        property: r'id',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.contains(
+          property: r'id',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
-  QueryBuilder<BusinessSettingsModel, BusinessSettingsModel,
-          QAfterFilterCondition>
-      idMatches(String pattern, {bool caseSensitive = true}) {
+  QueryBuilder<
+    BusinessSettingsModel,
+    BusinessSettingsModel,
+    QAfterFilterCondition
+  >
+  idMatches(String pattern, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.matches(
-        property: r'id',
-        wildcard: pattern,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.matches(
+          property: r'id',
+          wildcard: pattern,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
-  QueryBuilder<BusinessSettingsModel, BusinessSettingsModel,
-      QAfterFilterCondition> idIsEmpty() {
+  QueryBuilder<
+    BusinessSettingsModel,
+    BusinessSettingsModel,
+    QAfterFilterCondition
+  >
+  idIsEmpty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'id',
-        value: '',
-      ));
+      return query.addFilterCondition(
+        FilterCondition.equalTo(property: r'id', value: ''),
+      );
     });
   }
 
-  QueryBuilder<BusinessSettingsModel, BusinessSettingsModel,
-      QAfterFilterCondition> idIsNotEmpty() {
+  QueryBuilder<
+    BusinessSettingsModel,
+    BusinessSettingsModel,
+    QAfterFilterCondition
+  >
+  idIsNotEmpty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        property: r'id',
-        value: '',
-      ));
+      return query.addFilterCondition(
+        FilterCondition.greaterThan(property: r'id', value: ''),
+      );
     });
   }
 
-  QueryBuilder<BusinessSettingsModel, BusinessSettingsModel,
-      QAfterFilterCondition> isDeletedEqualTo(bool value) {
+  QueryBuilder<
+    BusinessSettingsModel,
+    BusinessSettingsModel,
+    QAfterFilterCondition
+  >
+  isDeletedEqualTo(bool value) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'isDeleted',
-        value: value,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.equalTo(property: r'isDeleted', value: value),
+      );
     });
   }
 
-  QueryBuilder<BusinessSettingsModel, BusinessSettingsModel,
-      QAfterFilterCondition> isarIdIsNull() {
+  QueryBuilder<
+    BusinessSettingsModel,
+    BusinessSettingsModel,
+    QAfterFilterCondition
+  >
+  isarIdIsNull() {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const FilterCondition.isNull(
-        property: r'isarId',
-      ));
+      return query.addFilterCondition(
+        const FilterCondition.isNull(property: r'isarId'),
+      );
     });
   }
 
-  QueryBuilder<BusinessSettingsModel, BusinessSettingsModel,
-      QAfterFilterCondition> isarIdIsNotNull() {
+  QueryBuilder<
+    BusinessSettingsModel,
+    BusinessSettingsModel,
+    QAfterFilterCondition
+  >
+  isarIdIsNotNull() {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const FilterCondition.isNotNull(
-        property: r'isarId',
-      ));
+      return query.addFilterCondition(
+        const FilterCondition.isNotNull(property: r'isarId'),
+      );
     });
   }
 
-  QueryBuilder<BusinessSettingsModel, BusinessSettingsModel,
-      QAfterFilterCondition> isarIdEqualTo(Id? value) {
+  QueryBuilder<
+    BusinessSettingsModel,
+    BusinessSettingsModel,
+    QAfterFilterCondition
+  >
+  isarIdEqualTo(Id? value) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'isarId',
-        value: value,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.equalTo(property: r'isarId', value: value),
+      );
     });
   }
 
-  QueryBuilder<BusinessSettingsModel, BusinessSettingsModel,
-      QAfterFilterCondition> isarIdGreaterThan(
-    Id? value, {
-    bool include = false,
-  }) {
+  QueryBuilder<
+    BusinessSettingsModel,
+    BusinessSettingsModel,
+    QAfterFilterCondition
+  >
+  isarIdGreaterThan(Id? value, {bool include = false}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        include: include,
-        property: r'isarId',
-        value: value,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.greaterThan(
+          include: include,
+          property: r'isarId',
+          value: value,
+        ),
+      );
     });
   }
 
-  QueryBuilder<BusinessSettingsModel, BusinessSettingsModel,
-      QAfterFilterCondition> isarIdLessThan(
-    Id? value, {
-    bool include = false,
-  }) {
+  QueryBuilder<
+    BusinessSettingsModel,
+    BusinessSettingsModel,
+    QAfterFilterCondition
+  >
+  isarIdLessThan(Id? value, {bool include = false}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.lessThan(
-        include: include,
-        property: r'isarId',
-        value: value,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.lessThan(
+          include: include,
+          property: r'isarId',
+          value: value,
+        ),
+      );
     });
   }
 
-  QueryBuilder<BusinessSettingsModel, BusinessSettingsModel,
-      QAfterFilterCondition> isarIdBetween(
+  QueryBuilder<
+    BusinessSettingsModel,
+    BusinessSettingsModel,
+    QAfterFilterCondition
+  >
+  isarIdBetween(
     Id? lower,
     Id? upper, {
     bool includeLower = true,
     bool includeUpper = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.between(
-        property: r'isarId',
-        lower: lower,
-        includeLower: includeLower,
-        upper: upper,
-        includeUpper: includeUpper,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.between(
+          property: r'isarId',
+          lower: lower,
+          includeLower: includeLower,
+          upper: upper,
+          includeUpper: includeUpper,
+        ),
+      );
     });
   }
 
-  QueryBuilder<BusinessSettingsModel, BusinessSettingsModel,
-      QAfterFilterCondition> logoUrlIsNull() {
+  QueryBuilder<
+    BusinessSettingsModel,
+    BusinessSettingsModel,
+    QAfterFilterCondition
+  >
+  logoUrlIsNull() {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const FilterCondition.isNull(
-        property: r'logoUrl',
-      ));
+      return query.addFilterCondition(
+        const FilterCondition.isNull(property: r'logoUrl'),
+      );
     });
   }
 
-  QueryBuilder<BusinessSettingsModel, BusinessSettingsModel,
-      QAfterFilterCondition> logoUrlIsNotNull() {
+  QueryBuilder<
+    BusinessSettingsModel,
+    BusinessSettingsModel,
+    QAfterFilterCondition
+  >
+  logoUrlIsNotNull() {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const FilterCondition.isNotNull(
-        property: r'logoUrl',
-      ));
+      return query.addFilterCondition(
+        const FilterCondition.isNotNull(property: r'logoUrl'),
+      );
     });
   }
 
-  QueryBuilder<BusinessSettingsModel, BusinessSettingsModel,
-      QAfterFilterCondition> logoUrlEqualTo(
-    String? value, {
-    bool caseSensitive = true,
-  }) {
+  QueryBuilder<
+    BusinessSettingsModel,
+    BusinessSettingsModel,
+    QAfterFilterCondition
+  >
+  logoUrlEqualTo(String? value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'logoUrl',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.equalTo(
+          property: r'logoUrl',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
-  QueryBuilder<BusinessSettingsModel, BusinessSettingsModel,
-      QAfterFilterCondition> logoUrlGreaterThan(
+  QueryBuilder<
+    BusinessSettingsModel,
+    BusinessSettingsModel,
+    QAfterFilterCondition
+  >
+  logoUrlGreaterThan(
     String? value, {
     bool include = false,
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        include: include,
-        property: r'logoUrl',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.greaterThan(
+          include: include,
+          property: r'logoUrl',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
-  QueryBuilder<BusinessSettingsModel, BusinessSettingsModel,
-      QAfterFilterCondition> logoUrlLessThan(
+  QueryBuilder<
+    BusinessSettingsModel,
+    BusinessSettingsModel,
+    QAfterFilterCondition
+  >
+  logoUrlLessThan(
     String? value, {
     bool include = false,
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.lessThan(
-        include: include,
-        property: r'logoUrl',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.lessThan(
+          include: include,
+          property: r'logoUrl',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
-  QueryBuilder<BusinessSettingsModel, BusinessSettingsModel,
-      QAfterFilterCondition> logoUrlBetween(
+  QueryBuilder<
+    BusinessSettingsModel,
+    BusinessSettingsModel,
+    QAfterFilterCondition
+  >
+  logoUrlBetween(
     String? lower,
     String? upper, {
     bool includeLower = true,
@@ -1450,285 +1762,374 @@ extension BusinessSettingsModelQueryFilter on QueryBuilder<
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.between(
-        property: r'logoUrl',
-        lower: lower,
-        includeLower: includeLower,
-        upper: upper,
-        includeUpper: includeUpper,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.between(
+          property: r'logoUrl',
+          lower: lower,
+          includeLower: includeLower,
+          upper: upper,
+          includeUpper: includeUpper,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
-  QueryBuilder<BusinessSettingsModel, BusinessSettingsModel,
-      QAfterFilterCondition> logoUrlStartsWith(
-    String value, {
-    bool caseSensitive = true,
-  }) {
+  QueryBuilder<
+    BusinessSettingsModel,
+    BusinessSettingsModel,
+    QAfterFilterCondition
+  >
+  logoUrlStartsWith(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.startsWith(
-        property: r'logoUrl',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.startsWith(
+          property: r'logoUrl',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
-  QueryBuilder<BusinessSettingsModel, BusinessSettingsModel,
-      QAfterFilterCondition> logoUrlEndsWith(
-    String value, {
-    bool caseSensitive = true,
-  }) {
+  QueryBuilder<
+    BusinessSettingsModel,
+    BusinessSettingsModel,
+    QAfterFilterCondition
+  >
+  logoUrlEndsWith(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.endsWith(
-        property: r'logoUrl',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.endsWith(
+          property: r'logoUrl',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
-  QueryBuilder<BusinessSettingsModel, BusinessSettingsModel,
-          QAfterFilterCondition>
-      logoUrlContains(String value, {bool caseSensitive = true}) {
+  QueryBuilder<
+    BusinessSettingsModel,
+    BusinessSettingsModel,
+    QAfterFilterCondition
+  >
+  logoUrlContains(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.contains(
-        property: r'logoUrl',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.contains(
+          property: r'logoUrl',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
-  QueryBuilder<BusinessSettingsModel, BusinessSettingsModel,
-          QAfterFilterCondition>
-      logoUrlMatches(String pattern, {bool caseSensitive = true}) {
+  QueryBuilder<
+    BusinessSettingsModel,
+    BusinessSettingsModel,
+    QAfterFilterCondition
+  >
+  logoUrlMatches(String pattern, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.matches(
-        property: r'logoUrl',
-        wildcard: pattern,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.matches(
+          property: r'logoUrl',
+          wildcard: pattern,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
-  QueryBuilder<BusinessSettingsModel, BusinessSettingsModel,
-      QAfterFilterCondition> logoUrlIsEmpty() {
+  QueryBuilder<
+    BusinessSettingsModel,
+    BusinessSettingsModel,
+    QAfterFilterCondition
+  >
+  logoUrlIsEmpty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'logoUrl',
-        value: '',
-      ));
+      return query.addFilterCondition(
+        FilterCondition.equalTo(property: r'logoUrl', value: ''),
+      );
     });
   }
 
-  QueryBuilder<BusinessSettingsModel, BusinessSettingsModel,
-      QAfterFilterCondition> logoUrlIsNotEmpty() {
+  QueryBuilder<
+    BusinessSettingsModel,
+    BusinessSettingsModel,
+    QAfterFilterCondition
+  >
+  logoUrlIsNotEmpty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        property: r'logoUrl',
-        value: '',
-      ));
+      return query.addFilterCondition(
+        FilterCondition.greaterThan(property: r'logoUrl', value: ''),
+      );
     });
   }
 
-  QueryBuilder<BusinessSettingsModel, BusinessSettingsModel,
-      QAfterFilterCondition> serverUpdatedAtIsNull() {
+  QueryBuilder<
+    BusinessSettingsModel,
+    BusinessSettingsModel,
+    QAfterFilterCondition
+  >
+  serverUpdatedAtIsNull() {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const FilterCondition.isNull(
-        property: r'serverUpdatedAt',
-      ));
+      return query.addFilterCondition(
+        const FilterCondition.isNull(property: r'serverUpdatedAt'),
+      );
     });
   }
 
-  QueryBuilder<BusinessSettingsModel, BusinessSettingsModel,
-      QAfterFilterCondition> serverUpdatedAtIsNotNull() {
+  QueryBuilder<
+    BusinessSettingsModel,
+    BusinessSettingsModel,
+    QAfterFilterCondition
+  >
+  serverUpdatedAtIsNotNull() {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const FilterCondition.isNotNull(
-        property: r'serverUpdatedAt',
-      ));
+      return query.addFilterCondition(
+        const FilterCondition.isNotNull(property: r'serverUpdatedAt'),
+      );
     });
   }
 
-  QueryBuilder<BusinessSettingsModel, BusinessSettingsModel,
-      QAfterFilterCondition> serverUpdatedAtEqualTo(DateTime? value) {
+  QueryBuilder<
+    BusinessSettingsModel,
+    BusinessSettingsModel,
+    QAfterFilterCondition
+  >
+  serverUpdatedAtEqualTo(DateTime? value) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'serverUpdatedAt',
-        value: value,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.equalTo(property: r'serverUpdatedAt', value: value),
+      );
     });
   }
 
-  QueryBuilder<BusinessSettingsModel, BusinessSettingsModel,
-      QAfterFilterCondition> serverUpdatedAtGreaterThan(
-    DateTime? value, {
-    bool include = false,
-  }) {
+  QueryBuilder<
+    BusinessSettingsModel,
+    BusinessSettingsModel,
+    QAfterFilterCondition
+  >
+  serverUpdatedAtGreaterThan(DateTime? value, {bool include = false}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        include: include,
-        property: r'serverUpdatedAt',
-        value: value,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.greaterThan(
+          include: include,
+          property: r'serverUpdatedAt',
+          value: value,
+        ),
+      );
     });
   }
 
-  QueryBuilder<BusinessSettingsModel, BusinessSettingsModel,
-      QAfterFilterCondition> serverUpdatedAtLessThan(
-    DateTime? value, {
-    bool include = false,
-  }) {
+  QueryBuilder<
+    BusinessSettingsModel,
+    BusinessSettingsModel,
+    QAfterFilterCondition
+  >
+  serverUpdatedAtLessThan(DateTime? value, {bool include = false}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.lessThan(
-        include: include,
-        property: r'serverUpdatedAt',
-        value: value,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.lessThan(
+          include: include,
+          property: r'serverUpdatedAt',
+          value: value,
+        ),
+      );
     });
   }
 
-  QueryBuilder<BusinessSettingsModel, BusinessSettingsModel,
-      QAfterFilterCondition> serverUpdatedAtBetween(
+  QueryBuilder<
+    BusinessSettingsModel,
+    BusinessSettingsModel,
+    QAfterFilterCondition
+  >
+  serverUpdatedAtBetween(
     DateTime? lower,
     DateTime? upper, {
     bool includeLower = true,
     bool includeUpper = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.between(
-        property: r'serverUpdatedAt',
-        lower: lower,
-        includeLower: includeLower,
-        upper: upper,
-        includeUpper: includeUpper,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.between(
+          property: r'serverUpdatedAt',
+          lower: lower,
+          includeLower: includeLower,
+          upper: upper,
+          includeUpper: includeUpper,
+        ),
+      );
     });
   }
 
-  QueryBuilder<BusinessSettingsModel, BusinessSettingsModel,
-      QAfterFilterCondition> syncStatusEqualTo(SyncStatus value) {
+  QueryBuilder<
+    BusinessSettingsModel,
+    BusinessSettingsModel,
+    QAfterFilterCondition
+  >
+  syncStatusEqualTo(SyncStatus value) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'syncStatus',
-        value: value,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.equalTo(property: r'syncStatus', value: value),
+      );
     });
   }
 
-  QueryBuilder<BusinessSettingsModel, BusinessSettingsModel,
-      QAfterFilterCondition> syncStatusGreaterThan(
-    SyncStatus value, {
-    bool include = false,
-  }) {
+  QueryBuilder<
+    BusinessSettingsModel,
+    BusinessSettingsModel,
+    QAfterFilterCondition
+  >
+  syncStatusGreaterThan(SyncStatus value, {bool include = false}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        include: include,
-        property: r'syncStatus',
-        value: value,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.greaterThan(
+          include: include,
+          property: r'syncStatus',
+          value: value,
+        ),
+      );
     });
   }
 
-  QueryBuilder<BusinessSettingsModel, BusinessSettingsModel,
-      QAfterFilterCondition> syncStatusLessThan(
-    SyncStatus value, {
-    bool include = false,
-  }) {
+  QueryBuilder<
+    BusinessSettingsModel,
+    BusinessSettingsModel,
+    QAfterFilterCondition
+  >
+  syncStatusLessThan(SyncStatus value, {bool include = false}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.lessThan(
-        include: include,
-        property: r'syncStatus',
-        value: value,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.lessThan(
+          include: include,
+          property: r'syncStatus',
+          value: value,
+        ),
+      );
     });
   }
 
-  QueryBuilder<BusinessSettingsModel, BusinessSettingsModel,
-      QAfterFilterCondition> syncStatusBetween(
+  QueryBuilder<
+    BusinessSettingsModel,
+    BusinessSettingsModel,
+    QAfterFilterCondition
+  >
+  syncStatusBetween(
     SyncStatus lower,
     SyncStatus upper, {
     bool includeLower = true,
     bool includeUpper = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.between(
-        property: r'syncStatus',
-        lower: lower,
-        includeLower: includeLower,
-        upper: upper,
-        includeUpper: includeUpper,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.between(
+          property: r'syncStatus',
+          lower: lower,
+          includeLower: includeLower,
+          upper: upper,
+          includeUpper: includeUpper,
+        ),
+      );
     });
   }
 
-  QueryBuilder<BusinessSettingsModel, BusinessSettingsModel,
-      QAfterFilterCondition> taxNumberIsNull() {
+  QueryBuilder<
+    BusinessSettingsModel,
+    BusinessSettingsModel,
+    QAfterFilterCondition
+  >
+  taxNumberIsNull() {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const FilterCondition.isNull(
-        property: r'taxNumber',
-      ));
+      return query.addFilterCondition(
+        const FilterCondition.isNull(property: r'taxNumber'),
+      );
     });
   }
 
-  QueryBuilder<BusinessSettingsModel, BusinessSettingsModel,
-      QAfterFilterCondition> taxNumberIsNotNull() {
+  QueryBuilder<
+    BusinessSettingsModel,
+    BusinessSettingsModel,
+    QAfterFilterCondition
+  >
+  taxNumberIsNotNull() {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const FilterCondition.isNotNull(
-        property: r'taxNumber',
-      ));
+      return query.addFilterCondition(
+        const FilterCondition.isNotNull(property: r'taxNumber'),
+      );
     });
   }
 
-  QueryBuilder<BusinessSettingsModel, BusinessSettingsModel,
-      QAfterFilterCondition> taxNumberEqualTo(
-    String? value, {
-    bool caseSensitive = true,
-  }) {
+  QueryBuilder<
+    BusinessSettingsModel,
+    BusinessSettingsModel,
+    QAfterFilterCondition
+  >
+  taxNumberEqualTo(String? value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'taxNumber',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.equalTo(
+          property: r'taxNumber',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
-  QueryBuilder<BusinessSettingsModel, BusinessSettingsModel,
-      QAfterFilterCondition> taxNumberGreaterThan(
+  QueryBuilder<
+    BusinessSettingsModel,
+    BusinessSettingsModel,
+    QAfterFilterCondition
+  >
+  taxNumberGreaterThan(
     String? value, {
     bool include = false,
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        include: include,
-        property: r'taxNumber',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.greaterThan(
+          include: include,
+          property: r'taxNumber',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
-  QueryBuilder<BusinessSettingsModel, BusinessSettingsModel,
-      QAfterFilterCondition> taxNumberLessThan(
+  QueryBuilder<
+    BusinessSettingsModel,
+    BusinessSettingsModel,
+    QAfterFilterCondition
+  >
+  taxNumberLessThan(
     String? value, {
     bool include = false,
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.lessThan(
-        include: include,
-        property: r'taxNumber',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.lessThan(
+          include: include,
+          property: r'taxNumber',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
-  QueryBuilder<BusinessSettingsModel, BusinessSettingsModel,
-      QAfterFilterCondition> taxNumberBetween(
+  QueryBuilder<
+    BusinessSettingsModel,
+    BusinessSettingsModel,
+    QAfterFilterCondition
+  >
+  taxNumberBetween(
     String? lower,
     String? upper, {
     bool includeLower = true,
@@ -1736,155 +2137,206 @@ extension BusinessSettingsModelQueryFilter on QueryBuilder<
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.between(
-        property: r'taxNumber',
-        lower: lower,
-        includeLower: includeLower,
-        upper: upper,
-        includeUpper: includeUpper,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.between(
+          property: r'taxNumber',
+          lower: lower,
+          includeLower: includeLower,
+          upper: upper,
+          includeUpper: includeUpper,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
-  QueryBuilder<BusinessSettingsModel, BusinessSettingsModel,
-      QAfterFilterCondition> taxNumberStartsWith(
-    String value, {
-    bool caseSensitive = true,
-  }) {
+  QueryBuilder<
+    BusinessSettingsModel,
+    BusinessSettingsModel,
+    QAfterFilterCondition
+  >
+  taxNumberStartsWith(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.startsWith(
-        property: r'taxNumber',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.startsWith(
+          property: r'taxNumber',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
-  QueryBuilder<BusinessSettingsModel, BusinessSettingsModel,
-      QAfterFilterCondition> taxNumberEndsWith(
-    String value, {
-    bool caseSensitive = true,
-  }) {
+  QueryBuilder<
+    BusinessSettingsModel,
+    BusinessSettingsModel,
+    QAfterFilterCondition
+  >
+  taxNumberEndsWith(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.endsWith(
-        property: r'taxNumber',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.endsWith(
+          property: r'taxNumber',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
-  QueryBuilder<BusinessSettingsModel, BusinessSettingsModel,
-          QAfterFilterCondition>
-      taxNumberContains(String value, {bool caseSensitive = true}) {
+  QueryBuilder<
+    BusinessSettingsModel,
+    BusinessSettingsModel,
+    QAfterFilterCondition
+  >
+  taxNumberContains(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.contains(
-        property: r'taxNumber',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.contains(
+          property: r'taxNumber',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
-  QueryBuilder<BusinessSettingsModel, BusinessSettingsModel,
-          QAfterFilterCondition>
-      taxNumberMatches(String pattern, {bool caseSensitive = true}) {
+  QueryBuilder<
+    BusinessSettingsModel,
+    BusinessSettingsModel,
+    QAfterFilterCondition
+  >
+  taxNumberMatches(String pattern, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.matches(
-        property: r'taxNumber',
-        wildcard: pattern,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.matches(
+          property: r'taxNumber',
+          wildcard: pattern,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
-  QueryBuilder<BusinessSettingsModel, BusinessSettingsModel,
-      QAfterFilterCondition> taxNumberIsEmpty() {
+  QueryBuilder<
+    BusinessSettingsModel,
+    BusinessSettingsModel,
+    QAfterFilterCondition
+  >
+  taxNumberIsEmpty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'taxNumber',
-        value: '',
-      ));
+      return query.addFilterCondition(
+        FilterCondition.equalTo(property: r'taxNumber', value: ''),
+      );
     });
   }
 
-  QueryBuilder<BusinessSettingsModel, BusinessSettingsModel,
-      QAfterFilterCondition> taxNumberIsNotEmpty() {
+  QueryBuilder<
+    BusinessSettingsModel,
+    BusinessSettingsModel,
+    QAfterFilterCondition
+  >
+  taxNumberIsNotEmpty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        property: r'taxNumber',
-        value: '',
-      ));
+      return query.addFilterCondition(
+        FilterCondition.greaterThan(property: r'taxNumber', value: ''),
+      );
     });
   }
 
-  QueryBuilder<BusinessSettingsModel, BusinessSettingsModel,
-      QAfterFilterCondition> userIdIsNull() {
+  QueryBuilder<
+    BusinessSettingsModel,
+    BusinessSettingsModel,
+    QAfterFilterCondition
+  >
+  userIdIsNull() {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const FilterCondition.isNull(
-        property: r'userId',
-      ));
+      return query.addFilterCondition(
+        const FilterCondition.isNull(property: r'userId'),
+      );
     });
   }
 
-  QueryBuilder<BusinessSettingsModel, BusinessSettingsModel,
-      QAfterFilterCondition> userIdIsNotNull() {
+  QueryBuilder<
+    BusinessSettingsModel,
+    BusinessSettingsModel,
+    QAfterFilterCondition
+  >
+  userIdIsNotNull() {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const FilterCondition.isNotNull(
-        property: r'userId',
-      ));
+      return query.addFilterCondition(
+        const FilterCondition.isNotNull(property: r'userId'),
+      );
     });
   }
 
-  QueryBuilder<BusinessSettingsModel, BusinessSettingsModel,
-      QAfterFilterCondition> userIdEqualTo(
-    String? value, {
-    bool caseSensitive = true,
-  }) {
+  QueryBuilder<
+    BusinessSettingsModel,
+    BusinessSettingsModel,
+    QAfterFilterCondition
+  >
+  userIdEqualTo(String? value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'userId',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.equalTo(
+          property: r'userId',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
-  QueryBuilder<BusinessSettingsModel, BusinessSettingsModel,
-      QAfterFilterCondition> userIdGreaterThan(
+  QueryBuilder<
+    BusinessSettingsModel,
+    BusinessSettingsModel,
+    QAfterFilterCondition
+  >
+  userIdGreaterThan(
     String? value, {
     bool include = false,
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        include: include,
-        property: r'userId',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.greaterThan(
+          include: include,
+          property: r'userId',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
-  QueryBuilder<BusinessSettingsModel, BusinessSettingsModel,
-      QAfterFilterCondition> userIdLessThan(
+  QueryBuilder<
+    BusinessSettingsModel,
+    BusinessSettingsModel,
+    QAfterFilterCondition
+  >
+  userIdLessThan(
     String? value, {
     bool include = false,
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.lessThan(
-        include: include,
-        property: r'userId',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.lessThan(
+          include: include,
+          property: r'userId',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
-  QueryBuilder<BusinessSettingsModel, BusinessSettingsModel,
-      QAfterFilterCondition> userIdBetween(
+  QueryBuilder<
+    BusinessSettingsModel,
+    BusinessSettingsModel,
+    QAfterFilterCondition
+  >
+  userIdBetween(
     String? lower,
     String? upper, {
     bool includeLower = true,
@@ -1892,261 +2344,295 @@ extension BusinessSettingsModelQueryFilter on QueryBuilder<
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.between(
-        property: r'userId',
-        lower: lower,
-        includeLower: includeLower,
-        upper: upper,
-        includeUpper: includeUpper,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.between(
+          property: r'userId',
+          lower: lower,
+          includeLower: includeLower,
+          upper: upper,
+          includeUpper: includeUpper,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
-  QueryBuilder<BusinessSettingsModel, BusinessSettingsModel,
-      QAfterFilterCondition> userIdStartsWith(
-    String value, {
-    bool caseSensitive = true,
-  }) {
+  QueryBuilder<
+    BusinessSettingsModel,
+    BusinessSettingsModel,
+    QAfterFilterCondition
+  >
+  userIdStartsWith(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.startsWith(
-        property: r'userId',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.startsWith(
+          property: r'userId',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
-  QueryBuilder<BusinessSettingsModel, BusinessSettingsModel,
-      QAfterFilterCondition> userIdEndsWith(
-    String value, {
-    bool caseSensitive = true,
-  }) {
+  QueryBuilder<
+    BusinessSettingsModel,
+    BusinessSettingsModel,
+    QAfterFilterCondition
+  >
+  userIdEndsWith(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.endsWith(
-        property: r'userId',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.endsWith(
+          property: r'userId',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
-  QueryBuilder<BusinessSettingsModel, BusinessSettingsModel,
-          QAfterFilterCondition>
-      userIdContains(String value, {bool caseSensitive = true}) {
+  QueryBuilder<
+    BusinessSettingsModel,
+    BusinessSettingsModel,
+    QAfterFilterCondition
+  >
+  userIdContains(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.contains(
-        property: r'userId',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.contains(
+          property: r'userId',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
-  QueryBuilder<BusinessSettingsModel, BusinessSettingsModel,
-          QAfterFilterCondition>
-      userIdMatches(String pattern, {bool caseSensitive = true}) {
+  QueryBuilder<
+    BusinessSettingsModel,
+    BusinessSettingsModel,
+    QAfterFilterCondition
+  >
+  userIdMatches(String pattern, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.matches(
-        property: r'userId',
-        wildcard: pattern,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.matches(
+          property: r'userId',
+          wildcard: pattern,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
-  QueryBuilder<BusinessSettingsModel, BusinessSettingsModel,
-      QAfterFilterCondition> userIdIsEmpty() {
+  QueryBuilder<
+    BusinessSettingsModel,
+    BusinessSettingsModel,
+    QAfterFilterCondition
+  >
+  userIdIsEmpty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'userId',
-        value: '',
-      ));
+      return query.addFilterCondition(
+        FilterCondition.equalTo(property: r'userId', value: ''),
+      );
     });
   }
 
-  QueryBuilder<BusinessSettingsModel, BusinessSettingsModel,
-      QAfterFilterCondition> userIdIsNotEmpty() {
+  QueryBuilder<
+    BusinessSettingsModel,
+    BusinessSettingsModel,
+    QAfterFilterCondition
+  >
+  userIdIsNotEmpty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        property: r'userId',
-        value: '',
-      ));
+      return query.addFilterCondition(
+        FilterCondition.greaterThan(property: r'userId', value: ''),
+      );
     });
   }
 }
 
-extension BusinessSettingsModelQueryObject on QueryBuilder<
-    BusinessSettingsModel, BusinessSettingsModel, QFilterCondition> {}
+extension BusinessSettingsModelQueryObject
+    on
+        QueryBuilder<
+          BusinessSettingsModel,
+          BusinessSettingsModel,
+          QFilterCondition
+        > {}
 
-extension BusinessSettingsModelQueryLinks on QueryBuilder<BusinessSettingsModel,
-    BusinessSettingsModel, QFilterCondition> {}
+extension BusinessSettingsModelQueryLinks
+    on
+        QueryBuilder<
+          BusinessSettingsModel,
+          BusinessSettingsModel,
+          QFilterCondition
+        > {}
 
 extension BusinessSettingsModelQuerySortBy
     on QueryBuilder<BusinessSettingsModel, BusinessSettingsModel, QSortBy> {
   QueryBuilder<BusinessSettingsModel, BusinessSettingsModel, QAfterSortBy>
-      sortByAddress() {
+  sortByAddress() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'address', Sort.asc);
     });
   }
 
   QueryBuilder<BusinessSettingsModel, BusinessSettingsModel, QAfterSortBy>
-      sortByAddressDesc() {
+  sortByAddressDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'address', Sort.desc);
     });
   }
 
   QueryBuilder<BusinessSettingsModel, BusinessSettingsModel, QAfterSortBy>
-      sortByCompanyName() {
+  sortByCompanyName() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'companyName', Sort.asc);
     });
   }
 
   QueryBuilder<BusinessSettingsModel, BusinessSettingsModel, QAfterSortBy>
-      sortByCompanyNameDesc() {
+  sortByCompanyNameDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'companyName', Sort.desc);
     });
   }
 
   QueryBuilder<BusinessSettingsModel, BusinessSettingsModel, QAfterSortBy>
-      sortByCurrencyCode() {
+  sortByCurrencyCode() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'currencyCode', Sort.asc);
     });
   }
 
   QueryBuilder<BusinessSettingsModel, BusinessSettingsModel, QAfterSortBy>
-      sortByCurrencyCodeDesc() {
+  sortByCurrencyCodeDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'currencyCode', Sort.desc);
     });
   }
 
   QueryBuilder<BusinessSettingsModel, BusinessSettingsModel, QAfterSortBy>
-      sortByCurrencySymbol() {
+  sortByCurrencySymbol() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'currencySymbol', Sort.asc);
     });
   }
 
   QueryBuilder<BusinessSettingsModel, BusinessSettingsModel, QAfterSortBy>
-      sortByCurrencySymbolDesc() {
+  sortByCurrencySymbolDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'currencySymbol', Sort.desc);
     });
   }
 
   QueryBuilder<BusinessSettingsModel, BusinessSettingsModel, QAfterSortBy>
-      sortByDefaultTaxRate() {
+  sortByDefaultTaxRate() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'defaultTaxRate', Sort.asc);
     });
   }
 
   QueryBuilder<BusinessSettingsModel, BusinessSettingsModel, QAfterSortBy>
-      sortByDefaultTaxRateDesc() {
+  sortByDefaultTaxRateDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'defaultTaxRate', Sort.desc);
     });
   }
 
   QueryBuilder<BusinessSettingsModel, BusinessSettingsModel, QAfterSortBy>
-      sortById() {
+  sortById() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'id', Sort.asc);
     });
   }
 
   QueryBuilder<BusinessSettingsModel, BusinessSettingsModel, QAfterSortBy>
-      sortByIdDesc() {
+  sortByIdDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'id', Sort.desc);
     });
   }
 
   QueryBuilder<BusinessSettingsModel, BusinessSettingsModel, QAfterSortBy>
-      sortByIsDeleted() {
+  sortByIsDeleted() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'isDeleted', Sort.asc);
     });
   }
 
   QueryBuilder<BusinessSettingsModel, BusinessSettingsModel, QAfterSortBy>
-      sortByIsDeletedDesc() {
+  sortByIsDeletedDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'isDeleted', Sort.desc);
     });
   }
 
   QueryBuilder<BusinessSettingsModel, BusinessSettingsModel, QAfterSortBy>
-      sortByLogoUrl() {
+  sortByLogoUrl() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'logoUrl', Sort.asc);
     });
   }
 
   QueryBuilder<BusinessSettingsModel, BusinessSettingsModel, QAfterSortBy>
-      sortByLogoUrlDesc() {
+  sortByLogoUrlDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'logoUrl', Sort.desc);
     });
   }
 
   QueryBuilder<BusinessSettingsModel, BusinessSettingsModel, QAfterSortBy>
-      sortByServerUpdatedAt() {
+  sortByServerUpdatedAt() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'serverUpdatedAt', Sort.asc);
     });
   }
 
   QueryBuilder<BusinessSettingsModel, BusinessSettingsModel, QAfterSortBy>
-      sortByServerUpdatedAtDesc() {
+  sortByServerUpdatedAtDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'serverUpdatedAt', Sort.desc);
     });
   }
 
   QueryBuilder<BusinessSettingsModel, BusinessSettingsModel, QAfterSortBy>
-      sortBySyncStatus() {
+  sortBySyncStatus() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'syncStatus', Sort.asc);
     });
   }
 
   QueryBuilder<BusinessSettingsModel, BusinessSettingsModel, QAfterSortBy>
-      sortBySyncStatusDesc() {
+  sortBySyncStatusDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'syncStatus', Sort.desc);
     });
   }
 
   QueryBuilder<BusinessSettingsModel, BusinessSettingsModel, QAfterSortBy>
-      sortByTaxNumber() {
+  sortByTaxNumber() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'taxNumber', Sort.asc);
     });
   }
 
   QueryBuilder<BusinessSettingsModel, BusinessSettingsModel, QAfterSortBy>
-      sortByTaxNumberDesc() {
+  sortByTaxNumberDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'taxNumber', Sort.desc);
     });
   }
 
   QueryBuilder<BusinessSettingsModel, BusinessSettingsModel, QAfterSortBy>
-      sortByUserId() {
+  sortByUserId() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'userId', Sort.asc);
     });
   }
 
   QueryBuilder<BusinessSettingsModel, BusinessSettingsModel, QAfterSortBy>
-      sortByUserIdDesc() {
+  sortByUserIdDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'userId', Sort.desc);
     });
@@ -2156,182 +2642,182 @@ extension BusinessSettingsModelQuerySortBy
 extension BusinessSettingsModelQuerySortThenBy
     on QueryBuilder<BusinessSettingsModel, BusinessSettingsModel, QSortThenBy> {
   QueryBuilder<BusinessSettingsModel, BusinessSettingsModel, QAfterSortBy>
-      thenByAddress() {
+  thenByAddress() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'address', Sort.asc);
     });
   }
 
   QueryBuilder<BusinessSettingsModel, BusinessSettingsModel, QAfterSortBy>
-      thenByAddressDesc() {
+  thenByAddressDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'address', Sort.desc);
     });
   }
 
   QueryBuilder<BusinessSettingsModel, BusinessSettingsModel, QAfterSortBy>
-      thenByCompanyName() {
+  thenByCompanyName() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'companyName', Sort.asc);
     });
   }
 
   QueryBuilder<BusinessSettingsModel, BusinessSettingsModel, QAfterSortBy>
-      thenByCompanyNameDesc() {
+  thenByCompanyNameDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'companyName', Sort.desc);
     });
   }
 
   QueryBuilder<BusinessSettingsModel, BusinessSettingsModel, QAfterSortBy>
-      thenByCurrencyCode() {
+  thenByCurrencyCode() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'currencyCode', Sort.asc);
     });
   }
 
   QueryBuilder<BusinessSettingsModel, BusinessSettingsModel, QAfterSortBy>
-      thenByCurrencyCodeDesc() {
+  thenByCurrencyCodeDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'currencyCode', Sort.desc);
     });
   }
 
   QueryBuilder<BusinessSettingsModel, BusinessSettingsModel, QAfterSortBy>
-      thenByCurrencySymbol() {
+  thenByCurrencySymbol() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'currencySymbol', Sort.asc);
     });
   }
 
   QueryBuilder<BusinessSettingsModel, BusinessSettingsModel, QAfterSortBy>
-      thenByCurrencySymbolDesc() {
+  thenByCurrencySymbolDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'currencySymbol', Sort.desc);
     });
   }
 
   QueryBuilder<BusinessSettingsModel, BusinessSettingsModel, QAfterSortBy>
-      thenByDefaultTaxRate() {
+  thenByDefaultTaxRate() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'defaultTaxRate', Sort.asc);
     });
   }
 
   QueryBuilder<BusinessSettingsModel, BusinessSettingsModel, QAfterSortBy>
-      thenByDefaultTaxRateDesc() {
+  thenByDefaultTaxRateDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'defaultTaxRate', Sort.desc);
     });
   }
 
   QueryBuilder<BusinessSettingsModel, BusinessSettingsModel, QAfterSortBy>
-      thenById() {
+  thenById() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'id', Sort.asc);
     });
   }
 
   QueryBuilder<BusinessSettingsModel, BusinessSettingsModel, QAfterSortBy>
-      thenByIdDesc() {
+  thenByIdDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'id', Sort.desc);
     });
   }
 
   QueryBuilder<BusinessSettingsModel, BusinessSettingsModel, QAfterSortBy>
-      thenByIsDeleted() {
+  thenByIsDeleted() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'isDeleted', Sort.asc);
     });
   }
 
   QueryBuilder<BusinessSettingsModel, BusinessSettingsModel, QAfterSortBy>
-      thenByIsDeletedDesc() {
+  thenByIsDeletedDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'isDeleted', Sort.desc);
     });
   }
 
   QueryBuilder<BusinessSettingsModel, BusinessSettingsModel, QAfterSortBy>
-      thenByIsarId() {
+  thenByIsarId() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'isarId', Sort.asc);
     });
   }
 
   QueryBuilder<BusinessSettingsModel, BusinessSettingsModel, QAfterSortBy>
-      thenByIsarIdDesc() {
+  thenByIsarIdDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'isarId', Sort.desc);
     });
   }
 
   QueryBuilder<BusinessSettingsModel, BusinessSettingsModel, QAfterSortBy>
-      thenByLogoUrl() {
+  thenByLogoUrl() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'logoUrl', Sort.asc);
     });
   }
 
   QueryBuilder<BusinessSettingsModel, BusinessSettingsModel, QAfterSortBy>
-      thenByLogoUrlDesc() {
+  thenByLogoUrlDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'logoUrl', Sort.desc);
     });
   }
 
   QueryBuilder<BusinessSettingsModel, BusinessSettingsModel, QAfterSortBy>
-      thenByServerUpdatedAt() {
+  thenByServerUpdatedAt() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'serverUpdatedAt', Sort.asc);
     });
   }
 
   QueryBuilder<BusinessSettingsModel, BusinessSettingsModel, QAfterSortBy>
-      thenByServerUpdatedAtDesc() {
+  thenByServerUpdatedAtDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'serverUpdatedAt', Sort.desc);
     });
   }
 
   QueryBuilder<BusinessSettingsModel, BusinessSettingsModel, QAfterSortBy>
-      thenBySyncStatus() {
+  thenBySyncStatus() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'syncStatus', Sort.asc);
     });
   }
 
   QueryBuilder<BusinessSettingsModel, BusinessSettingsModel, QAfterSortBy>
-      thenBySyncStatusDesc() {
+  thenBySyncStatusDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'syncStatus', Sort.desc);
     });
   }
 
   QueryBuilder<BusinessSettingsModel, BusinessSettingsModel, QAfterSortBy>
-      thenByTaxNumber() {
+  thenByTaxNumber() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'taxNumber', Sort.asc);
     });
   }
 
   QueryBuilder<BusinessSettingsModel, BusinessSettingsModel, QAfterSortBy>
-      thenByTaxNumberDesc() {
+  thenByTaxNumberDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'taxNumber', Sort.desc);
     });
   }
 
   QueryBuilder<BusinessSettingsModel, BusinessSettingsModel, QAfterSortBy>
-      thenByUserId() {
+  thenByUserId() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'userId', Sort.asc);
     });
   }
 
   QueryBuilder<BusinessSettingsModel, BusinessSettingsModel, QAfterSortBy>
-      thenByUserIdDesc() {
+  thenByUserIdDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'userId', Sort.desc);
     });
@@ -2341,93 +2827,100 @@ extension BusinessSettingsModelQuerySortThenBy
 extension BusinessSettingsModelQueryWhereDistinct
     on QueryBuilder<BusinessSettingsModel, BusinessSettingsModel, QDistinct> {
   QueryBuilder<BusinessSettingsModel, BusinessSettingsModel, QDistinct>
-      distinctByAddress({bool caseSensitive = true}) {
+  distinctByAddress({bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'address', caseSensitive: caseSensitive);
     });
   }
 
   QueryBuilder<BusinessSettingsModel, BusinessSettingsModel, QDistinct>
-      distinctByCompanyName({bool caseSensitive = true}) {
+  distinctByCompanyName({bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'companyName', caseSensitive: caseSensitive);
     });
   }
 
   QueryBuilder<BusinessSettingsModel, BusinessSettingsModel, QDistinct>
-      distinctByCurrencyCode({bool caseSensitive = true}) {
+  distinctByCurrencyCode({bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'currencyCode', caseSensitive: caseSensitive);
     });
   }
 
   QueryBuilder<BusinessSettingsModel, BusinessSettingsModel, QDistinct>
-      distinctByCurrencySymbol({bool caseSensitive = true}) {
+  distinctByCurrencySymbol({bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy(r'currencySymbol',
-          caseSensitive: caseSensitive);
+      return query.addDistinctBy(
+        r'currencySymbol',
+        caseSensitive: caseSensitive,
+      );
     });
   }
 
   QueryBuilder<BusinessSettingsModel, BusinessSettingsModel, QDistinct>
-      distinctByDefaultTaxRate() {
+  distinctByDefaultTaxRate() {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'defaultTaxRate');
     });
   }
 
   QueryBuilder<BusinessSettingsModel, BusinessSettingsModel, QDistinct>
-      distinctById({bool caseSensitive = true}) {
+  distinctById({bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'id', caseSensitive: caseSensitive);
     });
   }
 
   QueryBuilder<BusinessSettingsModel, BusinessSettingsModel, QDistinct>
-      distinctByIsDeleted() {
+  distinctByIsDeleted() {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'isDeleted');
     });
   }
 
   QueryBuilder<BusinessSettingsModel, BusinessSettingsModel, QDistinct>
-      distinctByLogoUrl({bool caseSensitive = true}) {
+  distinctByLogoUrl({bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'logoUrl', caseSensitive: caseSensitive);
     });
   }
 
   QueryBuilder<BusinessSettingsModel, BusinessSettingsModel, QDistinct>
-      distinctByServerUpdatedAt() {
+  distinctByServerUpdatedAt() {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'serverUpdatedAt');
     });
   }
 
   QueryBuilder<BusinessSettingsModel, BusinessSettingsModel, QDistinct>
-      distinctBySyncStatus() {
+  distinctBySyncStatus() {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'syncStatus');
     });
   }
 
   QueryBuilder<BusinessSettingsModel, BusinessSettingsModel, QDistinct>
-      distinctByTaxNumber({bool caseSensitive = true}) {
+  distinctByTaxNumber({bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'taxNumber', caseSensitive: caseSensitive);
     });
   }
 
   QueryBuilder<BusinessSettingsModel, BusinessSettingsModel, QDistinct>
-      distinctByUserId({bool caseSensitive = true}) {
+  distinctByUserId({bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'userId', caseSensitive: caseSensitive);
     });
   }
 }
 
-extension BusinessSettingsModelQueryProperty on QueryBuilder<
-    BusinessSettingsModel, BusinessSettingsModel, QQueryProperty> {
+extension BusinessSettingsModelQueryProperty
+    on
+        QueryBuilder<
+          BusinessSettingsModel,
+          BusinessSettingsModel,
+          QQueryProperty
+        > {
   QueryBuilder<BusinessSettingsModel, int, QQueryOperations> isarIdProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'isarId');
@@ -2435,35 +2928,35 @@ extension BusinessSettingsModelQueryProperty on QueryBuilder<
   }
 
   QueryBuilder<BusinessSettingsModel, String?, QQueryOperations>
-      addressProperty() {
+  addressProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'address');
     });
   }
 
   QueryBuilder<BusinessSettingsModel, String, QQueryOperations>
-      companyNameProperty() {
+  companyNameProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'companyName');
     });
   }
 
   QueryBuilder<BusinessSettingsModel, String, QQueryOperations>
-      currencyCodeProperty() {
+  currencyCodeProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'currencyCode');
     });
   }
 
   QueryBuilder<BusinessSettingsModel, String, QQueryOperations>
-      currencySymbolProperty() {
+  currencySymbolProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'currencySymbol');
     });
   }
 
   QueryBuilder<BusinessSettingsModel, double, QQueryOperations>
-      defaultTaxRateProperty() {
+  defaultTaxRateProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'defaultTaxRate');
     });
@@ -2476,42 +2969,42 @@ extension BusinessSettingsModelQueryProperty on QueryBuilder<
   }
 
   QueryBuilder<BusinessSettingsModel, bool, QQueryOperations>
-      isDeletedProperty() {
+  isDeletedProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'isDeleted');
     });
   }
 
   QueryBuilder<BusinessSettingsModel, String?, QQueryOperations>
-      logoUrlProperty() {
+  logoUrlProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'logoUrl');
     });
   }
 
   QueryBuilder<BusinessSettingsModel, DateTime?, QQueryOperations>
-      serverUpdatedAtProperty() {
+  serverUpdatedAtProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'serverUpdatedAt');
     });
   }
 
   QueryBuilder<BusinessSettingsModel, SyncStatus, QQueryOperations>
-      syncStatusProperty() {
+  syncStatusProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'syncStatus');
     });
   }
 
   QueryBuilder<BusinessSettingsModel, String?, QQueryOperations>
-      taxNumberProperty() {
+  taxNumberProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'taxNumber');
     });
   }
 
   QueryBuilder<BusinessSettingsModel, String?, QQueryOperations>
-      userIdProperty() {
+  userIdProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'userId');
     });

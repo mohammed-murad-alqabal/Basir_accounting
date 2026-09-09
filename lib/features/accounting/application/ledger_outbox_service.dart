@@ -31,9 +31,9 @@ class LedgerOutboxService {
     required Isar isar,
     required AuthoritativeLedgerGateway gateway,
     required AccountingRepository repository,
-  })  : _isar = isar,
-        _gateway = gateway,
-        _repository = repository;
+  }) : _isar = isar,
+       _gateway = gateway,
+       _repository = repository;
 
   final Isar _isar;
   final AuthoritativeLedgerGateway _gateway;
@@ -55,8 +55,10 @@ class LedgerOutboxService {
   /// current and later commands untouched; a server rejection is retained with
   /// an error marker and then surfaced to the caller.
   Future<void> flush() async {
-    final pending =
-        await _isar.ledgerOutboxModels.where().sortByCreatedAt().findAll();
+    final pending = await _isar.ledgerOutboxModels
+        .where()
+        .sortByCreatedAt()
+        .findAll();
     for (final command in pending) {
       final entry = JournalEntry.fromJson(
         jsonDecode(command.payload) as Map<String, dynamic>,
@@ -64,8 +66,9 @@ class LedgerOutboxService {
       try {
         final receipt = await _gateway.post(entry);
         await _cacheReceipt(entry, receipt);
-        await _isar
-            .writeTxn(() => _isar.ledgerOutboxModels.delete(command.isarId!));
+        await _isar.writeTxn(
+          () => _isar.ledgerOutboxModels.delete(command.isarId!),
+        );
       } on LedgerTransportException catch (error) {
         await _recordAttempt(command, error);
         break;
@@ -113,10 +116,7 @@ class LedgerOutboxService {
     await _isar.writeTxn(() => _isar.ledgerOutboxModels.put(command));
   }
 
-  Future<void> _cacheReceipt(
-    JournalEntry entry,
-    LedgerPostReceipt receipt,
-  ) =>
+  Future<void> _cacheReceipt(JournalEntry entry, LedgerPostReceipt receipt) =>
       _repository.cacheAuthoritativeJournalEntry(
         entry.copyWith(
           authoritativeEntryId: receipt.entryId,

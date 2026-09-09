@@ -19,8 +19,10 @@ class AssetRepositoryImpl implements AssetRepository {
   @override
   Future<List<FixedAsset>> getAllAssets() async {
     try {
-      final models =
-          await isar.fixedAssetModels.filter().userIdEqualTo(userId).findAll();
+      final models = await isar.fixedAssetModels
+          .filter()
+          .userIdEqualTo(userId)
+          .findAll();
       return models.map((m) => m.toEntity()).toList();
     } catch (e) {
       throw Exception('خطأ في جلب الأصول: $e');

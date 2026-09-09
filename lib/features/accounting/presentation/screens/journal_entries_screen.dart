@@ -86,9 +86,7 @@ class JournalEntriesScreen extends ConsumerWidget {
                         const Spacer(),
                         Text(
                           intl.DateFormat('yyyy-MM-dd').format(entry.date),
-                          style: Theme.of(context)
-                              .textTheme
-                              .bodySmall
+                          style: Theme.of(context).textTheme.bodySmall
                               ?.copyWith(color: AppColors.textSecondary),
                         ),
                         _buildActions(context, ref, entry),
@@ -264,25 +262,24 @@ class JournalEntriesScreen extends ConsumerWidget {
     String label,
     Color textColor,
     Color bgColor,
-  ) =>
-      Container(
-        padding: const EdgeInsets.symmetric(
-          horizontal: Spacing.sm,
-          vertical: Spacing.xs,
-        ),
-        decoration: BoxDecoration(
-          color: bgColor,
-          borderRadius: Radii.borderRadiusSm,
-        ),
-        child: Text(
-          label,
-          style: TextStyle(
-            color: textColor,
-            fontSize: 12,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-      );
+  ) => Container(
+    padding: const EdgeInsets.symmetric(
+      horizontal: Spacing.sm,
+      vertical: Spacing.xs,
+    ),
+    decoration: BoxDecoration(
+      color: bgColor,
+      borderRadius: Radii.borderRadiusSm,
+    ),
+    child: Text(
+      label,
+      style: TextStyle(
+        color: textColor,
+        fontSize: 12,
+        fontWeight: FontWeight.bold,
+      ),
+    ),
+  );
 
   /// Builds the scrollable list of Debit/Credit atomic lines.
   Widget _buildEntryLines(BuildContext context, List<JournalEntryLine> lines) =>
@@ -292,63 +289,63 @@ class JournalEntriesScreen extends ConsumerWidget {
 
   /// Renders a single accounting line with semantic balance colors.
   Widget _buildLineRow(BuildContext context, JournalEntryLine line) => Padding(
-        padding: const EdgeInsets.symmetric(
-          horizontal: Spacing.md,
-          vertical: Spacing.xs,
-        ),
-        child: Row(
-          children: [
-            Expanded(
-              flex: 3,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    line.accountName,
-                    style: const TextStyle(fontWeight: FontWeight.w500),
+    padding: const EdgeInsets.symmetric(
+      horizontal: Spacing.md,
+      vertical: Spacing.xs,
+    ),
+    child: Row(
+      children: [
+        Expanded(
+          flex: 3,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                line.accountName,
+                style: const TextStyle(fontWeight: FontWeight.w500),
+              ),
+              if (line.description != null)
+                Text(
+                  line.description!,
+                  style: const TextStyle(
+                    fontSize: 10,
+                    color: AppColors.textHint,
                   ),
-                  if (line.description != null)
-                    Text(
-                      line.description!,
-                      style: const TextStyle(
-                        fontSize: 10,
-                        color: AppColors.textHint,
-                      ),
-                    ),
-                ],
-              ),
-            ),
-            Expanded(
-              flex: 2,
-              child: Text(
-                line.debit > Decimal.zero ? _formatCurrency(line.debit) : '-',
-                textAlign: TextAlign.end,
-                style: const TextStyle(
-                  color: AppColors.success,
-                  fontWeight: FontWeight.w500,
                 ),
-              ),
-            ),
-            Expanded(
-              flex: 2,
-              child: Text(
-                line.credit > Decimal.zero ? _formatCurrency(line.credit) : '-',
-                textAlign: TextAlign.end,
-                style: const TextStyle(
-                  color: AppColors.error,
-                  fontWeight: FontWeight.w500,
-                ),
-              ),
-            ),
-          ],
+            ],
+          ),
         ),
-      );
+        Expanded(
+          flex: 2,
+          child: Text(
+            line.debit > Decimal.zero ? _formatCurrency(line.debit) : '-',
+            textAlign: TextAlign.end,
+            style: const TextStyle(
+              color: AppColors.success,
+              fontWeight: FontWeight.w500,
+            ),
+          ),
+        ),
+        Expanded(
+          flex: 2,
+          child: Text(
+            line.credit > Decimal.zero ? _formatCurrency(line.credit) : '-',
+            textAlign: TextAlign.end,
+            style: const TextStyle(
+              color: AppColors.error,
+              fontWeight: FontWeight.w500,
+            ),
+          ),
+        ),
+      ],
+    ),
+  );
 
   /// Formats currency values for consistency across the UI.
   String _formatCurrency(Decimal value) => intl.NumberFormat.currency(
-        symbol: '',
-        decimalDigits: 2,
-      ).format(value.toDouble());
+    symbol: '',
+    decimalDigits: 2,
+  ).format(value.toDouble());
 
   /// Shows export format modal (PDF/CSV).
   Future<void> _showExportOptions(BuildContext context, WidgetRef ref) async {

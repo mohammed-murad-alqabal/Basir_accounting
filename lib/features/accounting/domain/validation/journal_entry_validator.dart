@@ -41,7 +41,8 @@ class JournalEntryValidator {
       failures.add(
         JournalEntryValidationFailure(
           code: JournalEntryValidationCode.unbalanced,
-          message: 'Debit ${entry.totalDebit} does not equal credit '
+          message:
+              'Debit ${entry.totalDebit} does not equal credit '
               '${entry.totalCredit}.',
         ),
       );
@@ -111,7 +112,7 @@ class JournalEntryValidator {
     final hasPartialAmountOrRate = hasOriginalAmount != hasExchangeRate;
     final hasInvalidCurrencyValues =
         (line.originalAmount != null && line.originalAmount! <= Decimal.zero) ||
-            (line.exchangeRate != null && line.exchangeRate! <= Decimal.zero);
+        (line.exchangeRate != null && line.exchangeRate! <= Decimal.zero);
 
     // A base-currency voucher may omit the currency code while still carrying
     // its original amount and a positive rate. A foreign-currency code, by
@@ -123,7 +124,8 @@ class JournalEntryValidator {
         JournalEntryValidationFailure(
           code: JournalEntryValidationCode.invalidOriginalCurrency,
           lineIndex: index,
-          message: 'A foreign currency requires amount and exchange rate; '
+          message:
+              'A foreign currency requires amount and exchange rate; '
               'amount and rate must be supplied together and be positive.',
         ),
       );

@@ -17,7 +17,7 @@ void main() {
       expect(identity.scopeKey, 'user:u-1');
       expect(identity.recordId, 'record-7');
       expect(identity.canonicalKey, 'user:u-1\u001frecord-7');
-      expect(() => identity.validate(), returnsNormally);
+      expect(identity.validate, returnsNormally);
     });
 
     test('rejects empty record identity', () {
@@ -57,7 +57,7 @@ void main() {
       expect(normalized.updatedAt.isUtc, isTrue);
       expect(normalized.serverUpdatedAt?.isUtc, isTrue);
       expect(normalized.syncStatus, DriftSyncStatusValue.pendingPush);
-      expect(() => normalized.validate(), returnsNormally);
+      expect(normalized.validate, returnsNormally);
     });
 
     test('rejects non-UTC metadata at the storage boundary', () {

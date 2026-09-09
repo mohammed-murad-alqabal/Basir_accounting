@@ -1,6 +1,5 @@
-import 'package:drift/drift.dart';
-
 import 'package:basir_drift_storage/src/basir_database.dart';
+import 'package:drift/drift.dart';
 
 /// DTO محايد لسجل سعر سوق زمني، مستقل عن Freezed وطبقة reports في التطبيق.
 class MarketPriceRecord {
@@ -91,7 +90,7 @@ class MarketPriceStore implements MarketPriceStorage {
   Future<List<MarketPriceRecord>> latestForAllItems(DateTime asOfDate) async {
     final rows = await (_database.select(_database.marketPrices)
           ..where(
-              (table) => table.asOfDate.isSmallerOrEqualValue(asOfDate.toUtc()))
+              (table) => table.asOfDate.isSmallerOrEqualValue(asOfDate.toUtc()),)
           ..orderBy([
             (table) => OrderingTerm.asc(table.itemId),
             (table) => OrderingTerm.desc(table.asOfDate),
@@ -118,7 +117,7 @@ class MarketPriceStore implements MarketPriceStorage {
   static void _validate(MarketPriceRecord record) {
     if (record.id.isEmpty || record.itemId.isEmpty) {
       throw ArgumentError.value(
-          record, 'record', 'Invalid market price record.');
+          record, 'record', 'Invalid market price record.',);
     }
   }
 }

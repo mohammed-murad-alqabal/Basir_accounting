@@ -19,25 +19,26 @@ class IsarGoalMigrationSource {
   final Isar _isar;
 
   Future<List<GoalRecord>> readAll() async {
-    final records = (await _isar.goalModels.where().findAll())
-        .map(_toRecord)
-        .toList(growable: false)
-      ..sort(_compareGoals);
+    final records =
+        (await _isar.goalModels.where().findAll())
+            .map(_toRecord)
+            .toList(growable: false)
+          ..sort(_compareGoals);
     return records;
   }
 
   static GoalRecord _toRecord(GoalModel model) => GoalRecord(
-        id: model.uuid,
-        name: model.name,
-        category: model.category.name,
-        targetAmount: model.targetAmount,
-        currentAmount: model.currentAmount,
-        startDate: model.startDate.toUtc(),
-        targetDate: model.targetDate.toUtc(),
-        isActive: model.isActive,
-        description: model.description,
-        userId: model.userId,
-      );
+    id: model.uuid,
+    name: model.name,
+    category: model.category.name,
+    targetAmount: model.targetAmount,
+    currentAmount: model.currentAmount,
+    startDate: model.startDate.toUtc(),
+    targetDate: model.targetDate.toUtc(),
+    isActive: model.isActive,
+    description: model.description,
+    userId: model.userId,
+  );
 }
 
 /// قارئ Budgets من Isar فقط، مع حفظ Decimal كنص وترتيب deterministic.
@@ -47,26 +48,27 @@ class IsarBudgetMigrationSource {
   final Isar _isar;
 
   Future<List<BudgetRecord>> readAll() async {
-    final records = (await _isar.budgetModels.where().findAll())
-        .map(_toRecord)
-        .toList(growable: false)
-      ..sort(_compareBudgets);
+    final records =
+        (await _isar.budgetModels.where().findAll())
+            .map(_toRecord)
+            .toList(growable: false)
+          ..sort(_compareBudgets);
     return records;
   }
 
   static BudgetRecord _toRecord(BudgetModel model) => BudgetRecord(
-        id: model.budgetId,
-        name: model.name,
-        category: model.category.name,
-        limitAmount: model.limitAmountStr,
-        spentAmount: model.spentAmountStr,
-        startDate: model.startDate.toUtc(),
-        endDate: model.endDate.toUtc(),
-        alertThreshold: model.alertThreshold,
-        isRollover: model.isRollover,
-        isActive: model.isActive,
-        userId: model.userId,
-      );
+    id: model.budgetId,
+    name: model.name,
+    category: model.category.name,
+    limitAmount: model.limitAmountStr,
+    spentAmount: model.spentAmountStr,
+    startDate: model.startDate.toUtc(),
+    endDate: model.endDate.toUtc(),
+    alertThreshold: model.alertThreshold,
+    isRollover: model.isRollover,
+    isActive: model.isActive,
+    userId: model.userId,
+  );
 }
 
 class DriftGoalsBudgetsMigrationReport {
@@ -89,11 +91,11 @@ class DriftGoalsBudgetsMigrator {
     required GoalStorage goalStorage,
     required BudgetStorage budgetStorage,
     required MigrationCheckpointStorage checkpoints,
-  })  : _goalSource = goalSource,
-        _budgetSource = budgetSource,
-        _goalStorage = goalStorage,
-        _budgetStorage = budgetStorage,
-        _checkpoints = checkpoints;
+  }) : _goalSource = goalSource,
+       _budgetSource = budgetSource,
+       _goalStorage = goalStorage,
+       _budgetStorage = budgetStorage,
+       _checkpoints = checkpoints;
 
   final GoalMigrationReader _goalSource;
   final BudgetMigrationReader _budgetSource;

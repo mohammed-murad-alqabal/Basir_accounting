@@ -39,9 +39,7 @@ class _UserFormScreenState extends ConsumerState<UserFormScreen> {
     _fullNameController = TextEditingController(
       text: widget.user?.fullName ?? '',
     );
-    _emailController = TextEditingController(
-      text: widget.user?.email ?? '',
-    );
+    _emailController = TextEditingController(text: widget.user?.email ?? '');
     _passwordController = TextEditingController(); // Empty for edit
 
     if (widget.user != null) {
@@ -67,9 +65,9 @@ class _UserFormScreenState extends ConsumerState<UserFormScreen> {
     // For edit, password is optional/separate
     // For create, password is required
     if (!isEditing && _passwordController.text.isEmpty) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('كلمة المرور مطلوبة')),
-      );
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(const SnackBar(content: Text('كلمة المرور مطلوبة')));
       return;
     }
 
@@ -99,83 +97,78 @@ class _UserFormScreenState extends ConsumerState<UserFormScreen> {
       if (mounted) Navigator.pop(context);
     } on Exception catch (e) {
       if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('خطأ: $e')),
-        );
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text('خطأ: $e')));
       }
     }
   }
 
   @override
   Widget build(BuildContext context) => GlassScaffold(
-        title: widget.user != null ? 'تعديل مستخدم' : 'مستخدم جديد',
-        body: Padding(
-          padding: const EdgeInsets.all(16),
-          child: Form(
-            key: _formKey,
-            child: ListView(
-              children: [
-                TextFormField(
-                  controller: _usernameController,
-                  decoration: const InputDecoration(labelText: 'اسم المستخدم'),
-                  validator: (v) => v!.isEmpty ? 'مطلوب' : null,
-                ),
-                const SizedBox(height: 16),
-                TextFormField(
-                  controller: _fullNameController,
-                  decoration: const InputDecoration(labelText: 'الاسم الكامل'),
-                  validator: (v) => v!.isEmpty ? 'مطلوب' : null,
-                ),
-                const SizedBox(height: 16),
-                TextFormField(
-                  controller: _emailController,
-                  decoration: const InputDecoration(
-                    labelText: 'البريد الإلكتروني',
-                  ),
-                  validator: (v) => v!.contains('@') ? null : 'بريد غير صحيح',
-                ),
-                const SizedBox(height: 16),
-                DropdownButtonFormField<UserRole>(
-                  initialValue: _role,
-                  decoration: const InputDecoration(labelText: 'الدور'),
-                  items: UserRole.values
-                      .map(
-                        (role) => DropdownMenuItem(
-                          value: role,
-                          child: Text(role.displayName),
-                        ),
-                      )
-                      .toList(),
-                  onChanged: (val) {
-                    if (val != null) setState(() => _role = val);
-                  },
-                ),
-                const SizedBox(height: 16),
-                if (widget.user != null)
-                  SwitchListTile(
-                    title: const Text('نشط'),
-                    value: _isActive,
-                    onChanged: (val) => setState(() => _isActive = val),
-                  ),
-                const SizedBox(height: 16),
-                TextFormField(
-                  controller: _passwordController,
-                  decoration: InputDecoration(
-                    labelText: widget.user != null
-                        ? 'كلمة المرور '
-                            '(اتركها فارغة للتجاهل)'
-                        : 'كلمة المرور',
-                  ),
-                  obscureText: true,
-                ),
-                const SizedBox(height: 32),
-                ElevatedButton(
-                  onPressed: _submit,
-                  child: const Text('حفظ'),
-                ),
-              ],
+    title: widget.user != null ? 'تعديل مستخدم' : 'مستخدم جديد',
+    body: Padding(
+      padding: const EdgeInsets.all(16),
+      child: Form(
+        key: _formKey,
+        child: ListView(
+          children: [
+            TextFormField(
+              controller: _usernameController,
+              decoration: const InputDecoration(labelText: 'اسم المستخدم'),
+              validator: (v) => v!.isEmpty ? 'مطلوب' : null,
             ),
-          ),
+            const SizedBox(height: 16),
+            TextFormField(
+              controller: _fullNameController,
+              decoration: const InputDecoration(labelText: 'الاسم الكامل'),
+              validator: (v) => v!.isEmpty ? 'مطلوب' : null,
+            ),
+            const SizedBox(height: 16),
+            TextFormField(
+              controller: _emailController,
+              decoration: const InputDecoration(labelText: 'البريد الإلكتروني'),
+              validator: (v) => v!.contains('@') ? null : 'بريد غير صحيح',
+            ),
+            const SizedBox(height: 16),
+            DropdownButtonFormField<UserRole>(
+              initialValue: _role,
+              decoration: const InputDecoration(labelText: 'الدور'),
+              items: UserRole.values
+                  .map(
+                    (role) => DropdownMenuItem(
+                      value: role,
+                      child: Text(role.displayName),
+                    ),
+                  )
+                  .toList(),
+              onChanged: (val) {
+                if (val != null) setState(() => _role = val);
+              },
+            ),
+            const SizedBox(height: 16),
+            if (widget.user != null)
+              SwitchListTile(
+                title: const Text('نشط'),
+                value: _isActive,
+                onChanged: (val) => setState(() => _isActive = val),
+              ),
+            const SizedBox(height: 16),
+            TextFormField(
+              controller: _passwordController,
+              decoration: InputDecoration(
+                labelText: widget.user != null
+                    ? 'كلمة المرور '
+                          '(اتركها فارغة للتجاهل)'
+                    : 'كلمة المرور',
+              ),
+              obscureText: true,
+            ),
+            const SizedBox(height: 32),
+            ElevatedButton(onPressed: _submit, child: const Text('حفظ')),
+          ],
         ),
-      );
+      ),
+    ),
+  );
 }

@@ -17,75 +17,75 @@ class GlobalErrorWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => MaterialApp(
-        debugShowCheckedModeBanner: false,
-        theme: ThemeData(
-          fontFamily: FontFamilies.arabic,
-          colorScheme: ColorScheme.fromSeed(seedColor: AppColors.primary),
+    debugShowCheckedModeBanner: false,
+    theme: ThemeData(
+      fontFamily: FontFamilies.arabic,
+      colorScheme: ColorScheme.fromSeed(seedColor: AppColors.primary),
+    ),
+    home: Scaffold(
+      backgroundColor: AppColors.background,
+      body: DecoratedBox(
+        decoration: const BoxDecoration(
+          gradient: RadialGradient(
+            center: Alignment(0, -0.5),
+            radius: 1.5,
+            colors: [AppColors.surface, AppColors.background],
+          ),
         ),
-        home: Scaffold(
-          backgroundColor: AppColors.background,
-          body: DecoratedBox(
-            decoration: const BoxDecoration(
-              gradient: RadialGradient(
-                center: Alignment(0, -0.5),
-                radius: 1.5,
-                colors: [AppColors.surface, AppColors.background],
-              ),
-            ),
-            child: SafeArea(
-              child: Padding(
-                padding: const EdgeInsets.all(Spacing.xl),
-                child: Center(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Container(
-                        padding: const EdgeInsets.all(Spacing.xl),
-                        decoration: BoxDecoration(
-                          color: AppColors.error.withValues(alpha: 0.1),
-                          shape: BoxShape.circle,
-                        ),
-                        child: const Icon(
-                          Icons.error_outline_rounded,
-                          color: AppColors.error,
-                          size: 64,
-                        ),
-                      ),
-                      const SizedBox(height: Spacing.xl),
-                      Text(
-                        context.l10n.errorTitle,
-                        textAlign: TextAlign.center,
-                        style: AppTextStyles.headlineSmall.copyWith(
-                          fontWeight: FontWeight.bold,
-                          color: AppColors.textPrimary,
-                        ),
-                      ),
-                      const SizedBox(height: Spacing.md),
-                      Text(
-                        context.l10n.errorDescription,
-                        textAlign: TextAlign.center,
-                        style: AppTextStyles.bodyMedium.copyWith(
-                          color: AppColors.textSecondary,
-                        ),
-                      ),
-                      const SizedBox(height: Spacing.xxl),
-                      AppEnhancedButton(
-                        label: context.l10n.btnRetry,
-                        onPressed: () {
-                          unawaited(
-                            Navigator.of(
-                              context,
-                            ).pushNamedAndRemoveUntil('/', (route) => false),
-                          );
-                        },
-                        width: double.infinity,
-                      ),
-                    ],
+        child: SafeArea(
+          child: Padding(
+            padding: const EdgeInsets.all(Spacing.xl),
+            child: Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Container(
+                    padding: const EdgeInsets.all(Spacing.xl),
+                    decoration: BoxDecoration(
+                      color: AppColors.error.withValues(alpha: 0.1),
+                      shape: BoxShape.circle,
+                    ),
+                    child: const Icon(
+                      Icons.error_outline_rounded,
+                      color: AppColors.error,
+                      size: 64,
+                    ),
                   ),
-                ),
+                  const SizedBox(height: Spacing.xl),
+                  Text(
+                    context.l10n.errorTitle,
+                    textAlign: TextAlign.center,
+                    style: AppTextStyles.headlineSmall.copyWith(
+                      fontWeight: FontWeight.bold,
+                      color: AppColors.textPrimary,
+                    ),
+                  ),
+                  const SizedBox(height: Spacing.md),
+                  Text(
+                    context.l10n.errorDescription,
+                    textAlign: TextAlign.center,
+                    style: AppTextStyles.bodyMedium.copyWith(
+                      color: AppColors.textSecondary,
+                    ),
+                  ),
+                  const SizedBox(height: Spacing.xxl),
+                  AppEnhancedButton(
+                    label: context.l10n.btnRetry,
+                    onPressed: () {
+                      unawaited(
+                        Navigator.of(
+                          context,
+                        ).pushNamedAndRemoveUntil('/', (route) => false),
+                      );
+                    },
+                    width: double.infinity,
+                  ),
+                ],
               ),
             ),
           ),
         ),
-      );
+      ),
+    ),
+  );
 }

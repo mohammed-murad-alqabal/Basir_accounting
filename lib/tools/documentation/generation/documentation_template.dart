@@ -31,40 +31,40 @@ class DocumentationTemplate {
 
   /// قالب للـ enums
   factory DocumentationTemplate.enumTemplate() => const DocumentationTemplate(
-        type: ElementType.enumType,
-        arabicTemplate: '''
+    type: ElementType.enumType,
+    arabicTemplate: '''
 /// {description}
 ///
 /// {details}
 ''',
-        englishTemplate: '''
+    englishTemplate: '''
 /// {description}
 ///
 /// {details}
 ''',
-        requiredSections: ['description', 'details'],
-      );
+    requiredSections: ['description', 'details'],
+  );
 
   /// قالب للكلاسات
   factory DocumentationTemplate.classTemplate() => const DocumentationTemplate(
-        type: ElementType.classType,
-        arabicTemplate: '''
+    type: ElementType.classType,
+    arabicTemplate: '''
 /// {description}
 ///
 /// {details}
 ''',
-        englishTemplate: '''
+    englishTemplate: '''
 /// {description}
 ///
 /// {details}
 ''',
-        requiredSections: ['description', 'details'],
-      );
+    requiredSections: ['description', 'details'],
+  );
 
   /// قالب للدوال
   factory DocumentationTemplate.methodTemplate() => const DocumentationTemplate(
-        type: ElementType.method,
-        arabicTemplate: '''
+    type: ElementType.method,
+    arabicTemplate: '''
 /// {description}
 ///
 /// {details}
@@ -74,7 +74,7 @@ class DocumentationTemplate {
 ///
 /// Returns: {returns}
 ''',
-        englishTemplate: '''
+    englishTemplate: '''
 /// {description}
 ///
 /// {details}
@@ -84,8 +84,8 @@ class DocumentationTemplate {
 ///
 /// Returns: {returns}
 ''',
-        requiredSections: ['description', 'parameters', 'returns'],
-      );
+    requiredSections: ['description', 'parameters', 'returns'],
+  );
 
   /// قالب للخصائص
   // ignore: prefer_expression_function_bodies
@@ -151,19 +151,22 @@ class DocumentationTemplate {
   String _formatValue(dynamic value, String key) {
     if (value is List) {
       if (key == 'parameters') {
-        return value.map((p) {
-          if (p is Map<String, dynamic>) {
-            final Object? nameValue = p['name'];
-            final Object? descriptionValue = p['description'];
-            final name =
-                nameValue is String ? nameValue : nameValue?.toString() ?? '';
-            final description = descriptionValue is String
-                ? descriptionValue
-                : (descriptionValue?.toString() ?? name);
-            return '/// - [$name]: $description';
-          }
-          return '/// - $p';
-        }).join('\n');
+        return value
+            .map((p) {
+              if (p is Map<String, dynamic>) {
+                final Object? nameValue = p['name'];
+                final Object? descriptionValue = p['description'];
+                final name = nameValue is String
+                    ? nameValue
+                    : nameValue?.toString() ?? '';
+                final description = descriptionValue is String
+                    ? descriptionValue
+                    : (descriptionValue?.toString() ?? name);
+                return '/// - [$name]: $description';
+              }
+              return '/// - $p';
+            })
+            .join('\n');
       }
       return value.map((e) => '/// $e').join('\n');
     }

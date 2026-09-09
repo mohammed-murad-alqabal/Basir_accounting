@@ -18,14 +18,14 @@ String _$taxEngineServiceHash() => r'a5e6dc8da6902c13381c51092e5d925184628700';
 @ProviderFor(TaxEngineService)
 final taxEngineServiceProvider =
     AsyncNotifierProvider<TaxEngineService, void>.internal(
-  TaxEngineService.new,
-  name: r'taxEngineServiceProvider',
-  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-      ? null
-      : _$taxEngineServiceHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
+      TaxEngineService.new,
+      name: r'taxEngineServiceProvider',
+      debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+          ? null
+          : _$taxEngineServiceHash,
+      dependencies: null,
+      allTransitiveDependencies: null,
+    );
 
 typedef _$TaxEngineService = AsyncNotifier<void>;
 // ignore_for_file: type=lint

@@ -6,8 +6,6 @@
 @TestOn('vm')
 library;
 
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_test/flutter_test.dart';
 import 'package:basir_accounting_system/core/domain/contracts/audit_entry.dart';
 import 'package:basir_accounting_system/core/domain/contracts/operation_result.dart';
 import 'package:basir_accounting_system/core/providers.dart';
@@ -16,14 +14,14 @@ import 'package:basir_accounting_system/features/inventory/domain/entities/bulk_
 import 'package:basir_accounting_system/features/inventory/domain/entities/inventory_item.dart';
 import 'package:basir_accounting_system/features/inventory/domain/repositories/inventory_repository.dart';
 import 'package:basir_accounting_system/features/inventory/presentation/providers/bulk_price_change_provider.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_test/flutter_test.dart';
 
 /// خدمة وهمية تحاكي المعاينة والتنفيذ والإلغاء.
 class _FakeBulkService implements BulkPriceChangeService {
   List<BulkPriceChangePreviewEntry> previewResult = const [];
   OperationResult<BulkChangeExecutionRecord> executeResult =
-      const OperationResult<BulkChangeExecutionRecord>.failure(
-    message: 'فشل',
-  );
+      const OperationResult<BulkChangeExecutionRecord>.failure(message: 'فشل');
   OperationResult<List<InventoryItem>> cancelResult =
       const OperationResult<List<InventoryItem>>.failure(message: 'فشل');
 
@@ -39,9 +37,7 @@ class _FakeBulkService implements BulkPriceChangeService {
   }) async {
     previewCalls.add('${scope.count}:$target:${rule.type}:${rule.value}');
     if (previewResult.isEmpty) {
-      return const OperationResult<List<BulkPriceChangePreviewEntry>>.failure(
-        message: 'فشل',
-      );
+      return const OperationResult<List<BulkPriceChangePreviewEntry>>.failure(message: 'فشل');
     }
     return OperationResult.success(value: previewResult);
   }
@@ -73,7 +69,7 @@ class _FakeBulkService implements BulkPriceChangeService {
 /// مستودع وهمي للمخزون للاختبار.
 class _FakeInventoryRepository implements InventoryRepository {
   _FakeInventoryRepository([Iterable<InventoryItem> initialItems = const []])
-      : _items = {for (final item in initialItems) item.id: item};
+    : _items = {for (final item in initialItems) item.id: item};
   final Map<String, InventoryItem> _items;
 
   @override
@@ -100,11 +96,14 @@ class _FakeInventoryRepository implements InventoryRepository {
   @override
   Future<List<InventoryItem>> searchItems(String query) async {
     final normalized = query.toUpperCase();
-    return _items.values.where((item) {
-      return (item.nameAr + item.nameEn).toUpperCase().contains(normalized) ||
-          (item.sku ?? '').toUpperCase().contains(normalized) ||
-          (item.barcode ?? '').toUpperCase().contains(normalized);
-    }).toList();
+    return _items.values
+        .where(
+          (item) =>
+              (item.nameAr + item.nameEn).toUpperCase().contains(normalized) ||
+              (item.sku ?? '').toUpperCase().contains(normalized) ||
+              (item.barcode ?? '').toUpperCase().contains(normalized),
+        )
+        .toList();
   }
 
   @override
@@ -116,8 +115,7 @@ class _FakeBulkChangeExecutionStorage implements BulkChangeExecutionStorage {
   final List<BulkChangeExecutionRecord> records = [];
 
   @override
-  Future<BulkChangeExecutionRecord> save(
-      BulkChangeExecutionRecord record) async {
+  Future<BulkChangeExecutionRecord> save(BulkChangeExecutionRecord record) async {
     records.removeWhere((existing) => existing.id == record.id);
     records.add(record);
     return record;
@@ -144,20 +142,18 @@ class _FakeBulkChangeExecutionStorage implements BulkChangeExecutionStorage {
 }
 
 final _fixedNowProvider = Provider<DateTime Function()>(
-  (ref) => () => DateTime.utc(2026, 8, 15, 12),
+  (ref) =>
+      () => DateTime.utc(2026, 8, 15, 12),
 );
 
-Future<ProviderContainer> buildContainer({
-  required InventoryRepository repository,
-}) async {
+Future<ProviderContainer> buildContainer({required InventoryRepository repository}) async {
   final fakeService = _FakeBulkService();
   final container = ProviderContainer(
     overrides: [
       inventoryRepositoryProvider.overrideWithValue(repository),
-      bulkChangeExecutionStorageProvider
-          .overrideWithValue(_FakeBulkChangeExecutionStorage()),
+      bulkChangeExecutionStorageProvider.overrideWithValue(_FakeBulkChangeExecutionStorage()),
       bulkPriceChangeServiceProvider.overrideWithValue(fakeService),
-      bulkChangeNowProvider.overrideWithProvider(_fixedNowProvider),
+      bulkChangeNowProvider.overrideWith(_fixedNowProvider),
     ],
   );
   addTearDown(container.dispose);
@@ -170,22 +166,19 @@ InventoryItem buildItem({
   required String nameEn,
   double salePrice = 100,
   double purchasePrice = 80,
-}) {
-  return InventoryItem(
-    id: id,
-    nameAr: nameAr,
-    nameEn: nameEn,
-    barcode: '',
-    sku: '',
-    unit: 'حبة',
-    salePrice: salePrice,
-    purchasePrice: purchasePrice,
-    currentQuantity: 10,
-    isDeleted: false,
-    createdAt: DateTime.utc(2026, 1, 1),
-    updatedAt: DateTime.utc(2026, 1, 1),
-  );
-}
+}) => InventoryItem(
+  id: id,
+  nameAr: nameAr,
+  nameEn: nameEn,
+  barcode: '',
+  sku: '',
+  unit: 'حبة',
+  salePrice: salePrice,
+  purchasePrice: purchasePrice,
+  currentQuantity: 10,
+  createdAt: DateTime.utc(2026),
+  updatedAt: DateTime.utc(2026),
+);
 
 /// سجل تنفيذ وهمي مفتوح نافذة الإلغاء.
 BulkChangeExecutionRecord buildRecord({
@@ -198,10 +191,7 @@ BulkChangeExecutionRecord buildRecord({
     operatorName: 'المدير',
     executedAt: executedAt,
     reason: 'تحديث أسعار الصيف',
-    rule: const BulkPriceChangeRule(
-      type: BulkPriceChangeRuleType.percentage,
-      value: 10,
-    ),
+    rule: const BulkPriceChangeRule(type: BulkPriceChangeRuleType.percentage, value: 10),
     scopeItemIds: const ['item-1', 'item-2'],
     affectedItemIds: const ['item-1'],
     previousValues: const [
@@ -214,7 +204,6 @@ BulkChangeExecutionRecord buildRecord({
         newSalePrice: 110,
         newPurchasePrice: 80,
         isBlocked: false,
-        blockReason: null,
       ),
     ],
     auditTrail: const [],
@@ -245,8 +234,7 @@ void main() {
       expect(wizard.scope.isSpecific, isFalse);
     });
 
-    test('ينتقل بين الخطوات بالترتيب scope → rule → preview → approval',
-        () async {
+    test('ينتقل بين الخطوات بالترتيب scope → rule → preview → approval', () async {
       final repository = _FakeInventoryRepository([
         buildItem(id: 'item-1', nameAr: 'صنف 1', nameEn: 'Item 1'),
       ]);
@@ -254,16 +242,13 @@ void main() {
       final notifier = container.read(bulkChangeWizardProvider.notifier);
 
       await notifier.nextStep();
-      expect(container.read(bulkChangeWizardProvider).step,
-          BulkChangeWizardStep.rule);
+      expect(container.read(bulkChangeWizardProvider).step, BulkChangeWizardStep.rule);
 
       await notifier.nextStep();
-      expect(container.read(bulkChangeWizardProvider).step,
-          BulkChangeWizardStep.preview);
+      expect(container.read(bulkChangeWizardProvider).step, BulkChangeWizardStep.preview);
 
       await notifier.nextStep();
-      expect(container.read(bulkChangeWizardProvider).step,
-          BulkChangeWizardStep.approval);
+      expect(container.read(bulkChangeWizardProvider).step, BulkChangeWizardStep.approval);
     });
 
     test('يعيد بناء المعاينة عند الدخول إلى خطوة المعاينة', () async {
@@ -272,10 +257,9 @@ void main() {
       ]);
       final container = await buildContainer(repository: repository);
       final notifier = container.read(bulkChangeWizardProvider.notifier);
-      final service =
-          container.read(bulkPriceChangeServiceProvider) as _FakeBulkService;
+      final service = container.read(bulkPriceChangeServiceProvider) as _FakeBulkService;
       service.previewResult = [
-        BulkPriceChangePreviewEntry(
+        const BulkPriceChangePreviewEntry(
           itemId: 'item-1',
           itemName: 'صنف 1',
           target: BulkPriceTarget.sale,
@@ -284,7 +268,6 @@ void main() {
           newSalePrice: 110,
           newPurchasePrice: 80,
           isBlocked: false,
-          blockReason: null,
         ),
       ];
 
@@ -326,10 +309,8 @@ void main() {
       ]);
       final container = await buildContainer(repository: repository);
       final notifier = container.read(bulkChangeWizardProvider.notifier);
-      final service =
-          container.read(bulkPriceChangeServiceProvider) as _FakeBulkService;
-      service.executeResult =
-          OperationResult.success(value: buildRecord(cancelled: false));
+      final service = container.read(bulkPriceChangeServiceProvider) as _FakeBulkService;
+      service.executeResult = OperationResult.success(value: buildRecord());
 
       await notifier.execute(operatorName: 'المدير', reason: 'السبب');
 
@@ -345,10 +326,8 @@ void main() {
       ]);
       final container = await buildContainer(repository: repository);
       final notifier = container.read(bulkChangeWizardProvider.notifier);
-      final service =
-          container.read(bulkPriceChangeServiceProvider) as _FakeBulkService;
-      service.executeResult =
-          const OperationResult<BulkChangeExecutionRecord>.failure(
+      final service = container.read(bulkPriceChangeServiceProvider) as _FakeBulkService;
+      service.executeResult = const OperationResult<BulkChangeExecutionRecord>.failure(
         message: 'فشل',
       );
 
@@ -394,10 +373,7 @@ void main() {
       await notifier.nextStep();
       notifier.previousStep();
 
-      expect(
-        container.read(bulkChangeWizardProvider).step,
-        BulkChangeWizardStep.rule,
-      );
+      expect(container.read(bulkChangeWizardProvider).step, BulkChangeWizardStep.rule);
     });
   });
 
@@ -408,35 +384,20 @@ void main() {
       ]);
       final container = await buildContainer(repository: repository);
       final notifier = container.read(bulkChangeWizardProvider.notifier);
-      final service =
-          container.read(bulkPriceChangeServiceProvider) as _FakeBulkService;
+      final service = container.read(bulkPriceChangeServiceProvider) as _FakeBulkService;
 
       // تنفيذ ناجح أولًا.
-      service.executeResult =
-          OperationResult.success(value: buildRecord(cancelled: false));
+      service.executeResult = OperationResult.success(value: buildRecord());
       await notifier.execute(operatorName: 'المدير', reason: 'السبب');
-      expect(
-        container.read(bulkChangeWizardProvider).step,
-        BulkChangeWizardStep.success,
-      );
+      expect(container.read(bulkChangeWizardProvider).step, BulkChangeWizardStep.success);
 
       final cancellable = await notifier.isExecutionCancellable();
       expect(cancellable, isTrue);
 
       // إلغاء ناجح: الخدمة تعيد الأصناف المستعادة مع أثر تدقيقي.
-      final restoredItem = buildItem(
-        id: 'item-1',
-        nameAr: 'صنف 1',
-        nameEn: 'Item 1',
-        salePrice: 100,
-        purchasePrice: 80,
-      );
-      service.cancelResult =
-          OperationResult<List<InventoryItem>>.success(value: [restoredItem]);
-      await notifier.cancelLastExecution(
-        operatorName: 'المدير',
-        reason: 'إلغاء',
-      );
+      final restoredItem = buildItem(id: 'item-1', nameAr: 'صنف 1', nameEn: 'Item 1');
+      service.cancelResult = OperationResult<List<InventoryItem>>.success(value: [restoredItem]);
+      await notifier.cancelLastExecution(operatorName: 'المدير', reason: 'إلغاء');
 
       final wizard = container.read(bulkChangeWizardProvider);
       expect(wizard.lastRecord?.isCancelled, isTrue);
@@ -448,16 +409,17 @@ void main() {
 
       // ترحيل الزمن إلى ما بعد نافذة الـ 24 ساعة عبر ProviderScope كامل.
       final lateNowProvider = Provider<DateTime Function()>(
-        (ref) => () => DateTime.utc(2026, 8, 16, 12),
+        (ref) =>
+            () => DateTime.utc(2026, 8, 16, 12),
       );
       final container = ProviderContainer(
         overrides: [
           inventoryRepositoryProvider.overrideWithValue(repository),
-          bulkChangeExecutionStorageProvider
-              .overrideWithValue(_FakeBulkChangeExecutionStorage()),
-          bulkPriceChangeServiceProvider.overrideWithValue(_FakeBulkService()
-            ..executeResult = OperationResult.success(value: buildRecord())),
-          bulkChangeNowProvider.overrideWithProvider(lateNowProvider),
+          bulkChangeExecutionStorageProvider.overrideWithValue(_FakeBulkChangeExecutionStorage()),
+          bulkPriceChangeServiceProvider.overrideWithValue(
+            _FakeBulkService()..executeResult = OperationResult.success(value: buildRecord()),
+          ),
+          bulkChangeNowProvider.overrideWith(lateNowProvider),
         ],
       );
       addTearDown(container.dispose);
@@ -475,31 +437,18 @@ void main() {
       ]);
       final container = await buildContainer(repository: repository);
       final notifier = container.read(bulkChangeWizardProvider.notifier);
-      final service =
-          container.read(bulkPriceChangeServiceProvider) as _FakeBulkService;
+      final service = container.read(bulkPriceChangeServiceProvider) as _FakeBulkService;
 
       service.executeResult = OperationResult.success(value: buildRecord());
       await notifier.execute(operatorName: 'المدير', reason: 'السبب');
 
-      final restoredItem = buildItem(
-        id: 'item-1',
-        nameAr: 'صنف 1',
-        nameEn: 'Item 1',
-      );
-      service.cancelResult = OperationResult<List<InventoryItem>>.success(
-        value: [restoredItem],
-      );
-      await notifier.cancelLastExecution(
-        operatorName: 'المدير',
-        reason: 'إلغاء',
-      );
+      final restoredItem = buildItem(id: 'item-1', nameAr: 'صنف 1', nameEn: 'Item 1');
+      service.cancelResult = OperationResult<List<InventoryItem>>.success(value: [restoredItem]);
+      await notifier.cancelLastExecution(operatorName: 'المدير', reason: 'إلغاء');
 
       final wizard = container.read(bulkChangeWizardProvider);
       expect(wizard.lastRecord?.cancellation, isNotNull);
-      expect(
-        wizard.lastRecord?.cancellation?.type,
-        AuditEventType.cancelled,
-      );
+      expect(wizard.lastRecord?.cancellation?.type, AuditEventType.cancelled);
     });
 
     test('يحدث المخزون بعد إلغاء ناجح عبر إبطال مزود الأصناف', () async {
@@ -508,23 +457,14 @@ void main() {
       ]);
       final container = await buildContainer(repository: repository);
       final notifier = container.read(bulkChangeWizardProvider.notifier);
-      final service =
-          container.read(bulkPriceChangeServiceProvider) as _FakeBulkService;
+      final service = container.read(bulkPriceChangeServiceProvider) as _FakeBulkService;
 
       service.executeResult = OperationResult.success(value: buildRecord());
       await notifier.execute(operatorName: 'المدير', reason: 'السبب');
 
-      final restoredItem = buildItem(
-        id: 'item-1',
-        nameAr: 'صنف 1',
-        nameEn: 'Item 1',
-      );
-      service.cancelResult =
-          OperationResult<List<InventoryItem>>.success(value: [restoredItem]);
-      await notifier.cancelLastExecution(
-        operatorName: 'المدير',
-        reason: 'إلغاء',
-      );
+      final restoredItem = buildItem(id: 'item-1', nameAr: 'صنف 1', nameEn: 'Item 1');
+      service.cancelResult = OperationResult<List<InventoryItem>>.success(value: [restoredItem]);
+      await notifier.cancelLastExecution(operatorName: 'المدير', reason: 'إلغاء');
 
       final wizard = container.read(bulkChangeWizardProvider);
       expect(wizard.lastRecord?.isCancelled, isTrue);

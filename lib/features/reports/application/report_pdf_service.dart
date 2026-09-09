@@ -33,10 +33,7 @@ class ReportPdfService extends _$ReportPdfService {
     pdf.addPage(
       pw.Page(
         pageFormat: PdfPageFormat.a4,
-        theme: pw.ThemeData.withFont(
-          base: fontRegular,
-          bold: fontBold,
-        ),
+        theme: pw.ThemeData.withFont(base: fontRegular, bold: fontBold),
         build: (context) => pw.Directionality(
           textDirection: pw.TextDirection.rtl,
           child: pw.Column(
@@ -95,40 +92,40 @@ class ReportPdfService extends _$ReportPdfService {
   }
 
   pw.Widget _buildSummaryParams(VatReturnStatement data) => pw.Container(
-        padding: const pw.EdgeInsets.all(10),
-        decoration: pw.BoxDecoration(
-          border: pw.Border.all(color: PdfColors.grey300),
-          borderRadius: const pw.BorderRadius.all(pw.Radius.circular(5)),
+    padding: const pw.EdgeInsets.all(10),
+    decoration: pw.BoxDecoration(
+      border: pw.Border.all(color: PdfColors.grey300),
+      borderRadius: const pw.BorderRadius.all(pw.Radius.circular(5)),
+    ),
+    child: pw.Row(
+      mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
+      children: [
+        pw.Text('العملة: ريال سعودي (SAR)'),
+        pw.Text(
+          'تاريخ التقرير: '
+          '${intl.DateFormat('yyyy-MM-dd HH:mm').format(DateTime.now())}',
         ),
-        child: pw.Row(
-          mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
-          children: [
-            pw.Text('العملة: ريال سعودي (SAR)'),
-            pw.Text(
-              'تاريخ التقرير: '
-              '${intl.DateFormat('yyyy-MM-dd HH:mm').format(DateTime.now())}',
-            ),
-          ],
-        ),
-      );
+      ],
+    ),
+  );
 
   pw.Widget _buildSalesSection(VatReturnStatement data) => _buildSectionTable(
-        title: 'ضريبة القيمة المضافة على المبيعات (Output Tax)',
-        rows: [
-          [
-            'المبيعات الخاضعة للنسبة الأساسية',
-            data.standardSalesBase,
-            data.standardSalesTax,
-          ],
-          [
-            'المبيعات للمواطنين (الخدمات الصحية/التعليمية)',
-            Decimal.zero,
-            Decimal.zero,
-          ], // Placeholder
-          ['المبيعات الصفرية', data.zeroRatedSales, Decimal.zero],
-          ['المبيعات المعفاة', data.exemptSales, Decimal.zero],
-        ],
-      );
+    title: 'ضريبة القيمة المضافة على المبيعات (Output Tax)',
+    rows: [
+      [
+        'المبيعات الخاضعة للنسبة الأساسية',
+        data.standardSalesBase,
+        data.standardSalesTax,
+      ],
+      [
+        'المبيعات للمواطنين (الخدمات الصحية/التعليمية)',
+        Decimal.zero,
+        Decimal.zero,
+      ], // Placeholder
+      ['المبيعات الصفرية', data.zeroRatedSales, Decimal.zero],
+      ['المبيعات المعفاة', data.exemptSales, Decimal.zero],
+    ],
+  );
 
   // ignore: lines_longer_than_80_chars
   pw.Widget _buildPurchasesSection(VatReturnStatement data) =>
@@ -148,117 +145,103 @@ class ReportPdfService extends _$ReportPdfService {
   pw.Widget _buildSectionTable({
     required String title,
     required List<List<dynamic>> rows,
-  }) =>
-      pw.Column(
-        crossAxisAlignment: pw.CrossAxisAlignment.start,
+  }) => pw.Column(
+    crossAxisAlignment: pw.CrossAxisAlignment.start,
+    children: [
+      pw.Text(
+        title,
+        style: pw.TextStyle(
+          fontSize: 14,
+          fontWeight: pw.FontWeight.bold,
+          color: PdfColors.blue800,
+        ),
+      ),
+      pw.SizedBox(height: 5),
+      pw.Table(
+        border: pw.TableBorder.all(color: PdfColors.grey300),
         children: [
-          pw.Text(
-            title,
-            style: pw.TextStyle(
-              fontSize: 14,
-              fontWeight: pw.FontWeight.bold,
-              color: PdfColors.blue800,
-            ),
-          ),
-          pw.SizedBox(height: 5),
-          pw.Table(
-            border: pw.TableBorder.all(color: PdfColors.grey300),
+          // Header
+          pw.TableRow(
+            decoration: const pw.BoxDecoration(color: PdfColors.grey100),
             children: [
-              // Header
-              pw.TableRow(
-                decoration: const pw.BoxDecoration(color: PdfColors.grey100),
-                children: [
-                  _buildTableCell('الوصف', isHeader: true),
-                  _buildTableCell(
-                    'المبلغ (SAR)',
-                    isHeader: true,
-                    alignRight: true,
-                  ),
-                  _buildTableCell(
-                    'مبلغ التعديل',
-                    isHeader: true,
-                    alignRight: true,
-                  ),
-                  _buildTableCell(
-                    'مبلغ الضريبة',
-                    isHeader: true,
-                    alignRight: true,
-                  ),
-                ],
-              ),
-              // Rows
-              ...rows.map((row) {
-                final label = row[0] as String;
-                final amount = row[1] as Decimal;
-                final tax = row[2] as Decimal;
-                return pw.TableRow(
-                  children: [
-                    _buildTableCell(label),
-                    _buildTableCell(
-                      FormatHelpers.formatNumber(amount),
-                      alignRight: true,
-                    ),
-                    _buildTableCell(
-                      '0.00',
-                      alignRight: true,
-                    ), // Adjustment placeholder
-                    _buildTableCell(
-                      FormatHelpers.formatNumber(tax),
-                      alignRight: true,
-                    ),
-                  ],
-                );
-              }),
+              _buildTableCell('الوصف', isHeader: true),
+              _buildTableCell('المبلغ (SAR)', isHeader: true, alignRight: true),
+              _buildTableCell('مبلغ التعديل', isHeader: true, alignRight: true),
+              _buildTableCell('مبلغ الضريبة', isHeader: true, alignRight: true),
             ],
           ),
+          // Rows
+          ...rows.map((row) {
+            final label = row[0] as String;
+            final amount = row[1] as Decimal;
+            final tax = row[2] as Decimal;
+            return pw.TableRow(
+              children: [
+                _buildTableCell(label),
+                _buildTableCell(
+                  FormatHelpers.formatNumber(amount),
+                  alignRight: true,
+                ),
+                _buildTableCell(
+                  '0.00',
+                  alignRight: true,
+                ), // Adjustment placeholder
+                _buildTableCell(
+                  FormatHelpers.formatNumber(tax),
+                  alignRight: true,
+                ),
+              ],
+            );
+          }),
         ],
-      );
+      ),
+    ],
+  );
 
   pw.Widget _buildTableCell(
     String text, {
     bool isHeader = false,
     bool alignRight = false,
-  }) =>
-      pw.Padding(
-        padding: const pw.EdgeInsets.all(5),
-        child: pw.Text(
-          text,
-          textAlign: alignRight ? pw.TextAlign.right : pw.TextAlign.left,
-          style: isHeader ? pw.TextStyle(fontWeight: pw.FontWeight.bold) : null,
-        ),
-      );
+  }) => pw.Padding(
+    padding: const pw.EdgeInsets.all(5),
+    child: pw.Text(
+      text,
+      textAlign: alignRight ? pw.TextAlign.right : pw.TextAlign.left,
+      style: isHeader ? pw.TextStyle(fontWeight: pw.FontWeight.bold) : null,
+    ),
+  );
 
   pw.Widget _buildNetVatSection(VatReturnStatement data) => pw.Container(
-        color: PdfColors.blue50,
-        padding: const pw.EdgeInsets.all(15),
-        child: pw.Row(
-          mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
-          children: [
-            pw.Text(
-              'صافي الضريبة المستحقة للدفع / الاسترداد',
-              style: pw.TextStyle(fontSize: 16, fontWeight: pw.FontWeight.bold),
-            ),
-            pw.Text(
-              '${FormatHelpers.formatNumber(data.netVatDue)} SAR',
-              style: pw.TextStyle(
-                fontSize: 18,
-                fontWeight: pw.FontWeight.bold,
-                color: PdfColors.blue900,
-              ),
-            ),
-          ],
+    color: PdfColors.blue50,
+    padding: const pw.EdgeInsets.all(15),
+    child: pw.Row(
+      mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
+      children: [
+        pw.Text(
+          'صافي الضريبة المستحقة للدفع / الاسترداد',
+          style: pw.TextStyle(fontSize: 16, fontWeight: pw.FontWeight.bold),
         ),
-      );
+        pw.Text(
+          '${FormatHelpers.formatNumber(data.netVatDue)} SAR',
+          style: pw.TextStyle(
+            fontSize: 18,
+            fontWeight: pw.FontWeight.bold,
+            color: PdfColors.blue900,
+          ),
+        ),
+      ],
+    ),
+  );
 
   pw.Widget _buildFooter() => pw.Column(
-        children: [
-          pw.Divider(color: PdfColors.grey400),
-          pw.Center(
-            child: pw.Text(
-              'تم إنشاء هذا التقرير آلياً بواسطة نظام بصير المحاسبي',
-              style: const pw.TextStyle(fontSize: 10, color: PdfColors.grey600),
-            ),
-          ),
-        ],
-      );
+    children: [
+      pw.Divider(color: PdfColors.grey400),
+      pw.Center(
+        child: pw.Text(
+          'تم إنشاء هذا التقرير آلياً بواسطة نظام بصير المحاسبي',
+          style: const pw.TextStyle(fontSize: 10, color: PdfColors.grey600),
+        ),
+      ),
+    ],
+  );
 }

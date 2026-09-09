@@ -30,8 +30,8 @@ class OperationResult<T> {
     required this.message,
     this.cause,
     this.auditTrail,
-  })  : success = false,
-        value = null;
+  }) : success = false,
+       value = null;
 
   /// هل انتهت العملية بنجاح؟
   final bool success;

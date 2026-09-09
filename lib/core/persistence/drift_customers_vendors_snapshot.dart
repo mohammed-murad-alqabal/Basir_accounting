@@ -45,12 +45,14 @@ class DriftCustomersVendorsSnapshot {
     if (value is! List<Object?>) {
       throw const FormatException('Snapshot collection is missing.');
     }
-    return value.map((item) {
-      if (item is! Map<String, Object?>) {
-        throw const FormatException('Snapshot record must be an object.');
-      }
-      return decode(item);
-    }).toList(growable: false);
+    return value
+        .map((item) {
+          if (item is! Map<String, Object?>) {
+            throw const FormatException('Snapshot record must be an object.');
+          }
+          return decode(item);
+        })
+        .toList(growable: false);
   }
 }
 
@@ -107,44 +109,44 @@ class DriftCustomersVendorsSnapshotRunner {
 }
 
 CustomerRecord _customerFromJson(Map<String, Object?> json) => CustomerRecord(
-      id: _requiredString(json, 'id'),
-      nameAr: _requiredString(json, 'nameAr'),
-      nameEn: _requiredString(json, 'nameEn'),
-      taxNumber: _optionalString(json, 'taxNumber'),
-      phone: _optionalString(json, 'phone'),
-      email: _optionalString(json, 'email'),
-      address: _optionalString(json, 'address'),
-      notes: _optionalString(json, 'notes'),
-      createdAt: _requiredDate(json, 'createdAt'),
-      updatedAt: _requiredDate(json, 'updatedAt'),
-      creditLimit: _requiredFiniteNumber(json, 'creditLimit'),
-      balance: _requiredFiniteNumber(json, 'balance'),
-      receivableAccountId: _optionalString(json, 'receivableAccountId'),
-      userId: _optionalString(json, 'userId'),
-      syncStatus: _requiredSyncStatus(json, 'syncStatus'),
-      serverUpdatedAt: _optionalDate(json, 'serverUpdatedAt'),
-      isDeleted: _requiredBool(json, 'isDeleted'),
-    );
+  id: _requiredString(json, 'id'),
+  nameAr: _requiredString(json, 'nameAr'),
+  nameEn: _requiredString(json, 'nameEn'),
+  taxNumber: _optionalString(json, 'taxNumber'),
+  phone: _optionalString(json, 'phone'),
+  email: _optionalString(json, 'email'),
+  address: _optionalString(json, 'address'),
+  notes: _optionalString(json, 'notes'),
+  createdAt: _requiredDate(json, 'createdAt'),
+  updatedAt: _requiredDate(json, 'updatedAt'),
+  creditLimit: _requiredFiniteNumber(json, 'creditLimit'),
+  balance: _requiredFiniteNumber(json, 'balance'),
+  receivableAccountId: _optionalString(json, 'receivableAccountId'),
+  userId: _optionalString(json, 'userId'),
+  syncStatus: _requiredSyncStatus(json, 'syncStatus'),
+  serverUpdatedAt: _optionalDate(json, 'serverUpdatedAt'),
+  isDeleted: _requiredBool(json, 'isDeleted'),
+);
 
 VendorRecord _vendorFromJson(Map<String, Object?> json) => VendorRecord(
-      id: _requiredString(json, 'id'),
-      nameAr: _requiredString(json, 'nameAr'),
-      nameEn: _requiredString(json, 'nameEn'),
-      phone: _optionalString(json, 'phone'),
-      email: _optionalString(json, 'email'),
-      address: _optionalString(json, 'address'),
-      notes: _optionalString(json, 'notes'),
-      createdAt: _requiredDate(json, 'createdAt'),
-      updatedAt: _requiredDate(json, 'updatedAt'),
-      payableAccountId: _optionalString(json, 'payableAccountId'),
-      vatNumber: _optionalString(json, 'vatNumber'),
-      registrationNumber: _optionalString(json, 'registrationNumber'),
-      balance: _requiredFiniteNumber(json, 'balance'),
-      userId: _optionalString(json, 'userId'),
-      syncStatus: _requiredSyncStatus(json, 'syncStatus'),
-      serverUpdatedAt: _optionalDate(json, 'serverUpdatedAt'),
-      isDeleted: _requiredBool(json, 'isDeleted'),
-    );
+  id: _requiredString(json, 'id'),
+  nameAr: _requiredString(json, 'nameAr'),
+  nameEn: _requiredString(json, 'nameEn'),
+  phone: _optionalString(json, 'phone'),
+  email: _optionalString(json, 'email'),
+  address: _optionalString(json, 'address'),
+  notes: _optionalString(json, 'notes'),
+  createdAt: _requiredDate(json, 'createdAt'),
+  updatedAt: _requiredDate(json, 'updatedAt'),
+  payableAccountId: _optionalString(json, 'payableAccountId'),
+  vatNumber: _optionalString(json, 'vatNumber'),
+  registrationNumber: _optionalString(json, 'registrationNumber'),
+  balance: _requiredFiniteNumber(json, 'balance'),
+  userId: _optionalString(json, 'userId'),
+  syncStatus: _requiredSyncStatus(json, 'syncStatus'),
+  serverUpdatedAt: _optionalDate(json, 'serverUpdatedAt'),
+  isDeleted: _requiredBool(json, 'isDeleted'),
+);
 
 String _requiredString(Map<String, Object?> json, String key) {
   final value = json[key];
@@ -197,8 +199,12 @@ double _requiredFiniteNumber(Map<String, Object?> json, String key) {
 
 String _requiredSyncStatus(Map<String, Object?> json, String key) {
   final value = _requiredString(json, key);
-  if (!const {'synced', 'pendingPush', 'pendingPull', 'conflict'}
-      .contains(value)) {
+  if (!const {
+    'synced',
+    'pendingPush',
+    'pendingPull',
+    'conflict',
+  }.contains(value)) {
     throw FormatException('Snapshot field $key has an unsupported value.');
   }
   return value;

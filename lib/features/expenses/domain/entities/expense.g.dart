@@ -55,25 +55,25 @@ Map<String, dynamic> _$$ExpenseImplToJson(_$ExpenseImpl instance) =>
     };
 
 _$ExpenseCategoryImpl _$$ExpenseCategoryImplFromJson(
-        Map<String, dynamic> json) =>
-    _$ExpenseCategoryImpl(
-      id: json['id'] as String,
-      name: json['name'] as String,
-      nameAr: json['nameAr'] as String,
-      icon: json['icon'] as String?,
-      color: json['color'] as String?,
-      accountId: json['accountId'] as String?,
-      isActive: json['isActive'] as bool? ?? true,
-    );
+  Map<String, dynamic> json,
+) => _$ExpenseCategoryImpl(
+  id: json['id'] as String,
+  name: json['name'] as String,
+  nameAr: json['nameAr'] as String,
+  icon: json['icon'] as String?,
+  color: json['color'] as String?,
+  accountId: json['accountId'] as String?,
+  isActive: json['isActive'] as bool? ?? true,
+);
 
 Map<String, dynamic> _$$ExpenseCategoryImplToJson(
-        _$ExpenseCategoryImpl instance) =>
-    <String, dynamic>{
-      'id': instance.id,
-      'name': instance.name,
-      'nameAr': instance.nameAr,
-      'icon': instance.icon,
-      'color': instance.color,
-      'accountId': instance.accountId,
-      'isActive': instance.isActive,
-    };
+  _$ExpenseCategoryImpl instance,
+) => <String, dynamic>{
+  'id': instance.id,
+  'name': instance.name,
+  'nameAr': instance.nameAr,
+  'icon': instance.icon,
+  'color': instance.color,
+  'accountId': instance.accountId,
+  'isActive': instance.isActive,
+};

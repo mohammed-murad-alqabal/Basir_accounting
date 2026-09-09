@@ -30,7 +30,8 @@ class ConsensusReportOverlay extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final glassTheme = theme.extension<GlassTheme>() ??
+    final glassTheme =
+        theme.extension<GlassTheme>() ??
         (theme.brightness == Brightness.dark
             ? GlassTheme.dark()
             : GlassTheme.light());
@@ -48,9 +49,7 @@ class ConsensusReportOverlay extends StatelessWidget {
                 sigmaX: glassTheme.blurSigma * 2,
                 sigmaY: glassTheme.blurSigma * 2,
               ),
-              child: Container(
-                color: Colors.black.withValues(alpha: 0.3),
-              ),
+              child: Container(color: Colors.black.withValues(alpha: 0.3)),
             ),
           ),
 
@@ -96,50 +95,46 @@ class ConsensusReportOverlay extends StatelessWidget {
     );
   }
 
-  Widget _buildHeader(
-    BuildContext context,
-    AppLocalizations l10n,
-  ) =>
-      Row(
-        children: [
-          Container(
-            padding: const EdgeInsets.all(8),
-            decoration: BoxDecoration(
-              color: consensus.isApproved ? Colors.green : Colors.red,
-              shape: BoxShape.circle,
+  Widget _buildHeader(BuildContext context, AppLocalizations l10n) => Row(
+    children: [
+      Container(
+        padding: const EdgeInsets.all(8),
+        decoration: BoxDecoration(
+          color: consensus.isApproved ? Colors.green : Colors.red,
+          shape: BoxShape.circle,
+        ),
+        child: Icon(
+          consensus.isApproved ? AppIcons.check : AppIcons.cancel,
+          color: Colors.white,
+          size: 20,
+        ),
+      ),
+      const SizedBox(width: 12),
+      Expanded(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              consensus.isApproved
+                  ? 'Consensus Approved'
+                  : 'Consensus Rejected',
+              style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                fontWeight: FontWeight.bold,
+                color: Colors.white,
+              ),
             ),
-            child: Icon(
-              consensus.isApproved ? AppIcons.check : AppIcons.cancel,
-              color: Colors.white,
-              size: 20,
+            Text(
+              'Cognitive Hexagon Final Audit',
+              style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                color: Colors.white70,
+                letterSpacing: 1.2,
+              ),
             ),
-          ),
-          const SizedBox(width: 12),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  consensus.isApproved
-                      ? 'Consensus Approved'
-                      : 'Consensus Rejected',
-                  style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white,
-                      ),
-                ),
-                Text(
-                  'Cognitive Hexagon Final Audit',
-                  style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                        color: Colors.white70,
-                        letterSpacing: 1.2,
-                      ),
-                ),
-              ],
-            ),
-          ),
-        ],
-      );
+          ],
+        ),
+      ),
+    ],
+  );
 
   Widget _buildAgentResult(
     BuildContext context,
@@ -207,16 +202,17 @@ class ConsensusReportOverlay extends StatelessWidget {
               Text(
                 l10n.labelAiSmartSuggestions,
                 style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                      color: Colors.blue,
-                      fontWeight: FontWeight.bold,
-                    ),
+                  color: Colors.blue,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
             ],
           ),
           const SizedBox(height: 12),
           ...adjustments.entries.map((e) {
             final val = e.value as Map<String, dynamic>;
-            final title = (val['title'] as String?) ??
+            final title =
+                (val['title'] as String?) ??
                 (val['suggestion'] as String?) ??
                 (val['reason'] as String?) ??
                 'Adjustment recommended';
@@ -269,47 +265,46 @@ class ConsensusReportOverlay extends StatelessWidget {
   }
 
   Widget _buildConfidenceIndicator(double score) => Container(
-        padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
-        decoration: BoxDecoration(
-          color: Colors.white10,
-          borderRadius: BorderRadius.circular(4),
-        ),
-        child: Text(
-          '${(score * 100).toInt()}% CONFIDENCE',
-          style: const TextStyle(
-            color: Colors.white54,
-            fontSize: 10,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-      );
+    padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+    decoration: BoxDecoration(
+      color: Colors.white10,
+      borderRadius: BorderRadius.circular(4),
+    ),
+    child: Text(
+      '${(score * 100).toInt()}% CONFIDENCE',
+      style: const TextStyle(
+        color: Colors.white54,
+        fontSize: 10,
+        fontWeight: FontWeight.bold,
+      ),
+    ),
+  );
 
   Widget _buildFooter(BuildContext context, AppLocalizations l10n) => Row(
-        children: [
-          Expanded(
-            child: TextButton(
-              onPressed: onCancel,
-              child: Text(
-                'Cancel',
-                style: TextStyle(color: Colors.white.withAlpha(150)),
-              ),
-            ),
+    children: [
+      Expanded(
+        child: TextButton(
+          onPressed: onCancel,
+          child: Text(
+            'Cancel',
+            style: TextStyle(color: Colors.white.withAlpha(150)),
           ),
-          const SizedBox(width: 12),
-          ElevatedButton(
-            onPressed: onConfirm,
-            style: ElevatedButton.styleFrom(
-              backgroundColor:
-                  consensus.isApproved ? Colors.green : Colors.orange,
-              foregroundColor: Colors.white,
-              padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
-            ),
-            child: Text(
-              consensus.isApproved ? 'Post Transaction' : 'Override & Post',
-            ),
-          ),
-        ],
-      );
+        ),
+      ),
+      const SizedBox(width: 12),
+      ElevatedButton(
+        onPressed: onConfirm,
+        style: ElevatedButton.styleFrom(
+          backgroundColor: consensus.isApproved ? Colors.green : Colors.orange,
+          foregroundColor: Colors.white,
+          padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+        ),
+        child: Text(
+          consensus.isApproved ? 'Post Transaction' : 'Override & Post',
+        ),
+      ),
+    ],
+  );
 
   String _getTranslatedRationale(AgentResult result, AppLocalizations l10n) {
     switch (result.rationale) {

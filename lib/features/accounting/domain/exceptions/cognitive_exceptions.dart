@@ -13,6 +13,7 @@ class CognitiveConsensusException implements Exception {
   final AgentConsensus consensus;
 
   @override
-  String toString() => 'CognitiveConsensusException: Transaction REJECTED by '
+  String toString() =>
+      'CognitiveConsensusException: Transaction REJECTED by '
       'Cognitive Hexagon.\nReasons:\n${consensus.explanation}';
 }

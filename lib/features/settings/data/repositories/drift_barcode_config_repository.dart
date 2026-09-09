@@ -8,7 +8,7 @@ import 'package:basir_drift_storage/basir_drift_storage.dart';
 /// اختبارات التكافؤ ويُعتمد تبديل feature flag بصورة منفصلة.
 class DriftBarcodeConfigRepository implements BarcodeConfigRepository {
   DriftBarcodeConfigRepository(BasirDatabase database)
-      : _storage = BarcodeConfigStore(database);
+    : _storage = BarcodeConfigStore(database);
 
   /// منشئ اختبار/حقن؛ يحافظ على عزل domain عن أنواع Drift.
   DriftBarcodeConfigRepository.withStorage(this._storage);
@@ -50,10 +50,10 @@ class DriftBarcodeConfigRepository implements BarcodeConfigRepository {
   }
 
   static PrinterType _printerTypeFromStorage(String value) => switch (value) {
-        'thermal' => PrinterType.thermal,
-        'a4' => PrinterType.a4,
-        _ => throw StateError('Unsupported persisted printer type: $value'),
-      };
+    'thermal' => PrinterType.thermal,
+    'a4' => PrinterType.a4,
+    _ => throw StateError('Unsupported persisted printer type: $value'),
+  };
 
   static void _validate(BarcodeConfig config) {
     if (config.id != 'default') {

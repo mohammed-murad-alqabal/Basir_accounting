@@ -20,8 +20,7 @@ import 'package:timezone/timezone.dart' as tz;
 /// );
 /// ```
 class NotificationService {
-  final FlutterLocalNotificationsPlugin _notificationsPlugin =
-      FlutterLocalNotificationsPlugin();
+  final FlutterLocalNotificationsPlugin _notificationsPlugin = FlutterLocalNotificationsPlugin();
 
   bool _isInitialized = false;
 
@@ -34,8 +33,7 @@ class NotificationService {
 
     tz.initializeTimeZones();
 
-    const initializationSettingsAndroid =
-        AndroidInitializationSettings('@mipmap/ic_launcher');
+    const initializationSettingsAndroid = AndroidInitializationSettings('@mipmap/ic_launcher');
     const initializationSettingsDarwin = DarwinInitializationSettings();
     const initializationSettings = InitializationSettings(
       android: initializationSettingsAndroid,
@@ -66,12 +64,7 @@ class NotificationService {
       macOS: DarwinNotificationDetails(),
     );
 
-    await _notificationsPlugin.show(
-      id,
-      title,
-      body,
-      notificationDetails,
-    );
+    await _notificationsPlugin.show(id, title, body, notificationDetails);
   }
 
   /// Schedules a notification for a future date.
@@ -116,5 +109,4 @@ class NotificationService {
 }
 
 /// Provider for the [NotificationService].
-final notificationServiceProvider =
-    Provider<NotificationService>((ref) => NotificationService());
+final notificationServiceProvider = Provider<NotificationService>((ref) => NotificationService());

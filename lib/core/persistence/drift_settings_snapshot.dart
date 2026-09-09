@@ -48,12 +48,14 @@ class DriftSettingsSnapshot {
     if (value is! List<Object?>) {
       throw const FormatException('Snapshot collection is missing.');
     }
-    return value.map((item) {
-      if (item is! Map<String, Object?>) {
-        throw const FormatException('Snapshot record must be an object.');
-      }
-      return decode(item);
-    }).toList(growable: false);
+    return value
+        .map((item) {
+          if (item is! Map<String, Object?>) {
+            throw const FormatException('Snapshot record must be an object.');
+          }
+          return decode(item);
+        })
+        .toList(growable: false);
   }
 }
 
@@ -111,16 +113,16 @@ class DriftSettingsSnapshotRunner {
 }
 
 ProfileRecord _profileFromJson(Map<String, Object?> json) => ProfileRecord(
-      id: _requiredString(json, 'id'),
-      email: _requiredString(json, 'email'),
-      displayName: _optionalString(json, 'displayName'),
-      avatarUrl: _optionalString(json, 'avatarUrl'),
-      phoneNumber: _optionalString(json, 'phoneNumber'),
-      userId: _optionalString(json, 'userId'),
-      syncStatus: _requiredString(json, 'syncStatus'),
-      serverUpdatedAt: _optionalDate(json, 'serverUpdatedAt'),
-      isDeleted: _requiredBool(json, 'isDeleted'),
-    );
+  id: _requiredString(json, 'id'),
+  email: _requiredString(json, 'email'),
+  displayName: _optionalString(json, 'displayName'),
+  avatarUrl: _optionalString(json, 'avatarUrl'),
+  phoneNumber: _optionalString(json, 'phoneNumber'),
+  userId: _optionalString(json, 'userId'),
+  syncStatus: _requiredString(json, 'syncStatus'),
+  serverUpdatedAt: _optionalDate(json, 'serverUpdatedAt'),
+  isDeleted: _requiredBool(json, 'isDeleted'),
+);
 
 BusinessSettingsRecord _businessSettingsFromJson(Map<String, Object?> json) =>
     BusinessSettingsRecord(

@@ -12,7 +12,8 @@ part of 'warehouse.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
+  'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models',
+);
 
 Warehouse _$WarehouseFromJson(Map<String, dynamic> json) {
   return _Warehouse.fromJson(json);
@@ -39,14 +40,15 @@ abstract class $WarehouseCopyWith<$Res> {
   factory $WarehouseCopyWith(Warehouse value, $Res Function(Warehouse) then) =
       _$WarehouseCopyWithImpl<$Res, Warehouse>;
   @useResult
-  $Res call(
-      {String id,
-      String nameAr,
-      String nameEn,
-      DateTime createdAt,
-      DateTime updatedAt,
-      String? location,
-      String? userId});
+  $Res call({
+    String id,
+    String nameAr,
+    String nameEn,
+    DateTime createdAt,
+    DateTime updatedAt,
+    String? location,
+    String? userId,
+  });
 }
 
 /// @nodoc
@@ -70,36 +72,39 @@ class _$WarehouseCopyWithImpl<$Res, $Val extends Warehouse>
     Object? location = freezed,
     Object? userId = freezed,
   }) {
-    return _then(_value.copyWith(
-      id: null == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as String,
-      nameAr: null == nameAr
-          ? _value.nameAr
-          : nameAr // ignore: cast_nullable_to_non_nullable
-              as String,
-      nameEn: null == nameEn
-          ? _value.nameEn
-          : nameEn // ignore: cast_nullable_to_non_nullable
-              as String,
-      createdAt: null == createdAt
-          ? _value.createdAt
-          : createdAt // ignore: cast_nullable_to_non_nullable
-              as DateTime,
-      updatedAt: null == updatedAt
-          ? _value.updatedAt
-          : updatedAt // ignore: cast_nullable_to_non_nullable
-              as DateTime,
-      location: freezed == location
-          ? _value.location
-          : location // ignore: cast_nullable_to_non_nullable
-              as String?,
-      userId: freezed == userId
-          ? _value.userId
-          : userId // ignore: cast_nullable_to_non_nullable
-              as String?,
-    ) as $Val);
+    return _then(
+      _value.copyWith(
+            id: null == id
+                ? _value.id
+                : id // ignore: cast_nullable_to_non_nullable
+                      as String,
+            nameAr: null == nameAr
+                ? _value.nameAr
+                : nameAr // ignore: cast_nullable_to_non_nullable
+                      as String,
+            nameEn: null == nameEn
+                ? _value.nameEn
+                : nameEn // ignore: cast_nullable_to_non_nullable
+                      as String,
+            createdAt: null == createdAt
+                ? _value.createdAt
+                : createdAt // ignore: cast_nullable_to_non_nullable
+                      as DateTime,
+            updatedAt: null == updatedAt
+                ? _value.updatedAt
+                : updatedAt // ignore: cast_nullable_to_non_nullable
+                      as DateTime,
+            location: freezed == location
+                ? _value.location
+                : location // ignore: cast_nullable_to_non_nullable
+                      as String?,
+            userId: freezed == userId
+                ? _value.userId
+                : userId // ignore: cast_nullable_to_non_nullable
+                      as String?,
+          )
+          as $Val,
+    );
   }
 }
 
@@ -107,18 +112,20 @@ class _$WarehouseCopyWithImpl<$Res, $Val extends Warehouse>
 abstract class _$$WarehouseImplCopyWith<$Res>
     implements $WarehouseCopyWith<$Res> {
   factory _$$WarehouseImplCopyWith(
-          _$WarehouseImpl value, $Res Function(_$WarehouseImpl) then) =
-      __$$WarehouseImplCopyWithImpl<$Res>;
+    _$WarehouseImpl value,
+    $Res Function(_$WarehouseImpl) then,
+  ) = __$$WarehouseImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call(
-      {String id,
-      String nameAr,
-      String nameEn,
-      DateTime createdAt,
-      DateTime updatedAt,
-      String? location,
-      String? userId});
+  $Res call({
+    String id,
+    String nameAr,
+    String nameEn,
+    DateTime createdAt,
+    DateTime updatedAt,
+    String? location,
+    String? userId,
+  });
 }
 
 /// @nodoc
@@ -126,8 +133,9 @@ class __$$WarehouseImplCopyWithImpl<$Res>
     extends _$WarehouseCopyWithImpl<$Res, _$WarehouseImpl>
     implements _$$WarehouseImplCopyWith<$Res> {
   __$$WarehouseImplCopyWithImpl(
-      _$WarehouseImpl _value, $Res Function(_$WarehouseImpl) _then)
-      : super(_value, _then);
+    _$WarehouseImpl _value,
+    $Res Function(_$WarehouseImpl) _then,
+  ) : super(_value, _then);
 
   @pragma('vm:prefer-inline')
   @override
@@ -140,51 +148,53 @@ class __$$WarehouseImplCopyWithImpl<$Res>
     Object? location = freezed,
     Object? userId = freezed,
   }) {
-    return _then(_$WarehouseImpl(
-      id: null == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as String,
-      nameAr: null == nameAr
-          ? _value.nameAr
-          : nameAr // ignore: cast_nullable_to_non_nullable
-              as String,
-      nameEn: null == nameEn
-          ? _value.nameEn
-          : nameEn // ignore: cast_nullable_to_non_nullable
-              as String,
-      createdAt: null == createdAt
-          ? _value.createdAt
-          : createdAt // ignore: cast_nullable_to_non_nullable
-              as DateTime,
-      updatedAt: null == updatedAt
-          ? _value.updatedAt
-          : updatedAt // ignore: cast_nullable_to_non_nullable
-              as DateTime,
-      location: freezed == location
-          ? _value.location
-          : location // ignore: cast_nullable_to_non_nullable
-              as String?,
-      userId: freezed == userId
-          ? _value.userId
-          : userId // ignore: cast_nullable_to_non_nullable
-              as String?,
-    ));
+    return _then(
+      _$WarehouseImpl(
+        id: null == id
+            ? _value.id
+            : id // ignore: cast_nullable_to_non_nullable
+                  as String,
+        nameAr: null == nameAr
+            ? _value.nameAr
+            : nameAr // ignore: cast_nullable_to_non_nullable
+                  as String,
+        nameEn: null == nameEn
+            ? _value.nameEn
+            : nameEn // ignore: cast_nullable_to_non_nullable
+                  as String,
+        createdAt: null == createdAt
+            ? _value.createdAt
+            : createdAt // ignore: cast_nullable_to_non_nullable
+                  as DateTime,
+        updatedAt: null == updatedAt
+            ? _value.updatedAt
+            : updatedAt // ignore: cast_nullable_to_non_nullable
+                  as DateTime,
+        location: freezed == location
+            ? _value.location
+            : location // ignore: cast_nullable_to_non_nullable
+                  as String?,
+        userId: freezed == userId
+            ? _value.userId
+            : userId // ignore: cast_nullable_to_non_nullable
+                  as String?,
+      ),
+    );
   }
 }
 
 /// @nodoc
 @JsonSerializable()
 class _$WarehouseImpl extends _Warehouse {
-  const _$WarehouseImpl(
-      {required this.id,
-      required this.nameAr,
-      required this.nameEn,
-      required this.createdAt,
-      required this.updatedAt,
-      this.location,
-      this.userId})
-      : super._();
+  const _$WarehouseImpl({
+    required this.id,
+    required this.nameAr,
+    required this.nameEn,
+    required this.createdAt,
+    required this.updatedAt,
+    this.location,
+    this.userId,
+  }) : super._();
 
   factory _$WarehouseImpl.fromJson(Map<String, dynamic> json) =>
       _$$WarehouseImplFromJson(json);
@@ -229,7 +239,15 @@ class _$WarehouseImpl extends _Warehouse {
   @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(
-      runtimeType, id, nameAr, nameEn, createdAt, updatedAt, location, userId);
+    runtimeType,
+    id,
+    nameAr,
+    nameEn,
+    createdAt,
+    updatedAt,
+    location,
+    userId,
+  );
 
   @JsonKey(ignore: true)
   @override
@@ -239,21 +257,20 @@ class _$WarehouseImpl extends _Warehouse {
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$WarehouseImplToJson(
-      this,
-    );
+    return _$$WarehouseImplToJson(this);
   }
 }
 
 abstract class _Warehouse extends Warehouse {
-  const factory _Warehouse(
-      {required final String id,
-      required final String nameAr,
-      required final String nameEn,
-      required final DateTime createdAt,
-      required final DateTime updatedAt,
-      final String? location,
-      final String? userId}) = _$WarehouseImpl;
+  const factory _Warehouse({
+    required final String id,
+    required final String nameAr,
+    required final String nameEn,
+    required final DateTime createdAt,
+    required final DateTime updatedAt,
+    final String? location,
+    final String? userId,
+  }) = _$WarehouseImpl;
   const _Warehouse._() : super._();
 
   factory _Warehouse.fromJson(Map<String, dynamic> json) =

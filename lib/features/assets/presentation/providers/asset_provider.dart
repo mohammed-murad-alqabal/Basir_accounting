@@ -43,7 +43,7 @@ final filteredAssetsProvider = Provider<AsyncValue<List<FixedAsset>>>((ref) {
 class AssetActionNotifier extends StateNotifier<AsyncValue<void>> {
   /// إنشاء نوتيفاير إجراءات الأصول
   AssetActionNotifier(this.repository, this.ref)
-      : super(const AsyncValue.data(null));
+    : super(const AsyncValue.data(null));
 
   /// مستودع الأصول
   final AssetRepository repository;
@@ -111,6 +111,6 @@ class AssetActionNotifier extends StateNotifier<AsyncValue<void>> {
 /// موفر إجراءات الأصول (CRUD)
 final assetActionProvider =
     StateNotifierProvider<AssetActionNotifier, AsyncValue<void>>((ref) {
-  final repository = ref.watch(assetRepositoryProvider);
-  return AssetActionNotifier(repository, ref);
-});
+      final repository = ref.watch(assetRepositoryProvider);
+      return AssetActionNotifier(repository, ref);
+    });

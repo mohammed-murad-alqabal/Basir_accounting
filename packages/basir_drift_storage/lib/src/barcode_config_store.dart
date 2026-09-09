@@ -1,6 +1,5 @@
-import 'package:drift/drift.dart';
-
 import 'package:basir_drift_storage/src/basir_database.dart';
+import 'package:drift/drift.dart';
 
 /// DTO محايد بين جدول Drift وطبقة domain في التطبيق المضيف.
 class BarcodeConfigRecord {

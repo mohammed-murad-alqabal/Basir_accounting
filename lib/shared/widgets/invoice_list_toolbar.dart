@@ -27,10 +27,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 /// ```
 class InvoiceListToolbar extends ConsumerStatefulWidget {
   /// إنشاء شريط أدوات جديد لقائمة الفواتير.
-  const InvoiceListToolbar({
-    super.key,
-    this.totalMatches,
-  });
+  const InvoiceListToolbar({super.key, this.totalMatches});
 
   /// إجمالي نتائج المطابقة الحالية لعرض العدّاد.
   /// إذا كان `null` أو 0 ولا يوجد استعلام بحث نشط، لا يظهر العدّاد.
@@ -83,8 +80,9 @@ class _InvoiceListToolbarState extends ConsumerState<InvoiceListToolbar> {
   @override
   Widget build(BuildContext context) {
     final l10n = context.l10n;
-    final isSearching =
-        ref.watch(invoiceSearchProvider.select((value) => value)).isNotEmpty;
+    final isSearching = ref
+        .watch(invoiceSearchProvider.select((value) => value))
+        .isNotEmpty;
     final sortKey = ref.watch(invoiceSortProvider.select((value) => value));
 
     return Container(
@@ -95,9 +93,7 @@ class _InvoiceListToolbarState extends ConsumerState<InvoiceListToolbar> {
       decoration: BoxDecoration(
         color: AppColors.surface,
         border: Border(
-          bottom: BorderSide(
-            color: AppColors.border.withValues(alpha: 0.5),
-          ),
+          bottom: BorderSide(color: AppColors.border.withValues(alpha: 0.5)),
         ),
       ),
       child: Column(

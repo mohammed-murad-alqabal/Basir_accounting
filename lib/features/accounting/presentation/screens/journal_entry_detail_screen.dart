@@ -14,10 +14,7 @@ import 'package:printing/printing.dart';
 /// with integrated forensic audit findings and multi-agent consensus.
 class JournalEntryDetailScreen extends ConsumerWidget {
   /// Creates a [JournalEntryDetailScreen].
-  const JournalEntryDetailScreen({
-    required this.entry,
-    super.key,
-  });
+  const JournalEntryDetailScreen({required this.entry, super.key});
 
   /// The entry to display.
   final JournalEntry entry;
@@ -98,10 +95,7 @@ class JournalEntryDetailScreen extends ConsumerWidget {
               valueColor: _getStatusColor(entry.status),
             ),
             const Divider(),
-            _HeaderRow(
-              label: l10n.labelDescription,
-              value: entry.description,
-            ),
+            _HeaderRow(label: l10n.labelDescription, value: entry.description),
             if (entry.sourceId.isNotEmpty && //
                 entry.sourceDocument.isNotEmpty) ...[
               const Divider(),
@@ -118,63 +112,60 @@ class JournalEntryDetailScreen extends ConsumerWidget {
   }
 
   Widget _buildSummary(BuildContext context, double total) => Container(
-        padding: const EdgeInsets.all(16),
-        decoration: BoxDecoration(
-          color: Theme.of(context).primaryColor.withValues(alpha: 0.1),
-          borderRadius: BorderRadius.circular(12),
-          border: Border.all(
-            color: Theme.of(context).primaryColor.withValues(alpha: 0.2),
+    padding: const EdgeInsets.all(16),
+    decoration: BoxDecoration(
+      color: Theme.of(context).primaryColor.withValues(alpha: 0.1),
+      borderRadius: BorderRadius.circular(12),
+      border: Border.all(
+        color: Theme.of(context).primaryColor.withValues(alpha: 0.2),
+      ),
+    ),
+    child: Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Text('Total Balanced Amount', style: context.textTheme.titleSmall),
+        Text(
+          total.toStringAsFixed(2),
+          style: context.textTheme.headlineSmall?.copyWith(
+            fontWeight: FontWeight.bold,
+            color: Theme.of(context).primaryColor,
           ),
         ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      ],
+    ),
+  );
+
+  Widget _buildLinesList(BuildContext context) => ListView.builder(
+    shrinkWrap: true,
+    physics: const NeverScrollableScrollPhysics(),
+    itemCount: entry.lines.length,
+    itemBuilder: (context, index) {
+      final line = entry.lines[index];
+      final isDebit = line.debit != Decimal.zero;
+      return ListTile(
+        contentPadding: EdgeInsets.zero,
+        title: Text(line.accountName),
+        subtitle: Text(line.description ?? ''),
+        trailing: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.end,
           children: [
             Text(
-              'Total Balanced Amount',
-              style: context.textTheme.titleSmall,
+              isDebit ? line.debit.toString() : line.credit.toString(),
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                color: isDebit ? Colors.green : Colors.red,
+              ),
             ),
             Text(
-              total.toStringAsFixed(2),
-              style: context.textTheme.headlineSmall?.copyWith(
-                fontWeight: FontWeight.bold,
-                color: Theme.of(context).primaryColor,
-              ),
+              isDebit ? 'DEBIT' : 'CREDIT',
+              style: context.textTheme.labelSmall,
             ),
           ],
         ),
       );
-
-  Widget _buildLinesList(BuildContext context) => ListView.builder(
-        shrinkWrap: true,
-        physics: const NeverScrollableScrollPhysics(),
-        itemCount: entry.lines.length,
-        itemBuilder: (context, index) {
-          final line = entry.lines[index];
-          final isDebit = line.debit != Decimal.zero;
-          return ListTile(
-            contentPadding: EdgeInsets.zero,
-            title: Text(line.accountName),
-            subtitle: Text(line.description ?? ''),
-            trailing: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: [
-                Text(
-                  isDebit ? line.debit.toString() : line.credit.toString(),
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    color: isDebit ? Colors.green : Colors.red,
-                  ),
-                ),
-                Text(
-                  isDebit ? 'DEBIT' : 'CREDIT',
-                  style: context.textTheme.labelSmall,
-                ),
-              ],
-            ),
-          );
-        },
-      );
+    },
+  );
 
   Widget _buildForensicSection(BuildContext context) {
     final isPosted = entry.status == JournalEntryStatus.posted;
@@ -185,31 +176,32 @@ class JournalEntryDetailScreen extends ConsumerWidget {
   }
 
   Widget _buildAuditTrailSection(BuildContext context) => Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            'Scientific Audit Trail',
-            style: context.textTheme.titleMedium?.copyWith(
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-          const SizedBox(height: 12),
-          _AuditItem(
-            label: 'Temporal Justification',
-            value: 'Effective: '
-                '${DateFormat.yMd().format(entry.temporal.effectiveDate)}\n'
-                'Recorded: '
-                '${DateFormat.yMd().format(entry.temporal.recordingDate)}',
-            icon: Icons.history_edu,
-          ),
-          const SizedBox(height: 12),
-          _AuditItem(
-            label: 'Standards Reference',
-            value: entry.standards.standardReference,
-            icon: Icons.gavel,
-          ),
-        ],
-      );
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: [
+      Text(
+        'Scientific Audit Trail',
+        style: context.textTheme.titleMedium?.copyWith(
+          fontWeight: FontWeight.bold,
+        ),
+      ),
+      const SizedBox(height: 12),
+      _AuditItem(
+        label: 'Temporal Justification',
+        value:
+            'Effective: '
+            '${DateFormat.yMd().format(entry.temporal.effectiveDate)}\n'
+            'Recorded: '
+            '${DateFormat.yMd().format(entry.temporal.recordingDate)}',
+        icon: Icons.history_edu,
+      ),
+      const SizedBox(height: 12),
+      _AuditItem(
+        label: 'Standards Reference',
+        value: entry.standards.standardReference,
+        icon: Icons.gavel,
+      ),
+    ],
+  );
 
   Future<void> _navigateToSource(BuildContext context, WidgetRef ref) async {
     final l10n = context.l10n;
@@ -223,7 +215,8 @@ class JournalEntryDetailScreen extends ConsumerWidget {
     );
 
     try {
-      final isInvoice = entry.sourceDocument == 'sales_invoice' || //
+      final isInvoice =
+          entry.sourceDocument == 'sales_invoice' || //
           entry.sourceDocument == 'invoice';
       if (isInvoice) {
         final repository = ref.read(invoiceRepositoryProvider);
@@ -237,9 +230,9 @@ class JournalEntryDetailScreen extends ConsumerWidget {
               arguments: invoice,
             );
           } else {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(content: Text(l10n.errSourceNotFound)),
-            );
+            ScaffoldMessenger.of(
+              context,
+            ).showSnackBar(SnackBar(content: Text(l10n.errSourceNotFound)));
           }
         }
       } else {
@@ -257,9 +250,9 @@ class JournalEntryDetailScreen extends ConsumerWidget {
       }
     } on Exception catch (_) {
       if (context.mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text(l10n.errSourceNotFound)),
-        );
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text(l10n.errSourceNotFound)));
       }
     }
   }
@@ -290,49 +283,51 @@ class _HeaderRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => InkWell(
-        onTap: onTap,
-        borderRadius: BorderRadius.circular(4),
-        child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 4),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(label, style: context.textTheme.bodySmall),
-              const SizedBox(width: 16),
-              Expanded(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    Flexible(
-                      child: Text(
-                        value,
-                        textAlign: TextAlign.end,
-                        style: context.textTheme.bodyMedium?.copyWith(
-                          color: valueColor ?? //
-                              (onTap != null
-                                  ? Theme.of(context).primaryColor
-                                  : null),
-                          fontWeight: (valueColor != null || onTap != null) //
-                              ? FontWeight.bold
-                              : null,
-                        ),
-                      ),
+    onTap: onTap,
+    borderRadius: BorderRadius.circular(4),
+    child: Padding(
+      padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 4),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(label, style: context.textTheme.bodySmall),
+          const SizedBox(width: 16),
+          Expanded(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                Flexible(
+                  child: Text(
+                    value,
+                    textAlign: TextAlign.end,
+                    style: context.textTheme.bodyMedium?.copyWith(
+                      color:
+                          valueColor ?? //
+                          (onTap != null
+                              ? Theme.of(context).primaryColor
+                              : null),
+                      fontWeight:
+                          (valueColor != null || onTap != null) //
+                          ? FontWeight.bold
+                          : null,
                     ),
-                    if (onTap != null) ...[
-                      const SizedBox(width: 4),
-                      Icon(
-                        Icons.open_in_new,
-                        size: 14,
-                        color: Theme.of(context).primaryColor,
-                      ),
-                    ],
-                  ],
+                  ),
                 ),
-              ),
-            ],
+                if (onTap != null) ...[
+                  const SizedBox(width: 4),
+                  Icon(
+                    Icons.open_in_new,
+                    size: 14,
+                    color: Theme.of(context).primaryColor,
+                  ),
+                ],
+              ],
+            ),
           ),
-        ),
-      );
+        ],
+      ),
+    ),
+  );
 }
 
 class _AuditItem extends StatelessWidget {
@@ -347,29 +342,29 @@ class _AuditItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Icon(icon, size: 20, color: Colors.grey),
-          const SizedBox(width: 12),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  label,
-                  style: context.textTheme.labelMedium?.copyWith(
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                Text(
-                  value,
-                  style: context.textTheme.bodySmall?.copyWith(
-                    color: Colors.grey[700],
-                  ),
-                ),
-              ],
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: [
+      Icon(icon, size: 20, color: Colors.grey),
+      const SizedBox(width: 12),
+      Expanded(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              label,
+              style: context.textTheme.labelMedium?.copyWith(
+                fontWeight: FontWeight.bold,
+              ),
             ),
-          ),
-        ],
-      );
+            Text(
+              value,
+              style: context.textTheme.bodySmall?.copyWith(
+                color: Colors.grey[700],
+              ),
+            ),
+          ],
+        ),
+      ),
+    ],
+  );
 }

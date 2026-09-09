@@ -10,8 +10,10 @@ class GenerationEngine {
     UndocumentedElement element, {
     GenerationOptions options = GenerationOptions.defaults,
   }) {
-    final description =
-        _generateDescription(element, arabic: options.useArabic);
+    final description = _generateDescription(
+      element,
+      arabic: options.useArabic,
+    );
     final details = options.includeDetails
         ? _generateDetails(element, arabic: options.useArabic)
         : null;
@@ -20,7 +22,7 @@ class GenerationEngine {
     final context = <String, dynamic>{
       'useArabic': options.useArabic,
       'description': description,
-      if (details != null) 'details': details,
+      'details': ?details,
     };
 
     try {
@@ -61,8 +63,10 @@ class GenerationEngine {
       docs[element.name] = generateDocumentation(element, options: options);
     }
     for (final element in result.undocumentedElements) {
-      docs['_sig::${element.signature.trim()}'] =
-          generateDocumentation(element, options: options);
+      docs['_sig::${element.signature.trim()}'] = generateDocumentation(
+        element,
+        options: options,
+      );
     }
     return docs;
   }
@@ -98,8 +102,8 @@ class GenerationEngine {
           // ====== تنفيذ force: إزالة الوثائق القديمة ======
           if (forceOverwrite) {
             // نحذف أي أسطر /// تعليق تسبق السطر مباشرة
-            while (
-                newLines.isNotEmpty && newLines.last.trim().startsWith('///')) {
+            while (newLines.isNotEmpty &&
+                newLines.last.trim().startsWith('///')) {
               newLines.removeLast();
             }
           }

@@ -25,14 +25,13 @@ class BarcodeDatabase extends _$BarcodeDatabase {
   int get schemaVersion => 1;
 
   @override
-  MigrationStrategy get migration => MigrationStrategy(
-        onCreate: (m) => m.createAll(),
-      );
+  MigrationStrategy get migration =>
+      MigrationStrategy(onCreate: (m) => m.createAll());
 
   Future<BarcodeConfig?> findDefault() async {
-    final row = await (select(barcodeConfigRows)
-          ..where((table) => table.id.equals('default')))
-        .getSingleOrNull();
+    final row = await (select(
+      barcodeConfigRows,
+    )..where((table) => table.id.equals('default'))).getSingleOrNull();
     return row == null ? null : _toEntity(row);
   }
 

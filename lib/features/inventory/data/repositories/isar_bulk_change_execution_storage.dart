@@ -2,8 +2,8 @@ import 'dart:convert';
 
 import 'package:basir_accounting_system/core/domain/contracts/audit_entry.dart';
 import 'package:basir_accounting_system/features/inventory/application/bulk_price_change_service.dart';
-import 'package:basir_accounting_system/features/inventory/domain/entities/bulk_price_change.dart';
 import 'package:basir_accounting_system/features/inventory/data/models/bulk_price_change_execution_model.dart';
+import 'package:basir_accounting_system/features/inventory/domain/entities/bulk_price_change.dart';
 import 'package:isar/isar.dart';
 
 /// تنفيذ تخزين سجلات تغيير الأسعار الجماعي عبر قاعدة Isar.
@@ -18,7 +18,8 @@ class IsarBulkChangeExecutionStorage implements BulkChangeExecutionStorage {
 
   @override
   Future<BulkChangeExecutionRecord> save(
-      BulkChangeExecutionRecord record) async {
+    BulkChangeExecutionRecord record,
+  ) async {
     final model = BulkPriceChangeExecutionModel.fromRecord(record);
     await _isar.writeTxn(() async {
       await _isar.bulkPriceChangeExecutionModels.put(model);
@@ -59,23 +60,19 @@ class IsarBulkChangeExecutionStorage implements BulkChangeExecutionStorage {
 /// ملحق كيان سجل التنفيذ لتوثيق الإلغاء ضمن السلسلةية.
 extension BulkChangeExecutionRecordCancellation on BulkChangeExecutionRecord {
   /// يبني نسخة من السجل تحمل حدث الإلغاء الموثق.
-  BulkChangeExecutionRecord copyWithCancellation(AuditEntry cancellation) {
-    return BulkChangeExecutionRecord(
-      id: id,
-      operatorName: operatorName,
-      executedAt: executedAt,
-      reason: reason,
-      rule: rule,
-      scopeItemIds: scopeItemIds,
-      affectedItemIds: affectedItemIds,
-      previousValues: previousValues,
-      auditTrail: [
-        ...auditTrail,
-        cancellation,
-      ],
-      effectiveAt: effectiveAt,
-      cancellationDeadline: cancellationDeadline,
-      cancellation: cancellation,
-    );
-  }
+  BulkChangeExecutionRecord copyWithCancellation(AuditEntry cancellation) =>
+      BulkChangeExecutionRecord(
+        id: id,
+        operatorName: operatorName,
+        executedAt: executedAt,
+        reason: reason,
+        rule: rule,
+        scopeItemIds: scopeItemIds,
+        affectedItemIds: affectedItemIds,
+        previousValues: previousValues,
+        auditTrail: [...auditTrail, cancellation],
+        effectiveAt: effectiveAt,
+        cancellationDeadline: cancellationDeadline,
+        cancellation: cancellation,
+      );
 }

@@ -62,15 +62,15 @@ class GoalModel {
 
   /// تحويل من النموذج (Model) إلى الكينونة (Entity)
   Goal toEntity() => Goal(
-        id: uuid,
-        name: name,
-        category: category,
-        targetAmount: Decimal.parse(targetAmount),
-        currentAmount: Decimal.parse(currentAmount),
-        startDate: startDate,
-        targetDate: targetDate,
-        isActive: isActive,
-        description: description,
-        userId: userId,
-      );
+    id: uuid,
+    name: name,
+    category: category,
+    targetAmount: Decimal.parse(targetAmount),
+    currentAmount: Decimal.parse(currentAmount),
+    startDate: startDate,
+    targetDate: targetDate,
+    isActive: isActive,
+    description: description,
+    userId: userId,
+  );
 }

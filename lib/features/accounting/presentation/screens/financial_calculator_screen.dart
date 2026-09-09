@@ -129,8 +129,9 @@ class _FinancialCalculatorScreenState extends State<FinancialCalculatorScreen> {
                     child: Text(
                       _display,
                       maxLines: 1,
-                      style: theme.textTheme.headlineMedium
-                          ?.copyWith(color: theme.colorScheme.outline),
+                      style: theme.textTheme.headlineMedium?.copyWith(
+                        color: theme.colorScheme.outline,
+                      ),
                     ),
                   ),
                   const SizedBox(height: Spacing.md),
@@ -140,8 +141,9 @@ class _FinancialCalculatorScreenState extends State<FinancialCalculatorScreen> {
                     child: Text(
                       _result,
                       maxLines: 1,
-                      style: theme.textTheme.displaySmall
-                          ?.copyWith(fontWeight: FontWeight.bold),
+                      style: theme.textTheme.displaySmall?.copyWith(
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                   ),
                 ],
@@ -194,26 +196,25 @@ class _FinancialCalculatorScreenState extends State<FinancialCalculatorScreen> {
     List<String> buttons, {
     bool isSpecial = false,
     bool isAction = false,
-  }) =>
-      Expanded(
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: buttons
-              .map(
-                (b) => Expanded(
-                  child: Padding(
-                    padding: const EdgeInsets.all(Spacing.xs),
-                    child: AppEnhancedButton(
-                      label: b,
-                      type: _getButtonType(b, isSpecial, isAction),
-                      onPressed: () => _onPressed(b),
-                    ),
-                  ),
+  }) => Expanded(
+    child: Row(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: buttons
+          .map(
+            (b) => Expanded(
+              child: Padding(
+                padding: const EdgeInsets.all(Spacing.xs),
+                child: AppEnhancedButton(
+                  label: b,
+                  type: _getButtonType(b, isSpecial, isAction),
+                  onPressed: () => _onPressed(b),
                 ),
-              )
-              .toList(),
-        ),
-      );
+              ),
+            ),
+          )
+          .toList(),
+    ),
+  );
 
   AppEnhancedButtonType _getButtonType(
     String b,

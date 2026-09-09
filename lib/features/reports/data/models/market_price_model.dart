@@ -40,10 +40,10 @@ class MarketPriceModel {
 
   /// تحويل من نموذج إلى كيان
   MarketPrice toEntity() => MarketPrice(
-        id: id,
-        itemId: itemId,
-        price: price,
-        asOfDate: asOfDate,
-        createdAt: createdAt,
-      );
+    id: id,
+    itemId: itemId,
+    price: price,
+    asOfDate: asOfDate,
+    createdAt: createdAt,
+  );
 }

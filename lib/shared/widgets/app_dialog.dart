@@ -3,13 +3,7 @@ import 'package:basir_accounting_system/shared/widgets/app_enhanced_button.dart'
 import 'package:flutter/material.dart';
 
 /// نوع الحوار (Dialog Type)
-enum AppDialogType {
-  confirmation,
-  info,
-  success,
-  error,
-  warning,
-}
+enum AppDialogType { confirmation, info, success, error, warning }
 
 /// حوار (Dialog) موحد للتطبيق
 ///
@@ -25,17 +19,16 @@ abstract final class AppDialog {
     String cancelLabel = 'إلغاء',
     IconData? icon,
     bool confirmIsDestructive = false,
-  }) =>
-      _show(
-        context,
-        title,
-        message,
-        AppDialogType.confirmation,
-        confirmLabel,
-        cancelLabel,
-        icon,
-        confirmIsDestructive,
-      );
+  }) => _show(
+    context,
+    title,
+    message,
+    AppDialogType.confirmation,
+    confirmLabel,
+    cancelLabel,
+    icon,
+    confirmIsDestructive,
+  );
 
   /// عرض حوار معلومات
   static Future<void> showInfo(
@@ -44,17 +37,16 @@ abstract final class AppDialog {
     required String message,
     String confirmLabel = 'موافق',
     IconData? icon,
-  }) =>
-      _show(
-        context,
-        title,
-        message,
-        AppDialogType.info,
-        confirmLabel,
-        null,
-        icon,
-        false,
-      );
+  }) => _show(
+    context,
+    title,
+    message,
+    AppDialogType.info,
+    confirmLabel,
+    null,
+    icon,
+    false,
+  );
 
   /// عرض حوار نجاح
   static Future<void> showSuccess(
@@ -63,17 +55,16 @@ abstract final class AppDialog {
     required String message,
     String confirmLabel = 'موافق',
     IconData? icon,
-  }) =>
-      _show(
-        context,
-        title,
-        message,
-        AppDialogType.success,
-        confirmLabel,
-        null,
-        icon,
-        false,
-      );
+  }) => _show(
+    context,
+    title,
+    message,
+    AppDialogType.success,
+    confirmLabel,
+    null,
+    icon,
+    false,
+  );
 
   /// عرض حوار خطأ
   static Future<void> showError(
@@ -82,17 +73,16 @@ abstract final class AppDialog {
     required String message,
     String confirmLabel = 'موافق',
     IconData? icon,
-  }) =>
-      _show(
-        context,
-        title,
-        message,
-        AppDialogType.error,
-        confirmLabel,
-        null,
-        icon,
-        false,
-      );
+  }) => _show(
+    context,
+    title,
+    message,
+    AppDialogType.error,
+    confirmLabel,
+    null,
+    icon,
+    false,
+  );
 
   /// عرض حوار تحذير
   static Future<bool> showWarning(
@@ -102,17 +92,16 @@ abstract final class AppDialog {
     String confirmLabel = 'موافق',
     String cancelLabel = 'إلغاء',
     IconData? icon,
-  }) =>
-      _show(
-        context,
-        title,
-        message,
-        AppDialogType.warning,
-        confirmLabel,
-        cancelLabel,
-        icon,
-        false,
-      );
+  }) => _show(
+    context,
+    title,
+    message,
+    AppDialogType.warning,
+    confirmLabel,
+    cancelLabel,
+    icon,
+    false,
+  );
 
   static Future<bool> _show(
     BuildContext context,
@@ -151,20 +140,14 @@ abstract final class AppDialog {
       context: context,
       barrierDismissible: false,
       builder: (context) => Dialog(
-        shape: const RoundedRectangleBorder(
-          borderRadius: Radii.borderRadiusXl,
-        ),
+        shape: const RoundedRectangleBorder(borderRadius: Radii.borderRadiusXl),
         elevation: Elevation.xl,
         child: Padding(
           padding: const EdgeInsets.all(Spacing.xl),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Icon(
-                icon ?? defaultIcon,
-                color: accentColor,
-                size: 64,
-              ),
+              Icon(icon ?? defaultIcon, color: accentColor, size: 64),
               const SizedBox(height: Spacing.lg),
               Text(
                 title,
@@ -206,10 +189,10 @@ abstract final class AppDialog {
                       type: confirmIsDestructive
                           ? AppEnhancedButtonType.danger
                           : type == AppDialogType.error
-                              ? AppEnhancedButtonType.danger
-                              : type == AppDialogType.success
-                                  ? AppEnhancedButtonType.secondary
-                                  : AppEnhancedButtonType.primary,
+                          ? AppEnhancedButtonType.danger
+                          : type == AppDialogType.success
+                          ? AppEnhancedButtonType.secondary
+                          : AppEnhancedButtonType.primary,
                       onPressed: () => Navigator.of(context).pop(true),
                     ),
                   ),

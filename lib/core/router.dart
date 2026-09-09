@@ -106,9 +106,7 @@ class AppRouter {
       case '/login':
         return MaterialPageRoute(builder: (_) => const LoginScreen());
       case '/forgot-password':
-        return MaterialPageRoute(
-          builder: (_) => const ForgotPasswordScreen(),
-        );
+        return MaterialPageRoute(builder: (_) => const ForgotPasswordScreen());
       case '/reset-password':
         final args = settings.arguments as Map<String, String>?;
         final hasEmail = args?.containsKey('email') ?? false;
@@ -124,9 +122,7 @@ class AppRouter {
         }
         return MaterialPageRoute(
           builder: (context) => Scaffold(
-            body: Center(
-              child: Text(context.l10n.errInvalidResetLink),
-            ),
+            body: Center(child: Text(context.l10n.errInvalidResetLink)),
           ),
         );
       case '/dashboard':
@@ -140,9 +136,8 @@ class AppRouter {
       case '/invoice-form':
         final args = settings.arguments as Map<String, dynamic>?;
         return MaterialPageRoute(
-          builder: (_) => InvoiceFormScreen(
-            invoice: args?['invoice'] as Invoice?,
-          ),
+          builder: (_) =>
+              InvoiceFormScreen(invoice: args?['invoice'] as Invoice?),
         );
       case '/invoice-detail':
         final invoice = settings.arguments! as Invoice;
@@ -206,9 +201,7 @@ class AppRouter {
           builder: (_) => UserFormScreen(user: args?['user'] as User?),
         );
       case '/forensic-portal':
-        return MaterialPageRoute(
-          builder: (_) => const ForensicPortalScreen(),
-        );
+        return MaterialPageRoute(builder: (_) => const ForensicPortalScreen());
       case '/guest-upgrade':
         return MaterialPageRoute(builder: (_) => const GuestUpgradeScreen());
       case '/zatca-onboarding':
@@ -237,15 +230,11 @@ class AppRouter {
           builder: (_) => const ExpensesDashboardScreen(),
         );
       case '/expenses/add':
-        return MaterialPageRoute(
-          builder: (_) => const ExpenseFormScreen(),
-        );
+        return MaterialPageRoute(builder: (_) => const ExpenseFormScreen());
       case '/expenses/edit':
         final args = settings.arguments as Map<String, dynamic>?;
         return MaterialPageRoute(
-          builder: (_) => ExpenseFormScreen(
-            expenseId: args?['id'] as String?,
-          ),
+          builder: (_) => ExpenseFormScreen(expenseId: args?['id'] as String?),
         );
       case '/excel-import':
         return MaterialPageRoute(builder: (_) => const ExcelImportScreen());
@@ -262,9 +251,8 @@ class AppRouter {
       case '/journal-entry-form':
         final args = settings.arguments as Map<String, dynamic>?;
         return MaterialPageRoute(
-          builder: (_) => JournalEntryFormScreen(
-            entry: args?['entry'] as JournalEntry?,
-          ),
+          builder: (_) =>
+              JournalEntryFormScreen(entry: args?['entry'] as JournalEntry?),
         );
       case '/balance-sheet':
         return MaterialPageRoute(builder: (_) => const BalanceSheetScreen());
@@ -320,7 +308,8 @@ class AppRouter {
         final args = settings.arguments as Map<String, dynamic>?;
         return MaterialPageRoute(
           builder: (_) => FinancialReportScreen(
-            reportType: args?['reportType'] as FinancialReportType? ??
+            reportType:
+                args?['reportType'] as FinancialReportType? ??
                 FinancialReportType.incomeStatement,
           ),
         );
@@ -338,8 +327,9 @@ class AppRouter {
           return MaterialPageRoute(
             builder: (context) => Scaffold(
               body: Center(
-                child:
-                    Text(context.l10n.errorScreenNotFound(settings.name ?? '')),
+                child: Text(
+                  context.l10n.errorScreenNotFound(settings.name ?? ''),
+                ),
               ),
             ),
           );

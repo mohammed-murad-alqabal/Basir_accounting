@@ -59,11 +59,11 @@ class BasirIcon extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Image.asset(
-        'assets/icons/app_icon.png',
-        width: size,
-        height: size,
-        fit: BoxFit.contain,
-      );
+    'assets/icons/app_icon.png',
+    width: size,
+    height: size,
+    fit: BoxFit.contain,
+  );
 }
 
 /// شعار بصير اللامع (Basir Shimmer Logo)
@@ -101,27 +101,26 @@ class _BasirShimmerLogoState extends State<BasirShimmerLogo>
 
   @override
   Widget build(BuildContext context) => AnimatedBuilder(
-        animation: _controller,
-        builder: (context, child) => ShaderMask(
-          // ignore: lines_longer_than_80_chars
-          shaderCallback: (bounds) =>
-              _createGradient(bounds).createShader(bounds),
-          blendMode: BlendMode.srcATop,
-          child: BasirLogo(size: widget.size),
-        ),
-      );
+    animation: _controller,
+    builder: (context, child) => ShaderMask(
+      // ignore: lines_longer_than_80_chars
+      shaderCallback: (bounds) => _createGradient(bounds).createShader(bounds),
+      blendMode: BlendMode.srcATop,
+      child: BasirLogo(size: widget.size),
+    ),
+  );
 
   LinearGradient _createGradient(Rect bounds) => LinearGradient(
-        begin: Alignment.topLeft,
-        end: Alignment.bottomRight,
-        stops: const [0.0, 0.5, 1.0],
-        colors: [
-          Colors.transparent,
-          Colors.white.withValues(alpha: 0.3),
-          Colors.transparent,
-        ],
-        transform: _SlidingGradientTransform(offset: _controller.value),
-      );
+    begin: Alignment.topLeft,
+    end: Alignment.bottomRight,
+    stops: const [0.0, 0.5, 1.0],
+    colors: [
+      Colors.transparent,
+      Colors.white.withValues(alpha: 0.3),
+      Colors.transparent,
+    ],
+    transform: _SlidingGradientTransform(offset: _controller.value),
+  );
 }
 
 class _SlidingGradientTransform extends GradientTransform {

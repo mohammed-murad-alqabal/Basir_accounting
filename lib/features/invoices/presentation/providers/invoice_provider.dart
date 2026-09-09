@@ -15,19 +15,19 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 /// القيد، ثم يمررها إلى بوابة Isar التي تحفظ جميع الآثار في معاملة واحدة.
 final salesInvoicePostingServiceProvider =
     FutureProvider.autoDispose<SalesInvoicePostingService>((ref) async {
-  final isar = await ref.watch(isarProvider.future);
-  await ref.watch(accountingServiceProvider.future);
-  final user = ref.watch(basirUserProvider);
+      final isar = await ref.watch(isarProvider.future);
+      await ref.watch(accountingServiceProvider.future);
+      final user = ref.watch(basirUserProvider);
 
-  return SalesInvoicePostingService(
-    gateway: IsarSalesInvoicePostingGateway(
-      isar: isar,
-      accountingService: ref.read(accountingServiceProvider.notifier),
-      userId: user?.id,
-      warehouseId: user?.warehouseId,
-    ),
-  );
-});
+      return SalesInvoicePostingService(
+        gateway: IsarSalesInvoicePostingGateway(
+          isar: isar,
+          accountingService: ref.read(accountingServiceProvider.notifier),
+          userId: user?.id,
+          warehouseId: user?.warehouseId,
+        ),
+      );
+    });
 
 /// Provider لقائمة جميع الفواتير
 final invoicesProvider = FutureProvider<List<Invoice>>((ref) async {
@@ -183,10 +183,9 @@ final filteredInvoicesProvider = Provider<AsyncValue<List<Invoice>>>((ref) {
             (invoice) =>
                 invoice.invoiceNumber.toLowerCase().contains(query) ||
                 invoice.id.toLowerCase().contains(query) ||
-                invoice.customerName
-                    .normalizeArabic()
-                    .toLowerCase()
-                    .contains(query),
+                invoice.customerName.normalizeArabic().toLowerCase().contains(
+                  query,
+                ),
           )
           .toList();
     }
@@ -247,9 +246,7 @@ final overdueInvoicesCountProvider = Provider<AsyncValue<int>>((ref) {
 
   return invoicesAsync.whenData(
     (invoices) => invoices
-        .where(
-          (invoice) => invoice.status == InvoiceStatus.overdue,
-        )
+        .where((invoice) => invoice.status == InvoiceStatus.overdue)
         .length,
   );
 });
@@ -277,9 +274,8 @@ final invoicesCountProvider = Provider<AsyncValue<int>>(
 final hasInvoicesProvider = Provider<AsyncValue<bool>>(
   (ref) => ref.watch(
     invoicesProvider.select(
-      (asyncInvoices) => asyncInvoices.whenData(
-        (invoices) => invoices.isNotEmpty,
-      ),
+      (asyncInvoices) =>
+          asyncInvoices.whenData((invoices) => invoices.isNotEmpty),
     ),
   ),
 );

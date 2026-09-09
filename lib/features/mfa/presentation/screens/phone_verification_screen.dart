@@ -37,12 +37,10 @@ class _PhoneVerificationScreenState
       }
       await ref.read(phoneAuthServiceInterfaceProvider).sendOtp(phone);
       if (!mounted) return;
-      final ok = await Navigator.of(context).pushNamed<bool>(
+      final ok =
+          await Navigator.of(context).pushNamed<bool>(
             MfaRoutes.phoneOtp,
-            arguments: {
-              'phone': phone,
-              'after': widget.afterRoute,
-            },
+            arguments: {'phone': phone, 'after': widget.afterRoute},
           ) ??
           false;
       if (!mounted) return;
@@ -59,44 +57,45 @@ class _PhoneVerificationScreenState
 
   @override
   Widget build(BuildContext context) => GlassScaffold(
-        title: 'ربط رقم الجوال',
-        body: SingleChildScrollView(
-          padding: const EdgeInsets.all(Spacing.lg),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              const SizedBox(height: Spacing.md),
-              Text(
-                'سنرسل رمز تحقق لمرة واحدة (OTP) إلى رقم جوالك',
-                style: AppTextStyles.bodyMedium.copyWith(
-                  color: Theme.of(context).colorScheme.onSurfaceVariant,
-                ),
-                textAlign: TextAlign.center,
-              ),
-              const SizedBox(height: Spacing.xl),
-              AppTextField(
-                controller: _phoneController,
-                label: 'رقم الجوال',
-                hint: '05xxxxxxxx',
-                keyboardType: TextInputType.phone,
-                prefixIcon: const Icon(Icons.phone_outlined),
-              ),
-              const SizedBox(height: Spacing.xl),
-              AppEnhancedButton(
-                label: 'إرسال الرمز',
-                onPressed: _isLoading ? null : _sendOtp,
-                isLoading: _isLoading,
-                icon: Icons.sms_outlined,
-              ),
-              const SizedBox(height: Spacing.lg),
-              AppEnhancedButton(
-                type: AppEnhancedButtonType.text,
-                label: 'إلغاء',
-                onPressed:
-                    _isLoading ? null : () => Navigator.of(context).pop(false),
-              ),
-            ],
+    title: 'ربط رقم الجوال',
+    body: SingleChildScrollView(
+      padding: const EdgeInsets.all(Spacing.lg),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          const SizedBox(height: Spacing.md),
+          Text(
+            'سنرسل رمز تحقق لمرة واحدة (OTP) إلى رقم جوالك',
+            style: AppTextStyles.bodyMedium.copyWith(
+              color: Theme.of(context).colorScheme.onSurfaceVariant,
+            ),
+            textAlign: TextAlign.center,
           ),
-        ),
-      );
+          const SizedBox(height: Spacing.xl),
+          AppTextField(
+            controller: _phoneController,
+            label: 'رقم الجوال',
+            hint: '05xxxxxxxx',
+            keyboardType: TextInputType.phone,
+            prefixIcon: const Icon(Icons.phone_outlined),
+          ),
+          const SizedBox(height: Spacing.xl),
+          AppEnhancedButton(
+            label: 'إرسال الرمز',
+            onPressed: _isLoading ? null : _sendOtp,
+            isLoading: _isLoading,
+            icon: Icons.sms_outlined,
+          ),
+          const SizedBox(height: Spacing.lg),
+          AppEnhancedButton(
+            type: AppEnhancedButtonType.text,
+            label: 'إلغاء',
+            onPressed: _isLoading
+                ? null
+                : () => Navigator.of(context).pop(false),
+          ),
+        ],
+      ),
+    ),
+  );
 }

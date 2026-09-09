@@ -49,10 +49,10 @@ class DriftGoalsBudgetsParityVerifier {
     required BudgetMigrationReader budgetSource,
     required GoalStorage goalStorage,
     required BudgetStorage budgetStorage,
-  })  : _goalSource = goalSource,
-        _budgetSource = budgetSource,
-        _goalStorage = goalStorage,
-        _budgetStorage = budgetStorage;
+  }) : _goalSource = goalSource,
+       _budgetSource = budgetSource,
+       _goalStorage = goalStorage,
+       _budgetStorage = budgetStorage;
 
   final GoalMigrationReader _goalSource;
   final BudgetMigrationReader _budgetSource;
@@ -89,14 +89,13 @@ class DriftGoalsBudgetsParityVerifier {
     required String scope,
     required List<String> expected,
     required List<String> actual,
-  }) =>
-      DriftGoalsBudgetsParityComparison(
-        scope: scope,
-        expectedCount: expected.length,
-        actualCount: actual.length,
-        expectedFingerprint: _fingerprint(expected),
-        actualFingerprint: _fingerprint(actual),
-      );
+  }) => DriftGoalsBudgetsParityComparison(
+    scope: scope,
+    expectedCount: expected.length,
+    actualCount: actual.length,
+    expectedFingerprint: _fingerprint(expected),
+    actualFingerprint: _fingerprint(actual),
+  );
 
   static List<GoalRecord> _sortGoals(List<GoalRecord> records) =>
       [...records]..sort(_compareGoals);
@@ -119,31 +118,31 @@ class DriftGoalsBudgetsParityVerifier {
 }
 
 String _canonicalGoal(GoalRecord record) => [
-      record.id,
-      record.name,
-      record.category,
-      record.targetAmount,
-      record.currentAmount,
-      record.startDate.toUtc().toIso8601String(),
-      record.targetDate.toUtc().toIso8601String(),
-      record.isActive.toString(),
-      _nullable(record.description),
-      _nullable(record.userId),
-    ].join('\u0000');
+  record.id,
+  record.name,
+  record.category,
+  record.targetAmount,
+  record.currentAmount,
+  record.startDate.toUtc().toIso8601String(),
+  record.targetDate.toUtc().toIso8601String(),
+  record.isActive.toString(),
+  _nullable(record.description),
+  _nullable(record.userId),
+].join('\u0000');
 
 String _canonicalBudget(BudgetRecord record) => [
-      record.id,
-      record.name,
-      record.category,
-      record.limitAmount,
-      record.spentAmount,
-      record.startDate.toUtc().toIso8601String(),
-      record.endDate.toUtc().toIso8601String(),
-      record.alertThreshold.toStringAsPrecision(17),
-      record.isRollover.toString(),
-      record.isActive.toString(),
-      _nullable(record.userId),
-    ].join('\u0000');
+  record.id,
+  record.name,
+  record.category,
+  record.limitAmount,
+  record.spentAmount,
+  record.startDate.toUtc().toIso8601String(),
+  record.endDate.toUtc().toIso8601String(),
+  record.alertThreshold.toStringAsPrecision(17),
+  record.isRollover.toString(),
+  record.isActive.toString(),
+  _nullable(record.userId),
+].join('\u0000');
 
 String _nullable(String? value) => value == null ? '\u0001' : '\u0002$value';
 

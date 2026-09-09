@@ -51,6 +51,7 @@ class JournalEntryValidationException implements Exception {
   final List<JournalEntryValidationFailure> failures;
 
   @override
-  String toString() => 'JournalEntryValidationException: '
+  String toString() =>
+      'JournalEntryValidationException: '
       '${failures.map((failure) => failure.toString()).join('; ')}';
 }

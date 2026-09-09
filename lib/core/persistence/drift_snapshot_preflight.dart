@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'drift_stock_movements_golden.dart';
+import 'package:basir_accounting_system/core/persistence/drift_stock_movements_golden.dart';
 
 /// تصنيف آمن لفشل preflight دون إرجاع السطر أو القيمة الحساسة.
 enum DriftSnapshotPreflightFailure {
@@ -35,13 +35,13 @@ class DriftSnapshotPreflightReport {
   const DriftSnapshotPreflightReport.invalid(
     DriftSnapshotPreflightFailure failure,
   ) : this._(
-         isValid: false,
-         sanitized: false,
-         fixtureVersion: 0,
-         cleanFixtureCount: 0,
-         blockedFixtureCount: 0,
-         failure: failure,
-       );
+        isValid: false,
+        sanitized: false,
+        fixtureVersion: 0,
+        cleanFixtureCount: 0,
+        blockedFixtureCount: 0,
+        failure: failure,
+      );
 
   final bool isValid;
   final bool sanitized;
@@ -101,19 +101,15 @@ class DriftSnapshotPreflight {
     }
   }
 
-  static bool _containsSecretPattern(String source) => _secretPatterns.any(
-    (pattern) => pattern.hasMatch(source),
-  );
+  static bool _containsSecretPattern(String source) =>
+      _secretPatterns.any((pattern) => pattern.hasMatch(source));
 
   static final List<RegExp> _secretPatterns = [
-    RegExp(r'ghp_[A-Za-z0-9]{20,}'),
-    RegExp(r'github_pat_[A-Za-z0-9_]{20,}'),
-    RegExp(r'AKIA[0-9A-Z]{16}'),
-    RegExp(
-      r'Bearer\s+[A-Za-z0-9._-]{20,}',
-      caseSensitive: false,
-    ),
-    RegExp(r'-----BEGIN [^-]*PRIVATE KEY-----'),
+    RegExp('ghp_[A-Za-z0-9]{20,}'),
+    RegExp('github_pat_[A-Za-z0-9_]{20,}'),
+    RegExp('AKIA[0-9A-Z]{16}'),
+    RegExp(r'Bearer\s+[A-Za-z0-9._-]{20,}', caseSensitive: false),
+    RegExp('-----BEGIN [^-]*PRIVATE KEY-----'),
     RegExp(
       r'''(?:password|passwd|secret|token|api[_-]?key)\s*[:=]\s*["']?[^"'\s,]{8,}''',
       caseSensitive: false,
@@ -122,9 +118,6 @@ class DriftSnapshotPreflight {
       r'(?:postgres|mysql|mongodb(?:\+srv)?|redis)://[^/\s:@]+:[^@\s]+@',
       caseSensitive: false,
     ),
-    RegExp(
-      r'aws_secret_access_key\s*[:=]',
-      caseSensitive: false,
-    ),
+    RegExp(r'aws_secret_access_key\s*[:=]', caseSensitive: false),
   ];
 }

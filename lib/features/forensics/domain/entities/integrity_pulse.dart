@@ -3,7 +3,6 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 part 'integrity_pulse.freezed.dart';
 
 @freezed
-
 /// Represents the state of the system's forensic health.
 class IntegrityPulse with _$IntegrityPulse {
   /// Creates an [IntegrityPulse].
@@ -26,7 +25,6 @@ class IntegrityPulse with _$IntegrityPulse {
 }
 
 @freezed
-
 /// A single verifiable block in the historical ledger.
 class LedgerBlock with _$LedgerBlock {
   /// Creates a [LedgerBlock].

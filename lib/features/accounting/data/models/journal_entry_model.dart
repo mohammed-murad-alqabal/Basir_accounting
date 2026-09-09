@@ -42,7 +42,7 @@ class JournalEntryModel {
   Id? isarId;
 
   /// المعرف الفريد.
-  @Index(unique: true, replace: false)
+  @Index(unique: true)
   late String id;
 
   /// Immutable identifier returned by the authoritative Postgres ledger.
@@ -124,30 +124,30 @@ class JournalEntryModel {
 
   /// تحويل النموذج إلى كيان.
   JournalEntry toEntity() => JournalEntry(
-        id: id,
-        authoritativeEntryId: authoritativeEntryId,
-        referenceNumber: referenceNumber,
-        date: date.toUtc(),
-        temporal: temporal.toEntity(),
-        standards: standards.toEntity(),
-        description: description,
-        status: status,
-        lines: lines.map((l) => l.toEntity()).toList(),
-        auditLogs: auditLogs.map((log) => log.toEntity()).toList(),
-        sourceDocument: sourceDocument,
-        sourceId: sourceId,
-        hash: hash,
-        previousHash: previousHash,
-        createdBy: createdBy,
-        createdAt: createdAt.toUtc(),
-        updatedAt: updatedAt.toUtc(),
-        postedAt: postedAt?.toUtc(),
-        userId: userId,
-        warehouseId: warehouseId,
-        syncStatus: syncStatus,
-        serverUpdatedAt: serverUpdatedAt?.toUtc(),
-        isDeleted: isDeleted,
-      );
+    id: id,
+    authoritativeEntryId: authoritativeEntryId,
+    referenceNumber: referenceNumber,
+    date: date.toUtc(),
+    temporal: temporal.toEntity(),
+    standards: standards.toEntity(),
+    description: description,
+    status: status,
+    lines: lines.map((l) => l.toEntity()).toList(),
+    auditLogs: auditLogs.map((log) => log.toEntity()).toList(),
+    sourceDocument: sourceDocument,
+    sourceId: sourceId,
+    hash: hash,
+    previousHash: previousHash,
+    createdBy: createdBy,
+    createdAt: createdAt.toUtc(),
+    updatedAt: updatedAt.toUtc(),
+    postedAt: postedAt?.toUtc(),
+    userId: userId,
+    warehouseId: warehouseId,
+    syncStatus: syncStatus,
+    serverUpdatedAt: serverUpdatedAt?.toUtc(),
+    isDeleted: isDeleted,
+  );
 }
 
 /// نموذج التبرير الزمني المضمن.
@@ -174,10 +174,10 @@ class TemporalJustificationModel {
 
   /// تحويل إلى كيان.
   TemporalJustification toEntity() => TemporalJustification(
-        transactionDate: transactionDate.toUtc(),
-        effectiveDate: effectiveDate.toUtc(),
-        recordingDate: recordingDate.toUtc(),
-      );
+    transactionDate: transactionDate.toUtc(),
+    effectiveDate: effectiveDate.toUtc(),
+    recordingDate: recordingDate.toUtc(),
+  );
 }
 
 /// نموذج تبرير المعايير المضمن.
@@ -204,10 +204,10 @@ class StandardsJustificationModel {
 
   /// تحويل إلى كيان.
   StandardsJustification toEntity() => StandardsJustification(
-        standardReference: standardReference,
-        recognitionBasis: recognitionBasis,
-        measurementBasis: measurementBasis,
-      );
+    standardReference: standardReference,
+    recognitionBasis: recognitionBasis,
+    measurementBasis: measurementBasis,
+  );
 }
 
 /// نموذج سجل التدقيق المحلي المضمن.
@@ -238,11 +238,11 @@ class AuditLogEntryModel {
 
   /// تحويل النموذج إلى كيان النطاق.
   AuditLogEntry toEntity() => AuditLogEntry(
-        timestamp: timestamp.toUtc(),
-        action: action,
-        rationale: rationale,
-        actor: actor,
-      );
+    timestamp: timestamp.toUtc(),
+    action: action,
+    rationale: rationale,
+    actor: actor,
+  );
 }
 
 /// نموذج بند القيد المحاسبي المضمن.
@@ -297,17 +297,17 @@ class JournalEntryLineModel {
 
   /// تحويل النموذج إلى كيان.
   JournalEntryLine toEntity() => JournalEntryLine(
-        accountId: accountId,
-        accountName: accountName,
-        debit: Decimal.parse(debit),
-        credit: Decimal.parse(credit),
-        description: description,
-        sourceDocumentRef: sourceDocumentRef,
-        costCenterId: costCenterId,
-        originalCurrency: originalCurrency,
-        exchangeRate:
-            exchangeRate != null ? Decimal.parse(exchangeRate!) : null,
-        originalAmount:
-            originalAmount != null ? Decimal.parse(originalAmount!) : null,
-      );
+    accountId: accountId,
+    accountName: accountName,
+    debit: Decimal.parse(debit),
+    credit: Decimal.parse(credit),
+    description: description,
+    sourceDocumentRef: sourceDocumentRef,
+    costCenterId: costCenterId,
+    originalCurrency: originalCurrency,
+    exchangeRate: exchangeRate != null ? Decimal.parse(exchangeRate!) : null,
+    originalAmount: originalAmount != null
+        ? Decimal.parse(originalAmount!)
+        : null,
+  );
 }

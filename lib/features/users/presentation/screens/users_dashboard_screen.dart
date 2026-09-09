@@ -76,8 +76,9 @@ class UsersDashboardScreen extends ConsumerWidget {
                           );
 
                           if (confirm) {
-                            final notifier =
-                                ref.read(userServiceProvider.notifier);
+                            final notifier = ref.read(
+                              userServiceProvider.notifier,
+                            );
                             await notifier.deleteUser(user.id);
                           }
                         },
@@ -101,9 +102,7 @@ class UsersDashboardScreen extends ConsumerWidget {
           unawaited(
             Navigator.push(
               context,
-              MaterialPageRoute<void>(
-                builder: (_) => const UserFormScreen(),
-              ),
+              MaterialPageRoute<void>(builder: (_) => const UserFormScreen()),
             ),
           );
         },

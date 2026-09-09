@@ -50,46 +50,46 @@ class DocumentEditor extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => LayoutBuilder(
-        builder: (context, constraints) {
-          final summary = SummaryRail(
-            draft: draft,
-            preview: preview,
-            onPreviewRequested: onPreviewRequested,
-            onSaveDraftRequested: onSaveDraftRequested,
-            onPostRequested: onPostRequested,
-          );
-          final primaryContent = Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              header,
-              const SizedBox(height: Spacing.lg),
-              lineItems,
-            ],
-          );
-
-          if (constraints.maxWidth >= desktopBreakpoint) {
-            return Row(
-              key: const Key('documentEditorDesktopLayout'),
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Expanded(child: primaryContent),
-                const SizedBox(width: Spacing.lg),
-                SizedBox(width: 320, child: summary),
-              ],
-            );
-          }
-
-          return SingleChildScrollView(
-            child: Column(
-              key: const Key('documentEditorCompactLayout'),
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                primaryContent,
-                const SizedBox(height: Spacing.lg),
-                summary,
-              ],
-            ),
-          );
-        },
+    builder: (context, constraints) {
+      final summary = SummaryRail(
+        draft: draft,
+        preview: preview,
+        onPreviewRequested: onPreviewRequested,
+        onSaveDraftRequested: onSaveDraftRequested,
+        onPostRequested: onPostRequested,
       );
+      final primaryContent = Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          header,
+          const SizedBox(height: Spacing.lg),
+          lineItems,
+        ],
+      );
+
+      if (constraints.maxWidth >= desktopBreakpoint) {
+        return Row(
+          key: const Key('documentEditorDesktopLayout'),
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Expanded(child: primaryContent),
+            const SizedBox(width: Spacing.lg),
+            SizedBox(width: 320, child: summary),
+          ],
+        );
+      }
+
+      return SingleChildScrollView(
+        child: Column(
+          key: const Key('documentEditorCompactLayout'),
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            primaryContent,
+            const SizedBox(height: Spacing.lg),
+            summary,
+          ],
+        ),
+      );
+    },
+  );
 }

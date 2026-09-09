@@ -12,7 +12,8 @@ part of 'profile.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
+  'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models',
+);
 
 Profile _$ProfileFromJson(Map<String, dynamic> json) {
   return _Profile.fromJson(json);
@@ -48,16 +49,17 @@ abstract class $ProfileCopyWith<$Res> {
   factory $ProfileCopyWith(Profile value, $Res Function(Profile) then) =
       _$ProfileCopyWithImpl<$Res, Profile>;
   @useResult
-  $Res call(
-      {String id,
-      String email,
-      String? displayName,
-      String? avatarUrl,
-      String? phoneNumber,
-      String? userId,
-      SyncStatus syncStatus,
-      DateTime? serverUpdatedAt,
-      bool isDeleted});
+  $Res call({
+    String id,
+    String email,
+    String? displayName,
+    String? avatarUrl,
+    String? phoneNumber,
+    String? userId,
+    SyncStatus syncStatus,
+    DateTime? serverUpdatedAt,
+    bool isDeleted,
+  });
 }
 
 /// @nodoc
@@ -83,64 +85,69 @@ class _$ProfileCopyWithImpl<$Res, $Val extends Profile>
     Object? serverUpdatedAt = freezed,
     Object? isDeleted = null,
   }) {
-    return _then(_value.copyWith(
-      id: null == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as String,
-      email: null == email
-          ? _value.email
-          : email // ignore: cast_nullable_to_non_nullable
-              as String,
-      displayName: freezed == displayName
-          ? _value.displayName
-          : displayName // ignore: cast_nullable_to_non_nullable
-              as String?,
-      avatarUrl: freezed == avatarUrl
-          ? _value.avatarUrl
-          : avatarUrl // ignore: cast_nullable_to_non_nullable
-              as String?,
-      phoneNumber: freezed == phoneNumber
-          ? _value.phoneNumber
-          : phoneNumber // ignore: cast_nullable_to_non_nullable
-              as String?,
-      userId: freezed == userId
-          ? _value.userId
-          : userId // ignore: cast_nullable_to_non_nullable
-              as String?,
-      syncStatus: null == syncStatus
-          ? _value.syncStatus
-          : syncStatus // ignore: cast_nullable_to_non_nullable
-              as SyncStatus,
-      serverUpdatedAt: freezed == serverUpdatedAt
-          ? _value.serverUpdatedAt
-          : serverUpdatedAt // ignore: cast_nullable_to_non_nullable
-              as DateTime?,
-      isDeleted: null == isDeleted
-          ? _value.isDeleted
-          : isDeleted // ignore: cast_nullable_to_non_nullable
-              as bool,
-    ) as $Val);
+    return _then(
+      _value.copyWith(
+            id: null == id
+                ? _value.id
+                : id // ignore: cast_nullable_to_non_nullable
+                      as String,
+            email: null == email
+                ? _value.email
+                : email // ignore: cast_nullable_to_non_nullable
+                      as String,
+            displayName: freezed == displayName
+                ? _value.displayName
+                : displayName // ignore: cast_nullable_to_non_nullable
+                      as String?,
+            avatarUrl: freezed == avatarUrl
+                ? _value.avatarUrl
+                : avatarUrl // ignore: cast_nullable_to_non_nullable
+                      as String?,
+            phoneNumber: freezed == phoneNumber
+                ? _value.phoneNumber
+                : phoneNumber // ignore: cast_nullable_to_non_nullable
+                      as String?,
+            userId: freezed == userId
+                ? _value.userId
+                : userId // ignore: cast_nullable_to_non_nullable
+                      as String?,
+            syncStatus: null == syncStatus
+                ? _value.syncStatus
+                : syncStatus // ignore: cast_nullable_to_non_nullable
+                      as SyncStatus,
+            serverUpdatedAt: freezed == serverUpdatedAt
+                ? _value.serverUpdatedAt
+                : serverUpdatedAt // ignore: cast_nullable_to_non_nullable
+                      as DateTime?,
+            isDeleted: null == isDeleted
+                ? _value.isDeleted
+                : isDeleted // ignore: cast_nullable_to_non_nullable
+                      as bool,
+          )
+          as $Val,
+    );
   }
 }
 
 /// @nodoc
 abstract class _$$ProfileImplCopyWith<$Res> implements $ProfileCopyWith<$Res> {
   factory _$$ProfileImplCopyWith(
-          _$ProfileImpl value, $Res Function(_$ProfileImpl) then) =
-      __$$ProfileImplCopyWithImpl<$Res>;
+    _$ProfileImpl value,
+    $Res Function(_$ProfileImpl) then,
+  ) = __$$ProfileImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call(
-      {String id,
-      String email,
-      String? displayName,
-      String? avatarUrl,
-      String? phoneNumber,
-      String? userId,
-      SyncStatus syncStatus,
-      DateTime? serverUpdatedAt,
-      bool isDeleted});
+  $Res call({
+    String id,
+    String email,
+    String? displayName,
+    String? avatarUrl,
+    String? phoneNumber,
+    String? userId,
+    SyncStatus syncStatus,
+    DateTime? serverUpdatedAt,
+    bool isDeleted,
+  });
 }
 
 /// @nodoc
@@ -148,8 +155,9 @@ class __$$ProfileImplCopyWithImpl<$Res>
     extends _$ProfileCopyWithImpl<$Res, _$ProfileImpl>
     implements _$$ProfileImplCopyWith<$Res> {
   __$$ProfileImplCopyWithImpl(
-      _$ProfileImpl _value, $Res Function(_$ProfileImpl) _then)
-      : super(_value, _then);
+    _$ProfileImpl _value,
+    $Res Function(_$ProfileImpl) _then,
+  ) : super(_value, _then);
 
   @pragma('vm:prefer-inline')
   @override
@@ -164,60 +172,63 @@ class __$$ProfileImplCopyWithImpl<$Res>
     Object? serverUpdatedAt = freezed,
     Object? isDeleted = null,
   }) {
-    return _then(_$ProfileImpl(
-      id: null == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as String,
-      email: null == email
-          ? _value.email
-          : email // ignore: cast_nullable_to_non_nullable
-              as String,
-      displayName: freezed == displayName
-          ? _value.displayName
-          : displayName // ignore: cast_nullable_to_non_nullable
-              as String?,
-      avatarUrl: freezed == avatarUrl
-          ? _value.avatarUrl
-          : avatarUrl // ignore: cast_nullable_to_non_nullable
-              as String?,
-      phoneNumber: freezed == phoneNumber
-          ? _value.phoneNumber
-          : phoneNumber // ignore: cast_nullable_to_non_nullable
-              as String?,
-      userId: freezed == userId
-          ? _value.userId
-          : userId // ignore: cast_nullable_to_non_nullable
-              as String?,
-      syncStatus: null == syncStatus
-          ? _value.syncStatus
-          : syncStatus // ignore: cast_nullable_to_non_nullable
-              as SyncStatus,
-      serverUpdatedAt: freezed == serverUpdatedAt
-          ? _value.serverUpdatedAt
-          : serverUpdatedAt // ignore: cast_nullable_to_non_nullable
-              as DateTime?,
-      isDeleted: null == isDeleted
-          ? _value.isDeleted
-          : isDeleted // ignore: cast_nullable_to_non_nullable
-              as bool,
-    ));
+    return _then(
+      _$ProfileImpl(
+        id: null == id
+            ? _value.id
+            : id // ignore: cast_nullable_to_non_nullable
+                  as String,
+        email: null == email
+            ? _value.email
+            : email // ignore: cast_nullable_to_non_nullable
+                  as String,
+        displayName: freezed == displayName
+            ? _value.displayName
+            : displayName // ignore: cast_nullable_to_non_nullable
+                  as String?,
+        avatarUrl: freezed == avatarUrl
+            ? _value.avatarUrl
+            : avatarUrl // ignore: cast_nullable_to_non_nullable
+                  as String?,
+        phoneNumber: freezed == phoneNumber
+            ? _value.phoneNumber
+            : phoneNumber // ignore: cast_nullable_to_non_nullable
+                  as String?,
+        userId: freezed == userId
+            ? _value.userId
+            : userId // ignore: cast_nullable_to_non_nullable
+                  as String?,
+        syncStatus: null == syncStatus
+            ? _value.syncStatus
+            : syncStatus // ignore: cast_nullable_to_non_nullable
+                  as SyncStatus,
+        serverUpdatedAt: freezed == serverUpdatedAt
+            ? _value.serverUpdatedAt
+            : serverUpdatedAt // ignore: cast_nullable_to_non_nullable
+                  as DateTime?,
+        isDeleted: null == isDeleted
+            ? _value.isDeleted
+            : isDeleted // ignore: cast_nullable_to_non_nullable
+                  as bool,
+      ),
+    );
   }
 }
 
 /// @nodoc
 @JsonSerializable()
 class _$ProfileImpl implements _Profile {
-  const _$ProfileImpl(
-      {required this.id,
-      required this.email,
-      this.displayName,
-      this.avatarUrl,
-      this.phoneNumber,
-      this.userId,
-      this.syncStatus = SyncStatus.synced,
-      this.serverUpdatedAt,
-      this.isDeleted = false});
+  const _$ProfileImpl({
+    required this.id,
+    required this.email,
+    this.displayName,
+    this.avatarUrl,
+    this.phoneNumber,
+    this.userId,
+    this.syncStatus = SyncStatus.synced,
+    this.serverUpdatedAt,
+    this.isDeleted = false,
+  });
 
   factory _$ProfileImpl.fromJson(Map<String, dynamic> json) =>
       _$$ProfileImplFromJson(json);
@@ -280,8 +291,18 @@ class _$ProfileImpl implements _Profile {
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, id, email, displayName,
-      avatarUrl, phoneNumber, userId, syncStatus, serverUpdatedAt, isDeleted);
+  int get hashCode => Object.hash(
+    runtimeType,
+    id,
+    email,
+    displayName,
+    avatarUrl,
+    phoneNumber,
+    userId,
+    syncStatus,
+    serverUpdatedAt,
+    isDeleted,
+  );
 
   @JsonKey(ignore: true)
   @override
@@ -291,23 +312,22 @@ class _$ProfileImpl implements _Profile {
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$ProfileImplToJson(
-      this,
-    );
+    return _$$ProfileImplToJson(this);
   }
 }
 
 abstract class _Profile implements Profile {
-  const factory _Profile(
-      {required final String id,
-      required final String email,
-      final String? displayName,
-      final String? avatarUrl,
-      final String? phoneNumber,
-      final String? userId,
-      final SyncStatus syncStatus,
-      final DateTime? serverUpdatedAt,
-      final bool isDeleted}) = _$ProfileImpl;
+  const factory _Profile({
+    required final String id,
+    required final String email,
+    final String? displayName,
+    final String? avatarUrl,
+    final String? phoneNumber,
+    final String? userId,
+    final SyncStatus syncStatus,
+    final DateTime? serverUpdatedAt,
+    final bool isDeleted,
+  }) = _$ProfileImpl;
 
   factory _Profile.fromJson(Map<String, dynamic> json) = _$ProfileImpl.fromJson;
 
@@ -322,19 +342,15 @@ abstract class _Profile implements Profile {
   @override
   String? get phoneNumber;
   @override
-
   /// معرف المستخدم لغرض عزل البيانات
   String? get userId;
   @override
-
   /// حالة المزامنة
   SyncStatus get syncStatus;
   @override
-
   /// تاريخ آخر تحديث من السيرفر
   DateTime? get serverUpdatedAt;
   @override
-
   /// هل السجل محذوف (حذف ناعم)
   bool get isDeleted;
   @override

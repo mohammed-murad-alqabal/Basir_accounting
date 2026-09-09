@@ -185,8 +185,9 @@ class ReleaseManager {
 
   /// Validates version format and semantic versioning rules
   static VersionValidationResult validateVersion(String version) {
-    final cleanVersion =
-        version.startsWith('v') ? version.substring(1) : version;
+    final cleanVersion = version.startsWith('v')
+        ? version.substring(1)
+        : version;
     final match = _versionPattern.firstMatch('v$cleanVersion');
 
     if (match == null) {
@@ -269,10 +270,12 @@ class ReleaseManager {
 
   static Future<bool> _checkBranchExists(String branchName) async {
     try {
-      final result = await Process.run(
-        'git',
-        ['show-ref', '--verify', '--quiet', 'refs/heads/$branchName'],
-      );
+      final result = await Process.run('git', [
+        'show-ref',
+        '--verify',
+        '--quiet',
+        'refs/heads/$branchName',
+      ]);
       return result.exitCode == 0;
     } on Exception {
       return false;
@@ -321,8 +324,9 @@ class ReleaseManager {
       }
 
       final content = await pubspecFile.readAsString();
-      final cleanVersion =
-          version.startsWith('v') ? version.substring(1) : version;
+      final cleanVersion = version.startsWith('v')
+          ? version.substring(1)
+          : version;
 
       // Update version line
       final updatedContent = content.replaceFirst(
@@ -350,7 +354,8 @@ class ReleaseManager {
     String? description,
   ) async {
     final releaseInfo = releaseTypes[releaseType]!;
-    final template = '''
+    final template =
+        '''
 # Release Notes - $version
 
 ## Release Type: ${releaseInfo.description}
@@ -412,7 +417,8 @@ ${releaseType == 'major' ? '- [ ] Migration step 1\n- [ ] Migration step 2' : '-
     String version,
     ReleaseTypeInfo releaseInfo,
   ) async {
-    final checklist = '''
+    final checklist =
+        '''
 # Release Checklist - $version
 
 ## Pre-Release Checks
@@ -457,10 +463,11 @@ ${releaseInfo.requiresDocumentationUpdate ? '- [ ] Documentation updated' : ''}
   }
 
   static Future<String> _getCurrentBranch() async {
-    final result = await Process.run(
-      'git',
-      ['rev-parse', '--abbrev-ref', 'HEAD'],
-    );
+    final result = await Process.run('git', [
+      'rev-parse',
+      '--abbrev-ref',
+      'HEAD',
+    ]);
     return result.stdout.toString().trim();
   }
 
@@ -518,10 +525,13 @@ ${releaseInfo.requiresDocumentationUpdate ? '- [ ] Documentation updated' : ''}
     String releaseNotes,
   ) async {
     try {
-      final result = await Process.run(
-        'git',
-        ['tag', '-a', version, '-m', releaseNotes],
-      );
+      final result = await Process.run('git', [
+        'tag',
+        '-a',
+        version,
+        '-m',
+        releaseNotes,
+      ]);
 
       if (result.exitCode == 0) {
         await Process.run('git', ['push', 'origin', version]);
@@ -663,14 +673,13 @@ class ReleaseResult {
     String? branchName,
     String? version,
     String? releaseType,
-  }) =>
-      ReleaseResult(
-        success: true,
-        message: message,
-        branchName: branchName,
-        version: version,
-        releaseType: releaseType,
-      );
+  }) => ReleaseResult(
+    success: true,
+    message: message,
+    branchName: branchName,
+    version: version,
+    releaseType: releaseType,
+  );
 
   /// Creates an error result
   factory ReleaseResult.error(String message) =>
@@ -695,10 +704,7 @@ class ReleaseResult {
 /// Result of Git operations
 class GitOperationResult {
   /// Creates a new [GitOperationResult] instance
-  const GitOperationResult({
-    required this.success,
-    required this.message,
-  });
+  const GitOperationResult({required this.success, required this.message});
 
   /// Whether the operation was successful
   final bool success;

@@ -66,16 +66,16 @@ class BudgetModel {
 
   /// تحويل إلى كائن Domain
   Budget toEntity() => Budget(
-        id: budgetId,
-        name: name,
-        category: category,
-        limitAmount: Decimal.parse(limitAmountStr),
-        spentAmount: Decimal.parse(spentAmountStr),
-        startDate: startDate,
-        endDate: endDate,
-        alertThreshold: alertThreshold,
-        isRollover: isRollover,
-        isActive: isActive,
-        userId: userId,
-      );
+    id: budgetId,
+    name: name,
+    category: category,
+    limitAmount: Decimal.parse(limitAmountStr),
+    spentAmount: Decimal.parse(spentAmountStr),
+    startDate: startDate,
+    endDate: endDate,
+    alertThreshold: alertThreshold,
+    isRollover: isRollover,
+    isActive: isActive,
+    userId: userId,
+  );
 }

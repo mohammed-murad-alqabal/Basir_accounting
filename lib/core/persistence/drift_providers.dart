@@ -61,9 +61,8 @@ final driftDatabaseProvider = Provider<BasirDatabase>((ref) {
 /// منفذ اختبار الاتصال، مع قابلية override في الاختبارات من دون الحاجة إلى
 /// فتح SQLite أو WASM.
 final driftConnectionVerifierProvider = Provider<DriftConnectionVerifier>(
-  (ref) => _DatabaseDriftConnectionVerifier(
-    ref.watch(driftDatabaseProvider),
-  ).call,
+  (ref) =>
+      _DatabaseDriftConnectionVerifier(ref.watch(driftDatabaseProvider)).call,
 );
 
 /// نتيجة تحقق صريحة بدل تحويل أخطاء فتح Drift إلى fallback صامت.
@@ -123,12 +122,10 @@ final driftBudgetsShadowReadEnabledProvider = Provider<bool>((ref) => false);
 
 /// Comparator قابل للحقن لـGoals وBudgets؛ sink الذاكراتي للاختبارات فقط.
 final driftGoalsBudgetsShadowReadComparatorProvider =
-    Provider<DriftGoalsBudgetsShadowReadComparator>(
-  (ref) {
-    final sink = InMemoryDriftShadowReadSink();
-    return DriftGoalsBudgetsShadowReadComparator(recorder: sink.record);
-  },
-);
+    Provider<DriftGoalsBudgetsShadowReadComparator>((ref) {
+      final sink = InMemoryDriftShadowReadSink();
+      return DriftGoalsBudgetsShadowReadComparator(recorder: sink.record);
+    });
 
 /// Feature flag مستقل لـProfile shadow-read. يبقى مغلقًا حتى اعتماد لقطة
 /// parity ومراجعة telemetry؛ لا يبدل Provider النشط عند تغييره.
@@ -136,18 +133,17 @@ final driftProfileShadowReadEnabledProvider = Provider<bool>((ref) => false);
 
 /// Feature flag مستقل لـBusinessSettings shadow-read. يبقى مغلقًا حتى اعتماد
 /// لقطة parity ومراجعة telemetry؛ لا يبدل Provider النشط عند تغييره.
-final driftBusinessSettingsShadowReadEnabledProvider =
-    Provider<bool>((ref) => false);
+final driftBusinessSettingsShadowReadEnabledProvider = Provider<bool>(
+  (ref) => false,
+);
 
 /// Comparator قابل للحقن في اختبارات shadow-read. لا يُربط تلقائيًا بمراقبة
 /// خارجية، ويظل sink الذاكراتي مناسبًا للاختبارات فقط.
 final driftSettingsShadowReadComparatorProvider =
-    Provider<DriftSettingsShadowReadComparator>(
-  (ref) {
-    final sink = InMemoryDriftShadowReadSink();
-    return DriftSettingsShadowReadComparator(recorder: sink.record);
-  },
-);
+    Provider<DriftSettingsShadowReadComparator>((ref) {
+      final sink = InMemoryDriftShadowReadSink();
+      return DriftSettingsShadowReadComparator(recorder: sink.record);
+    });
 
 /// Feature flag مستقل لـCustomer shadow-read. يبقى مغلقًا حتى اعتماد parity
 /// على لقطة فعلية ومراجعة telemetry؛ لا يبدل Provider النشط.
@@ -159,25 +155,23 @@ final driftVendorShadowReadEnabledProvider = Provider<bool>((ref) => false);
 
 /// Comparator قابل للحقن لـCustomers وVendors؛ sink الذاكراتي للاختبارات فقط.
 final driftCustomersVendorsShadowReadComparatorProvider =
-    Provider<DriftCustomersVendorsShadowReadComparator>(
-  (ref) {
-    final sink = InMemoryDriftShadowReadSink();
-    return DriftCustomersVendorsShadowReadComparator(recorder: sink.record);
-  },
-);
+    Provider<DriftCustomersVendorsShadowReadComparator>((ref) {
+      final sink = InMemoryDriftShadowReadSink();
+      return DriftCustomersVendorsShadowReadComparator(recorder: sink.record);
+    });
 
 /// Feature flags مستقلة لشريحة المخزون؛ تبقى مغلقة افتراضيًا.
 final driftWarehousesShadowReadEnabledProvider = Provider<bool>((ref) => false);
-final driftInventoryItemsShadowReadEnabledProvider =
-    Provider<bool>((ref) => false);
-final driftStockMovementsShadowReadEnabledProvider =
-    Provider<bool>((ref) => false);
+final driftInventoryItemsShadowReadEnabledProvider = Provider<bool>(
+  (ref) => false,
+);
+final driftStockMovementsShadowReadEnabledProvider = Provider<bool>(
+  (ref) => false,
+);
 
 /// Comparator لشريحة المخزون؛ sink الذاكراتي للاختبار فقط حتى اعتماد telemetry.
 final driftInventoryShadowReadComparatorProvider =
-    Provider<DriftInventoryShadowReadComparator>(
-  (ref) {
-    final sink = InMemoryDriftShadowReadSink();
-    return DriftInventoryShadowReadComparator(recorder: sink.record);
-  },
-);
+    Provider<DriftInventoryShadowReadComparator>((ref) {
+      final sink = InMemoryDriftShadowReadSink();
+      return DriftInventoryShadowReadComparator(recorder: sink.record);
+    });

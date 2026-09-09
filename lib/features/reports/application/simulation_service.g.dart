@@ -23,14 +23,14 @@ String _$financialSimulationServiceHash() =>
 @ProviderFor(FinancialSimulationService)
 final financialSimulationServiceProvider =
     AutoDisposeNotifierProvider<FinancialSimulationService, void>.internal(
-  FinancialSimulationService.new,
-  name: r'financialSimulationServiceProvider',
-  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-      ? null
-      : _$financialSimulationServiceHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
+      FinancialSimulationService.new,
+      name: r'financialSimulationServiceProvider',
+      debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+          ? null
+          : _$financialSimulationServiceHash,
+      dependencies: null,
+      allTransitiveDependencies: null,
+    );
 
 typedef _$FinancialSimulationService = AutoDisposeNotifier<void>;
 // ignore_for_file: type=lint

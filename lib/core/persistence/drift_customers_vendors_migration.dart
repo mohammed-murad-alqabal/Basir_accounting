@@ -19,32 +19,33 @@ class IsarCustomerMigrationSource {
   final Isar _isar;
 
   Future<List<CustomerRecord>> readAll() async {
-    final records = (await _isar.customerModels.where().findAll())
-        .map(_toRecord)
-        .toList(growable: false)
-      ..sort(_compareCustomers);
+    final records =
+        (await _isar.customerModels.where().findAll())
+            .map(_toRecord)
+            .toList(growable: false)
+          ..sort(_compareCustomers);
     return records;
   }
 
   static CustomerRecord _toRecord(CustomerModel model) => CustomerRecord(
-        id: model.customerId,
-        nameAr: model.nameAr,
-        nameEn: model.nameEn,
-        taxNumber: model.taxNumber,
-        phone: model.phone,
-        email: model.email,
-        address: model.address,
-        notes: model.notes,
-        createdAt: model.createdAt.toUtc(),
-        updatedAt: model.updatedAt.toUtc(),
-        creditLimit: model.creditLimit,
-        balance: model.balance,
-        receivableAccountId: model.receivableAccountId,
-        userId: model.userId,
-        syncStatus: model.syncStatus.name,
-        serverUpdatedAt: model.serverUpdatedAt?.toUtc(),
-        isDeleted: model.isDeleted,
-      );
+    id: model.customerId,
+    nameAr: model.nameAr,
+    nameEn: model.nameEn,
+    taxNumber: model.taxNumber,
+    phone: model.phone,
+    email: model.email,
+    address: model.address,
+    notes: model.notes,
+    createdAt: model.createdAt.toUtc(),
+    updatedAt: model.updatedAt.toUtc(),
+    creditLimit: model.creditLimit,
+    balance: model.balance,
+    receivableAccountId: model.receivableAccountId,
+    userId: model.userId,
+    syncStatus: model.syncStatus.name,
+    serverUpdatedAt: model.serverUpdatedAt?.toUtc(),
+    isDeleted: model.isDeleted,
+  );
 }
 
 /// قارئ Vendors من Isar فقط، مع تحويل محايد وترتيب deterministic.
@@ -54,32 +55,33 @@ class IsarVendorMigrationSource {
   final Isar _isar;
 
   Future<List<VendorRecord>> readAll() async {
-    final records = (await _isar.vendorModels.where().findAll())
-        .map(_toRecord)
-        .toList(growable: false)
-      ..sort(_compareVendors);
+    final records =
+        (await _isar.vendorModels.where().findAll())
+            .map(_toRecord)
+            .toList(growable: false)
+          ..sort(_compareVendors);
     return records;
   }
 
   static VendorRecord _toRecord(VendorModel model) => VendorRecord(
-        id: model.vendorId,
-        nameAr: model.nameAr,
-        nameEn: model.nameEn,
-        phone: model.phone,
-        email: model.email,
-        address: model.address,
-        notes: model.notes,
-        createdAt: model.createdAt.toUtc(),
-        updatedAt: model.updatedAt.toUtc(),
-        payableAccountId: model.payableAccountId,
-        vatNumber: model.vatNumber,
-        registrationNumber: model.registrationNumber,
-        balance: model.balance,
-        userId: model.userId,
-        syncStatus: model.syncStatus.name,
-        serverUpdatedAt: model.serverUpdatedAt?.toUtc(),
-        isDeleted: model.isDeleted,
-      );
+    id: model.vendorId,
+    nameAr: model.nameAr,
+    nameEn: model.nameEn,
+    phone: model.phone,
+    email: model.email,
+    address: model.address,
+    notes: model.notes,
+    createdAt: model.createdAt.toUtc(),
+    updatedAt: model.updatedAt.toUtc(),
+    payableAccountId: model.payableAccountId,
+    vatNumber: model.vatNumber,
+    registrationNumber: model.registrationNumber,
+    balance: model.balance,
+    userId: model.userId,
+    syncStatus: model.syncStatus.name,
+    serverUpdatedAt: model.serverUpdatedAt?.toUtc(),
+    isDeleted: model.isDeleted,
+  );
 }
 
 class DriftCustomersVendorsMigrationReport {
@@ -102,11 +104,11 @@ class DriftCustomersVendorsMigrator {
     required CustomerStorage customerStorage,
     required VendorStorage vendorStorage,
     required MigrationCheckpointStorage checkpoints,
-  })  : _customerSource = customerSource,
-        _vendorSource = vendorSource,
-        _customerStorage = customerStorage,
-        _vendorStorage = vendorStorage,
-        _checkpoints = checkpoints;
+  }) : _customerSource = customerSource,
+       _vendorSource = vendorSource,
+       _customerStorage = customerStorage,
+       _vendorStorage = vendorStorage,
+       _checkpoints = checkpoints;
 
   final CustomerMigrationReader _customerSource;
   final VendorMigrationReader _vendorSource;

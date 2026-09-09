@@ -26,9 +26,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:isar/isar.dart';
 
-import '../../../helpers/test_helpers.dart';
-
 import '../../../helpers/mock_accounting_repository.dart';
+import '../../../helpers/test_helpers.dart';
 
 class InMemoryCustomerRepository implements CustomerRepository {
   final _customers = <String, Customer>{};

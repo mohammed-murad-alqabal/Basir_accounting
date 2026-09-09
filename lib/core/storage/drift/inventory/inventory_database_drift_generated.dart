@@ -12,188 +12,301 @@ class $InventoryItemsTable extends InventoryItems
   static const VerificationMeta _idMeta = const VerificationMeta('id');
   @override
   late final GeneratedColumn<String> id = GeneratedColumn<String>(
-      'id', aliasedName, false,
-      type: DriftSqlType.string, requiredDuringInsert: true);
+    'id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
   static const VerificationMeta _nameArMeta = const VerificationMeta('nameAr');
   @override
   late final GeneratedColumn<String> nameAr = GeneratedColumn<String>(
-      'name_ar', aliasedName, false,
-      type: DriftSqlType.string, requiredDuringInsert: true);
+    'name_ar',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
   static const VerificationMeta _nameEnMeta = const VerificationMeta('nameEn');
   @override
   late final GeneratedColumn<String> nameEn = GeneratedColumn<String>(
-      'name_en', aliasedName, false,
-      type: DriftSqlType.string, requiredDuringInsert: true);
+    'name_en',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
   static const VerificationMeta _skuMeta = const VerificationMeta('sku');
   @override
   late final GeneratedColumn<String> sku = GeneratedColumn<String>(
-      'sku', aliasedName, true,
-      type: DriftSqlType.string, requiredDuringInsert: false);
-  static const VerificationMeta _barcodeMeta =
-      const VerificationMeta('barcode');
+    'sku',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _barcodeMeta = const VerificationMeta(
+    'barcode',
+  );
   @override
   late final GeneratedColumn<String> barcode = GeneratedColumn<String>(
-      'barcode', aliasedName, true,
-      type: DriftSqlType.string, requiredDuringInsert: false);
-  static const VerificationMeta _descriptionMeta =
-      const VerificationMeta('description');
+    'barcode',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _descriptionMeta = const VerificationMeta(
+    'description',
+  );
   @override
   late final GeneratedColumn<String> description = GeneratedColumn<String>(
-      'description', aliasedName, true,
-      type: DriftSqlType.string, requiredDuringInsert: false);
-  static const VerificationMeta _purchasePriceMeta =
-      const VerificationMeta('purchasePrice');
+    'description',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _purchasePriceMeta = const VerificationMeta(
+    'purchasePrice',
+  );
   @override
   late final GeneratedColumn<double> purchasePrice = GeneratedColumn<double>(
-      'purchase_price', aliasedName, true,
-      type: DriftSqlType.double, requiredDuringInsert: false);
-  static const VerificationMeta _salePriceMeta =
-      const VerificationMeta('salePrice');
+    'purchase_price',
+    aliasedName,
+    true,
+    type: DriftSqlType.double,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _salePriceMeta = const VerificationMeta(
+    'salePrice',
+  );
   @override
   late final GeneratedColumn<double> salePrice = GeneratedColumn<double>(
-      'sale_price', aliasedName, true,
-      type: DriftSqlType.double, requiredDuringInsert: false);
-  static const VerificationMeta _currentQuantityMeta =
-      const VerificationMeta('currentQuantity');
+    'sale_price',
+    aliasedName,
+    true,
+    type: DriftSqlType.double,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _currentQuantityMeta = const VerificationMeta(
+    'currentQuantity',
+  );
   @override
   late final GeneratedColumn<double> currentQuantity = GeneratedColumn<double>(
-      'current_quantity', aliasedName, false,
-      type: DriftSqlType.double,
-      requiredDuringInsert: false,
-      defaultValue: const Constant(0));
+    'current_quantity',
+    aliasedName,
+    false,
+    type: DriftSqlType.double,
+    requiredDuringInsert: false,
+    defaultValue: const Constant(0),
+  );
   static const VerificationMeta _unitMeta = const VerificationMeta('unit');
   @override
   late final GeneratedColumn<String> unit = GeneratedColumn<String>(
-      'unit', aliasedName, true,
-      type: DriftSqlType.string, requiredDuringInsert: false);
-  static const VerificationMeta _categoryIdMeta =
-      const VerificationMeta('categoryId');
+    'unit',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _categoryIdMeta = const VerificationMeta(
+    'categoryId',
+  );
   @override
   late final GeneratedColumn<String> categoryId = GeneratedColumn<String>(
-      'category_id', aliasedName, true,
-      type: DriftSqlType.string, requiredDuringInsert: false);
-  static const VerificationMeta _valuationMethodMeta =
-      const VerificationMeta('valuationMethod');
+    'category_id',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _valuationMethodMeta = const VerificationMeta(
+    'valuationMethod',
+  );
   @override
   late final GeneratedColumn<String> valuationMethod = GeneratedColumn<String>(
-      'valuation_method', aliasedName, false,
-      type: DriftSqlType.string,
-      requiredDuringInsert: false,
-      defaultValue: const Constant('weightedAverage'));
-  static const VerificationMeta _assetAccountIdMeta =
-      const VerificationMeta('assetAccountId');
+    'valuation_method',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+    defaultValue: const Constant('weightedAverage'),
+  );
+  static const VerificationMeta _assetAccountIdMeta = const VerificationMeta(
+    'assetAccountId',
+  );
   @override
   late final GeneratedColumn<String> assetAccountId = GeneratedColumn<String>(
-      'asset_account_id', aliasedName, true,
-      type: DriftSqlType.string, requiredDuringInsert: false);
-  static const VerificationMeta _cogsAccountIdMeta =
-      const VerificationMeta('cogsAccountId');
+    'asset_account_id',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _cogsAccountIdMeta = const VerificationMeta(
+    'cogsAccountId',
+  );
   @override
   late final GeneratedColumn<String> cogsAccountId = GeneratedColumn<String>(
-      'cogs_account_id', aliasedName, true,
-      type: DriftSqlType.string, requiredDuringInsert: false);
-  static const VerificationMeta _revenueAccountIdMeta =
-      const VerificationMeta('revenueAccountId');
+    'cogs_account_id',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _revenueAccountIdMeta = const VerificationMeta(
+    'revenueAccountId',
+  );
   @override
   late final GeneratedColumn<String> revenueAccountId = GeneratedColumn<String>(
-      'revenue_account_id', aliasedName, true,
-      type: DriftSqlType.string, requiredDuringInsert: false);
-  static const VerificationMeta _primaryAccountIdMeta =
-      const VerificationMeta('primaryAccountId');
+    'revenue_account_id',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _primaryAccountIdMeta = const VerificationMeta(
+    'primaryAccountId',
+  );
   @override
   late final GeneratedColumn<String> primaryAccountId = GeneratedColumn<String>(
-      'primary_account_id', aliasedName, true,
-      type: DriftSqlType.string, requiredDuringInsert: false);
-  static const VerificationMeta _syncStatusMeta =
-      const VerificationMeta('syncStatus');
+    'primary_account_id',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _syncStatusMeta = const VerificationMeta(
+    'syncStatus',
+  );
   @override
   late final GeneratedColumn<String> syncStatus = GeneratedColumn<String>(
-      'sync_status', aliasedName, false,
-      type: DriftSqlType.string,
-      requiredDuringInsert: false,
-      defaultValue: const Constant('synced'));
-  static const VerificationMeta _serverUpdatedAtMeta =
-      const VerificationMeta('serverUpdatedAt');
+    'sync_status',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+    defaultValue: const Constant('synced'),
+  );
+  static const VerificationMeta _serverUpdatedAtMeta = const VerificationMeta(
+    'serverUpdatedAt',
+  );
   @override
   late final GeneratedColumn<DateTime> serverUpdatedAt =
-      GeneratedColumn<DateTime>('server_updated_at', aliasedName, true,
-          type: DriftSqlType.dateTime, requiredDuringInsert: false);
-  static const VerificationMeta _isDeletedMeta =
-      const VerificationMeta('isDeleted');
+      GeneratedColumn<DateTime>(
+        'server_updated_at',
+        aliasedName,
+        true,
+        type: DriftSqlType.dateTime,
+        requiredDuringInsert: false,
+      );
+  static const VerificationMeta _isDeletedMeta = const VerificationMeta(
+    'isDeleted',
+  );
   @override
   late final GeneratedColumn<bool> isDeleted = GeneratedColumn<bool>(
-      'is_deleted', aliasedName, false,
-      type: DriftSqlType.bool,
-      requiredDuringInsert: false,
-      defaultConstraints:
-          GeneratedColumn.constraintIsAlways('CHECK ("is_deleted" IN (0, 1))'),
-      defaultValue: const Constant(false));
-  static const VerificationMeta _createdAtMeta =
-      const VerificationMeta('createdAt');
+    'is_deleted',
+    aliasedName,
+    false,
+    type: DriftSqlType.bool,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'CHECK ("is_deleted" IN (0, 1))',
+    ),
+    defaultValue: const Constant(false),
+  );
+  static const VerificationMeta _createdAtMeta = const VerificationMeta(
+    'createdAt',
+  );
   @override
   late final GeneratedColumn<DateTime> createdAt = GeneratedColumn<DateTime>(
-      'created_at', aliasedName, false,
-      type: DriftSqlType.dateTime, requiredDuringInsert: true);
-  static const VerificationMeta _updatedAtMeta =
-      const VerificationMeta('updatedAt');
+    'created_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _updatedAtMeta = const VerificationMeta(
+    'updatedAt',
+  );
   @override
   late final GeneratedColumn<DateTime> updatedAt = GeneratedColumn<DateTime>(
-      'updated_at', aliasedName, false,
-      type: DriftSqlType.dateTime, requiredDuringInsert: true);
+    'updated_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: true,
+  );
   static const VerificationMeta _userIdMeta = const VerificationMeta('userId');
   @override
   late final GeneratedColumn<String> userId = GeneratedColumn<String>(
-      'user_id', aliasedName, true,
-      type: DriftSqlType.string, requiredDuringInsert: false);
-  static const VerificationMeta _warehouseIdMeta =
-      const VerificationMeta('warehouseId');
+    'user_id',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _warehouseIdMeta = const VerificationMeta(
+    'warehouseId',
+  );
   @override
   late final GeneratedColumn<String> warehouseId = GeneratedColumn<String>(
-      'warehouse_id', aliasedName, true,
-      type: DriftSqlType.string, requiredDuringInsert: false);
-  static const VerificationMeta _taxCategoryMeta =
-      const VerificationMeta('taxCategory');
+    'warehouse_id',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _taxCategoryMeta = const VerificationMeta(
+    'taxCategory',
+  );
   @override
   late final GeneratedColumn<String> taxCategory = GeneratedColumn<String>(
-      'tax_category', aliasedName, false,
-      type: DriftSqlType.string,
-      requiredDuringInsert: false,
-      defaultValue: const Constant('S'));
+    'tax_category',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+    defaultValue: const Constant('S'),
+  );
   @override
   List<GeneratedColumn> get $columns => [
-        id,
-        nameAr,
-        nameEn,
-        sku,
-        barcode,
-        description,
-        purchasePrice,
-        salePrice,
-        currentQuantity,
-        unit,
-        categoryId,
-        valuationMethod,
-        assetAccountId,
-        cogsAccountId,
-        revenueAccountId,
-        primaryAccountId,
-        syncStatus,
-        serverUpdatedAt,
-        isDeleted,
-        createdAt,
-        updatedAt,
-        userId,
-        warehouseId,
-        taxCategory
-      ];
+    id,
+    nameAr,
+    nameEn,
+    sku,
+    barcode,
+    description,
+    purchasePrice,
+    salePrice,
+    currentQuantity,
+    unit,
+    categoryId,
+    valuationMethod,
+    assetAccountId,
+    cogsAccountId,
+    revenueAccountId,
+    primaryAccountId,
+    syncStatus,
+    serverUpdatedAt,
+    isDeleted,
+    createdAt,
+    updatedAt,
+    userId,
+    warehouseId,
+    taxCategory,
+  ];
   @override
   String get aliasedName => _alias ?? actualTableName;
   @override
   String get actualTableName => $name;
   static const String $name = 'inventory_items';
   @override
-  VerificationContext validateIntegrity(Insertable<InventoryItem> instance,
-      {bool isInserting = false}) {
+  VerificationContext validateIntegrity(
+    Insertable<InventoryItem> instance, {
+    bool isInserting = false,
+  }) {
     final context = VerificationContext();
     final data = instance.toColumns(true);
     if (data.containsKey('id')) {
@@ -202,130 +315,183 @@ class $InventoryItemsTable extends InventoryItems
       context.missing(_idMeta);
     }
     if (data.containsKey('name_ar')) {
-      context.handle(_nameArMeta,
-          nameAr.isAcceptableOrUnknown(data['name_ar']!, _nameArMeta));
+      context.handle(
+        _nameArMeta,
+        nameAr.isAcceptableOrUnknown(data['name_ar']!, _nameArMeta),
+      );
     } else if (isInserting) {
       context.missing(_nameArMeta);
     }
     if (data.containsKey('name_en')) {
-      context.handle(_nameEnMeta,
-          nameEn.isAcceptableOrUnknown(data['name_en']!, _nameEnMeta));
+      context.handle(
+        _nameEnMeta,
+        nameEn.isAcceptableOrUnknown(data['name_en']!, _nameEnMeta),
+      );
     } else if (isInserting) {
       context.missing(_nameEnMeta);
     }
     if (data.containsKey('sku')) {
       context.handle(
-          _skuMeta, sku.isAcceptableOrUnknown(data['sku']!, _skuMeta));
+        _skuMeta,
+        sku.isAcceptableOrUnknown(data['sku']!, _skuMeta),
+      );
     }
     if (data.containsKey('barcode')) {
-      context.handle(_barcodeMeta,
-          barcode.isAcceptableOrUnknown(data['barcode']!, _barcodeMeta));
+      context.handle(
+        _barcodeMeta,
+        barcode.isAcceptableOrUnknown(data['barcode']!, _barcodeMeta),
+      );
     }
     if (data.containsKey('description')) {
       context.handle(
+        _descriptionMeta,
+        description.isAcceptableOrUnknown(
+          data['description']!,
           _descriptionMeta,
-          description.isAcceptableOrUnknown(
-              data['description']!, _descriptionMeta));
+        ),
+      );
     }
     if (data.containsKey('purchase_price')) {
       context.handle(
+        _purchasePriceMeta,
+        purchasePrice.isAcceptableOrUnknown(
+          data['purchase_price']!,
           _purchasePriceMeta,
-          purchasePrice.isAcceptableOrUnknown(
-              data['purchase_price']!, _purchasePriceMeta));
+        ),
+      );
     }
     if (data.containsKey('sale_price')) {
-      context.handle(_salePriceMeta,
-          salePrice.isAcceptableOrUnknown(data['sale_price']!, _salePriceMeta));
+      context.handle(
+        _salePriceMeta,
+        salePrice.isAcceptableOrUnknown(data['sale_price']!, _salePriceMeta),
+      );
     }
     if (data.containsKey('current_quantity')) {
       context.handle(
+        _currentQuantityMeta,
+        currentQuantity.isAcceptableOrUnknown(
+          data['current_quantity']!,
           _currentQuantityMeta,
-          currentQuantity.isAcceptableOrUnknown(
-              data['current_quantity']!, _currentQuantityMeta));
+        ),
+      );
     }
     if (data.containsKey('unit')) {
       context.handle(
-          _unitMeta, unit.isAcceptableOrUnknown(data['unit']!, _unitMeta));
+        _unitMeta,
+        unit.isAcceptableOrUnknown(data['unit']!, _unitMeta),
+      );
     }
     if (data.containsKey('category_id')) {
       context.handle(
-          _categoryIdMeta,
-          categoryId.isAcceptableOrUnknown(
-              data['category_id']!, _categoryIdMeta));
+        _categoryIdMeta,
+        categoryId.isAcceptableOrUnknown(data['category_id']!, _categoryIdMeta),
+      );
     }
     if (data.containsKey('valuation_method')) {
       context.handle(
+        _valuationMethodMeta,
+        valuationMethod.isAcceptableOrUnknown(
+          data['valuation_method']!,
           _valuationMethodMeta,
-          valuationMethod.isAcceptableOrUnknown(
-              data['valuation_method']!, _valuationMethodMeta));
+        ),
+      );
     }
     if (data.containsKey('asset_account_id')) {
       context.handle(
+        _assetAccountIdMeta,
+        assetAccountId.isAcceptableOrUnknown(
+          data['asset_account_id']!,
           _assetAccountIdMeta,
-          assetAccountId.isAcceptableOrUnknown(
-              data['asset_account_id']!, _assetAccountIdMeta));
+        ),
+      );
     }
     if (data.containsKey('cogs_account_id')) {
       context.handle(
+        _cogsAccountIdMeta,
+        cogsAccountId.isAcceptableOrUnknown(
+          data['cogs_account_id']!,
           _cogsAccountIdMeta,
-          cogsAccountId.isAcceptableOrUnknown(
-              data['cogs_account_id']!, _cogsAccountIdMeta));
+        ),
+      );
     }
     if (data.containsKey('revenue_account_id')) {
       context.handle(
+        _revenueAccountIdMeta,
+        revenueAccountId.isAcceptableOrUnknown(
+          data['revenue_account_id']!,
           _revenueAccountIdMeta,
-          revenueAccountId.isAcceptableOrUnknown(
-              data['revenue_account_id']!, _revenueAccountIdMeta));
+        ),
+      );
     }
     if (data.containsKey('primary_account_id')) {
       context.handle(
+        _primaryAccountIdMeta,
+        primaryAccountId.isAcceptableOrUnknown(
+          data['primary_account_id']!,
           _primaryAccountIdMeta,
-          primaryAccountId.isAcceptableOrUnknown(
-              data['primary_account_id']!, _primaryAccountIdMeta));
+        ),
+      );
     }
     if (data.containsKey('sync_status')) {
       context.handle(
-          _syncStatusMeta,
-          syncStatus.isAcceptableOrUnknown(
-              data['sync_status']!, _syncStatusMeta));
+        _syncStatusMeta,
+        syncStatus.isAcceptableOrUnknown(data['sync_status']!, _syncStatusMeta),
+      );
     }
     if (data.containsKey('server_updated_at')) {
       context.handle(
+        _serverUpdatedAtMeta,
+        serverUpdatedAt.isAcceptableOrUnknown(
+          data['server_updated_at']!,
           _serverUpdatedAtMeta,
-          serverUpdatedAt.isAcceptableOrUnknown(
-              data['server_updated_at']!, _serverUpdatedAtMeta));
+        ),
+      );
     }
     if (data.containsKey('is_deleted')) {
-      context.handle(_isDeletedMeta,
-          isDeleted.isAcceptableOrUnknown(data['is_deleted']!, _isDeletedMeta));
+      context.handle(
+        _isDeletedMeta,
+        isDeleted.isAcceptableOrUnknown(data['is_deleted']!, _isDeletedMeta),
+      );
     }
     if (data.containsKey('created_at')) {
-      context.handle(_createdAtMeta,
-          createdAt.isAcceptableOrUnknown(data['created_at']!, _createdAtMeta));
+      context.handle(
+        _createdAtMeta,
+        createdAt.isAcceptableOrUnknown(data['created_at']!, _createdAtMeta),
+      );
     } else if (isInserting) {
       context.missing(_createdAtMeta);
     }
     if (data.containsKey('updated_at')) {
-      context.handle(_updatedAtMeta,
-          updatedAt.isAcceptableOrUnknown(data['updated_at']!, _updatedAtMeta));
+      context.handle(
+        _updatedAtMeta,
+        updatedAt.isAcceptableOrUnknown(data['updated_at']!, _updatedAtMeta),
+      );
     } else if (isInserting) {
       context.missing(_updatedAtMeta);
     }
     if (data.containsKey('user_id')) {
-      context.handle(_userIdMeta,
-          userId.isAcceptableOrUnknown(data['user_id']!, _userIdMeta));
+      context.handle(
+        _userIdMeta,
+        userId.isAcceptableOrUnknown(data['user_id']!, _userIdMeta),
+      );
     }
     if (data.containsKey('warehouse_id')) {
       context.handle(
+        _warehouseIdMeta,
+        warehouseId.isAcceptableOrUnknown(
+          data['warehouse_id']!,
           _warehouseIdMeta,
-          warehouseId.isAcceptableOrUnknown(
-              data['warehouse_id']!, _warehouseIdMeta));
+        ),
+      );
     }
     if (data.containsKey('tax_category')) {
       context.handle(
+        _taxCategoryMeta,
+        taxCategory.isAcceptableOrUnknown(
+          data['tax_category']!,
           _taxCategoryMeta,
-          taxCategory.isAcceptableOrUnknown(
-              data['tax_category']!, _taxCategoryMeta));
+        ),
+      );
     }
     return context;
   }
@@ -336,54 +502,102 @@ class $InventoryItemsTable extends InventoryItems
   InventoryItem map(Map<String, dynamic> data, {String? tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
     return InventoryItem(
-      id: attachedDatabase.typeMapping
-          .read(DriftSqlType.string, data['${effectivePrefix}id'])!,
-      nameAr: attachedDatabase.typeMapping
-          .read(DriftSqlType.string, data['${effectivePrefix}name_ar'])!,
-      nameEn: attachedDatabase.typeMapping
-          .read(DriftSqlType.string, data['${effectivePrefix}name_en'])!,
-      sku: attachedDatabase.typeMapping
-          .read(DriftSqlType.string, data['${effectivePrefix}sku']),
-      barcode: attachedDatabase.typeMapping
-          .read(DriftSqlType.string, data['${effectivePrefix}barcode']),
-      description: attachedDatabase.typeMapping
-          .read(DriftSqlType.string, data['${effectivePrefix}description']),
-      purchasePrice: attachedDatabase.typeMapping
-          .read(DriftSqlType.double, data['${effectivePrefix}purchase_price']),
-      salePrice: attachedDatabase.typeMapping
-          .read(DriftSqlType.double, data['${effectivePrefix}sale_price']),
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}id'],
+      )!,
+      nameAr: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}name_ar'],
+      )!,
+      nameEn: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}name_en'],
+      )!,
+      sku: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}sku'],
+      ),
+      barcode: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}barcode'],
+      ),
+      description: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}description'],
+      ),
+      purchasePrice: attachedDatabase.typeMapping.read(
+        DriftSqlType.double,
+        data['${effectivePrefix}purchase_price'],
+      ),
+      salePrice: attachedDatabase.typeMapping.read(
+        DriftSqlType.double,
+        data['${effectivePrefix}sale_price'],
+      ),
       currentQuantity: attachedDatabase.typeMapping.read(
-          DriftSqlType.double, data['${effectivePrefix}current_quantity'])!,
-      unit: attachedDatabase.typeMapping
-          .read(DriftSqlType.string, data['${effectivePrefix}unit']),
-      categoryId: attachedDatabase.typeMapping
-          .read(DriftSqlType.string, data['${effectivePrefix}category_id']),
+        DriftSqlType.double,
+        data['${effectivePrefix}current_quantity'],
+      )!,
+      unit: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}unit'],
+      ),
+      categoryId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}category_id'],
+      ),
       valuationMethod: attachedDatabase.typeMapping.read(
-          DriftSqlType.string, data['${effectivePrefix}valuation_method'])!,
+        DriftSqlType.string,
+        data['${effectivePrefix}valuation_method'],
+      )!,
       assetAccountId: attachedDatabase.typeMapping.read(
-          DriftSqlType.string, data['${effectivePrefix}asset_account_id']),
-      cogsAccountId: attachedDatabase.typeMapping
-          .read(DriftSqlType.string, data['${effectivePrefix}cogs_account_id']),
+        DriftSqlType.string,
+        data['${effectivePrefix}asset_account_id'],
+      ),
+      cogsAccountId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}cogs_account_id'],
+      ),
       revenueAccountId: attachedDatabase.typeMapping.read(
-          DriftSqlType.string, data['${effectivePrefix}revenue_account_id']),
+        DriftSqlType.string,
+        data['${effectivePrefix}revenue_account_id'],
+      ),
       primaryAccountId: attachedDatabase.typeMapping.read(
-          DriftSqlType.string, data['${effectivePrefix}primary_account_id']),
-      syncStatus: attachedDatabase.typeMapping
-          .read(DriftSqlType.string, data['${effectivePrefix}sync_status'])!,
+        DriftSqlType.string,
+        data['${effectivePrefix}primary_account_id'],
+      ),
+      syncStatus: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}sync_status'],
+      )!,
       serverUpdatedAt: attachedDatabase.typeMapping.read(
-          DriftSqlType.dateTime, data['${effectivePrefix}server_updated_at']),
-      isDeleted: attachedDatabase.typeMapping
-          .read(DriftSqlType.bool, data['${effectivePrefix}is_deleted'])!,
-      createdAt: attachedDatabase.typeMapping
-          .read(DriftSqlType.dateTime, data['${effectivePrefix}created_at'])!,
-      updatedAt: attachedDatabase.typeMapping
-          .read(DriftSqlType.dateTime, data['${effectivePrefix}updated_at'])!,
-      userId: attachedDatabase.typeMapping
-          .read(DriftSqlType.string, data['${effectivePrefix}user_id']),
-      warehouseId: attachedDatabase.typeMapping
-          .read(DriftSqlType.string, data['${effectivePrefix}warehouse_id']),
-      taxCategory: attachedDatabase.typeMapping
-          .read(DriftSqlType.string, data['${effectivePrefix}tax_category'])!,
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}server_updated_at'],
+      ),
+      isDeleted: attachedDatabase.typeMapping.read(
+        DriftSqlType.bool,
+        data['${effectivePrefix}is_deleted'],
+      )!,
+      createdAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}created_at'],
+      )!,
+      updatedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}updated_at'],
+      )!,
+      userId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}user_id'],
+      ),
+      warehouseId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}warehouse_id'],
+      ),
+      taxCategory: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}tax_category'],
+      )!,
     );
   }
 
@@ -418,31 +632,32 @@ class InventoryItem extends DataClass implements Insertable<InventoryItem> {
   final String? userId;
   final String? warehouseId;
   final String taxCategory;
-  const InventoryItem(
-      {required this.id,
-      required this.nameAr,
-      required this.nameEn,
-      this.sku,
-      this.barcode,
-      this.description,
-      this.purchasePrice,
-      this.salePrice,
-      required this.currentQuantity,
-      this.unit,
-      this.categoryId,
-      required this.valuationMethod,
-      this.assetAccountId,
-      this.cogsAccountId,
-      this.revenueAccountId,
-      this.primaryAccountId,
-      required this.syncStatus,
-      this.serverUpdatedAt,
-      required this.isDeleted,
-      required this.createdAt,
-      required this.updatedAt,
-      this.userId,
-      this.warehouseId,
-      required this.taxCategory});
+  const InventoryItem({
+    required this.id,
+    required this.nameAr,
+    required this.nameEn,
+    this.sku,
+    this.barcode,
+    this.description,
+    this.purchasePrice,
+    this.salePrice,
+    required this.currentQuantity,
+    this.unit,
+    this.categoryId,
+    required this.valuationMethod,
+    this.assetAccountId,
+    this.cogsAccountId,
+    this.revenueAccountId,
+    this.primaryAccountId,
+    required this.syncStatus,
+    this.serverUpdatedAt,
+    required this.isDeleted,
+    required this.createdAt,
+    required this.updatedAt,
+    this.userId,
+    this.warehouseId,
+    required this.taxCategory,
+  });
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
@@ -544,8 +759,9 @@ class InventoryItem extends DataClass implements Insertable<InventoryItem> {
       isDeleted: Value(isDeleted),
       createdAt: Value(createdAt),
       updatedAt: Value(updatedAt),
-      userId:
-          userId == null && nullToAbsent ? const Value.absent() : Value(userId),
+      userId: userId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(userId),
       warehouseId: warehouseId == null && nullToAbsent
           ? const Value.absent()
           : Value(warehouseId),
@@ -553,8 +769,10 @@ class InventoryItem extends DataClass implements Insertable<InventoryItem> {
     );
   }
 
-  factory InventoryItem.fromJson(Map<String, dynamic> json,
-      {ValueSerializer? serializer}) {
+  factory InventoryItem.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
     serializer ??= driftRuntimeOptions.defaultSerializer;
     return InventoryItem(
       id: serializer.fromJson<String>(json['id']),
@@ -614,66 +832,69 @@ class InventoryItem extends DataClass implements Insertable<InventoryItem> {
     };
   }
 
-  InventoryItem copyWith(
-          {String? id,
-          String? nameAr,
-          String? nameEn,
-          Value<String?> sku = const Value.absent(),
-          Value<String?> barcode = const Value.absent(),
-          Value<String?> description = const Value.absent(),
-          Value<double?> purchasePrice = const Value.absent(),
-          Value<double?> salePrice = const Value.absent(),
-          double? currentQuantity,
-          Value<String?> unit = const Value.absent(),
-          Value<String?> categoryId = const Value.absent(),
-          String? valuationMethod,
-          Value<String?> assetAccountId = const Value.absent(),
-          Value<String?> cogsAccountId = const Value.absent(),
-          Value<String?> revenueAccountId = const Value.absent(),
-          Value<String?> primaryAccountId = const Value.absent(),
-          String? syncStatus,
-          Value<DateTime?> serverUpdatedAt = const Value.absent(),
-          bool? isDeleted,
-          DateTime? createdAt,
-          DateTime? updatedAt,
-          Value<String?> userId = const Value.absent(),
-          Value<String?> warehouseId = const Value.absent(),
-          String? taxCategory}) =>
-      InventoryItem(
-        id: id ?? this.id,
-        nameAr: nameAr ?? this.nameAr,
-        nameEn: nameEn ?? this.nameEn,
-        sku: sku.present ? sku.value : this.sku,
-        barcode: barcode.present ? barcode.value : this.barcode,
-        description: description.present ? description.value : this.description,
-        purchasePrice:
-            purchasePrice.present ? purchasePrice.value : this.purchasePrice,
-        salePrice: salePrice.present ? salePrice.value : this.salePrice,
-        currentQuantity: currentQuantity ?? this.currentQuantity,
-        unit: unit.present ? unit.value : this.unit,
-        categoryId: categoryId.present ? categoryId.value : this.categoryId,
-        valuationMethod: valuationMethod ?? this.valuationMethod,
-        assetAccountId:
-            assetAccountId.present ? assetAccountId.value : this.assetAccountId,
-        cogsAccountId:
-            cogsAccountId.present ? cogsAccountId.value : this.cogsAccountId,
-        revenueAccountId: revenueAccountId.present
-            ? revenueAccountId.value
-            : this.revenueAccountId,
-        primaryAccountId: primaryAccountId.present
-            ? primaryAccountId.value
-            : this.primaryAccountId,
-        syncStatus: syncStatus ?? this.syncStatus,
-        serverUpdatedAt: serverUpdatedAt.present
-            ? serverUpdatedAt.value
-            : this.serverUpdatedAt,
-        isDeleted: isDeleted ?? this.isDeleted,
-        createdAt: createdAt ?? this.createdAt,
-        updatedAt: updatedAt ?? this.updatedAt,
-        userId: userId.present ? userId.value : this.userId,
-        warehouseId: warehouseId.present ? warehouseId.value : this.warehouseId,
-        taxCategory: taxCategory ?? this.taxCategory,
-      );
+  InventoryItem copyWith({
+    String? id,
+    String? nameAr,
+    String? nameEn,
+    Value<String?> sku = const Value.absent(),
+    Value<String?> barcode = const Value.absent(),
+    Value<String?> description = const Value.absent(),
+    Value<double?> purchasePrice = const Value.absent(),
+    Value<double?> salePrice = const Value.absent(),
+    double? currentQuantity,
+    Value<String?> unit = const Value.absent(),
+    Value<String?> categoryId = const Value.absent(),
+    String? valuationMethod,
+    Value<String?> assetAccountId = const Value.absent(),
+    Value<String?> cogsAccountId = const Value.absent(),
+    Value<String?> revenueAccountId = const Value.absent(),
+    Value<String?> primaryAccountId = const Value.absent(),
+    String? syncStatus,
+    Value<DateTime?> serverUpdatedAt = const Value.absent(),
+    bool? isDeleted,
+    DateTime? createdAt,
+    DateTime? updatedAt,
+    Value<String?> userId = const Value.absent(),
+    Value<String?> warehouseId = const Value.absent(),
+    String? taxCategory,
+  }) => InventoryItem(
+    id: id ?? this.id,
+    nameAr: nameAr ?? this.nameAr,
+    nameEn: nameEn ?? this.nameEn,
+    sku: sku.present ? sku.value : this.sku,
+    barcode: barcode.present ? barcode.value : this.barcode,
+    description: description.present ? description.value : this.description,
+    purchasePrice: purchasePrice.present
+        ? purchasePrice.value
+        : this.purchasePrice,
+    salePrice: salePrice.present ? salePrice.value : this.salePrice,
+    currentQuantity: currentQuantity ?? this.currentQuantity,
+    unit: unit.present ? unit.value : this.unit,
+    categoryId: categoryId.present ? categoryId.value : this.categoryId,
+    valuationMethod: valuationMethod ?? this.valuationMethod,
+    assetAccountId: assetAccountId.present
+        ? assetAccountId.value
+        : this.assetAccountId,
+    cogsAccountId: cogsAccountId.present
+        ? cogsAccountId.value
+        : this.cogsAccountId,
+    revenueAccountId: revenueAccountId.present
+        ? revenueAccountId.value
+        : this.revenueAccountId,
+    primaryAccountId: primaryAccountId.present
+        ? primaryAccountId.value
+        : this.primaryAccountId,
+    syncStatus: syncStatus ?? this.syncStatus,
+    serverUpdatedAt: serverUpdatedAt.present
+        ? serverUpdatedAt.value
+        : this.serverUpdatedAt,
+    isDeleted: isDeleted ?? this.isDeleted,
+    createdAt: createdAt ?? this.createdAt,
+    updatedAt: updatedAt ?? this.updatedAt,
+    userId: userId.present ? userId.value : this.userId,
+    warehouseId: warehouseId.present ? warehouseId.value : this.warehouseId,
+    taxCategory: taxCategory ?? this.taxCategory,
+  );
   InventoryItem copyWithCompanion(InventoryItemsCompanion data) {
     return InventoryItem(
       id: data.id.present ? data.id.value : this.id,
@@ -681,8 +902,9 @@ class InventoryItem extends DataClass implements Insertable<InventoryItem> {
       nameEn: data.nameEn.present ? data.nameEn.value : this.nameEn,
       sku: data.sku.present ? data.sku.value : this.sku,
       barcode: data.barcode.present ? data.barcode.value : this.barcode,
-      description:
-          data.description.present ? data.description.value : this.description,
+      description: data.description.present
+          ? data.description.value
+          : this.description,
       purchasePrice: data.purchasePrice.present
           ? data.purchasePrice.value
           : this.purchasePrice,
@@ -691,8 +913,9 @@ class InventoryItem extends DataClass implements Insertable<InventoryItem> {
           ? data.currentQuantity.value
           : this.currentQuantity,
       unit: data.unit.present ? data.unit.value : this.unit,
-      categoryId:
-          data.categoryId.present ? data.categoryId.value : this.categoryId,
+      categoryId: data.categoryId.present
+          ? data.categoryId.value
+          : this.categoryId,
       valuationMethod: data.valuationMethod.present
           ? data.valuationMethod.value
           : this.valuationMethod,
@@ -708,8 +931,9 @@ class InventoryItem extends DataClass implements Insertable<InventoryItem> {
       primaryAccountId: data.primaryAccountId.present
           ? data.primaryAccountId.value
           : this.primaryAccountId,
-      syncStatus:
-          data.syncStatus.present ? data.syncStatus.value : this.syncStatus,
+      syncStatus: data.syncStatus.present
+          ? data.syncStatus.value
+          : this.syncStatus,
       serverUpdatedAt: data.serverUpdatedAt.present
           ? data.serverUpdatedAt.value
           : this.serverUpdatedAt,
@@ -717,10 +941,12 @@ class InventoryItem extends DataClass implements Insertable<InventoryItem> {
       createdAt: data.createdAt.present ? data.createdAt.value : this.createdAt,
       updatedAt: data.updatedAt.present ? data.updatedAt.value : this.updatedAt,
       userId: data.userId.present ? data.userId.value : this.userId,
-      warehouseId:
-          data.warehouseId.present ? data.warehouseId.value : this.warehouseId,
-      taxCategory:
-          data.taxCategory.present ? data.taxCategory.value : this.taxCategory,
+      warehouseId: data.warehouseId.present
+          ? data.warehouseId.value
+          : this.warehouseId,
+      taxCategory: data.taxCategory.present
+          ? data.taxCategory.value
+          : this.taxCategory,
     );
   }
 
@@ -757,31 +983,31 @@ class InventoryItem extends DataClass implements Insertable<InventoryItem> {
 
   @override
   int get hashCode => Object.hashAll([
-        id,
-        nameAr,
-        nameEn,
-        sku,
-        barcode,
-        description,
-        purchasePrice,
-        salePrice,
-        currentQuantity,
-        unit,
-        categoryId,
-        valuationMethod,
-        assetAccountId,
-        cogsAccountId,
-        revenueAccountId,
-        primaryAccountId,
-        syncStatus,
-        serverUpdatedAt,
-        isDeleted,
-        createdAt,
-        updatedAt,
-        userId,
-        warehouseId,
-        taxCategory
-      ]);
+    id,
+    nameAr,
+    nameEn,
+    sku,
+    barcode,
+    description,
+    purchasePrice,
+    salePrice,
+    currentQuantity,
+    unit,
+    categoryId,
+    valuationMethod,
+    assetAccountId,
+    cogsAccountId,
+    revenueAccountId,
+    primaryAccountId,
+    syncStatus,
+    serverUpdatedAt,
+    isDeleted,
+    createdAt,
+    updatedAt,
+    userId,
+    warehouseId,
+    taxCategory,
+  ]);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -891,11 +1117,11 @@ class InventoryItemsCompanion extends UpdateCompanion<InventoryItem> {
     this.warehouseId = const Value.absent(),
     this.taxCategory = const Value.absent(),
     this.rowid = const Value.absent(),
-  })  : id = Value(id),
-        nameAr = Value(nameAr),
-        nameEn = Value(nameEn),
-        createdAt = Value(createdAt),
-        updatedAt = Value(updatedAt);
+  }) : id = Value(id),
+       nameAr = Value(nameAr),
+       nameEn = Value(nameEn),
+       createdAt = Value(createdAt),
+       updatedAt = Value(updatedAt);
   static Insertable<InventoryItem> custom({
     Expression<String>? id,
     Expression<String>? nameAr,
@@ -952,32 +1178,33 @@ class InventoryItemsCompanion extends UpdateCompanion<InventoryItem> {
     });
   }
 
-  InventoryItemsCompanion copyWith(
-      {Value<String>? id,
-      Value<String>? nameAr,
-      Value<String>? nameEn,
-      Value<String?>? sku,
-      Value<String?>? barcode,
-      Value<String?>? description,
-      Value<double?>? purchasePrice,
-      Value<double?>? salePrice,
-      Value<double>? currentQuantity,
-      Value<String?>? unit,
-      Value<String?>? categoryId,
-      Value<String>? valuationMethod,
-      Value<String?>? assetAccountId,
-      Value<String?>? cogsAccountId,
-      Value<String?>? revenueAccountId,
-      Value<String?>? primaryAccountId,
-      Value<String>? syncStatus,
-      Value<DateTime?>? serverUpdatedAt,
-      Value<bool>? isDeleted,
-      Value<DateTime>? createdAt,
-      Value<DateTime>? updatedAt,
-      Value<String?>? userId,
-      Value<String?>? warehouseId,
-      Value<String>? taxCategory,
-      Value<int>? rowid}) {
+  InventoryItemsCompanion copyWith({
+    Value<String>? id,
+    Value<String>? nameAr,
+    Value<String>? nameEn,
+    Value<String?>? sku,
+    Value<String?>? barcode,
+    Value<String?>? description,
+    Value<double?>? purchasePrice,
+    Value<double?>? salePrice,
+    Value<double>? currentQuantity,
+    Value<String?>? unit,
+    Value<String?>? categoryId,
+    Value<String>? valuationMethod,
+    Value<String?>? assetAccountId,
+    Value<String?>? cogsAccountId,
+    Value<String?>? revenueAccountId,
+    Value<String?>? primaryAccountId,
+    Value<String>? syncStatus,
+    Value<DateTime?>? serverUpdatedAt,
+    Value<bool>? isDeleted,
+    Value<DateTime>? createdAt,
+    Value<DateTime>? updatedAt,
+    Value<String?>? userId,
+    Value<String?>? warehouseId,
+    Value<String>? taxCategory,
+    Value<int>? rowid,
+  }) {
     return InventoryItemsCompanion(
       id: id ?? this.id,
       nameAr: nameAr ?? this.nameAr,
@@ -1132,62 +1359,62 @@ abstract class _$InventoryDatabase extends GeneratedDatabase {
   List<DatabaseSchemaEntity> get allSchemaEntities => [inventoryItems];
 }
 
-typedef $$InventoryItemsTableCreateCompanionBuilder = InventoryItemsCompanion
-    Function({
-  required String id,
-  required String nameAr,
-  required String nameEn,
-  Value<String?> sku,
-  Value<String?> barcode,
-  Value<String?> description,
-  Value<double?> purchasePrice,
-  Value<double?> salePrice,
-  Value<double> currentQuantity,
-  Value<String?> unit,
-  Value<String?> categoryId,
-  Value<String> valuationMethod,
-  Value<String?> assetAccountId,
-  Value<String?> cogsAccountId,
-  Value<String?> revenueAccountId,
-  Value<String?> primaryAccountId,
-  Value<String> syncStatus,
-  Value<DateTime?> serverUpdatedAt,
-  Value<bool> isDeleted,
-  required DateTime createdAt,
-  required DateTime updatedAt,
-  Value<String?> userId,
-  Value<String?> warehouseId,
-  Value<String> taxCategory,
-  Value<int> rowid,
-});
-typedef $$InventoryItemsTableUpdateCompanionBuilder = InventoryItemsCompanion
-    Function({
-  Value<String> id,
-  Value<String> nameAr,
-  Value<String> nameEn,
-  Value<String?> sku,
-  Value<String?> barcode,
-  Value<String?> description,
-  Value<double?> purchasePrice,
-  Value<double?> salePrice,
-  Value<double> currentQuantity,
-  Value<String?> unit,
-  Value<String?> categoryId,
-  Value<String> valuationMethod,
-  Value<String?> assetAccountId,
-  Value<String?> cogsAccountId,
-  Value<String?> revenueAccountId,
-  Value<String?> primaryAccountId,
-  Value<String> syncStatus,
-  Value<DateTime?> serverUpdatedAt,
-  Value<bool> isDeleted,
-  Value<DateTime> createdAt,
-  Value<DateTime> updatedAt,
-  Value<String?> userId,
-  Value<String?> warehouseId,
-  Value<String> taxCategory,
-  Value<int> rowid,
-});
+typedef $$InventoryItemsTableCreateCompanionBuilder =
+    InventoryItemsCompanion Function({
+      required String id,
+      required String nameAr,
+      required String nameEn,
+      Value<String?> sku,
+      Value<String?> barcode,
+      Value<String?> description,
+      Value<double?> purchasePrice,
+      Value<double?> salePrice,
+      Value<double> currentQuantity,
+      Value<String?> unit,
+      Value<String?> categoryId,
+      Value<String> valuationMethod,
+      Value<String?> assetAccountId,
+      Value<String?> cogsAccountId,
+      Value<String?> revenueAccountId,
+      Value<String?> primaryAccountId,
+      Value<String> syncStatus,
+      Value<DateTime?> serverUpdatedAt,
+      Value<bool> isDeleted,
+      required DateTime createdAt,
+      required DateTime updatedAt,
+      Value<String?> userId,
+      Value<String?> warehouseId,
+      Value<String> taxCategory,
+      Value<int> rowid,
+    });
+typedef $$InventoryItemsTableUpdateCompanionBuilder =
+    InventoryItemsCompanion Function({
+      Value<String> id,
+      Value<String> nameAr,
+      Value<String> nameEn,
+      Value<String?> sku,
+      Value<String?> barcode,
+      Value<String?> description,
+      Value<double?> purchasePrice,
+      Value<double?> salePrice,
+      Value<double> currentQuantity,
+      Value<String?> unit,
+      Value<String?> categoryId,
+      Value<String> valuationMethod,
+      Value<String?> assetAccountId,
+      Value<String?> cogsAccountId,
+      Value<String?> revenueAccountId,
+      Value<String?> primaryAccountId,
+      Value<String> syncStatus,
+      Value<DateTime?> serverUpdatedAt,
+      Value<bool> isDeleted,
+      Value<DateTime> createdAt,
+      Value<DateTime> updatedAt,
+      Value<String?> userId,
+      Value<String?> warehouseId,
+      Value<String> taxCategory,
+      Value<int> rowid,
+    });
 
 class $$InventoryItemsTableFilterComposer
     extends Composer<_$InventoryDatabase, $InventoryItemsTable> {
@@ -1199,82 +1426,124 @@ class $$InventoryItemsTableFilterComposer
     super.$removeJoinBuilderFromRootComposer,
   });
   ColumnFilters<String> get id => $composableBuilder(
-      column: $table.id, builder: (column) => ColumnFilters(column));
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
 
   ColumnFilters<String> get nameAr => $composableBuilder(
-      column: $table.nameAr, builder: (column) => ColumnFilters(column));
+    column: $table.nameAr,
+    builder: (column) => ColumnFilters(column),
+  );
 
   ColumnFilters<String> get nameEn => $composableBuilder(
-      column: $table.nameEn, builder: (column) => ColumnFilters(column));
+    column: $table.nameEn,
+    builder: (column) => ColumnFilters(column),
+  );
 
   ColumnFilters<String> get sku => $composableBuilder(
-      column: $table.sku, builder: (column) => ColumnFilters(column));
+    column: $table.sku,
+    builder: (column) => ColumnFilters(column),
+  );
 
   ColumnFilters<String> get barcode => $composableBuilder(
-      column: $table.barcode, builder: (column) => ColumnFilters(column));
+    column: $table.barcode,
+    builder: (column) => ColumnFilters(column),
+  );
 
   ColumnFilters<String> get description => $composableBuilder(
-      column: $table.description, builder: (column) => ColumnFilters(column));
+    column: $table.description,
+    builder: (column) => ColumnFilters(column),
+  );
 
   ColumnFilters<double> get purchasePrice => $composableBuilder(
-      column: $table.purchasePrice, builder: (column) => ColumnFilters(column));
+    column: $table.purchasePrice,
+    builder: (column) => ColumnFilters(column),
+  );
 
   ColumnFilters<double> get salePrice => $composableBuilder(
-      column: $table.salePrice, builder: (column) => ColumnFilters(column));
+    column: $table.salePrice,
+    builder: (column) => ColumnFilters(column),
+  );
 
   ColumnFilters<double> get currentQuantity => $composableBuilder(
-      column: $table.currentQuantity,
-      builder: (column) => ColumnFilters(column));
+    column: $table.currentQuantity,
+    builder: (column) => ColumnFilters(column),
+  );
 
   ColumnFilters<String> get unit => $composableBuilder(
-      column: $table.unit, builder: (column) => ColumnFilters(column));
+    column: $table.unit,
+    builder: (column) => ColumnFilters(column),
+  );
 
   ColumnFilters<String> get categoryId => $composableBuilder(
-      column: $table.categoryId, builder: (column) => ColumnFilters(column));
+    column: $table.categoryId,
+    builder: (column) => ColumnFilters(column),
+  );
 
   ColumnFilters<String> get valuationMethod => $composableBuilder(
-      column: $table.valuationMethod,
-      builder: (column) => ColumnFilters(column));
+    column: $table.valuationMethod,
+    builder: (column) => ColumnFilters(column),
+  );
 
   ColumnFilters<String> get assetAccountId => $composableBuilder(
-      column: $table.assetAccountId,
-      builder: (column) => ColumnFilters(column));
+    column: $table.assetAccountId,
+    builder: (column) => ColumnFilters(column),
+  );
 
   ColumnFilters<String> get cogsAccountId => $composableBuilder(
-      column: $table.cogsAccountId, builder: (column) => ColumnFilters(column));
+    column: $table.cogsAccountId,
+    builder: (column) => ColumnFilters(column),
+  );
 
   ColumnFilters<String> get revenueAccountId => $composableBuilder(
-      column: $table.revenueAccountId,
-      builder: (column) => ColumnFilters(column));
+    column: $table.revenueAccountId,
+    builder: (column) => ColumnFilters(column),
+  );
 
   ColumnFilters<String> get primaryAccountId => $composableBuilder(
-      column: $table.primaryAccountId,
-      builder: (column) => ColumnFilters(column));
+    column: $table.primaryAccountId,
+    builder: (column) => ColumnFilters(column),
+  );
 
   ColumnFilters<String> get syncStatus => $composableBuilder(
-      column: $table.syncStatus, builder: (column) => ColumnFilters(column));
+    column: $table.syncStatus,
+    builder: (column) => ColumnFilters(column),
+  );
 
   ColumnFilters<DateTime> get serverUpdatedAt => $composableBuilder(
-      column: $table.serverUpdatedAt,
-      builder: (column) => ColumnFilters(column));
+    column: $table.serverUpdatedAt,
+    builder: (column) => ColumnFilters(column),
+  );
 
   ColumnFilters<bool> get isDeleted => $composableBuilder(
-      column: $table.isDeleted, builder: (column) => ColumnFilters(column));
+    column: $table.isDeleted,
+    builder: (column) => ColumnFilters(column),
+  );
 
   ColumnFilters<DateTime> get createdAt => $composableBuilder(
-      column: $table.createdAt, builder: (column) => ColumnFilters(column));
+    column: $table.createdAt,
+    builder: (column) => ColumnFilters(column),
+  );
 
   ColumnFilters<DateTime> get updatedAt => $composableBuilder(
-      column: $table.updatedAt, builder: (column) => ColumnFilters(column));
+    column: $table.updatedAt,
+    builder: (column) => ColumnFilters(column),
+  );
 
   ColumnFilters<String> get userId => $composableBuilder(
-      column: $table.userId, builder: (column) => ColumnFilters(column));
+    column: $table.userId,
+    builder: (column) => ColumnFilters(column),
+  );
 
   ColumnFilters<String> get warehouseId => $composableBuilder(
-      column: $table.warehouseId, builder: (column) => ColumnFilters(column));
+    column: $table.warehouseId,
+    builder: (column) => ColumnFilters(column),
+  );
 
   ColumnFilters<String> get taxCategory => $composableBuilder(
-      column: $table.taxCategory, builder: (column) => ColumnFilters(column));
+    column: $table.taxCategory,
+    builder: (column) => ColumnFilters(column),
+  );
 }
 
 class $$InventoryItemsTableOrderingComposer
@@ -1287,84 +1556,124 @@ class $$InventoryItemsTableOrderingComposer
     super.$removeJoinBuilderFromRootComposer,
   });
   ColumnOrderings<String> get id => $composableBuilder(
-      column: $table.id, builder: (column) => ColumnOrderings(column));
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
 
   ColumnOrderings<String> get nameAr => $composableBuilder(
-      column: $table.nameAr, builder: (column) => ColumnOrderings(column));
+    column: $table.nameAr,
+    builder: (column) => ColumnOrderings(column),
+  );
 
   ColumnOrderings<String> get nameEn => $composableBuilder(
-      column: $table.nameEn, builder: (column) => ColumnOrderings(column));
+    column: $table.nameEn,
+    builder: (column) => ColumnOrderings(column),
+  );
 
   ColumnOrderings<String> get sku => $composableBuilder(
-      column: $table.sku, builder: (column) => ColumnOrderings(column));
+    column: $table.sku,
+    builder: (column) => ColumnOrderings(column),
+  );
 
   ColumnOrderings<String> get barcode => $composableBuilder(
-      column: $table.barcode, builder: (column) => ColumnOrderings(column));
+    column: $table.barcode,
+    builder: (column) => ColumnOrderings(column),
+  );
 
   ColumnOrderings<String> get description => $composableBuilder(
-      column: $table.description, builder: (column) => ColumnOrderings(column));
+    column: $table.description,
+    builder: (column) => ColumnOrderings(column),
+  );
 
   ColumnOrderings<double> get purchasePrice => $composableBuilder(
-      column: $table.purchasePrice,
-      builder: (column) => ColumnOrderings(column));
+    column: $table.purchasePrice,
+    builder: (column) => ColumnOrderings(column),
+  );
 
   ColumnOrderings<double> get salePrice => $composableBuilder(
-      column: $table.salePrice, builder: (column) => ColumnOrderings(column));
+    column: $table.salePrice,
+    builder: (column) => ColumnOrderings(column),
+  );
 
   ColumnOrderings<double> get currentQuantity => $composableBuilder(
-      column: $table.currentQuantity,
-      builder: (column) => ColumnOrderings(column));
+    column: $table.currentQuantity,
+    builder: (column) => ColumnOrderings(column),
+  );
 
   ColumnOrderings<String> get unit => $composableBuilder(
-      column: $table.unit, builder: (column) => ColumnOrderings(column));
+    column: $table.unit,
+    builder: (column) => ColumnOrderings(column),
+  );
 
   ColumnOrderings<String> get categoryId => $composableBuilder(
-      column: $table.categoryId, builder: (column) => ColumnOrderings(column));
+    column: $table.categoryId,
+    builder: (column) => ColumnOrderings(column),
+  );
 
   ColumnOrderings<String> get valuationMethod => $composableBuilder(
-      column: $table.valuationMethod,
-      builder: (column) => ColumnOrderings(column));
+    column: $table.valuationMethod,
+    builder: (column) => ColumnOrderings(column),
+  );
 
   ColumnOrderings<String> get assetAccountId => $composableBuilder(
-      column: $table.assetAccountId,
-      builder: (column) => ColumnOrderings(column));
+    column: $table.assetAccountId,
+    builder: (column) => ColumnOrderings(column),
+  );
 
   ColumnOrderings<String> get cogsAccountId => $composableBuilder(
-      column: $table.cogsAccountId,
-      builder: (column) => ColumnOrderings(column));
+    column: $table.cogsAccountId,
+    builder: (column) => ColumnOrderings(column),
+  );
 
   ColumnOrderings<String> get revenueAccountId => $composableBuilder(
-      column: $table.revenueAccountId,
-      builder: (column) => ColumnOrderings(column));
+    column: $table.revenueAccountId,
+    builder: (column) => ColumnOrderings(column),
+  );
 
   ColumnOrderings<String> get primaryAccountId => $composableBuilder(
-      column: $table.primaryAccountId,
-      builder: (column) => ColumnOrderings(column));
+    column: $table.primaryAccountId,
+    builder: (column) => ColumnOrderings(column),
+  );
 
   ColumnOrderings<String> get syncStatus => $composableBuilder(
-      column: $table.syncStatus, builder: (column) => ColumnOrderings(column));
+    column: $table.syncStatus,
+    builder: (column) => ColumnOrderings(column),
+  );
 
   ColumnOrderings<DateTime> get serverUpdatedAt => $composableBuilder(
-      column: $table.serverUpdatedAt,
-      builder: (column) => ColumnOrderings(column));
+    column: $table.serverUpdatedAt,
+    builder: (column) => ColumnOrderings(column),
+  );
 
   ColumnOrderings<bool> get isDeleted => $composableBuilder(
-      column: $table.isDeleted, builder: (column) => ColumnOrderings(column));
+    column: $table.isDeleted,
+    builder: (column) => ColumnOrderings(column),
+  );
 
   ColumnOrderings<DateTime> get createdAt => $composableBuilder(
-      column: $table.createdAt, builder: (column) => ColumnOrderings(column));
+    column: $table.createdAt,
+    builder: (column) => ColumnOrderings(column),
+  );
 
   ColumnOrderings<DateTime> get updatedAt => $composableBuilder(
-      column: $table.updatedAt, builder: (column) => ColumnOrderings(column));
+    column: $table.updatedAt,
+    builder: (column) => ColumnOrderings(column),
+  );
 
   ColumnOrderings<String> get userId => $composableBuilder(
-      column: $table.userId, builder: (column) => ColumnOrderings(column));
+    column: $table.userId,
+    builder: (column) => ColumnOrderings(column),
+  );
 
   ColumnOrderings<String> get warehouseId => $composableBuilder(
-      column: $table.warehouseId, builder: (column) => ColumnOrderings(column));
+    column: $table.warehouseId,
+    builder: (column) => ColumnOrderings(column),
+  );
 
   ColumnOrderings<String> get taxCategory => $composableBuilder(
-      column: $table.taxCategory, builder: (column) => ColumnOrderings(column));
+    column: $table.taxCategory,
+    builder: (column) => ColumnOrderings(column),
+  );
 }
 
 class $$InventoryItemsTableAnnotationComposer
@@ -1392,43 +1701,65 @@ class $$InventoryItemsTableAnnotationComposer
       $composableBuilder(column: $table.barcode, builder: (column) => column);
 
   GeneratedColumn<String> get description => $composableBuilder(
-      column: $table.description, builder: (column) => column);
+    column: $table.description,
+    builder: (column) => column,
+  );
 
   GeneratedColumn<double> get purchasePrice => $composableBuilder(
-      column: $table.purchasePrice, builder: (column) => column);
+    column: $table.purchasePrice,
+    builder: (column) => column,
+  );
 
   GeneratedColumn<double> get salePrice =>
       $composableBuilder(column: $table.salePrice, builder: (column) => column);
 
   GeneratedColumn<double> get currentQuantity => $composableBuilder(
-      column: $table.currentQuantity, builder: (column) => column);
+    column: $table.currentQuantity,
+    builder: (column) => column,
+  );
 
   GeneratedColumn<String> get unit =>
       $composableBuilder(column: $table.unit, builder: (column) => column);
 
   GeneratedColumn<String> get categoryId => $composableBuilder(
-      column: $table.categoryId, builder: (column) => column);
+    column: $table.categoryId,
+    builder: (column) => column,
+  );
 
   GeneratedColumn<String> get valuationMethod => $composableBuilder(
-      column: $table.valuationMethod, builder: (column) => column);
+    column: $table.valuationMethod,
+    builder: (column) => column,
+  );
 
   GeneratedColumn<String> get assetAccountId => $composableBuilder(
-      column: $table.assetAccountId, builder: (column) => column);
+    column: $table.assetAccountId,
+    builder: (column) => column,
+  );
 
   GeneratedColumn<String> get cogsAccountId => $composableBuilder(
-      column: $table.cogsAccountId, builder: (column) => column);
+    column: $table.cogsAccountId,
+    builder: (column) => column,
+  );
 
   GeneratedColumn<String> get revenueAccountId => $composableBuilder(
-      column: $table.revenueAccountId, builder: (column) => column);
+    column: $table.revenueAccountId,
+    builder: (column) => column,
+  );
 
   GeneratedColumn<String> get primaryAccountId => $composableBuilder(
-      column: $table.primaryAccountId, builder: (column) => column);
+    column: $table.primaryAccountId,
+    builder: (column) => column,
+  );
 
   GeneratedColumn<String> get syncStatus => $composableBuilder(
-      column: $table.syncStatus, builder: (column) => column);
+    column: $table.syncStatus,
+    builder: (column) => column,
+  );
 
   GeneratedColumn<DateTime> get serverUpdatedAt => $composableBuilder(
-      column: $table.serverUpdatedAt, builder: (column) => column);
+    column: $table.serverUpdatedAt,
+    builder: (column) => column,
+  );
 
   GeneratedColumn<bool> get isDeleted =>
       $composableBuilder(column: $table.isDeleted, builder: (column) => column);
@@ -1443,30 +1774,43 @@ class $$InventoryItemsTableAnnotationComposer
       $composableBuilder(column: $table.userId, builder: (column) => column);
 
   GeneratedColumn<String> get warehouseId => $composableBuilder(
-      column: $table.warehouseId, builder: (column) => column);
+    column: $table.warehouseId,
+    builder: (column) => column,
+  );
 
   GeneratedColumn<String> get taxCategory => $composableBuilder(
-      column: $table.taxCategory, builder: (column) => column);
+    column: $table.taxCategory,
+    builder: (column) => column,
+  );
 }
 
-class $$InventoryItemsTableTableManager extends RootTableManager<
-    _$InventoryDatabase,
-    $InventoryItemsTable,
-    InventoryItem,
-    $$InventoryItemsTableFilterComposer,
-    $$InventoryItemsTableOrderingComposer,
-    $$InventoryItemsTableAnnotationComposer,
-    $$InventoryItemsTableCreateCompanionBuilder,
-    $$InventoryItemsTableUpdateCompanionBuilder,
-    (
-      InventoryItem,
-      BaseReferences<_$InventoryDatabase, $InventoryItemsTable, InventoryItem>
-    ),
-    InventoryItem,
-    PrefetchHooks Function()> {
+class $$InventoryItemsTableTableManager
+    extends
+        RootTableManager<
+          _$InventoryDatabase,
+          $InventoryItemsTable,
+          InventoryItem,
+          $$InventoryItemsTableFilterComposer,
+          $$InventoryItemsTableOrderingComposer,
+          $$InventoryItemsTableAnnotationComposer,
+          $$InventoryItemsTableCreateCompanionBuilder,
+          $$InventoryItemsTableUpdateCompanionBuilder,
+          (
+            InventoryItem,
+            BaseReferences<
+              _$InventoryDatabase,
+              $InventoryItemsTable,
+              InventoryItem
+            >,
+          ),
+          InventoryItem,
+          PrefetchHooks Function()
+        > {
   $$InventoryItemsTableTableManager(
-      _$InventoryDatabase db, $InventoryItemsTable table)
-      : super(TableManagerState(
+    _$InventoryDatabase db,
+    $InventoryItemsTable table,
+  ) : super(
+        TableManagerState(
           db: db,
           table: table,
           createFilteringComposer: () =>
@@ -1475,136 +1819,143 @@ class $$InventoryItemsTableTableManager extends RootTableManager<
               $$InventoryItemsTableOrderingComposer($db: db, $table: table),
           createComputedFieldComposer: () =>
               $$InventoryItemsTableAnnotationComposer($db: db, $table: table),
-          updateCompanionCallback: ({
-            Value<String> id = const Value.absent(),
-            Value<String> nameAr = const Value.absent(),
-            Value<String> nameEn = const Value.absent(),
-            Value<String?> sku = const Value.absent(),
-            Value<String?> barcode = const Value.absent(),
-            Value<String?> description = const Value.absent(),
-            Value<double?> purchasePrice = const Value.absent(),
-            Value<double?> salePrice = const Value.absent(),
-            Value<double> currentQuantity = const Value.absent(),
-            Value<String?> unit = const Value.absent(),
-            Value<String?> categoryId = const Value.absent(),
-            Value<String> valuationMethod = const Value.absent(),
-            Value<String?> assetAccountId = const Value.absent(),
-            Value<String?> cogsAccountId = const Value.absent(),
-            Value<String?> revenueAccountId = const Value.absent(),
-            Value<String?> primaryAccountId = const Value.absent(),
-            Value<String> syncStatus = const Value.absent(),
-            Value<DateTime?> serverUpdatedAt = const Value.absent(),
-            Value<bool> isDeleted = const Value.absent(),
-            Value<DateTime> createdAt = const Value.absent(),
-            Value<DateTime> updatedAt = const Value.absent(),
-            Value<String?> userId = const Value.absent(),
-            Value<String?> warehouseId = const Value.absent(),
-            Value<String> taxCategory = const Value.absent(),
-            Value<int> rowid = const Value.absent(),
-          }) =>
-              InventoryItemsCompanion(
-            id: id,
-            nameAr: nameAr,
-            nameEn: nameEn,
-            sku: sku,
-            barcode: barcode,
-            description: description,
-            purchasePrice: purchasePrice,
-            salePrice: salePrice,
-            currentQuantity: currentQuantity,
-            unit: unit,
-            categoryId: categoryId,
-            valuationMethod: valuationMethod,
-            assetAccountId: assetAccountId,
-            cogsAccountId: cogsAccountId,
-            revenueAccountId: revenueAccountId,
-            primaryAccountId: primaryAccountId,
-            syncStatus: syncStatus,
-            serverUpdatedAt: serverUpdatedAt,
-            isDeleted: isDeleted,
-            createdAt: createdAt,
-            updatedAt: updatedAt,
-            userId: userId,
-            warehouseId: warehouseId,
-            taxCategory: taxCategory,
-            rowid: rowid,
-          ),
-          createCompanionCallback: ({
-            required String id,
-            required String nameAr,
-            required String nameEn,
-            Value<String?> sku = const Value.absent(),
-            Value<String?> barcode = const Value.absent(),
-            Value<String?> description = const Value.absent(),
-            Value<double?> purchasePrice = const Value.absent(),
-            Value<double?> salePrice = const Value.absent(),
-            Value<double> currentQuantity = const Value.absent(),
-            Value<String?> unit = const Value.absent(),
-            Value<String?> categoryId = const Value.absent(),
-            Value<String> valuationMethod = const Value.absent(),
-            Value<String?> assetAccountId = const Value.absent(),
-            Value<String?> cogsAccountId = const Value.absent(),
-            Value<String?> revenueAccountId = const Value.absent(),
-            Value<String?> primaryAccountId = const Value.absent(),
-            Value<String> syncStatus = const Value.absent(),
-            Value<DateTime?> serverUpdatedAt = const Value.absent(),
-            Value<bool> isDeleted = const Value.absent(),
-            required DateTime createdAt,
-            required DateTime updatedAt,
-            Value<String?> userId = const Value.absent(),
-            Value<String?> warehouseId = const Value.absent(),
-            Value<String> taxCategory = const Value.absent(),
-            Value<int> rowid = const Value.absent(),
-          }) =>
-              InventoryItemsCompanion.insert(
-            id: id,
-            nameAr: nameAr,
-            nameEn: nameEn,
-            sku: sku,
-            barcode: barcode,
-            description: description,
-            purchasePrice: purchasePrice,
-            salePrice: salePrice,
-            currentQuantity: currentQuantity,
-            unit: unit,
-            categoryId: categoryId,
-            valuationMethod: valuationMethod,
-            assetAccountId: assetAccountId,
-            cogsAccountId: cogsAccountId,
-            revenueAccountId: revenueAccountId,
-            primaryAccountId: primaryAccountId,
-            syncStatus: syncStatus,
-            serverUpdatedAt: serverUpdatedAt,
-            isDeleted: isDeleted,
-            createdAt: createdAt,
-            updatedAt: updatedAt,
-            userId: userId,
-            warehouseId: warehouseId,
-            taxCategory: taxCategory,
-            rowid: rowid,
-          ),
+          updateCompanionCallback:
+              ({
+                Value<String> id = const Value.absent(),
+                Value<String> nameAr = const Value.absent(),
+                Value<String> nameEn = const Value.absent(),
+                Value<String?> sku = const Value.absent(),
+                Value<String?> barcode = const Value.absent(),
+                Value<String?> description = const Value.absent(),
+                Value<double?> purchasePrice = const Value.absent(),
+                Value<double?> salePrice = const Value.absent(),
+                Value<double> currentQuantity = const Value.absent(),
+                Value<String?> unit = const Value.absent(),
+                Value<String?> categoryId = const Value.absent(),
+                Value<String> valuationMethod = const Value.absent(),
+                Value<String?> assetAccountId = const Value.absent(),
+                Value<String?> cogsAccountId = const Value.absent(),
+                Value<String?> revenueAccountId = const Value.absent(),
+                Value<String?> primaryAccountId = const Value.absent(),
+                Value<String> syncStatus = const Value.absent(),
+                Value<DateTime?> serverUpdatedAt = const Value.absent(),
+                Value<bool> isDeleted = const Value.absent(),
+                Value<DateTime> createdAt = const Value.absent(),
+                Value<DateTime> updatedAt = const Value.absent(),
+                Value<String?> userId = const Value.absent(),
+                Value<String?> warehouseId = const Value.absent(),
+                Value<String> taxCategory = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => InventoryItemsCompanion(
+                id: id,
+                nameAr: nameAr,
+                nameEn: nameEn,
+                sku: sku,
+                barcode: barcode,
+                description: description,
+                purchasePrice: purchasePrice,
+                salePrice: salePrice,
+                currentQuantity: currentQuantity,
+                unit: unit,
+                categoryId: categoryId,
+                valuationMethod: valuationMethod,
+                assetAccountId: assetAccountId,
+                cogsAccountId: cogsAccountId,
+                revenueAccountId: revenueAccountId,
+                primaryAccountId: primaryAccountId,
+                syncStatus: syncStatus,
+                serverUpdatedAt: serverUpdatedAt,
+                isDeleted: isDeleted,
+                createdAt: createdAt,
+                updatedAt: updatedAt,
+                userId: userId,
+                warehouseId: warehouseId,
+                taxCategory: taxCategory,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                required String id,
+                required String nameAr,
+                required String nameEn,
+                Value<String?> sku = const Value.absent(),
+                Value<String?> barcode = const Value.absent(),
+                Value<String?> description = const Value.absent(),
+                Value<double?> purchasePrice = const Value.absent(),
+                Value<double?> salePrice = const Value.absent(),
+                Value<double> currentQuantity = const Value.absent(),
+                Value<String?> unit = const Value.absent(),
+                Value<String?> categoryId = const Value.absent(),
+                Value<String> valuationMethod = const Value.absent(),
+                Value<String?> assetAccountId = const Value.absent(),
+                Value<String?> cogsAccountId = const Value.absent(),
+                Value<String?> revenueAccountId = const Value.absent(),
+                Value<String?> primaryAccountId = const Value.absent(),
+                Value<String> syncStatus = const Value.absent(),
+                Value<DateTime?> serverUpdatedAt = const Value.absent(),
+                Value<bool> isDeleted = const Value.absent(),
+                required DateTime createdAt,
+                required DateTime updatedAt,
+                Value<String?> userId = const Value.absent(),
+                Value<String?> warehouseId = const Value.absent(),
+                Value<String> taxCategory = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => InventoryItemsCompanion.insert(
+                id: id,
+                nameAr: nameAr,
+                nameEn: nameEn,
+                sku: sku,
+                barcode: barcode,
+                description: description,
+                purchasePrice: purchasePrice,
+                salePrice: salePrice,
+                currentQuantity: currentQuantity,
+                unit: unit,
+                categoryId: categoryId,
+                valuationMethod: valuationMethod,
+                assetAccountId: assetAccountId,
+                cogsAccountId: cogsAccountId,
+                revenueAccountId: revenueAccountId,
+                primaryAccountId: primaryAccountId,
+                syncStatus: syncStatus,
+                serverUpdatedAt: serverUpdatedAt,
+                isDeleted: isDeleted,
+                createdAt: createdAt,
+                updatedAt: updatedAt,
+                userId: userId,
+                warehouseId: warehouseId,
+                taxCategory: taxCategory,
+                rowid: rowid,
+              ),
           withReferenceMapper: (p0) => p0
               .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
               .toList(),
           prefetchHooksCallback: null,
-        ));
+        ),
+      );
 }
 
-typedef $$InventoryItemsTableProcessedTableManager = ProcessedTableManager<
-    _$InventoryDatabase,
-    $InventoryItemsTable,
-    InventoryItem,
-    $$InventoryItemsTableFilterComposer,
-    $$InventoryItemsTableOrderingComposer,
-    $$InventoryItemsTableAnnotationComposer,
-    $$InventoryItemsTableCreateCompanionBuilder,
-    $$InventoryItemsTableUpdateCompanionBuilder,
-    (
+typedef $$InventoryItemsTableProcessedTableManager =
+    ProcessedTableManager<
+      _$InventoryDatabase,
+      $InventoryItemsTable,
       InventoryItem,
-      BaseReferences<_$InventoryDatabase, $InventoryItemsTable, InventoryItem>
-    ),
-    InventoryItem,
-    PrefetchHooks Function()>;
+      $$InventoryItemsTableFilterComposer,
+      $$InventoryItemsTableOrderingComposer,
+      $$InventoryItemsTableAnnotationComposer,
+      $$InventoryItemsTableCreateCompanionBuilder,
+      $$InventoryItemsTableUpdateCompanionBuilder,
+      (
+        InventoryItem,
+        BaseReferences<
+          _$InventoryDatabase,
+          $InventoryItemsTable,
+          InventoryItem
+        >,
+      ),
+      InventoryItem,
+      PrefetchHooks Function()
+    >;
 
 class $InventoryDatabaseManager {
   final _$InventoryDatabase _db;

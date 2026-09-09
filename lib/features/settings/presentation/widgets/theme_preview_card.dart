@@ -34,9 +34,9 @@ class ThemePreviewCard extends StatelessWidget {
                 Text(
                   'معاينة المظهر',
                   style: Theme.of(context).textTheme.labelLarge?.copyWith(
-                        color: colorScheme.primary,
-                        fontWeight: FontWeight.bold,
-                      ),
+                    color: colorScheme.primary,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
               ],
             ),
@@ -87,8 +87,8 @@ class ThemePreviewCard extends StatelessWidget {
                     Text(
                       'نص توضيحي فرعي',
                       style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                            color: colorScheme.onSurfaceVariant,
-                          ),
+                        color: colorScheme.onSurfaceVariant,
+                      ),
                     ),
                   ],
                 ),

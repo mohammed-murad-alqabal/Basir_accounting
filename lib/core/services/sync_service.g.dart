@@ -36,13 +36,14 @@ String _$syncServiceHash() => r'fee6ac25b4635bdbfc01f9d8420a407f73f66fc8';
 @ProviderFor(SyncService)
 final syncServiceProvider =
     AutoDisposeAsyncNotifierProvider<SyncService, void>.internal(
-  SyncService.new,
-  name: r'syncServiceProvider',
-  debugGetCreateSourceHash:
-      const bool.fromEnvironment('dart.vm.product') ? null : _$syncServiceHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
+      SyncService.new,
+      name: r'syncServiceProvider',
+      debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+          ? null
+          : _$syncServiceHash,
+      dependencies: null,
+      allTransitiveDependencies: null,
+    );
 
 typedef _$SyncService = AutoDisposeAsyncNotifier<void>;
 // ignore_for_file: type=lint

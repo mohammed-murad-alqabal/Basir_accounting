@@ -108,27 +108,27 @@ class FinancialVoucherModel {
 
   /// تحويل النموذج إلى كيان سند مالي.
   FinancialVoucher toEntity() => FinancialVoucher(
-        id: id,
-        referenceNumber: referenceNumber,
-        date: date,
-        type: type,
-        paymentMethod: paymentMethod,
-        amount: Decimal.parse(amount),
-        accountId: accountId,
-        treasuryAccountId: treasuryAccountId,
-        description: description,
-        createdAt: createdAt,
-        personName: personName,
-        isPosted: isPosted,
-        journalEntryId: journalEntryId,
-        userId: userId,
-        originalCurrency: originalCurrency,
-        exchangeRate:
-            exchangeRate != null ? Decimal.parse(exchangeRate!) : null,
-        originalAmount:
-            originalAmount != null ? Decimal.parse(originalAmount!) : null,
-        syncStatus: syncStatus,
-        serverUpdatedAt: serverUpdatedAt,
-        isDeleted: isDeleted,
-      );
+    id: id,
+    referenceNumber: referenceNumber,
+    date: date,
+    type: type,
+    paymentMethod: paymentMethod,
+    amount: Decimal.parse(amount),
+    accountId: accountId,
+    treasuryAccountId: treasuryAccountId,
+    description: description,
+    createdAt: createdAt,
+    personName: personName,
+    isPosted: isPosted,
+    journalEntryId: journalEntryId,
+    userId: userId,
+    originalCurrency: originalCurrency,
+    exchangeRate: exchangeRate != null ? Decimal.parse(exchangeRate!) : null,
+    originalAmount: originalAmount != null
+        ? Decimal.parse(originalAmount!)
+        : null,
+    syncStatus: syncStatus,
+    serverUpdatedAt: serverUpdatedAt,
+    isDeleted: isDeleted,
+  );
 }

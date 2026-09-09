@@ -242,28 +242,28 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
   }
 
   Widget _buildHeader(ColorScheme colorScheme) => Column(
-        children: [
-          Semantics(
-            label: context.l10n.dashboardBasirSystemTitle,
-            image: true,
-            child: const BasirLogo(size: 140),
-          ),
-          const SizedBox(height: Spacing.lg),
-          Text(
-            context.l10n.loginTitle,
-            style: AppTextStyles.headlineSmall.copyWith(
-              fontWeight: FontWeights.bold,
-              color: colorScheme.onSurface,
-            ),
-          ),
-          const SizedBox(height: Spacing.xs),
-          Text(
-            context.l10n.loginSubtitle,
-            textAlign: TextAlign.center,
-            style: AppTextStyles.bodyMedium.copyWith(
-              color: colorScheme.onSurfaceVariant,
-            ),
-          ),
-        ],
-      );
+    children: [
+      Semantics(
+        label: context.l10n.dashboardBasirSystemTitle,
+        image: true,
+        child: const BasirLogo(size: 140),
+      ),
+      const SizedBox(height: Spacing.lg),
+      Text(
+        context.l10n.loginTitle,
+        style: AppTextStyles.headlineSmall.copyWith(
+          fontWeight: FontWeights.bold,
+          color: colorScheme.onSurface,
+        ),
+      ),
+      const SizedBox(height: Spacing.xs),
+      Text(
+        context.l10n.loginSubtitle,
+        textAlign: TextAlign.center,
+        style: AppTextStyles.bodyMedium.copyWith(
+          color: colorScheme.onSurfaceVariant,
+        ),
+      ),
+    ],
+  );
 }

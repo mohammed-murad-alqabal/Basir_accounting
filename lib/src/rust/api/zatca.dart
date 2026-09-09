@@ -11,19 +11,23 @@ import 'package:flutter_rust_bridge/flutter_rust_bridge_for_generated.dart';
 Future<(String, String)> generateZatcaKeyPair() =>
     RustLib.instance.api.crateApiZatcaGenerateZatcaKeyPair();
 
-Future<String> generateZatcaCsr(
-        {required ZatcaCsrInputDto input, required String keyPairPem}) =>
-    RustLib.instance.api
-        .crateApiZatcaGenerateZatcaCsr(input: input, keyPairPem: keyPairPem);
+Future<String> generateZatcaCsr({
+  required ZatcaCsrInputDto input,
+  required String keyPairPem,
+}) => RustLib.instance.api.crateApiZatcaGenerateZatcaCsr(
+  input: input,
+  keyPairPem: keyPairPem,
+);
 
-Future<(String, String)> generateZatcaSignedXml(
-        {required ZatcaInvoiceInputDto input,
-        required String certificatePem,
-        required String privateKeyPem}) =>
-    RustLib.instance.api.crateApiZatcaGenerateZatcaSignedXml(
-        input: input,
-        certificatePem: certificatePem,
-        privateKeyPem: privateKeyPem);
+Future<(String, String)> generateZatcaSignedXml({
+  required ZatcaInvoiceInputDto input,
+  required String certificatePem,
+  required String privateKeyPem,
+}) => RustLib.instance.api.crateApiZatcaGenerateZatcaSignedXml(
+  input: input,
+  certificatePem: certificatePem,
+  privateKeyPem: privateKeyPem,
+);
 
 class ZatcaCsrInputDto {
   final String commonName;
@@ -166,10 +170,7 @@ class ZatcaPartyDto {
   final String partyId;
   final String partyIdScheme;
 
-  const ZatcaPartyDto({
-    required this.partyId,
-    required this.partyIdScheme,
-  });
+  const ZatcaPartyDto({required this.partyId, required this.partyIdScheme});
 
   @override
   int get hashCode => partyId.hashCode ^ partyIdScheme.hashCode;

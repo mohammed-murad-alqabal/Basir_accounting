@@ -118,7 +118,8 @@ abstract class RustLibApiImplPlatform extends BaseApiImpl<RustLibWire> {
 
   @protected
   ZatcaInvoiceInputDto dco_decode_box_autoadd_zatca_invoice_input_dto(
-      dynamic raw);
+    dynamic raw,
+  );
 
   @protected
   CustomerDto dco_decode_customer_dto(dynamic raw);
@@ -155,7 +156,8 @@ abstract class RustLibApiImplPlatform extends BaseApiImpl<RustLibWire> {
 
   @protected
   InventoryValuationReportDto dco_decode_inventory_valuation_report_dto(
-      dynamic raw);
+    dynamic raw,
+  );
 
   @protected
   LineDto dco_decode_line_dto(dynamic raw);
@@ -192,7 +194,8 @@ abstract class RustLibApiImplPlatform extends BaseApiImpl<RustLibWire> {
 
   @protected
   List<FinancialReportLineDto> dco_decode_list_financial_report_line_dto(
-      dynamic raw);
+    dynamic raw,
+  );
 
   @protected
   List<InventoryItemDto> dco_decode_list_inventory_item_dto(dynamic raw);
@@ -343,7 +346,8 @@ abstract class RustLibApiImplPlatform extends BaseApiImpl<RustLibWire> {
 
   @protected
   Map<String, String> sse_decode_Map_String_String_None(
-      SseDeserializer deserializer);
+    SseDeserializer deserializer,
+  );
 
   @protected
   String sse_decode_String(SseDeserializer deserializer);
@@ -353,7 +357,8 @@ abstract class RustLibApiImplPlatform extends BaseApiImpl<RustLibWire> {
 
   @protected
   AgingReportLineDto sse_decode_aging_report_line_dto(
-      SseDeserializer deserializer);
+    SseDeserializer deserializer,
+  );
 
   @protected
   AnomalyDto sse_decode_anomaly_dto(SseDeserializer deserializer);
@@ -381,73 +386,86 @@ abstract class RustLibApiImplPlatform extends BaseApiImpl<RustLibWire> {
 
   @protected
   AssetCategoryDto sse_decode_box_autoadd_asset_category_dto(
-      SseDeserializer deserializer);
+    SseDeserializer deserializer,
+  );
 
   @protected
   AssetDto sse_decode_box_autoadd_asset_dto(SseDeserializer deserializer);
 
   @protected
   AuditMetadataDto sse_decode_box_autoadd_audit_metadata_dto(
-      SseDeserializer deserializer);
+    SseDeserializer deserializer,
+  );
 
   @protected
   BillPaymentDto sse_decode_box_autoadd_bill_payment_dto(
-      SseDeserializer deserializer);
+    SseDeserializer deserializer,
+  );
 
   @protected
   CustomerDto sse_decode_box_autoadd_customer_dto(SseDeserializer deserializer);
 
   @protected
   CustomerPaymentDto sse_decode_box_autoadd_customer_payment_dto(
-      SseDeserializer deserializer);
+    SseDeserializer deserializer,
+  );
 
   @protected
   EntryDto sse_decode_box_autoadd_entry_dto(SseDeserializer deserializer);
 
   @protected
   ExchangeRateDto sse_decode_box_autoadd_exchange_rate_dto(
-      SseDeserializer deserializer);
+    SseDeserializer deserializer,
+  );
 
   @protected
   InventoryItemDto sse_decode_box_autoadd_inventory_item_dto(
-      SseDeserializer deserializer);
+    SseDeserializer deserializer,
+  );
 
   @protected
   PeriodDto sse_decode_box_autoadd_period_dto(SseDeserializer deserializer);
 
   @protected
   PurchaseBillDto sse_decode_box_autoadd_purchase_bill_dto(
-      SseDeserializer deserializer);
+    SseDeserializer deserializer,
+  );
 
   @protected
   SalesInvoiceDto sse_decode_box_autoadd_sales_invoice_dto(
-      SseDeserializer deserializer);
+    SseDeserializer deserializer,
+  );
 
   @protected
   StockMovementDto sse_decode_box_autoadd_stock_movement_dto(
-      SseDeserializer deserializer);
+    SseDeserializer deserializer,
+  );
 
   @protected
   VendorDto sse_decode_box_autoadd_vendor_dto(SseDeserializer deserializer);
 
   @protected
   ZatcaCsrInputDto sse_decode_box_autoadd_zatca_csr_input_dto(
-      SseDeserializer deserializer);
+    SseDeserializer deserializer,
+  );
 
   @protected
   ZatcaInvoiceInputDto sse_decode_box_autoadd_zatca_invoice_input_dto(
-      SseDeserializer deserializer);
+    SseDeserializer deserializer,
+  );
 
   @protected
   CustomerDto sse_decode_customer_dto(SseDeserializer deserializer);
 
   @protected
   CustomerPaymentDto sse_decode_customer_payment_dto(
-      SseDeserializer deserializer);
+    SseDeserializer deserializer,
+  );
 
   @protected
   DrillDownEntryDto sse_decode_drill_down_entry_dto(
-      SseDeserializer deserializer);
+    SseDeserializer deserializer,
+  );
 
   @protected
   EntryDto sse_decode_entry_dto(SseDeserializer deserializer);
@@ -457,11 +475,13 @@ abstract class RustLibApiImplPlatform extends BaseApiImpl<RustLibWire> {
 
   @protected
   FinancialReportDto sse_decode_financial_report_dto(
-      SseDeserializer deserializer);
+    SseDeserializer deserializer,
+  );
 
   @protected
   FinancialReportLineDto sse_decode_financial_report_line_dto(
-      SseDeserializer deserializer);
+    SseDeserializer deserializer,
+  );
 
   @protected
   HowDto sse_decode_how_dto(SseDeserializer deserializer);
@@ -477,7 +497,8 @@ abstract class RustLibApiImplPlatform extends BaseApiImpl<RustLibWire> {
 
   @protected
   InventoryValuationReportDto sse_decode_inventory_valuation_report_dto(
-      SseDeserializer deserializer);
+    SseDeserializer deserializer,
+  );
 
   @protected
   LineDto sse_decode_line_dto(SseDeserializer deserializer);
@@ -487,43 +508,50 @@ abstract class RustLibApiImplPlatform extends BaseApiImpl<RustLibWire> {
 
   @protected
   List<AgingReportLineDto> sse_decode_list_aging_report_line_dto(
-      SseDeserializer deserializer);
+    SseDeserializer deserializer,
+  );
 
   @protected
   List<AnomalyDto> sse_decode_list_anomaly_dto(SseDeserializer deserializer);
 
   @protected
   List<AssetCategoryDto> sse_decode_list_asset_category_dto(
-      SseDeserializer deserializer);
+    SseDeserializer deserializer,
+  );
 
   @protected
   List<AssetDto> sse_decode_list_asset_dto(SseDeserializer deserializer);
 
   @protected
   List<AuditRecordDto> sse_decode_list_audit_record_dto(
-      SseDeserializer deserializer);
+    SseDeserializer deserializer,
+  );
 
   @protected
   List<CustomerDto> sse_decode_list_customer_dto(SseDeserializer deserializer);
 
   @protected
   List<DrillDownEntryDto> sse_decode_list_drill_down_entry_dto(
-      SseDeserializer deserializer);
+    SseDeserializer deserializer,
+  );
 
   @protected
   List<EntryDto> sse_decode_list_entry_dto(SseDeserializer deserializer);
 
   @protected
   List<ExchangeRateDto> sse_decode_list_exchange_rate_dto(
-      SseDeserializer deserializer);
+    SseDeserializer deserializer,
+  );
 
   @protected
   List<FinancialReportLineDto> sse_decode_list_financial_report_line_dto(
-      SseDeserializer deserializer);
+    SseDeserializer deserializer,
+  );
 
   @protected
   List<InventoryItemDto> sse_decode_list_inventory_item_dto(
-      SseDeserializer deserializer);
+    SseDeserializer deserializer,
+  );
 
   @protected
   List<LineDto> sse_decode_list_line_dto(SseDeserializer deserializer);
@@ -536,79 +564,95 @@ abstract class RustLibApiImplPlatform extends BaseApiImpl<RustLibWire> {
 
   @protected
   List<PurchaseBillDto> sse_decode_list_purchase_bill_dto(
-      SseDeserializer deserializer);
+    SseDeserializer deserializer,
+  );
 
   @protected
   List<(String, String)> sse_decode_list_record_string_string(
-      SseDeserializer deserializer);
+    SseDeserializer deserializer,
+  );
 
   @protected
   List<SalesInvoiceDto> sse_decode_list_sales_invoice_dto(
-      SseDeserializer deserializer);
+    SseDeserializer deserializer,
+  );
 
   @protected
   List<SalesInvoiceLineDto> sse_decode_list_sales_invoice_line_dto(
-      SseDeserializer deserializer);
+    SseDeserializer deserializer,
+  );
 
   @protected
   List<StandardDto> sse_decode_list_standard_dto(SseDeserializer deserializer);
 
   @protected
   List<StockMovementDto> sse_decode_list_stock_movement_dto(
-      SseDeserializer deserializer);
+    SseDeserializer deserializer,
+  );
 
   @protected
   List<TrialBalanceLineDto> sse_decode_list_trial_balance_line_dto(
-      SseDeserializer deserializer);
+    SseDeserializer deserializer,
+  );
 
   @protected
   List<ValuationItemDto> sse_decode_list_valuation_item_dto(
-      SseDeserializer deserializer);
+    SseDeserializer deserializer,
+  );
 
   @protected
   List<VendorDto> sse_decode_list_vendor_dto(SseDeserializer deserializer);
 
   @protected
   List<ZatcaInvoiceLineDto> sse_decode_list_zatca_invoice_line_dto(
-      SseDeserializer deserializer);
+    SseDeserializer deserializer,
+  );
 
   @protected
   Map<String, String>? sse_decode_opt_Map_String_String_None(
-      SseDeserializer deserializer);
+    SseDeserializer deserializer,
+  );
 
   @protected
   String? sse_decode_opt_String(SseDeserializer deserializer);
 
   @protected
   AccountDto? sse_decode_opt_box_autoadd_account_dto(
-      SseDeserializer deserializer);
+    SseDeserializer deserializer,
+  );
 
   @protected
   AssetDto? sse_decode_opt_box_autoadd_asset_dto(SseDeserializer deserializer);
 
   @protected
   ExchangeRateDto? sse_decode_opt_box_autoadd_exchange_rate_dto(
-      SseDeserializer deserializer);
+    SseDeserializer deserializer,
+  );
 
   @protected
   InventoryItemDto? sse_decode_opt_box_autoadd_inventory_item_dto(
-      SseDeserializer deserializer);
+    SseDeserializer deserializer,
+  );
 
   @protected
   PeriodDto? sse_decode_opt_box_autoadd_period_dto(
-      SseDeserializer deserializer);
+    SseDeserializer deserializer,
+  );
 
   @protected
   PurchaseBillDto? sse_decode_opt_box_autoadd_purchase_bill_dto(
-      SseDeserializer deserializer);
+    SseDeserializer deserializer,
+  );
 
   @protected
   SalesInvoiceDto? sse_decode_opt_box_autoadd_sales_invoice_dto(
-      SseDeserializer deserializer);
+    SseDeserializer deserializer,
+  );
 
   @protected
   VendorDto? sse_decode_opt_box_autoadd_vendor_dto(
-      SseDeserializer deserializer);
+    SseDeserializer deserializer,
+  );
 
   @protected
   PeriodDto sse_decode_period_dto(SseDeserializer deserializer);
@@ -618,14 +662,16 @@ abstract class RustLibApiImplPlatform extends BaseApiImpl<RustLibWire> {
 
   @protected
   (String, String) sse_decode_record_string_string(
-      SseDeserializer deserializer);
+    SseDeserializer deserializer,
+  );
 
   @protected
   SalesInvoiceDto sse_decode_sales_invoice_dto(SseDeserializer deserializer);
 
   @protected
   SalesInvoiceLineDto sse_decode_sales_invoice_line_dto(
-      SseDeserializer deserializer);
+    SseDeserializer deserializer,
+  );
 
   @protected
   StandardDto sse_decode_standard_dto(SseDeserializer deserializer);
@@ -638,7 +684,8 @@ abstract class RustLibApiImplPlatform extends BaseApiImpl<RustLibWire> {
 
   @protected
   TrialBalanceLineDto sse_decode_trial_balance_line_dto(
-      SseDeserializer deserializer);
+    SseDeserializer deserializer,
+  );
 
   @protected
   int sse_decode_u_32(SseDeserializer deserializer);
@@ -678,22 +725,28 @@ abstract class RustLibApiImplPlatform extends BaseApiImpl<RustLibWire> {
 
   @protected
   ZatcaInvoiceInputDto sse_decode_zatca_invoice_input_dto(
-      SseDeserializer deserializer);
+    SseDeserializer deserializer,
+  );
 
   @protected
   ZatcaInvoiceLineDto sse_decode_zatca_invoice_line_dto(
-      SseDeserializer deserializer);
+    SseDeserializer deserializer,
+  );
 
   @protected
   ZatcaPartyDto sse_decode_zatca_party_dto(SseDeserializer deserializer);
 
   @protected
   void sse_encode_AnyhowException(
-      AnyhowException self, SseSerializer serializer);
+    AnyhowException self,
+    SseSerializer serializer,
+  );
 
   @protected
   void sse_encode_Map_String_String_None(
-      Map<String, String> self, SseSerializer serializer);
+    Map<String, String> self,
+    SseSerializer serializer,
+  );
 
   @protected
   void sse_encode_String(String self, SseSerializer serializer);
@@ -703,126 +756,180 @@ abstract class RustLibApiImplPlatform extends BaseApiImpl<RustLibWire> {
 
   @protected
   void sse_encode_aging_report_line_dto(
-      AgingReportLineDto self, SseSerializer serializer);
+    AgingReportLineDto self,
+    SseSerializer serializer,
+  );
 
   @protected
   void sse_encode_anomaly_dto(AnomalyDto self, SseSerializer serializer);
 
   @protected
   void sse_encode_asset_category_dto(
-      AssetCategoryDto self, SseSerializer serializer);
+    AssetCategoryDto self,
+    SseSerializer serializer,
+  );
 
   @protected
   void sse_encode_asset_dto(AssetDto self, SseSerializer serializer);
 
   @protected
   void sse_encode_audit_metadata_dto(
-      AuditMetadataDto self, SseSerializer serializer);
+    AuditMetadataDto self,
+    SseSerializer serializer,
+  );
 
   @protected
   void sse_encode_audit_record_dto(
-      AuditRecordDto self, SseSerializer serializer);
+    AuditRecordDto self,
+    SseSerializer serializer,
+  );
 
   @protected
   void sse_encode_bill_payment_dto(
-      BillPaymentDto self, SseSerializer serializer);
+    BillPaymentDto self,
+    SseSerializer serializer,
+  );
 
   @protected
   void sse_encode_bool(bool self, SseSerializer serializer);
 
   @protected
   void sse_encode_box_autoadd_account_dto(
-      AccountDto self, SseSerializer serializer);
+    AccountDto self,
+    SseSerializer serializer,
+  );
 
   @protected
   void sse_encode_box_autoadd_asset_category_dto(
-      AssetCategoryDto self, SseSerializer serializer);
+    AssetCategoryDto self,
+    SseSerializer serializer,
+  );
 
   @protected
   void sse_encode_box_autoadd_asset_dto(
-      AssetDto self, SseSerializer serializer);
+    AssetDto self,
+    SseSerializer serializer,
+  );
 
   @protected
   void sse_encode_box_autoadd_audit_metadata_dto(
-      AuditMetadataDto self, SseSerializer serializer);
+    AuditMetadataDto self,
+    SseSerializer serializer,
+  );
 
   @protected
   void sse_encode_box_autoadd_bill_payment_dto(
-      BillPaymentDto self, SseSerializer serializer);
+    BillPaymentDto self,
+    SseSerializer serializer,
+  );
 
   @protected
   void sse_encode_box_autoadd_customer_dto(
-      CustomerDto self, SseSerializer serializer);
+    CustomerDto self,
+    SseSerializer serializer,
+  );
 
   @protected
   void sse_encode_box_autoadd_customer_payment_dto(
-      CustomerPaymentDto self, SseSerializer serializer);
+    CustomerPaymentDto self,
+    SseSerializer serializer,
+  );
 
   @protected
   void sse_encode_box_autoadd_entry_dto(
-      EntryDto self, SseSerializer serializer);
+    EntryDto self,
+    SseSerializer serializer,
+  );
 
   @protected
   void sse_encode_box_autoadd_exchange_rate_dto(
-      ExchangeRateDto self, SseSerializer serializer);
+    ExchangeRateDto self,
+    SseSerializer serializer,
+  );
 
   @protected
   void sse_encode_box_autoadd_inventory_item_dto(
-      InventoryItemDto self, SseSerializer serializer);
+    InventoryItemDto self,
+    SseSerializer serializer,
+  );
 
   @protected
   void sse_encode_box_autoadd_period_dto(
-      PeriodDto self, SseSerializer serializer);
+    PeriodDto self,
+    SseSerializer serializer,
+  );
 
   @protected
   void sse_encode_box_autoadd_purchase_bill_dto(
-      PurchaseBillDto self, SseSerializer serializer);
+    PurchaseBillDto self,
+    SseSerializer serializer,
+  );
 
   @protected
   void sse_encode_box_autoadd_sales_invoice_dto(
-      SalesInvoiceDto self, SseSerializer serializer);
+    SalesInvoiceDto self,
+    SseSerializer serializer,
+  );
 
   @protected
   void sse_encode_box_autoadd_stock_movement_dto(
-      StockMovementDto self, SseSerializer serializer);
+    StockMovementDto self,
+    SseSerializer serializer,
+  );
 
   @protected
   void sse_encode_box_autoadd_vendor_dto(
-      VendorDto self, SseSerializer serializer);
+    VendorDto self,
+    SseSerializer serializer,
+  );
 
   @protected
   void sse_encode_box_autoadd_zatca_csr_input_dto(
-      ZatcaCsrInputDto self, SseSerializer serializer);
+    ZatcaCsrInputDto self,
+    SseSerializer serializer,
+  );
 
   @protected
   void sse_encode_box_autoadd_zatca_invoice_input_dto(
-      ZatcaInvoiceInputDto self, SseSerializer serializer);
+    ZatcaInvoiceInputDto self,
+    SseSerializer serializer,
+  );
 
   @protected
   void sse_encode_customer_dto(CustomerDto self, SseSerializer serializer);
 
   @protected
   void sse_encode_customer_payment_dto(
-      CustomerPaymentDto self, SseSerializer serializer);
+    CustomerPaymentDto self,
+    SseSerializer serializer,
+  );
 
   @protected
   void sse_encode_drill_down_entry_dto(
-      DrillDownEntryDto self, SseSerializer serializer);
+    DrillDownEntryDto self,
+    SseSerializer serializer,
+  );
 
   @protected
   void sse_encode_entry_dto(EntryDto self, SseSerializer serializer);
 
   @protected
   void sse_encode_exchange_rate_dto(
-      ExchangeRateDto self, SseSerializer serializer);
+    ExchangeRateDto self,
+    SseSerializer serializer,
+  );
 
   @protected
   void sse_encode_financial_report_dto(
-      FinancialReportDto self, SseSerializer serializer);
+    FinancialReportDto self,
+    SseSerializer serializer,
+  );
 
   @protected
   void sse_encode_financial_report_line_dto(
-      FinancialReportLineDto self, SseSerializer serializer);
+    FinancialReportLineDto self,
+    SseSerializer serializer,
+  );
 
   @protected
   void sse_encode_how_dto(HowDto self, SseSerializer serializer);
@@ -835,184 +942,264 @@ abstract class RustLibApiImplPlatform extends BaseApiImpl<RustLibWire> {
 
   @protected
   void sse_encode_inventory_item_dto(
-      InventoryItemDto self, SseSerializer serializer);
+    InventoryItemDto self,
+    SseSerializer serializer,
+  );
 
   @protected
   void sse_encode_inventory_valuation_report_dto(
-      InventoryValuationReportDto self, SseSerializer serializer);
+    InventoryValuationReportDto self,
+    SseSerializer serializer,
+  );
 
   @protected
   void sse_encode_line_dto(LineDto self, SseSerializer serializer);
 
   @protected
   void sse_encode_list_account_dto(
-      List<AccountDto> self, SseSerializer serializer);
+    List<AccountDto> self,
+    SseSerializer serializer,
+  );
 
   @protected
   void sse_encode_list_aging_report_line_dto(
-      List<AgingReportLineDto> self, SseSerializer serializer);
+    List<AgingReportLineDto> self,
+    SseSerializer serializer,
+  );
 
   @protected
   void sse_encode_list_anomaly_dto(
-      List<AnomalyDto> self, SseSerializer serializer);
+    List<AnomalyDto> self,
+    SseSerializer serializer,
+  );
 
   @protected
   void sse_encode_list_asset_category_dto(
-      List<AssetCategoryDto> self, SseSerializer serializer);
+    List<AssetCategoryDto> self,
+    SseSerializer serializer,
+  );
 
   @protected
   void sse_encode_list_asset_dto(List<AssetDto> self, SseSerializer serializer);
 
   @protected
   void sse_encode_list_audit_record_dto(
-      List<AuditRecordDto> self, SseSerializer serializer);
+    List<AuditRecordDto> self,
+    SseSerializer serializer,
+  );
 
   @protected
   void sse_encode_list_customer_dto(
-      List<CustomerDto> self, SseSerializer serializer);
+    List<CustomerDto> self,
+    SseSerializer serializer,
+  );
 
   @protected
   void sse_encode_list_drill_down_entry_dto(
-      List<DrillDownEntryDto> self, SseSerializer serializer);
+    List<DrillDownEntryDto> self,
+    SseSerializer serializer,
+  );
 
   @protected
   void sse_encode_list_entry_dto(List<EntryDto> self, SseSerializer serializer);
 
   @protected
   void sse_encode_list_exchange_rate_dto(
-      List<ExchangeRateDto> self, SseSerializer serializer);
+    List<ExchangeRateDto> self,
+    SseSerializer serializer,
+  );
 
   @protected
   void sse_encode_list_financial_report_line_dto(
-      List<FinancialReportLineDto> self, SseSerializer serializer);
+    List<FinancialReportLineDto> self,
+    SseSerializer serializer,
+  );
 
   @protected
   void sse_encode_list_inventory_item_dto(
-      List<InventoryItemDto> self, SseSerializer serializer);
+    List<InventoryItemDto> self,
+    SseSerializer serializer,
+  );
 
   @protected
   void sse_encode_list_line_dto(List<LineDto> self, SseSerializer serializer);
 
   @protected
   void sse_encode_list_period_dto(
-      List<PeriodDto> self, SseSerializer serializer);
+    List<PeriodDto> self,
+    SseSerializer serializer,
+  );
 
   @protected
   void sse_encode_list_prim_u_8_strict(
-      Uint8List self, SseSerializer serializer);
+    Uint8List self,
+    SseSerializer serializer,
+  );
 
   @protected
   void sse_encode_list_purchase_bill_dto(
-      List<PurchaseBillDto> self, SseSerializer serializer);
+    List<PurchaseBillDto> self,
+    SseSerializer serializer,
+  );
 
   @protected
   void sse_encode_list_record_string_string(
-      List<(String, String)> self, SseSerializer serializer);
+    List<(String, String)> self,
+    SseSerializer serializer,
+  );
 
   @protected
   void sse_encode_list_sales_invoice_dto(
-      List<SalesInvoiceDto> self, SseSerializer serializer);
+    List<SalesInvoiceDto> self,
+    SseSerializer serializer,
+  );
 
   @protected
   void sse_encode_list_sales_invoice_line_dto(
-      List<SalesInvoiceLineDto> self, SseSerializer serializer);
+    List<SalesInvoiceLineDto> self,
+    SseSerializer serializer,
+  );
 
   @protected
   void sse_encode_list_standard_dto(
-      List<StandardDto> self, SseSerializer serializer);
+    List<StandardDto> self,
+    SseSerializer serializer,
+  );
 
   @protected
   void sse_encode_list_stock_movement_dto(
-      List<StockMovementDto> self, SseSerializer serializer);
+    List<StockMovementDto> self,
+    SseSerializer serializer,
+  );
 
   @protected
   void sse_encode_list_trial_balance_line_dto(
-      List<TrialBalanceLineDto> self, SseSerializer serializer);
+    List<TrialBalanceLineDto> self,
+    SseSerializer serializer,
+  );
 
   @protected
   void sse_encode_list_valuation_item_dto(
-      List<ValuationItemDto> self, SseSerializer serializer);
+    List<ValuationItemDto> self,
+    SseSerializer serializer,
+  );
 
   @protected
   void sse_encode_list_vendor_dto(
-      List<VendorDto> self, SseSerializer serializer);
+    List<VendorDto> self,
+    SseSerializer serializer,
+  );
 
   @protected
   void sse_encode_list_zatca_invoice_line_dto(
-      List<ZatcaInvoiceLineDto> self, SseSerializer serializer);
+    List<ZatcaInvoiceLineDto> self,
+    SseSerializer serializer,
+  );
 
   @protected
   void sse_encode_opt_Map_String_String_None(
-      Map<String, String>? self, SseSerializer serializer);
+    Map<String, String>? self,
+    SseSerializer serializer,
+  );
 
   @protected
   void sse_encode_opt_String(String? self, SseSerializer serializer);
 
   @protected
   void sse_encode_opt_box_autoadd_account_dto(
-      AccountDto? self, SseSerializer serializer);
+    AccountDto? self,
+    SseSerializer serializer,
+  );
 
   @protected
   void sse_encode_opt_box_autoadd_asset_dto(
-      AssetDto? self, SseSerializer serializer);
+    AssetDto? self,
+    SseSerializer serializer,
+  );
 
   @protected
   void sse_encode_opt_box_autoadd_exchange_rate_dto(
-      ExchangeRateDto? self, SseSerializer serializer);
+    ExchangeRateDto? self,
+    SseSerializer serializer,
+  );
 
   @protected
   void sse_encode_opt_box_autoadd_inventory_item_dto(
-      InventoryItemDto? self, SseSerializer serializer);
+    InventoryItemDto? self,
+    SseSerializer serializer,
+  );
 
   @protected
   void sse_encode_opt_box_autoadd_period_dto(
-      PeriodDto? self, SseSerializer serializer);
+    PeriodDto? self,
+    SseSerializer serializer,
+  );
 
   @protected
   void sse_encode_opt_box_autoadd_purchase_bill_dto(
-      PurchaseBillDto? self, SseSerializer serializer);
+    PurchaseBillDto? self,
+    SseSerializer serializer,
+  );
 
   @protected
   void sse_encode_opt_box_autoadd_sales_invoice_dto(
-      SalesInvoiceDto? self, SseSerializer serializer);
+    SalesInvoiceDto? self,
+    SseSerializer serializer,
+  );
 
   @protected
   void sse_encode_opt_box_autoadd_vendor_dto(
-      VendorDto? self, SseSerializer serializer);
+    VendorDto? self,
+    SseSerializer serializer,
+  );
 
   @protected
   void sse_encode_period_dto(PeriodDto self, SseSerializer serializer);
 
   @protected
   void sse_encode_purchase_bill_dto(
-      PurchaseBillDto self, SseSerializer serializer);
+    PurchaseBillDto self,
+    SseSerializer serializer,
+  );
 
   @protected
   void sse_encode_record_string_string(
-      (String, String) self, SseSerializer serializer);
+    (String, String) self,
+    SseSerializer serializer,
+  );
 
   @protected
   void sse_encode_sales_invoice_dto(
-      SalesInvoiceDto self, SseSerializer serializer);
+    SalesInvoiceDto self,
+    SseSerializer serializer,
+  );
 
   @protected
   void sse_encode_sales_invoice_line_dto(
-      SalesInvoiceLineDto self, SseSerializer serializer);
+    SalesInvoiceLineDto self,
+    SseSerializer serializer,
+  );
 
   @protected
   void sse_encode_standard_dto(StandardDto self, SseSerializer serializer);
 
   @protected
   void sse_encode_stock_movement_dto(
-      StockMovementDto self, SseSerializer serializer);
+    StockMovementDto self,
+    SseSerializer serializer,
+  );
 
   @protected
   void sse_encode_trial_balance_dto(
-      TrialBalanceDto self, SseSerializer serializer);
+    TrialBalanceDto self,
+    SseSerializer serializer,
+  );
 
   @protected
   void sse_encode_trial_balance_line_dto(
-      TrialBalanceLineDto self, SseSerializer serializer);
+    TrialBalanceLineDto self,
+    SseSerializer serializer,
+  );
 
   @protected
   void sse_encode_u_32(int self, SseSerializer serializer);
@@ -1028,7 +1215,9 @@ abstract class RustLibApiImplPlatform extends BaseApiImpl<RustLibWire> {
 
   @protected
   void sse_encode_valuation_item_dto(
-      ValuationItemDto self, SseSerializer serializer);
+    ValuationItemDto self,
+    SseSerializer serializer,
+  );
 
   @protected
   void sse_encode_vendor_dto(VendorDto self, SseSerializer serializer);
@@ -1047,19 +1236,27 @@ abstract class RustLibApiImplPlatform extends BaseApiImpl<RustLibWire> {
 
   @protected
   void sse_encode_zakah_calendar_dto(
-      ZakahCalendarDto self, SseSerializer serializer);
+    ZakahCalendarDto self,
+    SseSerializer serializer,
+  );
 
   @protected
   void sse_encode_zatca_csr_input_dto(
-      ZatcaCsrInputDto self, SseSerializer serializer);
+    ZatcaCsrInputDto self,
+    SseSerializer serializer,
+  );
 
   @protected
   void sse_encode_zatca_invoice_input_dto(
-      ZatcaInvoiceInputDto self, SseSerializer serializer);
+    ZatcaInvoiceInputDto self,
+    SseSerializer serializer,
+  );
 
   @protected
   void sse_encode_zatca_invoice_line_dto(
-      ZatcaInvoiceLineDto self, SseSerializer serializer);
+    ZatcaInvoiceLineDto self,
+    SseSerializer serializer,
+  );
 
   @protected
   void sse_encode_zatca_party_dto(ZatcaPartyDto self, SseSerializer serializer);

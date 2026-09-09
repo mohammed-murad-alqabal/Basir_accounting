@@ -41,7 +41,8 @@ class ValidationEngine {
 
         for (var i = 0; i < lines.length; i++) {
           final line = lines[i].trim();
-          final isPublicElement = classRegex.hasMatch(line) ||
+          final isPublicElement =
+              classRegex.hasMatch(line) ||
               enumRegex.hasMatch(line) ||
               (methodRegex.hasMatch(line) &&
                   !methodRegex.firstMatch(line)!.group(1)!.startsWith('_'));
@@ -87,7 +88,8 @@ class ValidationEngine {
     }
 
     final hasErrors = elementResults.any((r) => !r.isValid);
-    final avgScore = elementResults
+    final avgScore =
+        elementResults
             .map((r) => r.qualityScore.score)
             .reduce((a, b) => a + b) ~/
         elementResults.length;
@@ -113,13 +115,15 @@ class ValidationEngine {
 
     try {
       if (libDir.existsSync()) {
-        final entities =
-            libDir.listSync(recursive: true).whereType<File>().where(
-                  (f) =>
-                      f.path.endsWith('.dart') &&
-                      !f.path.contains('.g.dart') &&
-                      !f.path.contains('.freezed.dart'),
-                );
+        final entities = libDir
+            .listSync(recursive: true)
+            .whereType<File>()
+            .where(
+              (f) =>
+                  f.path.endsWith('.dart') &&
+                  !f.path.contains('.g.dart') &&
+                  !f.path.contains('.freezed.dart'),
+            );
 
         for (final entity in entities) {
           final result = validateFile(entity.path);

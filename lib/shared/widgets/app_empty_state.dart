@@ -38,52 +38,52 @@ class AppEmptyState extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Center(
-        child: Padding(
-          padding: const EdgeInsets.all(Spacing.xl),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              _buildIllustration(),
-              const SizedBox(height: Spacing.lg),
-              Text(
-                title,
-                style: AppTextStyles.titleMedium.copyWith(
-                  fontWeight: FontWeights.bold,
-                ),
-                textAlign: TextAlign.center,
-              ),
-              if (description != null) ...[
-                const SizedBox(height: Spacing.sm),
-                Text(
-                  description!,
-                  style: AppTextStyles.bodyMedium.copyWith(
-                    color: AppColors.textSecondary,
-                  ),
-                  textAlign: TextAlign.center,
-                ),
-              ],
-              if (actionLabel != null && onActionPressed != null) ...[
-                const SizedBox(height: Spacing.xl),
-                ElevatedButton(
-                  onPressed: onActionPressed,
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: AppColors.primary,
-                    foregroundColor: Colors.white,
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: Spacing.xl,
-                      vertical: Spacing.md,
-                    ),
-                    shape: const RoundedRectangleBorder(
-                      borderRadius: Radii.borderRadiusMd,
-                    ),
-                  ),
-                  child: Text(actionLabel!),
-                ),
-              ],
-            ],
+    child: Padding(
+      padding: const EdgeInsets.all(Spacing.xl),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          _buildIllustration(),
+          const SizedBox(height: Spacing.lg),
+          Text(
+            title,
+            style: AppTextStyles.titleMedium.copyWith(
+              fontWeight: FontWeights.bold,
+            ),
+            textAlign: TextAlign.center,
           ),
-        ),
-      );
+          if (description != null) ...[
+            const SizedBox(height: Spacing.sm),
+            Text(
+              description!,
+              style: AppTextStyles.bodyMedium.copyWith(
+                color: AppColors.textSecondary,
+              ),
+              textAlign: TextAlign.center,
+            ),
+          ],
+          if (actionLabel != null && onActionPressed != null) ...[
+            const SizedBox(height: Spacing.xl),
+            ElevatedButton(
+              onPressed: onActionPressed,
+              style: ElevatedButton.styleFrom(
+                backgroundColor: AppColors.primary,
+                foregroundColor: Colors.white,
+                padding: const EdgeInsets.symmetric(
+                  horizontal: Spacing.xl,
+                  vertical: Spacing.md,
+                ),
+                shape: const RoundedRectangleBorder(
+                  borderRadius: Radii.borderRadiusMd,
+                ),
+              ),
+              child: Text(actionLabel!),
+            ),
+          ],
+        ],
+      ),
+    ),
+  );
 
   Widget _buildIllustration() {
     if (lottieAsset != null) {

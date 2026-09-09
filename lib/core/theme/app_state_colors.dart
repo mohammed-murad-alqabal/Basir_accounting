@@ -3,14 +3,7 @@ import 'package:basir_accounting_system/core/theme/tokens/index.dart';
 import 'package:flutter/material.dart';
 
 /// Interactive states for components
-enum InteractiveState {
-  normal,
-  hovered,
-  pressed,
-  focused,
-  selected,
-  disabled,
-}
+enum InteractiveState { normal, hovered, pressed, focused, selected, disabled }
 
 /// State-specific colors for interactive components
 abstract final class AppStateColors {
@@ -53,8 +46,8 @@ abstract final class AppStateColors {
   /// Get selected background color based on brightness
   static Color getSelectedBackground(Brightness brightness) =>
       brightness == Brightness.dark
-          ? selectedBackgroundDark
-          : selectedBackgroundLight;
+      ? selectedBackgroundDark
+      : selectedBackgroundLight;
 
   /// Get selected border color based on brightness
   static Color getSelectedBorder(Brightness brightness) =>
@@ -63,8 +56,8 @@ abstract final class AppStateColors {
   /// Get selected foreground color based on brightness
   static Color getSelectedForeground(Brightness brightness) =>
       brightness == Brightness.dark
-          ? selectedForegroundDark
-          : selectedForegroundLight;
+      ? selectedForegroundDark
+      : selectedForegroundLight;
 
   /// Get focus border color based on brightness
   static Color getFocusBorder(Brightness brightness) =>
@@ -73,14 +66,14 @@ abstract final class AppStateColors {
   /// Get disabled background color based on brightness
   static Color getDisabledBackground(Brightness brightness) =>
       brightness == Brightness.dark
-          ? disabledBackgroundDark
-          : disabledBackgroundLight;
+      ? disabledBackgroundDark
+      : disabledBackgroundLight;
 
   /// Get disabled foreground color based on brightness
   static Color getDisabledForeground(Brightness brightness) =>
       brightness == Brightness.dark
-          ? disabledForegroundDark
-          : disabledForegroundLight;
+      ? disabledForegroundDark
+      : disabledForegroundLight;
 
   /// Get primary button background color for specific state
   static Color getPrimaryBackgroundColor(

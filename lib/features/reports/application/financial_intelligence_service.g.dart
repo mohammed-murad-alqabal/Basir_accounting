@@ -17,14 +17,14 @@ String _$financialIntelligenceServiceHash() =>
 @ProviderFor(FinancialIntelligenceService)
 final financialIntelligenceServiceProvider =
     NotifierProvider<FinancialIntelligenceService, void>.internal(
-  FinancialIntelligenceService.new,
-  name: r'financialIntelligenceServiceProvider',
-  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-      ? null
-      : _$financialIntelligenceServiceHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
+      FinancialIntelligenceService.new,
+      name: r'financialIntelligenceServiceProvider',
+      debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+          ? null
+          : _$financialIntelligenceServiceHash,
+      dependencies: null,
+      allTransitiveDependencies: null,
+    );
 
 typedef _$FinancialIntelligenceService = Notifier<void>;
 // ignore_for_file: type=lint

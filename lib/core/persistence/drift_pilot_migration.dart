@@ -89,11 +89,11 @@ class DriftPilotMigrator {
     required BarcodeConfigStorage barcodeStorage,
     required MarketPriceStorage marketPriceStorage,
     required MigrationCheckpointStorage checkpoints,
-  })  : _barcodeSource = barcodeSource,
-        _marketPriceSource = marketPriceSource,
-        _barcodeStorage = barcodeStorage,
-        _marketPriceStorage = marketPriceStorage,
-        _checkpoints = checkpoints;
+  }) : _barcodeSource = barcodeSource,
+       _marketPriceSource = marketPriceSource,
+       _barcodeStorage = barcodeStorage,
+       _marketPriceStorage = marketPriceStorage,
+       _checkpoints = checkpoints;
 
   final BarcodeConfigMigrationReader _barcodeSource;
   final MarketPriceMigrationReader _marketPriceSource;

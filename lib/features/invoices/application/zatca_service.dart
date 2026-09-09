@@ -79,11 +79,14 @@ class ZatcaService {
       id: invoice.invoiceNumber,
       uuid: invoice.id,
       issueDate: invoice.issuedDate.toIso8601String().split('T')[0],
-      issueTime:
-          invoice.issuedDate.toIso8601String().split('T')[1].split('.')[0],
+      issueTime: invoice.issuedDate
+          .toIso8601String()
+          .split('T')[1]
+          .split('.')[0],
       invoiceTypeCode: _getInvoiceTypeCode(invoice),
       invoiceCounterValue: BigInt.from(invoice.zatcaCounter),
-      previousInvoiceHash: invoice.zatcaHash ??
+      previousInvoiceHash:
+          invoice.zatcaHash ??
           'NWZlY2ViOTZmOTYyNDY4MTI5YmQ2YmFmNWYwN2IxNzk=', // Initial hash if none
       sellerParty: ZatcaPartyDto(
         partyId: sellerVatNumber,

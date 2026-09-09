@@ -18,14 +18,14 @@ String _$productionReadyServiceHash() =>
 @ProviderFor(ProductionReadyService)
 final productionReadyServiceProvider =
     AsyncNotifierProvider<ProductionReadyService, void>.internal(
-  ProductionReadyService.new,
-  name: r'productionReadyServiceProvider',
-  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-      ? null
-      : _$productionReadyServiceHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
+      ProductionReadyService.new,
+      name: r'productionReadyServiceProvider',
+      debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+          ? null
+          : _$productionReadyServiceHash,
+      dependencies: null,
+      allTransitiveDependencies: null,
+    );
 
 typedef _$ProductionReadyService = AsyncNotifier<void>;
 // ignore_for_file: type=lint

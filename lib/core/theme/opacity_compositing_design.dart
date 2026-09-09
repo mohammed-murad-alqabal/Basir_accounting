@@ -41,8 +41,10 @@ abstract final class OpacityCompositingDesign {
       background: background,
       opacity: opacity,
     );
-    final contrast =
-        StateContrastCalculator.calculateContrastRatio(textColor, compositedBg);
+    final contrast = StateContrastCalculator.calculateContrastRatio(
+      textColor,
+      compositedBg,
+    );
     return contrast >= minContrast;
   }
 
@@ -86,10 +88,7 @@ abstract final class OpacityCompositingDesign {
 
     return Opacity(
       opacity: effectiveOpacity,
-      child: ColoredBox(
-        color: overlayColor,
-        child: child,
-      ),
+      child: ColoredBox(color: overlayColor, child: child),
     );
   }
 }

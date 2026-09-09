@@ -120,19 +120,9 @@ class FormatHelpers {
           'دقائق',
         );
       } else if (absSecs < 86400) {
-        return arRelative(
-          difference.inHours.abs(),
-          'ساعة',
-          'ساعتان',
-          'ساعات',
-        );
+        return arRelative(difference.inHours.abs(), 'ساعة', 'ساعتان', 'ساعات');
       } else if (absSecs < 604800) {
-        return arRelative(
-          difference.inDays.abs(),
-          'يوم',
-          'يومان',
-          'أيام',
-        );
+        return arRelative(difference.inDays.abs(), 'يوم', 'يومان', 'أيام');
       } else if (absSecs < 2592000) {
         // أقل من 30 يوماً → أسابيع
         final weeks = (difference.inDays.abs() / 7).floor();

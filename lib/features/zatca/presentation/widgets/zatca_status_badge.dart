@@ -5,10 +5,7 @@ import 'package:flutter/material.dart';
 /// A badge widget that displays the ZATCA submission status of an invoice.
 class ZatcaStatusBadge extends StatelessWidget {
   /// Creates a ZATCA status badge.
-  const ZatcaStatusBadge({
-    required this.status,
-    super.key,
-  });
+  const ZatcaStatusBadge({required this.status, super.key});
 
   /// The current ZATCA status to display.
   final ZatcaSubmissionStatus status;

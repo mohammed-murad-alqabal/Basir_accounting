@@ -546,12 +546,9 @@ abstract final class AppIcons {
   /// ```dart
   /// Icon(AppIcons.getSortIcon(ascending: true))
   /// ```
-  static IconData getSortIcon({
-    required bool ascending,
-  }) =>
-      ascending
-          ? const MaterialAppIcons().arrowUp
-          : const MaterialAppIcons().arrowDown;
+  static IconData getSortIcon({required bool ascending}) => ascending
+      ? const MaterialAppIcons().arrowUp
+      : const MaterialAppIcons().arrowDown;
 
   /// الحصول على أيقونة الرؤية
   ///

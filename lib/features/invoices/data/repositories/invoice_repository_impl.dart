@@ -103,8 +103,9 @@ class InvoiceRepositoryImpl implements InvoiceRepository {
   Future<void> addInvoice(Invoice invoice) async {
     try {
       // Self-Healing: Correct any discrepancies before persisting.
-      final invoiceToSave =
-          invoice.hasTotalDiscrepancy ? invoice.healedCopy : invoice;
+      final invoiceToSave = invoice.hasTotalDiscrepancy
+          ? invoice.healedCopy
+          : invoice;
 
       final model = InvoiceModel.fromEntity(
         invoiceToSave.copyWith(
@@ -124,8 +125,9 @@ class InvoiceRepositoryImpl implements InvoiceRepository {
   Future<void> updateInvoice(Invoice invoice) async {
     try {
       // Self-Healing: Correct any discrepancies before persisting.
-      final invoiceToSave =
-          invoice.hasTotalDiscrepancy ? invoice.healedCopy : invoice;
+      final invoiceToSave = invoice.hasTotalDiscrepancy
+          ? invoice.healedCopy
+          : invoice;
 
       await isar.writeTxn(() async {
         // البحث عن الفاتورة الموجودة

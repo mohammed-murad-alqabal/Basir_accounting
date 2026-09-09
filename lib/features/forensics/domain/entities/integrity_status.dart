@@ -51,15 +51,14 @@ class LedgerHealth {
     int? errorCount,
     List<String>? anomalousEntryIds,
     String? message,
-  }) =>
-      LedgerHealth(
-        status: status ?? this.status,
-        lastVerification: lastVerification ?? this.lastVerification,
-        verifiedCount: verifiedCount ?? this.verifiedCount,
-        errorCount: errorCount ?? this.errorCount,
-        anomalousEntryIds: anomalousEntryIds ?? this.anomalousEntryIds,
-        message: message ?? this.message,
-      );
+  }) => LedgerHealth(
+    status: status ?? this.status,
+    lastVerification: lastVerification ?? this.lastVerification,
+    verifiedCount: verifiedCount ?? this.verifiedCount,
+    errorCount: errorCount ?? this.errorCount,
+    anomalousEntryIds: anomalousEntryIds ?? this.anomalousEntryIds,
+    message: message ?? this.message,
+  );
 
   /// Returns a color representation of the health status.
   Color get color {

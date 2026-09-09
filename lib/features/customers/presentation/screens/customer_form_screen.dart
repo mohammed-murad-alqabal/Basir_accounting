@@ -69,9 +69,7 @@ class _CustomerFormScreenState extends ConsumerState<CustomerFormScreen> {
     final appIcons = ref.watch(appIconsProvider);
 
     return GlassScaffold(
-      title: isEditing
-          ? context.l10n.customerFormTitleEdit
-          : context.l10n.customerFormTitleAdd,
+      title: isEditing ? context.l10n.customerFormTitleEdit : context.l10n.customerFormTitleAdd,
       actions: const [],
       body: Form(
         key: _formKey,
@@ -130,9 +128,7 @@ class _CustomerFormScreenState extends ConsumerState<CustomerFormScreen> {
                 keyboardType: TextInputType.emailAddress,
                 validator: (value) {
                   if (value != null && value.isNotEmpty) {
-                    final emailRegex = RegExp(
-                      r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$',
-                    );
+                    final emailRegex = RegExp(r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$');
                     if (!emailRegex.hasMatch(value)) {
                       return context.l10n.errInvalidEmail;
                     }
@@ -189,9 +185,7 @@ class _CustomerFormScreenState extends ConsumerState<CustomerFormScreen> {
                 label: context.l10n.labelCreditLimit,
                 hint: '0.0',
                 prefixIcon: Icon(appIcons.accounting),
-                keyboardType: const TextInputType.numberWithOptions(
-                  decimal: true,
-                ),
+                keyboardType: const TextInputType.numberWithOptions(decimal: true),
                 validator: (value) {
                   if (value != null && value.isNotEmpty) {
                     if (double.tryParse(value) == null) {
@@ -241,10 +235,8 @@ class _CustomerFormScreenState extends ConsumerState<CustomerFormScreen> {
               final contact = contacts[index];
               return ListTile(
                 leading: Icon(appIcons.person),
-                title: Text('${contact.name.first} ${contact.name.last}'),
-                subtitle: Text(
-                  contact.phones.isNotEmpty ? contact.phones.first.number : '',
-                ),
+                title: Text('${contact.name.first ?? ''} ${contact.name.last ?? ''}'),
+                subtitle: Text(contact.phones.isNotEmpty ? contact.phones.first.number : ''),
                 onTap: () => Navigator.pop(context, contact),
               );
             },
@@ -255,10 +247,12 @@ class _CustomerFormScreenState extends ConsumerState<CustomerFormScreen> {
       if (result != null && result is Contact) {
         final selectedContact = result;
         setState(() {
-          _nameArController.text = '${selectedContact.name.first} '
-              '${selectedContact.name.last}';
-          _nameEnController.text = '${selectedContact.name.first} '
-              '${selectedContact.name.last}';
+          _nameArController.text =
+              '${selectedContact.name.first ?? ''} '
+              '${selectedContact.name.last ?? ''}';
+          _nameEnController.text =
+              '${selectedContact.name.first ?? ''} '
+              '${selectedContact.name.last ?? ''}';
           if (selectedContact.phones.isNotEmpty) {
             _phoneController.text = selectedContact.phones.first.number;
           }
@@ -269,10 +263,7 @@ class _CustomerFormScreenState extends ConsumerState<CustomerFormScreen> {
       }
     } on Exception catch (e) {
       if (!mounted) return;
-      AppSnackbar.showError(
-        context,
-        context.l10n.errContactAccess(e.toString()),
-      );
+      AppSnackbar.showError(context, context.l10n.errContactAccess(e.toString()));
     }
   }
 
@@ -292,18 +283,10 @@ class _CustomerFormScreenState extends ConsumerState<CustomerFormScreen> {
         id: widget.customer?.id ?? const Uuid().v4(),
         nameAr: _nameArController.text.trim(),
         nameEn: _nameEnController.text.trim(),
-        email: _emailController.text.trim().isEmpty
-            ? null
-            : _emailController.text.trim(),
-        phone: _phoneController.text.trim().isEmpty
-            ? null
-            : _phoneController.text.trim(),
-        address: _addressController.text.trim().isEmpty
-            ? null
-            : _addressController.text.trim(),
-        notes: _notesController.text.trim().isEmpty
-            ? null
-            : _notesController.text.trim(),
+        email: _emailController.text.trim().isEmpty ? null : _emailController.text.trim(),
+        phone: _phoneController.text.trim().isEmpty ? null : _phoneController.text.trim(),
+        address: _addressController.text.trim().isEmpty ? null : _addressController.text.trim(),
+        notes: _notesController.text.trim().isEmpty ? null : _notesController.text.trim(),
         creditLimit: double.tryParse(_creditLimitController.text) ?? 0.0,
         balance: widget.customer?.balance ?? 0.0,
         createdAt: widget.customer?.createdAt ?? DateTime.now(),
@@ -320,17 +303,13 @@ class _CustomerFormScreenState extends ConsumerState<CustomerFormScreen> {
       if (result) {
         AppSnackbar.showSuccess(
           context,
-          isEditing
-              ? context.l10n.msgCustomerUpdated
-              : context.l10n.msgCustomerAdded,
+          isEditing ? context.l10n.msgCustomerUpdated : context.l10n.msgCustomerAdded,
         );
         Navigator.pop(context, true);
       } else {
         AppSnackbar.showError(
           context,
-          isEditing
-              ? context.l10n.errCustomerUpdate
-              : context.l10n.errCustomerAdd,
+          isEditing ? context.l10n.errCustomerUpdate : context.l10n.errCustomerAdd,
         );
       }
     } on Exception catch (e) {

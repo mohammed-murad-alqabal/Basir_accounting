@@ -154,9 +154,7 @@ class _PrintSettingsScreenState extends ConsumerState<PrintSettingsScreen> {
               onPressed: () {
                 ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(
-                    content: Text(
-                      l10n.msgExportComingSoon,
-                    ),
+                    content: Text(l10n.msgExportComingSoon),
                   ), // Placeholder for save logic
                 );
                 Navigator.pop(context);
@@ -169,37 +167,35 @@ class _PrintSettingsScreenState extends ConsumerState<PrintSettingsScreen> {
   }
 
   Widget _buildSectionHeader(String title, IconData icon) => Padding(
-        padding: const EdgeInsets.only(bottom: Spacing.sm, left: Spacing.xs),
-        child: Row(
-          children: [
-            Icon(icon, size: 20, color: Theme.of(context).colorScheme.primary),
-            const SizedBox(width: Spacing.sm),
-            Text(
-              title,
-              style: Theme.of(context)
-                  .textTheme
-                  .titleMedium
-                  ?.copyWith(fontWeight: FontWeight.bold),
-            ),
-          ],
+    padding: const EdgeInsets.only(bottom: Spacing.sm, left: Spacing.xs),
+    child: Row(
+      children: [
+        Icon(icon, size: 20, color: Theme.of(context).colorScheme.primary),
+        const SizedBox(width: Spacing.sm),
+        Text(
+          title,
+          style: Theme.of(
+            context,
+          ).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold),
         ),
-      );
+      ],
+    ),
+  );
 
   Widget _buildRadioTile(
     String title,
     String value,
     String groupValue,
     ValueChanged<String?> onChanged,
-  ) =>
-      RadioListTile<String>(
-        title: Text(title),
-        value: value,
-        // ignore: deprecated_member_use
-        groupValue: groupValue,
-        // ignore: deprecated_member_use
-        onChanged: onChanged,
-        activeColor: Theme.of(context).colorScheme.primary,
-      );
+  ) => RadioListTile<String>(
+    title: Text(title),
+    value: value,
+    // ignore: deprecated_member_use
+    groupValue: groupValue,
+    // ignore: deprecated_member_use
+    onChanged: onChanged,
+    activeColor: Theme.of(context).colorScheme.primary,
+  );
 
   Widget _buildSlider(
     String label,
@@ -207,46 +203,36 @@ class _PrintSettingsScreenState extends ConsumerState<PrintSettingsScreen> {
     double min,
     double max,
     ValueChanged<double> onChanged,
-  ) =>
-      Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+  ) => Column(
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: [
+      Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(label),
-              Text(
-                value.toInt().toString(),
-                style: const TextStyle(fontWeight: FontWeight.bold),
-              ),
-            ],
-          ),
-          Slider(
-            value: value,
-            min: min,
-            max: max,
-            divisions: (max - min).toInt(),
-            onChanged: onChanged,
+          Text(label),
+          Text(
+            value.toInt().toString(),
+            style: const TextStyle(fontWeight: FontWeight.bold),
           ),
         ],
-      );
+      ),
+      Slider(
+        value: value,
+        min: min,
+        max: max,
+        divisions: (max - min).toInt(),
+        onChanged: onChanged,
+      ),
+    ],
+  );
 
-  Widget _buildCounter(
-    String label,
-    int value,
-    ValueChanged<int> onChanged,
-  ) =>
+  Widget _buildCounter(String label, int value, ValueChanged<int> onChanged) =>
       Padding(
         padding: const EdgeInsets.symmetric(vertical: Spacing.xs),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Expanded(
-              child: Text(
-                label,
-                overflow: TextOverflow.ellipsis,
-              ),
-            ),
+            Expanded(child: Text(label, overflow: TextOverflow.ellipsis)),
             const SizedBox(width: Spacing.sm),
             Row(
               children: [

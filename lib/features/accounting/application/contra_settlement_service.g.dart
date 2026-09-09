@@ -19,14 +19,14 @@ String _$contraSettlementServiceHash() =>
 @ProviderFor(ContraSettlementService)
 final contraSettlementServiceProvider =
     AutoDisposeAsyncNotifierProvider<ContraSettlementService, void>.internal(
-  ContraSettlementService.new,
-  name: r'contraSettlementServiceProvider',
-  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-      ? null
-      : _$contraSettlementServiceHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
+      ContraSettlementService.new,
+      name: r'contraSettlementServiceProvider',
+      debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+          ? null
+          : _$contraSettlementServiceHash,
+      dependencies: null,
+      allTransitiveDependencies: null,
+    );
 
 typedef _$ContraSettlementService = AutoDisposeAsyncNotifier<void>;
 // ignore_for_file: type=lint

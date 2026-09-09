@@ -32,9 +32,7 @@ class MfaRoutes {
         final args = settings.arguments as Map<String, dynamic>?;
         final afterRoute = args?['after'] as String?;
         return MaterialPageRoute(
-          builder: (_) => MfaChallengeScreen(
-            afterRoute: afterRoute,
-          ),
+          builder: (_) => MfaChallengeScreen(afterRoute: afterRoute),
           settings: settings,
         );
 
@@ -42,9 +40,7 @@ class MfaRoutes {
         final args = settings.arguments as Map<String, dynamic>?;
         final afterRoute = args?['after'] as String?;
         return MaterialPageRoute(
-          builder: (_) => PhoneVerificationScreen(
-            afterRoute: afterRoute,
-          ),
+          builder: (_) => PhoneVerificationScreen(afterRoute: afterRoute),
           settings: settings,
         );
 
@@ -53,19 +49,14 @@ class MfaRoutes {
         final phone = args?['phone'] as String? ?? '';
         final afterRoute = args?['after'] as String?;
         return MaterialPageRoute(
-          builder: (_) => PhoneOtpScreen(
-            phone: phone,
-            afterRoute: afterRoute,
-          ),
+          builder: (_) => PhoneOtpScreen(phone: phone, afterRoute: afterRoute),
           settings: settings,
         );
 
       default:
         return MaterialPageRoute(
           builder: (_) => Scaffold(
-            body: Center(
-              child: Text('Route not found: ${settings.name}'),
-            ),
+            body: Center(child: Text('Route not found: ${settings.name}')),
           ),
           settings: settings,
         );
@@ -96,10 +87,7 @@ class MfaRoutes {
         final args = settings?.arguments as Map<String, dynamic>?;
         final phone = args?['phone'] as String? ?? '';
         final afterRoute = args?['after'] as String?;
-        return PhoneOtpScreen(
-          phone: phone,
-          afterRoute: afterRoute,
-        );
+        return PhoneOtpScreen(phone: phone, afterRoute: afterRoute);
       },
     };
 
@@ -108,10 +96,10 @@ class MfaRoutes {
 
   /// Get list of all MFA routes
   static List<String> get allRoutes => [
-        mfaGate,
-        mfaSecurityCenter,
-        mfaChallenge,
-        phoneVerification,
-        phoneOtp,
-      ];
+    mfaGate,
+    mfaSecurityCenter,
+    mfaChallenge,
+    phoneVerification,
+    phoneOtp,
+  ];
 }

@@ -104,7 +104,7 @@ class FinancialReportingService extends _$FinancialReportingService {
             : Decimal.fromInt(-1);
         categoryBalances[account.ifrs18Category!] =
             (categoryBalances[account.ifrs18Category!] ?? Decimal.zero) +
-                (balance * sign);
+            (balance * sign);
       }
     }
 

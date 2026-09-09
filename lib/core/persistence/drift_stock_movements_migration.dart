@@ -7,8 +7,8 @@ abstract final class DriftStockMovementsMigrationSlice {
   static const stockMovements = 'stock-movements-v1';
 }
 
-typedef StockMovementMigrationReader = Future<List<StockMovementRecord>>
-    Function();
+typedef StockMovementMigrationReader =
+    Future<List<StockMovementRecord>> Function();
 
 /// قارئ Isar محايد؛ لا يكتب Isar ولا يربط Provider أو sync_service.
 class IsarStockMovementMigrationSource {
@@ -17,10 +17,11 @@ class IsarStockMovementMigrationSource {
   final Isar _isar;
 
   Future<List<StockMovementRecord>> readAll() async {
-    final records = (await _isar.stockMovementModels.where().findAll())
-        .map(_toRecord)
-        .toList(growable: false)
-      ..sort(_compareMovements);
+    final records =
+        (await _isar.stockMovementModels.where().findAll())
+            .map(_toRecord)
+            .toList(growable: false)
+          ..sort(_compareMovements);
     return records;
   }
 
@@ -79,9 +80,9 @@ class DriftStockMovementsMigrator {
     required StockMovementMigrationReader source,
     required StockMovementStorage storage,
     required MigrationCheckpointStorage checkpoints,
-  })  : _source = source,
-        _storage = storage,
-        _checkpoints = checkpoints;
+  }) : _source = source,
+       _storage = storage,
+       _checkpoints = checkpoints;
 
   final StockMovementMigrationReader _source;
   final StockMovementStorage _storage;
@@ -148,9 +149,7 @@ class DriftStockMovementsMigrator {
   }
 }
 
-List<StockMovementMigrationIssue> _issues(
-  List<StockMovementRecord> records,
-) {
+List<StockMovementMigrationIssue> _issues(List<StockMovementRecord> records) {
   final counts = <String, int>{};
   for (final record in records) {
     final reason = switch (record.type) {
@@ -168,10 +167,8 @@ List<StockMovementMigrationIssue> _issues(
   }
   return counts.entries
       .map(
-        (entry) => StockMovementMigrationIssue(
-          reason: entry.key,
-          count: entry.value,
-        ),
+        (entry) =>
+            StockMovementMigrationIssue(reason: entry.key, count: entry.value),
       )
       .toList(growable: false)
     ..sort((left, right) => left.reason.compareTo(right.reason));

@@ -19,18 +19,14 @@ abstract final class LedgerAuthorityPolicy {
   /// Verifies that a local `Posted` record is a server-confirmed cache entry.
   static void assertAuthoritativeCache(JournalEntry entry) {
     if (entry.status != JournalEntryStatus.posted) {
-      throw StateError(
-        'AUTHORITATIVE_CACHE_REQUIRES_POSTED_ENTRY',
-      );
+      throw StateError('AUTHORITATIVE_CACHE_REQUIRES_POSTED_ENTRY');
     }
     if (entry.authoritativeEntryId == null ||
         entry.authoritativeEntryId!.isEmpty ||
         entry.hash == null ||
         entry.hash!.isEmpty ||
         entry.postedAt == null) {
-      throw StateError(
-        'AUTHORITATIVE_RECEIPT_REQUIRED_FOR_POSTED_CACHE',
-      );
+      throw StateError('AUTHORITATIVE_RECEIPT_REQUIRED_FOR_POSTED_CACHE');
     }
   }
 }

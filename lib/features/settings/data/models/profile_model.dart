@@ -57,14 +57,14 @@ class ProfileModel {
 
   /// التحويل إلى Entity
   Profile toEntity() => Profile(
-        id: id,
-        email: email,
-        displayName: displayName,
-        avatarUrl: avatarUrl,
-        phoneNumber: phoneNumber,
-        userId: userId,
-        syncStatus: syncStatus,
-        serverUpdatedAt: serverUpdatedAt,
-        isDeleted: isDeleted,
-      );
+    id: id,
+    email: email,
+    displayName: displayName,
+    avatarUrl: avatarUrl,
+    phoneNumber: phoneNumber,
+    userId: userId,
+    syncStatus: syncStatus,
+    serverUpdatedAt: serverUpdatedAt,
+    isDeleted: isDeleted,
+  );
 }

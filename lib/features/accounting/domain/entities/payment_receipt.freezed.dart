@@ -12,7 +12,8 @@ part of 'payment_receipt.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
+  'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models',
+);
 
 PaymentReceipt _$PaymentReceiptFromJson(Map<String, dynamic> json) {
   return _PaymentReceipt.fromJson(json);
@@ -95,32 +96,34 @@ mixin _$PaymentReceipt {
 /// @nodoc
 abstract class $PaymentReceiptCopyWith<$Res> {
   factory $PaymentReceiptCopyWith(
-          PaymentReceipt value, $Res Function(PaymentReceipt) then) =
-      _$PaymentReceiptCopyWithImpl<$Res, PaymentReceipt>;
+    PaymentReceipt value,
+    $Res Function(PaymentReceipt) then,
+  ) = _$PaymentReceiptCopyWithImpl<$Res, PaymentReceipt>;
   @useResult
-  $Res call(
-      {String id,
-      String receiptNumber,
-      String customerId,
-      String customerName,
-      Decimal amount,
-      DateTime receiptDate,
-      PaymentMethod paymentMethod,
-      String accountId,
-      String createdBy,
-      DateTime createdAt,
-      String? reference,
-      String? notes,
-      String? bankAccountNumber,
-      String? checkNumber,
-      DateTime? checkDueDate,
-      PaymentStatus status,
-      String? journalEntryId,
-      String? userId,
-      String? warehouseId,
-      SyncStatus syncStatus,
-      DateTime? serverUpdatedAt,
-      bool isDeleted});
+  $Res call({
+    String id,
+    String receiptNumber,
+    String customerId,
+    String customerName,
+    Decimal amount,
+    DateTime receiptDate,
+    PaymentMethod paymentMethod,
+    String accountId,
+    String createdBy,
+    DateTime createdAt,
+    String? reference,
+    String? notes,
+    String? bankAccountNumber,
+    String? checkNumber,
+    DateTime? checkDueDate,
+    PaymentStatus status,
+    String? journalEntryId,
+    String? userId,
+    String? warehouseId,
+    SyncStatus syncStatus,
+    DateTime? serverUpdatedAt,
+    bool isDeleted,
+  });
 }
 
 /// @nodoc
@@ -159,130 +162,135 @@ class _$PaymentReceiptCopyWithImpl<$Res, $Val extends PaymentReceipt>
     Object? serverUpdatedAt = freezed,
     Object? isDeleted = null,
   }) {
-    return _then(_value.copyWith(
-      id: null == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as String,
-      receiptNumber: null == receiptNumber
-          ? _value.receiptNumber
-          : receiptNumber // ignore: cast_nullable_to_non_nullable
-              as String,
-      customerId: null == customerId
-          ? _value.customerId
-          : customerId // ignore: cast_nullable_to_non_nullable
-              as String,
-      customerName: null == customerName
-          ? _value.customerName
-          : customerName // ignore: cast_nullable_to_non_nullable
-              as String,
-      amount: null == amount
-          ? _value.amount
-          : amount // ignore: cast_nullable_to_non_nullable
-              as Decimal,
-      receiptDate: null == receiptDate
-          ? _value.receiptDate
-          : receiptDate // ignore: cast_nullable_to_non_nullable
-              as DateTime,
-      paymentMethod: null == paymentMethod
-          ? _value.paymentMethod
-          : paymentMethod // ignore: cast_nullable_to_non_nullable
-              as PaymentMethod,
-      accountId: null == accountId
-          ? _value.accountId
-          : accountId // ignore: cast_nullable_to_non_nullable
-              as String,
-      createdBy: null == createdBy
-          ? _value.createdBy
-          : createdBy // ignore: cast_nullable_to_non_nullable
-              as String,
-      createdAt: null == createdAt
-          ? _value.createdAt
-          : createdAt // ignore: cast_nullable_to_non_nullable
-              as DateTime,
-      reference: freezed == reference
-          ? _value.reference
-          : reference // ignore: cast_nullable_to_non_nullable
-              as String?,
-      notes: freezed == notes
-          ? _value.notes
-          : notes // ignore: cast_nullable_to_non_nullable
-              as String?,
-      bankAccountNumber: freezed == bankAccountNumber
-          ? _value.bankAccountNumber
-          : bankAccountNumber // ignore: cast_nullable_to_non_nullable
-              as String?,
-      checkNumber: freezed == checkNumber
-          ? _value.checkNumber
-          : checkNumber // ignore: cast_nullable_to_non_nullable
-              as String?,
-      checkDueDate: freezed == checkDueDate
-          ? _value.checkDueDate
-          : checkDueDate // ignore: cast_nullable_to_non_nullable
-              as DateTime?,
-      status: null == status
-          ? _value.status
-          : status // ignore: cast_nullable_to_non_nullable
-              as PaymentStatus,
-      journalEntryId: freezed == journalEntryId
-          ? _value.journalEntryId
-          : journalEntryId // ignore: cast_nullable_to_non_nullable
-              as String?,
-      userId: freezed == userId
-          ? _value.userId
-          : userId // ignore: cast_nullable_to_non_nullable
-              as String?,
-      warehouseId: freezed == warehouseId
-          ? _value.warehouseId
-          : warehouseId // ignore: cast_nullable_to_non_nullable
-              as String?,
-      syncStatus: null == syncStatus
-          ? _value.syncStatus
-          : syncStatus // ignore: cast_nullable_to_non_nullable
-              as SyncStatus,
-      serverUpdatedAt: freezed == serverUpdatedAt
-          ? _value.serverUpdatedAt
-          : serverUpdatedAt // ignore: cast_nullable_to_non_nullable
-              as DateTime?,
-      isDeleted: null == isDeleted
-          ? _value.isDeleted
-          : isDeleted // ignore: cast_nullable_to_non_nullable
-              as bool,
-    ) as $Val);
+    return _then(
+      _value.copyWith(
+            id: null == id
+                ? _value.id
+                : id // ignore: cast_nullable_to_non_nullable
+                      as String,
+            receiptNumber: null == receiptNumber
+                ? _value.receiptNumber
+                : receiptNumber // ignore: cast_nullable_to_non_nullable
+                      as String,
+            customerId: null == customerId
+                ? _value.customerId
+                : customerId // ignore: cast_nullable_to_non_nullable
+                      as String,
+            customerName: null == customerName
+                ? _value.customerName
+                : customerName // ignore: cast_nullable_to_non_nullable
+                      as String,
+            amount: null == amount
+                ? _value.amount
+                : amount // ignore: cast_nullable_to_non_nullable
+                      as Decimal,
+            receiptDate: null == receiptDate
+                ? _value.receiptDate
+                : receiptDate // ignore: cast_nullable_to_non_nullable
+                      as DateTime,
+            paymentMethod: null == paymentMethod
+                ? _value.paymentMethod
+                : paymentMethod // ignore: cast_nullable_to_non_nullable
+                      as PaymentMethod,
+            accountId: null == accountId
+                ? _value.accountId
+                : accountId // ignore: cast_nullable_to_non_nullable
+                      as String,
+            createdBy: null == createdBy
+                ? _value.createdBy
+                : createdBy // ignore: cast_nullable_to_non_nullable
+                      as String,
+            createdAt: null == createdAt
+                ? _value.createdAt
+                : createdAt // ignore: cast_nullable_to_non_nullable
+                      as DateTime,
+            reference: freezed == reference
+                ? _value.reference
+                : reference // ignore: cast_nullable_to_non_nullable
+                      as String?,
+            notes: freezed == notes
+                ? _value.notes
+                : notes // ignore: cast_nullable_to_non_nullable
+                      as String?,
+            bankAccountNumber: freezed == bankAccountNumber
+                ? _value.bankAccountNumber
+                : bankAccountNumber // ignore: cast_nullable_to_non_nullable
+                      as String?,
+            checkNumber: freezed == checkNumber
+                ? _value.checkNumber
+                : checkNumber // ignore: cast_nullable_to_non_nullable
+                      as String?,
+            checkDueDate: freezed == checkDueDate
+                ? _value.checkDueDate
+                : checkDueDate // ignore: cast_nullable_to_non_nullable
+                      as DateTime?,
+            status: null == status
+                ? _value.status
+                : status // ignore: cast_nullable_to_non_nullable
+                      as PaymentStatus,
+            journalEntryId: freezed == journalEntryId
+                ? _value.journalEntryId
+                : journalEntryId // ignore: cast_nullable_to_non_nullable
+                      as String?,
+            userId: freezed == userId
+                ? _value.userId
+                : userId // ignore: cast_nullable_to_non_nullable
+                      as String?,
+            warehouseId: freezed == warehouseId
+                ? _value.warehouseId
+                : warehouseId // ignore: cast_nullable_to_non_nullable
+                      as String?,
+            syncStatus: null == syncStatus
+                ? _value.syncStatus
+                : syncStatus // ignore: cast_nullable_to_non_nullable
+                      as SyncStatus,
+            serverUpdatedAt: freezed == serverUpdatedAt
+                ? _value.serverUpdatedAt
+                : serverUpdatedAt // ignore: cast_nullable_to_non_nullable
+                      as DateTime?,
+            isDeleted: null == isDeleted
+                ? _value.isDeleted
+                : isDeleted // ignore: cast_nullable_to_non_nullable
+                      as bool,
+          )
+          as $Val,
+    );
   }
 }
 
 /// @nodoc
 abstract class _$$PaymentReceiptImplCopyWith<$Res>
     implements $PaymentReceiptCopyWith<$Res> {
-  factory _$$PaymentReceiptImplCopyWith(_$PaymentReceiptImpl value,
-          $Res Function(_$PaymentReceiptImpl) then) =
-      __$$PaymentReceiptImplCopyWithImpl<$Res>;
+  factory _$$PaymentReceiptImplCopyWith(
+    _$PaymentReceiptImpl value,
+    $Res Function(_$PaymentReceiptImpl) then,
+  ) = __$$PaymentReceiptImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call(
-      {String id,
-      String receiptNumber,
-      String customerId,
-      String customerName,
-      Decimal amount,
-      DateTime receiptDate,
-      PaymentMethod paymentMethod,
-      String accountId,
-      String createdBy,
-      DateTime createdAt,
-      String? reference,
-      String? notes,
-      String? bankAccountNumber,
-      String? checkNumber,
-      DateTime? checkDueDate,
-      PaymentStatus status,
-      String? journalEntryId,
-      String? userId,
-      String? warehouseId,
-      SyncStatus syncStatus,
-      DateTime? serverUpdatedAt,
-      bool isDeleted});
+  $Res call({
+    String id,
+    String receiptNumber,
+    String customerId,
+    String customerName,
+    Decimal amount,
+    DateTime receiptDate,
+    PaymentMethod paymentMethod,
+    String accountId,
+    String createdBy,
+    DateTime createdAt,
+    String? reference,
+    String? notes,
+    String? bankAccountNumber,
+    String? checkNumber,
+    DateTime? checkDueDate,
+    PaymentStatus status,
+    String? journalEntryId,
+    String? userId,
+    String? warehouseId,
+    SyncStatus syncStatus,
+    DateTime? serverUpdatedAt,
+    bool isDeleted,
+  });
 }
 
 /// @nodoc
@@ -290,8 +298,9 @@ class __$$PaymentReceiptImplCopyWithImpl<$Res>
     extends _$PaymentReceiptCopyWithImpl<$Res, _$PaymentReceiptImpl>
     implements _$$PaymentReceiptImplCopyWith<$Res> {
   __$$PaymentReceiptImplCopyWithImpl(
-      _$PaymentReceiptImpl _value, $Res Function(_$PaymentReceiptImpl) _then)
-      : super(_value, _then);
+    _$PaymentReceiptImpl _value,
+    $Res Function(_$PaymentReceiptImpl) _then,
+  ) : super(_value, _then);
 
   @pragma('vm:prefer-inline')
   @override
@@ -319,126 +328,128 @@ class __$$PaymentReceiptImplCopyWithImpl<$Res>
     Object? serverUpdatedAt = freezed,
     Object? isDeleted = null,
   }) {
-    return _then(_$PaymentReceiptImpl(
-      id: null == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as String,
-      receiptNumber: null == receiptNumber
-          ? _value.receiptNumber
-          : receiptNumber // ignore: cast_nullable_to_non_nullable
-              as String,
-      customerId: null == customerId
-          ? _value.customerId
-          : customerId // ignore: cast_nullable_to_non_nullable
-              as String,
-      customerName: null == customerName
-          ? _value.customerName
-          : customerName // ignore: cast_nullable_to_non_nullable
-              as String,
-      amount: null == amount
-          ? _value.amount
-          : amount // ignore: cast_nullable_to_non_nullable
-              as Decimal,
-      receiptDate: null == receiptDate
-          ? _value.receiptDate
-          : receiptDate // ignore: cast_nullable_to_non_nullable
-              as DateTime,
-      paymentMethod: null == paymentMethod
-          ? _value.paymentMethod
-          : paymentMethod // ignore: cast_nullable_to_non_nullable
-              as PaymentMethod,
-      accountId: null == accountId
-          ? _value.accountId
-          : accountId // ignore: cast_nullable_to_non_nullable
-              as String,
-      createdBy: null == createdBy
-          ? _value.createdBy
-          : createdBy // ignore: cast_nullable_to_non_nullable
-              as String,
-      createdAt: null == createdAt
-          ? _value.createdAt
-          : createdAt // ignore: cast_nullable_to_non_nullable
-              as DateTime,
-      reference: freezed == reference
-          ? _value.reference
-          : reference // ignore: cast_nullable_to_non_nullable
-              as String?,
-      notes: freezed == notes
-          ? _value.notes
-          : notes // ignore: cast_nullable_to_non_nullable
-              as String?,
-      bankAccountNumber: freezed == bankAccountNumber
-          ? _value.bankAccountNumber
-          : bankAccountNumber // ignore: cast_nullable_to_non_nullable
-              as String?,
-      checkNumber: freezed == checkNumber
-          ? _value.checkNumber
-          : checkNumber // ignore: cast_nullable_to_non_nullable
-              as String?,
-      checkDueDate: freezed == checkDueDate
-          ? _value.checkDueDate
-          : checkDueDate // ignore: cast_nullable_to_non_nullable
-              as DateTime?,
-      status: null == status
-          ? _value.status
-          : status // ignore: cast_nullable_to_non_nullable
-              as PaymentStatus,
-      journalEntryId: freezed == journalEntryId
-          ? _value.journalEntryId
-          : journalEntryId // ignore: cast_nullable_to_non_nullable
-              as String?,
-      userId: freezed == userId
-          ? _value.userId
-          : userId // ignore: cast_nullable_to_non_nullable
-              as String?,
-      warehouseId: freezed == warehouseId
-          ? _value.warehouseId
-          : warehouseId // ignore: cast_nullable_to_non_nullable
-              as String?,
-      syncStatus: null == syncStatus
-          ? _value.syncStatus
-          : syncStatus // ignore: cast_nullable_to_non_nullable
-              as SyncStatus,
-      serverUpdatedAt: freezed == serverUpdatedAt
-          ? _value.serverUpdatedAt
-          : serverUpdatedAt // ignore: cast_nullable_to_non_nullable
-              as DateTime?,
-      isDeleted: null == isDeleted
-          ? _value.isDeleted
-          : isDeleted // ignore: cast_nullable_to_non_nullable
-              as bool,
-    ));
+    return _then(
+      _$PaymentReceiptImpl(
+        id: null == id
+            ? _value.id
+            : id // ignore: cast_nullable_to_non_nullable
+                  as String,
+        receiptNumber: null == receiptNumber
+            ? _value.receiptNumber
+            : receiptNumber // ignore: cast_nullable_to_non_nullable
+                  as String,
+        customerId: null == customerId
+            ? _value.customerId
+            : customerId // ignore: cast_nullable_to_non_nullable
+                  as String,
+        customerName: null == customerName
+            ? _value.customerName
+            : customerName // ignore: cast_nullable_to_non_nullable
+                  as String,
+        amount: null == amount
+            ? _value.amount
+            : amount // ignore: cast_nullable_to_non_nullable
+                  as Decimal,
+        receiptDate: null == receiptDate
+            ? _value.receiptDate
+            : receiptDate // ignore: cast_nullable_to_non_nullable
+                  as DateTime,
+        paymentMethod: null == paymentMethod
+            ? _value.paymentMethod
+            : paymentMethod // ignore: cast_nullable_to_non_nullable
+                  as PaymentMethod,
+        accountId: null == accountId
+            ? _value.accountId
+            : accountId // ignore: cast_nullable_to_non_nullable
+                  as String,
+        createdBy: null == createdBy
+            ? _value.createdBy
+            : createdBy // ignore: cast_nullable_to_non_nullable
+                  as String,
+        createdAt: null == createdAt
+            ? _value.createdAt
+            : createdAt // ignore: cast_nullable_to_non_nullable
+                  as DateTime,
+        reference: freezed == reference
+            ? _value.reference
+            : reference // ignore: cast_nullable_to_non_nullable
+                  as String?,
+        notes: freezed == notes
+            ? _value.notes
+            : notes // ignore: cast_nullable_to_non_nullable
+                  as String?,
+        bankAccountNumber: freezed == bankAccountNumber
+            ? _value.bankAccountNumber
+            : bankAccountNumber // ignore: cast_nullable_to_non_nullable
+                  as String?,
+        checkNumber: freezed == checkNumber
+            ? _value.checkNumber
+            : checkNumber // ignore: cast_nullable_to_non_nullable
+                  as String?,
+        checkDueDate: freezed == checkDueDate
+            ? _value.checkDueDate
+            : checkDueDate // ignore: cast_nullable_to_non_nullable
+                  as DateTime?,
+        status: null == status
+            ? _value.status
+            : status // ignore: cast_nullable_to_non_nullable
+                  as PaymentStatus,
+        journalEntryId: freezed == journalEntryId
+            ? _value.journalEntryId
+            : journalEntryId // ignore: cast_nullable_to_non_nullable
+                  as String?,
+        userId: freezed == userId
+            ? _value.userId
+            : userId // ignore: cast_nullable_to_non_nullable
+                  as String?,
+        warehouseId: freezed == warehouseId
+            ? _value.warehouseId
+            : warehouseId // ignore: cast_nullable_to_non_nullable
+                  as String?,
+        syncStatus: null == syncStatus
+            ? _value.syncStatus
+            : syncStatus // ignore: cast_nullable_to_non_nullable
+                  as SyncStatus,
+        serverUpdatedAt: freezed == serverUpdatedAt
+            ? _value.serverUpdatedAt
+            : serverUpdatedAt // ignore: cast_nullable_to_non_nullable
+                  as DateTime?,
+        isDeleted: null == isDeleted
+            ? _value.isDeleted
+            : isDeleted // ignore: cast_nullable_to_non_nullable
+                  as bool,
+      ),
+    );
   }
 }
 
 /// @nodoc
 @JsonSerializable()
 class _$PaymentReceiptImpl extends _PaymentReceipt {
-  const _$PaymentReceiptImpl(
-      {required this.id,
-      required this.receiptNumber,
-      required this.customerId,
-      required this.customerName,
-      required this.amount,
-      required this.receiptDate,
-      required this.paymentMethod,
-      required this.accountId,
-      required this.createdBy,
-      required this.createdAt,
-      this.reference,
-      this.notes,
-      this.bankAccountNumber,
-      this.checkNumber,
-      this.checkDueDate,
-      this.status = PaymentStatus.cleared,
-      this.journalEntryId,
-      this.userId,
-      this.warehouseId,
-      this.syncStatus = SyncStatus.synced,
-      this.serverUpdatedAt,
-      this.isDeleted = false})
-      : super._();
+  const _$PaymentReceiptImpl({
+    required this.id,
+    required this.receiptNumber,
+    required this.customerId,
+    required this.customerName,
+    required this.amount,
+    required this.receiptDate,
+    required this.paymentMethod,
+    required this.accountId,
+    required this.createdBy,
+    required this.createdAt,
+    this.reference,
+    this.notes,
+    this.bankAccountNumber,
+    this.checkNumber,
+    this.checkDueDate,
+    this.status = PaymentStatus.cleared,
+    this.journalEntryId,
+    this.userId,
+    this.warehouseId,
+    this.syncStatus = SyncStatus.synced,
+    this.serverUpdatedAt,
+    this.isDeleted = false,
+  }) : super._();
 
   factory _$PaymentReceiptImpl.fromJson(Map<String, dynamic> json) =>
       _$$PaymentReceiptImplFromJson(json);
@@ -588,161 +599,140 @@ class _$PaymentReceiptImpl extends _PaymentReceipt {
   @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hashAll([
-        runtimeType,
-        id,
-        receiptNumber,
-        customerId,
-        customerName,
-        amount,
-        receiptDate,
-        paymentMethod,
-        accountId,
-        createdBy,
-        createdAt,
-        reference,
-        notes,
-        bankAccountNumber,
-        checkNumber,
-        checkDueDate,
-        status,
-        journalEntryId,
-        userId,
-        warehouseId,
-        syncStatus,
-        serverUpdatedAt,
-        isDeleted
-      ]);
+    runtimeType,
+    id,
+    receiptNumber,
+    customerId,
+    customerName,
+    amount,
+    receiptDate,
+    paymentMethod,
+    accountId,
+    createdBy,
+    createdAt,
+    reference,
+    notes,
+    bankAccountNumber,
+    checkNumber,
+    checkDueDate,
+    status,
+    journalEntryId,
+    userId,
+    warehouseId,
+    syncStatus,
+    serverUpdatedAt,
+    isDeleted,
+  ]);
 
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
   _$$PaymentReceiptImplCopyWith<_$PaymentReceiptImpl> get copyWith =>
       __$$PaymentReceiptImplCopyWithImpl<_$PaymentReceiptImpl>(
-          this, _$identity);
+        this,
+        _$identity,
+      );
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$PaymentReceiptImplToJson(
-      this,
-    );
+    return _$$PaymentReceiptImplToJson(this);
   }
 }
 
 abstract class _PaymentReceipt extends PaymentReceipt {
-  const factory _PaymentReceipt(
-      {required final String id,
-      required final String receiptNumber,
-      required final String customerId,
-      required final String customerName,
-      required final Decimal amount,
-      required final DateTime receiptDate,
-      required final PaymentMethod paymentMethod,
-      required final String accountId,
-      required final String createdBy,
-      required final DateTime createdAt,
-      final String? reference,
-      final String? notes,
-      final String? bankAccountNumber,
-      final String? checkNumber,
-      final DateTime? checkDueDate,
-      final PaymentStatus status,
-      final String? journalEntryId,
-      final String? userId,
-      final String? warehouseId,
-      final SyncStatus syncStatus,
-      final DateTime? serverUpdatedAt,
-      final bool isDeleted}) = _$PaymentReceiptImpl;
+  const factory _PaymentReceipt({
+    required final String id,
+    required final String receiptNumber,
+    required final String customerId,
+    required final String customerName,
+    required final Decimal amount,
+    required final DateTime receiptDate,
+    required final PaymentMethod paymentMethod,
+    required final String accountId,
+    required final String createdBy,
+    required final DateTime createdAt,
+    final String? reference,
+    final String? notes,
+    final String? bankAccountNumber,
+    final String? checkNumber,
+    final DateTime? checkDueDate,
+    final PaymentStatus status,
+    final String? journalEntryId,
+    final String? userId,
+    final String? warehouseId,
+    final SyncStatus syncStatus,
+    final DateTime? serverUpdatedAt,
+    final bool isDeleted,
+  }) = _$PaymentReceiptImpl;
   const _PaymentReceipt._() : super._();
 
   factory _PaymentReceipt.fromJson(Map<String, dynamic> json) =
       _$PaymentReceiptImpl.fromJson;
 
   @override
-
   /// Unique internal UUID for the receipt.
   String get id;
   @override
-
   /// Human-readable unique serial number (e.g., "RCPT-2024-001").
   String get receiptNumber;
   @override
-
   /// Reference to the customer making the payment.
   String get customerId;
   @override
-
   /// Denormalized customer name for display and audit purposes.
   String get customerName;
   @override
-
   /// Payment amount in base currency (SAR).
   Decimal get amount;
   @override
-
   /// Date and time of payment receipt.
   DateTime get receiptDate;
   @override
-
   /// Method of payment (cash, bank transfer, check, etc.).
   PaymentMethod get paymentMethod;
   @override
-
   /// Cash or Bank account ID receiving the payment.
   String get accountId;
   @override
-
   /// User ID of the person recording the receipt.
   String get createdBy;
   @override
-
   /// System-generated creation timestamp in UTC.
   DateTime get createdAt;
   @override
-
   /// External reference number (bank reference, check number, etc.).
   String? get reference;
   @override
-
   /// Optional notes or description.
   String? get notes;
   @override
-
   /// Bank account number for bank transfers.
   String? get bankAccountNumber;
   @override
-
   /// Check number for check payments.
   String? get checkNumber;
   @override
-
   /// Due date for check clearing (if applicable).
   DateTime? get checkDueDate;
   @override
-
   /// Current status of the payment.
   PaymentStatus get status;
   @override
-
   /// ID of the journal entry created for this receipt.
   String? get journalEntryId;
   @override
-
   /// User ID for multi-tenant data isolation.
   String? get userId;
   @override
-
   /// Warehouse scope identifier for multi-branch operations.
   String? get warehouseId;
   @override
-
   /// Local-to-remote synchronization state.
   SyncStatus get syncStatus;
   @override
-
   /// Most recent synchronization timestamp from the server.
   DateTime? get serverUpdatedAt;
   @override
-
   /// Soft-deletion flag for audit trail preservation.
   bool get isDeleted;
   @override

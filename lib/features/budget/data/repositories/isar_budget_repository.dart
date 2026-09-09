@@ -14,18 +14,17 @@ class IsarBudgetRepository implements BudgetRepository {
   Future<List<Budget>> getBudgets() async {
     final models = await _isar.budgetModels
         .filter()
-        .optional(
-          _userId != null,
-          (q) => q.userIdEqualTo(_userId),
-        )
+        .optional(_userId != null, (q) => q.userIdEqualTo(_userId))
         .findAll();
     return models.map((m) => m.toEntity()).toList();
   }
 
   @override
   Future<Budget?> getBudget(String id) async {
-    final model =
-        await _isar.budgetModels.filter().budgetIdEqualTo(id).findFirst();
+    final model = await _isar.budgetModels
+        .filter()
+        .budgetIdEqualTo(id)
+        .findFirst();
     return model?.toEntity();
   }
 

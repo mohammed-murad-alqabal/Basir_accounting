@@ -38,68 +38,67 @@ class DashboardCharts extends ConsumerWidget {
     BuildContext context,
     String title,
     IconData icon,
-  ) =>
-      Row(
-        children: [
-          Icon(icon, size: 20, color: AppColors.primary),
-          const SizedBox(width: Spacing.xs),
-          Text(
-            title,
-            style: AppTextStyles.titleMedium.copyWith(
-              fontWeight: FontWeight.bold,
-              color: AppColors.textPrimary,
-            ),
-          ),
-        ],
-      );
+  ) => Row(
+    children: [
+      Icon(icon, size: 20, color: AppColors.primary),
+      const SizedBox(width: Spacing.xs),
+      Text(
+        title,
+        style: AppTextStyles.titleMedium.copyWith(
+          fontWeight: FontWeight.bold,
+          color: AppColors.textPrimary,
+        ),
+      ),
+    ],
+  );
 
   Widget _buildSalesPerformanceCard(BuildContext context) => Card(
-        elevation: 0,
-        color: AppColors.surface,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(Radii.md),
-          side: const BorderSide(color: AppColors.border),
-        ),
-        child: Padding(
-          padding: const EdgeInsets.all(Spacing.lg),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                context.l10n.dashboardStatsTitle,
-                style: AppTextStyles.bodyLarge.copyWith(
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              const SizedBox(height: Spacing.xl),
-              const SizedBox(height: 200, child: RevenueTrendChart()),
-            ],
+    elevation: 0,
+    color: AppColors.surface,
+    shape: RoundedRectangleBorder(
+      borderRadius: BorderRadius.circular(Radii.md),
+      side: const BorderSide(color: AppColors.border),
+    ),
+    child: Padding(
+      padding: const EdgeInsets.all(Spacing.lg),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            context.l10n.dashboardStatsTitle,
+            style: AppTextStyles.bodyLarge.copyWith(
+              fontWeight: FontWeight.bold,
+            ),
           ),
-        ),
-      );
+          const SizedBox(height: Spacing.xl),
+          const SizedBox(height: 200, child: RevenueTrendChart()),
+        ],
+      ),
+    ),
+  );
 
   Widget _buildRevenueDistributionCard(BuildContext context) => Card(
-        elevation: 0,
-        color: AppColors.surface,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(Radii.md),
-          side: const BorderSide(color: AppColors.border),
-        ),
-        child: Padding(
-          padding: const EdgeInsets.all(Spacing.lg),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                context.l10n.expenseDistributionTitle,
-                style: AppTextStyles.bodyLarge.copyWith(
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              const SizedBox(height: Spacing.xl),
-              const SizedBox(height: 200, child: ExpenseCompositionChart()),
-            ],
+    elevation: 0,
+    color: AppColors.surface,
+    shape: RoundedRectangleBorder(
+      borderRadius: BorderRadius.circular(Radii.md),
+      side: const BorderSide(color: AppColors.border),
+    ),
+    child: Padding(
+      padding: const EdgeInsets.all(Spacing.lg),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            context.l10n.expenseDistributionTitle,
+            style: AppTextStyles.bodyLarge.copyWith(
+              fontWeight: FontWeight.bold,
+            ),
           ),
-        ),
-      );
+          const SizedBox(height: Spacing.xl),
+          const SizedBox(height: 200, child: ExpenseCompositionChart()),
+        ],
+      ),
+    ),
+  );
 }

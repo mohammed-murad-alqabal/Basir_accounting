@@ -74,9 +74,7 @@ class _MfaChallengeScreenState extends ConsumerState<MfaChallengeScreen> {
       // استخدام PatternDrawScreen لرسم النمط
       final ok = await Navigator.of(context).pushNamed<bool>(
         '/pattern-draw',
-        arguments: {
-          'after': '/mfa-challenge',
-        },
+        arguments: {'after': '/mfa-challenge'},
       );
 
       if (!mounted) return;
@@ -172,8 +170,9 @@ class _MfaChallengeScreenState extends ConsumerState<MfaChallengeScreen> {
             AppEnhancedButton(
               type: AppEnhancedButtonType.text,
               label: 'إلغاء',
-              onPressed:
-                  _isLoading ? null : () => Navigator.of(context).pop(false),
+              onPressed: _isLoading
+                  ? null
+                  : () => Navigator.of(context).pop(false),
             ),
           ],
         ),

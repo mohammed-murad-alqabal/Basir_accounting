@@ -36,9 +36,7 @@ class GoalDashboardScreen extends ConsumerWidget {
         future: goalService.getActiveGoals(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(
-              child: AppLoadingIndicator(),
-            );
+            return const Center(child: AppLoadingIndicator());
           }
 
           if (snapshot.hasError) {

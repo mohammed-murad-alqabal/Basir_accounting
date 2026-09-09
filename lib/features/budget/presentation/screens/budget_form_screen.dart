@@ -83,99 +83,95 @@ class _BudgetFormScreenState extends ConsumerState<BudgetFormScreen> {
 
   @override
   Widget build(BuildContext context) => GlassScaffold(
-        title: widget.budget == null ? 'إضافة ميزانية' : 'تعديل ميزانية',
-        body: Form(
-          key: _formKey,
-          child: ListView(
-            padding: const EdgeInsets.all(24),
+    title: widget.budget == null ? 'إضافة ميزانية' : 'تعديل ميزانية',
+    body: Form(
+      key: _formKey,
+      child: ListView(
+        padding: const EdgeInsets.all(24),
+        children: [
+          AppTextField(
+            controller: _nameController,
+            label: 'اسم الميزانية',
+            prefixIcon: const Icon(Icons.label_outline),
+            validator: (v) => v!.isEmpty ? 'يرجى إدخال الاسم' : null,
+          ),
+          const SizedBox(height: 16),
+          AppTextField(
+            controller: _limitController,
+            label: 'المبلغ المستهدف',
+            prefixIcon: const Icon(Icons.account_balance_wallet_outlined),
+            keyboardType: TextInputType.number,
+            validator: (v) => Decimal.tryParse(v ?? '') == null
+                ? 'يرجى إدخال مبلغ صحيح'
+                : null,
+          ),
+          const SizedBox(height: 16),
+          DropdownButtonFormField<BudgetCategory>(
+            initialValue: _category,
+            decoration: _inputDecoration('التصنيف', Icons.category_outlined),
+            items: BudgetCategory.values
+                .map(
+                  (c) => DropdownMenuItem(
+                    value: c,
+                    child: Text(_getCategoryName(c)),
+                  ),
+                )
+                .toList(),
+            onChanged: (v) => setState(() => _category = v!),
+          ),
+          const SizedBox(height: 24),
+          Row(
             children: [
-              AppTextField(
-                controller: _nameController,
-                label: 'اسم الميزانية',
-                prefixIcon: const Icon(Icons.label_outline),
-                validator: (v) => v!.isEmpty ? 'يرجى إدخال الاسم' : null,
-              ),
-              const SizedBox(height: 16),
-              AppTextField(
-                controller: _limitController,
-                label: 'المبلغ المستهدف',
-                prefixIcon: const Icon(Icons.account_balance_wallet_outlined),
-                keyboardType: TextInputType.number,
-                validator: (v) => Decimal.tryParse(v ?? '') == null
-                    ? 'يرجى إدخال مبلغ صحيح'
-                    : null,
-              ),
-              const SizedBox(height: 16),
-              DropdownButtonFormField<BudgetCategory>(
-                initialValue: _category,
-                decoration:
-                    _inputDecoration('التصنيف', Icons.category_outlined),
-                items: BudgetCategory.values
-                    .map(
-                      (c) => DropdownMenuItem(
-                        value: c,
-                        child: Text(_getCategoryName(c)),
-                      ),
-                    )
-                    .toList(),
-                onChanged: (v) => setState(() => _category = v!),
-              ),
-              const SizedBox(height: 24),
-              Row(
-                children: [
-                  Expanded(
-                    child: ListTile(
-                      title: const Text('تبدأ من'),
-                      subtitle: Text(
-                        '${_startDate.year}-${_startDate.month}-${_startDate.day}',
-                      ),
-                      onTap: () async {
-                        final picked = await showDatePicker(
-                          context: context,
-                          initialDate: _startDate,
-                          firstDate: DateTime(2000),
-                          lastDate: DateTime(2100),
-                        );
-                        if (picked != null) setState(() => _startDate = picked);
-                      },
-                    ),
+              Expanded(
+                child: ListTile(
+                  title: const Text('تبدأ من'),
+                  subtitle: Text(
+                    '${_startDate.year}-${_startDate.month}-${_startDate.day}',
                   ),
-                  Expanded(
-                    child: ListTile(
-                      title: const Text('تنتهي في'),
-                      subtitle: Text(
-                        '${_endDate.year}-${_endDate.month}-${_endDate.day}',
-                      ),
-                      onTap: () async {
-                        final picked = await showDatePicker(
-                          context: context,
-                          initialDate: _endDate,
-                          firstDate: DateTime(2000),
-                          lastDate: DateTime(2100),
-                        );
-                        if (picked != null) setState(() => _endDate = picked);
-                      },
-                    ),
+                  onTap: () async {
+                    final picked = await showDatePicker(
+                      context: context,
+                      initialDate: _startDate,
+                      firstDate: DateTime(2000),
+                      lastDate: DateTime(2100),
+                    );
+                    if (picked != null) setState(() => _startDate = picked);
+                  },
+                ),
+              ),
+              Expanded(
+                child: ListTile(
+                  title: const Text('تنتهي في'),
+                  subtitle: Text(
+                    '${_endDate.year}-${_endDate.month}-${_endDate.day}',
                   ),
-                ],
-              ),
-              const SizedBox(height: 16),
-              SwitchListTile(
-                title: const Text('ترحيل الفائض (Rollover)'),
-                subtitle: const Text('نقل المبالغ غير المستخدمة للشهر التالي'),
-                value: _isRollover,
-                activeThumbColor: AppColors.primary,
-                onChanged: (v) => setState(() => _isRollover = v),
-              ),
-              const SizedBox(height: 32),
-              AppEnhancedButton(
-                onPressed: _save,
-                label: 'حفظ الميزانية',
+                  onTap: () async {
+                    final picked = await showDatePicker(
+                      context: context,
+                      initialDate: _endDate,
+                      firstDate: DateTime(2000),
+                      lastDate: DateTime(2100),
+                    );
+                    if (picked != null) setState(() => _endDate = picked);
+                  },
+                ),
               ),
             ],
           ),
-        ),
-      );
+          const SizedBox(height: 16),
+          SwitchListTile(
+            title: const Text('ترحيل الفائض (Rollover)'),
+            subtitle: const Text('نقل المبالغ غير المستخدمة للشهر التالي'),
+            value: _isRollover,
+            activeThumbColor: AppColors.primary,
+            onChanged: (v) => setState(() => _isRollover = v),
+          ),
+          const SizedBox(height: 32),
+          AppEnhancedButton(onPressed: _save, label: 'حفظ الميزانية'),
+        ],
+      ),
+    ),
+  );
 
   InputDecoration _inputDecoration(String label, IconData icon) =>
       InputDecoration(

@@ -20,14 +20,14 @@ String _$financialStatementServiceHash() =>
 @ProviderFor(FinancialStatementService)
 final financialStatementServiceProvider =
     AutoDisposeNotifierProvider<FinancialStatementService, void>.internal(
-  FinancialStatementService.new,
-  name: r'financialStatementServiceProvider',
-  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-      ? null
-      : _$financialStatementServiceHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
+      FinancialStatementService.new,
+      name: r'financialStatementServiceProvider',
+      debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+          ? null
+          : _$financialStatementServiceHash,
+      dependencies: null,
+      allTransitiveDependencies: null,
+    );
 
 typedef _$FinancialStatementService = AutoDisposeNotifier<void>;
 // ignore_for_file: type=lint

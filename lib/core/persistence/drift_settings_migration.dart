@@ -13,8 +13,8 @@ abstract final class DriftSettingsMigrationSlice {
 typedef ProfileMigrationReader = Future<List<ProfileRecord>> Function();
 
 /// قارئ إعدادات العمل في المصدر القديم، مفصول عن Isar لاختبارات المهاجر.
-typedef BusinessSettingsMigrationReader = Future<List<BusinessSettingsRecord>>
-    Function();
+typedef BusinessSettingsMigrationReader =
+    Future<List<BusinessSettingsRecord>> Function();
 
 /// قراءة ملفات المستخدم من Isar وتحويلها إلى DTO محايد بترتيب حتمي.
 class IsarProfileMigrationSource {
@@ -23,24 +23,25 @@ class IsarProfileMigrationSource {
   final Isar _isar;
 
   Future<List<ProfileRecord>> readAll() async {
-    final records = (await _isar.profileModels.where().findAll())
-        .map(_toRecord)
-        .toList(growable: false)
-      ..sort(_compareProfiles);
+    final records =
+        (await _isar.profileModels.where().findAll())
+            .map(_toRecord)
+            .toList(growable: false)
+          ..sort(_compareProfiles);
     return records;
   }
 
   static ProfileRecord _toRecord(ProfileModel model) => ProfileRecord(
-        id: model.id,
-        email: model.email,
-        displayName: model.displayName,
-        avatarUrl: model.avatarUrl,
-        phoneNumber: model.phoneNumber,
-        userId: model.userId,
-        syncStatus: model.syncStatus.name,
-        serverUpdatedAt: model.serverUpdatedAt?.toUtc(),
-        isDeleted: model.isDeleted,
-      );
+    id: model.id,
+    email: model.email,
+    displayName: model.displayName,
+    avatarUrl: model.avatarUrl,
+    phoneNumber: model.phoneNumber,
+    userId: model.userId,
+    syncStatus: model.syncStatus.name,
+    serverUpdatedAt: model.serverUpdatedAt?.toUtc(),
+    isDeleted: model.isDeleted,
+  );
 }
 
 /// قراءة إعدادات العمل من Isar وتحويلها إلى DTO محايد بترتيب حتمي.
@@ -50,10 +51,11 @@ class IsarBusinessSettingsMigrationSource {
   final Isar _isar;
 
   Future<List<BusinessSettingsRecord>> readAll() async {
-    final records = (await _isar.businessSettingsModels.where().findAll())
-        .map(_toRecord)
-        .toList(growable: false)
-      ..sort(_compareBusinessSettings);
+    final records =
+        (await _isar.businessSettingsModels.where().findAll())
+            .map(_toRecord)
+            .toList(growable: false)
+          ..sort(_compareBusinessSettings);
     return records;
   }
 
@@ -98,11 +100,11 @@ class DriftSettingsMigrator {
     required ProfileStorage profileStorage,
     required BusinessSettingsStorage businessSettingsStorage,
     required MigrationCheckpointStorage checkpoints,
-  })  : _profileSource = profileSource,
-        _businessSettingsSource = businessSettingsSource,
-        _profileStorage = profileStorage,
-        _businessSettingsStorage = businessSettingsStorage,
-        _checkpoints = checkpoints;
+  }) : _profileSource = profileSource,
+       _businessSettingsSource = businessSettingsSource,
+       _profileStorage = profileStorage,
+       _businessSettingsStorage = businessSettingsStorage,
+       _checkpoints = checkpoints;
 
   final ProfileMigrationReader _profileSource;
   final BusinessSettingsMigrationReader _businessSettingsSource;
@@ -116,8 +118,9 @@ class DriftSettingsMigrator {
     }
 
     final profiles = await _migrateProfiles(batchSize: batchSize);
-    final businessSettings =
-        await _migrateBusinessSettings(batchSize: batchSize);
+    final businessSettings = await _migrateBusinessSettings(
+      batchSize: batchSize,
+    );
     return DriftSettingsMigrationReport(
       profiles: profiles,
       businessSettings: businessSettings,
@@ -182,15 +185,14 @@ class DriftSettingsMigrator {
     required String slice,
     required int sourceCount,
     required int migratedCount,
-  }) =>
-      _checkpoints.save(
-        MigrationCheckpoint(
-          slice: slice,
-          sourceCount: sourceCount,
-          migratedCount: migratedCount,
-          completedAt: null,
-        ),
-      );
+  }) => _checkpoints.save(
+    MigrationCheckpoint(
+      slice: slice,
+      sourceCount: sourceCount,
+      migratedCount: migratedCount,
+      completedAt: null,
+    ),
+  );
 }
 
 int _compareProfiles(ProfileRecord left, ProfileRecord right) {

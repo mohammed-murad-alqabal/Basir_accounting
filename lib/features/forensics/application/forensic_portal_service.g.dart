@@ -14,13 +14,14 @@ String _$ledgerBlocksHash() => r'df7008dd4f78f027709cdd554d30b6869d6c339c';
 @ProviderFor(ledgerBlocks)
 final ledgerBlocksProvider =
     AutoDisposeFutureProvider<List<LedgerBlock>>.internal(
-  ledgerBlocks,
-  name: r'ledgerBlocksProvider',
-  debugGetCreateSourceHash:
-      const bool.fromEnvironment('dart.vm.product') ? null : _$ledgerBlocksHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
+      ledgerBlocks,
+      name: r'ledgerBlocksProvider',
+      debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+          ? null
+          : _$ledgerBlocksHash,
+      dependencies: null,
+      allTransitiveDependencies: null,
+    );
 
 typedef LedgerBlocksRef = AutoDisposeFutureProviderRef<List<LedgerBlock>>;
 String _$forensicPortalNotifierHash() =>
@@ -30,16 +31,19 @@ String _$forensicPortalNotifierHash() =>
 ///
 /// Copied from [ForensicPortalNotifier].
 @ProviderFor(ForensicPortalNotifier)
-final forensicPortalNotifierProvider = AutoDisposeAsyncNotifierProvider<
-    ForensicPortalNotifier, IntegrityPulse>.internal(
-  ForensicPortalNotifier.new,
-  name: r'forensicPortalNotifierProvider',
-  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-      ? null
-      : _$forensicPortalNotifierHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
+final forensicPortalNotifierProvider =
+    AutoDisposeAsyncNotifierProvider<
+      ForensicPortalNotifier,
+      IntegrityPulse
+    >.internal(
+      ForensicPortalNotifier.new,
+      name: r'forensicPortalNotifierProvider',
+      debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+          ? null
+          : _$forensicPortalNotifierHash,
+      dependencies: null,
+      allTransitiveDependencies: null,
+    );
 
 typedef _$ForensicPortalNotifier = AutoDisposeAsyncNotifier<IntegrityPulse>;
 // ignore_for_file: type=lint

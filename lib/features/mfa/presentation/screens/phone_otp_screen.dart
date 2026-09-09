@@ -34,10 +34,9 @@ class _PhoneOtpScreenState extends ConsumerState<PhoneOtpScreen> {
         return;
       }
 
-      final ok = await ref.read(phoneAuthServiceInterfaceProvider).verifyOtp(
-            widget.phone,
-            otp,
-          );
+      final ok = await ref
+          .read(phoneAuthServiceInterfaceProvider)
+          .verifyOtp(widget.phone, otp);
       if (!mounted) return;
       if (!ok) {
         AppSnackbar.showError(context, 'رمز غير صحيح');
@@ -58,44 +57,45 @@ class _PhoneOtpScreenState extends ConsumerState<PhoneOtpScreen> {
 
   @override
   Widget build(BuildContext context) => GlassScaffold(
-        title: 'رمز التحقق',
-        body: SingleChildScrollView(
-          padding: const EdgeInsets.all(Spacing.lg),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              const SizedBox(height: Spacing.md),
-              Text(
-                'أدخل الرمز المرسل إلى ${widget.phone}',
-                style: AppTextStyles.bodyMedium.copyWith(
-                  color: Theme.of(context).colorScheme.onSurfaceVariant,
-                ),
-                textAlign: TextAlign.center,
-              ),
-              const SizedBox(height: Spacing.xl),
-              AppTextField(
-                controller: _otpController,
-                label: 'الرمز',
-                hint: 'xxxxxx',
-                keyboardType: TextInputType.number,
-                prefixIcon: const Icon(Icons.lock_open_outlined),
-              ),
-              const SizedBox(height: Spacing.xl),
-              AppEnhancedButton(
-                label: 'تحقق',
-                onPressed: _isLoading ? null : _verify,
-                isLoading: _isLoading,
-                icon: Icons.verified_outlined,
-              ),
-              const SizedBox(height: Spacing.lg),
-              AppEnhancedButton(
-                type: AppEnhancedButtonType.text,
-                label: 'إلغاء',
-                onPressed:
-                    _isLoading ? null : () => Navigator.of(context).pop(false),
-              ),
-            ],
+    title: 'رمز التحقق',
+    body: SingleChildScrollView(
+      padding: const EdgeInsets.all(Spacing.lg),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          const SizedBox(height: Spacing.md),
+          Text(
+            'أدخل الرمز المرسل إلى ${widget.phone}',
+            style: AppTextStyles.bodyMedium.copyWith(
+              color: Theme.of(context).colorScheme.onSurfaceVariant,
+            ),
+            textAlign: TextAlign.center,
           ),
-        ),
-      );
+          const SizedBox(height: Spacing.xl),
+          AppTextField(
+            controller: _otpController,
+            label: 'الرمز',
+            hint: 'xxxxxx',
+            keyboardType: TextInputType.number,
+            prefixIcon: const Icon(Icons.lock_open_outlined),
+          ),
+          const SizedBox(height: Spacing.xl),
+          AppEnhancedButton(
+            label: 'تحقق',
+            onPressed: _isLoading ? null : _verify,
+            isLoading: _isLoading,
+            icon: Icons.verified_outlined,
+          ),
+          const SizedBox(height: Spacing.lg),
+          AppEnhancedButton(
+            type: AppEnhancedButtonType.text,
+            label: 'إلغاء',
+            onPressed: _isLoading
+                ? null
+                : () => Navigator.of(context).pop(false),
+          ),
+        ],
+      ),
+    ),
+  );
 }

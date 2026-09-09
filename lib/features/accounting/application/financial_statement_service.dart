@@ -37,10 +37,12 @@ class FinancialStatementService extends _$FinancialStatementService {
 
       final balance = await _repository.getAccountBalance(account.id);
 
-      final debit =
-          account.nature == AccountNature.debit ? balance : Decimal.zero;
-      final credit =
-          account.nature == AccountNature.credit ? balance : Decimal.zero;
+      final debit = account.nature == AccountNature.debit
+          ? balance
+          : Decimal.zero;
+      final credit = account.nature == AccountNature.credit
+          ? balance
+          : Decimal.zero;
 
       if (balance != Decimal.zero) {
         lines.add(
@@ -106,8 +108,9 @@ class FinancialStatementService extends _$FinancialStatementService {
         final balance = await _repository.getAccountBalance(account.id);
 
         // Revenue increases profit (+ve), Expenses decrease profit (-ve)
-        final adjustedBalance =
-            account.type == AccountType.revenue ? balance : -balance;
+        final adjustedBalance = account.type == AccountType.revenue
+            ? balance
+            : -balance;
 
         if (adjustedBalance != Decimal.zero) {
           lines.add(
@@ -160,11 +163,7 @@ class FinancialStatementService extends _$FinancialStatementService {
 
     // --- Assets Section ---
     lines.add(
-      FinancialReportLine(
-        label: 'Assets',
-        amount: Decimal.zero,
-        isTitle: true,
-      ),
+      FinancialReportLine(label: 'Assets', amount: Decimal.zero, isTitle: true),
     );
     var totalAssets = Decimal.zero;
     for (final account in accounts.where(

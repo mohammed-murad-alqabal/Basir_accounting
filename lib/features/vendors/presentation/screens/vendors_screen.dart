@@ -156,7 +156,8 @@ class _VendorsScreenState extends ConsumerState<VendorsScreen> {
         final vendor = vendors[index];
         final localizedName = vendor.name(isArabic: context.isArabic);
         return Semantics(
-          label: '$localizedName, '
+          label:
+              '$localizedName, '
               '${vendor.email ?? ""}, '
               '${vendor.phone ?? ""}',
           button: true,

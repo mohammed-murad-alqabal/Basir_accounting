@@ -23,10 +23,7 @@ class PasswordHasher {
   /// يعيد bcrypt hash جديدًا ذاتي الوصف، ويشمل salt ومعامل الكلفة.
   static String hash(String password) {
     _ensureSupportedPasswordLength(password);
-    return BCrypt.hashpw(
-      password,
-      BCrypt.gensalt(logRounds: bcryptCost),
-    );
+    return BCrypt.hashpw(password, BCrypt.gensalt(logRounds: bcryptCost));
   }
 
   /// يتحقق من bcrypt hash، ويرفض الصيغ التالفة بأمان بدل تمرير الاستثناء.
@@ -67,12 +64,14 @@ class PasswordHasher {
 
     const appSalt = 'basir_mvp_2025_secure_salt';
     final combinedSalt = '$appSalt$userSalt';
-    var candidate =
-        sha256.convert(utf8.encode('$password$combinedSalt')).toString();
+    var candidate = sha256
+        .convert(utf8.encode('$password$combinedSalt'))
+        .toString();
 
     for (var iteration = 0; iteration < 1000; iteration++) {
-      candidate =
-          sha256.convert(utf8.encode('$candidate$combinedSalt')).toString();
+      candidate = sha256
+          .convert(utf8.encode('$candidate$combinedSalt'))
+          .toString();
     }
 
     return _constantTimeEquals(candidate, encodedHash);

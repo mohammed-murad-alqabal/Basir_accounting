@@ -39,7 +39,13 @@ class ExcelImportService extends _$ExcelImportService {
         return;
       }
 
-      final file = File(result.files.first.path!);
+      final filePath = result.files.first.path;
+      if (filePath == null) {
+        state = const AsyncValue.data([]);
+        return;
+      }
+
+      final file = File(filePath);
       final bytes = file.readAsBytesSync();
       final excel = Excel.decodeBytes(bytes);
 
@@ -63,10 +69,9 @@ class ExcelImportService extends _$ExcelImportService {
             final natureStr = rowData[4]?.value?.toString().toLowerCase() ?? '';
 
             final balance = Decimal.tryParse(balanceStr) ?? Decimal.zero;
-            final nature =
-                natureStr.contains('credit') || natureStr.contains('دائن')
-                    ? AccountNature.credit
-                    : AccountNature.debit;
+            final nature = natureStr.contains('credit') || natureStr.contains('دائن')
+                ? AccountNature.credit
+                : AccountNature.debit;
 
             rows.add(
               ImportRow(
@@ -125,10 +130,7 @@ class ExcelImportService extends _$ExcelImportService {
     await file.writeAsBytes(excel.encode()!);
 
     // ignore: deprecated_member_use
-    await Share.shareXFiles(
-      [XFile(path)],
-      subject: 'Basir Data Import Template',
-    );
+    await Share.shareXFiles([XFile(path)], subject: 'Basir Data Import Template');
   }
 
   /// تنفيذ عملية الاستيراد وحفظ البيانات في القاعدة
@@ -144,8 +146,7 @@ class ExcelImportService extends _$ExcelImportService {
     try {
       final customerRepo = ref.read(customerRepositoryProvider);
       final accountRepo = ref.read(accountingRepositoryProvider);
-      final integrityService =
-          ref.read(ledgerIntegrityServiceProvider.notifier);
+      final integrityService = ref.read(ledgerIntegrityServiceProvider.notifier);
       final now = DateTime.now();
       const uuid = Uuid();
 
@@ -154,8 +155,7 @@ class ExcelImportService extends _$ExcelImportService {
       existingEntries.sort((a, b) => a.createdAt.compareTo(b.createdAt));
       var lastHash = existingEntries.isEmpty
           ? null
-          : existingEntries.last.hash ??
-              _computeEntryHash(existingEntries.last);
+          : existingEntries.last.hash ?? _computeEntryHash(existingEntries.last);
 
       for (final row in rows) {
         if (!row.isValid) continue;
@@ -200,22 +200,14 @@ class ExcelImportService extends _$ExcelImportService {
             JournalEntryLine(
               accountId: accountId,
               accountName: row.name,
-              debit: row.nature == AccountNature.debit
-                  ? row.balance
-                  : Decimal.zero,
-              credit: row.nature == AccountNature.credit
-                  ? row.balance
-                  : Decimal.zero,
+              debit: row.nature == AccountNature.debit ? row.balance : Decimal.zero,
+              credit: row.nature == AccountNature.credit ? row.balance : Decimal.zero,
             ),
             JournalEntryLine(
               accountId: 'opening_balance_equity',
               accountName: 'الأرصدة الافتتاحية',
-              debit: row.nature == AccountNature.credit
-                  ? row.balance
-                  : Decimal.zero,
-              credit: row.nature == AccountNature.debit
-                  ? row.balance
-                  : Decimal.zero,
+              debit: row.nature == AccountNature.credit ? row.balance : Decimal.zero,
+              credit: row.nature == AccountNature.debit ? row.balance : Decimal.zero,
             ),
           ];
 
@@ -246,7 +238,8 @@ class ExcelImportService extends _$ExcelImportService {
                 timestamp: now,
                 action: 'EXCEL_IMPORT_COMMIT',
                 actor: 'ExcelImportService',
-                rationale: 'Ledger integrity chain attached '
+                rationale:
+                    'Ledger integrity chain attached '
                     '(prev_hash: ${previousHash ?? 'genesis'})',
               ),
             ],

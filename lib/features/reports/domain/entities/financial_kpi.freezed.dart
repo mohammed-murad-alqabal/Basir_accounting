@@ -12,7 +12,8 @@ part of 'financial_kpi.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
+  'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models',
+);
 
 AgentInsight _$AgentInsightFromJson(Map<String, dynamic> json) {
   return _AgentInsight.fromJson(json);
@@ -39,19 +40,21 @@ mixin _$AgentInsight {
 /// @nodoc
 abstract class $AgentInsightCopyWith<$Res> {
   factory $AgentInsightCopyWith(
-          AgentInsight value, $Res Function(AgentInsight) then) =
-      _$AgentInsightCopyWithImpl<$Res, AgentInsight>;
+    AgentInsight value,
+    $Res Function(AgentInsight) then,
+  ) = _$AgentInsightCopyWithImpl<$Res, AgentInsight>;
   @useResult
-  $Res call(
-      {String id,
-      AgentSource source,
-      InsightRiskLevel riskLevel,
-      String title,
-      String description,
-      DateTime timestamp,
-      Map<String, dynamic>? metadata,
-      String? actionLabel,
-      String? actionRoute});
+  $Res call({
+    String id,
+    AgentSource source,
+    InsightRiskLevel riskLevel,
+    String title,
+    String description,
+    DateTime timestamp,
+    Map<String, dynamic>? metadata,
+    String? actionLabel,
+    String? actionRoute,
+  });
 }
 
 /// @nodoc
@@ -77,44 +80,47 @@ class _$AgentInsightCopyWithImpl<$Res, $Val extends AgentInsight>
     Object? actionLabel = freezed,
     Object? actionRoute = freezed,
   }) {
-    return _then(_value.copyWith(
-      id: null == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as String,
-      source: null == source
-          ? _value.source
-          : source // ignore: cast_nullable_to_non_nullable
-              as AgentSource,
-      riskLevel: null == riskLevel
-          ? _value.riskLevel
-          : riskLevel // ignore: cast_nullable_to_non_nullable
-              as InsightRiskLevel,
-      title: null == title
-          ? _value.title
-          : title // ignore: cast_nullable_to_non_nullable
-              as String,
-      description: null == description
-          ? _value.description
-          : description // ignore: cast_nullable_to_non_nullable
-              as String,
-      timestamp: null == timestamp
-          ? _value.timestamp
-          : timestamp // ignore: cast_nullable_to_non_nullable
-              as DateTime,
-      metadata: freezed == metadata
-          ? _value.metadata
-          : metadata // ignore: cast_nullable_to_non_nullable
-              as Map<String, dynamic>?,
-      actionLabel: freezed == actionLabel
-          ? _value.actionLabel
-          : actionLabel // ignore: cast_nullable_to_non_nullable
-              as String?,
-      actionRoute: freezed == actionRoute
-          ? _value.actionRoute
-          : actionRoute // ignore: cast_nullable_to_non_nullable
-              as String?,
-    ) as $Val);
+    return _then(
+      _value.copyWith(
+            id: null == id
+                ? _value.id
+                : id // ignore: cast_nullable_to_non_nullable
+                      as String,
+            source: null == source
+                ? _value.source
+                : source // ignore: cast_nullable_to_non_nullable
+                      as AgentSource,
+            riskLevel: null == riskLevel
+                ? _value.riskLevel
+                : riskLevel // ignore: cast_nullable_to_non_nullable
+                      as InsightRiskLevel,
+            title: null == title
+                ? _value.title
+                : title // ignore: cast_nullable_to_non_nullable
+                      as String,
+            description: null == description
+                ? _value.description
+                : description // ignore: cast_nullable_to_non_nullable
+                      as String,
+            timestamp: null == timestamp
+                ? _value.timestamp
+                : timestamp // ignore: cast_nullable_to_non_nullable
+                      as DateTime,
+            metadata: freezed == metadata
+                ? _value.metadata
+                : metadata // ignore: cast_nullable_to_non_nullable
+                      as Map<String, dynamic>?,
+            actionLabel: freezed == actionLabel
+                ? _value.actionLabel
+                : actionLabel // ignore: cast_nullable_to_non_nullable
+                      as String?,
+            actionRoute: freezed == actionRoute
+                ? _value.actionRoute
+                : actionRoute // ignore: cast_nullable_to_non_nullable
+                      as String?,
+          )
+          as $Val,
+    );
   }
 }
 
@@ -122,20 +128,22 @@ class _$AgentInsightCopyWithImpl<$Res, $Val extends AgentInsight>
 abstract class _$$AgentInsightImplCopyWith<$Res>
     implements $AgentInsightCopyWith<$Res> {
   factory _$$AgentInsightImplCopyWith(
-          _$AgentInsightImpl value, $Res Function(_$AgentInsightImpl) then) =
-      __$$AgentInsightImplCopyWithImpl<$Res>;
+    _$AgentInsightImpl value,
+    $Res Function(_$AgentInsightImpl) then,
+  ) = __$$AgentInsightImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call(
-      {String id,
-      AgentSource source,
-      InsightRiskLevel riskLevel,
-      String title,
-      String description,
-      DateTime timestamp,
-      Map<String, dynamic>? metadata,
-      String? actionLabel,
-      String? actionRoute});
+  $Res call({
+    String id,
+    AgentSource source,
+    InsightRiskLevel riskLevel,
+    String title,
+    String description,
+    DateTime timestamp,
+    Map<String, dynamic>? metadata,
+    String? actionLabel,
+    String? actionRoute,
+  });
 }
 
 /// @nodoc
@@ -143,8 +151,9 @@ class __$$AgentInsightImplCopyWithImpl<$Res>
     extends _$AgentInsightCopyWithImpl<$Res, _$AgentInsightImpl>
     implements _$$AgentInsightImplCopyWith<$Res> {
   __$$AgentInsightImplCopyWithImpl(
-      _$AgentInsightImpl _value, $Res Function(_$AgentInsightImpl) _then)
-      : super(_value, _then);
+    _$AgentInsightImpl _value,
+    $Res Function(_$AgentInsightImpl) _then,
+  ) : super(_value, _then);
 
   @pragma('vm:prefer-inline')
   @override
@@ -159,61 +168,63 @@ class __$$AgentInsightImplCopyWithImpl<$Res>
     Object? actionLabel = freezed,
     Object? actionRoute = freezed,
   }) {
-    return _then(_$AgentInsightImpl(
-      id: null == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as String,
-      source: null == source
-          ? _value.source
-          : source // ignore: cast_nullable_to_non_nullable
-              as AgentSource,
-      riskLevel: null == riskLevel
-          ? _value.riskLevel
-          : riskLevel // ignore: cast_nullable_to_non_nullable
-              as InsightRiskLevel,
-      title: null == title
-          ? _value.title
-          : title // ignore: cast_nullable_to_non_nullable
-              as String,
-      description: null == description
-          ? _value.description
-          : description // ignore: cast_nullable_to_non_nullable
-              as String,
-      timestamp: null == timestamp
-          ? _value.timestamp
-          : timestamp // ignore: cast_nullable_to_non_nullable
-              as DateTime,
-      metadata: freezed == metadata
-          ? _value._metadata
-          : metadata // ignore: cast_nullable_to_non_nullable
-              as Map<String, dynamic>?,
-      actionLabel: freezed == actionLabel
-          ? _value.actionLabel
-          : actionLabel // ignore: cast_nullable_to_non_nullable
-              as String?,
-      actionRoute: freezed == actionRoute
-          ? _value.actionRoute
-          : actionRoute // ignore: cast_nullable_to_non_nullable
-              as String?,
-    ));
+    return _then(
+      _$AgentInsightImpl(
+        id: null == id
+            ? _value.id
+            : id // ignore: cast_nullable_to_non_nullable
+                  as String,
+        source: null == source
+            ? _value.source
+            : source // ignore: cast_nullable_to_non_nullable
+                  as AgentSource,
+        riskLevel: null == riskLevel
+            ? _value.riskLevel
+            : riskLevel // ignore: cast_nullable_to_non_nullable
+                  as InsightRiskLevel,
+        title: null == title
+            ? _value.title
+            : title // ignore: cast_nullable_to_non_nullable
+                  as String,
+        description: null == description
+            ? _value.description
+            : description // ignore: cast_nullable_to_non_nullable
+                  as String,
+        timestamp: null == timestamp
+            ? _value.timestamp
+            : timestamp // ignore: cast_nullable_to_non_nullable
+                  as DateTime,
+        metadata: freezed == metadata
+            ? _value._metadata
+            : metadata // ignore: cast_nullable_to_non_nullable
+                  as Map<String, dynamic>?,
+        actionLabel: freezed == actionLabel
+            ? _value.actionLabel
+            : actionLabel // ignore: cast_nullable_to_non_nullable
+                  as String?,
+        actionRoute: freezed == actionRoute
+            ? _value.actionRoute
+            : actionRoute // ignore: cast_nullable_to_non_nullable
+                  as String?,
+      ),
+    );
   }
 }
 
 /// @nodoc
 @JsonSerializable()
 class _$AgentInsightImpl implements _AgentInsight {
-  const _$AgentInsightImpl(
-      {required this.id,
-      required this.source,
-      required this.riskLevel,
-      required this.title,
-      required this.description,
-      required this.timestamp,
-      final Map<String, dynamic>? metadata,
-      this.actionLabel,
-      this.actionRoute})
-      : _metadata = metadata;
+  const _$AgentInsightImpl({
+    required this.id,
+    required this.source,
+    required this.riskLevel,
+    required this.title,
+    required this.description,
+    required this.timestamp,
+    final Map<String, dynamic>? metadata,
+    this.actionLabel,
+    this.actionRoute,
+  }) : _metadata = metadata;
 
   factory _$AgentInsightImpl.fromJson(Map<String, dynamic> json) =>
       _$$AgentInsightImplFromJson(json);
@@ -274,16 +285,17 @@ class _$AgentInsightImpl implements _AgentInsight {
   @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(
-      runtimeType,
-      id,
-      source,
-      riskLevel,
-      title,
-      description,
-      timestamp,
-      const DeepCollectionEquality().hash(_metadata),
-      actionLabel,
-      actionRoute);
+    runtimeType,
+    id,
+    source,
+    riskLevel,
+    title,
+    description,
+    timestamp,
+    const DeepCollectionEquality().hash(_metadata),
+    actionLabel,
+    actionRoute,
+  );
 
   @JsonKey(ignore: true)
   @override
@@ -293,23 +305,22 @@ class _$AgentInsightImpl implements _AgentInsight {
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$AgentInsightImplToJson(
-      this,
-    );
+    return _$$AgentInsightImplToJson(this);
   }
 }
 
 abstract class _AgentInsight implements AgentInsight {
-  const factory _AgentInsight(
-      {required final String id,
-      required final AgentSource source,
-      required final InsightRiskLevel riskLevel,
-      required final String title,
-      required final String description,
-      required final DateTime timestamp,
-      final Map<String, dynamic>? metadata,
-      final String? actionLabel,
-      final String? actionRoute}) = _$AgentInsightImpl;
+  const factory _AgentInsight({
+    required final String id,
+    required final AgentSource source,
+    required final InsightRiskLevel riskLevel,
+    required final String title,
+    required final String description,
+    required final DateTime timestamp,
+    final Map<String, dynamic>? metadata,
+    final String? actionLabel,
+    final String? actionRoute,
+  }) = _$AgentInsightImpl;
 
   factory _AgentInsight.fromJson(Map<String, dynamic> json) =
       _$AgentInsightImpl.fromJson;
@@ -371,16 +382,18 @@ mixin _$FinancialKpi {
 /// @nodoc
 abstract class $FinancialKpiCopyWith<$Res> {
   factory $FinancialKpiCopyWith(
-          FinancialKpi value, $Res Function(FinancialKpi) then) =
-      _$FinancialKpiCopyWithImpl<$Res, FinancialKpi>;
+    FinancialKpi value,
+    $Res Function(FinancialKpi) then,
+  ) = _$FinancialKpiCopyWithImpl<$Res, FinancialKpi>;
   @useResult
-  $Res call(
-      {String name,
-      double value,
-      String unit,
-      double trend,
-      KpiHealth health,
-      String description});
+  $Res call({
+    String name,
+    double value,
+    String unit,
+    double trend,
+    KpiHealth health,
+    String description,
+  });
 }
 
 /// @nodoc
@@ -403,32 +416,35 @@ class _$FinancialKpiCopyWithImpl<$Res, $Val extends FinancialKpi>
     Object? health = null,
     Object? description = null,
   }) {
-    return _then(_value.copyWith(
-      name: null == name
-          ? _value.name
-          : name // ignore: cast_nullable_to_non_nullable
-              as String,
-      value: null == value
-          ? _value.value
-          : value // ignore: cast_nullable_to_non_nullable
-              as double,
-      unit: null == unit
-          ? _value.unit
-          : unit // ignore: cast_nullable_to_non_nullable
-              as String,
-      trend: null == trend
-          ? _value.trend
-          : trend // ignore: cast_nullable_to_non_nullable
-              as double,
-      health: null == health
-          ? _value.health
-          : health // ignore: cast_nullable_to_non_nullable
-              as KpiHealth,
-      description: null == description
-          ? _value.description
-          : description // ignore: cast_nullable_to_non_nullable
-              as String,
-    ) as $Val);
+    return _then(
+      _value.copyWith(
+            name: null == name
+                ? _value.name
+                : name // ignore: cast_nullable_to_non_nullable
+                      as String,
+            value: null == value
+                ? _value.value
+                : value // ignore: cast_nullable_to_non_nullable
+                      as double,
+            unit: null == unit
+                ? _value.unit
+                : unit // ignore: cast_nullable_to_non_nullable
+                      as String,
+            trend: null == trend
+                ? _value.trend
+                : trend // ignore: cast_nullable_to_non_nullable
+                      as double,
+            health: null == health
+                ? _value.health
+                : health // ignore: cast_nullable_to_non_nullable
+                      as KpiHealth,
+            description: null == description
+                ? _value.description
+                : description // ignore: cast_nullable_to_non_nullable
+                      as String,
+          )
+          as $Val,
+    );
   }
 }
 
@@ -436,17 +452,19 @@ class _$FinancialKpiCopyWithImpl<$Res, $Val extends FinancialKpi>
 abstract class _$$FinancialKpiImplCopyWith<$Res>
     implements $FinancialKpiCopyWith<$Res> {
   factory _$$FinancialKpiImplCopyWith(
-          _$FinancialKpiImpl value, $Res Function(_$FinancialKpiImpl) then) =
-      __$$FinancialKpiImplCopyWithImpl<$Res>;
+    _$FinancialKpiImpl value,
+    $Res Function(_$FinancialKpiImpl) then,
+  ) = __$$FinancialKpiImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call(
-      {String name,
-      double value,
-      String unit,
-      double trend,
-      KpiHealth health,
-      String description});
+  $Res call({
+    String name,
+    double value,
+    String unit,
+    double trend,
+    KpiHealth health,
+    String description,
+  });
 }
 
 /// @nodoc
@@ -454,8 +472,9 @@ class __$$FinancialKpiImplCopyWithImpl<$Res>
     extends _$FinancialKpiCopyWithImpl<$Res, _$FinancialKpiImpl>
     implements _$$FinancialKpiImplCopyWith<$Res> {
   __$$FinancialKpiImplCopyWithImpl(
-      _$FinancialKpiImpl _value, $Res Function(_$FinancialKpiImpl) _then)
-      : super(_value, _then);
+    _$FinancialKpiImpl _value,
+    $Res Function(_$FinancialKpiImpl) _then,
+  ) : super(_value, _then);
 
   @pragma('vm:prefer-inline')
   @override
@@ -467,45 +486,48 @@ class __$$FinancialKpiImplCopyWithImpl<$Res>
     Object? health = null,
     Object? description = null,
   }) {
-    return _then(_$FinancialKpiImpl(
-      name: null == name
-          ? _value.name
-          : name // ignore: cast_nullable_to_non_nullable
-              as String,
-      value: null == value
-          ? _value.value
-          : value // ignore: cast_nullable_to_non_nullable
-              as double,
-      unit: null == unit
-          ? _value.unit
-          : unit // ignore: cast_nullable_to_non_nullable
-              as String,
-      trend: null == trend
-          ? _value.trend
-          : trend // ignore: cast_nullable_to_non_nullable
-              as double,
-      health: null == health
-          ? _value.health
-          : health // ignore: cast_nullable_to_non_nullable
-              as KpiHealth,
-      description: null == description
-          ? _value.description
-          : description // ignore: cast_nullable_to_non_nullable
-              as String,
-    ));
+    return _then(
+      _$FinancialKpiImpl(
+        name: null == name
+            ? _value.name
+            : name // ignore: cast_nullable_to_non_nullable
+                  as String,
+        value: null == value
+            ? _value.value
+            : value // ignore: cast_nullable_to_non_nullable
+                  as double,
+        unit: null == unit
+            ? _value.unit
+            : unit // ignore: cast_nullable_to_non_nullable
+                  as String,
+        trend: null == trend
+            ? _value.trend
+            : trend // ignore: cast_nullable_to_non_nullable
+                  as double,
+        health: null == health
+            ? _value.health
+            : health // ignore: cast_nullable_to_non_nullable
+                  as KpiHealth,
+        description: null == description
+            ? _value.description
+            : description // ignore: cast_nullable_to_non_nullable
+                  as String,
+      ),
+    );
   }
 }
 
 /// @nodoc
 @JsonSerializable()
 class _$FinancialKpiImpl implements _FinancialKpi {
-  const _$FinancialKpiImpl(
-      {required this.name,
-      required this.value,
-      required this.unit,
-      required this.trend,
-      required this.health,
-      required this.description});
+  const _$FinancialKpiImpl({
+    required this.name,
+    required this.value,
+    required this.unit,
+    required this.trend,
+    required this.health,
+    required this.description,
+  });
 
   factory _$FinancialKpiImpl.fromJson(Map<String, dynamic> json) =>
       _$$FinancialKpiImplFromJson(json);
@@ -566,46 +588,39 @@ class _$FinancialKpiImpl implements _FinancialKpi {
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$FinancialKpiImplToJson(
-      this,
-    );
+    return _$$FinancialKpiImplToJson(this);
   }
 }
 
 abstract class _FinancialKpi implements FinancialKpi {
-  const factory _FinancialKpi(
-      {required final String name,
-      required final double value,
-      required final String unit,
-      required final double trend,
-      required final KpiHealth health,
-      required final String description}) = _$FinancialKpiImpl;
+  const factory _FinancialKpi({
+    required final String name,
+    required final double value,
+    required final String unit,
+    required final double trend,
+    required final KpiHealth health,
+    required final String description,
+  }) = _$FinancialKpiImpl;
 
   factory _FinancialKpi.fromJson(Map<String, dynamic> json) =
       _$FinancialKpiImpl.fromJson;
 
   @override
-
   /// اسم المؤشر
   String get name;
   @override
-
   /// قيمة المؤشر
   double get value;
   @override
-
   /// وحدة القياس (مثل % أو SAR)
   String get unit;
   @override
-
   /// الاتجاه (التغير المئوي عن الفترة السابقة)
   double get trend;
   @override
-
   /// الحالة الصحية للمؤشر
   KpiHealth get health;
   @override
-
   /// وصف أو تحليل للمؤشر
   String get description;
   @override

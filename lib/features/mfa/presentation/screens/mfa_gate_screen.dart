@@ -29,7 +29,8 @@ class _MfaGateScreenState extends ConsumerState<MfaGateScreen> {
       final phoneVerified = await ref.read(phoneVerifiedProvider.future);
 
       if (cloudRequired && !phoneVerified) {
-        final ok = await navigator.pushNamed<bool>(
+        final ok =
+            await navigator.pushNamed<bool>(
               MfaRoutes.phoneVerification,
               arguments: {'after': MfaRoutes.mfaGate},
             ) ??
@@ -43,7 +44,8 @@ class _MfaGateScreenState extends ConsumerState<MfaGateScreen> {
       if (!mounted) return;
 
       if (appLockEnabled) {
-        final ok = await navigator.pushNamed<bool>(
+        final ok =
+            await navigator.pushNamed<bool>(
               MfaRoutes.mfaChallenge,
               arguments: const {'after': '/dashboard'},
             ) ??
@@ -65,9 +67,6 @@ class _MfaGateScreenState extends ConsumerState<MfaGateScreen> {
   }
 
   @override
-  Widget build(BuildContext context) => const GlassScaffold(
-        body: Center(
-          child: AppLoadingIndicator(),
-        ),
-      );
+  Widget build(BuildContext context) =>
+      const GlassScaffold(body: Center(child: AppLoadingIndicator()));
 }

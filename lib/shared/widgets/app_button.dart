@@ -150,15 +150,16 @@ class _AppButtonState extends State<AppButton>
       duration: Durations.fast,
       vsync: this,
     );
-    _scaleAnimation = Tween<double>(
-      begin: TransformScales.normal,
-      end: TransformScales.pressed,
-    ).animate(
-      CurvedAnimation(
-        parent: _scaleController,
-        curve: AnimationCurves.decelerate,
-      ),
-    );
+    _scaleAnimation =
+        Tween<double>(
+          begin: TransformScales.normal,
+          end: TransformScales.pressed,
+        ).animate(
+          CurvedAnimation(
+            parent: _scaleController,
+            curve: AnimationCurves.decelerate,
+          ),
+        );
   }
 
   @override
@@ -248,28 +249,28 @@ class _AppButtonState extends State<AppButton>
   }
 
   double _getFontSizeValue() => switch (widget.size) {
-        AppButtonSize.small => 14,
-        AppButtonSize.medium => 16,
-        AppButtonSize.large => 18,
-      };
+    AppButtonSize.small => 14,
+    AppButtonSize.medium => 16,
+    AppButtonSize.large => 18,
+  };
 
   double _getMinVerticalPadding() => switch (widget.size) {
-        AppButtonSize.small => 8,
-        AppButtonSize.medium => 12,
-        AppButtonSize.large => 16,
-      };
+    AppButtonSize.small => 8,
+    AppButtonSize.medium => 12,
+    AppButtonSize.large => 16,
+  };
 
   double _getHorizontalPaddingValue() => switch (widget.size) {
-        AppButtonSize.small => 12,
-        AppButtonSize.medium => 16,
-        AppButtonSize.large => 20,
-      };
+    AppButtonSize.small => 12,
+    AppButtonSize.medium => 16,
+    AppButtonSize.large => 20,
+  };
 
   double _getHeight() => switch (widget.size) {
-        AppButtonSize.small => TouchTargets.buttonHeightSm,
-        AppButtonSize.medium => TouchTargets.buttonHeightMd,
-        AppButtonSize.large => TouchTargets.buttonHeightLg,
-      };
+    AppButtonSize.small => TouchTargets.buttonHeightSm,
+    AppButtonSize.medium => TouchTargets.buttonHeightMd,
+    AppButtonSize.large => TouchTargets.buttonHeightLg,
+  };
 
   BoxDecoration _getDecoration(ColorScheme colorScheme, bool isEnabled) {
     final backgroundColor = _getBackgroundColor(colorScheme, isEnabled);
@@ -316,11 +317,9 @@ class _AppButtonState extends State<AppButton>
     return switch (widget.type) {
       AppButtonType.primary ||
       AppButtonType.secondary ||
-      AppButtonType.danger =>
-        colorScheme.onPrimary,
+      AppButtonType.danger => colorScheme.onPrimary,
       AppButtonType.outlined ||
-      AppButtonType.text =>
-        widget.color ?? colorScheme.primary,
+      AppButtonType.text => widget.color ?? colorScheme.primary,
     };
   }
 
@@ -398,10 +397,10 @@ class _AppButtonState extends State<AppButton>
   }
 
   double _getIconSize() => switch (widget.size) {
-        AppButtonSize.small => IconSizes.sm,
-        AppButtonSize.medium => IconSizes.md,
-        AppButtonSize.large => IconSizes.lg,
-      };
+    AppButtonSize.small => IconSizes.sm,
+    AppButtonSize.medium => IconSizes.md,
+    AppButtonSize.large => IconSizes.lg,
+  };
 }
 
 // ═══════════════════════════════════════════════════════════════════════════
@@ -452,14 +451,14 @@ class AppPrimaryButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => AppButton(
-        label: label,
-        onPressed: onPressed,
-        isLoading: isLoading,
-        icon: icon,
-        width: width,
-        height: height,
-        isFullWidth: width == double.infinity,
-      );
+    label: label,
+    onPressed: onPressed,
+    isLoading: isLoading,
+    icon: icon,
+    width: width,
+    height: height,
+    isFullWidth: width == double.infinity,
+  );
 }
 
 /// مغلف لـ AppSecondaryButton للحفاظ على التوافق مع الكود الموجود
@@ -506,15 +505,15 @@ class AppSecondaryButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => AppButton(
-        label: label,
-        onPressed: onPressed,
-        type: AppButtonType.outlined,
-        isLoading: isLoading,
-        icon: icon,
-        width: width,
-        height: height,
-        isFullWidth: width == double.infinity,
-      );
+    label: label,
+    onPressed: onPressed,
+    type: AppButtonType.outlined,
+    isLoading: isLoading,
+    icon: icon,
+    width: width,
+    height: height,
+    isFullWidth: width == double.infinity,
+  );
 }
 
 /// مغلف لـ AppTextButton للحفاظ على التوافق مع الكود الموجود
@@ -549,11 +548,11 @@ class AppTextButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => AppButton(
-        label: label,
-        onPressed: onPressed,
-        type: AppButtonType.text,
-        icon: icon,
-        color: color,
-        fontSize: fontSize,
-      );
+    label: label,
+    onPressed: onPressed,
+    type: AppButtonType.text,
+    icon: icon,
+    color: color,
+    fontSize: fontSize,
+  );
 }

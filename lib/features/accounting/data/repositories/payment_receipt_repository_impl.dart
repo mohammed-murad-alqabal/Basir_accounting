@@ -72,9 +72,7 @@ class PaymentReceiptRepositoryImpl implements PaymentReceiptRepository {
   }
 
   @override
-  Future<List<PaymentReceipt>> getReceiptsByStatus(
-    PaymentStatus status,
-  ) async {
+  Future<List<PaymentReceipt>> getReceiptsByStatus(PaymentStatus status) async {
     final models = await _isar.paymentReceiptModels
         .where()
         .statusEqualTo(status.index)
@@ -156,11 +154,10 @@ class PaymentReceiptRepositoryImpl implements PaymentReceiptRepository {
   Future<int> getReceiptsCount({
     required DateTime fromDate,
     required DateTime toDate,
-  }) async =>
-      _isar.paymentReceiptModels
-          .where()
-          .receiptDateBetween(fromDate, toDate)
-          .count();
+  }) async => _isar.paymentReceiptModels
+      .where()
+      .receiptDateBetween(fromDate, toDate)
+      .count();
 }
 
 /// Isar-based implementation of PaymentVoucherRepository.
@@ -230,9 +227,7 @@ class PaymentVoucherRepositoryImpl implements PaymentVoucherRepository {
   }
 
   @override
-  Future<List<PaymentVoucher>> getVouchersByStatus(
-    PaymentStatus status,
-  ) async {
+  Future<List<PaymentVoucher>> getVouchersByStatus(PaymentStatus status) async {
     final models = await _isar.paymentVoucherModels
         .where()
         .statusEqualTo(status.index)
@@ -314,9 +309,8 @@ class PaymentVoucherRepositoryImpl implements PaymentVoucherRepository {
   Future<int> getVouchersCount({
     required DateTime fromDate,
     required DateTime toDate,
-  }) async =>
-      _isar.paymentVoucherModels
-          .where()
-          .paymentDateBetween(fromDate, toDate)
-          .count();
+  }) async => _isar.paymentVoucherModels
+      .where()
+      .paymentDateBetween(fromDate, toDate)
+      .count();
 }

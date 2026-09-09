@@ -90,68 +90,67 @@ class _AssetFormScreenState extends ConsumerState<AssetFormScreen> {
   }
 
   Widget _buildForm() => SingleChildScrollView(
-        padding: const EdgeInsets.all(Spacing.lg),
-        child: Form(
-          key: _formKey,
-          child: Column(
-            children: [
-              AppTextField(
-                controller: _nameArController,
-                label: context.l10n.labelNameAr,
-                validator: (v) =>
-                    v?.isEmpty ?? true ? context.l10n.errEmptyField : null,
-              ),
-              const SizedBox(height: Spacing.md),
-              AppTextField(
-                controller: _nameEnController,
-                label: context.l10n.labelNameEn,
-                validator: (v) =>
-                    v?.isEmpty ?? true ? context.l10n.errEmptyField : null,
-              ),
-              const SizedBox(height: Spacing.md),
-              AppTextField(
-                controller: _codeController,
-                label: context.l10n.labelCode,
-              ),
-              const SizedBox(height: Spacing.md),
-              AppTextField(
-                controller: _costController,
-                label: context.l10n.labelCost,
-                keyboardType: TextInputType.number,
-              ),
-              const SizedBox(height: Spacing.md),
-              AppTextField(
-                controller: _salvageValueController,
-                label: context.l10n.labelSalvageValue,
-                keyboardType: TextInputType.number,
-              ),
-              const SizedBox(height: Spacing.md),
-              AppTextField(
-                controller: _usefulLifeController,
-                label: context.l10n.labelUsefulLife,
-                keyboardType: TextInputType.number,
-              ),
-              const SizedBox(height: Spacing.md),
-              // Simple date picker placeholder
-              ListTile(
-                title: Text(context.l10n.labelPurchaseDate),
-                subtitle:
-                    Text(_acquisitionDate.toIso8601String().split('T')[0]),
-                trailing: const Icon(Icons.calendar_today),
-                onTap: () async {
-                  final date = await showDatePicker(
-                    context: context,
-                    initialDate: _acquisitionDate,
-                    firstDate: DateTime(2000),
-                    lastDate: DateTime(2100),
-                  );
-                  if (date != null) setState(() => _acquisitionDate = date);
-                },
-              ),
-            ],
+    padding: const EdgeInsets.all(Spacing.lg),
+    child: Form(
+      key: _formKey,
+      child: Column(
+        children: [
+          AppTextField(
+            controller: _nameArController,
+            label: context.l10n.labelNameAr,
+            validator: (v) =>
+                v?.isEmpty ?? true ? context.l10n.errEmptyField : null,
           ),
-        ),
-      );
+          const SizedBox(height: Spacing.md),
+          AppTextField(
+            controller: _nameEnController,
+            label: context.l10n.labelNameEn,
+            validator: (v) =>
+                v?.isEmpty ?? true ? context.l10n.errEmptyField : null,
+          ),
+          const SizedBox(height: Spacing.md),
+          AppTextField(
+            controller: _codeController,
+            label: context.l10n.labelCode,
+          ),
+          const SizedBox(height: Spacing.md),
+          AppTextField(
+            controller: _costController,
+            label: context.l10n.labelCost,
+            keyboardType: TextInputType.number,
+          ),
+          const SizedBox(height: Spacing.md),
+          AppTextField(
+            controller: _salvageValueController,
+            label: context.l10n.labelSalvageValue,
+            keyboardType: TextInputType.number,
+          ),
+          const SizedBox(height: Spacing.md),
+          AppTextField(
+            controller: _usefulLifeController,
+            label: context.l10n.labelUsefulLife,
+            keyboardType: TextInputType.number,
+          ),
+          const SizedBox(height: Spacing.md),
+          // Simple date picker placeholder
+          ListTile(
+            title: Text(context.l10n.labelPurchaseDate),
+            subtitle: Text(_acquisitionDate.toIso8601String().split('T')[0]),
+            trailing: const Icon(Icons.calendar_today),
+            onTap: () async {
+              final date = await showDatePicker(
+                context: context,
+                initialDate: _acquisitionDate,
+                firstDate: DateTime(2000),
+                lastDate: DateTime(2100),
+              );
+              if (date != null) setState(() => _acquisitionDate = date);
+            },
+          ),
+        ],
+      ),
+    ),
+  );
 
   Future<void> _saveAsset() async {
     if (!_formKey.currentState!.validate()) return;

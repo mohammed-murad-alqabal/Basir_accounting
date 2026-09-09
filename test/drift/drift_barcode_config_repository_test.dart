@@ -23,7 +23,7 @@ void main() {
       printerType: PrinterType.a4,
       columnsPerRow: 3,
       height: 42.5,
-      width: 70.0,
+      width: 70,
       margin: 1.5,
       showItemName: false,
       showPrice: false,

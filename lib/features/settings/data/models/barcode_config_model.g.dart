@@ -23,21 +23,9 @@ const BarcodeConfigModelSchema = CollectionSchema(
       name: r'columnsPerRow',
       type: IsarType.long,
     ),
-    r'height': PropertySchema(
-      id: 1,
-      name: r'height',
-      type: IsarType.double,
-    ),
-    r'id': PropertySchema(
-      id: 2,
-      name: r'id',
-      type: IsarType.string,
-    ),
-    r'margin': PropertySchema(
-      id: 3,
-      name: r'margin',
-      type: IsarType.double,
-    ),
+    r'height': PropertySchema(id: 1, name: r'height', type: IsarType.double),
+    r'id': PropertySchema(id: 2, name: r'id', type: IsarType.string),
+    r'margin': PropertySchema(id: 3, name: r'margin', type: IsarType.double),
     r'printerType': PropertySchema(
       id: 4,
       name: r'printerType',
@@ -54,11 +42,7 @@ const BarcodeConfigModelSchema = CollectionSchema(
       name: r'showPrice',
       type: IsarType.bool,
     ),
-    r'width': PropertySchema(
-      id: 7,
-      name: r'width',
-      type: IsarType.double,
-    )
+    r'width': PropertySchema(id: 7, name: r'width', type: IsarType.double),
   },
   estimateSize: _barcodeConfigModelEstimateSize,
   serialize: _barcodeConfigModelSerialize,
@@ -76,9 +60,9 @@ const BarcodeConfigModelSchema = CollectionSchema(
           name: r'id',
           type: IndexType.hash,
           caseSensitive: true,
-        )
+        ),
       ],
-    )
+    ),
   },
   links: {},
   embeddedSchemas: {},
@@ -126,8 +110,10 @@ BarcodeConfigModel _barcodeConfigModelDeserialize(
   object.id = reader.readString(offsets[2]);
   object.isarId = id;
   object.margin = reader.readDouble(offsets[3]);
-  object.printerType = _BarcodeConfigModelprinterTypeValueEnumMap[
-          reader.readByteOrNull(offsets[4])] ??
+  object.printerType =
+      _BarcodeConfigModelprinterTypeValueEnumMap[reader.readByteOrNull(
+        offsets[4],
+      )] ??
       PrinterType.thermal;
   object.showItemName = reader.readBool(offsets[5]);
   object.showPrice = reader.readBool(offsets[6]);
@@ -151,9 +137,11 @@ P _barcodeConfigModelDeserializeProp<P>(
     case 3:
       return (reader.readDouble(offset)) as P;
     case 4:
-      return (_BarcodeConfigModelprinterTypeValueEnumMap[
-              reader.readByteOrNull(offset)] ??
-          PrinterType.thermal) as P;
+      return (_BarcodeConfigModelprinterTypeValueEnumMap[reader.readByteOrNull(
+                offset,
+              )] ??
+              PrinterType.thermal)
+          as P;
     case 5:
       return (reader.readBool(offset)) as P;
     case 6:
@@ -165,10 +153,7 @@ P _barcodeConfigModelDeserializeProp<P>(
   }
 }
 
-const _BarcodeConfigModelprinterTypeEnumValueMap = {
-  'thermal': 0,
-  'a4': 1,
-};
+const _BarcodeConfigModelprinterTypeEnumValueMap = {'thermal': 0, 'a4': 1};
 const _BarcodeConfigModelprinterTypeValueEnumMap = {
   0: PrinterType.thermal,
   1: PrinterType.a4,
@@ -179,12 +164,16 @@ Id _barcodeConfigModelGetId(BarcodeConfigModel object) {
 }
 
 List<IsarLinkBase<dynamic>> _barcodeConfigModelGetLinks(
-    BarcodeConfigModel object) {
+  BarcodeConfigModel object,
+) {
   return [];
 }
 
 void _barcodeConfigModelAttach(
-    IsarCollection<dynamic> col, Id id, BarcodeConfigModel object) {
+  IsarCollection<dynamic> col,
+  Id id,
+  BarcodeConfigModel object,
+) {
   object.isarId = id;
 }
 
@@ -237,8 +226,10 @@ extension BarcodeConfigModelByIndex on IsarCollection<BarcodeConfigModel> {
     return putAllByIndex(r'id', objects);
   }
 
-  List<Id> putAllByIdSync(List<BarcodeConfigModel> objects,
-      {bool saveLinks = true}) {
+  List<Id> putAllByIdSync(
+    List<BarcodeConfigModel> objects, {
+    bool saveLinks = true,
+  }) {
     return putAllByIndexSync(r'id', objects, saveLinks: saveLinks);
   }
 }
@@ -246,7 +237,7 @@ extension BarcodeConfigModelByIndex on IsarCollection<BarcodeConfigModel> {
 extension BarcodeConfigModelQueryWhereSort
     on QueryBuilder<BarcodeConfigModel, BarcodeConfigModel, QWhere> {
   QueryBuilder<BarcodeConfigModel, BarcodeConfigModel, QAfterWhere>
-      anyIsarId() {
+  anyIsarId() {
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(const IdWhereClause.any());
     });
@@ -256,17 +247,16 @@ extension BarcodeConfigModelQueryWhereSort
 extension BarcodeConfigModelQueryWhere
     on QueryBuilder<BarcodeConfigModel, BarcodeConfigModel, QWhereClause> {
   QueryBuilder<BarcodeConfigModel, BarcodeConfigModel, QAfterWhereClause>
-      isarIdEqualTo(Id isarId) {
+  isarIdEqualTo(Id isarId) {
     return QueryBuilder.apply(this, (query) {
-      return query.addWhereClause(IdWhereClause.between(
-        lower: isarId,
-        upper: isarId,
-      ));
+      return query.addWhereClause(
+        IdWhereClause.between(lower: isarId, upper: isarId),
+      );
     });
   }
 
   QueryBuilder<BarcodeConfigModel, BarcodeConfigModel, QAfterWhereClause>
-      isarIdNotEqualTo(Id isarId) {
+  isarIdNotEqualTo(Id isarId) {
     return QueryBuilder.apply(this, (query) {
       if (query.whereSort == Sort.asc) {
         return query
@@ -289,7 +279,7 @@ extension BarcodeConfigModelQueryWhere
   }
 
   QueryBuilder<BarcodeConfigModel, BarcodeConfigModel, QAfterWhereClause>
-      isarIdGreaterThan(Id isarId, {bool include = false}) {
+  isarIdGreaterThan(Id isarId, {bool include = false}) {
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(
         IdWhereClause.greaterThan(lower: isarId, includeLower: include),
@@ -298,7 +288,7 @@ extension BarcodeConfigModelQueryWhere
   }
 
   QueryBuilder<BarcodeConfigModel, BarcodeConfigModel, QAfterWhereClause>
-      isarIdLessThan(Id isarId, {bool include = false}) {
+  isarIdLessThan(Id isarId, {bool include = false}) {
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(
         IdWhereClause.lessThan(upper: isarId, includeUpper: include),
@@ -307,63 +297,72 @@ extension BarcodeConfigModelQueryWhere
   }
 
   QueryBuilder<BarcodeConfigModel, BarcodeConfigModel, QAfterWhereClause>
-      isarIdBetween(
+  isarIdBetween(
     Id lowerIsarId,
     Id upperIsarId, {
     bool includeLower = true,
     bool includeUpper = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addWhereClause(IdWhereClause.between(
-        lower: lowerIsarId,
-        includeLower: includeLower,
-        upper: upperIsarId,
-        includeUpper: includeUpper,
-      ));
+      return query.addWhereClause(
+        IdWhereClause.between(
+          lower: lowerIsarId,
+          includeLower: includeLower,
+          upper: upperIsarId,
+          includeUpper: includeUpper,
+        ),
+      );
     });
   }
 
   QueryBuilder<BarcodeConfigModel, BarcodeConfigModel, QAfterWhereClause>
-      idEqualTo(String id) {
+  idEqualTo(String id) {
     return QueryBuilder.apply(this, (query) {
-      return query.addWhereClause(IndexWhereClause.equalTo(
-        indexName: r'id',
-        value: [id],
-      ));
+      return query.addWhereClause(
+        IndexWhereClause.equalTo(indexName: r'id', value: [id]),
+      );
     });
   }
 
   QueryBuilder<BarcodeConfigModel, BarcodeConfigModel, QAfterWhereClause>
-      idNotEqualTo(String id) {
+  idNotEqualTo(String id) {
     return QueryBuilder.apply(this, (query) {
       if (query.whereSort == Sort.asc) {
         return query
-            .addWhereClause(IndexWhereClause.between(
-              indexName: r'id',
-              lower: [],
-              upper: [id],
-              includeUpper: false,
-            ))
-            .addWhereClause(IndexWhereClause.between(
-              indexName: r'id',
-              lower: [id],
-              includeLower: false,
-              upper: [],
-            ));
+            .addWhereClause(
+              IndexWhereClause.between(
+                indexName: r'id',
+                lower: [],
+                upper: [id],
+                includeUpper: false,
+              ),
+            )
+            .addWhereClause(
+              IndexWhereClause.between(
+                indexName: r'id',
+                lower: [id],
+                includeLower: false,
+                upper: [],
+              ),
+            );
       } else {
         return query
-            .addWhereClause(IndexWhereClause.between(
-              indexName: r'id',
-              lower: [id],
-              includeLower: false,
-              upper: [],
-            ))
-            .addWhereClause(IndexWhereClause.between(
-              indexName: r'id',
-              lower: [],
-              upper: [id],
-              includeUpper: false,
-            ));
+            .addWhereClause(
+              IndexWhereClause.between(
+                indexName: r'id',
+                lower: [id],
+                includeLower: false,
+                upper: [],
+              ),
+            )
+            .addWhereClause(
+              IndexWhereClause.between(
+                indexName: r'id',
+                lower: [],
+                upper: [id],
+                includeUpper: false,
+              ),
+            );
       }
     });
   }
@@ -372,109 +371,111 @@ extension BarcodeConfigModelQueryWhere
 extension BarcodeConfigModelQueryFilter
     on QueryBuilder<BarcodeConfigModel, BarcodeConfigModel, QFilterCondition> {
   QueryBuilder<BarcodeConfigModel, BarcodeConfigModel, QAfterFilterCondition>
-      columnsPerRowEqualTo(int value) {
+  columnsPerRowEqualTo(int value) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'columnsPerRow',
-        value: value,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.equalTo(property: r'columnsPerRow', value: value),
+      );
     });
   }
 
   QueryBuilder<BarcodeConfigModel, BarcodeConfigModel, QAfterFilterCondition>
-      columnsPerRowGreaterThan(
-    int value, {
-    bool include = false,
-  }) {
+  columnsPerRowGreaterThan(int value, {bool include = false}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        include: include,
-        property: r'columnsPerRow',
-        value: value,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.greaterThan(
+          include: include,
+          property: r'columnsPerRow',
+          value: value,
+        ),
+      );
     });
   }
 
   QueryBuilder<BarcodeConfigModel, BarcodeConfigModel, QAfterFilterCondition>
-      columnsPerRowLessThan(
-    int value, {
-    bool include = false,
-  }) {
+  columnsPerRowLessThan(int value, {bool include = false}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.lessThan(
-        include: include,
-        property: r'columnsPerRow',
-        value: value,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.lessThan(
+          include: include,
+          property: r'columnsPerRow',
+          value: value,
+        ),
+      );
     });
   }
 
   QueryBuilder<BarcodeConfigModel, BarcodeConfigModel, QAfterFilterCondition>
-      columnsPerRowBetween(
+  columnsPerRowBetween(
     int lower,
     int upper, {
     bool includeLower = true,
     bool includeUpper = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.between(
-        property: r'columnsPerRow',
-        lower: lower,
-        includeLower: includeLower,
-        upper: upper,
-        includeUpper: includeUpper,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.between(
+          property: r'columnsPerRow',
+          lower: lower,
+          includeLower: includeLower,
+          upper: upper,
+          includeUpper: includeUpper,
+        ),
+      );
     });
   }
 
   QueryBuilder<BarcodeConfigModel, BarcodeConfigModel, QAfterFilterCondition>
-      heightEqualTo(
-    double value, {
-    double epsilon = Query.epsilon,
-  }) {
+  heightEqualTo(double value, {double epsilon = Query.epsilon}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'height',
-        value: value,
-        epsilon: epsilon,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.equalTo(
+          property: r'height',
+          value: value,
+          epsilon: epsilon,
+        ),
+      );
     });
   }
 
   QueryBuilder<BarcodeConfigModel, BarcodeConfigModel, QAfterFilterCondition>
-      heightGreaterThan(
-    double value, {
-    bool include = false,
-    double epsilon = Query.epsilon,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        include: include,
-        property: r'height',
-        value: value,
-        epsilon: epsilon,
-      ));
-    });
-  }
-
-  QueryBuilder<BarcodeConfigModel, BarcodeConfigModel, QAfterFilterCondition>
-      heightLessThan(
+  heightGreaterThan(
     double value, {
     bool include = false,
     double epsilon = Query.epsilon,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.lessThan(
-        include: include,
-        property: r'height',
-        value: value,
-        epsilon: epsilon,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.greaterThan(
+          include: include,
+          property: r'height',
+          value: value,
+          epsilon: epsilon,
+        ),
+      );
     });
   }
 
   QueryBuilder<BarcodeConfigModel, BarcodeConfigModel, QAfterFilterCondition>
-      heightBetween(
+  heightLessThan(
+    double value, {
+    bool include = false,
+    double epsilon = Query.epsilon,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        FilterCondition.lessThan(
+          include: include,
+          property: r'height',
+          value: value,
+          epsilon: epsilon,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<BarcodeConfigModel, BarcodeConfigModel, QAfterFilterCondition>
+  heightBetween(
     double lower,
     double upper, {
     bool includeLower = true,
@@ -482,65 +483,66 @@ extension BarcodeConfigModelQueryFilter
     double epsilon = Query.epsilon,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.between(
-        property: r'height',
-        lower: lower,
-        includeLower: includeLower,
-        upper: upper,
-        includeUpper: includeUpper,
-        epsilon: epsilon,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.between(
+          property: r'height',
+          lower: lower,
+          includeLower: includeLower,
+          upper: upper,
+          includeUpper: includeUpper,
+          epsilon: epsilon,
+        ),
+      );
     });
   }
 
   QueryBuilder<BarcodeConfigModel, BarcodeConfigModel, QAfterFilterCondition>
-      idEqualTo(
-    String value, {
-    bool caseSensitive = true,
-  }) {
+  idEqualTo(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'id',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.equalTo(
+          property: r'id',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
   QueryBuilder<BarcodeConfigModel, BarcodeConfigModel, QAfterFilterCondition>
-      idGreaterThan(
-    String value, {
-    bool include = false,
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        include: include,
-        property: r'id',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<BarcodeConfigModel, BarcodeConfigModel, QAfterFilterCondition>
-      idLessThan(
+  idGreaterThan(
     String value, {
     bool include = false,
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.lessThan(
-        include: include,
-        property: r'id',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.greaterThan(
+          include: include,
+          property: r'id',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
   QueryBuilder<BarcodeConfigModel, BarcodeConfigModel, QAfterFilterCondition>
-      idBetween(
+  idLessThan(String value, {bool include = false, bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        FilterCondition.lessThan(
+          include: include,
+          property: r'id',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<BarcodeConfigModel, BarcodeConfigModel, QAfterFilterCondition>
+  idBetween(
     String lower,
     String upper, {
     bool includeLower = true,
@@ -548,209 +550,213 @@ extension BarcodeConfigModelQueryFilter
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.between(
-        property: r'id',
-        lower: lower,
-        includeLower: includeLower,
-        upper: upper,
-        includeUpper: includeUpper,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.between(
+          property: r'id',
+          lower: lower,
+          includeLower: includeLower,
+          upper: upper,
+          includeUpper: includeUpper,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
   QueryBuilder<BarcodeConfigModel, BarcodeConfigModel, QAfterFilterCondition>
-      idStartsWith(
-    String value, {
-    bool caseSensitive = true,
-  }) {
+  idStartsWith(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.startsWith(
-        property: r'id',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.startsWith(
+          property: r'id',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
   QueryBuilder<BarcodeConfigModel, BarcodeConfigModel, QAfterFilterCondition>
-      idEndsWith(
-    String value, {
-    bool caseSensitive = true,
-  }) {
+  idEndsWith(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.endsWith(
-        property: r'id',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.endsWith(
+          property: r'id',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
   QueryBuilder<BarcodeConfigModel, BarcodeConfigModel, QAfterFilterCondition>
-      idContains(String value, {bool caseSensitive = true}) {
+  idContains(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.contains(
-        property: r'id',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.contains(
+          property: r'id',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
   QueryBuilder<BarcodeConfigModel, BarcodeConfigModel, QAfterFilterCondition>
-      idMatches(String pattern, {bool caseSensitive = true}) {
+  idMatches(String pattern, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.matches(
-        property: r'id',
-        wildcard: pattern,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.matches(
+          property: r'id',
+          wildcard: pattern,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
   QueryBuilder<BarcodeConfigModel, BarcodeConfigModel, QAfterFilterCondition>
-      idIsEmpty() {
+  idIsEmpty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'id',
-        value: '',
-      ));
+      return query.addFilterCondition(
+        FilterCondition.equalTo(property: r'id', value: ''),
+      );
     });
   }
 
   QueryBuilder<BarcodeConfigModel, BarcodeConfigModel, QAfterFilterCondition>
-      idIsNotEmpty() {
+  idIsNotEmpty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        property: r'id',
-        value: '',
-      ));
+      return query.addFilterCondition(
+        FilterCondition.greaterThan(property: r'id', value: ''),
+      );
     });
   }
 
   QueryBuilder<BarcodeConfigModel, BarcodeConfigModel, QAfterFilterCondition>
-      isarIdIsNull() {
+  isarIdIsNull() {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const FilterCondition.isNull(
-        property: r'isarId',
-      ));
+      return query.addFilterCondition(
+        const FilterCondition.isNull(property: r'isarId'),
+      );
     });
   }
 
   QueryBuilder<BarcodeConfigModel, BarcodeConfigModel, QAfterFilterCondition>
-      isarIdIsNotNull() {
+  isarIdIsNotNull() {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const FilterCondition.isNotNull(
-        property: r'isarId',
-      ));
+      return query.addFilterCondition(
+        const FilterCondition.isNotNull(property: r'isarId'),
+      );
     });
   }
 
   QueryBuilder<BarcodeConfigModel, BarcodeConfigModel, QAfterFilterCondition>
-      isarIdEqualTo(Id? value) {
+  isarIdEqualTo(Id? value) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'isarId',
-        value: value,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.equalTo(property: r'isarId', value: value),
+      );
     });
   }
 
   QueryBuilder<BarcodeConfigModel, BarcodeConfigModel, QAfterFilterCondition>
-      isarIdGreaterThan(
-    Id? value, {
-    bool include = false,
-  }) {
+  isarIdGreaterThan(Id? value, {bool include = false}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        include: include,
-        property: r'isarId',
-        value: value,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.greaterThan(
+          include: include,
+          property: r'isarId',
+          value: value,
+        ),
+      );
     });
   }
 
   QueryBuilder<BarcodeConfigModel, BarcodeConfigModel, QAfterFilterCondition>
-      isarIdLessThan(
-    Id? value, {
-    bool include = false,
-  }) {
+  isarIdLessThan(Id? value, {bool include = false}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.lessThan(
-        include: include,
-        property: r'isarId',
-        value: value,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.lessThan(
+          include: include,
+          property: r'isarId',
+          value: value,
+        ),
+      );
     });
   }
 
   QueryBuilder<BarcodeConfigModel, BarcodeConfigModel, QAfterFilterCondition>
-      isarIdBetween(
+  isarIdBetween(
     Id? lower,
     Id? upper, {
     bool includeLower = true,
     bool includeUpper = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.between(
-        property: r'isarId',
-        lower: lower,
-        includeLower: includeLower,
-        upper: upper,
-        includeUpper: includeUpper,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.between(
+          property: r'isarId',
+          lower: lower,
+          includeLower: includeLower,
+          upper: upper,
+          includeUpper: includeUpper,
+        ),
+      );
     });
   }
 
   QueryBuilder<BarcodeConfigModel, BarcodeConfigModel, QAfterFilterCondition>
-      marginEqualTo(
-    double value, {
-    double epsilon = Query.epsilon,
-  }) {
+  marginEqualTo(double value, {double epsilon = Query.epsilon}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'margin',
-        value: value,
-        epsilon: epsilon,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.equalTo(
+          property: r'margin',
+          value: value,
+          epsilon: epsilon,
+        ),
+      );
     });
   }
 
   QueryBuilder<BarcodeConfigModel, BarcodeConfigModel, QAfterFilterCondition>
-      marginGreaterThan(
-    double value, {
-    bool include = false,
-    double epsilon = Query.epsilon,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        include: include,
-        property: r'margin',
-        value: value,
-        epsilon: epsilon,
-      ));
-    });
-  }
-
-  QueryBuilder<BarcodeConfigModel, BarcodeConfigModel, QAfterFilterCondition>
-      marginLessThan(
+  marginGreaterThan(
     double value, {
     bool include = false,
     double epsilon = Query.epsilon,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.lessThan(
-        include: include,
-        property: r'margin',
-        value: value,
-        epsilon: epsilon,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.greaterThan(
+          include: include,
+          property: r'margin',
+          value: value,
+          epsilon: epsilon,
+        ),
+      );
     });
   }
 
   QueryBuilder<BarcodeConfigModel, BarcodeConfigModel, QAfterFilterCondition>
-      marginBetween(
+  marginLessThan(
+    double value, {
+    bool include = false,
+    double epsilon = Query.epsilon,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        FilterCondition.lessThan(
+          include: include,
+          property: r'margin',
+          value: value,
+          epsilon: epsilon,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<BarcodeConfigModel, BarcodeConfigModel, QAfterFilterCondition>
+  marginBetween(
     double lower,
     double upper, {
     bool includeLower = true,
@@ -758,141 +764,143 @@ extension BarcodeConfigModelQueryFilter
     double epsilon = Query.epsilon,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.between(
-        property: r'margin',
-        lower: lower,
-        includeLower: includeLower,
-        upper: upper,
-        includeUpper: includeUpper,
-        epsilon: epsilon,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.between(
+          property: r'margin',
+          lower: lower,
+          includeLower: includeLower,
+          upper: upper,
+          includeUpper: includeUpper,
+          epsilon: epsilon,
+        ),
+      );
     });
   }
 
   QueryBuilder<BarcodeConfigModel, BarcodeConfigModel, QAfterFilterCondition>
-      printerTypeEqualTo(PrinterType value) {
+  printerTypeEqualTo(PrinterType value) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'printerType',
-        value: value,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.equalTo(property: r'printerType', value: value),
+      );
     });
   }
 
   QueryBuilder<BarcodeConfigModel, BarcodeConfigModel, QAfterFilterCondition>
-      printerTypeGreaterThan(
-    PrinterType value, {
-    bool include = false,
-  }) {
+  printerTypeGreaterThan(PrinterType value, {bool include = false}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        include: include,
-        property: r'printerType',
-        value: value,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.greaterThan(
+          include: include,
+          property: r'printerType',
+          value: value,
+        ),
+      );
     });
   }
 
   QueryBuilder<BarcodeConfigModel, BarcodeConfigModel, QAfterFilterCondition>
-      printerTypeLessThan(
-    PrinterType value, {
-    bool include = false,
-  }) {
+  printerTypeLessThan(PrinterType value, {bool include = false}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.lessThan(
-        include: include,
-        property: r'printerType',
-        value: value,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.lessThan(
+          include: include,
+          property: r'printerType',
+          value: value,
+        ),
+      );
     });
   }
 
   QueryBuilder<BarcodeConfigModel, BarcodeConfigModel, QAfterFilterCondition>
-      printerTypeBetween(
+  printerTypeBetween(
     PrinterType lower,
     PrinterType upper, {
     bool includeLower = true,
     bool includeUpper = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.between(
-        property: r'printerType',
-        lower: lower,
-        includeLower: includeLower,
-        upper: upper,
-        includeUpper: includeUpper,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.between(
+          property: r'printerType',
+          lower: lower,
+          includeLower: includeLower,
+          upper: upper,
+          includeUpper: includeUpper,
+        ),
+      );
     });
   }
 
   QueryBuilder<BarcodeConfigModel, BarcodeConfigModel, QAfterFilterCondition>
-      showItemNameEqualTo(bool value) {
+  showItemNameEqualTo(bool value) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'showItemName',
-        value: value,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.equalTo(property: r'showItemName', value: value),
+      );
     });
   }
 
   QueryBuilder<BarcodeConfigModel, BarcodeConfigModel, QAfterFilterCondition>
-      showPriceEqualTo(bool value) {
+  showPriceEqualTo(bool value) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'showPrice',
-        value: value,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.equalTo(property: r'showPrice', value: value),
+      );
     });
   }
 
   QueryBuilder<BarcodeConfigModel, BarcodeConfigModel, QAfterFilterCondition>
-      widthEqualTo(
-    double value, {
-    double epsilon = Query.epsilon,
-  }) {
+  widthEqualTo(double value, {double epsilon = Query.epsilon}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'width',
-        value: value,
-        epsilon: epsilon,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.equalTo(
+          property: r'width',
+          value: value,
+          epsilon: epsilon,
+        ),
+      );
     });
   }
 
   QueryBuilder<BarcodeConfigModel, BarcodeConfigModel, QAfterFilterCondition>
-      widthGreaterThan(
-    double value, {
-    bool include = false,
-    double epsilon = Query.epsilon,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        include: include,
-        property: r'width',
-        value: value,
-        epsilon: epsilon,
-      ));
-    });
-  }
-
-  QueryBuilder<BarcodeConfigModel, BarcodeConfigModel, QAfterFilterCondition>
-      widthLessThan(
+  widthGreaterThan(
     double value, {
     bool include = false,
     double epsilon = Query.epsilon,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.lessThan(
-        include: include,
-        property: r'width',
-        value: value,
-        epsilon: epsilon,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.greaterThan(
+          include: include,
+          property: r'width',
+          value: value,
+          epsilon: epsilon,
+        ),
+      );
     });
   }
 
   QueryBuilder<BarcodeConfigModel, BarcodeConfigModel, QAfterFilterCondition>
-      widthBetween(
+  widthLessThan(
+    double value, {
+    bool include = false,
+    double epsilon = Query.epsilon,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        FilterCondition.lessThan(
+          include: include,
+          property: r'width',
+          value: value,
+          epsilon: epsilon,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<BarcodeConfigModel, BarcodeConfigModel, QAfterFilterCondition>
+  widthBetween(
     double lower,
     double upper, {
     bool includeLower = true,
@@ -900,14 +908,16 @@ extension BarcodeConfigModelQueryFilter
     double epsilon = Query.epsilon,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.between(
-        property: r'width',
-        lower: lower,
-        includeLower: includeLower,
-        upper: upper,
-        includeUpper: includeUpper,
-        epsilon: epsilon,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.between(
+          property: r'width',
+          lower: lower,
+          includeLower: includeLower,
+          upper: upper,
+          includeUpper: includeUpper,
+          epsilon: epsilon,
+        ),
+      );
     });
   }
 }
@@ -921,112 +931,112 @@ extension BarcodeConfigModelQueryLinks
 extension BarcodeConfigModelQuerySortBy
     on QueryBuilder<BarcodeConfigModel, BarcodeConfigModel, QSortBy> {
   QueryBuilder<BarcodeConfigModel, BarcodeConfigModel, QAfterSortBy>
-      sortByColumnsPerRow() {
+  sortByColumnsPerRow() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'columnsPerRow', Sort.asc);
     });
   }
 
   QueryBuilder<BarcodeConfigModel, BarcodeConfigModel, QAfterSortBy>
-      sortByColumnsPerRowDesc() {
+  sortByColumnsPerRowDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'columnsPerRow', Sort.desc);
     });
   }
 
   QueryBuilder<BarcodeConfigModel, BarcodeConfigModel, QAfterSortBy>
-      sortByHeight() {
+  sortByHeight() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'height', Sort.asc);
     });
   }
 
   QueryBuilder<BarcodeConfigModel, BarcodeConfigModel, QAfterSortBy>
-      sortByHeightDesc() {
+  sortByHeightDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'height', Sort.desc);
     });
   }
 
   QueryBuilder<BarcodeConfigModel, BarcodeConfigModel, QAfterSortBy>
-      sortById() {
+  sortById() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'id', Sort.asc);
     });
   }
 
   QueryBuilder<BarcodeConfigModel, BarcodeConfigModel, QAfterSortBy>
-      sortByIdDesc() {
+  sortByIdDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'id', Sort.desc);
     });
   }
 
   QueryBuilder<BarcodeConfigModel, BarcodeConfigModel, QAfterSortBy>
-      sortByMargin() {
+  sortByMargin() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'margin', Sort.asc);
     });
   }
 
   QueryBuilder<BarcodeConfigModel, BarcodeConfigModel, QAfterSortBy>
-      sortByMarginDesc() {
+  sortByMarginDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'margin', Sort.desc);
     });
   }
 
   QueryBuilder<BarcodeConfigModel, BarcodeConfigModel, QAfterSortBy>
-      sortByPrinterType() {
+  sortByPrinterType() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'printerType', Sort.asc);
     });
   }
 
   QueryBuilder<BarcodeConfigModel, BarcodeConfigModel, QAfterSortBy>
-      sortByPrinterTypeDesc() {
+  sortByPrinterTypeDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'printerType', Sort.desc);
     });
   }
 
   QueryBuilder<BarcodeConfigModel, BarcodeConfigModel, QAfterSortBy>
-      sortByShowItemName() {
+  sortByShowItemName() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'showItemName', Sort.asc);
     });
   }
 
   QueryBuilder<BarcodeConfigModel, BarcodeConfigModel, QAfterSortBy>
-      sortByShowItemNameDesc() {
+  sortByShowItemNameDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'showItemName', Sort.desc);
     });
   }
 
   QueryBuilder<BarcodeConfigModel, BarcodeConfigModel, QAfterSortBy>
-      sortByShowPrice() {
+  sortByShowPrice() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'showPrice', Sort.asc);
     });
   }
 
   QueryBuilder<BarcodeConfigModel, BarcodeConfigModel, QAfterSortBy>
-      sortByShowPriceDesc() {
+  sortByShowPriceDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'showPrice', Sort.desc);
     });
   }
 
   QueryBuilder<BarcodeConfigModel, BarcodeConfigModel, QAfterSortBy>
-      sortByWidth() {
+  sortByWidth() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'width', Sort.asc);
     });
   }
 
   QueryBuilder<BarcodeConfigModel, BarcodeConfigModel, QAfterSortBy>
-      sortByWidthDesc() {
+  sortByWidthDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'width', Sort.desc);
     });
@@ -1036,126 +1046,126 @@ extension BarcodeConfigModelQuerySortBy
 extension BarcodeConfigModelQuerySortThenBy
     on QueryBuilder<BarcodeConfigModel, BarcodeConfigModel, QSortThenBy> {
   QueryBuilder<BarcodeConfigModel, BarcodeConfigModel, QAfterSortBy>
-      thenByColumnsPerRow() {
+  thenByColumnsPerRow() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'columnsPerRow', Sort.asc);
     });
   }
 
   QueryBuilder<BarcodeConfigModel, BarcodeConfigModel, QAfterSortBy>
-      thenByColumnsPerRowDesc() {
+  thenByColumnsPerRowDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'columnsPerRow', Sort.desc);
     });
   }
 
   QueryBuilder<BarcodeConfigModel, BarcodeConfigModel, QAfterSortBy>
-      thenByHeight() {
+  thenByHeight() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'height', Sort.asc);
     });
   }
 
   QueryBuilder<BarcodeConfigModel, BarcodeConfigModel, QAfterSortBy>
-      thenByHeightDesc() {
+  thenByHeightDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'height', Sort.desc);
     });
   }
 
   QueryBuilder<BarcodeConfigModel, BarcodeConfigModel, QAfterSortBy>
-      thenById() {
+  thenById() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'id', Sort.asc);
     });
   }
 
   QueryBuilder<BarcodeConfigModel, BarcodeConfigModel, QAfterSortBy>
-      thenByIdDesc() {
+  thenByIdDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'id', Sort.desc);
     });
   }
 
   QueryBuilder<BarcodeConfigModel, BarcodeConfigModel, QAfterSortBy>
-      thenByIsarId() {
+  thenByIsarId() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'isarId', Sort.asc);
     });
   }
 
   QueryBuilder<BarcodeConfigModel, BarcodeConfigModel, QAfterSortBy>
-      thenByIsarIdDesc() {
+  thenByIsarIdDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'isarId', Sort.desc);
     });
   }
 
   QueryBuilder<BarcodeConfigModel, BarcodeConfigModel, QAfterSortBy>
-      thenByMargin() {
+  thenByMargin() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'margin', Sort.asc);
     });
   }
 
   QueryBuilder<BarcodeConfigModel, BarcodeConfigModel, QAfterSortBy>
-      thenByMarginDesc() {
+  thenByMarginDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'margin', Sort.desc);
     });
   }
 
   QueryBuilder<BarcodeConfigModel, BarcodeConfigModel, QAfterSortBy>
-      thenByPrinterType() {
+  thenByPrinterType() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'printerType', Sort.asc);
     });
   }
 
   QueryBuilder<BarcodeConfigModel, BarcodeConfigModel, QAfterSortBy>
-      thenByPrinterTypeDesc() {
+  thenByPrinterTypeDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'printerType', Sort.desc);
     });
   }
 
   QueryBuilder<BarcodeConfigModel, BarcodeConfigModel, QAfterSortBy>
-      thenByShowItemName() {
+  thenByShowItemName() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'showItemName', Sort.asc);
     });
   }
 
   QueryBuilder<BarcodeConfigModel, BarcodeConfigModel, QAfterSortBy>
-      thenByShowItemNameDesc() {
+  thenByShowItemNameDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'showItemName', Sort.desc);
     });
   }
 
   QueryBuilder<BarcodeConfigModel, BarcodeConfigModel, QAfterSortBy>
-      thenByShowPrice() {
+  thenByShowPrice() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'showPrice', Sort.asc);
     });
   }
 
   QueryBuilder<BarcodeConfigModel, BarcodeConfigModel, QAfterSortBy>
-      thenByShowPriceDesc() {
+  thenByShowPriceDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'showPrice', Sort.desc);
     });
   }
 
   QueryBuilder<BarcodeConfigModel, BarcodeConfigModel, QAfterSortBy>
-      thenByWidth() {
+  thenByWidth() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'width', Sort.asc);
     });
   }
 
   QueryBuilder<BarcodeConfigModel, BarcodeConfigModel, QAfterSortBy>
-      thenByWidthDesc() {
+  thenByWidthDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'width', Sort.desc);
     });
@@ -1165,56 +1175,57 @@ extension BarcodeConfigModelQuerySortThenBy
 extension BarcodeConfigModelQueryWhereDistinct
     on QueryBuilder<BarcodeConfigModel, BarcodeConfigModel, QDistinct> {
   QueryBuilder<BarcodeConfigModel, BarcodeConfigModel, QDistinct>
-      distinctByColumnsPerRow() {
+  distinctByColumnsPerRow() {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'columnsPerRow');
     });
   }
 
   QueryBuilder<BarcodeConfigModel, BarcodeConfigModel, QDistinct>
-      distinctByHeight() {
+  distinctByHeight() {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'height');
     });
   }
 
-  QueryBuilder<BarcodeConfigModel, BarcodeConfigModel, QDistinct> distinctById(
-      {bool caseSensitive = true}) {
+  QueryBuilder<BarcodeConfigModel, BarcodeConfigModel, QDistinct> distinctById({
+    bool caseSensitive = true,
+  }) {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'id', caseSensitive: caseSensitive);
     });
   }
 
   QueryBuilder<BarcodeConfigModel, BarcodeConfigModel, QDistinct>
-      distinctByMargin() {
+  distinctByMargin() {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'margin');
     });
   }
 
   QueryBuilder<BarcodeConfigModel, BarcodeConfigModel, QDistinct>
-      distinctByPrinterType() {
+  distinctByPrinterType() {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'printerType');
     });
   }
 
   QueryBuilder<BarcodeConfigModel, BarcodeConfigModel, QDistinct>
-      distinctByShowItemName() {
+  distinctByShowItemName() {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'showItemName');
     });
   }
 
   QueryBuilder<BarcodeConfigModel, BarcodeConfigModel, QDistinct>
-      distinctByShowPrice() {
+  distinctByShowPrice() {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'showPrice');
     });
   }
 
   QueryBuilder<BarcodeConfigModel, BarcodeConfigModel, QDistinct>
-      distinctByWidth() {
+  distinctByWidth() {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'width');
     });
@@ -1230,7 +1241,7 @@ extension BarcodeConfigModelQueryProperty
   }
 
   QueryBuilder<BarcodeConfigModel, int, QQueryOperations>
-      columnsPerRowProperty() {
+  columnsPerRowProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'columnsPerRow');
     });
@@ -1255,14 +1266,14 @@ extension BarcodeConfigModelQueryProperty
   }
 
   QueryBuilder<BarcodeConfigModel, PrinterType, QQueryOperations>
-      printerTypeProperty() {
+  printerTypeProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'printerType');
     });
   }
 
   QueryBuilder<BarcodeConfigModel, bool, QQueryOperations>
-      showItemNameProperty() {
+  showItemNameProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'showItemName');
     });

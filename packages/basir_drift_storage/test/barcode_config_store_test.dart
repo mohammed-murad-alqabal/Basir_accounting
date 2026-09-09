@@ -52,7 +52,7 @@ void main() {
       marginMm: 2,
       showItemName: true,
       showPrice: true,
-    ));
+    ),);
     await store.save(const BarcodeConfigRecord(
       id: 'default',
       printerType: 'a4',
@@ -62,10 +62,10 @@ void main() {
       marginMm: 2,
       showItemName: true,
       showPrice: true,
-    ));
+    ),);
 
     expect(
-        (await database.select(database.barcodeConfigs).get()), hasLength(1));
+        await database.select(database.barcodeConfigs).get(), hasLength(1),);
     expect((await store.read('default'))?.columnsPerRow, 4);
   });
 
@@ -80,7 +80,7 @@ void main() {
         marginMm: 2,
         showItemName: true,
         showPrice: true,
-      )),
+      ),),
       throwsArgumentError,
     );
   });

@@ -1,4 +1,3 @@
-library;
 
 import 'package:basir_accounting_system/core/domain/contracts/audit_entry.dart';
 import 'package:basir_accounting_system/features/inventory/application/bulk_price_change_service.dart';
@@ -96,8 +95,8 @@ InventoryItem item({
       id: id,
       nameAr: 'صنف $id',
       nameEn: 'Item $id',
-      createdAt: DateTime(2026, 1, 1),
-      updatedAt: DateTime(2026, 1, 1),
+      createdAt: DateTime(2026),
+      updatedAt: DateTime(2026),
       salePrice: salePrice,
       purchasePrice: purchasePrice,
       isDeleted: isDeleted,
@@ -114,7 +113,7 @@ void main() {
   const operatorName = 'المحاسبي المسؤول';
 
   setUp(() {
-    now = DateTime(2026, 8, 15, 10, 0);
+    now = DateTime(2026, 8, 15, 10);
     repository = FakeInventoryRepository([
       item(id: 'a', salePrice: 100, purchasePrice: 60),
       item(id: 'b', salePrice: 200, purchasePrice: 120),
@@ -360,7 +359,7 @@ void main() {
       expect(updatedA!.salePrice, 110);
       expect(updatedA.purchasePrice, 60, reason: 'سعر الشراء لا يتغير');
       expect(updatedA.currentQuantity, 0, reason: 'الرصيد لا يُمس');
-      expect(updatedA.createdAt, DateTime(2026, 1, 1),
+      expect(updatedA.createdAt, DateTime(2026),
           reason: 'تاريخ الإنشاء محفوظ');
     });
 

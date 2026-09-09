@@ -105,8 +105,9 @@ class OperationalIntelService extends _$OperationalIntelService
     // 2. Urgency and Priority Validation
     final isUrgent = context.metadata['priority'] == 'high';
     if (isUrgent) {
-      rationale
-          .add('Note: Processed as high operational priority transaction.');
+      rationale.add(
+        'Note: Processed as high operational priority transaction.',
+      );
       confidenceScore = 0.98;
     }
 
@@ -115,8 +116,9 @@ class OperationalIntelService extends _$OperationalIntelService
       isAllowed: isAllowed,
       rationale: rationale.join('\n'),
       confidenceScore: confidenceScore,
-      suggestedAdjustments:
-          suggestedAdjustments.isNotEmpty ? suggestedAdjustments : null,
+      suggestedAdjustments: suggestedAdjustments.isNotEmpty
+          ? suggestedAdjustments
+          : null,
     );
   }
 }

@@ -35,7 +35,8 @@ class _MfaSecurityCenterScreenState
     final pin1 = TextEditingController();
     final pin2 = TextEditingController();
 
-    final ok = await showModalBottomSheet<bool>(
+    final ok =
+        await showModalBottomSheet<bool>(
           context: context,
           isScrollControlled: true,
           backgroundColor: Colors.transparent,
@@ -46,8 +47,9 @@ class _MfaSecurityCenterScreenState
             child: Container(
               decoration: BoxDecoration(
                 color: Theme.of(context).colorScheme.surface,
-                borderRadius:
-                    const BorderRadius.vertical(top: Radius.circular(Radii.xl)),
+                borderRadius: const BorderRadius.vertical(
+                  top: Radius.circular(Radii.xl),
+                ),
               ),
               padding: const EdgeInsets.all(Spacing.lg),
               child: Column(
@@ -131,10 +133,7 @@ class _MfaSecurityCenterScreenState
   Future<void> _showSetPatternSheet() async {
     final ok = await Navigator.of(context).pushNamed<bool>(
       '/pattern-draw',
-      arguments: {
-        'after': '/mfa-security',
-        'title': 'رسم نمط القفل',
-      },
+      arguments: {'after': '/mfa-security', 'title': 'رسم نمط القفل'},
     );
 
     if (!mounted) return;
@@ -176,8 +175,9 @@ class _MfaSecurityCenterScreenState
                       .read(appLockEnabledProvider.notifier)
                       .toggle(enabled: v),
                   title: const Text('قفل التطبيق'),
-                  subtitle:
-                      const Text('طلب تحقق إضافي عند الدخول وفتح التطبيق'),
+                  subtitle: const Text(
+                    'طلب تحقق إضافي عند الدخول وفتح التطبيق',
+                  ),
                   secondary: const Icon(Icons.lock_outline),
                 ),
                 const Divider(height: 1),
@@ -185,8 +185,8 @@ class _MfaSecurityCenterScreenState
                   value: lockOnResume,
                   onChanged: appLockEnabled
                       ? (v) async => ref
-                          .read(lockOnResumeProvider.notifier)
-                          .toggle(enabled: v)
+                            .read(lockOnResumeProvider.notifier)
+                            .toggle(enabled: v)
                       : null,
                   title: const Text('القفل عند الاستئناف'),
                   subtitle: const Text('طلب التحقق عند الرجوع من الخلفية'),
@@ -201,8 +201,8 @@ class _MfaSecurityCenterScreenState
                   value: biometricEnabled,
                   onChanged: biometricAvailable
                       ? (v) async => ref
-                          .read(biometricEnabledProvider.notifier)
-                          .toggle(enabled: v)
+                            .read(biometricEnabledProvider.notifier)
+                            .toggle(enabled: v)
                       : null,
                   title: const Text('البصمة'),
                   subtitle: Text(
@@ -259,7 +259,8 @@ class _MfaSecurityCenterScreenState
                   trailing: const Icon(Icons.chevron_right),
                   onTap: () async {
                     final navigator = Navigator.of(context);
-                    final ok = await navigator.pushNamed<bool>(
+                    final ok =
+                        await navigator.pushNamed<bool>(
                           MfaRoutes.phoneVerification,
                           arguments: const {
                             'after': MfaRoutes.mfaSecurityCenter,
@@ -282,7 +283,8 @@ class _MfaSecurityCenterScreenState
               onPressed: appLockEnabled
                   ? () async {
                       final navigator = Navigator.of(context);
-                      final ok = await navigator.pushNamed<bool>(
+                      final ok =
+                          await navigator.pushNamed<bool>(
                             MfaRoutes.mfaChallenge,
                             arguments: const {
                               'after': MfaRoutes.mfaSecurityCenter,

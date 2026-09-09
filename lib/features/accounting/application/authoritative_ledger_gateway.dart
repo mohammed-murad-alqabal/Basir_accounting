@@ -77,8 +77,10 @@ class SupabaseLedgerGateway implements AuthoritativeLedgerGateway {
   static const _uuidNamespace = '6ba7b811-9dad-11d1-80b4-00c04fd430c8';
 
   /// Maps a local journal identifier to its permanent authoritative UUID.
-  static String operationIdFor(String localJournalEntryId) => const Uuid()
-      .v5(_uuidNamespace, 'basir/ledger-entry/v1/$localJournalEntryId');
+  static String operationIdFor(String localJournalEntryId) => const Uuid().v5(
+    _uuidNamespace,
+    'basir/ledger-entry/v1/$localJournalEntryId',
+  );
 
   /// Maps a local account identifier into the server namespace.
   ///
@@ -99,10 +101,12 @@ class SupabaseLedgerGateway implements AuthoritativeLedgerGateway {
         params: {
           'p_entry_id': entryId,
           'p_entry_number': entry.referenceNumber,
-          'p_transaction_date':
-              entry.temporal.transactionDate.toUtc().toIso8601String(),
-          'p_effective_date':
-              entry.temporal.effectiveDate.toUtc().toIso8601String(),
+          'p_transaction_date': entry.temporal.transactionDate
+              .toUtc()
+              .toIso8601String(),
+          'p_effective_date': entry.temporal.effectiveDate
+              .toUtc()
+              .toIso8601String(),
           'p_standard_reference': entry.standards.standardReference,
           'p_description': entry.description,
           'p_source_document': entry.sourceDocument,

@@ -18,43 +18,43 @@ class EmptyStateIllustration extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => SingleChildScrollView(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            SizedBox(
-              width: size,
-              height: size,
-              child: CustomPaint(
-                painter: _Professional2IllustrationPainter(
-                  isCustomers: isCustomers,
-                  themeColor: AppColors.primary,
-                ),
-              ),
+    child: Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        SizedBox(
+          width: size,
+          height: size,
+          child: CustomPaint(
+            painter: _Professional2IllustrationPainter(
+              isCustomers: isCustomers,
+              themeColor: AppColors.primary,
             ),
-            const SizedBox(height: Spacing.xl),
-            Text(
-              isCustomers
-                  ? 'قاعدة بيانات العملاء جاهزة'
-                  : 'سجل الفواتير الذكي منظم',
-              style: AppTextStyles.titleMedium.copyWith(
-                fontWeight: FontWeight.bold,
-                color: AppColors.primary,
-              ),
-              textAlign: TextAlign.center,
-            ),
-            const SizedBox(height: Spacing.xs),
-            Text(
-              isCustomers
-                  ? 'ابدأ بإضافة أول شريك نجاح لك'
-                  : 'فاتورتك الأولى بانتظارك',
-              style: AppTextStyles.bodyMedium.copyWith(
-                color: AppColors.textSecondary,
-              ),
-              textAlign: TextAlign.center,
-            ),
-          ],
+          ),
         ),
-      );
+        const SizedBox(height: Spacing.xl),
+        Text(
+          isCustomers
+              ? 'قاعدة بيانات العملاء جاهزة'
+              : 'سجل الفواتير الذكي منظم',
+          style: AppTextStyles.titleMedium.copyWith(
+            fontWeight: FontWeight.bold,
+            color: AppColors.primary,
+          ),
+          textAlign: TextAlign.center,
+        ),
+        const SizedBox(height: Spacing.xs),
+        Text(
+          isCustomers
+              ? 'ابدأ بإضافة أول شريك نجاح لك'
+              : 'فاتورتك الأولى بانتظارك',
+          style: AppTextStyles.bodyMedium.copyWith(
+            color: AppColors.textSecondary,
+          ),
+          textAlign: TextAlign.center,
+        ),
+      ],
+    ),
+  );
 }
 
 /// رسم توضيحي للأونبوردينج بنظام Professional 2.0
@@ -74,16 +74,16 @@ class OnboardingIllustration extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => SizedBox(
-        width: size,
-        height: size,
-        child: CustomPaint(
-          painter: _Professional2IllustrationPainter(
-            index: index,
-            isOnboarding: true,
-            themeColor: index == 0 ? AppColors.primary : AppColors.secondary,
-          ),
-        ),
-      );
+    width: size,
+    height: size,
+    child: CustomPaint(
+      painter: _Professional2IllustrationPainter(
+        index: index,
+        isOnboarding: true,
+        themeColor: index == 0 ? AppColors.primary : AppColors.secondary,
+      ),
+    ),
+  );
 }
 
 /// رسم توضيحي لحالة الخطأ بنظام Professional 2.0
@@ -96,15 +96,15 @@ class ErrorIllustration extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => SizedBox(
-        width: size,
-        height: size,
-        child: CustomPaint(
-          painter: _Professional2IllustrationPainter(
-            isError: true,
-            themeColor: AppColors.error,
-          ),
-        ),
-      );
+    width: size,
+    height: size,
+    child: CustomPaint(
+      painter: _Professional2IllustrationPainter(
+        isError: true,
+        themeColor: AppColors.error,
+      ),
+    ),
+  );
 }
 
 /// رسم توضيحي لحالة النجاح بنظام Professional 2.0
@@ -117,15 +117,15 @@ class SuccessIllustration extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => SizedBox(
-        width: size,
-        height: size,
-        child: CustomPaint(
-          painter: _Professional2IllustrationPainter(
-            isSuccess: true,
-            themeColor: AppColors.success,
-          ),
-        ),
-      );
+    width: size,
+    height: size,
+    child: CustomPaint(
+      painter: _Professional2IllustrationPainter(
+        isSuccess: true,
+        themeColor: AppColors.success,
+      ),
+    ),
+  );
 }
 
 class _Professional2IllustrationPainter extends CustomPainter {

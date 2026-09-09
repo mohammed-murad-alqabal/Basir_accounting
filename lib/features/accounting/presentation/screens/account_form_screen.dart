@@ -13,11 +13,7 @@ import 'package:uuid/uuid.dart';
 /// Form screen for creating or editing a Chart of Accounts entry.
 class AccountFormScreen extends ConsumerStatefulWidget {
   /// Creates translated [AccountFormScreen].
-  const AccountFormScreen({
-    super.key,
-    this.account,
-    this.initialParentId,
-  });
+  const AccountFormScreen({super.key, this.account, this.initialParentId});
 
   /// Existing account to edit, or null for creation.
   final Account? account;
@@ -45,10 +41,12 @@ class _AccountFormScreenState extends ConsumerState<AccountFormScreen> {
   @override
   void initState() {
     super.initState();
-    _nameArController =
-        TextEditingController(text: widget.account?.nameAr ?? '');
-    _nameEnController =
-        TextEditingController(text: widget.account?.nameEn ?? '');
+    _nameArController = TextEditingController(
+      text: widget.account?.nameAr ?? '',
+    );
+    _nameEnController = TextEditingController(
+      text: widget.account?.nameEn ?? '',
+    );
     _codeController = TextEditingController(text: widget.account?.code ?? '');
 
     if (widget.account != null) {
@@ -105,139 +103,138 @@ class _AccountFormScreenState extends ConsumerState<AccountFormScreen> {
   }
 
   Widget _buildNameFields() => Column(
-        children: [
-          AppTextField(
-            controller: _nameArController,
-            label: 'الاسم (بالعربية)',
-            validator: (v) => v!.isEmpty ? 'يرجى إدخال الاسم بالعربية' : null,
-          ),
-          const SizedBox(height: Spacing.md),
-          AppTextField(
-            controller: _nameEnController,
-            label: 'Name (English)',
-            validator: (v) =>
-                v!.isEmpty ? 'Please enter name in English' : null,
-          ),
-        ],
-      );
+    children: [
+      AppTextField(
+        controller: _nameArController,
+        label: 'الاسم (بالعربية)',
+        validator: (v) => v!.isEmpty ? 'يرجى إدخال الاسم بالعربية' : null,
+      ),
+      const SizedBox(height: Spacing.md),
+      AppTextField(
+        controller: _nameEnController,
+        label: 'Name (English)',
+        validator: (v) => v!.isEmpty ? 'Please enter name in English' : null,
+      ),
+    ],
+  );
 
   Widget _buildTypeAndNature() => Row(
+    children: [
+      Expanded(
+        child: DropdownButtonFormField<AccountType>(
+          initialValue: _selectedType,
+          decoration: const InputDecoration(labelText: 'نوع الحساب'),
+          items: AccountType.values
+              .map((t) => DropdownMenuItem(value: t, child: Text(t.name)))
+              .toList(),
+          onChanged: widget.account?.isSystem ?? false
+              ? null
+              : (val) {
+                  if (val != null) {
+                    setState(() {
+                      _selectedType = val;
+                      _selectedNature =
+                          (val == AccountType.asset ||
+                              val == AccountType.expense)
+                          ? AccountNature.debit
+                          : AccountNature.credit;
+                    });
+                  }
+                },
+        ),
+      ),
+      const SizedBox(width: Spacing.md),
+      Expanded(
+        child: DropdownButtonFormField<AccountNature>(
+          initialValue: _selectedNature,
+          decoration: const InputDecoration(labelText: 'طبيعة الحساب'),
+          items: AccountNature.values
+              .map((n) => DropdownMenuItem(value: n, child: Text(n.name)))
+              .toList(),
+          onChanged: widget.account?.isSystem ?? false
+              ? null
+              : (val) {
+                  if (val != null) setState(() => _selectedNature = val);
+                },
+        ),
+      ),
+    ],
+  );
+
+  Widget _buildHierarchySelection(
+    AsyncValue<List<Account>> accountsAsync,
+  ) => accountsAsync.when(
+    data: (accounts) {
+      final parentOptions = accounts.where((a) => a.isParent).toList();
+      return Column(
         children: [
-          Expanded(
-            child: DropdownButtonFormField<AccountType>(
-              initialValue: _selectedType,
-              decoration: const InputDecoration(labelText: 'نوع الحساب'),
-              items: AccountType.values
-                  .map((t) => DropdownMenuItem(value: t, child: Text(t.name)))
-                  .toList(),
-              onChanged: widget.account?.isSystem ?? false
-                  ? null
-                  : (val) {
-                      if (val != null) {
-                        setState(() {
-                          _selectedType = val;
-                          _selectedNature = (val == AccountType.asset ||
-                                  val == AccountType.expense)
-                              ? AccountNature.debit
-                              : AccountNature.credit;
-                        });
-                      }
-                    },
-            ),
+          DropdownButtonFormField<String?>(
+            initialValue: _selectedParentId,
+            decoration: const InputDecoration(labelText: 'الحساب الأب'),
+            items: [
+              const DropdownMenuItem(child: Text('جذر (لا يوجد أب)')),
+              ...parentOptions.map(
+                (a) => DropdownMenuItem(
+                  value: a.id,
+                  child: Text('${a.code} - ${a.nameAr}'),
+                ),
+              ),
+            ],
+            onChanged: widget.account?.isSystem ?? false
+                ? null
+                : (val) async {
+                    setState(() => _selectedParentId = val);
+                    if (val != null) {
+                      final parent = accounts.firstWhere((a) => a.id == val);
+                      setState(() {
+                        _selectedType = parent.type;
+                        _selectedNature = parent.nature;
+                      });
+                      await _suggestNextCode(val, accounts);
+                    }
+                  },
           ),
-          const SizedBox(width: Spacing.md),
-          Expanded(
-            child: DropdownButtonFormField<AccountNature>(
-              initialValue: _selectedNature,
-              decoration: const InputDecoration(labelText: 'طبيعة الحساب'),
-              items: AccountNature.values
-                  .map((n) => DropdownMenuItem(value: n, child: Text(n.name)))
-                  .toList(),
-              onChanged: widget.account?.isSystem ?? false
-                  ? null
-                  : (val) {
-                      if (val != null) setState(() => _selectedNature = val);
-                    },
-            ),
+          const SizedBox(height: Spacing.sm),
+          CheckboxListTile(
+            title: const Text('هل هذا حساب رئيسي؟ (يحتوي على حسابات تابعة)'),
+            value: _isParent,
+            onChanged: (val) => setState(() => _isParent = val ?? false),
+            controlAffinity: ListTileControlAffinity.leading,
+            contentPadding: EdgeInsets.zero,
           ),
         ],
       );
-
-  Widget _buildHierarchySelection(AsyncValue<List<Account>> accountsAsync) =>
-      accountsAsync.when(
-        data: (accounts) {
-          final parentOptions = accounts.where((a) => a.isParent).toList();
-          return Column(
-            children: [
-              DropdownButtonFormField<String?>(
-                initialValue: _selectedParentId,
-                decoration: const InputDecoration(labelText: 'الحساب الأب'),
-                items: [
-                  const DropdownMenuItem(child: Text('جذر (لا يوجد أب)')),
-                  ...parentOptions.map(
-                    (a) => DropdownMenuItem(
-                      value: a.id,
-                      child: Text('${a.code} - ${a.nameAr}'),
-                    ),
-                  ),
-                ],
-                onChanged: widget.account?.isSystem ?? false
-                    ? null
-                    : (val) async {
-                        setState(() => _selectedParentId = val);
-                        if (val != null) {
-                          final parent =
-                              accounts.firstWhere((a) => a.id == val);
-                          setState(() {
-                            _selectedType = parent.type;
-                            _selectedNature = parent.nature;
-                          });
-                          await _suggestNextCode(val, accounts);
-                        }
-                      },
-              ),
-              const SizedBox(height: Spacing.sm),
-              CheckboxListTile(
-                title:
-                    const Text('هل هذا حساب رئيسي؟ (يحتوي على حسابات تابعة)'),
-                value: _isParent,
-                onChanged: (val) => setState(() => _isParent = val ?? false),
-                controlAffinity: ListTileControlAffinity.leading,
-                contentPadding: EdgeInsets.zero,
-              ),
-            ],
-          );
-        },
-        loading: () => const Center(child: AppLoadingIndicator()),
-        error: (_, __) => AppErrorWidget(
-          message: 'خطأ في تحميل الحسابات',
-          onRetry: () => ref.invalidate(getAccountsProvider),
-        ),
-      );
+    },
+    loading: () => const Center(child: AppLoadingIndicator()),
+    error: (_, _) => AppErrorWidget(
+      message: 'خطأ في تحميل الحسابات',
+      onRetry: () => ref.invalidate(getAccountsProvider),
+    ),
+  );
 
   Widget _buildCodeField() => AppTextField(
-        controller: _codeController,
-        label: 'رمز الحساب (Code)',
-        keyboardType: TextInputType.number,
-        validator: (v) => v!.isEmpty ? 'يرجى إدخال رمز الحساب' : null,
-      );
+    controller: _codeController,
+    label: 'رمز الحساب (Code)',
+    keyboardType: TextInputType.number,
+    validator: (v) => v!.isEmpty ? 'يرجى إدخال رمز الحساب' : null,
+  );
 
   Widget _buildIfrsMapping() => DropdownButtonFormField<Ifrs18Category>(
-        initialValue: _selectedIfrsCategory,
-        decoration: const InputDecoration(labelText: 'تصنيف IFRS 18'),
-        items: Ifrs18Category.values
-            .map((c) => DropdownMenuItem(value: c, child: Text(c.name)))
-            .toList(),
-        onChanged: (val) {
-          if (val != null) setState(() => _selectedIfrsCategory = val);
-        },
-      );
+    initialValue: _selectedIfrsCategory,
+    decoration: const InputDecoration(labelText: 'تصنيف IFRS 18'),
+    items: Ifrs18Category.values
+        .map((c) => DropdownMenuItem(value: c, child: Text(c.name)))
+        .toList(),
+    onChanged: (val) {
+      if (val != null) setState(() => _selectedIfrsCategory = val);
+    },
+  );
 
   Widget _buildSubmitButton() => AppEnhancedButton(
-        label: widget.account == null ? 'إنشاء حساب' : 'حفظ التعديلات',
-        onPressed: _saveAccount,
-        isLoading: _isLoading,
-      );
+    label: widget.account == null ? 'إنشاء حساب' : 'حفظ التعديلات',
+    onPressed: _saveAccount,
+    isLoading: _isLoading,
+  );
 
   Future<void> _suggestNextCode(
     String parentId,

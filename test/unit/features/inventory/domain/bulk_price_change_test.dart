@@ -1,8 +1,7 @@
-import 'package:flutter_test/flutter_test.dart';
-
 import 'package:basir_accounting_system/core/domain/contracts/audit_entry.dart';
 import 'package:basir_accounting_system/features/inventory/data/models/bulk_price_change_execution_model.dart';
 import 'package:basir_accounting_system/features/inventory/domain/entities/bulk_price_change.dart';
+import 'package:flutter_test/flutter_test.dart';
 
 AuditEntry _auditEntry({
   AuditEventType type = AuditEventType.administrative,
@@ -24,9 +23,9 @@ BulkPriceChangePreviewEntry _preview({
   itemId: 'item-1',
   itemName: 'Test item',
   target: BulkPriceTarget.both,
-  previousSalePrice: 12.0,
+  previousSalePrice: 12,
   newSalePrice: newSalePrice,
-  previousPurchasePrice: 8.0,
+  previousPurchasePrice: 8,
   newPurchasePrice: newPurchasePrice,
   isBlocked: isBlocked,
   blockReason: blockReason,
@@ -42,14 +41,14 @@ BulkChangeExecutionRecord _record({AuditEntry? cancellation}) {
     rule: BulkPriceChangeRule(
       type: BulkPriceChangeRuleType.percentage,
       value: 12.5,
-      effectiveAt: DateTime.utc(2026, 9, 1),
+      effectiveAt: DateTime.utc(2026, 9),
       sourcePrice: BulkPriceSource.sale,
     ),
     scopeItemIds: const ['item-1', 'item-2'],
     affectedItemIds: const ['item-1'],
     previousValues: [_preview()],
     auditTrail: [_auditEntry()],
-    effectiveAt: DateTime.utc(2026, 9, 1),
+    effectiveAt: DateTime.utc(2026, 9),
     cancellation: cancellation,
   );
 }
@@ -73,7 +72,7 @@ void main() {
 
   group('BulkPriceChangeRule', () {
     test('round trips every rule type and optional fields', () {
-      final effectiveAt = DateTime.utc(2026, 9, 1);
+      final effectiveAt = DateTime.utc(2026, 9);
       final rules = [
         const BulkPriceChangeRule(
           type: BulkPriceChangeRuleType.percentage,

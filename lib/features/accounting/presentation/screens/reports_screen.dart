@@ -39,97 +39,97 @@ class _ReportingOverviewScreenState
 
   @override
   Widget build(BuildContext context) => GlassScaffold(
-        title: context.l10n.reportingOverviewTitle,
-        body: ListView(
-          padding: const EdgeInsets.all(Spacing.md),
-          children: [
-            _buildReportCard(
-              context,
-              title: context.l10n.trialBalanceTitle,
-              subtitle: context.l10n.trialBalanceSubtitle,
-              icon: Icons.account_balance_rounded,
-              onTap: () {
-                unawaited(
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute<void>(
-                      builder: (context) => const TrialBalanceScreen(),
-                    ),
-                  ),
-                );
-              },
-            ),
-            const SizedBox(height: Spacing.md),
-            _buildReportCard(
-              context,
-              title: context.l10n.incomeStatementTitle,
-              subtitle: context.l10n.incomeStatementSubtitle,
-              icon: Icons.pie_chart_rounded,
-              onTap: () {
-                unawaited(
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute<void>(
-                      builder: (context) => const IncomeStatementScreen(),
-                    ),
-                  ),
-                );
-              },
-            ),
-            const SizedBox(height: Spacing.md),
-            _buildReportCard(
-              context,
-              title: context.l10n.balanceSheetTitle,
-              subtitle: context.l10n.balanceSheetSubtitle,
-              icon: Icons.assessment_rounded,
-              onTap: () {
-                unawaited(
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute<void>(
-                      builder: (context) => const BalanceSheetScreen(),
-                    ),
-                  ),
-                );
-              },
-            ),
-            const SizedBox(height: Spacing.md),
-            _buildReportCard(
-              context,
-              title: context.l10n.cashFlowTitle,
-              subtitle: context.l10n.cashFlowSubtitle,
-              icon: Icons.money_rounded,
-              onTap: () {
-                unawaited(
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute<void>(
-                      builder: (context) => const CashFlowScreen(),
-                    ),
-                  ),
-                );
-              },
-            ),
-            const SizedBox(height: Spacing.md),
-            _buildReportCard(
-              context,
-              title: context.l10n.agingReportsTitle,
-              subtitle: context.l10n.agingReportsSubtitle,
-              icon: Icons.timer_rounded,
-              onTap: () {
-                unawaited(
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute<void>(
-                      builder: (context) => const AgingReportsScreen(),
-                    ),
-                  ),
-                );
-              },
-            ),
-          ],
+    title: context.l10n.reportingOverviewTitle,
+    body: ListView(
+      padding: const EdgeInsets.all(Spacing.md),
+      children: [
+        _buildReportCard(
+          context,
+          title: context.l10n.trialBalanceTitle,
+          subtitle: context.l10n.trialBalanceSubtitle,
+          icon: Icons.account_balance_rounded,
+          onTap: () {
+            unawaited(
+              Navigator.push(
+                context,
+                MaterialPageRoute<void>(
+                  builder: (context) => const TrialBalanceScreen(),
+                ),
+              ),
+            );
+          },
         ),
-      );
+        const SizedBox(height: Spacing.md),
+        _buildReportCard(
+          context,
+          title: context.l10n.incomeStatementTitle,
+          subtitle: context.l10n.incomeStatementSubtitle,
+          icon: Icons.pie_chart_rounded,
+          onTap: () {
+            unawaited(
+              Navigator.push(
+                context,
+                MaterialPageRoute<void>(
+                  builder: (context) => const IncomeStatementScreen(),
+                ),
+              ),
+            );
+          },
+        ),
+        const SizedBox(height: Spacing.md),
+        _buildReportCard(
+          context,
+          title: context.l10n.balanceSheetTitle,
+          subtitle: context.l10n.balanceSheetSubtitle,
+          icon: Icons.assessment_rounded,
+          onTap: () {
+            unawaited(
+              Navigator.push(
+                context,
+                MaterialPageRoute<void>(
+                  builder: (context) => const BalanceSheetScreen(),
+                ),
+              ),
+            );
+          },
+        ),
+        const SizedBox(height: Spacing.md),
+        _buildReportCard(
+          context,
+          title: context.l10n.cashFlowTitle,
+          subtitle: context.l10n.cashFlowSubtitle,
+          icon: Icons.money_rounded,
+          onTap: () {
+            unawaited(
+              Navigator.push(
+                context,
+                MaterialPageRoute<void>(
+                  builder: (context) => const CashFlowScreen(),
+                ),
+              ),
+            );
+          },
+        ),
+        const SizedBox(height: Spacing.md),
+        _buildReportCard(
+          context,
+          title: context.l10n.agingReportsTitle,
+          subtitle: context.l10n.agingReportsSubtitle,
+          icon: Icons.timer_rounded,
+          onTap: () {
+            unawaited(
+              Navigator.push(
+                context,
+                MaterialPageRoute<void>(
+                  builder: (context) => const AgingReportsScreen(),
+                ),
+              ),
+            );
+          },
+        ),
+      ],
+    ),
+  );
 
   /// Builds a high-level navigation card for a specific report category.
   Widget _buildReportCard(
@@ -138,47 +138,46 @@ class _ReportingOverviewScreenState
     required String subtitle,
     required IconData icon,
     required VoidCallback onTap,
-  }) =>
-      AppCard(
-        onTap: onTap,
-        child: Padding(
-          padding: const EdgeInsets.all(Spacing.md),
-          child: Row(
-            children: [
-              Container(
-                padding: const EdgeInsets.all(Spacing.sm),
-                decoration: BoxDecoration(
-                  color: AppColors.primary.withValues(alpha: 0.1),
-                  borderRadius: Radii.borderRadiusMd,
-                ),
-                child: Icon(icon, color: AppColors.primary, size: 32),
-              ),
-              const SizedBox(width: Spacing.md),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      title,
-                      style: AppTextStyles.titleMedium.copyWith(
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    Text(
-                      subtitle,
-                      style: AppTextStyles.bodyMedium.copyWith(
-                        color: AppColors.textSecondary,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              const Icon(
-                Icons.chevron_right_rounded,
-                color: AppColors.textSecondary,
-              ),
-            ],
+  }) => AppCard(
+    onTap: onTap,
+    child: Padding(
+      padding: const EdgeInsets.all(Spacing.md),
+      child: Row(
+        children: [
+          Container(
+            padding: const EdgeInsets.all(Spacing.sm),
+            decoration: BoxDecoration(
+              color: AppColors.primary.withValues(alpha: 0.1),
+              borderRadius: Radii.borderRadiusMd,
+            ),
+            child: Icon(icon, color: AppColors.primary, size: 32),
           ),
-        ),
-      );
+          const SizedBox(width: Spacing.md),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  title,
+                  style: AppTextStyles.titleMedium.copyWith(
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                Text(
+                  subtitle,
+                  style: AppTextStyles.bodyMedium.copyWith(
+                    color: AppColors.textSecondary,
+                  ),
+                ),
+              ],
+            ),
+          ),
+          const Icon(
+            Icons.chevron_right_rounded,
+            color: AppColors.textSecondary,
+          ),
+        ],
+      ),
+    ),
+  );
 }

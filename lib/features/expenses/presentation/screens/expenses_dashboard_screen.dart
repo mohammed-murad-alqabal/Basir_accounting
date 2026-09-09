@@ -92,30 +92,22 @@ class ExpensesDashboardScreen extends ConsumerWidget {
                         const SizedBox(height: 16),
                         categories.when(
                           data: (cats) => summary.when(
-                            data: (s) => _buildCategoryBreakdown(
-                              context,
-                              cats,
-                              s,
-                              l10n,
-                            ),
-                            loading: () => const Center(
-                              child: AppLoadingIndicator(),
-                            ),
+                            data: (s) =>
+                                _buildCategoryBreakdown(context, cats, s, l10n),
+                            loading: () =>
+                                const Center(child: AppLoadingIndicator()),
                             error: (e, _) => AppErrorWidget(
                               message: e.toString(),
-                              onRetry: () => ref.invalidate(
-                                expenseSummaryProvider,
-                              ),
+                              onRetry: () =>
+                                  ref.invalidate(expenseSummaryProvider),
                             ),
                           ),
-                          loading: () => const Center(
-                            child: AppLoadingIndicator(),
-                          ),
+                          loading: () =>
+                              const Center(child: AppLoadingIndicator()),
                           error: (e, _) => AppErrorWidget(
                             message: e.toString(),
-                            onRetry: () => ref.invalidate(
-                              expenseCategoriesProvider,
-                            ),
+                            onRetry: () =>
+                                ref.invalidate(expenseCategoriesProvider),
                           ),
                         ),
                       ],
@@ -152,9 +144,7 @@ class ExpensesDashboardScreen extends ConsumerWidget {
             // Expenses List
             expenses.when(
               data: (list) => list.isEmpty
-                  ? SliverToBoxAdapter(
-                      child: _buildEmptyState(context, l10n),
-                    )
+                  ? SliverToBoxAdapter(child: _buildEmptyState(context, l10n))
                   : SliverList(
                       delegate: SliverChildBuilderDelegate(
                         (context, index) => _buildExpenseItem(
@@ -186,9 +176,7 @@ class ExpensesDashboardScreen extends ConsumerWidget {
             ),
 
             // Bottom padding
-            const SliverToBoxAdapter(
-              child: SizedBox(height: 80),
-            ),
+            const SliverToBoxAdapter(child: SizedBox(height: 80)),
           ],
         ),
       ),
@@ -272,7 +260,9 @@ class ExpensesDashboardScreen extends ConsumerWidget {
           ),
         );
 
-        final percentage = summary.totalAmount > 0 //
+        final percentage =
+            summary.totalAmount >
+                0 //
             ? (entry.value / summary.totalAmount * 100)
             : 0.0;
 
@@ -284,8 +274,9 @@ class ExpensesDashboardScreen extends ConsumerWidget {
                 width: 32,
                 height: 32,
                 decoration: BoxDecoration(
-                  color: _getCategoryColor(category.color) //
-                      .withValues(alpha: 0.2),
+                  color:
+                      _getCategoryColor(category.color) //
+                          .withValues(alpha: 0.2),
                   borderRadius: BorderRadius.circular(8),
                 ),
                 child: Icon(
@@ -381,10 +372,7 @@ class ExpensesDashboardScreen extends ConsumerWidget {
           children: [
             Text(
               currencyFormat.format(expense.amount.toDouble()),
-              style: const TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 14,
-              ),
+              style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
             ),
             _buildStatusBadge(expense.status, l10n),
           ],
@@ -421,20 +409,17 @@ class ExpensesDashboardScreen extends ConsumerWidget {
         color: color.withValues(alpha: 0.1),
         borderRadius: BorderRadius.circular(4),
       ),
-      child: Text(
-        label,
-        style: TextStyle(color: color, fontSize: 10),
-      ),
+      child: Text(label, style: TextStyle(color: color, fontSize: 10)),
     );
   }
 
   Widget _buildEmptyState(BuildContext context, bool l10n) => AppEmptyState(
-        title: l10n ? 'لا توجد مصروفات' : 'No expenses yet',
-        description: l10n
-            ? 'استخدم زر الإضافة من الأعلى لتسجيل مصروف جديد.'
-            : 'Use the add action above to record a new expense.',
-        icon: Icons.receipt_long,
-      );
+    title: l10n ? 'لا توجد مصروفات' : 'No expenses yet',
+    description: l10n
+        ? 'استخدم زر الإضافة من الأعلى لتسجيل مصروف جديد.'
+        : 'Use the add action above to record a new expense.',
+    icon: Icons.receipt_long,
+  );
 
   Future<void> _showFilterDialog(BuildContext context, WidgetRef ref) async {
     final theme = Theme.of(context);
@@ -644,7 +629,9 @@ class ExpensesDashboardScreen extends ConsumerWidget {
     if (result == null) return;
 
     // تطبيق الفلاتر على مزود القائمة والموجز
-    await ref.read(expensesNotifierProvider.notifier).loadExpenses(
+    await ref
+        .read(expensesNotifierProvider.notifier)
+        .loadExpenses(
           startDate: result['startDate'] as DateTime?,
           endDate: result['endDate'] as DateTime?,
           categoryId: result['categoryId'] as String?,
@@ -718,37 +705,34 @@ class _SummaryCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Card(
-        child: Padding(
-          padding: const EdgeInsets.all(12),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+    child: Padding(
+      padding: const EdgeInsets.all(12),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
             children: [
-              Row(
-                children: [
-                  Icon(icon, size: 16, color: color),
-                  const SizedBox(width: 4),
-                  Text(
-                    title,
-                    style: TextStyle(
-                      fontSize: 12,
-                      color: Colors.grey[600],
-                    ),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 8),
+              Icon(icon, size: 16, color: color),
+              const SizedBox(width: 4),
               Text(
-                value,
-                style: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold,
-                  color: color,
-                ),
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
+                title,
+                style: TextStyle(fontSize: 12, color: Colors.grey[600]),
               ),
             ],
           ),
-        ),
-      );
+          const SizedBox(height: 8),
+          Text(
+            value,
+            style: TextStyle(
+              fontSize: 16,
+              fontWeight: FontWeight.bold,
+              color: color,
+            ),
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+          ),
+        ],
+      ),
+    ),
+  );
 }

@@ -17,17 +17,17 @@ class DriftStockMovementsSnapshotRunReport {
   bool get isClean => migration.isClean && parity.isClean;
 
   Map<String, Object?> toSafeJson() => {
-        'fixtureId': fixtureId,
-        'clean': isClean,
-        'sourceCount': migration.sourceCount,
-        'migratedCount': migration.migratedCount,
-        'blockedCount': migration.blockedCount,
-        'rawScopes': parity.rawComparisons.length,
-        'referenceScopes': parity.referenceComparisons.length,
-        'derivedQueries': parity.derivedComparisons.length,
-        'duplicateScopedKeys': parity.duplicateScopedKeys.length,
-        'blockedReasons': parity.blockedReasons,
-      };
+    'fixtureId': fixtureId,
+    'clean': isClean,
+    'sourceCount': migration.sourceCount,
+    'migratedCount': migration.migratedCount,
+    'blockedCount': migration.blockedCount,
+    'rawScopes': parity.rawComparisons.length,
+    'referenceScopes': parity.referenceComparisons.length,
+    'derivedQueries': parity.derivedComparisons.length,
+    'duplicateScopedKeys': parity.duplicateScopedKeys.length,
+    'blockedReasons': parity.blockedReasons,
+  };
 }
 
 /// يشغل fixture معقمة داخل SQLite في الذاكرة، ثم يغلق القاعدة قبل العودة.

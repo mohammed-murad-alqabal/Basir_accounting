@@ -444,9 +444,7 @@ abstract final class AppIcons {
   /// ```dart
   /// Icon(AppIcons.getSortIcon(ascending: true))
   /// ```
-  static IconData getSortIcon({
-    required bool ascending,
-  }) =>
+  static IconData getSortIcon({required bool ascending}) =>
       ascending ? arrowUp : arrowDown;
 
   /// الحصول على أيقونة الرؤية

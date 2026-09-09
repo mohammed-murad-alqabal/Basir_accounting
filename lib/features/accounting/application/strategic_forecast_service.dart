@@ -13,8 +13,9 @@ class StrategicForecastNotifier extends _$StrategicForecastNotifier {
   FutureOr<StrategicOutlook> build() async => _generateOutlook();
 
   Future<StrategicOutlook> _generateOutlook() async {
-    final journalEntries =
-        await ref.read(accountingServiceProvider.notifier).getJournalEntries();
+    final journalEntries = await ref
+        .read(accountingServiceProvider.notifier)
+        .getJournalEntries();
 
     // 1. Group by month and calculate P&L
     final monthlyData = _calculateMonthlyPnL(journalEntries);
@@ -41,7 +42,8 @@ class StrategicForecastNotifier extends _$StrategicForecastNotifier {
 
     for (final entry in entries) {
       final month = DateTime(entry.date.year, entry.date.month);
-      final current = map[month] ??
+      final current =
+          map[month] ??
           PredictiveMetric(
             period: month,
             revenue: Decimal.zero,
@@ -104,16 +106,19 @@ class StrategicForecastNotifier extends _$StrategicForecastNotifier {
     final forecast = <PredictiveMetric>[];
     for (var i = 1; i <= months; i++) {
       final period = DateTime(lastMonth.year, lastMonth.month + i);
-      final prevRev =
-          i == 1 ? current[lastMonth]!.revenue : forecast.last.revenue;
-      final prevExp =
-          i == 1 ? current[lastMonth]!.expense : forecast.last.expense;
+      final prevRev = i == 1
+          ? current[lastMonth]!.revenue
+          : forecast.last.revenue;
+      final prevExp = i == 1
+          ? current[lastMonth]!.expense
+          : forecast.last.expense;
 
       forecast.add(
         PredictiveMetric(
           period: period,
           revenue: prevRev + avgRevGrowth,
-          expense: prevExp *
+          expense:
+              prevExp *
               Decimal.parse('1.02'), // 2% month-over-month expense increase
           netIncome:
               (prevRev + avgRevGrowth) - (prevExp * Decimal.parse('1.02')),
@@ -136,9 +141,11 @@ class StrategicForecastNotifier extends _$StrategicForecastNotifier {
       insights.add(
         const StrategicInsight(
           title: 'Positive Growth Trajectory',
-          observation: 'Your revenue is projected to exceed expenses by 12% in '
+          observation:
+              'Your revenue is projected to exceed expenses by 12% in '
               'the next quarter.',
-          recommendation: 'Consider reinvesting surplus into expansion or '
+          recommendation:
+              'Consider reinvesting surplus into expansion or '
               'inventory buffering.',
           impact: InsightImpact.positive,
           priority: 'high',
@@ -147,15 +154,18 @@ class StrategicForecastNotifier extends _$StrategicForecastNotifier {
     }
 
     // Insight 2: Cash Flow Alert
-    final lowCashMonth =
-        forecast.where((m) => m.cashInflow < m.cashOutflow).toList();
+    final lowCashMonth = forecast
+        .where((m) => m.cashInflow < m.cashOutflow)
+        .toList();
     if (lowCashMonth.isNotEmpty) {
       insights.add(
         StrategicInsight(
           title: 'Liquidity Pressure Detected',
-          observation: 'Expected outflow exceeds inflow in '
+          observation:
+              'Expected outflow exceeds inflow in '
               '${lowCashMonth.length} upcoming months.',
-          recommendation: 'Accelerate receivables or negotiate extended '
+          recommendation:
+              'Accelerate receivables or negotiate extended '
               'payables with vendors.',
           impact: InsightImpact.negative,
           priority: 'high',

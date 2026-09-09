@@ -20,8 +20,11 @@ _$InventoryItemImpl _$$InventoryItemImplFromJson(Map<String, dynamic> json) =>
       currentQuantity: (json['currentQuantity'] as num?)?.toDouble() ?? 0.0,
       unit: json['unit'] as String?,
       categoryId: json['categoryId'] as String?,
-      valuationMethod: $enumDecodeNullable(
-              _$ValuationMethodEnumMap, json['valuationMethod']) ??
+      valuationMethod:
+          $enumDecodeNullable(
+            _$ValuationMethodEnumMap,
+            json['valuationMethod'],
+          ) ??
           ValuationMethod.weightedAverage,
       assetAccountId: json['assetAccountId'] as String?,
       cogsAccountId: json['cogsAccountId'] as String?,
@@ -29,7 +32,7 @@ _$InventoryItemImpl _$$InventoryItemImplFromJson(Map<String, dynamic> json) =>
       primaryAccountId: json['primaryAccountId'] as String?,
       syncStatus:
           $enumDecodeNullable(_$SyncStatusEnumMap, json['syncStatus']) ??
-              SyncStatus.synced,
+          SyncStatus.synced,
       serverUpdatedAt: json['serverUpdatedAt'] == null
           ? null
           : DateTime.parse(json['serverUpdatedAt'] as String),

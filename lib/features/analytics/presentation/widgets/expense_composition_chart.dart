@@ -35,66 +35,69 @@ class _ExpenseCompositionChartState
 
   @override
   Widget build(BuildContext context) => FutureBuilder<Map<String, Decimal>>(
-        future: _compositionFuture,
-        builder: (context, snapshot) {
-          // ... existing builder logic ...
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(child: CircularProgressIndicator());
-          }
-          if (snapshot.hasError) {
-            return Center(child: Text('Error: ${snapshot.error}'));
-          }
+    future: _compositionFuture,
+    builder: (context, snapshot) {
+      // ... existing builder logic ...
+      if (snapshot.connectionState == ConnectionState.waiting) {
+        return const Center(child: CircularProgressIndicator());
+      }
+      if (snapshot.hasError) {
+        return Center(child: Text('Error: ${snapshot.error}'));
+      }
 
-          final data = snapshot.data ?? {};
-          if (data.isEmpty || data.values.every((v) => v == Decimal.zero)) {
-            return Center(child: Text(context.l10n.noExpenseDataMessage));
-          }
+      final data = snapshot.data ?? {};
+      if (data.isEmpty || data.values.every((v) => v == Decimal.zero)) {
+        return Center(child: Text(context.l10n.noExpenseDataMessage));
+      }
 
-          return Row(
-            children: <Widget>[
-              const SizedBox(height: 18),
-              Expanded(
-                child: AspectRatio(
-                  aspectRatio: 1,
-                  child: PieChart(
-                    PieChartData(
-                      pieTouchData: PieTouchData(
-                        touchCallback: (event, pieTouchResponse) {
-                          setState(() {
-                            if (!event.isInterestedForInteractions ||
-                                pieTouchResponse == null ||
-                                pieTouchResponse.touchedSection == null) {
-                              touchedIndex = -1;
-                              return;
-                            }
-                            touchedIndex = pieTouchResponse
-                                .touchedSection!.touchedSectionIndex;
-                          });
-                        },
-                      ),
-                      borderData: FlBorderData(show: false),
-                      sectionsSpace: 0,
-                      centerSpaceRadius: 40,
-                      sections: _showingSections(data),
-                    ),
+      return Row(
+        children: <Widget>[
+          const SizedBox(height: 18),
+          Expanded(
+            child: AspectRatio(
+              aspectRatio: 1,
+              child: PieChart(
+                PieChartData(
+                  pieTouchData: PieTouchData(
+                    touchCallback: (event, pieTouchResponse) {
+                      setState(() {
+                        if (!event.isInterestedForInteractions ||
+                            pieTouchResponse == null ||
+                            pieTouchResponse.touchedSection == null) {
+                          touchedIndex = -1;
+                          return;
+                        }
+                        touchedIndex = pieTouchResponse
+                            .touchedSection!
+                            .touchedSectionIndex;
+                      });
+                    },
                   ),
+                  borderData: FlBorderData(show: false),
+                  sectionsSpace: 0,
+                  centerSpaceRadius: 40,
+                  sections: _showingSections(data),
                 ),
               ),
-              const Column(
-                mainAxisAlignment: MainAxisAlignment.end,
-                crossAxisAlignment: CrossAxisAlignment.start,
-              ),
-              const SizedBox(width: 28),
-            ],
-          );
-        },
+            ),
+          ),
+          const Column(
+            mainAxisAlignment: MainAxisAlignment.end,
+            crossAxisAlignment: CrossAxisAlignment.start,
+          ),
+          const SizedBox(width: 28),
+        ],
       );
+    },
+  );
 
   List<PieChartSectionData> _showingSections(Map<String, Decimal> data) {
     final sections = <PieChartSectionData>[];
     final keys = data.keys.toList();
-    final total =
-        data.values.fold<Decimal>(Decimal.zero, (sum, val) => sum + val);
+    final total = data.values.fold<Decimal>(
+      Decimal.zero,
+      (sum, val) => sum + val,
+    );
 
     // Color palette
     final colors = [
@@ -113,8 +116,8 @@ class _ExpenseCompositionChartState
       final rawKey = keys[i];
       final key = rawKey.isEmpty ? context.l10n.otherExpensesLabel : rawKey;
       final value = data[rawKey]!;
-      final percentage =
-          (value.toDouble() * 100 / total.toDouble()).toStringAsFixed(1);
+      final percentage = (value.toDouble() * 100 / total.toDouble())
+          .toStringAsFixed(1);
       final color = colors[i % colors.length];
 
       sections.add(
@@ -146,28 +149,28 @@ class _Badge extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => AnimatedContainer(
-        duration: PieChart.defaultDuration,
-        width: size * 2, // Wider for text
-        height: size,
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(size / 2),
-          border: Border.all(color: borderColor, width: 2),
-          boxShadow: <BoxShadow>[
-            BoxShadow(
-              color: Colors.black.withValues(alpha: 0.5),
-              offset: const Offset(3, 3),
-              blurRadius: 3,
-            ),
-          ],
+    duration: PieChart.defaultDuration,
+    width: size * 2, // Wider for text
+    height: size,
+    decoration: BoxDecoration(
+      color: Colors.white,
+      borderRadius: BorderRadius.circular(size / 2),
+      border: Border.all(color: borderColor, width: 2),
+      boxShadow: <BoxShadow>[
+        BoxShadow(
+          color: Colors.black.withValues(alpha: 0.5),
+          offset: const Offset(3, 3),
+          blurRadius: 3,
         ),
-        padding: const EdgeInsets.all(4),
-        child: Center(
-          child: Text(
-            text,
-            style: const TextStyle(fontSize: 12),
-            overflow: TextOverflow.ellipsis,
-          ),
-        ),
-      );
+      ],
+    ),
+    padding: const EdgeInsets.all(4),
+    child: Center(
+      child: Text(
+        text,
+        style: const TextStyle(fontSize: 12),
+        overflow: TextOverflow.ellipsis,
+      ),
+    ),
+  );
 }

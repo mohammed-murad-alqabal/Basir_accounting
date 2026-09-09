@@ -11,7 +11,7 @@ part of 'bulk_price_change_execution_model.dart';
 
 extension GetBulkPriceChangeExecutionModelCollection on Isar {
   IsarCollection<BulkPriceChangeExecutionModel>
-      get bulkPriceChangeExecutionModels => this.collection();
+  get bulkPriceChangeExecutionModels => this.collection();
 }
 
 const BulkPriceChangeExecutionModelSchema = CollectionSchema(
@@ -43,26 +43,18 @@ const BulkPriceChangeExecutionModelSchema = CollectionSchema(
       name: r'executedAt',
       type: IsarType.dateTime,
     ),
-    r'id': PropertySchema(
-      id: 5,
-      name: r'id',
-      type: IsarType.string,
-    ),
+    r'id': PropertySchema(id: 5, name: r'id', type: IsarType.string),
     r'operatorName': PropertySchema(
       id: 6,
       name: r'operatorName',
       type: IsarType.string,
     ),
-    r'reason': PropertySchema(
-      id: 7,
-      name: r'reason',
-      type: IsarType.string,
-    ),
+    r'reason': PropertySchema(id: 7, name: r'reason', type: IsarType.string),
     r'recordJson': PropertySchema(
       id: 8,
       name: r'recordJson',
       type: IsarType.string,
-    )
+    ),
   },
   estimateSize: _bulkPriceChangeExecutionModelEstimateSize,
   serialize: _bulkPriceChangeExecutionModelSerialize,
@@ -80,7 +72,7 @@ const BulkPriceChangeExecutionModelSchema = CollectionSchema(
           name: r'id',
           type: IndexType.hash,
           caseSensitive: true,
-        )
+        ),
       ],
     ),
     r'operatorName': IndexSchema(
@@ -93,7 +85,7 @@ const BulkPriceChangeExecutionModelSchema = CollectionSchema(
           name: r'operatorName',
           type: IndexType.hash,
           caseSensitive: true,
-        )
+        ),
       ],
     ),
     r'executedAt': IndexSchema(
@@ -106,7 +98,7 @@ const BulkPriceChangeExecutionModelSchema = CollectionSchema(
           name: r'executedAt',
           type: IndexType.value,
           caseSensitive: false,
-        )
+        ),
       ],
     ),
     r'cancellationDeadline': IndexSchema(
@@ -119,9 +111,9 @@ const BulkPriceChangeExecutionModelSchema = CollectionSchema(
           name: r'cancellationDeadline',
           type: IndexType.value,
           caseSensitive: false,
-        )
+        ),
       ],
-    )
+    ),
   },
   links: {},
   embeddedSchemas: {},
@@ -216,12 +208,16 @@ Id _bulkPriceChangeExecutionModelGetId(BulkPriceChangeExecutionModel object) {
 }
 
 List<IsarLinkBase<dynamic>> _bulkPriceChangeExecutionModelGetLinks(
-    BulkPriceChangeExecutionModel object) {
+  BulkPriceChangeExecutionModel object,
+) {
   return [];
 }
 
 void _bulkPriceChangeExecutionModelAttach(
-    IsarCollection<dynamic> col, Id id, BulkPriceChangeExecutionModel object) {
+  IsarCollection<dynamic> col,
+  Id id,
+  BulkPriceChangeExecutionModel object,
+) {
   object.isarId = id;
 }
 
@@ -244,7 +240,8 @@ extension BulkPriceChangeExecutionModelByIndex
   }
 
   Future<List<BulkPriceChangeExecutionModel?>> getAllById(
-      List<String> idValues) {
+    List<String> idValues,
+  ) {
     final values = idValues.map((e) => [e]).toList();
     return getAllByIndex(r'id', values);
   }
@@ -268,8 +265,10 @@ extension BulkPriceChangeExecutionModelByIndex
     return putByIndex(r'id', object);
   }
 
-  Id putByIdSync(BulkPriceChangeExecutionModel object,
-      {bool saveLinks = true}) {
+  Id putByIdSync(
+    BulkPriceChangeExecutionModel object, {
+    bool saveLinks = true,
+  }) {
     return putByIndexSync(r'id', object, saveLinks: saveLinks);
   }
 
@@ -277,23 +276,38 @@ extension BulkPriceChangeExecutionModelByIndex
     return putAllByIndex(r'id', objects);
   }
 
-  List<Id> putAllByIdSync(List<BulkPriceChangeExecutionModel> objects,
-      {bool saveLinks = true}) {
+  List<Id> putAllByIdSync(
+    List<BulkPriceChangeExecutionModel> objects, {
+    bool saveLinks = true,
+  }) {
     return putAllByIndexSync(r'id', objects, saveLinks: saveLinks);
   }
 }
 
-extension BulkPriceChangeExecutionModelQueryWhereSort on QueryBuilder<
-    BulkPriceChangeExecutionModel, BulkPriceChangeExecutionModel, QWhere> {
-  QueryBuilder<BulkPriceChangeExecutionModel, BulkPriceChangeExecutionModel,
-      QAfterWhere> anyIsarId() {
+extension BulkPriceChangeExecutionModelQueryWhereSort
+    on
+        QueryBuilder<
+          BulkPriceChangeExecutionModel,
+          BulkPriceChangeExecutionModel,
+          QWhere
+        > {
+  QueryBuilder<
+    BulkPriceChangeExecutionModel,
+    BulkPriceChangeExecutionModel,
+    QAfterWhere
+  >
+  anyIsarId() {
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(const IdWhereClause.any());
     });
   }
 
-  QueryBuilder<BulkPriceChangeExecutionModel, BulkPriceChangeExecutionModel,
-      QAfterWhere> anyExecutedAt() {
+  QueryBuilder<
+    BulkPriceChangeExecutionModel,
+    BulkPriceChangeExecutionModel,
+    QAfterWhere
+  >
+  anyExecutedAt() {
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(
         const IndexWhereClause.any(indexName: r'executedAt'),
@@ -301,8 +315,12 @@ extension BulkPriceChangeExecutionModelQueryWhereSort on QueryBuilder<
     });
   }
 
-  QueryBuilder<BulkPriceChangeExecutionModel, BulkPriceChangeExecutionModel,
-      QAfterWhere> anyCancellationDeadline() {
+  QueryBuilder<
+    BulkPriceChangeExecutionModel,
+    BulkPriceChangeExecutionModel,
+    QAfterWhere
+  >
+  anyCancellationDeadline() {
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(
         const IndexWhereClause.any(indexName: r'cancellationDeadline'),
@@ -311,22 +329,32 @@ extension BulkPriceChangeExecutionModelQueryWhereSort on QueryBuilder<
   }
 }
 
-extension BulkPriceChangeExecutionModelQueryWhere on QueryBuilder<
+extension BulkPriceChangeExecutionModelQueryWhere
+    on
+        QueryBuilder<
+          BulkPriceChangeExecutionModel,
+          BulkPriceChangeExecutionModel,
+          QWhereClause
+        > {
+  QueryBuilder<
     BulkPriceChangeExecutionModel,
     BulkPriceChangeExecutionModel,
-    QWhereClause> {
-  QueryBuilder<BulkPriceChangeExecutionModel, BulkPriceChangeExecutionModel,
-      QAfterWhereClause> isarIdEqualTo(Id isarId) {
+    QAfterWhereClause
+  >
+  isarIdEqualTo(Id isarId) {
     return QueryBuilder.apply(this, (query) {
-      return query.addWhereClause(IdWhereClause.between(
-        lower: isarId,
-        upper: isarId,
-      ));
+      return query.addWhereClause(
+        IdWhereClause.between(lower: isarId, upper: isarId),
+      );
     });
   }
 
-  QueryBuilder<BulkPriceChangeExecutionModel, BulkPriceChangeExecutionModel,
-      QAfterWhereClause> isarIdNotEqualTo(Id isarId) {
+  QueryBuilder<
+    BulkPriceChangeExecutionModel,
+    BulkPriceChangeExecutionModel,
+    QAfterWhereClause
+  >
+  isarIdNotEqualTo(Id isarId) {
     return QueryBuilder.apply(this, (query) {
       if (query.whereSort == Sort.asc) {
         return query
@@ -348,8 +376,12 @@ extension BulkPriceChangeExecutionModelQueryWhere on QueryBuilder<
     });
   }
 
-  QueryBuilder<BulkPriceChangeExecutionModel, BulkPriceChangeExecutionModel,
-      QAfterWhereClause> isarIdGreaterThan(Id isarId, {bool include = false}) {
+  QueryBuilder<
+    BulkPriceChangeExecutionModel,
+    BulkPriceChangeExecutionModel,
+    QAfterWhereClause
+  >
+  isarIdGreaterThan(Id isarId, {bool include = false}) {
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(
         IdWhereClause.greaterThan(lower: isarId, includeLower: include),
@@ -357,8 +389,12 @@ extension BulkPriceChangeExecutionModelQueryWhere on QueryBuilder<
     });
   }
 
-  QueryBuilder<BulkPriceChangeExecutionModel, BulkPriceChangeExecutionModel,
-      QAfterWhereClause> isarIdLessThan(Id isarId, {bool include = false}) {
+  QueryBuilder<
+    BulkPriceChangeExecutionModel,
+    BulkPriceChangeExecutionModel,
+    QAfterWhereClause
+  >
+  isarIdLessThan(Id isarId, {bool include = false}) {
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(
         IdWhereClause.lessThan(upper: isarId, includeUpper: include),
@@ -366,670 +402,882 @@ extension BulkPriceChangeExecutionModelQueryWhere on QueryBuilder<
     });
   }
 
-  QueryBuilder<BulkPriceChangeExecutionModel, BulkPriceChangeExecutionModel,
-      QAfterWhereClause> isarIdBetween(
+  QueryBuilder<
+    BulkPriceChangeExecutionModel,
+    BulkPriceChangeExecutionModel,
+    QAfterWhereClause
+  >
+  isarIdBetween(
     Id lowerIsarId,
     Id upperIsarId, {
     bool includeLower = true,
     bool includeUpper = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addWhereClause(IdWhereClause.between(
-        lower: lowerIsarId,
-        includeLower: includeLower,
-        upper: upperIsarId,
-        includeUpper: includeUpper,
-      ));
+      return query.addWhereClause(
+        IdWhereClause.between(
+          lower: lowerIsarId,
+          includeLower: includeLower,
+          upper: upperIsarId,
+          includeUpper: includeUpper,
+        ),
+      );
     });
   }
 
-  QueryBuilder<BulkPriceChangeExecutionModel, BulkPriceChangeExecutionModel,
-      QAfterWhereClause> idEqualTo(String id) {
+  QueryBuilder<
+    BulkPriceChangeExecutionModel,
+    BulkPriceChangeExecutionModel,
+    QAfterWhereClause
+  >
+  idEqualTo(String id) {
     return QueryBuilder.apply(this, (query) {
-      return query.addWhereClause(IndexWhereClause.equalTo(
-        indexName: r'id',
-        value: [id],
-      ));
+      return query.addWhereClause(
+        IndexWhereClause.equalTo(indexName: r'id', value: [id]),
+      );
     });
   }
 
-  QueryBuilder<BulkPriceChangeExecutionModel, BulkPriceChangeExecutionModel,
-      QAfterWhereClause> idNotEqualTo(String id) {
+  QueryBuilder<
+    BulkPriceChangeExecutionModel,
+    BulkPriceChangeExecutionModel,
+    QAfterWhereClause
+  >
+  idNotEqualTo(String id) {
     return QueryBuilder.apply(this, (query) {
       if (query.whereSort == Sort.asc) {
         return query
-            .addWhereClause(IndexWhereClause.between(
-              indexName: r'id',
-              lower: [],
-              upper: [id],
-              includeUpper: false,
-            ))
-            .addWhereClause(IndexWhereClause.between(
-              indexName: r'id',
-              lower: [id],
-              includeLower: false,
-              upper: [],
-            ));
+            .addWhereClause(
+              IndexWhereClause.between(
+                indexName: r'id',
+                lower: [],
+                upper: [id],
+                includeUpper: false,
+              ),
+            )
+            .addWhereClause(
+              IndexWhereClause.between(
+                indexName: r'id',
+                lower: [id],
+                includeLower: false,
+                upper: [],
+              ),
+            );
       } else {
         return query
-            .addWhereClause(IndexWhereClause.between(
-              indexName: r'id',
-              lower: [id],
-              includeLower: false,
-              upper: [],
-            ))
-            .addWhereClause(IndexWhereClause.between(
-              indexName: r'id',
-              lower: [],
-              upper: [id],
-              includeUpper: false,
-            ));
+            .addWhereClause(
+              IndexWhereClause.between(
+                indexName: r'id',
+                lower: [id],
+                includeLower: false,
+                upper: [],
+              ),
+            )
+            .addWhereClause(
+              IndexWhereClause.between(
+                indexName: r'id',
+                lower: [],
+                upper: [id],
+                includeUpper: false,
+              ),
+            );
       }
     });
   }
 
-  QueryBuilder<BulkPriceChangeExecutionModel, BulkPriceChangeExecutionModel,
-      QAfterWhereClause> operatorNameEqualTo(String operatorName) {
+  QueryBuilder<
+    BulkPriceChangeExecutionModel,
+    BulkPriceChangeExecutionModel,
+    QAfterWhereClause
+  >
+  operatorNameEqualTo(String operatorName) {
     return QueryBuilder.apply(this, (query) {
-      return query.addWhereClause(IndexWhereClause.equalTo(
-        indexName: r'operatorName',
-        value: [operatorName],
-      ));
+      return query.addWhereClause(
+        IndexWhereClause.equalTo(
+          indexName: r'operatorName',
+          value: [operatorName],
+        ),
+      );
     });
   }
 
-  QueryBuilder<BulkPriceChangeExecutionModel, BulkPriceChangeExecutionModel,
-      QAfterWhereClause> operatorNameNotEqualTo(String operatorName) {
+  QueryBuilder<
+    BulkPriceChangeExecutionModel,
+    BulkPriceChangeExecutionModel,
+    QAfterWhereClause
+  >
+  operatorNameNotEqualTo(String operatorName) {
     return QueryBuilder.apply(this, (query) {
       if (query.whereSort == Sort.asc) {
         return query
-            .addWhereClause(IndexWhereClause.between(
-              indexName: r'operatorName',
-              lower: [],
-              upper: [operatorName],
-              includeUpper: false,
-            ))
-            .addWhereClause(IndexWhereClause.between(
-              indexName: r'operatorName',
-              lower: [operatorName],
-              includeLower: false,
-              upper: [],
-            ));
+            .addWhereClause(
+              IndexWhereClause.between(
+                indexName: r'operatorName',
+                lower: [],
+                upper: [operatorName],
+                includeUpper: false,
+              ),
+            )
+            .addWhereClause(
+              IndexWhereClause.between(
+                indexName: r'operatorName',
+                lower: [operatorName],
+                includeLower: false,
+                upper: [],
+              ),
+            );
       } else {
         return query
-            .addWhereClause(IndexWhereClause.between(
-              indexName: r'operatorName',
-              lower: [operatorName],
-              includeLower: false,
-              upper: [],
-            ))
-            .addWhereClause(IndexWhereClause.between(
-              indexName: r'operatorName',
-              lower: [],
-              upper: [operatorName],
-              includeUpper: false,
-            ));
+            .addWhereClause(
+              IndexWhereClause.between(
+                indexName: r'operatorName',
+                lower: [operatorName],
+                includeLower: false,
+                upper: [],
+              ),
+            )
+            .addWhereClause(
+              IndexWhereClause.between(
+                indexName: r'operatorName',
+                lower: [],
+                upper: [operatorName],
+                includeUpper: false,
+              ),
+            );
       }
     });
   }
 
-  QueryBuilder<BulkPriceChangeExecutionModel, BulkPriceChangeExecutionModel,
-      QAfterWhereClause> executedAtEqualTo(DateTime executedAt) {
+  QueryBuilder<
+    BulkPriceChangeExecutionModel,
+    BulkPriceChangeExecutionModel,
+    QAfterWhereClause
+  >
+  executedAtEqualTo(DateTime executedAt) {
     return QueryBuilder.apply(this, (query) {
-      return query.addWhereClause(IndexWhereClause.equalTo(
-        indexName: r'executedAt',
-        value: [executedAt],
-      ));
+      return query.addWhereClause(
+        IndexWhereClause.equalTo(indexName: r'executedAt', value: [executedAt]),
+      );
     });
   }
 
-  QueryBuilder<BulkPriceChangeExecutionModel, BulkPriceChangeExecutionModel,
-      QAfterWhereClause> executedAtNotEqualTo(DateTime executedAt) {
+  QueryBuilder<
+    BulkPriceChangeExecutionModel,
+    BulkPriceChangeExecutionModel,
+    QAfterWhereClause
+  >
+  executedAtNotEqualTo(DateTime executedAt) {
     return QueryBuilder.apply(this, (query) {
       if (query.whereSort == Sort.asc) {
         return query
-            .addWhereClause(IndexWhereClause.between(
-              indexName: r'executedAt',
-              lower: [],
-              upper: [executedAt],
-              includeUpper: false,
-            ))
-            .addWhereClause(IndexWhereClause.between(
-              indexName: r'executedAt',
-              lower: [executedAt],
-              includeLower: false,
-              upper: [],
-            ));
+            .addWhereClause(
+              IndexWhereClause.between(
+                indexName: r'executedAt',
+                lower: [],
+                upper: [executedAt],
+                includeUpper: false,
+              ),
+            )
+            .addWhereClause(
+              IndexWhereClause.between(
+                indexName: r'executedAt',
+                lower: [executedAt],
+                includeLower: false,
+                upper: [],
+              ),
+            );
       } else {
         return query
-            .addWhereClause(IndexWhereClause.between(
-              indexName: r'executedAt',
-              lower: [executedAt],
-              includeLower: false,
-              upper: [],
-            ))
-            .addWhereClause(IndexWhereClause.between(
-              indexName: r'executedAt',
-              lower: [],
-              upper: [executedAt],
-              includeUpper: false,
-            ));
+            .addWhereClause(
+              IndexWhereClause.between(
+                indexName: r'executedAt',
+                lower: [executedAt],
+                includeLower: false,
+                upper: [],
+              ),
+            )
+            .addWhereClause(
+              IndexWhereClause.between(
+                indexName: r'executedAt',
+                lower: [],
+                upper: [executedAt],
+                includeUpper: false,
+              ),
+            );
       }
     });
   }
 
-  QueryBuilder<BulkPriceChangeExecutionModel, BulkPriceChangeExecutionModel,
-      QAfterWhereClause> executedAtGreaterThan(
-    DateTime executedAt, {
-    bool include = false,
-  }) {
+  QueryBuilder<
+    BulkPriceChangeExecutionModel,
+    BulkPriceChangeExecutionModel,
+    QAfterWhereClause
+  >
+  executedAtGreaterThan(DateTime executedAt, {bool include = false}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addWhereClause(IndexWhereClause.between(
-        indexName: r'executedAt',
-        lower: [executedAt],
-        includeLower: include,
-        upper: [],
-      ));
+      return query.addWhereClause(
+        IndexWhereClause.between(
+          indexName: r'executedAt',
+          lower: [executedAt],
+          includeLower: include,
+          upper: [],
+        ),
+      );
     });
   }
 
-  QueryBuilder<BulkPriceChangeExecutionModel, BulkPriceChangeExecutionModel,
-      QAfterWhereClause> executedAtLessThan(
-    DateTime executedAt, {
-    bool include = false,
-  }) {
+  QueryBuilder<
+    BulkPriceChangeExecutionModel,
+    BulkPriceChangeExecutionModel,
+    QAfterWhereClause
+  >
+  executedAtLessThan(DateTime executedAt, {bool include = false}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addWhereClause(IndexWhereClause.between(
-        indexName: r'executedAt',
-        lower: [],
-        upper: [executedAt],
-        includeUpper: include,
-      ));
+      return query.addWhereClause(
+        IndexWhereClause.between(
+          indexName: r'executedAt',
+          lower: [],
+          upper: [executedAt],
+          includeUpper: include,
+        ),
+      );
     });
   }
 
-  QueryBuilder<BulkPriceChangeExecutionModel, BulkPriceChangeExecutionModel,
-      QAfterWhereClause> executedAtBetween(
+  QueryBuilder<
+    BulkPriceChangeExecutionModel,
+    BulkPriceChangeExecutionModel,
+    QAfterWhereClause
+  >
+  executedAtBetween(
     DateTime lowerExecutedAt,
     DateTime upperExecutedAt, {
     bool includeLower = true,
     bool includeUpper = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addWhereClause(IndexWhereClause.between(
-        indexName: r'executedAt',
-        lower: [lowerExecutedAt],
-        includeLower: includeLower,
-        upper: [upperExecutedAt],
-        includeUpper: includeUpper,
-      ));
+      return query.addWhereClause(
+        IndexWhereClause.between(
+          indexName: r'executedAt',
+          lower: [lowerExecutedAt],
+          includeLower: includeLower,
+          upper: [upperExecutedAt],
+          includeUpper: includeUpper,
+        ),
+      );
     });
   }
 
-  QueryBuilder<BulkPriceChangeExecutionModel, BulkPriceChangeExecutionModel,
-          QAfterWhereClause>
-      cancellationDeadlineEqualTo(DateTime cancellationDeadline) {
+  QueryBuilder<
+    BulkPriceChangeExecutionModel,
+    BulkPriceChangeExecutionModel,
+    QAfterWhereClause
+  >
+  cancellationDeadlineEqualTo(DateTime cancellationDeadline) {
     return QueryBuilder.apply(this, (query) {
-      return query.addWhereClause(IndexWhereClause.equalTo(
-        indexName: r'cancellationDeadline',
-        value: [cancellationDeadline],
-      ));
+      return query.addWhereClause(
+        IndexWhereClause.equalTo(
+          indexName: r'cancellationDeadline',
+          value: [cancellationDeadline],
+        ),
+      );
     });
   }
 
-  QueryBuilder<BulkPriceChangeExecutionModel, BulkPriceChangeExecutionModel,
-          QAfterWhereClause>
-      cancellationDeadlineNotEqualTo(DateTime cancellationDeadline) {
+  QueryBuilder<
+    BulkPriceChangeExecutionModel,
+    BulkPriceChangeExecutionModel,
+    QAfterWhereClause
+  >
+  cancellationDeadlineNotEqualTo(DateTime cancellationDeadline) {
     return QueryBuilder.apply(this, (query) {
       if (query.whereSort == Sort.asc) {
         return query
-            .addWhereClause(IndexWhereClause.between(
-              indexName: r'cancellationDeadline',
-              lower: [],
-              upper: [cancellationDeadline],
-              includeUpper: false,
-            ))
-            .addWhereClause(IndexWhereClause.between(
-              indexName: r'cancellationDeadline',
-              lower: [cancellationDeadline],
-              includeLower: false,
-              upper: [],
-            ));
+            .addWhereClause(
+              IndexWhereClause.between(
+                indexName: r'cancellationDeadline',
+                lower: [],
+                upper: [cancellationDeadline],
+                includeUpper: false,
+              ),
+            )
+            .addWhereClause(
+              IndexWhereClause.between(
+                indexName: r'cancellationDeadline',
+                lower: [cancellationDeadline],
+                includeLower: false,
+                upper: [],
+              ),
+            );
       } else {
         return query
-            .addWhereClause(IndexWhereClause.between(
-              indexName: r'cancellationDeadline',
-              lower: [cancellationDeadline],
-              includeLower: false,
-              upper: [],
-            ))
-            .addWhereClause(IndexWhereClause.between(
-              indexName: r'cancellationDeadline',
-              lower: [],
-              upper: [cancellationDeadline],
-              includeUpper: false,
-            ));
+            .addWhereClause(
+              IndexWhereClause.between(
+                indexName: r'cancellationDeadline',
+                lower: [cancellationDeadline],
+                includeLower: false,
+                upper: [],
+              ),
+            )
+            .addWhereClause(
+              IndexWhereClause.between(
+                indexName: r'cancellationDeadline',
+                lower: [],
+                upper: [cancellationDeadline],
+                includeUpper: false,
+              ),
+            );
       }
     });
   }
 
-  QueryBuilder<BulkPriceChangeExecutionModel, BulkPriceChangeExecutionModel,
-      QAfterWhereClause> cancellationDeadlineGreaterThan(
+  QueryBuilder<
+    BulkPriceChangeExecutionModel,
+    BulkPriceChangeExecutionModel,
+    QAfterWhereClause
+  >
+  cancellationDeadlineGreaterThan(
     DateTime cancellationDeadline, {
     bool include = false,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addWhereClause(IndexWhereClause.between(
-        indexName: r'cancellationDeadline',
-        lower: [cancellationDeadline],
-        includeLower: include,
-        upper: [],
-      ));
+      return query.addWhereClause(
+        IndexWhereClause.between(
+          indexName: r'cancellationDeadline',
+          lower: [cancellationDeadline],
+          includeLower: include,
+          upper: [],
+        ),
+      );
     });
   }
 
-  QueryBuilder<BulkPriceChangeExecutionModel, BulkPriceChangeExecutionModel,
-      QAfterWhereClause> cancellationDeadlineLessThan(
+  QueryBuilder<
+    BulkPriceChangeExecutionModel,
+    BulkPriceChangeExecutionModel,
+    QAfterWhereClause
+  >
+  cancellationDeadlineLessThan(
     DateTime cancellationDeadline, {
     bool include = false,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addWhereClause(IndexWhereClause.between(
-        indexName: r'cancellationDeadline',
-        lower: [],
-        upper: [cancellationDeadline],
-        includeUpper: include,
-      ));
+      return query.addWhereClause(
+        IndexWhereClause.between(
+          indexName: r'cancellationDeadline',
+          lower: [],
+          upper: [cancellationDeadline],
+          includeUpper: include,
+        ),
+      );
     });
   }
 
-  QueryBuilder<BulkPriceChangeExecutionModel, BulkPriceChangeExecutionModel,
-      QAfterWhereClause> cancellationDeadlineBetween(
+  QueryBuilder<
+    BulkPriceChangeExecutionModel,
+    BulkPriceChangeExecutionModel,
+    QAfterWhereClause
+  >
+  cancellationDeadlineBetween(
     DateTime lowerCancellationDeadline,
     DateTime upperCancellationDeadline, {
     bool includeLower = true,
     bool includeUpper = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addWhereClause(IndexWhereClause.between(
-        indexName: r'cancellationDeadline',
-        lower: [lowerCancellationDeadline],
-        includeLower: includeLower,
-        upper: [upperCancellationDeadline],
-        includeUpper: includeUpper,
-      ));
+      return query.addWhereClause(
+        IndexWhereClause.between(
+          indexName: r'cancellationDeadline',
+          lower: [lowerCancellationDeadline],
+          includeLower: includeLower,
+          upper: [upperCancellationDeadline],
+          includeUpper: includeUpper,
+        ),
+      );
     });
   }
 }
 
-extension BulkPriceChangeExecutionModelQueryFilter on QueryBuilder<
+extension BulkPriceChangeExecutionModelQueryFilter
+    on
+        QueryBuilder<
+          BulkPriceChangeExecutionModel,
+          BulkPriceChangeExecutionModel,
+          QFilterCondition
+        > {
+  QueryBuilder<
     BulkPriceChangeExecutionModel,
     BulkPriceChangeExecutionModel,
-    QFilterCondition> {
-  QueryBuilder<BulkPriceChangeExecutionModel, BulkPriceChangeExecutionModel,
-      QAfterFilterCondition> cancellationDeadlineEqualTo(DateTime value) {
+    QAfterFilterCondition
+  >
+  cancellationDeadlineEqualTo(DateTime value) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'cancellationDeadline',
-        value: value,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.equalTo(
+          property: r'cancellationDeadline',
+          value: value,
+        ),
+      );
     });
   }
 
-  QueryBuilder<BulkPriceChangeExecutionModel, BulkPriceChangeExecutionModel,
-      QAfterFilterCondition> cancellationDeadlineGreaterThan(
-    DateTime value, {
-    bool include = false,
-  }) {
+  QueryBuilder<
+    BulkPriceChangeExecutionModel,
+    BulkPriceChangeExecutionModel,
+    QAfterFilterCondition
+  >
+  cancellationDeadlineGreaterThan(DateTime value, {bool include = false}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        include: include,
-        property: r'cancellationDeadline',
-        value: value,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.greaterThan(
+          include: include,
+          property: r'cancellationDeadline',
+          value: value,
+        ),
+      );
     });
   }
 
-  QueryBuilder<BulkPriceChangeExecutionModel, BulkPriceChangeExecutionModel,
-      QAfterFilterCondition> cancellationDeadlineLessThan(
-    DateTime value, {
-    bool include = false,
-  }) {
+  QueryBuilder<
+    BulkPriceChangeExecutionModel,
+    BulkPriceChangeExecutionModel,
+    QAfterFilterCondition
+  >
+  cancellationDeadlineLessThan(DateTime value, {bool include = false}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.lessThan(
-        include: include,
-        property: r'cancellationDeadline',
-        value: value,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.lessThan(
+          include: include,
+          property: r'cancellationDeadline',
+          value: value,
+        ),
+      );
     });
   }
 
-  QueryBuilder<BulkPriceChangeExecutionModel, BulkPriceChangeExecutionModel,
-      QAfterFilterCondition> cancellationDeadlineBetween(
+  QueryBuilder<
+    BulkPriceChangeExecutionModel,
+    BulkPriceChangeExecutionModel,
+    QAfterFilterCondition
+  >
+  cancellationDeadlineBetween(
     DateTime lower,
     DateTime upper, {
     bool includeLower = true,
     bool includeUpper = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.between(
-        property: r'cancellationDeadline',
-        lower: lower,
-        includeLower: includeLower,
-        upper: upper,
-        includeUpper: includeUpper,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.between(
+          property: r'cancellationDeadline',
+          lower: lower,
+          includeLower: includeLower,
+          upper: upper,
+          includeUpper: includeUpper,
+        ),
+      );
     });
   }
 
-  QueryBuilder<BulkPriceChangeExecutionModel, BulkPriceChangeExecutionModel,
-      QAfterFilterCondition> cancelledAtIsNull() {
+  QueryBuilder<
+    BulkPriceChangeExecutionModel,
+    BulkPriceChangeExecutionModel,
+    QAfterFilterCondition
+  >
+  cancelledAtIsNull() {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const FilterCondition.isNull(
-        property: r'cancelledAt',
-      ));
+      return query.addFilterCondition(
+        const FilterCondition.isNull(property: r'cancelledAt'),
+      );
     });
   }
 
-  QueryBuilder<BulkPriceChangeExecutionModel, BulkPriceChangeExecutionModel,
-      QAfterFilterCondition> cancelledAtIsNotNull() {
+  QueryBuilder<
+    BulkPriceChangeExecutionModel,
+    BulkPriceChangeExecutionModel,
+    QAfterFilterCondition
+  >
+  cancelledAtIsNotNull() {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const FilterCondition.isNotNull(
-        property: r'cancelledAt',
-      ));
+      return query.addFilterCondition(
+        const FilterCondition.isNotNull(property: r'cancelledAt'),
+      );
     });
   }
 
-  QueryBuilder<BulkPriceChangeExecutionModel, BulkPriceChangeExecutionModel,
-      QAfterFilterCondition> cancelledAtEqualTo(DateTime? value) {
+  QueryBuilder<
+    BulkPriceChangeExecutionModel,
+    BulkPriceChangeExecutionModel,
+    QAfterFilterCondition
+  >
+  cancelledAtEqualTo(DateTime? value) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'cancelledAt',
-        value: value,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.equalTo(property: r'cancelledAt', value: value),
+      );
     });
   }
 
-  QueryBuilder<BulkPriceChangeExecutionModel, BulkPriceChangeExecutionModel,
-      QAfterFilterCondition> cancelledAtGreaterThan(
-    DateTime? value, {
-    bool include = false,
-  }) {
+  QueryBuilder<
+    BulkPriceChangeExecutionModel,
+    BulkPriceChangeExecutionModel,
+    QAfterFilterCondition
+  >
+  cancelledAtGreaterThan(DateTime? value, {bool include = false}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        include: include,
-        property: r'cancelledAt',
-        value: value,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.greaterThan(
+          include: include,
+          property: r'cancelledAt',
+          value: value,
+        ),
+      );
     });
   }
 
-  QueryBuilder<BulkPriceChangeExecutionModel, BulkPriceChangeExecutionModel,
-      QAfterFilterCondition> cancelledAtLessThan(
-    DateTime? value, {
-    bool include = false,
-  }) {
+  QueryBuilder<
+    BulkPriceChangeExecutionModel,
+    BulkPriceChangeExecutionModel,
+    QAfterFilterCondition
+  >
+  cancelledAtLessThan(DateTime? value, {bool include = false}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.lessThan(
-        include: include,
-        property: r'cancelledAt',
-        value: value,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.lessThan(
+          include: include,
+          property: r'cancelledAt',
+          value: value,
+        ),
+      );
     });
   }
 
-  QueryBuilder<BulkPriceChangeExecutionModel, BulkPriceChangeExecutionModel,
-      QAfterFilterCondition> cancelledAtBetween(
+  QueryBuilder<
+    BulkPriceChangeExecutionModel,
+    BulkPriceChangeExecutionModel,
+    QAfterFilterCondition
+  >
+  cancelledAtBetween(
     DateTime? lower,
     DateTime? upper, {
     bool includeLower = true,
     bool includeUpper = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.between(
-        property: r'cancelledAt',
-        lower: lower,
-        includeLower: includeLower,
-        upper: upper,
-        includeUpper: includeUpper,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.between(
+          property: r'cancelledAt',
+          lower: lower,
+          includeLower: includeLower,
+          upper: upper,
+          includeUpper: includeUpper,
+        ),
+      );
     });
   }
 
-  QueryBuilder<BulkPriceChangeExecutionModel, BulkPriceChangeExecutionModel,
-      QAfterFilterCondition> createdAtEqualTo(DateTime value) {
+  QueryBuilder<
+    BulkPriceChangeExecutionModel,
+    BulkPriceChangeExecutionModel,
+    QAfterFilterCondition
+  >
+  createdAtEqualTo(DateTime value) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'createdAt',
-        value: value,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.equalTo(property: r'createdAt', value: value),
+      );
     });
   }
 
-  QueryBuilder<BulkPriceChangeExecutionModel, BulkPriceChangeExecutionModel,
-      QAfterFilterCondition> createdAtGreaterThan(
-    DateTime value, {
-    bool include = false,
-  }) {
+  QueryBuilder<
+    BulkPriceChangeExecutionModel,
+    BulkPriceChangeExecutionModel,
+    QAfterFilterCondition
+  >
+  createdAtGreaterThan(DateTime value, {bool include = false}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        include: include,
-        property: r'createdAt',
-        value: value,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.greaterThan(
+          include: include,
+          property: r'createdAt',
+          value: value,
+        ),
+      );
     });
   }
 
-  QueryBuilder<BulkPriceChangeExecutionModel, BulkPriceChangeExecutionModel,
-      QAfterFilterCondition> createdAtLessThan(
-    DateTime value, {
-    bool include = false,
-  }) {
+  QueryBuilder<
+    BulkPriceChangeExecutionModel,
+    BulkPriceChangeExecutionModel,
+    QAfterFilterCondition
+  >
+  createdAtLessThan(DateTime value, {bool include = false}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.lessThan(
-        include: include,
-        property: r'createdAt',
-        value: value,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.lessThan(
+          include: include,
+          property: r'createdAt',
+          value: value,
+        ),
+      );
     });
   }
 
-  QueryBuilder<BulkPriceChangeExecutionModel, BulkPriceChangeExecutionModel,
-      QAfterFilterCondition> createdAtBetween(
+  QueryBuilder<
+    BulkPriceChangeExecutionModel,
+    BulkPriceChangeExecutionModel,
+    QAfterFilterCondition
+  >
+  createdAtBetween(
     DateTime lower,
     DateTime upper, {
     bool includeLower = true,
     bool includeUpper = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.between(
-        property: r'createdAt',
-        lower: lower,
-        includeLower: includeLower,
-        upper: upper,
-        includeUpper: includeUpper,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.between(
+          property: r'createdAt',
+          lower: lower,
+          includeLower: includeLower,
+          upper: upper,
+          includeUpper: includeUpper,
+        ),
+      );
     });
   }
 
-  QueryBuilder<BulkPriceChangeExecutionModel, BulkPriceChangeExecutionModel,
-      QAfterFilterCondition> effectiveAtIsNull() {
+  QueryBuilder<
+    BulkPriceChangeExecutionModel,
+    BulkPriceChangeExecutionModel,
+    QAfterFilterCondition
+  >
+  effectiveAtIsNull() {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const FilterCondition.isNull(
-        property: r'effectiveAt',
-      ));
+      return query.addFilterCondition(
+        const FilterCondition.isNull(property: r'effectiveAt'),
+      );
     });
   }
 
-  QueryBuilder<BulkPriceChangeExecutionModel, BulkPriceChangeExecutionModel,
-      QAfterFilterCondition> effectiveAtIsNotNull() {
+  QueryBuilder<
+    BulkPriceChangeExecutionModel,
+    BulkPriceChangeExecutionModel,
+    QAfterFilterCondition
+  >
+  effectiveAtIsNotNull() {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const FilterCondition.isNotNull(
-        property: r'effectiveAt',
-      ));
+      return query.addFilterCondition(
+        const FilterCondition.isNotNull(property: r'effectiveAt'),
+      );
     });
   }
 
-  QueryBuilder<BulkPriceChangeExecutionModel, BulkPriceChangeExecutionModel,
-      QAfterFilterCondition> effectiveAtEqualTo(DateTime? value) {
+  QueryBuilder<
+    BulkPriceChangeExecutionModel,
+    BulkPriceChangeExecutionModel,
+    QAfterFilterCondition
+  >
+  effectiveAtEqualTo(DateTime? value) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'effectiveAt',
-        value: value,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.equalTo(property: r'effectiveAt', value: value),
+      );
     });
   }
 
-  QueryBuilder<BulkPriceChangeExecutionModel, BulkPriceChangeExecutionModel,
-      QAfterFilterCondition> effectiveAtGreaterThan(
-    DateTime? value, {
-    bool include = false,
-  }) {
+  QueryBuilder<
+    BulkPriceChangeExecutionModel,
+    BulkPriceChangeExecutionModel,
+    QAfterFilterCondition
+  >
+  effectiveAtGreaterThan(DateTime? value, {bool include = false}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        include: include,
-        property: r'effectiveAt',
-        value: value,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.greaterThan(
+          include: include,
+          property: r'effectiveAt',
+          value: value,
+        ),
+      );
     });
   }
 
-  QueryBuilder<BulkPriceChangeExecutionModel, BulkPriceChangeExecutionModel,
-      QAfterFilterCondition> effectiveAtLessThan(
-    DateTime? value, {
-    bool include = false,
-  }) {
+  QueryBuilder<
+    BulkPriceChangeExecutionModel,
+    BulkPriceChangeExecutionModel,
+    QAfterFilterCondition
+  >
+  effectiveAtLessThan(DateTime? value, {bool include = false}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.lessThan(
-        include: include,
-        property: r'effectiveAt',
-        value: value,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.lessThan(
+          include: include,
+          property: r'effectiveAt',
+          value: value,
+        ),
+      );
     });
   }
 
-  QueryBuilder<BulkPriceChangeExecutionModel, BulkPriceChangeExecutionModel,
-      QAfterFilterCondition> effectiveAtBetween(
+  QueryBuilder<
+    BulkPriceChangeExecutionModel,
+    BulkPriceChangeExecutionModel,
+    QAfterFilterCondition
+  >
+  effectiveAtBetween(
     DateTime? lower,
     DateTime? upper, {
     bool includeLower = true,
     bool includeUpper = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.between(
-        property: r'effectiveAt',
-        lower: lower,
-        includeLower: includeLower,
-        upper: upper,
-        includeUpper: includeUpper,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.between(
+          property: r'effectiveAt',
+          lower: lower,
+          includeLower: includeLower,
+          upper: upper,
+          includeUpper: includeUpper,
+        ),
+      );
     });
   }
 
-  QueryBuilder<BulkPriceChangeExecutionModel, BulkPriceChangeExecutionModel,
-      QAfterFilterCondition> executedAtEqualTo(DateTime value) {
+  QueryBuilder<
+    BulkPriceChangeExecutionModel,
+    BulkPriceChangeExecutionModel,
+    QAfterFilterCondition
+  >
+  executedAtEqualTo(DateTime value) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'executedAt',
-        value: value,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.equalTo(property: r'executedAt', value: value),
+      );
     });
   }
 
-  QueryBuilder<BulkPriceChangeExecutionModel, BulkPriceChangeExecutionModel,
-      QAfterFilterCondition> executedAtGreaterThan(
-    DateTime value, {
-    bool include = false,
-  }) {
+  QueryBuilder<
+    BulkPriceChangeExecutionModel,
+    BulkPriceChangeExecutionModel,
+    QAfterFilterCondition
+  >
+  executedAtGreaterThan(DateTime value, {bool include = false}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        include: include,
-        property: r'executedAt',
-        value: value,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.greaterThan(
+          include: include,
+          property: r'executedAt',
+          value: value,
+        ),
+      );
     });
   }
 
-  QueryBuilder<BulkPriceChangeExecutionModel, BulkPriceChangeExecutionModel,
-      QAfterFilterCondition> executedAtLessThan(
-    DateTime value, {
-    bool include = false,
-  }) {
+  QueryBuilder<
+    BulkPriceChangeExecutionModel,
+    BulkPriceChangeExecutionModel,
+    QAfterFilterCondition
+  >
+  executedAtLessThan(DateTime value, {bool include = false}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.lessThan(
-        include: include,
-        property: r'executedAt',
-        value: value,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.lessThan(
+          include: include,
+          property: r'executedAt',
+          value: value,
+        ),
+      );
     });
   }
 
-  QueryBuilder<BulkPriceChangeExecutionModel, BulkPriceChangeExecutionModel,
-      QAfterFilterCondition> executedAtBetween(
+  QueryBuilder<
+    BulkPriceChangeExecutionModel,
+    BulkPriceChangeExecutionModel,
+    QAfterFilterCondition
+  >
+  executedAtBetween(
     DateTime lower,
     DateTime upper, {
     bool includeLower = true,
     bool includeUpper = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.between(
-        property: r'executedAt',
-        lower: lower,
-        includeLower: includeLower,
-        upper: upper,
-        includeUpper: includeUpper,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.between(
+          property: r'executedAt',
+          lower: lower,
+          includeLower: includeLower,
+          upper: upper,
+          includeUpper: includeUpper,
+        ),
+      );
     });
   }
 
-  QueryBuilder<BulkPriceChangeExecutionModel, BulkPriceChangeExecutionModel,
-      QAfterFilterCondition> idEqualTo(
-    String value, {
-    bool caseSensitive = true,
-  }) {
+  QueryBuilder<
+    BulkPriceChangeExecutionModel,
+    BulkPriceChangeExecutionModel,
+    QAfterFilterCondition
+  >
+  idEqualTo(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'id',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.equalTo(
+          property: r'id',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
-  QueryBuilder<BulkPriceChangeExecutionModel, BulkPriceChangeExecutionModel,
-      QAfterFilterCondition> idGreaterThan(
-    String value, {
-    bool include = false,
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        include: include,
-        property: r'id',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<BulkPriceChangeExecutionModel, BulkPriceChangeExecutionModel,
-      QAfterFilterCondition> idLessThan(
+  QueryBuilder<
+    BulkPriceChangeExecutionModel,
+    BulkPriceChangeExecutionModel,
+    QAfterFilterCondition
+  >
+  idGreaterThan(
     String value, {
     bool include = false,
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.lessThan(
-        include: include,
-        property: r'id',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.greaterThan(
+          include: include,
+          property: r'id',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
-  QueryBuilder<BulkPriceChangeExecutionModel, BulkPriceChangeExecutionModel,
-      QAfterFilterCondition> idBetween(
+  QueryBuilder<
+    BulkPriceChangeExecutionModel,
+    BulkPriceChangeExecutionModel,
+    QAfterFilterCondition
+  >
+  idLessThan(String value, {bool include = false, bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        FilterCondition.lessThan(
+          include: include,
+          property: r'id',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<
+    BulkPriceChangeExecutionModel,
+    BulkPriceChangeExecutionModel,
+    QAfterFilterCondition
+  >
+  idBetween(
     String lower,
     String upper, {
     bool includeLower = true,
@@ -1037,211 +1285,277 @@ extension BulkPriceChangeExecutionModelQueryFilter on QueryBuilder<
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.between(
-        property: r'id',
-        lower: lower,
-        includeLower: includeLower,
-        upper: upper,
-        includeUpper: includeUpper,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.between(
+          property: r'id',
+          lower: lower,
+          includeLower: includeLower,
+          upper: upper,
+          includeUpper: includeUpper,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
-  QueryBuilder<BulkPriceChangeExecutionModel, BulkPriceChangeExecutionModel,
-      QAfterFilterCondition> idStartsWith(
-    String value, {
-    bool caseSensitive = true,
-  }) {
+  QueryBuilder<
+    BulkPriceChangeExecutionModel,
+    BulkPriceChangeExecutionModel,
+    QAfterFilterCondition
+  >
+  idStartsWith(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.startsWith(
-        property: r'id',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.startsWith(
+          property: r'id',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
-  QueryBuilder<BulkPriceChangeExecutionModel, BulkPriceChangeExecutionModel,
-      QAfterFilterCondition> idEndsWith(
-    String value, {
-    bool caseSensitive = true,
-  }) {
+  QueryBuilder<
+    BulkPriceChangeExecutionModel,
+    BulkPriceChangeExecutionModel,
+    QAfterFilterCondition
+  >
+  idEndsWith(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.endsWith(
-        property: r'id',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.endsWith(
+          property: r'id',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
-  QueryBuilder<BulkPriceChangeExecutionModel, BulkPriceChangeExecutionModel,
-          QAfterFilterCondition>
-      idContains(String value, {bool caseSensitive = true}) {
+  QueryBuilder<
+    BulkPriceChangeExecutionModel,
+    BulkPriceChangeExecutionModel,
+    QAfterFilterCondition
+  >
+  idContains(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.contains(
-        property: r'id',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.contains(
+          property: r'id',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
-  QueryBuilder<BulkPriceChangeExecutionModel, BulkPriceChangeExecutionModel,
-          QAfterFilterCondition>
-      idMatches(String pattern, {bool caseSensitive = true}) {
+  QueryBuilder<
+    BulkPriceChangeExecutionModel,
+    BulkPriceChangeExecutionModel,
+    QAfterFilterCondition
+  >
+  idMatches(String pattern, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.matches(
-        property: r'id',
-        wildcard: pattern,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.matches(
+          property: r'id',
+          wildcard: pattern,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
-  QueryBuilder<BulkPriceChangeExecutionModel, BulkPriceChangeExecutionModel,
-      QAfterFilterCondition> idIsEmpty() {
+  QueryBuilder<
+    BulkPriceChangeExecutionModel,
+    BulkPriceChangeExecutionModel,
+    QAfterFilterCondition
+  >
+  idIsEmpty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'id',
-        value: '',
-      ));
+      return query.addFilterCondition(
+        FilterCondition.equalTo(property: r'id', value: ''),
+      );
     });
   }
 
-  QueryBuilder<BulkPriceChangeExecutionModel, BulkPriceChangeExecutionModel,
-      QAfterFilterCondition> idIsNotEmpty() {
+  QueryBuilder<
+    BulkPriceChangeExecutionModel,
+    BulkPriceChangeExecutionModel,
+    QAfterFilterCondition
+  >
+  idIsNotEmpty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        property: r'id',
-        value: '',
-      ));
+      return query.addFilterCondition(
+        FilterCondition.greaterThan(property: r'id', value: ''),
+      );
     });
   }
 
-  QueryBuilder<BulkPriceChangeExecutionModel, BulkPriceChangeExecutionModel,
-      QAfterFilterCondition> isarIdIsNull() {
+  QueryBuilder<
+    BulkPriceChangeExecutionModel,
+    BulkPriceChangeExecutionModel,
+    QAfterFilterCondition
+  >
+  isarIdIsNull() {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const FilterCondition.isNull(
-        property: r'isarId',
-      ));
+      return query.addFilterCondition(
+        const FilterCondition.isNull(property: r'isarId'),
+      );
     });
   }
 
-  QueryBuilder<BulkPriceChangeExecutionModel, BulkPriceChangeExecutionModel,
-      QAfterFilterCondition> isarIdIsNotNull() {
+  QueryBuilder<
+    BulkPriceChangeExecutionModel,
+    BulkPriceChangeExecutionModel,
+    QAfterFilterCondition
+  >
+  isarIdIsNotNull() {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const FilterCondition.isNotNull(
-        property: r'isarId',
-      ));
+      return query.addFilterCondition(
+        const FilterCondition.isNotNull(property: r'isarId'),
+      );
     });
   }
 
-  QueryBuilder<BulkPriceChangeExecutionModel, BulkPriceChangeExecutionModel,
-      QAfterFilterCondition> isarIdEqualTo(Id? value) {
+  QueryBuilder<
+    BulkPriceChangeExecutionModel,
+    BulkPriceChangeExecutionModel,
+    QAfterFilterCondition
+  >
+  isarIdEqualTo(Id? value) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'isarId',
-        value: value,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.equalTo(property: r'isarId', value: value),
+      );
     });
   }
 
-  QueryBuilder<BulkPriceChangeExecutionModel, BulkPriceChangeExecutionModel,
-      QAfterFilterCondition> isarIdGreaterThan(
-    Id? value, {
-    bool include = false,
-  }) {
+  QueryBuilder<
+    BulkPriceChangeExecutionModel,
+    BulkPriceChangeExecutionModel,
+    QAfterFilterCondition
+  >
+  isarIdGreaterThan(Id? value, {bool include = false}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        include: include,
-        property: r'isarId',
-        value: value,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.greaterThan(
+          include: include,
+          property: r'isarId',
+          value: value,
+        ),
+      );
     });
   }
 
-  QueryBuilder<BulkPriceChangeExecutionModel, BulkPriceChangeExecutionModel,
-      QAfterFilterCondition> isarIdLessThan(
-    Id? value, {
-    bool include = false,
-  }) {
+  QueryBuilder<
+    BulkPriceChangeExecutionModel,
+    BulkPriceChangeExecutionModel,
+    QAfterFilterCondition
+  >
+  isarIdLessThan(Id? value, {bool include = false}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.lessThan(
-        include: include,
-        property: r'isarId',
-        value: value,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.lessThan(
+          include: include,
+          property: r'isarId',
+          value: value,
+        ),
+      );
     });
   }
 
-  QueryBuilder<BulkPriceChangeExecutionModel, BulkPriceChangeExecutionModel,
-      QAfterFilterCondition> isarIdBetween(
+  QueryBuilder<
+    BulkPriceChangeExecutionModel,
+    BulkPriceChangeExecutionModel,
+    QAfterFilterCondition
+  >
+  isarIdBetween(
     Id? lower,
     Id? upper, {
     bool includeLower = true,
     bool includeUpper = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.between(
-        property: r'isarId',
-        lower: lower,
-        includeLower: includeLower,
-        upper: upper,
-        includeUpper: includeUpper,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.between(
+          property: r'isarId',
+          lower: lower,
+          includeLower: includeLower,
+          upper: upper,
+          includeUpper: includeUpper,
+        ),
+      );
     });
   }
 
-  QueryBuilder<BulkPriceChangeExecutionModel, BulkPriceChangeExecutionModel,
-      QAfterFilterCondition> operatorNameEqualTo(
-    String value, {
-    bool caseSensitive = true,
-  }) {
+  QueryBuilder<
+    BulkPriceChangeExecutionModel,
+    BulkPriceChangeExecutionModel,
+    QAfterFilterCondition
+  >
+  operatorNameEqualTo(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'operatorName',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.equalTo(
+          property: r'operatorName',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
-  QueryBuilder<BulkPriceChangeExecutionModel, BulkPriceChangeExecutionModel,
-      QAfterFilterCondition> operatorNameGreaterThan(
-    String value, {
-    bool include = false,
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        include: include,
-        property: r'operatorName',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<BulkPriceChangeExecutionModel, BulkPriceChangeExecutionModel,
-      QAfterFilterCondition> operatorNameLessThan(
+  QueryBuilder<
+    BulkPriceChangeExecutionModel,
+    BulkPriceChangeExecutionModel,
+    QAfterFilterCondition
+  >
+  operatorNameGreaterThan(
     String value, {
     bool include = false,
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.lessThan(
-        include: include,
-        property: r'operatorName',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.greaterThan(
+          include: include,
+          property: r'operatorName',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
-  QueryBuilder<BulkPriceChangeExecutionModel, BulkPriceChangeExecutionModel,
-      QAfterFilterCondition> operatorNameBetween(
+  QueryBuilder<
+    BulkPriceChangeExecutionModel,
+    BulkPriceChangeExecutionModel,
+    QAfterFilterCondition
+  >
+  operatorNameLessThan(
+    String value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        FilterCondition.lessThan(
+          include: include,
+          property: r'operatorName',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<
+    BulkPriceChangeExecutionModel,
+    BulkPriceChangeExecutionModel,
+    QAfterFilterCondition
+  >
+  operatorNameBetween(
     String lower,
     String upper, {
     bool includeLower = true,
@@ -1249,137 +1563,180 @@ extension BulkPriceChangeExecutionModelQueryFilter on QueryBuilder<
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.between(
-        property: r'operatorName',
-        lower: lower,
-        includeLower: includeLower,
-        upper: upper,
-        includeUpper: includeUpper,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.between(
+          property: r'operatorName',
+          lower: lower,
+          includeLower: includeLower,
+          upper: upper,
+          includeUpper: includeUpper,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
-  QueryBuilder<BulkPriceChangeExecutionModel, BulkPriceChangeExecutionModel,
-      QAfterFilterCondition> operatorNameStartsWith(
-    String value, {
-    bool caseSensitive = true,
-  }) {
+  QueryBuilder<
+    BulkPriceChangeExecutionModel,
+    BulkPriceChangeExecutionModel,
+    QAfterFilterCondition
+  >
+  operatorNameStartsWith(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.startsWith(
-        property: r'operatorName',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.startsWith(
+          property: r'operatorName',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
-  QueryBuilder<BulkPriceChangeExecutionModel, BulkPriceChangeExecutionModel,
-      QAfterFilterCondition> operatorNameEndsWith(
-    String value, {
-    bool caseSensitive = true,
-  }) {
+  QueryBuilder<
+    BulkPriceChangeExecutionModel,
+    BulkPriceChangeExecutionModel,
+    QAfterFilterCondition
+  >
+  operatorNameEndsWith(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.endsWith(
-        property: r'operatorName',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.endsWith(
+          property: r'operatorName',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
-  QueryBuilder<BulkPriceChangeExecutionModel, BulkPriceChangeExecutionModel,
-          QAfterFilterCondition>
-      operatorNameContains(String value, {bool caseSensitive = true}) {
+  QueryBuilder<
+    BulkPriceChangeExecutionModel,
+    BulkPriceChangeExecutionModel,
+    QAfterFilterCondition
+  >
+  operatorNameContains(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.contains(
-        property: r'operatorName',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.contains(
+          property: r'operatorName',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
-  QueryBuilder<BulkPriceChangeExecutionModel, BulkPriceChangeExecutionModel,
-          QAfterFilterCondition>
-      operatorNameMatches(String pattern, {bool caseSensitive = true}) {
+  QueryBuilder<
+    BulkPriceChangeExecutionModel,
+    BulkPriceChangeExecutionModel,
+    QAfterFilterCondition
+  >
+  operatorNameMatches(String pattern, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.matches(
-        property: r'operatorName',
-        wildcard: pattern,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.matches(
+          property: r'operatorName',
+          wildcard: pattern,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
-  QueryBuilder<BulkPriceChangeExecutionModel, BulkPriceChangeExecutionModel,
-      QAfterFilterCondition> operatorNameIsEmpty() {
+  QueryBuilder<
+    BulkPriceChangeExecutionModel,
+    BulkPriceChangeExecutionModel,
+    QAfterFilterCondition
+  >
+  operatorNameIsEmpty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'operatorName',
-        value: '',
-      ));
+      return query.addFilterCondition(
+        FilterCondition.equalTo(property: r'operatorName', value: ''),
+      );
     });
   }
 
-  QueryBuilder<BulkPriceChangeExecutionModel, BulkPriceChangeExecutionModel,
-      QAfterFilterCondition> operatorNameIsNotEmpty() {
+  QueryBuilder<
+    BulkPriceChangeExecutionModel,
+    BulkPriceChangeExecutionModel,
+    QAfterFilterCondition
+  >
+  operatorNameIsNotEmpty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        property: r'operatorName',
-        value: '',
-      ));
+      return query.addFilterCondition(
+        FilterCondition.greaterThan(property: r'operatorName', value: ''),
+      );
     });
   }
 
-  QueryBuilder<BulkPriceChangeExecutionModel, BulkPriceChangeExecutionModel,
-      QAfterFilterCondition> reasonEqualTo(
-    String value, {
-    bool caseSensitive = true,
-  }) {
+  QueryBuilder<
+    BulkPriceChangeExecutionModel,
+    BulkPriceChangeExecutionModel,
+    QAfterFilterCondition
+  >
+  reasonEqualTo(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'reason',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.equalTo(
+          property: r'reason',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
-  QueryBuilder<BulkPriceChangeExecutionModel, BulkPriceChangeExecutionModel,
-      QAfterFilterCondition> reasonGreaterThan(
+  QueryBuilder<
+    BulkPriceChangeExecutionModel,
+    BulkPriceChangeExecutionModel,
+    QAfterFilterCondition
+  >
+  reasonGreaterThan(
     String value, {
     bool include = false,
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        include: include,
-        property: r'reason',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.greaterThan(
+          include: include,
+          property: r'reason',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
-  QueryBuilder<BulkPriceChangeExecutionModel, BulkPriceChangeExecutionModel,
-      QAfterFilterCondition> reasonLessThan(
+  QueryBuilder<
+    BulkPriceChangeExecutionModel,
+    BulkPriceChangeExecutionModel,
+    QAfterFilterCondition
+  >
+  reasonLessThan(
     String value, {
     bool include = false,
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.lessThan(
-        include: include,
-        property: r'reason',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.lessThan(
+          include: include,
+          property: r'reason',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
-  QueryBuilder<BulkPriceChangeExecutionModel, BulkPriceChangeExecutionModel,
-      QAfterFilterCondition> reasonBetween(
+  QueryBuilder<
+    BulkPriceChangeExecutionModel,
+    BulkPriceChangeExecutionModel,
+    QAfterFilterCondition
+  >
+  reasonBetween(
     String lower,
     String upper, {
     bool includeLower = true,
@@ -1387,137 +1744,180 @@ extension BulkPriceChangeExecutionModelQueryFilter on QueryBuilder<
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.between(
-        property: r'reason',
-        lower: lower,
-        includeLower: includeLower,
-        upper: upper,
-        includeUpper: includeUpper,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.between(
+          property: r'reason',
+          lower: lower,
+          includeLower: includeLower,
+          upper: upper,
+          includeUpper: includeUpper,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
-  QueryBuilder<BulkPriceChangeExecutionModel, BulkPriceChangeExecutionModel,
-      QAfterFilterCondition> reasonStartsWith(
-    String value, {
-    bool caseSensitive = true,
-  }) {
+  QueryBuilder<
+    BulkPriceChangeExecutionModel,
+    BulkPriceChangeExecutionModel,
+    QAfterFilterCondition
+  >
+  reasonStartsWith(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.startsWith(
-        property: r'reason',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.startsWith(
+          property: r'reason',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
-  QueryBuilder<BulkPriceChangeExecutionModel, BulkPriceChangeExecutionModel,
-      QAfterFilterCondition> reasonEndsWith(
-    String value, {
-    bool caseSensitive = true,
-  }) {
+  QueryBuilder<
+    BulkPriceChangeExecutionModel,
+    BulkPriceChangeExecutionModel,
+    QAfterFilterCondition
+  >
+  reasonEndsWith(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.endsWith(
-        property: r'reason',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.endsWith(
+          property: r'reason',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
-  QueryBuilder<BulkPriceChangeExecutionModel, BulkPriceChangeExecutionModel,
-          QAfterFilterCondition>
-      reasonContains(String value, {bool caseSensitive = true}) {
+  QueryBuilder<
+    BulkPriceChangeExecutionModel,
+    BulkPriceChangeExecutionModel,
+    QAfterFilterCondition
+  >
+  reasonContains(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.contains(
-        property: r'reason',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.contains(
+          property: r'reason',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
-  QueryBuilder<BulkPriceChangeExecutionModel, BulkPriceChangeExecutionModel,
-          QAfterFilterCondition>
-      reasonMatches(String pattern, {bool caseSensitive = true}) {
+  QueryBuilder<
+    BulkPriceChangeExecutionModel,
+    BulkPriceChangeExecutionModel,
+    QAfterFilterCondition
+  >
+  reasonMatches(String pattern, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.matches(
-        property: r'reason',
-        wildcard: pattern,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.matches(
+          property: r'reason',
+          wildcard: pattern,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
-  QueryBuilder<BulkPriceChangeExecutionModel, BulkPriceChangeExecutionModel,
-      QAfterFilterCondition> reasonIsEmpty() {
+  QueryBuilder<
+    BulkPriceChangeExecutionModel,
+    BulkPriceChangeExecutionModel,
+    QAfterFilterCondition
+  >
+  reasonIsEmpty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'reason',
-        value: '',
-      ));
+      return query.addFilterCondition(
+        FilterCondition.equalTo(property: r'reason', value: ''),
+      );
     });
   }
 
-  QueryBuilder<BulkPriceChangeExecutionModel, BulkPriceChangeExecutionModel,
-      QAfterFilterCondition> reasonIsNotEmpty() {
+  QueryBuilder<
+    BulkPriceChangeExecutionModel,
+    BulkPriceChangeExecutionModel,
+    QAfterFilterCondition
+  >
+  reasonIsNotEmpty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        property: r'reason',
-        value: '',
-      ));
+      return query.addFilterCondition(
+        FilterCondition.greaterThan(property: r'reason', value: ''),
+      );
     });
   }
 
-  QueryBuilder<BulkPriceChangeExecutionModel, BulkPriceChangeExecutionModel,
-      QAfterFilterCondition> recordJsonEqualTo(
-    String value, {
-    bool caseSensitive = true,
-  }) {
+  QueryBuilder<
+    BulkPriceChangeExecutionModel,
+    BulkPriceChangeExecutionModel,
+    QAfterFilterCondition
+  >
+  recordJsonEqualTo(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'recordJson',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.equalTo(
+          property: r'recordJson',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
-  QueryBuilder<BulkPriceChangeExecutionModel, BulkPriceChangeExecutionModel,
-      QAfterFilterCondition> recordJsonGreaterThan(
+  QueryBuilder<
+    BulkPriceChangeExecutionModel,
+    BulkPriceChangeExecutionModel,
+    QAfterFilterCondition
+  >
+  recordJsonGreaterThan(
     String value, {
     bool include = false,
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        include: include,
-        property: r'recordJson',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.greaterThan(
+          include: include,
+          property: r'recordJson',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
-  QueryBuilder<BulkPriceChangeExecutionModel, BulkPriceChangeExecutionModel,
-      QAfterFilterCondition> recordJsonLessThan(
+  QueryBuilder<
+    BulkPriceChangeExecutionModel,
+    BulkPriceChangeExecutionModel,
+    QAfterFilterCondition
+  >
+  recordJsonLessThan(
     String value, {
     bool include = false,
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.lessThan(
-        include: include,
-        property: r'recordJson',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.lessThan(
+          include: include,
+          property: r'recordJson',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
-  QueryBuilder<BulkPriceChangeExecutionModel, BulkPriceChangeExecutionModel,
-      QAfterFilterCondition> recordJsonBetween(
+  QueryBuilder<
+    BulkPriceChangeExecutionModel,
+    BulkPriceChangeExecutionModel,
+    QAfterFilterCondition
+  >
+  recordJsonBetween(
     String lower,
     String upper, {
     bool includeLower = true,
@@ -1525,507 +1925,743 @@ extension BulkPriceChangeExecutionModelQueryFilter on QueryBuilder<
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.between(
-        property: r'recordJson',
-        lower: lower,
-        includeLower: includeLower,
-        upper: upper,
-        includeUpper: includeUpper,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.between(
+          property: r'recordJson',
+          lower: lower,
+          includeLower: includeLower,
+          upper: upper,
+          includeUpper: includeUpper,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
-  QueryBuilder<BulkPriceChangeExecutionModel, BulkPriceChangeExecutionModel,
-      QAfterFilterCondition> recordJsonStartsWith(
-    String value, {
-    bool caseSensitive = true,
-  }) {
+  QueryBuilder<
+    BulkPriceChangeExecutionModel,
+    BulkPriceChangeExecutionModel,
+    QAfterFilterCondition
+  >
+  recordJsonStartsWith(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.startsWith(
-        property: r'recordJson',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.startsWith(
+          property: r'recordJson',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
-  QueryBuilder<BulkPriceChangeExecutionModel, BulkPriceChangeExecutionModel,
-      QAfterFilterCondition> recordJsonEndsWith(
-    String value, {
-    bool caseSensitive = true,
-  }) {
+  QueryBuilder<
+    BulkPriceChangeExecutionModel,
+    BulkPriceChangeExecutionModel,
+    QAfterFilterCondition
+  >
+  recordJsonEndsWith(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.endsWith(
-        property: r'recordJson',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.endsWith(
+          property: r'recordJson',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
-  QueryBuilder<BulkPriceChangeExecutionModel, BulkPriceChangeExecutionModel,
-          QAfterFilterCondition>
-      recordJsonContains(String value, {bool caseSensitive = true}) {
+  QueryBuilder<
+    BulkPriceChangeExecutionModel,
+    BulkPriceChangeExecutionModel,
+    QAfterFilterCondition
+  >
+  recordJsonContains(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.contains(
-        property: r'recordJson',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.contains(
+          property: r'recordJson',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
-  QueryBuilder<BulkPriceChangeExecutionModel, BulkPriceChangeExecutionModel,
-          QAfterFilterCondition>
-      recordJsonMatches(String pattern, {bool caseSensitive = true}) {
+  QueryBuilder<
+    BulkPriceChangeExecutionModel,
+    BulkPriceChangeExecutionModel,
+    QAfterFilterCondition
+  >
+  recordJsonMatches(String pattern, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.matches(
-        property: r'recordJson',
-        wildcard: pattern,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.matches(
+          property: r'recordJson',
+          wildcard: pattern,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
-  QueryBuilder<BulkPriceChangeExecutionModel, BulkPriceChangeExecutionModel,
-      QAfterFilterCondition> recordJsonIsEmpty() {
+  QueryBuilder<
+    BulkPriceChangeExecutionModel,
+    BulkPriceChangeExecutionModel,
+    QAfterFilterCondition
+  >
+  recordJsonIsEmpty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'recordJson',
-        value: '',
-      ));
+      return query.addFilterCondition(
+        FilterCondition.equalTo(property: r'recordJson', value: ''),
+      );
     });
   }
 
-  QueryBuilder<BulkPriceChangeExecutionModel, BulkPriceChangeExecutionModel,
-      QAfterFilterCondition> recordJsonIsNotEmpty() {
+  QueryBuilder<
+    BulkPriceChangeExecutionModel,
+    BulkPriceChangeExecutionModel,
+    QAfterFilterCondition
+  >
+  recordJsonIsNotEmpty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        property: r'recordJson',
-        value: '',
-      ));
+      return query.addFilterCondition(
+        FilterCondition.greaterThan(property: r'recordJson', value: ''),
+      );
     });
   }
 }
 
-extension BulkPriceChangeExecutionModelQueryObject on QueryBuilder<
-    BulkPriceChangeExecutionModel,
-    BulkPriceChangeExecutionModel,
-    QFilterCondition> {}
+extension BulkPriceChangeExecutionModelQueryObject
+    on
+        QueryBuilder<
+          BulkPriceChangeExecutionModel,
+          BulkPriceChangeExecutionModel,
+          QFilterCondition
+        > {}
 
-extension BulkPriceChangeExecutionModelQueryLinks on QueryBuilder<
-    BulkPriceChangeExecutionModel,
-    BulkPriceChangeExecutionModel,
-    QFilterCondition> {}
+extension BulkPriceChangeExecutionModelQueryLinks
+    on
+        QueryBuilder<
+          BulkPriceChangeExecutionModel,
+          BulkPriceChangeExecutionModel,
+          QFilterCondition
+        > {}
 
-extension BulkPriceChangeExecutionModelQuerySortBy on QueryBuilder<
-    BulkPriceChangeExecutionModel, BulkPriceChangeExecutionModel, QSortBy> {
-  QueryBuilder<BulkPriceChangeExecutionModel, BulkPriceChangeExecutionModel,
-      QAfterSortBy> sortByCancellationDeadline() {
+extension BulkPriceChangeExecutionModelQuerySortBy
+    on
+        QueryBuilder<
+          BulkPriceChangeExecutionModel,
+          BulkPriceChangeExecutionModel,
+          QSortBy
+        > {
+  QueryBuilder<
+    BulkPriceChangeExecutionModel,
+    BulkPriceChangeExecutionModel,
+    QAfterSortBy
+  >
+  sortByCancellationDeadline() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'cancellationDeadline', Sort.asc);
     });
   }
 
-  QueryBuilder<BulkPriceChangeExecutionModel, BulkPriceChangeExecutionModel,
-      QAfterSortBy> sortByCancellationDeadlineDesc() {
+  QueryBuilder<
+    BulkPriceChangeExecutionModel,
+    BulkPriceChangeExecutionModel,
+    QAfterSortBy
+  >
+  sortByCancellationDeadlineDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'cancellationDeadline', Sort.desc);
     });
   }
 
-  QueryBuilder<BulkPriceChangeExecutionModel, BulkPriceChangeExecutionModel,
-      QAfterSortBy> sortByCancelledAt() {
+  QueryBuilder<
+    BulkPriceChangeExecutionModel,
+    BulkPriceChangeExecutionModel,
+    QAfterSortBy
+  >
+  sortByCancelledAt() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'cancelledAt', Sort.asc);
     });
   }
 
-  QueryBuilder<BulkPriceChangeExecutionModel, BulkPriceChangeExecutionModel,
-      QAfterSortBy> sortByCancelledAtDesc() {
+  QueryBuilder<
+    BulkPriceChangeExecutionModel,
+    BulkPriceChangeExecutionModel,
+    QAfterSortBy
+  >
+  sortByCancelledAtDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'cancelledAt', Sort.desc);
     });
   }
 
-  QueryBuilder<BulkPriceChangeExecutionModel, BulkPriceChangeExecutionModel,
-      QAfterSortBy> sortByCreatedAt() {
+  QueryBuilder<
+    BulkPriceChangeExecutionModel,
+    BulkPriceChangeExecutionModel,
+    QAfterSortBy
+  >
+  sortByCreatedAt() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'createdAt', Sort.asc);
     });
   }
 
-  QueryBuilder<BulkPriceChangeExecutionModel, BulkPriceChangeExecutionModel,
-      QAfterSortBy> sortByCreatedAtDesc() {
+  QueryBuilder<
+    BulkPriceChangeExecutionModel,
+    BulkPriceChangeExecutionModel,
+    QAfterSortBy
+  >
+  sortByCreatedAtDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'createdAt', Sort.desc);
     });
   }
 
-  QueryBuilder<BulkPriceChangeExecutionModel, BulkPriceChangeExecutionModel,
-      QAfterSortBy> sortByEffectiveAt() {
+  QueryBuilder<
+    BulkPriceChangeExecutionModel,
+    BulkPriceChangeExecutionModel,
+    QAfterSortBy
+  >
+  sortByEffectiveAt() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'effectiveAt', Sort.asc);
     });
   }
 
-  QueryBuilder<BulkPriceChangeExecutionModel, BulkPriceChangeExecutionModel,
-      QAfterSortBy> sortByEffectiveAtDesc() {
+  QueryBuilder<
+    BulkPriceChangeExecutionModel,
+    BulkPriceChangeExecutionModel,
+    QAfterSortBy
+  >
+  sortByEffectiveAtDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'effectiveAt', Sort.desc);
     });
   }
 
-  QueryBuilder<BulkPriceChangeExecutionModel, BulkPriceChangeExecutionModel,
-      QAfterSortBy> sortByExecutedAt() {
+  QueryBuilder<
+    BulkPriceChangeExecutionModel,
+    BulkPriceChangeExecutionModel,
+    QAfterSortBy
+  >
+  sortByExecutedAt() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'executedAt', Sort.asc);
     });
   }
 
-  QueryBuilder<BulkPriceChangeExecutionModel, BulkPriceChangeExecutionModel,
-      QAfterSortBy> sortByExecutedAtDesc() {
+  QueryBuilder<
+    BulkPriceChangeExecutionModel,
+    BulkPriceChangeExecutionModel,
+    QAfterSortBy
+  >
+  sortByExecutedAtDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'executedAt', Sort.desc);
     });
   }
 
-  QueryBuilder<BulkPriceChangeExecutionModel, BulkPriceChangeExecutionModel,
-      QAfterSortBy> sortById() {
+  QueryBuilder<
+    BulkPriceChangeExecutionModel,
+    BulkPriceChangeExecutionModel,
+    QAfterSortBy
+  >
+  sortById() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'id', Sort.asc);
     });
   }
 
-  QueryBuilder<BulkPriceChangeExecutionModel, BulkPriceChangeExecutionModel,
-      QAfterSortBy> sortByIdDesc() {
+  QueryBuilder<
+    BulkPriceChangeExecutionModel,
+    BulkPriceChangeExecutionModel,
+    QAfterSortBy
+  >
+  sortByIdDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'id', Sort.desc);
     });
   }
 
-  QueryBuilder<BulkPriceChangeExecutionModel, BulkPriceChangeExecutionModel,
-      QAfterSortBy> sortByOperatorName() {
+  QueryBuilder<
+    BulkPriceChangeExecutionModel,
+    BulkPriceChangeExecutionModel,
+    QAfterSortBy
+  >
+  sortByOperatorName() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'operatorName', Sort.asc);
     });
   }
 
-  QueryBuilder<BulkPriceChangeExecutionModel, BulkPriceChangeExecutionModel,
-      QAfterSortBy> sortByOperatorNameDesc() {
+  QueryBuilder<
+    BulkPriceChangeExecutionModel,
+    BulkPriceChangeExecutionModel,
+    QAfterSortBy
+  >
+  sortByOperatorNameDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'operatorName', Sort.desc);
     });
   }
 
-  QueryBuilder<BulkPriceChangeExecutionModel, BulkPriceChangeExecutionModel,
-      QAfterSortBy> sortByReason() {
+  QueryBuilder<
+    BulkPriceChangeExecutionModel,
+    BulkPriceChangeExecutionModel,
+    QAfterSortBy
+  >
+  sortByReason() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'reason', Sort.asc);
     });
   }
 
-  QueryBuilder<BulkPriceChangeExecutionModel, BulkPriceChangeExecutionModel,
-      QAfterSortBy> sortByReasonDesc() {
+  QueryBuilder<
+    BulkPriceChangeExecutionModel,
+    BulkPriceChangeExecutionModel,
+    QAfterSortBy
+  >
+  sortByReasonDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'reason', Sort.desc);
     });
   }
 
-  QueryBuilder<BulkPriceChangeExecutionModel, BulkPriceChangeExecutionModel,
-      QAfterSortBy> sortByRecordJson() {
+  QueryBuilder<
+    BulkPriceChangeExecutionModel,
+    BulkPriceChangeExecutionModel,
+    QAfterSortBy
+  >
+  sortByRecordJson() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'recordJson', Sort.asc);
     });
   }
 
-  QueryBuilder<BulkPriceChangeExecutionModel, BulkPriceChangeExecutionModel,
-      QAfterSortBy> sortByRecordJsonDesc() {
+  QueryBuilder<
+    BulkPriceChangeExecutionModel,
+    BulkPriceChangeExecutionModel,
+    QAfterSortBy
+  >
+  sortByRecordJsonDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'recordJson', Sort.desc);
     });
   }
 }
 
-extension BulkPriceChangeExecutionModelQuerySortThenBy on QueryBuilder<
-    BulkPriceChangeExecutionModel, BulkPriceChangeExecutionModel, QSortThenBy> {
-  QueryBuilder<BulkPriceChangeExecutionModel, BulkPriceChangeExecutionModel,
-      QAfterSortBy> thenByCancellationDeadline() {
+extension BulkPriceChangeExecutionModelQuerySortThenBy
+    on
+        QueryBuilder<
+          BulkPriceChangeExecutionModel,
+          BulkPriceChangeExecutionModel,
+          QSortThenBy
+        > {
+  QueryBuilder<
+    BulkPriceChangeExecutionModel,
+    BulkPriceChangeExecutionModel,
+    QAfterSortBy
+  >
+  thenByCancellationDeadline() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'cancellationDeadline', Sort.asc);
     });
   }
 
-  QueryBuilder<BulkPriceChangeExecutionModel, BulkPriceChangeExecutionModel,
-      QAfterSortBy> thenByCancellationDeadlineDesc() {
+  QueryBuilder<
+    BulkPriceChangeExecutionModel,
+    BulkPriceChangeExecutionModel,
+    QAfterSortBy
+  >
+  thenByCancellationDeadlineDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'cancellationDeadline', Sort.desc);
     });
   }
 
-  QueryBuilder<BulkPriceChangeExecutionModel, BulkPriceChangeExecutionModel,
-      QAfterSortBy> thenByCancelledAt() {
+  QueryBuilder<
+    BulkPriceChangeExecutionModel,
+    BulkPriceChangeExecutionModel,
+    QAfterSortBy
+  >
+  thenByCancelledAt() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'cancelledAt', Sort.asc);
     });
   }
 
-  QueryBuilder<BulkPriceChangeExecutionModel, BulkPriceChangeExecutionModel,
-      QAfterSortBy> thenByCancelledAtDesc() {
+  QueryBuilder<
+    BulkPriceChangeExecutionModel,
+    BulkPriceChangeExecutionModel,
+    QAfterSortBy
+  >
+  thenByCancelledAtDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'cancelledAt', Sort.desc);
     });
   }
 
-  QueryBuilder<BulkPriceChangeExecutionModel, BulkPriceChangeExecutionModel,
-      QAfterSortBy> thenByCreatedAt() {
+  QueryBuilder<
+    BulkPriceChangeExecutionModel,
+    BulkPriceChangeExecutionModel,
+    QAfterSortBy
+  >
+  thenByCreatedAt() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'createdAt', Sort.asc);
     });
   }
 
-  QueryBuilder<BulkPriceChangeExecutionModel, BulkPriceChangeExecutionModel,
-      QAfterSortBy> thenByCreatedAtDesc() {
+  QueryBuilder<
+    BulkPriceChangeExecutionModel,
+    BulkPriceChangeExecutionModel,
+    QAfterSortBy
+  >
+  thenByCreatedAtDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'createdAt', Sort.desc);
     });
   }
 
-  QueryBuilder<BulkPriceChangeExecutionModel, BulkPriceChangeExecutionModel,
-      QAfterSortBy> thenByEffectiveAt() {
+  QueryBuilder<
+    BulkPriceChangeExecutionModel,
+    BulkPriceChangeExecutionModel,
+    QAfterSortBy
+  >
+  thenByEffectiveAt() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'effectiveAt', Sort.asc);
     });
   }
 
-  QueryBuilder<BulkPriceChangeExecutionModel, BulkPriceChangeExecutionModel,
-      QAfterSortBy> thenByEffectiveAtDesc() {
+  QueryBuilder<
+    BulkPriceChangeExecutionModel,
+    BulkPriceChangeExecutionModel,
+    QAfterSortBy
+  >
+  thenByEffectiveAtDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'effectiveAt', Sort.desc);
     });
   }
 
-  QueryBuilder<BulkPriceChangeExecutionModel, BulkPriceChangeExecutionModel,
-      QAfterSortBy> thenByExecutedAt() {
+  QueryBuilder<
+    BulkPriceChangeExecutionModel,
+    BulkPriceChangeExecutionModel,
+    QAfterSortBy
+  >
+  thenByExecutedAt() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'executedAt', Sort.asc);
     });
   }
 
-  QueryBuilder<BulkPriceChangeExecutionModel, BulkPriceChangeExecutionModel,
-      QAfterSortBy> thenByExecutedAtDesc() {
+  QueryBuilder<
+    BulkPriceChangeExecutionModel,
+    BulkPriceChangeExecutionModel,
+    QAfterSortBy
+  >
+  thenByExecutedAtDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'executedAt', Sort.desc);
     });
   }
 
-  QueryBuilder<BulkPriceChangeExecutionModel, BulkPriceChangeExecutionModel,
-      QAfterSortBy> thenById() {
+  QueryBuilder<
+    BulkPriceChangeExecutionModel,
+    BulkPriceChangeExecutionModel,
+    QAfterSortBy
+  >
+  thenById() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'id', Sort.asc);
     });
   }
 
-  QueryBuilder<BulkPriceChangeExecutionModel, BulkPriceChangeExecutionModel,
-      QAfterSortBy> thenByIdDesc() {
+  QueryBuilder<
+    BulkPriceChangeExecutionModel,
+    BulkPriceChangeExecutionModel,
+    QAfterSortBy
+  >
+  thenByIdDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'id', Sort.desc);
     });
   }
 
-  QueryBuilder<BulkPriceChangeExecutionModel, BulkPriceChangeExecutionModel,
-      QAfterSortBy> thenByIsarId() {
+  QueryBuilder<
+    BulkPriceChangeExecutionModel,
+    BulkPriceChangeExecutionModel,
+    QAfterSortBy
+  >
+  thenByIsarId() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'isarId', Sort.asc);
     });
   }
 
-  QueryBuilder<BulkPriceChangeExecutionModel, BulkPriceChangeExecutionModel,
-      QAfterSortBy> thenByIsarIdDesc() {
+  QueryBuilder<
+    BulkPriceChangeExecutionModel,
+    BulkPriceChangeExecutionModel,
+    QAfterSortBy
+  >
+  thenByIsarIdDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'isarId', Sort.desc);
     });
   }
 
-  QueryBuilder<BulkPriceChangeExecutionModel, BulkPriceChangeExecutionModel,
-      QAfterSortBy> thenByOperatorName() {
+  QueryBuilder<
+    BulkPriceChangeExecutionModel,
+    BulkPriceChangeExecutionModel,
+    QAfterSortBy
+  >
+  thenByOperatorName() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'operatorName', Sort.asc);
     });
   }
 
-  QueryBuilder<BulkPriceChangeExecutionModel, BulkPriceChangeExecutionModel,
-      QAfterSortBy> thenByOperatorNameDesc() {
+  QueryBuilder<
+    BulkPriceChangeExecutionModel,
+    BulkPriceChangeExecutionModel,
+    QAfterSortBy
+  >
+  thenByOperatorNameDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'operatorName', Sort.desc);
     });
   }
 
-  QueryBuilder<BulkPriceChangeExecutionModel, BulkPriceChangeExecutionModel,
-      QAfterSortBy> thenByReason() {
+  QueryBuilder<
+    BulkPriceChangeExecutionModel,
+    BulkPriceChangeExecutionModel,
+    QAfterSortBy
+  >
+  thenByReason() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'reason', Sort.asc);
     });
   }
 
-  QueryBuilder<BulkPriceChangeExecutionModel, BulkPriceChangeExecutionModel,
-      QAfterSortBy> thenByReasonDesc() {
+  QueryBuilder<
+    BulkPriceChangeExecutionModel,
+    BulkPriceChangeExecutionModel,
+    QAfterSortBy
+  >
+  thenByReasonDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'reason', Sort.desc);
     });
   }
 
-  QueryBuilder<BulkPriceChangeExecutionModel, BulkPriceChangeExecutionModel,
-      QAfterSortBy> thenByRecordJson() {
+  QueryBuilder<
+    BulkPriceChangeExecutionModel,
+    BulkPriceChangeExecutionModel,
+    QAfterSortBy
+  >
+  thenByRecordJson() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'recordJson', Sort.asc);
     });
   }
 
-  QueryBuilder<BulkPriceChangeExecutionModel, BulkPriceChangeExecutionModel,
-      QAfterSortBy> thenByRecordJsonDesc() {
+  QueryBuilder<
+    BulkPriceChangeExecutionModel,
+    BulkPriceChangeExecutionModel,
+    QAfterSortBy
+  >
+  thenByRecordJsonDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'recordJson', Sort.desc);
     });
   }
 }
 
-extension BulkPriceChangeExecutionModelQueryWhereDistinct on QueryBuilder<
-    BulkPriceChangeExecutionModel, BulkPriceChangeExecutionModel, QDistinct> {
-  QueryBuilder<BulkPriceChangeExecutionModel, BulkPriceChangeExecutionModel,
-      QDistinct> distinctByCancellationDeadline() {
+extension BulkPriceChangeExecutionModelQueryWhereDistinct
+    on
+        QueryBuilder<
+          BulkPriceChangeExecutionModel,
+          BulkPriceChangeExecutionModel,
+          QDistinct
+        > {
+  QueryBuilder<
+    BulkPriceChangeExecutionModel,
+    BulkPriceChangeExecutionModel,
+    QDistinct
+  >
+  distinctByCancellationDeadline() {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'cancellationDeadline');
     });
   }
 
-  QueryBuilder<BulkPriceChangeExecutionModel, BulkPriceChangeExecutionModel,
-      QDistinct> distinctByCancelledAt() {
+  QueryBuilder<
+    BulkPriceChangeExecutionModel,
+    BulkPriceChangeExecutionModel,
+    QDistinct
+  >
+  distinctByCancelledAt() {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'cancelledAt');
     });
   }
 
-  QueryBuilder<BulkPriceChangeExecutionModel, BulkPriceChangeExecutionModel,
-      QDistinct> distinctByCreatedAt() {
+  QueryBuilder<
+    BulkPriceChangeExecutionModel,
+    BulkPriceChangeExecutionModel,
+    QDistinct
+  >
+  distinctByCreatedAt() {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'createdAt');
     });
   }
 
-  QueryBuilder<BulkPriceChangeExecutionModel, BulkPriceChangeExecutionModel,
-      QDistinct> distinctByEffectiveAt() {
+  QueryBuilder<
+    BulkPriceChangeExecutionModel,
+    BulkPriceChangeExecutionModel,
+    QDistinct
+  >
+  distinctByEffectiveAt() {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'effectiveAt');
     });
   }
 
-  QueryBuilder<BulkPriceChangeExecutionModel, BulkPriceChangeExecutionModel,
-      QDistinct> distinctByExecutedAt() {
+  QueryBuilder<
+    BulkPriceChangeExecutionModel,
+    BulkPriceChangeExecutionModel,
+    QDistinct
+  >
+  distinctByExecutedAt() {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'executedAt');
     });
   }
 
-  QueryBuilder<BulkPriceChangeExecutionModel, BulkPriceChangeExecutionModel,
-      QDistinct> distinctById({bool caseSensitive = true}) {
+  QueryBuilder<
+    BulkPriceChangeExecutionModel,
+    BulkPriceChangeExecutionModel,
+    QDistinct
+  >
+  distinctById({bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'id', caseSensitive: caseSensitive);
     });
   }
 
-  QueryBuilder<BulkPriceChangeExecutionModel, BulkPriceChangeExecutionModel,
-      QDistinct> distinctByOperatorName({bool caseSensitive = true}) {
+  QueryBuilder<
+    BulkPriceChangeExecutionModel,
+    BulkPriceChangeExecutionModel,
+    QDistinct
+  >
+  distinctByOperatorName({bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'operatorName', caseSensitive: caseSensitive);
     });
   }
 
-  QueryBuilder<BulkPriceChangeExecutionModel, BulkPriceChangeExecutionModel,
-      QDistinct> distinctByReason({bool caseSensitive = true}) {
+  QueryBuilder<
+    BulkPriceChangeExecutionModel,
+    BulkPriceChangeExecutionModel,
+    QDistinct
+  >
+  distinctByReason({bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'reason', caseSensitive: caseSensitive);
     });
   }
 
-  QueryBuilder<BulkPriceChangeExecutionModel, BulkPriceChangeExecutionModel,
-      QDistinct> distinctByRecordJson({bool caseSensitive = true}) {
+  QueryBuilder<
+    BulkPriceChangeExecutionModel,
+    BulkPriceChangeExecutionModel,
+    QDistinct
+  >
+  distinctByRecordJson({bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'recordJson', caseSensitive: caseSensitive);
     });
   }
 }
 
-extension BulkPriceChangeExecutionModelQueryProperty on QueryBuilder<
-    BulkPriceChangeExecutionModel,
-    BulkPriceChangeExecutionModel,
-    QQueryProperty> {
+extension BulkPriceChangeExecutionModelQueryProperty
+    on
+        QueryBuilder<
+          BulkPriceChangeExecutionModel,
+          BulkPriceChangeExecutionModel,
+          QQueryProperty
+        > {
   QueryBuilder<BulkPriceChangeExecutionModel, int, QQueryOperations>
-      isarIdProperty() {
+  isarIdProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'isarId');
     });
   }
 
   QueryBuilder<BulkPriceChangeExecutionModel, DateTime, QQueryOperations>
-      cancellationDeadlineProperty() {
+  cancellationDeadlineProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'cancellationDeadline');
     });
   }
 
   QueryBuilder<BulkPriceChangeExecutionModel, DateTime?, QQueryOperations>
-      cancelledAtProperty() {
+  cancelledAtProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'cancelledAt');
     });
   }
 
   QueryBuilder<BulkPriceChangeExecutionModel, DateTime, QQueryOperations>
-      createdAtProperty() {
+  createdAtProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'createdAt');
     });
   }
 
   QueryBuilder<BulkPriceChangeExecutionModel, DateTime?, QQueryOperations>
-      effectiveAtProperty() {
+  effectiveAtProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'effectiveAt');
     });
   }
 
   QueryBuilder<BulkPriceChangeExecutionModel, DateTime, QQueryOperations>
-      executedAtProperty() {
+  executedAtProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'executedAt');
     });
   }
 
   QueryBuilder<BulkPriceChangeExecutionModel, String, QQueryOperations>
-      idProperty() {
+  idProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'id');
     });
   }
 
   QueryBuilder<BulkPriceChangeExecutionModel, String, QQueryOperations>
-      operatorNameProperty() {
+  operatorNameProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'operatorName');
     });
   }
 
   QueryBuilder<BulkPriceChangeExecutionModel, String, QQueryOperations>
-      reasonProperty() {
+  reasonProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'reason');
     });
   }
 
   QueryBuilder<BulkPriceChangeExecutionModel, String, QQueryOperations>
-      recordJsonProperty() {
+  recordJsonProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'recordJson');
     });

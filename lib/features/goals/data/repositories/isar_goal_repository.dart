@@ -40,8 +40,10 @@ class IsarGoalRepository implements GoalRepository {
     final model = GoalModel.fromEntity(goal);
 
     // Check if exists
-    final existing =
-        await _isar.goalModels.where().uuidEqualTo(goal.id).findFirst();
+    final existing = await _isar.goalModels
+        .where()
+        .uuidEqualTo(goal.id)
+        .findFirst();
     if (existing != null) {
       model.id = existing.id;
     }

@@ -128,10 +128,7 @@ class _BudgetCard extends ConsumerWidget {
                 ],
               ),
               if (isAlert)
-                const Icon(
-                  Icons.warning_amber_rounded,
-                  color: AppColors.error,
-                ),
+                const Icon(Icons.warning_amber_rounded, color: AppColors.error),
             ],
           ),
           const SizedBox(height: 20),

@@ -36,12 +36,12 @@ class TransferItemModel {
 
   /// تحويل النموذج إلى كائن Entity
   TransferItem toEntity() => TransferItem(
-        itemId: itemId,
-        itemName: itemName,
-        quantity: quantity,
-        unit: unit,
-        note: note,
-      );
+    itemId: itemId,
+    itemName: itemName,
+    quantity: quantity,
+    unit: unit,
+    note: note,
+  );
 }
 
 /// نموذج تحويل المخزون لقاعدة بيانات Isar
@@ -114,17 +114,17 @@ class WarehouseTransferModel {
 
   /// تحويل النموذج إلى كائن Entity
   WarehouseTransfer toEntity() => WarehouseTransfer(
-        id: id ?? '',
-        transferNumber: transferNumber,
-        sourceWarehouseId: sourceWarehouseId ?? '',
-        destinationWarehouseId: destinationWarehouseId ?? '',
-        date: date,
-        status: status,
-        items: items.map((e) => e.toEntity()).toList(),
-        remarks: remarks,
-        userId: userId,
-        syncStatus: syncStatus,
-        createdAt: createdAt,
-        updatedAt: updatedAt,
-      );
+    id: id ?? '',
+    transferNumber: transferNumber,
+    sourceWarehouseId: sourceWarehouseId ?? '',
+    destinationWarehouseId: destinationWarehouseId ?? '',
+    date: date,
+    status: status,
+    items: items.map((e) => e.toEntity()).toList(),
+    remarks: remarks,
+    userId: userId,
+    syncStatus: syncStatus,
+    createdAt: createdAt,
+    updatedAt: updatedAt,
+  );
 }

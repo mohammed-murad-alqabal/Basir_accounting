@@ -89,7 +89,8 @@ class AppAppBar extends ConsumerWidget implements PreferredSizeWidget {
     final appIcons = ref.watch(appIconsProvider);
     final effectiveForeground = foregroundColor ?? AppColors.textPrimary;
 
-    final titleTextStyle = toolbarTextStyle ??
+    final titleTextStyle =
+        toolbarTextStyle ??
         AppTextStyles.titleLarge.copyWith(
           color: effectiveForeground,
           fontWeight: FontWeights.semiBold,
@@ -137,7 +138,8 @@ class AppAppBar extends ConsumerWidget implements PreferredSizeWidget {
             )
           : null,
       actions: actions,
-      bottom: bottom ??
+      bottom:
+          bottom ??
           PreferredSize(
             preferredSize: const Size.fromHeight(BorderWidths.thin),
             child: Container(
@@ -152,8 +154,8 @@ class AppAppBar extends ConsumerWidget implements PreferredSizeWidget {
 
   @override
   Size get preferredSize => Size.fromHeight(
-        kToolbarHeight + (bottom?.preferredSize.height ?? BorderWidths.thin),
-      );
+    kToolbarHeight + (bottom?.preferredSize.height ?? BorderWidths.thin),
+  );
 }
 
 /// شريط تطبيق بسيط بدون زر رجوع

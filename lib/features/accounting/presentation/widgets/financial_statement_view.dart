@@ -5,54 +5,49 @@ import 'package:intl/intl.dart';
 /// A reusable widget to display a [FinancialReport].
 class FinancialStatementView extends StatelessWidget {
   /// Creates a report view for the given [report].
-  const FinancialStatementView({
-    required this.report,
-    super.key,
-  });
+  const FinancialStatementView({required this.report, super.key});
 
   /// The financial report instance to render.
   final FinancialReport report;
 
   @override
   Widget build(BuildContext context) => Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(16),
-            child: Column(
-              children: [
-                Text(
-                  report.title,
-                  style: Theme.of(context).textTheme.headlineSmall,
-                  textAlign: TextAlign.center,
-                ),
-                const SizedBox(height: 8),
-                Text(
-                  '${DateFormat.yMMMd().format(report.fromDate)} - '
-                  '${DateFormat.yMMMd().format(report.toDate)}',
-                  style: Theme.of(context).textTheme.bodySmall,
-                ),
-              ],
+    children: [
+      Padding(
+        padding: const EdgeInsets.all(16),
+        child: Column(
+          children: [
+            Text(
+              report.title,
+              style: Theme.of(context).textTheme.headlineSmall,
+              textAlign: TextAlign.center,
             ),
-          ),
-          Expanded(
-            child: ListView.separated(
-              padding: const EdgeInsets.only(bottom: 24),
-              itemCount: report.lines.length,
-              separatorBuilder: (context, index) => const Divider(height: 1),
-              itemBuilder: (context, index) {
-                final line = report.lines[index];
-                return _FinancialReportLineTile(line: line);
-              },
+            const SizedBox(height: 8),
+            Text(
+              '${DateFormat.yMMMd().format(report.fromDate)} - '
+              '${DateFormat.yMMMd().format(report.toDate)}',
+              style: Theme.of(context).textTheme.bodySmall,
             ),
-          ),
-        ],
-      );
+          ],
+        ),
+      ),
+      Expanded(
+        child: ListView.separated(
+          padding: const EdgeInsets.only(bottom: 24),
+          itemCount: report.lines.length,
+          separatorBuilder: (context, index) => const Divider(height: 1),
+          itemBuilder: (context, index) {
+            final line = report.lines[index];
+            return _FinancialReportLineTile(line: line);
+          },
+        ),
+      ),
+    ],
+  );
 }
 
 class _FinancialReportLineTile extends StatelessWidget {
-  const _FinancialReportLineTile({
-    required this.line,
-  });
+  const _FinancialReportLineTile({required this.line});
 
   final FinancialReportLine line;
 
@@ -84,9 +79,9 @@ class _FinancialReportLineTile extends StatelessWidget {
             ),
             if (!line.isTitle || line.isTotal)
               Text(
-                NumberFormat.currency(symbol: '').format(
-                  line.amount.toDouble(),
-                ),
+                NumberFormat.currency(
+                  symbol: '',
+                ).format(line.amount.toDouble()),
                 style: theme.textTheme.bodyMedium?.copyWith(
                   fontWeight: isBold ? FontWeight.bold : FontWeight.normal,
                   fontFamily: 'RobotoMono', // Better for alignment

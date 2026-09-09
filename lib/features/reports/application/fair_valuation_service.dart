@@ -34,12 +34,16 @@ class FairValuationService {
     for (final item in items) {
       if (item.assetAccountId == null) continue;
 
-      final quantity =
-          await movementRepo.getStockLevel(item.id, asOfDate: asOfDate);
+      final quantity = await movementRepo.getStockLevel(
+        item.id,
+        asOfDate: asOfDate,
+      );
       if (quantity <= 0) continue;
 
-      final marketPrice =
-          await marketPriceRepo.getLatestPrice(item.id, asOfDate);
+      final marketPrice = await marketPriceRepo.getLatestPrice(
+        item.id,
+        asOfDate,
+      );
       if (marketPrice == null) continue;
 
       final fairValue = quantity * marketPrice.price;

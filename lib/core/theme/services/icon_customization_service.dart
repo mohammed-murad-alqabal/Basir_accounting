@@ -91,8 +91,8 @@ class IconCustomizationService extends AsyncNotifier<IconCustomizationState> {
 /// موفر خدمة تخصيص الأيقونات
 final iconCustomizationProvider =
     AsyncNotifierProvider<IconCustomizationService, IconCustomizationState>(
-  IconCustomizationService.new,
-);
+      IconCustomizationService.new,
+    );
 
 /// مزود الأيقونات الحالي لسهولة الوصول
 final appIconsProvider = Provider<AppIconsBase>((ref) {

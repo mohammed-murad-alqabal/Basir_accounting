@@ -8,11 +8,12 @@ import 'package:uuid/uuid.dart';
 /// ترجع معرف القيد المحاسبي (JournalEntry) بعد النشر.
 /// تُستخدم لتفكيك طبقة المستودع عن طبقة المحاسبة مع
 /// الحفاظ على إمكانية اختبار الوحدات (Testable DI).
-typedef LedgerPostCallback = Future<String> Function({
-  required Expense expense,
-  required String journalEntryId,
-  required AccountNature expenseNature,
-});
+typedef LedgerPostCallback =
+    Future<String> Function({
+      required Expense expense,
+      required String journalEntryId,
+      required AccountNature expenseNature,
+    });
 
 /// Implementation of ExpenseRepository using Isar local database.
 ///
@@ -163,7 +164,8 @@ class ExpenseRepositoryImpl implements ExpenseRepository {
           (byCategory[expense.categoryId] ?? 0) + expense.amount.toDouble();
 
       // By month
-      final monthKey = '${expense.expenseDate.year}-'
+      final monthKey =
+          '${expense.expenseDate.year}-'
           '${expense.expenseDate.month.toString().padLeft(2, '0')}';
       byMonth[monthKey] = (byMonth[monthKey] ?? 0) + expense.amount.toDouble();
     }

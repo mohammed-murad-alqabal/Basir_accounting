@@ -16,7 +16,11 @@ part 'accounting_repository_impl.g.dart';
 /// (FR-ACC-007: تخزين مؤقت للبيانات لسرعة الوصول)
 class IsarAccountingRepository implements AccountingRepository {
   /// إنشاء نسخة جديدة مع تمرير مثيل Isar ومعرف المستخدم.
-  IsarAccountingRepository({required this.isar, required this.userId, this.warehouseId});
+  IsarAccountingRepository({
+    required this.isar,
+    required this.userId,
+    this.warehouseId,
+  });
 
   /// مثيل قاعدة بيانات Isar.
   final Isar isar;
@@ -76,7 +80,9 @@ class IsarAccountingRepository implements AccountingRepository {
         .filter()
         .userIdEqualTo(userId)
         .and()
-        .group((q) => q.warehouseIdIsNull().or().warehouseIdEqualTo(warehouseId))
+        .group(
+          (q) => q.warehouseIdIsNull().or().warehouseIdEqualTo(warehouseId),
+        )
         .sortByDateDesc()
         .findAll();
     return models.map((m) => m.toEntity()).toList();
@@ -103,9 +109,12 @@ class IsarAccountingRepository implements AccountingRepository {
     if (existing != null) {
       final isDraftTransition =
           existing.status == JournalEntryStatus.draft &&
-          (entry.status == JournalEntryStatus.draft || entry.status == JournalEntryStatus.posted);
+          (entry.status == JournalEntryStatus.draft ||
+              entry.status == JournalEntryStatus.posted);
       if (!isDraftTransition) {
-        throw StateError('Existing journal entries are immutable; create a reversal instead.');
+        throw StateError(
+          'Existing journal entries are immutable; create a reversal instead.',
+        );
       }
     }
 
@@ -134,7 +143,10 @@ class IsarAccountingRepository implements AccountingRepository {
     }
 
     final model = JournalEntryModel.fromEntity(
-      entry.copyWith(userId: userId, warehouseId: entry.warehouseId ?? warehouseId),
+      entry.copyWith(
+        userId: userId,
+        warehouseId: entry.warehouseId ?? warehouseId,
+      ),
     );
     if (existing != null) {
       model.isarId = existing.isarId;
@@ -203,5 +215,9 @@ AccountingRepository accountingRepository(AccountingRepositoryRef ref) {
   final user = ref.watch(basirUserProvider);
   final warehouseId = user?.warehouseId;
 
-  return IsarAccountingRepository(isar: isar, userId: user?.id, warehouseId: warehouseId);
+  return IsarAccountingRepository(
+    isar: isar,
+    userId: user?.id,
+    warehouseId: warehouseId,
+  );
 }

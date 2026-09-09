@@ -23,32 +23,20 @@ const WarehouseTransferModelSchema = CollectionSchema(
       name: r'createdAt',
       type: IsarType.dateTime,
     ),
-    r'date': PropertySchema(
-      id: 1,
-      name: r'date',
-      type: IsarType.dateTime,
-    ),
+    r'date': PropertySchema(id: 1, name: r'date', type: IsarType.dateTime),
     r'destinationWarehouseId': PropertySchema(
       id: 2,
       name: r'destinationWarehouseId',
       type: IsarType.string,
     ),
-    r'id': PropertySchema(
-      id: 3,
-      name: r'id',
-      type: IsarType.string,
-    ),
+    r'id': PropertySchema(id: 3, name: r'id', type: IsarType.string),
     r'items': PropertySchema(
       id: 4,
       name: r'items',
       type: IsarType.objectList,
       target: r'TransferItemModel',
     ),
-    r'remarks': PropertySchema(
-      id: 5,
-      name: r'remarks',
-      type: IsarType.string,
-    ),
+    r'remarks': PropertySchema(id: 5, name: r'remarks', type: IsarType.string),
     r'sourceWarehouseId': PropertySchema(
       id: 6,
       name: r'sourceWarehouseId',
@@ -76,11 +64,7 @@ const WarehouseTransferModelSchema = CollectionSchema(
       name: r'updatedAt',
       type: IsarType.dateTime,
     ),
-    r'userId': PropertySchema(
-      id: 11,
-      name: r'userId',
-      type: IsarType.string,
-    )
+    r'userId': PropertySchema(id: 11, name: r'userId', type: IsarType.string),
   },
   estimateSize: _warehouseTransferModelEstimateSize,
   serialize: _warehouseTransferModelSerialize,
@@ -98,7 +82,7 @@ const WarehouseTransferModelSchema = CollectionSchema(
           name: r'id',
           type: IndexType.hash,
           caseSensitive: true,
-        )
+        ),
       ],
     ),
     r'transferNumber': IndexSchema(
@@ -111,7 +95,7 @@ const WarehouseTransferModelSchema = CollectionSchema(
           name: r'transferNumber',
           type: IndexType.value,
           caseSensitive: true,
-        )
+        ),
       ],
     ),
     r'sourceWarehouseId': IndexSchema(
@@ -124,7 +108,7 @@ const WarehouseTransferModelSchema = CollectionSchema(
           name: r'sourceWarehouseId',
           type: IndexType.hash,
           caseSensitive: true,
-        )
+        ),
       ],
     ),
     r'destinationWarehouseId': IndexSchema(
@@ -137,7 +121,7 @@ const WarehouseTransferModelSchema = CollectionSchema(
           name: r'destinationWarehouseId',
           type: IndexType.hash,
           caseSensitive: true,
-        )
+        ),
       ],
     ),
     r'date': IndexSchema(
@@ -150,9 +134,9 @@ const WarehouseTransferModelSchema = CollectionSchema(
           name: r'date',
           type: IndexType.value,
           caseSensitive: false,
-        )
+        ),
       ],
-    )
+    ),
   },
   links: {},
   embeddedSchemas: {r'TransferItemModel': TransferItemModelSchema},
@@ -185,8 +169,11 @@ int _warehouseTransferModelEstimateSize(
     final offsets = allOffsets[TransferItemModel]!;
     for (var i = 0; i < object.items.length; i++) {
       final value = object.items[i];
-      bytesCount +=
-          TransferItemModelSchema.estimateSize(value, offsets, allOffsets);
+      bytesCount += TransferItemModelSchema.estimateSize(
+        value,
+        offsets,
+        allOffsets,
+      );
     }
   }
   {
@@ -250,7 +237,8 @@ WarehouseTransferModel _warehouseTransferModelDeserialize(
   object.destinationWarehouseId = reader.readStringOrNull(offsets[2]);
   object.id = reader.readStringOrNull(offsets[3]);
   object.isarId = id;
-  object.items = reader.readObjectList<TransferItemModel>(
+  object.items =
+      reader.readObjectList<TransferItemModel>(
         offsets[4],
         TransferItemModelSchema.deserialize,
         allOffsets,
@@ -259,11 +247,15 @@ WarehouseTransferModel _warehouseTransferModelDeserialize(
       [];
   object.remarks = reader.readStringOrNull(offsets[5]);
   object.sourceWarehouseId = reader.readStringOrNull(offsets[6]);
-  object.status = _WarehouseTransferModelstatusValueEnumMap[
-          reader.readStringOrNull(offsets[7])] ??
+  object.status =
+      _WarehouseTransferModelstatusValueEnumMap[reader.readStringOrNull(
+        offsets[7],
+      )] ??
       TransferStatus.draft;
-  object.syncStatus = _WarehouseTransferModelsyncStatusValueEnumMap[
-          reader.readStringOrNull(offsets[8])] ??
+  object.syncStatus =
+      _WarehouseTransferModelsyncStatusValueEnumMap[reader.readStringOrNull(
+        offsets[8],
+      )] ??
       SyncStatus.synced;
   object.transferNumber = reader.readString(offsets[9]);
   object.updatedAt = reader.readDateTime(offsets[10]);
@@ -288,24 +280,28 @@ P _warehouseTransferModelDeserializeProp<P>(
       return (reader.readStringOrNull(offset)) as P;
     case 4:
       return (reader.readObjectList<TransferItemModel>(
-            offset,
-            TransferItemModelSchema.deserialize,
-            allOffsets,
-            TransferItemModel(),
-          ) ??
-          []) as P;
+                offset,
+                TransferItemModelSchema.deserialize,
+                allOffsets,
+                TransferItemModel(),
+              ) ??
+              [])
+          as P;
     case 5:
       return (reader.readStringOrNull(offset)) as P;
     case 6:
       return (reader.readStringOrNull(offset)) as P;
     case 7:
-      return (_WarehouseTransferModelstatusValueEnumMap[
-              reader.readStringOrNull(offset)] ??
-          TransferStatus.draft) as P;
+      return (_WarehouseTransferModelstatusValueEnumMap[reader.readStringOrNull(
+                offset,
+              )] ??
+              TransferStatus.draft)
+          as P;
     case 8:
-      return (_WarehouseTransferModelsyncStatusValueEnumMap[
-              reader.readStringOrNull(offset)] ??
-          SyncStatus.synced) as P;
+      return (_WarehouseTransferModelsyncStatusValueEnumMap[reader
+                  .readStringOrNull(offset)] ??
+              SyncStatus.synced)
+          as P;
     case 9:
       return (reader.readString(offset)) as P;
     case 10:
@@ -349,12 +345,16 @@ Id _warehouseTransferModelGetId(WarehouseTransferModel object) {
 }
 
 List<IsarLinkBase<dynamic>> _warehouseTransferModelGetLinks(
-    WarehouseTransferModel object) {
+  WarehouseTransferModel object,
+) {
   return [];
 }
 
 void _warehouseTransferModelAttach(
-    IsarCollection<dynamic> col, Id id, WarehouseTransferModel object) {
+  IsarCollection<dynamic> col,
+  Id id,
+  WarehouseTransferModel object,
+) {
   object.isarId = id;
 }
 
@@ -408,8 +408,10 @@ extension WarehouseTransferModelByIndex
     return putAllByIndex(r'id', objects);
   }
 
-  List<Id> putAllByIdSync(List<WarehouseTransferModel> objects,
-      {bool saveLinks = true}) {
+  List<Id> putAllByIdSync(
+    List<WarehouseTransferModel> objects, {
+    bool saveLinks = true,
+  }) {
     return putAllByIndexSync(r'id', objects, saveLinks: saveLinks);
   }
 }
@@ -417,14 +419,14 @@ extension WarehouseTransferModelByIndex
 extension WarehouseTransferModelQueryWhereSort
     on QueryBuilder<WarehouseTransferModel, WarehouseTransferModel, QWhere> {
   QueryBuilder<WarehouseTransferModel, WarehouseTransferModel, QAfterWhere>
-      anyIsarId() {
+  anyIsarId() {
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(const IdWhereClause.any());
     });
   }
 
   QueryBuilder<WarehouseTransferModel, WarehouseTransferModel, QAfterWhere>
-      anyTransferNumber() {
+  anyTransferNumber() {
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(
         const IndexWhereClause.any(indexName: r'transferNumber'),
@@ -433,7 +435,7 @@ extension WarehouseTransferModelQueryWhereSort
   }
 
   QueryBuilder<WarehouseTransferModel, WarehouseTransferModel, QAfterWhere>
-      anyDate() {
+  anyDate() {
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(
         const IndexWhereClause.any(indexName: r'date'),
@@ -442,20 +444,32 @@ extension WarehouseTransferModelQueryWhereSort
   }
 }
 
-extension WarehouseTransferModelQueryWhere on QueryBuilder<
-    WarehouseTransferModel, WarehouseTransferModel, QWhereClause> {
-  QueryBuilder<WarehouseTransferModel, WarehouseTransferModel,
-      QAfterWhereClause> isarIdEqualTo(Id isarId) {
+extension WarehouseTransferModelQueryWhere
+    on
+        QueryBuilder<
+          WarehouseTransferModel,
+          WarehouseTransferModel,
+          QWhereClause
+        > {
+  QueryBuilder<
+    WarehouseTransferModel,
+    WarehouseTransferModel,
+    QAfterWhereClause
+  >
+  isarIdEqualTo(Id isarId) {
     return QueryBuilder.apply(this, (query) {
-      return query.addWhereClause(IdWhereClause.between(
-        lower: isarId,
-        upper: isarId,
-      ));
+      return query.addWhereClause(
+        IdWhereClause.between(lower: isarId, upper: isarId),
+      );
     });
   }
 
-  QueryBuilder<WarehouseTransferModel, WarehouseTransferModel,
-      QAfterWhereClause> isarIdNotEqualTo(Id isarId) {
+  QueryBuilder<
+    WarehouseTransferModel,
+    WarehouseTransferModel,
+    QAfterWhereClause
+  >
+  isarIdNotEqualTo(Id isarId) {
     return QueryBuilder.apply(this, (query) {
       if (query.whereSort == Sort.asc) {
         return query
@@ -477,8 +491,12 @@ extension WarehouseTransferModelQueryWhere on QueryBuilder<
     });
   }
 
-  QueryBuilder<WarehouseTransferModel, WarehouseTransferModel,
-      QAfterWhereClause> isarIdGreaterThan(Id isarId, {bool include = false}) {
+  QueryBuilder<
+    WarehouseTransferModel,
+    WarehouseTransferModel,
+    QAfterWhereClause
+  >
+  isarIdGreaterThan(Id isarId, {bool include = false}) {
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(
         IdWhereClause.greaterThan(lower: isarId, includeLower: include),
@@ -486,8 +504,12 @@ extension WarehouseTransferModelQueryWhere on QueryBuilder<
     });
   }
 
-  QueryBuilder<WarehouseTransferModel, WarehouseTransferModel,
-      QAfterWhereClause> isarIdLessThan(Id isarId, {bool include = false}) {
+  QueryBuilder<
+    WarehouseTransferModel,
+    WarehouseTransferModel,
+    QAfterWhereClause
+  >
+  isarIdLessThan(Id isarId, {bool include = false}) {
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(
         IdWhereClause.lessThan(upper: isarId, includeUpper: include),
@@ -495,642 +517,869 @@ extension WarehouseTransferModelQueryWhere on QueryBuilder<
     });
   }
 
-  QueryBuilder<WarehouseTransferModel, WarehouseTransferModel,
-      QAfterWhereClause> isarIdBetween(
+  QueryBuilder<
+    WarehouseTransferModel,
+    WarehouseTransferModel,
+    QAfterWhereClause
+  >
+  isarIdBetween(
     Id lowerIsarId,
     Id upperIsarId, {
     bool includeLower = true,
     bool includeUpper = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addWhereClause(IdWhereClause.between(
-        lower: lowerIsarId,
-        includeLower: includeLower,
-        upper: upperIsarId,
-        includeUpper: includeUpper,
-      ));
+      return query.addWhereClause(
+        IdWhereClause.between(
+          lower: lowerIsarId,
+          includeLower: includeLower,
+          upper: upperIsarId,
+          includeUpper: includeUpper,
+        ),
+      );
     });
   }
 
-  QueryBuilder<WarehouseTransferModel, WarehouseTransferModel,
-      QAfterWhereClause> idIsNull() {
+  QueryBuilder<
+    WarehouseTransferModel,
+    WarehouseTransferModel,
+    QAfterWhereClause
+  >
+  idIsNull() {
     return QueryBuilder.apply(this, (query) {
-      return query.addWhereClause(IndexWhereClause.equalTo(
-        indexName: r'id',
-        value: [null],
-      ));
+      return query.addWhereClause(
+        IndexWhereClause.equalTo(indexName: r'id', value: [null]),
+      );
     });
   }
 
-  QueryBuilder<WarehouseTransferModel, WarehouseTransferModel,
-      QAfterWhereClause> idIsNotNull() {
+  QueryBuilder<
+    WarehouseTransferModel,
+    WarehouseTransferModel,
+    QAfterWhereClause
+  >
+  idIsNotNull() {
     return QueryBuilder.apply(this, (query) {
-      return query.addWhereClause(IndexWhereClause.between(
-        indexName: r'id',
-        lower: [null],
-        includeLower: false,
-        upper: [],
-      ));
+      return query.addWhereClause(
+        IndexWhereClause.between(
+          indexName: r'id',
+          lower: [null],
+          includeLower: false,
+          upper: [],
+        ),
+      );
     });
   }
 
-  QueryBuilder<WarehouseTransferModel, WarehouseTransferModel,
-      QAfterWhereClause> idEqualTo(String? id) {
+  QueryBuilder<
+    WarehouseTransferModel,
+    WarehouseTransferModel,
+    QAfterWhereClause
+  >
+  idEqualTo(String? id) {
     return QueryBuilder.apply(this, (query) {
-      return query.addWhereClause(IndexWhereClause.equalTo(
-        indexName: r'id',
-        value: [id],
-      ));
+      return query.addWhereClause(
+        IndexWhereClause.equalTo(indexName: r'id', value: [id]),
+      );
     });
   }
 
-  QueryBuilder<WarehouseTransferModel, WarehouseTransferModel,
-      QAfterWhereClause> idNotEqualTo(String? id) {
+  QueryBuilder<
+    WarehouseTransferModel,
+    WarehouseTransferModel,
+    QAfterWhereClause
+  >
+  idNotEqualTo(String? id) {
     return QueryBuilder.apply(this, (query) {
       if (query.whereSort == Sort.asc) {
         return query
-            .addWhereClause(IndexWhereClause.between(
-              indexName: r'id',
-              lower: [],
-              upper: [id],
-              includeUpper: false,
-            ))
-            .addWhereClause(IndexWhereClause.between(
-              indexName: r'id',
-              lower: [id],
-              includeLower: false,
-              upper: [],
-            ));
+            .addWhereClause(
+              IndexWhereClause.between(
+                indexName: r'id',
+                lower: [],
+                upper: [id],
+                includeUpper: false,
+              ),
+            )
+            .addWhereClause(
+              IndexWhereClause.between(
+                indexName: r'id',
+                lower: [id],
+                includeLower: false,
+                upper: [],
+              ),
+            );
       } else {
         return query
-            .addWhereClause(IndexWhereClause.between(
-              indexName: r'id',
-              lower: [id],
-              includeLower: false,
-              upper: [],
-            ))
-            .addWhereClause(IndexWhereClause.between(
-              indexName: r'id',
-              lower: [],
-              upper: [id],
-              includeUpper: false,
-            ));
+            .addWhereClause(
+              IndexWhereClause.between(
+                indexName: r'id',
+                lower: [id],
+                includeLower: false,
+                upper: [],
+              ),
+            )
+            .addWhereClause(
+              IndexWhereClause.between(
+                indexName: r'id',
+                lower: [],
+                upper: [id],
+                includeUpper: false,
+              ),
+            );
       }
     });
   }
 
-  QueryBuilder<WarehouseTransferModel, WarehouseTransferModel,
-      QAfterWhereClause> transferNumberEqualTo(String transferNumber) {
+  QueryBuilder<
+    WarehouseTransferModel,
+    WarehouseTransferModel,
+    QAfterWhereClause
+  >
+  transferNumberEqualTo(String transferNumber) {
     return QueryBuilder.apply(this, (query) {
-      return query.addWhereClause(IndexWhereClause.equalTo(
-        indexName: r'transferNumber',
-        value: [transferNumber],
-      ));
+      return query.addWhereClause(
+        IndexWhereClause.equalTo(
+          indexName: r'transferNumber',
+          value: [transferNumber],
+        ),
+      );
     });
   }
 
-  QueryBuilder<WarehouseTransferModel, WarehouseTransferModel,
-      QAfterWhereClause> transferNumberNotEqualTo(String transferNumber) {
+  QueryBuilder<
+    WarehouseTransferModel,
+    WarehouseTransferModel,
+    QAfterWhereClause
+  >
+  transferNumberNotEqualTo(String transferNumber) {
     return QueryBuilder.apply(this, (query) {
       if (query.whereSort == Sort.asc) {
         return query
-            .addWhereClause(IndexWhereClause.between(
-              indexName: r'transferNumber',
-              lower: [],
-              upper: [transferNumber],
-              includeUpper: false,
-            ))
-            .addWhereClause(IndexWhereClause.between(
-              indexName: r'transferNumber',
-              lower: [transferNumber],
-              includeLower: false,
-              upper: [],
-            ));
+            .addWhereClause(
+              IndexWhereClause.between(
+                indexName: r'transferNumber',
+                lower: [],
+                upper: [transferNumber],
+                includeUpper: false,
+              ),
+            )
+            .addWhereClause(
+              IndexWhereClause.between(
+                indexName: r'transferNumber',
+                lower: [transferNumber],
+                includeLower: false,
+                upper: [],
+              ),
+            );
       } else {
         return query
-            .addWhereClause(IndexWhereClause.between(
-              indexName: r'transferNumber',
-              lower: [transferNumber],
-              includeLower: false,
-              upper: [],
-            ))
-            .addWhereClause(IndexWhereClause.between(
-              indexName: r'transferNumber',
-              lower: [],
-              upper: [transferNumber],
-              includeUpper: false,
-            ));
+            .addWhereClause(
+              IndexWhereClause.between(
+                indexName: r'transferNumber',
+                lower: [transferNumber],
+                includeLower: false,
+                upper: [],
+              ),
+            )
+            .addWhereClause(
+              IndexWhereClause.between(
+                indexName: r'transferNumber',
+                lower: [],
+                upper: [transferNumber],
+                includeUpper: false,
+              ),
+            );
       }
     });
   }
 
-  QueryBuilder<WarehouseTransferModel, WarehouseTransferModel,
-      QAfterWhereClause> transferNumberGreaterThan(
-    String transferNumber, {
-    bool include = false,
-  }) {
+  QueryBuilder<
+    WarehouseTransferModel,
+    WarehouseTransferModel,
+    QAfterWhereClause
+  >
+  transferNumberGreaterThan(String transferNumber, {bool include = false}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addWhereClause(IndexWhereClause.between(
-        indexName: r'transferNumber',
-        lower: [transferNumber],
-        includeLower: include,
-        upper: [],
-      ));
+      return query.addWhereClause(
+        IndexWhereClause.between(
+          indexName: r'transferNumber',
+          lower: [transferNumber],
+          includeLower: include,
+          upper: [],
+        ),
+      );
     });
   }
 
-  QueryBuilder<WarehouseTransferModel, WarehouseTransferModel,
-      QAfterWhereClause> transferNumberLessThan(
-    String transferNumber, {
-    bool include = false,
-  }) {
+  QueryBuilder<
+    WarehouseTransferModel,
+    WarehouseTransferModel,
+    QAfterWhereClause
+  >
+  transferNumberLessThan(String transferNumber, {bool include = false}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addWhereClause(IndexWhereClause.between(
-        indexName: r'transferNumber',
-        lower: [],
-        upper: [transferNumber],
-        includeUpper: include,
-      ));
+      return query.addWhereClause(
+        IndexWhereClause.between(
+          indexName: r'transferNumber',
+          lower: [],
+          upper: [transferNumber],
+          includeUpper: include,
+        ),
+      );
     });
   }
 
-  QueryBuilder<WarehouseTransferModel, WarehouseTransferModel,
-      QAfterWhereClause> transferNumberBetween(
+  QueryBuilder<
+    WarehouseTransferModel,
+    WarehouseTransferModel,
+    QAfterWhereClause
+  >
+  transferNumberBetween(
     String lowerTransferNumber,
     String upperTransferNumber, {
     bool includeLower = true,
     bool includeUpper = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addWhereClause(IndexWhereClause.between(
-        indexName: r'transferNumber',
-        lower: [lowerTransferNumber],
-        includeLower: includeLower,
-        upper: [upperTransferNumber],
-        includeUpper: includeUpper,
-      ));
+      return query.addWhereClause(
+        IndexWhereClause.between(
+          indexName: r'transferNumber',
+          lower: [lowerTransferNumber],
+          includeLower: includeLower,
+          upper: [upperTransferNumber],
+          includeUpper: includeUpper,
+        ),
+      );
     });
   }
 
-  QueryBuilder<WarehouseTransferModel, WarehouseTransferModel,
-      QAfterWhereClause> transferNumberStartsWith(String TransferNumberPrefix) {
+  QueryBuilder<
+    WarehouseTransferModel,
+    WarehouseTransferModel,
+    QAfterWhereClause
+  >
+  transferNumberStartsWith(String TransferNumberPrefix) {
     return QueryBuilder.apply(this, (query) {
-      return query.addWhereClause(IndexWhereClause.between(
-        indexName: r'transferNumber',
-        lower: [TransferNumberPrefix],
-        upper: ['$TransferNumberPrefix\u{FFFFF}'],
-      ));
+      return query.addWhereClause(
+        IndexWhereClause.between(
+          indexName: r'transferNumber',
+          lower: [TransferNumberPrefix],
+          upper: ['$TransferNumberPrefix\u{FFFFF}'],
+        ),
+      );
     });
   }
 
-  QueryBuilder<WarehouseTransferModel, WarehouseTransferModel,
-      QAfterWhereClause> transferNumberIsEmpty() {
+  QueryBuilder<
+    WarehouseTransferModel,
+    WarehouseTransferModel,
+    QAfterWhereClause
+  >
+  transferNumberIsEmpty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addWhereClause(IndexWhereClause.equalTo(
-        indexName: r'transferNumber',
-        value: [''],
-      ));
+      return query.addWhereClause(
+        IndexWhereClause.equalTo(indexName: r'transferNumber', value: ['']),
+      );
     });
   }
 
-  QueryBuilder<WarehouseTransferModel, WarehouseTransferModel,
-      QAfterWhereClause> transferNumberIsNotEmpty() {
+  QueryBuilder<
+    WarehouseTransferModel,
+    WarehouseTransferModel,
+    QAfterWhereClause
+  >
+  transferNumberIsNotEmpty() {
     return QueryBuilder.apply(this, (query) {
       if (query.whereSort == Sort.asc) {
         return query
-            .addWhereClause(IndexWhereClause.lessThan(
-              indexName: r'transferNumber',
-              upper: [''],
-            ))
-            .addWhereClause(IndexWhereClause.greaterThan(
-              indexName: r'transferNumber',
-              lower: [''],
-            ));
+            .addWhereClause(
+              IndexWhereClause.lessThan(
+                indexName: r'transferNumber',
+                upper: [''],
+              ),
+            )
+            .addWhereClause(
+              IndexWhereClause.greaterThan(
+                indexName: r'transferNumber',
+                lower: [''],
+              ),
+            );
       } else {
         return query
-            .addWhereClause(IndexWhereClause.greaterThan(
-              indexName: r'transferNumber',
-              lower: [''],
-            ))
-            .addWhereClause(IndexWhereClause.lessThan(
-              indexName: r'transferNumber',
-              upper: [''],
-            ));
+            .addWhereClause(
+              IndexWhereClause.greaterThan(
+                indexName: r'transferNumber',
+                lower: [''],
+              ),
+            )
+            .addWhereClause(
+              IndexWhereClause.lessThan(
+                indexName: r'transferNumber',
+                upper: [''],
+              ),
+            );
       }
     });
   }
 
-  QueryBuilder<WarehouseTransferModel, WarehouseTransferModel,
-      QAfterWhereClause> sourceWarehouseIdIsNull() {
+  QueryBuilder<
+    WarehouseTransferModel,
+    WarehouseTransferModel,
+    QAfterWhereClause
+  >
+  sourceWarehouseIdIsNull() {
     return QueryBuilder.apply(this, (query) {
-      return query.addWhereClause(IndexWhereClause.equalTo(
-        indexName: r'sourceWarehouseId',
-        value: [null],
-      ));
+      return query.addWhereClause(
+        IndexWhereClause.equalTo(
+          indexName: r'sourceWarehouseId',
+          value: [null],
+        ),
+      );
     });
   }
 
-  QueryBuilder<WarehouseTransferModel, WarehouseTransferModel,
-      QAfterWhereClause> sourceWarehouseIdIsNotNull() {
+  QueryBuilder<
+    WarehouseTransferModel,
+    WarehouseTransferModel,
+    QAfterWhereClause
+  >
+  sourceWarehouseIdIsNotNull() {
     return QueryBuilder.apply(this, (query) {
-      return query.addWhereClause(IndexWhereClause.between(
-        indexName: r'sourceWarehouseId',
-        lower: [null],
-        includeLower: false,
-        upper: [],
-      ));
+      return query.addWhereClause(
+        IndexWhereClause.between(
+          indexName: r'sourceWarehouseId',
+          lower: [null],
+          includeLower: false,
+          upper: [],
+        ),
+      );
     });
   }
 
-  QueryBuilder<WarehouseTransferModel, WarehouseTransferModel,
-      QAfterWhereClause> sourceWarehouseIdEqualTo(String? sourceWarehouseId) {
+  QueryBuilder<
+    WarehouseTransferModel,
+    WarehouseTransferModel,
+    QAfterWhereClause
+  >
+  sourceWarehouseIdEqualTo(String? sourceWarehouseId) {
     return QueryBuilder.apply(this, (query) {
-      return query.addWhereClause(IndexWhereClause.equalTo(
-        indexName: r'sourceWarehouseId',
-        value: [sourceWarehouseId],
-      ));
+      return query.addWhereClause(
+        IndexWhereClause.equalTo(
+          indexName: r'sourceWarehouseId',
+          value: [sourceWarehouseId],
+        ),
+      );
     });
   }
 
-  QueryBuilder<WarehouseTransferModel, WarehouseTransferModel,
-          QAfterWhereClause>
-      sourceWarehouseIdNotEqualTo(String? sourceWarehouseId) {
+  QueryBuilder<
+    WarehouseTransferModel,
+    WarehouseTransferModel,
+    QAfterWhereClause
+  >
+  sourceWarehouseIdNotEqualTo(String? sourceWarehouseId) {
     return QueryBuilder.apply(this, (query) {
       if (query.whereSort == Sort.asc) {
         return query
-            .addWhereClause(IndexWhereClause.between(
-              indexName: r'sourceWarehouseId',
-              lower: [],
-              upper: [sourceWarehouseId],
-              includeUpper: false,
-            ))
-            .addWhereClause(IndexWhereClause.between(
-              indexName: r'sourceWarehouseId',
-              lower: [sourceWarehouseId],
-              includeLower: false,
-              upper: [],
-            ));
+            .addWhereClause(
+              IndexWhereClause.between(
+                indexName: r'sourceWarehouseId',
+                lower: [],
+                upper: [sourceWarehouseId],
+                includeUpper: false,
+              ),
+            )
+            .addWhereClause(
+              IndexWhereClause.between(
+                indexName: r'sourceWarehouseId',
+                lower: [sourceWarehouseId],
+                includeLower: false,
+                upper: [],
+              ),
+            );
       } else {
         return query
-            .addWhereClause(IndexWhereClause.between(
-              indexName: r'sourceWarehouseId',
-              lower: [sourceWarehouseId],
-              includeLower: false,
-              upper: [],
-            ))
-            .addWhereClause(IndexWhereClause.between(
-              indexName: r'sourceWarehouseId',
-              lower: [],
-              upper: [sourceWarehouseId],
-              includeUpper: false,
-            ));
+            .addWhereClause(
+              IndexWhereClause.between(
+                indexName: r'sourceWarehouseId',
+                lower: [sourceWarehouseId],
+                includeLower: false,
+                upper: [],
+              ),
+            )
+            .addWhereClause(
+              IndexWhereClause.between(
+                indexName: r'sourceWarehouseId',
+                lower: [],
+                upper: [sourceWarehouseId],
+                includeUpper: false,
+              ),
+            );
       }
     });
   }
 
-  QueryBuilder<WarehouseTransferModel, WarehouseTransferModel,
-      QAfterWhereClause> destinationWarehouseIdIsNull() {
+  QueryBuilder<
+    WarehouseTransferModel,
+    WarehouseTransferModel,
+    QAfterWhereClause
+  >
+  destinationWarehouseIdIsNull() {
     return QueryBuilder.apply(this, (query) {
-      return query.addWhereClause(IndexWhereClause.equalTo(
-        indexName: r'destinationWarehouseId',
-        value: [null],
-      ));
+      return query.addWhereClause(
+        IndexWhereClause.equalTo(
+          indexName: r'destinationWarehouseId',
+          value: [null],
+        ),
+      );
     });
   }
 
-  QueryBuilder<WarehouseTransferModel, WarehouseTransferModel,
-      QAfterWhereClause> destinationWarehouseIdIsNotNull() {
+  QueryBuilder<
+    WarehouseTransferModel,
+    WarehouseTransferModel,
+    QAfterWhereClause
+  >
+  destinationWarehouseIdIsNotNull() {
     return QueryBuilder.apply(this, (query) {
-      return query.addWhereClause(IndexWhereClause.between(
-        indexName: r'destinationWarehouseId',
-        lower: [null],
-        includeLower: false,
-        upper: [],
-      ));
+      return query.addWhereClause(
+        IndexWhereClause.between(
+          indexName: r'destinationWarehouseId',
+          lower: [null],
+          includeLower: false,
+          upper: [],
+        ),
+      );
     });
   }
 
-  QueryBuilder<WarehouseTransferModel, WarehouseTransferModel,
-          QAfterWhereClause>
-      destinationWarehouseIdEqualTo(String? destinationWarehouseId) {
+  QueryBuilder<
+    WarehouseTransferModel,
+    WarehouseTransferModel,
+    QAfterWhereClause
+  >
+  destinationWarehouseIdEqualTo(String? destinationWarehouseId) {
     return QueryBuilder.apply(this, (query) {
-      return query.addWhereClause(IndexWhereClause.equalTo(
-        indexName: r'destinationWarehouseId',
-        value: [destinationWarehouseId],
-      ));
+      return query.addWhereClause(
+        IndexWhereClause.equalTo(
+          indexName: r'destinationWarehouseId',
+          value: [destinationWarehouseId],
+        ),
+      );
     });
   }
 
-  QueryBuilder<WarehouseTransferModel, WarehouseTransferModel,
-          QAfterWhereClause>
-      destinationWarehouseIdNotEqualTo(String? destinationWarehouseId) {
+  QueryBuilder<
+    WarehouseTransferModel,
+    WarehouseTransferModel,
+    QAfterWhereClause
+  >
+  destinationWarehouseIdNotEqualTo(String? destinationWarehouseId) {
     return QueryBuilder.apply(this, (query) {
       if (query.whereSort == Sort.asc) {
         return query
-            .addWhereClause(IndexWhereClause.between(
-              indexName: r'destinationWarehouseId',
-              lower: [],
-              upper: [destinationWarehouseId],
-              includeUpper: false,
-            ))
-            .addWhereClause(IndexWhereClause.between(
-              indexName: r'destinationWarehouseId',
-              lower: [destinationWarehouseId],
-              includeLower: false,
-              upper: [],
-            ));
+            .addWhereClause(
+              IndexWhereClause.between(
+                indexName: r'destinationWarehouseId',
+                lower: [],
+                upper: [destinationWarehouseId],
+                includeUpper: false,
+              ),
+            )
+            .addWhereClause(
+              IndexWhereClause.between(
+                indexName: r'destinationWarehouseId',
+                lower: [destinationWarehouseId],
+                includeLower: false,
+                upper: [],
+              ),
+            );
       } else {
         return query
-            .addWhereClause(IndexWhereClause.between(
-              indexName: r'destinationWarehouseId',
-              lower: [destinationWarehouseId],
-              includeLower: false,
-              upper: [],
-            ))
-            .addWhereClause(IndexWhereClause.between(
-              indexName: r'destinationWarehouseId',
-              lower: [],
-              upper: [destinationWarehouseId],
-              includeUpper: false,
-            ));
+            .addWhereClause(
+              IndexWhereClause.between(
+                indexName: r'destinationWarehouseId',
+                lower: [destinationWarehouseId],
+                includeLower: false,
+                upper: [],
+              ),
+            )
+            .addWhereClause(
+              IndexWhereClause.between(
+                indexName: r'destinationWarehouseId',
+                lower: [],
+                upper: [destinationWarehouseId],
+                includeUpper: false,
+              ),
+            );
       }
     });
   }
 
-  QueryBuilder<WarehouseTransferModel, WarehouseTransferModel,
-      QAfterWhereClause> dateEqualTo(DateTime date) {
+  QueryBuilder<
+    WarehouseTransferModel,
+    WarehouseTransferModel,
+    QAfterWhereClause
+  >
+  dateEqualTo(DateTime date) {
     return QueryBuilder.apply(this, (query) {
-      return query.addWhereClause(IndexWhereClause.equalTo(
-        indexName: r'date',
-        value: [date],
-      ));
+      return query.addWhereClause(
+        IndexWhereClause.equalTo(indexName: r'date', value: [date]),
+      );
     });
   }
 
-  QueryBuilder<WarehouseTransferModel, WarehouseTransferModel,
-      QAfterWhereClause> dateNotEqualTo(DateTime date) {
+  QueryBuilder<
+    WarehouseTransferModel,
+    WarehouseTransferModel,
+    QAfterWhereClause
+  >
+  dateNotEqualTo(DateTime date) {
     return QueryBuilder.apply(this, (query) {
       if (query.whereSort == Sort.asc) {
         return query
-            .addWhereClause(IndexWhereClause.between(
-              indexName: r'date',
-              lower: [],
-              upper: [date],
-              includeUpper: false,
-            ))
-            .addWhereClause(IndexWhereClause.between(
-              indexName: r'date',
-              lower: [date],
-              includeLower: false,
-              upper: [],
-            ));
+            .addWhereClause(
+              IndexWhereClause.between(
+                indexName: r'date',
+                lower: [],
+                upper: [date],
+                includeUpper: false,
+              ),
+            )
+            .addWhereClause(
+              IndexWhereClause.between(
+                indexName: r'date',
+                lower: [date],
+                includeLower: false,
+                upper: [],
+              ),
+            );
       } else {
         return query
-            .addWhereClause(IndexWhereClause.between(
-              indexName: r'date',
-              lower: [date],
-              includeLower: false,
-              upper: [],
-            ))
-            .addWhereClause(IndexWhereClause.between(
-              indexName: r'date',
-              lower: [],
-              upper: [date],
-              includeUpper: false,
-            ));
+            .addWhereClause(
+              IndexWhereClause.between(
+                indexName: r'date',
+                lower: [date],
+                includeLower: false,
+                upper: [],
+              ),
+            )
+            .addWhereClause(
+              IndexWhereClause.between(
+                indexName: r'date',
+                lower: [],
+                upper: [date],
+                includeUpper: false,
+              ),
+            );
       }
     });
   }
 
-  QueryBuilder<WarehouseTransferModel, WarehouseTransferModel,
-      QAfterWhereClause> dateGreaterThan(
-    DateTime date, {
-    bool include = false,
-  }) {
+  QueryBuilder<
+    WarehouseTransferModel,
+    WarehouseTransferModel,
+    QAfterWhereClause
+  >
+  dateGreaterThan(DateTime date, {bool include = false}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addWhereClause(IndexWhereClause.between(
-        indexName: r'date',
-        lower: [date],
-        includeLower: include,
-        upper: [],
-      ));
+      return query.addWhereClause(
+        IndexWhereClause.between(
+          indexName: r'date',
+          lower: [date],
+          includeLower: include,
+          upper: [],
+        ),
+      );
     });
   }
 
-  QueryBuilder<WarehouseTransferModel, WarehouseTransferModel,
-      QAfterWhereClause> dateLessThan(
-    DateTime date, {
-    bool include = false,
-  }) {
+  QueryBuilder<
+    WarehouseTransferModel,
+    WarehouseTransferModel,
+    QAfterWhereClause
+  >
+  dateLessThan(DateTime date, {bool include = false}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addWhereClause(IndexWhereClause.between(
-        indexName: r'date',
-        lower: [],
-        upper: [date],
-        includeUpper: include,
-      ));
+      return query.addWhereClause(
+        IndexWhereClause.between(
+          indexName: r'date',
+          lower: [],
+          upper: [date],
+          includeUpper: include,
+        ),
+      );
     });
   }
 
-  QueryBuilder<WarehouseTransferModel, WarehouseTransferModel,
-      QAfterWhereClause> dateBetween(
+  QueryBuilder<
+    WarehouseTransferModel,
+    WarehouseTransferModel,
+    QAfterWhereClause
+  >
+  dateBetween(
     DateTime lowerDate,
     DateTime upperDate, {
     bool includeLower = true,
     bool includeUpper = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addWhereClause(IndexWhereClause.between(
-        indexName: r'date',
-        lower: [lowerDate],
-        includeLower: includeLower,
-        upper: [upperDate],
-        includeUpper: includeUpper,
-      ));
+      return query.addWhereClause(
+        IndexWhereClause.between(
+          indexName: r'date',
+          lower: [lowerDate],
+          includeLower: includeLower,
+          upper: [upperDate],
+          includeUpper: includeUpper,
+        ),
+      );
     });
   }
 }
 
-extension WarehouseTransferModelQueryFilter on QueryBuilder<
-    WarehouseTransferModel, WarehouseTransferModel, QFilterCondition> {
-  QueryBuilder<WarehouseTransferModel, WarehouseTransferModel,
-      QAfterFilterCondition> createdAtEqualTo(DateTime value) {
+extension WarehouseTransferModelQueryFilter
+    on
+        QueryBuilder<
+          WarehouseTransferModel,
+          WarehouseTransferModel,
+          QFilterCondition
+        > {
+  QueryBuilder<
+    WarehouseTransferModel,
+    WarehouseTransferModel,
+    QAfterFilterCondition
+  >
+  createdAtEqualTo(DateTime value) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'createdAt',
-        value: value,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.equalTo(property: r'createdAt', value: value),
+      );
     });
   }
 
-  QueryBuilder<WarehouseTransferModel, WarehouseTransferModel,
-      QAfterFilterCondition> createdAtGreaterThan(
-    DateTime value, {
-    bool include = false,
-  }) {
+  QueryBuilder<
+    WarehouseTransferModel,
+    WarehouseTransferModel,
+    QAfterFilterCondition
+  >
+  createdAtGreaterThan(DateTime value, {bool include = false}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        include: include,
-        property: r'createdAt',
-        value: value,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.greaterThan(
+          include: include,
+          property: r'createdAt',
+          value: value,
+        ),
+      );
     });
   }
 
-  QueryBuilder<WarehouseTransferModel, WarehouseTransferModel,
-      QAfterFilterCondition> createdAtLessThan(
-    DateTime value, {
-    bool include = false,
-  }) {
+  QueryBuilder<
+    WarehouseTransferModel,
+    WarehouseTransferModel,
+    QAfterFilterCondition
+  >
+  createdAtLessThan(DateTime value, {bool include = false}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.lessThan(
-        include: include,
-        property: r'createdAt',
-        value: value,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.lessThan(
+          include: include,
+          property: r'createdAt',
+          value: value,
+        ),
+      );
     });
   }
 
-  QueryBuilder<WarehouseTransferModel, WarehouseTransferModel,
-      QAfterFilterCondition> createdAtBetween(
+  QueryBuilder<
+    WarehouseTransferModel,
+    WarehouseTransferModel,
+    QAfterFilterCondition
+  >
+  createdAtBetween(
     DateTime lower,
     DateTime upper, {
     bool includeLower = true,
     bool includeUpper = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.between(
-        property: r'createdAt',
-        lower: lower,
-        includeLower: includeLower,
-        upper: upper,
-        includeUpper: includeUpper,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.between(
+          property: r'createdAt',
+          lower: lower,
+          includeLower: includeLower,
+          upper: upper,
+          includeUpper: includeUpper,
+        ),
+      );
     });
   }
 
-  QueryBuilder<WarehouseTransferModel, WarehouseTransferModel,
-      QAfterFilterCondition> dateEqualTo(DateTime value) {
+  QueryBuilder<
+    WarehouseTransferModel,
+    WarehouseTransferModel,
+    QAfterFilterCondition
+  >
+  dateEqualTo(DateTime value) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'date',
-        value: value,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.equalTo(property: r'date', value: value),
+      );
     });
   }
 
-  QueryBuilder<WarehouseTransferModel, WarehouseTransferModel,
-      QAfterFilterCondition> dateGreaterThan(
-    DateTime value, {
-    bool include = false,
-  }) {
+  QueryBuilder<
+    WarehouseTransferModel,
+    WarehouseTransferModel,
+    QAfterFilterCondition
+  >
+  dateGreaterThan(DateTime value, {bool include = false}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        include: include,
-        property: r'date',
-        value: value,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.greaterThan(
+          include: include,
+          property: r'date',
+          value: value,
+        ),
+      );
     });
   }
 
-  QueryBuilder<WarehouseTransferModel, WarehouseTransferModel,
-      QAfterFilterCondition> dateLessThan(
-    DateTime value, {
-    bool include = false,
-  }) {
+  QueryBuilder<
+    WarehouseTransferModel,
+    WarehouseTransferModel,
+    QAfterFilterCondition
+  >
+  dateLessThan(DateTime value, {bool include = false}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.lessThan(
-        include: include,
-        property: r'date',
-        value: value,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.lessThan(
+          include: include,
+          property: r'date',
+          value: value,
+        ),
+      );
     });
   }
 
-  QueryBuilder<WarehouseTransferModel, WarehouseTransferModel,
-      QAfterFilterCondition> dateBetween(
+  QueryBuilder<
+    WarehouseTransferModel,
+    WarehouseTransferModel,
+    QAfterFilterCondition
+  >
+  dateBetween(
     DateTime lower,
     DateTime upper, {
     bool includeLower = true,
     bool includeUpper = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.between(
-        property: r'date',
-        lower: lower,
-        includeLower: includeLower,
-        upper: upper,
-        includeUpper: includeUpper,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.between(
+          property: r'date',
+          lower: lower,
+          includeLower: includeLower,
+          upper: upper,
+          includeUpper: includeUpper,
+        ),
+      );
     });
   }
 
-  QueryBuilder<WarehouseTransferModel, WarehouseTransferModel,
-      QAfterFilterCondition> destinationWarehouseIdIsNull() {
+  QueryBuilder<
+    WarehouseTransferModel,
+    WarehouseTransferModel,
+    QAfterFilterCondition
+  >
+  destinationWarehouseIdIsNull() {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const FilterCondition.isNull(
-        property: r'destinationWarehouseId',
-      ));
+      return query.addFilterCondition(
+        const FilterCondition.isNull(property: r'destinationWarehouseId'),
+      );
     });
   }
 
-  QueryBuilder<WarehouseTransferModel, WarehouseTransferModel,
-      QAfterFilterCondition> destinationWarehouseIdIsNotNull() {
+  QueryBuilder<
+    WarehouseTransferModel,
+    WarehouseTransferModel,
+    QAfterFilterCondition
+  >
+  destinationWarehouseIdIsNotNull() {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const FilterCondition.isNotNull(
-        property: r'destinationWarehouseId',
-      ));
+      return query.addFilterCondition(
+        const FilterCondition.isNotNull(property: r'destinationWarehouseId'),
+      );
     });
   }
 
-  QueryBuilder<WarehouseTransferModel, WarehouseTransferModel,
-      QAfterFilterCondition> destinationWarehouseIdEqualTo(
-    String? value, {
-    bool caseSensitive = true,
-  }) {
+  QueryBuilder<
+    WarehouseTransferModel,
+    WarehouseTransferModel,
+    QAfterFilterCondition
+  >
+  destinationWarehouseIdEqualTo(String? value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'destinationWarehouseId',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.equalTo(
+          property: r'destinationWarehouseId',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
-  QueryBuilder<WarehouseTransferModel, WarehouseTransferModel,
-      QAfterFilterCondition> destinationWarehouseIdGreaterThan(
+  QueryBuilder<
+    WarehouseTransferModel,
+    WarehouseTransferModel,
+    QAfterFilterCondition
+  >
+  destinationWarehouseIdGreaterThan(
     String? value, {
     bool include = false,
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        include: include,
-        property: r'destinationWarehouseId',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.greaterThan(
+          include: include,
+          property: r'destinationWarehouseId',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
-  QueryBuilder<WarehouseTransferModel, WarehouseTransferModel,
-      QAfterFilterCondition> destinationWarehouseIdLessThan(
+  QueryBuilder<
+    WarehouseTransferModel,
+    WarehouseTransferModel,
+    QAfterFilterCondition
+  >
+  destinationWarehouseIdLessThan(
     String? value, {
     bool include = false,
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.lessThan(
-        include: include,
-        property: r'destinationWarehouseId',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.lessThan(
+          include: include,
+          property: r'destinationWarehouseId',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
-  QueryBuilder<WarehouseTransferModel, WarehouseTransferModel,
-      QAfterFilterCondition> destinationWarehouseIdBetween(
+  QueryBuilder<
+    WarehouseTransferModel,
+    WarehouseTransferModel,
+    QAfterFilterCondition
+  >
+  destinationWarehouseIdBetween(
     String? lower,
     String? upper, {
     bool includeLower = true,
@@ -1138,157 +1387,205 @@ extension WarehouseTransferModelQueryFilter on QueryBuilder<
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.between(
-        property: r'destinationWarehouseId',
-        lower: lower,
-        includeLower: includeLower,
-        upper: upper,
-        includeUpper: includeUpper,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.between(
+          property: r'destinationWarehouseId',
+          lower: lower,
+          includeLower: includeLower,
+          upper: upper,
+          includeUpper: includeUpper,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
-  QueryBuilder<WarehouseTransferModel, WarehouseTransferModel,
-      QAfterFilterCondition> destinationWarehouseIdStartsWith(
-    String value, {
-    bool caseSensitive = true,
-  }) {
+  QueryBuilder<
+    WarehouseTransferModel,
+    WarehouseTransferModel,
+    QAfterFilterCondition
+  >
+  destinationWarehouseIdStartsWith(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.startsWith(
-        property: r'destinationWarehouseId',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.startsWith(
+          property: r'destinationWarehouseId',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
-  QueryBuilder<WarehouseTransferModel, WarehouseTransferModel,
-      QAfterFilterCondition> destinationWarehouseIdEndsWith(
-    String value, {
-    bool caseSensitive = true,
-  }) {
+  QueryBuilder<
+    WarehouseTransferModel,
+    WarehouseTransferModel,
+    QAfterFilterCondition
+  >
+  destinationWarehouseIdEndsWith(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.endsWith(
-        property: r'destinationWarehouseId',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.endsWith(
+          property: r'destinationWarehouseId',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
-  QueryBuilder<WarehouseTransferModel, WarehouseTransferModel,
-          QAfterFilterCondition>
-      destinationWarehouseIdContains(String value,
-          {bool caseSensitive = true}) {
+  QueryBuilder<
+    WarehouseTransferModel,
+    WarehouseTransferModel,
+    QAfterFilterCondition
+  >
+  destinationWarehouseIdContains(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.contains(
-        property: r'destinationWarehouseId',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.contains(
+          property: r'destinationWarehouseId',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
-  QueryBuilder<WarehouseTransferModel, WarehouseTransferModel,
-          QAfterFilterCondition>
-      destinationWarehouseIdMatches(String pattern,
-          {bool caseSensitive = true}) {
+  QueryBuilder<
+    WarehouseTransferModel,
+    WarehouseTransferModel,
+    QAfterFilterCondition
+  >
+  destinationWarehouseIdMatches(String pattern, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.matches(
-        property: r'destinationWarehouseId',
-        wildcard: pattern,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.matches(
+          property: r'destinationWarehouseId',
+          wildcard: pattern,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
-  QueryBuilder<WarehouseTransferModel, WarehouseTransferModel,
-      QAfterFilterCondition> destinationWarehouseIdIsEmpty() {
+  QueryBuilder<
+    WarehouseTransferModel,
+    WarehouseTransferModel,
+    QAfterFilterCondition
+  >
+  destinationWarehouseIdIsEmpty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'destinationWarehouseId',
-        value: '',
-      ));
+      return query.addFilterCondition(
+        FilterCondition.equalTo(property: r'destinationWarehouseId', value: ''),
+      );
     });
   }
 
-  QueryBuilder<WarehouseTransferModel, WarehouseTransferModel,
-      QAfterFilterCondition> destinationWarehouseIdIsNotEmpty() {
+  QueryBuilder<
+    WarehouseTransferModel,
+    WarehouseTransferModel,
+    QAfterFilterCondition
+  >
+  destinationWarehouseIdIsNotEmpty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        property: r'destinationWarehouseId',
-        value: '',
-      ));
+      return query.addFilterCondition(
+        FilterCondition.greaterThan(
+          property: r'destinationWarehouseId',
+          value: '',
+        ),
+      );
     });
   }
 
-  QueryBuilder<WarehouseTransferModel, WarehouseTransferModel,
-      QAfterFilterCondition> idIsNull() {
+  QueryBuilder<
+    WarehouseTransferModel,
+    WarehouseTransferModel,
+    QAfterFilterCondition
+  >
+  idIsNull() {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const FilterCondition.isNull(
-        property: r'id',
-      ));
+      return query.addFilterCondition(
+        const FilterCondition.isNull(property: r'id'),
+      );
     });
   }
 
-  QueryBuilder<WarehouseTransferModel, WarehouseTransferModel,
-      QAfterFilterCondition> idIsNotNull() {
+  QueryBuilder<
+    WarehouseTransferModel,
+    WarehouseTransferModel,
+    QAfterFilterCondition
+  >
+  idIsNotNull() {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const FilterCondition.isNotNull(
-        property: r'id',
-      ));
+      return query.addFilterCondition(
+        const FilterCondition.isNotNull(property: r'id'),
+      );
     });
   }
 
-  QueryBuilder<WarehouseTransferModel, WarehouseTransferModel,
-      QAfterFilterCondition> idEqualTo(
-    String? value, {
-    bool caseSensitive = true,
-  }) {
+  QueryBuilder<
+    WarehouseTransferModel,
+    WarehouseTransferModel,
+    QAfterFilterCondition
+  >
+  idEqualTo(String? value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'id',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.equalTo(
+          property: r'id',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
-  QueryBuilder<WarehouseTransferModel, WarehouseTransferModel,
-      QAfterFilterCondition> idGreaterThan(
+  QueryBuilder<
+    WarehouseTransferModel,
+    WarehouseTransferModel,
+    QAfterFilterCondition
+  >
+  idGreaterThan(
     String? value, {
     bool include = false,
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        include: include,
-        property: r'id',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.greaterThan(
+          include: include,
+          property: r'id',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
-  QueryBuilder<WarehouseTransferModel, WarehouseTransferModel,
-      QAfterFilterCondition> idLessThan(
-    String? value, {
-    bool include = false,
-    bool caseSensitive = true,
-  }) {
+  QueryBuilder<
+    WarehouseTransferModel,
+    WarehouseTransferModel,
+    QAfterFilterCondition
+  >
+  idLessThan(String? value, {bool include = false, bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.lessThan(
-        include: include,
-        property: r'id',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.lessThan(
+          include: include,
+          property: r'id',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
-  QueryBuilder<WarehouseTransferModel, WarehouseTransferModel,
-      QAfterFilterCondition> idBetween(
+  QueryBuilder<
+    WarehouseTransferModel,
+    WarehouseTransferModel,
+    QAfterFilterCondition
+  >
+  idBetween(
     String? lower,
     String? upper, {
     bool includeLower = true,
@@ -1296,236 +1593,271 @@ extension WarehouseTransferModelQueryFilter on QueryBuilder<
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.between(
-        property: r'id',
-        lower: lower,
-        includeLower: includeLower,
-        upper: upper,
-        includeUpper: includeUpper,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.between(
+          property: r'id',
+          lower: lower,
+          includeLower: includeLower,
+          upper: upper,
+          includeUpper: includeUpper,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
-  QueryBuilder<WarehouseTransferModel, WarehouseTransferModel,
-      QAfterFilterCondition> idStartsWith(
-    String value, {
-    bool caseSensitive = true,
-  }) {
+  QueryBuilder<
+    WarehouseTransferModel,
+    WarehouseTransferModel,
+    QAfterFilterCondition
+  >
+  idStartsWith(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.startsWith(
-        property: r'id',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.startsWith(
+          property: r'id',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
-  QueryBuilder<WarehouseTransferModel, WarehouseTransferModel,
-      QAfterFilterCondition> idEndsWith(
-    String value, {
-    bool caseSensitive = true,
-  }) {
+  QueryBuilder<
+    WarehouseTransferModel,
+    WarehouseTransferModel,
+    QAfterFilterCondition
+  >
+  idEndsWith(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.endsWith(
-        property: r'id',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.endsWith(
+          property: r'id',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
-  QueryBuilder<WarehouseTransferModel, WarehouseTransferModel,
-          QAfterFilterCondition>
-      idContains(String value, {bool caseSensitive = true}) {
+  QueryBuilder<
+    WarehouseTransferModel,
+    WarehouseTransferModel,
+    QAfterFilterCondition
+  >
+  idContains(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.contains(
-        property: r'id',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.contains(
+          property: r'id',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
-  QueryBuilder<WarehouseTransferModel, WarehouseTransferModel,
-          QAfterFilterCondition>
-      idMatches(String pattern, {bool caseSensitive = true}) {
+  QueryBuilder<
+    WarehouseTransferModel,
+    WarehouseTransferModel,
+    QAfterFilterCondition
+  >
+  idMatches(String pattern, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.matches(
-        property: r'id',
-        wildcard: pattern,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.matches(
+          property: r'id',
+          wildcard: pattern,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
-  QueryBuilder<WarehouseTransferModel, WarehouseTransferModel,
-      QAfterFilterCondition> idIsEmpty() {
+  QueryBuilder<
+    WarehouseTransferModel,
+    WarehouseTransferModel,
+    QAfterFilterCondition
+  >
+  idIsEmpty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'id',
-        value: '',
-      ));
+      return query.addFilterCondition(
+        FilterCondition.equalTo(property: r'id', value: ''),
+      );
     });
   }
 
-  QueryBuilder<WarehouseTransferModel, WarehouseTransferModel,
-      QAfterFilterCondition> idIsNotEmpty() {
+  QueryBuilder<
+    WarehouseTransferModel,
+    WarehouseTransferModel,
+    QAfterFilterCondition
+  >
+  idIsNotEmpty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        property: r'id',
-        value: '',
-      ));
+      return query.addFilterCondition(
+        FilterCondition.greaterThan(property: r'id', value: ''),
+      );
     });
   }
 
-  QueryBuilder<WarehouseTransferModel, WarehouseTransferModel,
-      QAfterFilterCondition> isarIdIsNull() {
+  QueryBuilder<
+    WarehouseTransferModel,
+    WarehouseTransferModel,
+    QAfterFilterCondition
+  >
+  isarIdIsNull() {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const FilterCondition.isNull(
-        property: r'isarId',
-      ));
+      return query.addFilterCondition(
+        const FilterCondition.isNull(property: r'isarId'),
+      );
     });
   }
 
-  QueryBuilder<WarehouseTransferModel, WarehouseTransferModel,
-      QAfterFilterCondition> isarIdIsNotNull() {
+  QueryBuilder<
+    WarehouseTransferModel,
+    WarehouseTransferModel,
+    QAfterFilterCondition
+  >
+  isarIdIsNotNull() {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const FilterCondition.isNotNull(
-        property: r'isarId',
-      ));
+      return query.addFilterCondition(
+        const FilterCondition.isNotNull(property: r'isarId'),
+      );
     });
   }
 
-  QueryBuilder<WarehouseTransferModel, WarehouseTransferModel,
-      QAfterFilterCondition> isarIdEqualTo(Id? value) {
+  QueryBuilder<
+    WarehouseTransferModel,
+    WarehouseTransferModel,
+    QAfterFilterCondition
+  >
+  isarIdEqualTo(Id? value) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'isarId',
-        value: value,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.equalTo(property: r'isarId', value: value),
+      );
     });
   }
 
-  QueryBuilder<WarehouseTransferModel, WarehouseTransferModel,
-      QAfterFilterCondition> isarIdGreaterThan(
-    Id? value, {
-    bool include = false,
-  }) {
+  QueryBuilder<
+    WarehouseTransferModel,
+    WarehouseTransferModel,
+    QAfterFilterCondition
+  >
+  isarIdGreaterThan(Id? value, {bool include = false}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        include: include,
-        property: r'isarId',
-        value: value,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.greaterThan(
+          include: include,
+          property: r'isarId',
+          value: value,
+        ),
+      );
     });
   }
 
-  QueryBuilder<WarehouseTransferModel, WarehouseTransferModel,
-      QAfterFilterCondition> isarIdLessThan(
-    Id? value, {
-    bool include = false,
-  }) {
+  QueryBuilder<
+    WarehouseTransferModel,
+    WarehouseTransferModel,
+    QAfterFilterCondition
+  >
+  isarIdLessThan(Id? value, {bool include = false}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.lessThan(
-        include: include,
-        property: r'isarId',
-        value: value,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.lessThan(
+          include: include,
+          property: r'isarId',
+          value: value,
+        ),
+      );
     });
   }
 
-  QueryBuilder<WarehouseTransferModel, WarehouseTransferModel,
-      QAfterFilterCondition> isarIdBetween(
+  QueryBuilder<
+    WarehouseTransferModel,
+    WarehouseTransferModel,
+    QAfterFilterCondition
+  >
+  isarIdBetween(
     Id? lower,
     Id? upper, {
     bool includeLower = true,
     bool includeUpper = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.between(
-        property: r'isarId',
-        lower: lower,
-        includeLower: includeLower,
-        upper: upper,
-        includeUpper: includeUpper,
-      ));
-    });
-  }
-
-  QueryBuilder<WarehouseTransferModel, WarehouseTransferModel,
-      QAfterFilterCondition> itemsLengthEqualTo(int length) {
-    return QueryBuilder.apply(this, (query) {
-      return query.listLength(
-        r'items',
-        length,
-        true,
-        length,
-        true,
+      return query.addFilterCondition(
+        FilterCondition.between(
+          property: r'isarId',
+          lower: lower,
+          includeLower: includeLower,
+          upper: upper,
+          includeUpper: includeUpper,
+        ),
       );
     });
   }
 
-  QueryBuilder<WarehouseTransferModel, WarehouseTransferModel,
-      QAfterFilterCondition> itemsIsEmpty() {
+  QueryBuilder<
+    WarehouseTransferModel,
+    WarehouseTransferModel,
+    QAfterFilterCondition
+  >
+  itemsLengthEqualTo(int length) {
     return QueryBuilder.apply(this, (query) {
-      return query.listLength(
-        r'items',
-        0,
-        true,
-        0,
-        true,
-      );
+      return query.listLength(r'items', length, true, length, true);
     });
   }
 
-  QueryBuilder<WarehouseTransferModel, WarehouseTransferModel,
-      QAfterFilterCondition> itemsIsNotEmpty() {
+  QueryBuilder<
+    WarehouseTransferModel,
+    WarehouseTransferModel,
+    QAfterFilterCondition
+  >
+  itemsIsEmpty() {
     return QueryBuilder.apply(this, (query) {
-      return query.listLength(
-        r'items',
-        0,
-        false,
-        999999,
-        true,
-      );
+      return query.listLength(r'items', 0, true, 0, true);
     });
   }
 
-  QueryBuilder<WarehouseTransferModel, WarehouseTransferModel,
-      QAfterFilterCondition> itemsLengthLessThan(
-    int length, {
-    bool include = false,
-  }) {
+  QueryBuilder<
+    WarehouseTransferModel,
+    WarehouseTransferModel,
+    QAfterFilterCondition
+  >
+  itemsIsNotEmpty() {
     return QueryBuilder.apply(this, (query) {
-      return query.listLength(
-        r'items',
-        0,
-        true,
-        length,
-        include,
-      );
+      return query.listLength(r'items', 0, false, 999999, true);
     });
   }
 
-  QueryBuilder<WarehouseTransferModel, WarehouseTransferModel,
-      QAfterFilterCondition> itemsLengthGreaterThan(
-    int length, {
-    bool include = false,
-  }) {
+  QueryBuilder<
+    WarehouseTransferModel,
+    WarehouseTransferModel,
+    QAfterFilterCondition
+  >
+  itemsLengthLessThan(int length, {bool include = false}) {
     return QueryBuilder.apply(this, (query) {
-      return query.listLength(
-        r'items',
-        length,
-        include,
-        999999,
-        true,
-      );
+      return query.listLength(r'items', 0, true, length, include);
     });
   }
 
-  QueryBuilder<WarehouseTransferModel, WarehouseTransferModel,
-      QAfterFilterCondition> itemsLengthBetween(
+  QueryBuilder<
+    WarehouseTransferModel,
+    WarehouseTransferModel,
+    QAfterFilterCondition
+  >
+  itemsLengthGreaterThan(int length, {bool include = false}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.listLength(r'items', length, include, 999999, true);
+    });
+  }
+
+  QueryBuilder<
+    WarehouseTransferModel,
+    WarehouseTransferModel,
+    QAfterFilterCondition
+  >
+  itemsLengthBetween(
     int lower,
     int upper, {
     bool includeLower = true,
@@ -1542,72 +1874,99 @@ extension WarehouseTransferModelQueryFilter on QueryBuilder<
     });
   }
 
-  QueryBuilder<WarehouseTransferModel, WarehouseTransferModel,
-      QAfterFilterCondition> remarksIsNull() {
+  QueryBuilder<
+    WarehouseTransferModel,
+    WarehouseTransferModel,
+    QAfterFilterCondition
+  >
+  remarksIsNull() {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const FilterCondition.isNull(
-        property: r'remarks',
-      ));
+      return query.addFilterCondition(
+        const FilterCondition.isNull(property: r'remarks'),
+      );
     });
   }
 
-  QueryBuilder<WarehouseTransferModel, WarehouseTransferModel,
-      QAfterFilterCondition> remarksIsNotNull() {
+  QueryBuilder<
+    WarehouseTransferModel,
+    WarehouseTransferModel,
+    QAfterFilterCondition
+  >
+  remarksIsNotNull() {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const FilterCondition.isNotNull(
-        property: r'remarks',
-      ));
+      return query.addFilterCondition(
+        const FilterCondition.isNotNull(property: r'remarks'),
+      );
     });
   }
 
-  QueryBuilder<WarehouseTransferModel, WarehouseTransferModel,
-      QAfterFilterCondition> remarksEqualTo(
-    String? value, {
-    bool caseSensitive = true,
-  }) {
+  QueryBuilder<
+    WarehouseTransferModel,
+    WarehouseTransferModel,
+    QAfterFilterCondition
+  >
+  remarksEqualTo(String? value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'remarks',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.equalTo(
+          property: r'remarks',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
-  QueryBuilder<WarehouseTransferModel, WarehouseTransferModel,
-      QAfterFilterCondition> remarksGreaterThan(
+  QueryBuilder<
+    WarehouseTransferModel,
+    WarehouseTransferModel,
+    QAfterFilterCondition
+  >
+  remarksGreaterThan(
     String? value, {
     bool include = false,
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        include: include,
-        property: r'remarks',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.greaterThan(
+          include: include,
+          property: r'remarks',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
-  QueryBuilder<WarehouseTransferModel, WarehouseTransferModel,
-      QAfterFilterCondition> remarksLessThan(
+  QueryBuilder<
+    WarehouseTransferModel,
+    WarehouseTransferModel,
+    QAfterFilterCondition
+  >
+  remarksLessThan(
     String? value, {
     bool include = false,
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.lessThan(
-        include: include,
-        property: r'remarks',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.lessThan(
+          include: include,
+          property: r'remarks',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
-  QueryBuilder<WarehouseTransferModel, WarehouseTransferModel,
-      QAfterFilterCondition> remarksBetween(
+  QueryBuilder<
+    WarehouseTransferModel,
+    WarehouseTransferModel,
+    QAfterFilterCondition
+  >
+  remarksBetween(
     String? lower,
     String? upper, {
     bool includeLower = true,
@@ -1615,155 +1974,206 @@ extension WarehouseTransferModelQueryFilter on QueryBuilder<
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.between(
-        property: r'remarks',
-        lower: lower,
-        includeLower: includeLower,
-        upper: upper,
-        includeUpper: includeUpper,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.between(
+          property: r'remarks',
+          lower: lower,
+          includeLower: includeLower,
+          upper: upper,
+          includeUpper: includeUpper,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
-  QueryBuilder<WarehouseTransferModel, WarehouseTransferModel,
-      QAfterFilterCondition> remarksStartsWith(
-    String value, {
-    bool caseSensitive = true,
-  }) {
+  QueryBuilder<
+    WarehouseTransferModel,
+    WarehouseTransferModel,
+    QAfterFilterCondition
+  >
+  remarksStartsWith(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.startsWith(
-        property: r'remarks',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.startsWith(
+          property: r'remarks',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
-  QueryBuilder<WarehouseTransferModel, WarehouseTransferModel,
-      QAfterFilterCondition> remarksEndsWith(
-    String value, {
-    bool caseSensitive = true,
-  }) {
+  QueryBuilder<
+    WarehouseTransferModel,
+    WarehouseTransferModel,
+    QAfterFilterCondition
+  >
+  remarksEndsWith(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.endsWith(
-        property: r'remarks',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.endsWith(
+          property: r'remarks',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
-  QueryBuilder<WarehouseTransferModel, WarehouseTransferModel,
-          QAfterFilterCondition>
-      remarksContains(String value, {bool caseSensitive = true}) {
+  QueryBuilder<
+    WarehouseTransferModel,
+    WarehouseTransferModel,
+    QAfterFilterCondition
+  >
+  remarksContains(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.contains(
-        property: r'remarks',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.contains(
+          property: r'remarks',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
-  QueryBuilder<WarehouseTransferModel, WarehouseTransferModel,
-          QAfterFilterCondition>
-      remarksMatches(String pattern, {bool caseSensitive = true}) {
+  QueryBuilder<
+    WarehouseTransferModel,
+    WarehouseTransferModel,
+    QAfterFilterCondition
+  >
+  remarksMatches(String pattern, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.matches(
-        property: r'remarks',
-        wildcard: pattern,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.matches(
+          property: r'remarks',
+          wildcard: pattern,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
-  QueryBuilder<WarehouseTransferModel, WarehouseTransferModel,
-      QAfterFilterCondition> remarksIsEmpty() {
+  QueryBuilder<
+    WarehouseTransferModel,
+    WarehouseTransferModel,
+    QAfterFilterCondition
+  >
+  remarksIsEmpty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'remarks',
-        value: '',
-      ));
+      return query.addFilterCondition(
+        FilterCondition.equalTo(property: r'remarks', value: ''),
+      );
     });
   }
 
-  QueryBuilder<WarehouseTransferModel, WarehouseTransferModel,
-      QAfterFilterCondition> remarksIsNotEmpty() {
+  QueryBuilder<
+    WarehouseTransferModel,
+    WarehouseTransferModel,
+    QAfterFilterCondition
+  >
+  remarksIsNotEmpty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        property: r'remarks',
-        value: '',
-      ));
+      return query.addFilterCondition(
+        FilterCondition.greaterThan(property: r'remarks', value: ''),
+      );
     });
   }
 
-  QueryBuilder<WarehouseTransferModel, WarehouseTransferModel,
-      QAfterFilterCondition> sourceWarehouseIdIsNull() {
+  QueryBuilder<
+    WarehouseTransferModel,
+    WarehouseTransferModel,
+    QAfterFilterCondition
+  >
+  sourceWarehouseIdIsNull() {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const FilterCondition.isNull(
-        property: r'sourceWarehouseId',
-      ));
+      return query.addFilterCondition(
+        const FilterCondition.isNull(property: r'sourceWarehouseId'),
+      );
     });
   }
 
-  QueryBuilder<WarehouseTransferModel, WarehouseTransferModel,
-      QAfterFilterCondition> sourceWarehouseIdIsNotNull() {
+  QueryBuilder<
+    WarehouseTransferModel,
+    WarehouseTransferModel,
+    QAfterFilterCondition
+  >
+  sourceWarehouseIdIsNotNull() {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const FilterCondition.isNotNull(
-        property: r'sourceWarehouseId',
-      ));
+      return query.addFilterCondition(
+        const FilterCondition.isNotNull(property: r'sourceWarehouseId'),
+      );
     });
   }
 
-  QueryBuilder<WarehouseTransferModel, WarehouseTransferModel,
-      QAfterFilterCondition> sourceWarehouseIdEqualTo(
-    String? value, {
-    bool caseSensitive = true,
-  }) {
+  QueryBuilder<
+    WarehouseTransferModel,
+    WarehouseTransferModel,
+    QAfterFilterCondition
+  >
+  sourceWarehouseIdEqualTo(String? value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'sourceWarehouseId',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.equalTo(
+          property: r'sourceWarehouseId',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
-  QueryBuilder<WarehouseTransferModel, WarehouseTransferModel,
-      QAfterFilterCondition> sourceWarehouseIdGreaterThan(
+  QueryBuilder<
+    WarehouseTransferModel,
+    WarehouseTransferModel,
+    QAfterFilterCondition
+  >
+  sourceWarehouseIdGreaterThan(
     String? value, {
     bool include = false,
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        include: include,
-        property: r'sourceWarehouseId',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.greaterThan(
+          include: include,
+          property: r'sourceWarehouseId',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
-  QueryBuilder<WarehouseTransferModel, WarehouseTransferModel,
-      QAfterFilterCondition> sourceWarehouseIdLessThan(
+  QueryBuilder<
+    WarehouseTransferModel,
+    WarehouseTransferModel,
+    QAfterFilterCondition
+  >
+  sourceWarehouseIdLessThan(
     String? value, {
     bool include = false,
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.lessThan(
-        include: include,
-        property: r'sourceWarehouseId',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.lessThan(
+          include: include,
+          property: r'sourceWarehouseId',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
-  QueryBuilder<WarehouseTransferModel, WarehouseTransferModel,
-      QAfterFilterCondition> sourceWarehouseIdBetween(
+  QueryBuilder<
+    WarehouseTransferModel,
+    WarehouseTransferModel,
+    QAfterFilterCondition
+  >
+  sourceWarehouseIdBetween(
     String? lower,
     String? upper, {
     bool includeLower = true,
@@ -1771,137 +2181,180 @@ extension WarehouseTransferModelQueryFilter on QueryBuilder<
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.between(
-        property: r'sourceWarehouseId',
-        lower: lower,
-        includeLower: includeLower,
-        upper: upper,
-        includeUpper: includeUpper,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.between(
+          property: r'sourceWarehouseId',
+          lower: lower,
+          includeLower: includeLower,
+          upper: upper,
+          includeUpper: includeUpper,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
-  QueryBuilder<WarehouseTransferModel, WarehouseTransferModel,
-      QAfterFilterCondition> sourceWarehouseIdStartsWith(
-    String value, {
-    bool caseSensitive = true,
-  }) {
+  QueryBuilder<
+    WarehouseTransferModel,
+    WarehouseTransferModel,
+    QAfterFilterCondition
+  >
+  sourceWarehouseIdStartsWith(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.startsWith(
-        property: r'sourceWarehouseId',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.startsWith(
+          property: r'sourceWarehouseId',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
-  QueryBuilder<WarehouseTransferModel, WarehouseTransferModel,
-      QAfterFilterCondition> sourceWarehouseIdEndsWith(
-    String value, {
-    bool caseSensitive = true,
-  }) {
+  QueryBuilder<
+    WarehouseTransferModel,
+    WarehouseTransferModel,
+    QAfterFilterCondition
+  >
+  sourceWarehouseIdEndsWith(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.endsWith(
-        property: r'sourceWarehouseId',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.endsWith(
+          property: r'sourceWarehouseId',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
-  QueryBuilder<WarehouseTransferModel, WarehouseTransferModel,
-          QAfterFilterCondition>
-      sourceWarehouseIdContains(String value, {bool caseSensitive = true}) {
+  QueryBuilder<
+    WarehouseTransferModel,
+    WarehouseTransferModel,
+    QAfterFilterCondition
+  >
+  sourceWarehouseIdContains(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.contains(
-        property: r'sourceWarehouseId',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.contains(
+          property: r'sourceWarehouseId',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
-  QueryBuilder<WarehouseTransferModel, WarehouseTransferModel,
-          QAfterFilterCondition>
-      sourceWarehouseIdMatches(String pattern, {bool caseSensitive = true}) {
+  QueryBuilder<
+    WarehouseTransferModel,
+    WarehouseTransferModel,
+    QAfterFilterCondition
+  >
+  sourceWarehouseIdMatches(String pattern, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.matches(
-        property: r'sourceWarehouseId',
-        wildcard: pattern,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.matches(
+          property: r'sourceWarehouseId',
+          wildcard: pattern,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
-  QueryBuilder<WarehouseTransferModel, WarehouseTransferModel,
-      QAfterFilterCondition> sourceWarehouseIdIsEmpty() {
+  QueryBuilder<
+    WarehouseTransferModel,
+    WarehouseTransferModel,
+    QAfterFilterCondition
+  >
+  sourceWarehouseIdIsEmpty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'sourceWarehouseId',
-        value: '',
-      ));
+      return query.addFilterCondition(
+        FilterCondition.equalTo(property: r'sourceWarehouseId', value: ''),
+      );
     });
   }
 
-  QueryBuilder<WarehouseTransferModel, WarehouseTransferModel,
-      QAfterFilterCondition> sourceWarehouseIdIsNotEmpty() {
+  QueryBuilder<
+    WarehouseTransferModel,
+    WarehouseTransferModel,
+    QAfterFilterCondition
+  >
+  sourceWarehouseIdIsNotEmpty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        property: r'sourceWarehouseId',
-        value: '',
-      ));
+      return query.addFilterCondition(
+        FilterCondition.greaterThan(property: r'sourceWarehouseId', value: ''),
+      );
     });
   }
 
-  QueryBuilder<WarehouseTransferModel, WarehouseTransferModel,
-      QAfterFilterCondition> statusEqualTo(
-    TransferStatus value, {
-    bool caseSensitive = true,
-  }) {
+  QueryBuilder<
+    WarehouseTransferModel,
+    WarehouseTransferModel,
+    QAfterFilterCondition
+  >
+  statusEqualTo(TransferStatus value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'status',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.equalTo(
+          property: r'status',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
-  QueryBuilder<WarehouseTransferModel, WarehouseTransferModel,
-      QAfterFilterCondition> statusGreaterThan(
+  QueryBuilder<
+    WarehouseTransferModel,
+    WarehouseTransferModel,
+    QAfterFilterCondition
+  >
+  statusGreaterThan(
     TransferStatus value, {
     bool include = false,
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        include: include,
-        property: r'status',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.greaterThan(
+          include: include,
+          property: r'status',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
-  QueryBuilder<WarehouseTransferModel, WarehouseTransferModel,
-      QAfterFilterCondition> statusLessThan(
+  QueryBuilder<
+    WarehouseTransferModel,
+    WarehouseTransferModel,
+    QAfterFilterCondition
+  >
+  statusLessThan(
     TransferStatus value, {
     bool include = false,
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.lessThan(
-        include: include,
-        property: r'status',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.lessThan(
+          include: include,
+          property: r'status',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
-  QueryBuilder<WarehouseTransferModel, WarehouseTransferModel,
-      QAfterFilterCondition> statusBetween(
+  QueryBuilder<
+    WarehouseTransferModel,
+    WarehouseTransferModel,
+    QAfterFilterCondition
+  >
+  statusBetween(
     TransferStatus lower,
     TransferStatus upper, {
     bool includeLower = true,
@@ -1909,137 +2362,180 @@ extension WarehouseTransferModelQueryFilter on QueryBuilder<
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.between(
-        property: r'status',
-        lower: lower,
-        includeLower: includeLower,
-        upper: upper,
-        includeUpper: includeUpper,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.between(
+          property: r'status',
+          lower: lower,
+          includeLower: includeLower,
+          upper: upper,
+          includeUpper: includeUpper,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
-  QueryBuilder<WarehouseTransferModel, WarehouseTransferModel,
-      QAfterFilterCondition> statusStartsWith(
-    String value, {
-    bool caseSensitive = true,
-  }) {
+  QueryBuilder<
+    WarehouseTransferModel,
+    WarehouseTransferModel,
+    QAfterFilterCondition
+  >
+  statusStartsWith(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.startsWith(
-        property: r'status',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.startsWith(
+          property: r'status',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
-  QueryBuilder<WarehouseTransferModel, WarehouseTransferModel,
-      QAfterFilterCondition> statusEndsWith(
-    String value, {
-    bool caseSensitive = true,
-  }) {
+  QueryBuilder<
+    WarehouseTransferModel,
+    WarehouseTransferModel,
+    QAfterFilterCondition
+  >
+  statusEndsWith(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.endsWith(
-        property: r'status',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.endsWith(
+          property: r'status',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
-  QueryBuilder<WarehouseTransferModel, WarehouseTransferModel,
-          QAfterFilterCondition>
-      statusContains(String value, {bool caseSensitive = true}) {
+  QueryBuilder<
+    WarehouseTransferModel,
+    WarehouseTransferModel,
+    QAfterFilterCondition
+  >
+  statusContains(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.contains(
-        property: r'status',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.contains(
+          property: r'status',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
-  QueryBuilder<WarehouseTransferModel, WarehouseTransferModel,
-          QAfterFilterCondition>
-      statusMatches(String pattern, {bool caseSensitive = true}) {
+  QueryBuilder<
+    WarehouseTransferModel,
+    WarehouseTransferModel,
+    QAfterFilterCondition
+  >
+  statusMatches(String pattern, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.matches(
-        property: r'status',
-        wildcard: pattern,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.matches(
+          property: r'status',
+          wildcard: pattern,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
-  QueryBuilder<WarehouseTransferModel, WarehouseTransferModel,
-      QAfterFilterCondition> statusIsEmpty() {
+  QueryBuilder<
+    WarehouseTransferModel,
+    WarehouseTransferModel,
+    QAfterFilterCondition
+  >
+  statusIsEmpty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'status',
-        value: '',
-      ));
+      return query.addFilterCondition(
+        FilterCondition.equalTo(property: r'status', value: ''),
+      );
     });
   }
 
-  QueryBuilder<WarehouseTransferModel, WarehouseTransferModel,
-      QAfterFilterCondition> statusIsNotEmpty() {
+  QueryBuilder<
+    WarehouseTransferModel,
+    WarehouseTransferModel,
+    QAfterFilterCondition
+  >
+  statusIsNotEmpty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        property: r'status',
-        value: '',
-      ));
+      return query.addFilterCondition(
+        FilterCondition.greaterThan(property: r'status', value: ''),
+      );
     });
   }
 
-  QueryBuilder<WarehouseTransferModel, WarehouseTransferModel,
-      QAfterFilterCondition> syncStatusEqualTo(
-    SyncStatus value, {
-    bool caseSensitive = true,
-  }) {
+  QueryBuilder<
+    WarehouseTransferModel,
+    WarehouseTransferModel,
+    QAfterFilterCondition
+  >
+  syncStatusEqualTo(SyncStatus value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'syncStatus',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.equalTo(
+          property: r'syncStatus',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
-  QueryBuilder<WarehouseTransferModel, WarehouseTransferModel,
-      QAfterFilterCondition> syncStatusGreaterThan(
+  QueryBuilder<
+    WarehouseTransferModel,
+    WarehouseTransferModel,
+    QAfterFilterCondition
+  >
+  syncStatusGreaterThan(
     SyncStatus value, {
     bool include = false,
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        include: include,
-        property: r'syncStatus',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.greaterThan(
+          include: include,
+          property: r'syncStatus',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
-  QueryBuilder<WarehouseTransferModel, WarehouseTransferModel,
-      QAfterFilterCondition> syncStatusLessThan(
+  QueryBuilder<
+    WarehouseTransferModel,
+    WarehouseTransferModel,
+    QAfterFilterCondition
+  >
+  syncStatusLessThan(
     SyncStatus value, {
     bool include = false,
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.lessThan(
-        include: include,
-        property: r'syncStatus',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.lessThan(
+          include: include,
+          property: r'syncStatus',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
-  QueryBuilder<WarehouseTransferModel, WarehouseTransferModel,
-      QAfterFilterCondition> syncStatusBetween(
+  QueryBuilder<
+    WarehouseTransferModel,
+    WarehouseTransferModel,
+    QAfterFilterCondition
+  >
+  syncStatusBetween(
     SyncStatus lower,
     SyncStatus upper, {
     bool includeLower = true,
@@ -2047,137 +2543,180 @@ extension WarehouseTransferModelQueryFilter on QueryBuilder<
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.between(
-        property: r'syncStatus',
-        lower: lower,
-        includeLower: includeLower,
-        upper: upper,
-        includeUpper: includeUpper,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.between(
+          property: r'syncStatus',
+          lower: lower,
+          includeLower: includeLower,
+          upper: upper,
+          includeUpper: includeUpper,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
-  QueryBuilder<WarehouseTransferModel, WarehouseTransferModel,
-      QAfterFilterCondition> syncStatusStartsWith(
-    String value, {
-    bool caseSensitive = true,
-  }) {
+  QueryBuilder<
+    WarehouseTransferModel,
+    WarehouseTransferModel,
+    QAfterFilterCondition
+  >
+  syncStatusStartsWith(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.startsWith(
-        property: r'syncStatus',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.startsWith(
+          property: r'syncStatus',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
-  QueryBuilder<WarehouseTransferModel, WarehouseTransferModel,
-      QAfterFilterCondition> syncStatusEndsWith(
-    String value, {
-    bool caseSensitive = true,
-  }) {
+  QueryBuilder<
+    WarehouseTransferModel,
+    WarehouseTransferModel,
+    QAfterFilterCondition
+  >
+  syncStatusEndsWith(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.endsWith(
-        property: r'syncStatus',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.endsWith(
+          property: r'syncStatus',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
-  QueryBuilder<WarehouseTransferModel, WarehouseTransferModel,
-          QAfterFilterCondition>
-      syncStatusContains(String value, {bool caseSensitive = true}) {
+  QueryBuilder<
+    WarehouseTransferModel,
+    WarehouseTransferModel,
+    QAfterFilterCondition
+  >
+  syncStatusContains(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.contains(
-        property: r'syncStatus',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.contains(
+          property: r'syncStatus',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
-  QueryBuilder<WarehouseTransferModel, WarehouseTransferModel,
-          QAfterFilterCondition>
-      syncStatusMatches(String pattern, {bool caseSensitive = true}) {
+  QueryBuilder<
+    WarehouseTransferModel,
+    WarehouseTransferModel,
+    QAfterFilterCondition
+  >
+  syncStatusMatches(String pattern, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.matches(
-        property: r'syncStatus',
-        wildcard: pattern,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.matches(
+          property: r'syncStatus',
+          wildcard: pattern,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
-  QueryBuilder<WarehouseTransferModel, WarehouseTransferModel,
-      QAfterFilterCondition> syncStatusIsEmpty() {
+  QueryBuilder<
+    WarehouseTransferModel,
+    WarehouseTransferModel,
+    QAfterFilterCondition
+  >
+  syncStatusIsEmpty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'syncStatus',
-        value: '',
-      ));
+      return query.addFilterCondition(
+        FilterCondition.equalTo(property: r'syncStatus', value: ''),
+      );
     });
   }
 
-  QueryBuilder<WarehouseTransferModel, WarehouseTransferModel,
-      QAfterFilterCondition> syncStatusIsNotEmpty() {
+  QueryBuilder<
+    WarehouseTransferModel,
+    WarehouseTransferModel,
+    QAfterFilterCondition
+  >
+  syncStatusIsNotEmpty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        property: r'syncStatus',
-        value: '',
-      ));
+      return query.addFilterCondition(
+        FilterCondition.greaterThan(property: r'syncStatus', value: ''),
+      );
     });
   }
 
-  QueryBuilder<WarehouseTransferModel, WarehouseTransferModel,
-      QAfterFilterCondition> transferNumberEqualTo(
-    String value, {
-    bool caseSensitive = true,
-  }) {
+  QueryBuilder<
+    WarehouseTransferModel,
+    WarehouseTransferModel,
+    QAfterFilterCondition
+  >
+  transferNumberEqualTo(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'transferNumber',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.equalTo(
+          property: r'transferNumber',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
-  QueryBuilder<WarehouseTransferModel, WarehouseTransferModel,
-      QAfterFilterCondition> transferNumberGreaterThan(
+  QueryBuilder<
+    WarehouseTransferModel,
+    WarehouseTransferModel,
+    QAfterFilterCondition
+  >
+  transferNumberGreaterThan(
     String value, {
     bool include = false,
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        include: include,
-        property: r'transferNumber',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.greaterThan(
+          include: include,
+          property: r'transferNumber',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
-  QueryBuilder<WarehouseTransferModel, WarehouseTransferModel,
-      QAfterFilterCondition> transferNumberLessThan(
+  QueryBuilder<
+    WarehouseTransferModel,
+    WarehouseTransferModel,
+    QAfterFilterCondition
+  >
+  transferNumberLessThan(
     String value, {
     bool include = false,
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.lessThan(
-        include: include,
-        property: r'transferNumber',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.lessThan(
+          include: include,
+          property: r'transferNumber',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
-  QueryBuilder<WarehouseTransferModel, WarehouseTransferModel,
-      QAfterFilterCondition> transferNumberBetween(
+  QueryBuilder<
+    WarehouseTransferModel,
+    WarehouseTransferModel,
+    QAfterFilterCondition
+  >
+  transferNumberBetween(
     String lower,
     String upper, {
     bool includeLower = true,
@@ -2185,211 +2724,277 @@ extension WarehouseTransferModelQueryFilter on QueryBuilder<
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.between(
-        property: r'transferNumber',
-        lower: lower,
-        includeLower: includeLower,
-        upper: upper,
-        includeUpper: includeUpper,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.between(
+          property: r'transferNumber',
+          lower: lower,
+          includeLower: includeLower,
+          upper: upper,
+          includeUpper: includeUpper,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
-  QueryBuilder<WarehouseTransferModel, WarehouseTransferModel,
-      QAfterFilterCondition> transferNumberStartsWith(
-    String value, {
-    bool caseSensitive = true,
-  }) {
+  QueryBuilder<
+    WarehouseTransferModel,
+    WarehouseTransferModel,
+    QAfterFilterCondition
+  >
+  transferNumberStartsWith(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.startsWith(
-        property: r'transferNumber',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.startsWith(
+          property: r'transferNumber',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
-  QueryBuilder<WarehouseTransferModel, WarehouseTransferModel,
-      QAfterFilterCondition> transferNumberEndsWith(
-    String value, {
-    bool caseSensitive = true,
-  }) {
+  QueryBuilder<
+    WarehouseTransferModel,
+    WarehouseTransferModel,
+    QAfterFilterCondition
+  >
+  transferNumberEndsWith(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.endsWith(
-        property: r'transferNumber',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.endsWith(
+          property: r'transferNumber',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
-  QueryBuilder<WarehouseTransferModel, WarehouseTransferModel,
-          QAfterFilterCondition>
-      transferNumberContains(String value, {bool caseSensitive = true}) {
+  QueryBuilder<
+    WarehouseTransferModel,
+    WarehouseTransferModel,
+    QAfterFilterCondition
+  >
+  transferNumberContains(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.contains(
-        property: r'transferNumber',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.contains(
+          property: r'transferNumber',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
-  QueryBuilder<WarehouseTransferModel, WarehouseTransferModel,
-          QAfterFilterCondition>
-      transferNumberMatches(String pattern, {bool caseSensitive = true}) {
+  QueryBuilder<
+    WarehouseTransferModel,
+    WarehouseTransferModel,
+    QAfterFilterCondition
+  >
+  transferNumberMatches(String pattern, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.matches(
-        property: r'transferNumber',
-        wildcard: pattern,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.matches(
+          property: r'transferNumber',
+          wildcard: pattern,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
-  QueryBuilder<WarehouseTransferModel, WarehouseTransferModel,
-      QAfterFilterCondition> transferNumberIsEmpty() {
+  QueryBuilder<
+    WarehouseTransferModel,
+    WarehouseTransferModel,
+    QAfterFilterCondition
+  >
+  transferNumberIsEmpty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'transferNumber',
-        value: '',
-      ));
+      return query.addFilterCondition(
+        FilterCondition.equalTo(property: r'transferNumber', value: ''),
+      );
     });
   }
 
-  QueryBuilder<WarehouseTransferModel, WarehouseTransferModel,
-      QAfterFilterCondition> transferNumberIsNotEmpty() {
+  QueryBuilder<
+    WarehouseTransferModel,
+    WarehouseTransferModel,
+    QAfterFilterCondition
+  >
+  transferNumberIsNotEmpty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        property: r'transferNumber',
-        value: '',
-      ));
+      return query.addFilterCondition(
+        FilterCondition.greaterThan(property: r'transferNumber', value: ''),
+      );
     });
   }
 
-  QueryBuilder<WarehouseTransferModel, WarehouseTransferModel,
-      QAfterFilterCondition> updatedAtEqualTo(DateTime value) {
+  QueryBuilder<
+    WarehouseTransferModel,
+    WarehouseTransferModel,
+    QAfterFilterCondition
+  >
+  updatedAtEqualTo(DateTime value) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'updatedAt',
-        value: value,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.equalTo(property: r'updatedAt', value: value),
+      );
     });
   }
 
-  QueryBuilder<WarehouseTransferModel, WarehouseTransferModel,
-      QAfterFilterCondition> updatedAtGreaterThan(
-    DateTime value, {
-    bool include = false,
-  }) {
+  QueryBuilder<
+    WarehouseTransferModel,
+    WarehouseTransferModel,
+    QAfterFilterCondition
+  >
+  updatedAtGreaterThan(DateTime value, {bool include = false}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        include: include,
-        property: r'updatedAt',
-        value: value,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.greaterThan(
+          include: include,
+          property: r'updatedAt',
+          value: value,
+        ),
+      );
     });
   }
 
-  QueryBuilder<WarehouseTransferModel, WarehouseTransferModel,
-      QAfterFilterCondition> updatedAtLessThan(
-    DateTime value, {
-    bool include = false,
-  }) {
+  QueryBuilder<
+    WarehouseTransferModel,
+    WarehouseTransferModel,
+    QAfterFilterCondition
+  >
+  updatedAtLessThan(DateTime value, {bool include = false}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.lessThan(
-        include: include,
-        property: r'updatedAt',
-        value: value,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.lessThan(
+          include: include,
+          property: r'updatedAt',
+          value: value,
+        ),
+      );
     });
   }
 
-  QueryBuilder<WarehouseTransferModel, WarehouseTransferModel,
-      QAfterFilterCondition> updatedAtBetween(
+  QueryBuilder<
+    WarehouseTransferModel,
+    WarehouseTransferModel,
+    QAfterFilterCondition
+  >
+  updatedAtBetween(
     DateTime lower,
     DateTime upper, {
     bool includeLower = true,
     bool includeUpper = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.between(
-        property: r'updatedAt',
-        lower: lower,
-        includeLower: includeLower,
-        upper: upper,
-        includeUpper: includeUpper,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.between(
+          property: r'updatedAt',
+          lower: lower,
+          includeLower: includeLower,
+          upper: upper,
+          includeUpper: includeUpper,
+        ),
+      );
     });
   }
 
-  QueryBuilder<WarehouseTransferModel, WarehouseTransferModel,
-      QAfterFilterCondition> userIdIsNull() {
+  QueryBuilder<
+    WarehouseTransferModel,
+    WarehouseTransferModel,
+    QAfterFilterCondition
+  >
+  userIdIsNull() {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const FilterCondition.isNull(
-        property: r'userId',
-      ));
+      return query.addFilterCondition(
+        const FilterCondition.isNull(property: r'userId'),
+      );
     });
   }
 
-  QueryBuilder<WarehouseTransferModel, WarehouseTransferModel,
-      QAfterFilterCondition> userIdIsNotNull() {
+  QueryBuilder<
+    WarehouseTransferModel,
+    WarehouseTransferModel,
+    QAfterFilterCondition
+  >
+  userIdIsNotNull() {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const FilterCondition.isNotNull(
-        property: r'userId',
-      ));
+      return query.addFilterCondition(
+        const FilterCondition.isNotNull(property: r'userId'),
+      );
     });
   }
 
-  QueryBuilder<WarehouseTransferModel, WarehouseTransferModel,
-      QAfterFilterCondition> userIdEqualTo(
-    String? value, {
-    bool caseSensitive = true,
-  }) {
+  QueryBuilder<
+    WarehouseTransferModel,
+    WarehouseTransferModel,
+    QAfterFilterCondition
+  >
+  userIdEqualTo(String? value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'userId',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.equalTo(
+          property: r'userId',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
-  QueryBuilder<WarehouseTransferModel, WarehouseTransferModel,
-      QAfterFilterCondition> userIdGreaterThan(
+  QueryBuilder<
+    WarehouseTransferModel,
+    WarehouseTransferModel,
+    QAfterFilterCondition
+  >
+  userIdGreaterThan(
     String? value, {
     bool include = false,
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        include: include,
-        property: r'userId',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.greaterThan(
+          include: include,
+          property: r'userId',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
-  QueryBuilder<WarehouseTransferModel, WarehouseTransferModel,
-      QAfterFilterCondition> userIdLessThan(
+  QueryBuilder<
+    WarehouseTransferModel,
+    WarehouseTransferModel,
+    QAfterFilterCondition
+  >
+  userIdLessThan(
     String? value, {
     bool include = false,
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.lessThan(
-        include: include,
-        property: r'userId',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.lessThan(
+          include: include,
+          property: r'userId',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
-  QueryBuilder<WarehouseTransferModel, WarehouseTransferModel,
-      QAfterFilterCondition> userIdBetween(
+  QueryBuilder<
+    WarehouseTransferModel,
+    WarehouseTransferModel,
+    QAfterFilterCondition
+  >
+  userIdBetween(
     String? lower,
     String? upper, {
     bool includeLower = true,
@@ -2397,425 +3002,468 @@ extension WarehouseTransferModelQueryFilter on QueryBuilder<
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.between(
-        property: r'userId',
-        lower: lower,
-        includeLower: includeLower,
-        upper: upper,
-        includeUpper: includeUpper,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.between(
+          property: r'userId',
+          lower: lower,
+          includeLower: includeLower,
+          upper: upper,
+          includeUpper: includeUpper,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
-  QueryBuilder<WarehouseTransferModel, WarehouseTransferModel,
-      QAfterFilterCondition> userIdStartsWith(
-    String value, {
-    bool caseSensitive = true,
-  }) {
+  QueryBuilder<
+    WarehouseTransferModel,
+    WarehouseTransferModel,
+    QAfterFilterCondition
+  >
+  userIdStartsWith(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.startsWith(
-        property: r'userId',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.startsWith(
+          property: r'userId',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
-  QueryBuilder<WarehouseTransferModel, WarehouseTransferModel,
-      QAfterFilterCondition> userIdEndsWith(
-    String value, {
-    bool caseSensitive = true,
-  }) {
+  QueryBuilder<
+    WarehouseTransferModel,
+    WarehouseTransferModel,
+    QAfterFilterCondition
+  >
+  userIdEndsWith(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.endsWith(
-        property: r'userId',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.endsWith(
+          property: r'userId',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
-  QueryBuilder<WarehouseTransferModel, WarehouseTransferModel,
-          QAfterFilterCondition>
-      userIdContains(String value, {bool caseSensitive = true}) {
+  QueryBuilder<
+    WarehouseTransferModel,
+    WarehouseTransferModel,
+    QAfterFilterCondition
+  >
+  userIdContains(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.contains(
-        property: r'userId',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.contains(
+          property: r'userId',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
-  QueryBuilder<WarehouseTransferModel, WarehouseTransferModel,
-          QAfterFilterCondition>
-      userIdMatches(String pattern, {bool caseSensitive = true}) {
+  QueryBuilder<
+    WarehouseTransferModel,
+    WarehouseTransferModel,
+    QAfterFilterCondition
+  >
+  userIdMatches(String pattern, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.matches(
-        property: r'userId',
-        wildcard: pattern,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.matches(
+          property: r'userId',
+          wildcard: pattern,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
-  QueryBuilder<WarehouseTransferModel, WarehouseTransferModel,
-      QAfterFilterCondition> userIdIsEmpty() {
+  QueryBuilder<
+    WarehouseTransferModel,
+    WarehouseTransferModel,
+    QAfterFilterCondition
+  >
+  userIdIsEmpty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'userId',
-        value: '',
-      ));
+      return query.addFilterCondition(
+        FilterCondition.equalTo(property: r'userId', value: ''),
+      );
     });
   }
 
-  QueryBuilder<WarehouseTransferModel, WarehouseTransferModel,
-      QAfterFilterCondition> userIdIsNotEmpty() {
+  QueryBuilder<
+    WarehouseTransferModel,
+    WarehouseTransferModel,
+    QAfterFilterCondition
+  >
+  userIdIsNotEmpty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        property: r'userId',
-        value: '',
-      ));
+      return query.addFilterCondition(
+        FilterCondition.greaterThan(property: r'userId', value: ''),
+      );
     });
   }
 }
 
-extension WarehouseTransferModelQueryObject on QueryBuilder<
-    WarehouseTransferModel, WarehouseTransferModel, QFilterCondition> {
-  QueryBuilder<WarehouseTransferModel, WarehouseTransferModel,
-      QAfterFilterCondition> itemsElement(FilterQuery<TransferItemModel> q) {
+extension WarehouseTransferModelQueryObject
+    on
+        QueryBuilder<
+          WarehouseTransferModel,
+          WarehouseTransferModel,
+          QFilterCondition
+        > {
+  QueryBuilder<
+    WarehouseTransferModel,
+    WarehouseTransferModel,
+    QAfterFilterCondition
+  >
+  itemsElement(FilterQuery<TransferItemModel> q) {
     return QueryBuilder.apply(this, (query) {
       return query.object(q, r'items');
     });
   }
 }
 
-extension WarehouseTransferModelQueryLinks on QueryBuilder<
-    WarehouseTransferModel, WarehouseTransferModel, QFilterCondition> {}
+extension WarehouseTransferModelQueryLinks
+    on
+        QueryBuilder<
+          WarehouseTransferModel,
+          WarehouseTransferModel,
+          QFilterCondition
+        > {}
 
 extension WarehouseTransferModelQuerySortBy
     on QueryBuilder<WarehouseTransferModel, WarehouseTransferModel, QSortBy> {
   QueryBuilder<WarehouseTransferModel, WarehouseTransferModel, QAfterSortBy>
-      sortByCreatedAt() {
+  sortByCreatedAt() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'createdAt', Sort.asc);
     });
   }
 
   QueryBuilder<WarehouseTransferModel, WarehouseTransferModel, QAfterSortBy>
-      sortByCreatedAtDesc() {
+  sortByCreatedAtDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'createdAt', Sort.desc);
     });
   }
 
   QueryBuilder<WarehouseTransferModel, WarehouseTransferModel, QAfterSortBy>
-      sortByDate() {
+  sortByDate() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'date', Sort.asc);
     });
   }
 
   QueryBuilder<WarehouseTransferModel, WarehouseTransferModel, QAfterSortBy>
-      sortByDateDesc() {
+  sortByDateDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'date', Sort.desc);
     });
   }
 
   QueryBuilder<WarehouseTransferModel, WarehouseTransferModel, QAfterSortBy>
-      sortByDestinationWarehouseId() {
+  sortByDestinationWarehouseId() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'destinationWarehouseId', Sort.asc);
     });
   }
 
   QueryBuilder<WarehouseTransferModel, WarehouseTransferModel, QAfterSortBy>
-      sortByDestinationWarehouseIdDesc() {
+  sortByDestinationWarehouseIdDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'destinationWarehouseId', Sort.desc);
     });
   }
 
   QueryBuilder<WarehouseTransferModel, WarehouseTransferModel, QAfterSortBy>
-      sortById() {
+  sortById() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'id', Sort.asc);
     });
   }
 
   QueryBuilder<WarehouseTransferModel, WarehouseTransferModel, QAfterSortBy>
-      sortByIdDesc() {
+  sortByIdDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'id', Sort.desc);
     });
   }
 
   QueryBuilder<WarehouseTransferModel, WarehouseTransferModel, QAfterSortBy>
-      sortByRemarks() {
+  sortByRemarks() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'remarks', Sort.asc);
     });
   }
 
   QueryBuilder<WarehouseTransferModel, WarehouseTransferModel, QAfterSortBy>
-      sortByRemarksDesc() {
+  sortByRemarksDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'remarks', Sort.desc);
     });
   }
 
   QueryBuilder<WarehouseTransferModel, WarehouseTransferModel, QAfterSortBy>
-      sortBySourceWarehouseId() {
+  sortBySourceWarehouseId() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'sourceWarehouseId', Sort.asc);
     });
   }
 
   QueryBuilder<WarehouseTransferModel, WarehouseTransferModel, QAfterSortBy>
-      sortBySourceWarehouseIdDesc() {
+  sortBySourceWarehouseIdDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'sourceWarehouseId', Sort.desc);
     });
   }
 
   QueryBuilder<WarehouseTransferModel, WarehouseTransferModel, QAfterSortBy>
-      sortByStatus() {
+  sortByStatus() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'status', Sort.asc);
     });
   }
 
   QueryBuilder<WarehouseTransferModel, WarehouseTransferModel, QAfterSortBy>
-      sortByStatusDesc() {
+  sortByStatusDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'status', Sort.desc);
     });
   }
 
   QueryBuilder<WarehouseTransferModel, WarehouseTransferModel, QAfterSortBy>
-      sortBySyncStatus() {
+  sortBySyncStatus() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'syncStatus', Sort.asc);
     });
   }
 
   QueryBuilder<WarehouseTransferModel, WarehouseTransferModel, QAfterSortBy>
-      sortBySyncStatusDesc() {
+  sortBySyncStatusDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'syncStatus', Sort.desc);
     });
   }
 
   QueryBuilder<WarehouseTransferModel, WarehouseTransferModel, QAfterSortBy>
-      sortByTransferNumber() {
+  sortByTransferNumber() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'transferNumber', Sort.asc);
     });
   }
 
   QueryBuilder<WarehouseTransferModel, WarehouseTransferModel, QAfterSortBy>
-      sortByTransferNumberDesc() {
+  sortByTransferNumberDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'transferNumber', Sort.desc);
     });
   }
 
   QueryBuilder<WarehouseTransferModel, WarehouseTransferModel, QAfterSortBy>
-      sortByUpdatedAt() {
+  sortByUpdatedAt() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'updatedAt', Sort.asc);
     });
   }
 
   QueryBuilder<WarehouseTransferModel, WarehouseTransferModel, QAfterSortBy>
-      sortByUpdatedAtDesc() {
+  sortByUpdatedAtDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'updatedAt', Sort.desc);
     });
   }
 
   QueryBuilder<WarehouseTransferModel, WarehouseTransferModel, QAfterSortBy>
-      sortByUserId() {
+  sortByUserId() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'userId', Sort.asc);
     });
   }
 
   QueryBuilder<WarehouseTransferModel, WarehouseTransferModel, QAfterSortBy>
-      sortByUserIdDesc() {
+  sortByUserIdDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'userId', Sort.desc);
     });
   }
 }
 
-extension WarehouseTransferModelQuerySortThenBy on QueryBuilder<
-    WarehouseTransferModel, WarehouseTransferModel, QSortThenBy> {
+extension WarehouseTransferModelQuerySortThenBy
+    on
+        QueryBuilder<
+          WarehouseTransferModel,
+          WarehouseTransferModel,
+          QSortThenBy
+        > {
   QueryBuilder<WarehouseTransferModel, WarehouseTransferModel, QAfterSortBy>
-      thenByCreatedAt() {
+  thenByCreatedAt() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'createdAt', Sort.asc);
     });
   }
 
   QueryBuilder<WarehouseTransferModel, WarehouseTransferModel, QAfterSortBy>
-      thenByCreatedAtDesc() {
+  thenByCreatedAtDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'createdAt', Sort.desc);
     });
   }
 
   QueryBuilder<WarehouseTransferModel, WarehouseTransferModel, QAfterSortBy>
-      thenByDate() {
+  thenByDate() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'date', Sort.asc);
     });
   }
 
   QueryBuilder<WarehouseTransferModel, WarehouseTransferModel, QAfterSortBy>
-      thenByDateDesc() {
+  thenByDateDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'date', Sort.desc);
     });
   }
 
   QueryBuilder<WarehouseTransferModel, WarehouseTransferModel, QAfterSortBy>
-      thenByDestinationWarehouseId() {
+  thenByDestinationWarehouseId() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'destinationWarehouseId', Sort.asc);
     });
   }
 
   QueryBuilder<WarehouseTransferModel, WarehouseTransferModel, QAfterSortBy>
-      thenByDestinationWarehouseIdDesc() {
+  thenByDestinationWarehouseIdDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'destinationWarehouseId', Sort.desc);
     });
   }
 
   QueryBuilder<WarehouseTransferModel, WarehouseTransferModel, QAfterSortBy>
-      thenById() {
+  thenById() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'id', Sort.asc);
     });
   }
 
   QueryBuilder<WarehouseTransferModel, WarehouseTransferModel, QAfterSortBy>
-      thenByIdDesc() {
+  thenByIdDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'id', Sort.desc);
     });
   }
 
   QueryBuilder<WarehouseTransferModel, WarehouseTransferModel, QAfterSortBy>
-      thenByIsarId() {
+  thenByIsarId() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'isarId', Sort.asc);
     });
   }
 
   QueryBuilder<WarehouseTransferModel, WarehouseTransferModel, QAfterSortBy>
-      thenByIsarIdDesc() {
+  thenByIsarIdDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'isarId', Sort.desc);
     });
   }
 
   QueryBuilder<WarehouseTransferModel, WarehouseTransferModel, QAfterSortBy>
-      thenByRemarks() {
+  thenByRemarks() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'remarks', Sort.asc);
     });
   }
 
   QueryBuilder<WarehouseTransferModel, WarehouseTransferModel, QAfterSortBy>
-      thenByRemarksDesc() {
+  thenByRemarksDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'remarks', Sort.desc);
     });
   }
 
   QueryBuilder<WarehouseTransferModel, WarehouseTransferModel, QAfterSortBy>
-      thenBySourceWarehouseId() {
+  thenBySourceWarehouseId() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'sourceWarehouseId', Sort.asc);
     });
   }
 
   QueryBuilder<WarehouseTransferModel, WarehouseTransferModel, QAfterSortBy>
-      thenBySourceWarehouseIdDesc() {
+  thenBySourceWarehouseIdDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'sourceWarehouseId', Sort.desc);
     });
   }
 
   QueryBuilder<WarehouseTransferModel, WarehouseTransferModel, QAfterSortBy>
-      thenByStatus() {
+  thenByStatus() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'status', Sort.asc);
     });
   }
 
   QueryBuilder<WarehouseTransferModel, WarehouseTransferModel, QAfterSortBy>
-      thenByStatusDesc() {
+  thenByStatusDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'status', Sort.desc);
     });
   }
 
   QueryBuilder<WarehouseTransferModel, WarehouseTransferModel, QAfterSortBy>
-      thenBySyncStatus() {
+  thenBySyncStatus() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'syncStatus', Sort.asc);
     });
   }
 
   QueryBuilder<WarehouseTransferModel, WarehouseTransferModel, QAfterSortBy>
-      thenBySyncStatusDesc() {
+  thenBySyncStatusDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'syncStatus', Sort.desc);
     });
   }
 
   QueryBuilder<WarehouseTransferModel, WarehouseTransferModel, QAfterSortBy>
-      thenByTransferNumber() {
+  thenByTransferNumber() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'transferNumber', Sort.asc);
     });
   }
 
   QueryBuilder<WarehouseTransferModel, WarehouseTransferModel, QAfterSortBy>
-      thenByTransferNumberDesc() {
+  thenByTransferNumberDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'transferNumber', Sort.desc);
     });
   }
 
   QueryBuilder<WarehouseTransferModel, WarehouseTransferModel, QAfterSortBy>
-      thenByUpdatedAt() {
+  thenByUpdatedAt() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'updatedAt', Sort.asc);
     });
   }
 
   QueryBuilder<WarehouseTransferModel, WarehouseTransferModel, QAfterSortBy>
-      thenByUpdatedAtDesc() {
+  thenByUpdatedAtDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'updatedAt', Sort.desc);
     });
   }
 
   QueryBuilder<WarehouseTransferModel, WarehouseTransferModel, QAfterSortBy>
-      thenByUserId() {
+  thenByUserId() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'userId', Sort.asc);
     });
   }
 
   QueryBuilder<WarehouseTransferModel, WarehouseTransferModel, QAfterSortBy>
-      thenByUserIdDesc() {
+  thenByUserIdDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'userId', Sort.desc);
     });
@@ -2825,88 +3473,99 @@ extension WarehouseTransferModelQuerySortThenBy on QueryBuilder<
 extension WarehouseTransferModelQueryWhereDistinct
     on QueryBuilder<WarehouseTransferModel, WarehouseTransferModel, QDistinct> {
   QueryBuilder<WarehouseTransferModel, WarehouseTransferModel, QDistinct>
-      distinctByCreatedAt() {
+  distinctByCreatedAt() {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'createdAt');
     });
   }
 
   QueryBuilder<WarehouseTransferModel, WarehouseTransferModel, QDistinct>
-      distinctByDate() {
+  distinctByDate() {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'date');
     });
   }
 
   QueryBuilder<WarehouseTransferModel, WarehouseTransferModel, QDistinct>
-      distinctByDestinationWarehouseId({bool caseSensitive = true}) {
+  distinctByDestinationWarehouseId({bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy(r'destinationWarehouseId',
-          caseSensitive: caseSensitive);
+      return query.addDistinctBy(
+        r'destinationWarehouseId',
+        caseSensitive: caseSensitive,
+      );
     });
   }
 
   QueryBuilder<WarehouseTransferModel, WarehouseTransferModel, QDistinct>
-      distinctById({bool caseSensitive = true}) {
+  distinctById({bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'id', caseSensitive: caseSensitive);
     });
   }
 
   QueryBuilder<WarehouseTransferModel, WarehouseTransferModel, QDistinct>
-      distinctByRemarks({bool caseSensitive = true}) {
+  distinctByRemarks({bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'remarks', caseSensitive: caseSensitive);
     });
   }
 
   QueryBuilder<WarehouseTransferModel, WarehouseTransferModel, QDistinct>
-      distinctBySourceWarehouseId({bool caseSensitive = true}) {
+  distinctBySourceWarehouseId({bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy(r'sourceWarehouseId',
-          caseSensitive: caseSensitive);
+      return query.addDistinctBy(
+        r'sourceWarehouseId',
+        caseSensitive: caseSensitive,
+      );
     });
   }
 
   QueryBuilder<WarehouseTransferModel, WarehouseTransferModel, QDistinct>
-      distinctByStatus({bool caseSensitive = true}) {
+  distinctByStatus({bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'status', caseSensitive: caseSensitive);
     });
   }
 
   QueryBuilder<WarehouseTransferModel, WarehouseTransferModel, QDistinct>
-      distinctBySyncStatus({bool caseSensitive = true}) {
+  distinctBySyncStatus({bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'syncStatus', caseSensitive: caseSensitive);
     });
   }
 
   QueryBuilder<WarehouseTransferModel, WarehouseTransferModel, QDistinct>
-      distinctByTransferNumber({bool caseSensitive = true}) {
+  distinctByTransferNumber({bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy(r'transferNumber',
-          caseSensitive: caseSensitive);
+      return query.addDistinctBy(
+        r'transferNumber',
+        caseSensitive: caseSensitive,
+      );
     });
   }
 
   QueryBuilder<WarehouseTransferModel, WarehouseTransferModel, QDistinct>
-      distinctByUpdatedAt() {
+  distinctByUpdatedAt() {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'updatedAt');
     });
   }
 
   QueryBuilder<WarehouseTransferModel, WarehouseTransferModel, QDistinct>
-      distinctByUserId({bool caseSensitive = true}) {
+  distinctByUserId({bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'userId', caseSensitive: caseSensitive);
     });
   }
 }
 
-extension WarehouseTransferModelQueryProperty on QueryBuilder<
-    WarehouseTransferModel, WarehouseTransferModel, QQueryProperty> {
+extension WarehouseTransferModelQueryProperty
+    on
+        QueryBuilder<
+          WarehouseTransferModel,
+          WarehouseTransferModel,
+          QQueryProperty
+        > {
   QueryBuilder<WarehouseTransferModel, int, QQueryOperations> isarIdProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'isarId');
@@ -2914,21 +3573,21 @@ extension WarehouseTransferModelQueryProperty on QueryBuilder<
   }
 
   QueryBuilder<WarehouseTransferModel, DateTime, QQueryOperations>
-      createdAtProperty() {
+  createdAtProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'createdAt');
     });
   }
 
   QueryBuilder<WarehouseTransferModel, DateTime, QQueryOperations>
-      dateProperty() {
+  dateProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'date');
     });
   }
 
   QueryBuilder<WarehouseTransferModel, String?, QQueryOperations>
-      destinationWarehouseIdProperty() {
+  destinationWarehouseIdProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'destinationWarehouseId');
     });
@@ -2940,57 +3599,61 @@ extension WarehouseTransferModelQueryProperty on QueryBuilder<
     });
   }
 
-  QueryBuilder<WarehouseTransferModel, List<TransferItemModel>,
-      QQueryOperations> itemsProperty() {
+  QueryBuilder<
+    WarehouseTransferModel,
+    List<TransferItemModel>,
+    QQueryOperations
+  >
+  itemsProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'items');
     });
   }
 
   QueryBuilder<WarehouseTransferModel, String?, QQueryOperations>
-      remarksProperty() {
+  remarksProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'remarks');
     });
   }
 
   QueryBuilder<WarehouseTransferModel, String?, QQueryOperations>
-      sourceWarehouseIdProperty() {
+  sourceWarehouseIdProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'sourceWarehouseId');
     });
   }
 
   QueryBuilder<WarehouseTransferModel, TransferStatus, QQueryOperations>
-      statusProperty() {
+  statusProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'status');
     });
   }
 
   QueryBuilder<WarehouseTransferModel, SyncStatus, QQueryOperations>
-      syncStatusProperty() {
+  syncStatusProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'syncStatus');
     });
   }
 
   QueryBuilder<WarehouseTransferModel, String, QQueryOperations>
-      transferNumberProperty() {
+  transferNumberProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'transferNumber');
     });
   }
 
   QueryBuilder<WarehouseTransferModel, DateTime, QQueryOperations>
-      updatedAtProperty() {
+  updatedAtProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'updatedAt');
     });
   }
 
   QueryBuilder<WarehouseTransferModel, String?, QQueryOperations>
-      userIdProperty() {
+  userIdProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'userId');
     });
@@ -3008,31 +3671,19 @@ const TransferItemModelSchema = Schema(
   name: r'TransferItemModel',
   id: 2304985567338035632,
   properties: {
-    r'itemId': PropertySchema(
-      id: 0,
-      name: r'itemId',
-      type: IsarType.string,
-    ),
+    r'itemId': PropertySchema(id: 0, name: r'itemId', type: IsarType.string),
     r'itemName': PropertySchema(
       id: 1,
       name: r'itemName',
       type: IsarType.string,
     ),
-    r'note': PropertySchema(
-      id: 2,
-      name: r'note',
-      type: IsarType.string,
-    ),
+    r'note': PropertySchema(id: 2, name: r'note', type: IsarType.string),
     r'quantity': PropertySchema(
       id: 3,
       name: r'quantity',
       type: IsarType.double,
     ),
-    r'unit': PropertySchema(
-      id: 4,
-      name: r'unit',
-      type: IsarType.string,
-    )
+    r'unit': PropertySchema(id: 4, name: r'unit', type: IsarType.string),
   },
   estimateSize: _transferItemModelEstimateSize,
   serialize: _transferItemModelSerialize,
@@ -3116,53 +3767,56 @@ P _transferItemModelDeserializeProp<P>(
 extension TransferItemModelQueryFilter
     on QueryBuilder<TransferItemModel, TransferItemModel, QFilterCondition> {
   QueryBuilder<TransferItemModel, TransferItemModel, QAfterFilterCondition>
-      itemIdEqualTo(
-    String value, {
-    bool caseSensitive = true,
-  }) {
+  itemIdEqualTo(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'itemId',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.equalTo(
+          property: r'itemId',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
   QueryBuilder<TransferItemModel, TransferItemModel, QAfterFilterCondition>
-      itemIdGreaterThan(
-    String value, {
-    bool include = false,
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        include: include,
-        property: r'itemId',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<TransferItemModel, TransferItemModel, QAfterFilterCondition>
-      itemIdLessThan(
+  itemIdGreaterThan(
     String value, {
     bool include = false,
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.lessThan(
-        include: include,
-        property: r'itemId',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.greaterThan(
+          include: include,
+          property: r'itemId',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
   QueryBuilder<TransferItemModel, TransferItemModel, QAfterFilterCondition>
-      itemIdBetween(
+  itemIdLessThan(
+    String value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        FilterCondition.lessThan(
+          include: include,
+          property: r'itemId',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<TransferItemModel, TransferItemModel, QAfterFilterCondition>
+  itemIdBetween(
     String lower,
     String upper, {
     bool includeLower = true,
@@ -3170,135 +3824,140 @@ extension TransferItemModelQueryFilter
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.between(
-        property: r'itemId',
-        lower: lower,
-        includeLower: includeLower,
-        upper: upper,
-        includeUpper: includeUpper,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.between(
+          property: r'itemId',
+          lower: lower,
+          includeLower: includeLower,
+          upper: upper,
+          includeUpper: includeUpper,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
   QueryBuilder<TransferItemModel, TransferItemModel, QAfterFilterCondition>
-      itemIdStartsWith(
-    String value, {
-    bool caseSensitive = true,
-  }) {
+  itemIdStartsWith(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.startsWith(
-        property: r'itemId',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.startsWith(
+          property: r'itemId',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
   QueryBuilder<TransferItemModel, TransferItemModel, QAfterFilterCondition>
-      itemIdEndsWith(
-    String value, {
-    bool caseSensitive = true,
-  }) {
+  itemIdEndsWith(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.endsWith(
-        property: r'itemId',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.endsWith(
+          property: r'itemId',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
   QueryBuilder<TransferItemModel, TransferItemModel, QAfterFilterCondition>
-      itemIdContains(String value, {bool caseSensitive = true}) {
+  itemIdContains(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.contains(
-        property: r'itemId',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.contains(
+          property: r'itemId',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
   QueryBuilder<TransferItemModel, TransferItemModel, QAfterFilterCondition>
-      itemIdMatches(String pattern, {bool caseSensitive = true}) {
+  itemIdMatches(String pattern, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.matches(
-        property: r'itemId',
-        wildcard: pattern,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.matches(
+          property: r'itemId',
+          wildcard: pattern,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
   QueryBuilder<TransferItemModel, TransferItemModel, QAfterFilterCondition>
-      itemIdIsEmpty() {
+  itemIdIsEmpty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'itemId',
-        value: '',
-      ));
+      return query.addFilterCondition(
+        FilterCondition.equalTo(property: r'itemId', value: ''),
+      );
     });
   }
 
   QueryBuilder<TransferItemModel, TransferItemModel, QAfterFilterCondition>
-      itemIdIsNotEmpty() {
+  itemIdIsNotEmpty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        property: r'itemId',
-        value: '',
-      ));
+      return query.addFilterCondition(
+        FilterCondition.greaterThan(property: r'itemId', value: ''),
+      );
     });
   }
 
   QueryBuilder<TransferItemModel, TransferItemModel, QAfterFilterCondition>
-      itemNameEqualTo(
-    String value, {
-    bool caseSensitive = true,
-  }) {
+  itemNameEqualTo(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'itemName',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.equalTo(
+          property: r'itemName',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
   QueryBuilder<TransferItemModel, TransferItemModel, QAfterFilterCondition>
-      itemNameGreaterThan(
-    String value, {
-    bool include = false,
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        include: include,
-        property: r'itemName',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<TransferItemModel, TransferItemModel, QAfterFilterCondition>
-      itemNameLessThan(
+  itemNameGreaterThan(
     String value, {
     bool include = false,
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.lessThan(
-        include: include,
-        property: r'itemName',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.greaterThan(
+          include: include,
+          property: r'itemName',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
   QueryBuilder<TransferItemModel, TransferItemModel, QAfterFilterCondition>
-      itemNameBetween(
+  itemNameLessThan(
+    String value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        FilterCondition.lessThan(
+          include: include,
+          property: r'itemName',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<TransferItemModel, TransferItemModel, QAfterFilterCondition>
+  itemNameBetween(
     String lower,
     String upper, {
     bool includeLower = true,
@@ -3306,153 +3965,158 @@ extension TransferItemModelQueryFilter
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.between(
-        property: r'itemName',
-        lower: lower,
-        includeLower: includeLower,
-        upper: upper,
-        includeUpper: includeUpper,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.between(
+          property: r'itemName',
+          lower: lower,
+          includeLower: includeLower,
+          upper: upper,
+          includeUpper: includeUpper,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
   QueryBuilder<TransferItemModel, TransferItemModel, QAfterFilterCondition>
-      itemNameStartsWith(
-    String value, {
-    bool caseSensitive = true,
-  }) {
+  itemNameStartsWith(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.startsWith(
-        property: r'itemName',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.startsWith(
+          property: r'itemName',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
   QueryBuilder<TransferItemModel, TransferItemModel, QAfterFilterCondition>
-      itemNameEndsWith(
-    String value, {
-    bool caseSensitive = true,
-  }) {
+  itemNameEndsWith(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.endsWith(
-        property: r'itemName',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.endsWith(
+          property: r'itemName',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
   QueryBuilder<TransferItemModel, TransferItemModel, QAfterFilterCondition>
-      itemNameContains(String value, {bool caseSensitive = true}) {
+  itemNameContains(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.contains(
-        property: r'itemName',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.contains(
+          property: r'itemName',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
   QueryBuilder<TransferItemModel, TransferItemModel, QAfterFilterCondition>
-      itemNameMatches(String pattern, {bool caseSensitive = true}) {
+  itemNameMatches(String pattern, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.matches(
-        property: r'itemName',
-        wildcard: pattern,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.matches(
+          property: r'itemName',
+          wildcard: pattern,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
   QueryBuilder<TransferItemModel, TransferItemModel, QAfterFilterCondition>
-      itemNameIsEmpty() {
+  itemNameIsEmpty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'itemName',
-        value: '',
-      ));
+      return query.addFilterCondition(
+        FilterCondition.equalTo(property: r'itemName', value: ''),
+      );
     });
   }
 
   QueryBuilder<TransferItemModel, TransferItemModel, QAfterFilterCondition>
-      itemNameIsNotEmpty() {
+  itemNameIsNotEmpty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        property: r'itemName',
-        value: '',
-      ));
+      return query.addFilterCondition(
+        FilterCondition.greaterThan(property: r'itemName', value: ''),
+      );
     });
   }
 
   QueryBuilder<TransferItemModel, TransferItemModel, QAfterFilterCondition>
-      noteIsNull() {
+  noteIsNull() {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const FilterCondition.isNull(
-        property: r'note',
-      ));
+      return query.addFilterCondition(
+        const FilterCondition.isNull(property: r'note'),
+      );
     });
   }
 
   QueryBuilder<TransferItemModel, TransferItemModel, QAfterFilterCondition>
-      noteIsNotNull() {
+  noteIsNotNull() {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const FilterCondition.isNotNull(
-        property: r'note',
-      ));
+      return query.addFilterCondition(
+        const FilterCondition.isNotNull(property: r'note'),
+      );
     });
   }
 
   QueryBuilder<TransferItemModel, TransferItemModel, QAfterFilterCondition>
-      noteEqualTo(
-    String? value, {
-    bool caseSensitive = true,
-  }) {
+  noteEqualTo(String? value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'note',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.equalTo(
+          property: r'note',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
   QueryBuilder<TransferItemModel, TransferItemModel, QAfterFilterCondition>
-      noteGreaterThan(
-    String? value, {
-    bool include = false,
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        include: include,
-        property: r'note',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<TransferItemModel, TransferItemModel, QAfterFilterCondition>
-      noteLessThan(
+  noteGreaterThan(
     String? value, {
     bool include = false,
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.lessThan(
-        include: include,
-        property: r'note',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.greaterThan(
+          include: include,
+          property: r'note',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
   QueryBuilder<TransferItemModel, TransferItemModel, QAfterFilterCondition>
-      noteBetween(
+  noteLessThan(
+    String? value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        FilterCondition.lessThan(
+          include: include,
+          property: r'note',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<TransferItemModel, TransferItemModel, QAfterFilterCondition>
+  noteBetween(
     String? lower,
     String? upper, {
     bool includeLower = true,
@@ -3460,135 +4124,140 @@ extension TransferItemModelQueryFilter
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.between(
-        property: r'note',
-        lower: lower,
-        includeLower: includeLower,
-        upper: upper,
-        includeUpper: includeUpper,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.between(
+          property: r'note',
+          lower: lower,
+          includeLower: includeLower,
+          upper: upper,
+          includeUpper: includeUpper,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
   QueryBuilder<TransferItemModel, TransferItemModel, QAfterFilterCondition>
-      noteStartsWith(
-    String value, {
-    bool caseSensitive = true,
-  }) {
+  noteStartsWith(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.startsWith(
-        property: r'note',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.startsWith(
+          property: r'note',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
   QueryBuilder<TransferItemModel, TransferItemModel, QAfterFilterCondition>
-      noteEndsWith(
-    String value, {
-    bool caseSensitive = true,
-  }) {
+  noteEndsWith(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.endsWith(
-        property: r'note',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.endsWith(
+          property: r'note',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
   QueryBuilder<TransferItemModel, TransferItemModel, QAfterFilterCondition>
-      noteContains(String value, {bool caseSensitive = true}) {
+  noteContains(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.contains(
-        property: r'note',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.contains(
+          property: r'note',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
   QueryBuilder<TransferItemModel, TransferItemModel, QAfterFilterCondition>
-      noteMatches(String pattern, {bool caseSensitive = true}) {
+  noteMatches(String pattern, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.matches(
-        property: r'note',
-        wildcard: pattern,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.matches(
+          property: r'note',
+          wildcard: pattern,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
   QueryBuilder<TransferItemModel, TransferItemModel, QAfterFilterCondition>
-      noteIsEmpty() {
+  noteIsEmpty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'note',
-        value: '',
-      ));
+      return query.addFilterCondition(
+        FilterCondition.equalTo(property: r'note', value: ''),
+      );
     });
   }
 
   QueryBuilder<TransferItemModel, TransferItemModel, QAfterFilterCondition>
-      noteIsNotEmpty() {
+  noteIsNotEmpty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        property: r'note',
-        value: '',
-      ));
+      return query.addFilterCondition(
+        FilterCondition.greaterThan(property: r'note', value: ''),
+      );
     });
   }
 
   QueryBuilder<TransferItemModel, TransferItemModel, QAfterFilterCondition>
-      quantityEqualTo(
-    double value, {
-    double epsilon = Query.epsilon,
-  }) {
+  quantityEqualTo(double value, {double epsilon = Query.epsilon}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'quantity',
-        value: value,
-        epsilon: epsilon,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.equalTo(
+          property: r'quantity',
+          value: value,
+          epsilon: epsilon,
+        ),
+      );
     });
   }
 
   QueryBuilder<TransferItemModel, TransferItemModel, QAfterFilterCondition>
-      quantityGreaterThan(
-    double value, {
-    bool include = false,
-    double epsilon = Query.epsilon,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        include: include,
-        property: r'quantity',
-        value: value,
-        epsilon: epsilon,
-      ));
-    });
-  }
-
-  QueryBuilder<TransferItemModel, TransferItemModel, QAfterFilterCondition>
-      quantityLessThan(
+  quantityGreaterThan(
     double value, {
     bool include = false,
     double epsilon = Query.epsilon,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.lessThan(
-        include: include,
-        property: r'quantity',
-        value: value,
-        epsilon: epsilon,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.greaterThan(
+          include: include,
+          property: r'quantity',
+          value: value,
+          epsilon: epsilon,
+        ),
+      );
     });
   }
 
   QueryBuilder<TransferItemModel, TransferItemModel, QAfterFilterCondition>
-      quantityBetween(
+  quantityLessThan(
+    double value, {
+    bool include = false,
+    double epsilon = Query.epsilon,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        FilterCondition.lessThan(
+          include: include,
+          property: r'quantity',
+          value: value,
+          epsilon: epsilon,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<TransferItemModel, TransferItemModel, QAfterFilterCondition>
+  quantityBetween(
     double lower,
     double upper, {
     bool includeLower = true,
@@ -3596,83 +4265,88 @@ extension TransferItemModelQueryFilter
     double epsilon = Query.epsilon,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.between(
-        property: r'quantity',
-        lower: lower,
-        includeLower: includeLower,
-        upper: upper,
-        includeUpper: includeUpper,
-        epsilon: epsilon,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.between(
+          property: r'quantity',
+          lower: lower,
+          includeLower: includeLower,
+          upper: upper,
+          includeUpper: includeUpper,
+          epsilon: epsilon,
+        ),
+      );
     });
   }
 
   QueryBuilder<TransferItemModel, TransferItemModel, QAfterFilterCondition>
-      unitIsNull() {
+  unitIsNull() {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const FilterCondition.isNull(
-        property: r'unit',
-      ));
+      return query.addFilterCondition(
+        const FilterCondition.isNull(property: r'unit'),
+      );
     });
   }
 
   QueryBuilder<TransferItemModel, TransferItemModel, QAfterFilterCondition>
-      unitIsNotNull() {
+  unitIsNotNull() {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const FilterCondition.isNotNull(
-        property: r'unit',
-      ));
+      return query.addFilterCondition(
+        const FilterCondition.isNotNull(property: r'unit'),
+      );
     });
   }
 
   QueryBuilder<TransferItemModel, TransferItemModel, QAfterFilterCondition>
-      unitEqualTo(
-    String? value, {
-    bool caseSensitive = true,
-  }) {
+  unitEqualTo(String? value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'unit',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.equalTo(
+          property: r'unit',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
   QueryBuilder<TransferItemModel, TransferItemModel, QAfterFilterCondition>
-      unitGreaterThan(
-    String? value, {
-    bool include = false,
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        include: include,
-        property: r'unit',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<TransferItemModel, TransferItemModel, QAfterFilterCondition>
-      unitLessThan(
+  unitGreaterThan(
     String? value, {
     bool include = false,
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.lessThan(
-        include: include,
-        property: r'unit',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.greaterThan(
+          include: include,
+          property: r'unit',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
   QueryBuilder<TransferItemModel, TransferItemModel, QAfterFilterCondition>
-      unitBetween(
+  unitLessThan(
+    String? value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        FilterCondition.lessThan(
+          include: include,
+          property: r'unit',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<TransferItemModel, TransferItemModel, QAfterFilterCondition>
+  unitBetween(
     String? lower,
     String? upper, {
     bool includeLower = true,
@@ -3680,84 +4354,86 @@ extension TransferItemModelQueryFilter
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.between(
-        property: r'unit',
-        lower: lower,
-        includeLower: includeLower,
-        upper: upper,
-        includeUpper: includeUpper,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.between(
+          property: r'unit',
+          lower: lower,
+          includeLower: includeLower,
+          upper: upper,
+          includeUpper: includeUpper,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
   QueryBuilder<TransferItemModel, TransferItemModel, QAfterFilterCondition>
-      unitStartsWith(
-    String value, {
-    bool caseSensitive = true,
-  }) {
+  unitStartsWith(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.startsWith(
-        property: r'unit',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.startsWith(
+          property: r'unit',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
   QueryBuilder<TransferItemModel, TransferItemModel, QAfterFilterCondition>
-      unitEndsWith(
-    String value, {
-    bool caseSensitive = true,
-  }) {
+  unitEndsWith(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.endsWith(
-        property: r'unit',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.endsWith(
+          property: r'unit',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
   QueryBuilder<TransferItemModel, TransferItemModel, QAfterFilterCondition>
-      unitContains(String value, {bool caseSensitive = true}) {
+  unitContains(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.contains(
-        property: r'unit',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.contains(
+          property: r'unit',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
   QueryBuilder<TransferItemModel, TransferItemModel, QAfterFilterCondition>
-      unitMatches(String pattern, {bool caseSensitive = true}) {
+  unitMatches(String pattern, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.matches(
-        property: r'unit',
-        wildcard: pattern,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.matches(
+          property: r'unit',
+          wildcard: pattern,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
   QueryBuilder<TransferItemModel, TransferItemModel, QAfterFilterCondition>
-      unitIsEmpty() {
+  unitIsEmpty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'unit',
-        value: '',
-      ));
+      return query.addFilterCondition(
+        FilterCondition.equalTo(property: r'unit', value: ''),
+      );
     });
   }
 
   QueryBuilder<TransferItemModel, TransferItemModel, QAfterFilterCondition>
-      unitIsNotEmpty() {
+  unitIsNotEmpty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        property: r'unit',
-        value: '',
-      ));
+      return query.addFilterCondition(
+        FilterCondition.greaterThan(property: r'unit', value: ''),
+      );
     });
   }
 }

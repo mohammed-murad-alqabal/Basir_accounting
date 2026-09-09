@@ -107,7 +107,8 @@ class _CustomersScreenState extends ConsumerState<CustomersScreen> {
       itemBuilder: (context, index) {
         final customer = customers[index];
         return Semantics(
-          label: '${customer.name(isArabic: context.isArabic)}, '
+          label:
+              '${customer.name(isArabic: context.isArabic)}, '
               '${customer.email ?? ""}, '
               '${customer.phone ?? ""}',
           button: true,

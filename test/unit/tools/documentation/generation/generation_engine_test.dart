@@ -118,7 +118,6 @@ void main() {
         filePath: 'empty.dart',
         undocumentedElements: [],
         coveragePercentage: 100,
-        totalElements: 0,
       );
 
       // Act & Assert

@@ -235,10 +235,7 @@ class BasirSidebar extends ConsumerWidget {
               borderRadius: BorderRadius.circular(Radii.sm),
               border: isSelected
                   ? const Border(
-                      right: BorderSide(
-                        color: AppColors.primary,
-                        width: 3,
-                      ),
+                      right: BorderSide(color: AppColors.primary, width: 3),
                     )
                   : null,
             ),
@@ -251,8 +248,9 @@ class BasirSidebar extends ConsumerWidget {
                 Icon(
                   isSelected ? item.selectedIcon : item.icon,
                   size: IconSizes.md,
-                  color:
-                      isSelected ? AppColors.primary : AppColors.textSecondary,
+                  color: isSelected
+                      ? AppColors.primary
+                      : AppColors.textSecondary,
                 ),
                 if (!collapsed) ...[
                   const SizedBox(width: Spacing.sm),
@@ -263,8 +261,9 @@ class BasirSidebar extends ConsumerWidget {
                         color: isSelected
                             ? AppColors.primary
                             : AppColors.textPrimary,
-                        fontWeight:
-                            isSelected ? FontWeights.bold : FontWeights.medium,
+                        fontWeight: isSelected
+                            ? FontWeights.bold
+                            : FontWeights.medium,
                       ),
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
@@ -282,14 +281,14 @@ class BasirSidebar extends ConsumerWidget {
 
   /// ترجمة مفتاح البند إلى التسمية النشطة
   String _labelFor(String key) => switch (key) {
-        'navHome' => l10n.navHome,
-        'navInvoices' => l10n.navInvoices,
-        'navVendors' => l10n.navVendors,
-        'navCustomers' => l10n.navCustomers,
-        'navInventory' => l10n.navInventory,
-        'navAssets' => l10n.navAssets,
-        'navReports' => l10n.navReports,
-        'navSettings' => l10n.navSettings,
-        _ => key,
-      };
+    'navHome' => l10n.navHome,
+    'navInvoices' => l10n.navInvoices,
+    'navVendors' => l10n.navVendors,
+    'navCustomers' => l10n.navCustomers,
+    'navInventory' => l10n.navInventory,
+    'navAssets' => l10n.navAssets,
+    'navReports' => l10n.navReports,
+    'navSettings' => l10n.navSettings,
+    _ => key,
+  };
 }

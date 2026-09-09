@@ -45,7 +45,9 @@ class _GuestUpgradeScreenState extends ConsumerState<GuestUpgradeScreen> {
     });
 
     try {
-      await ref.read(authServiceProvider).convertGuestToUser(
+      await ref
+          .read(authServiceProvider)
+          .convertGuestToUser(
             _usernameController.text.trim(),
             _passwordController.text,
           );

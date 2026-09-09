@@ -98,31 +98,27 @@ class IntelligenceScreen extends ConsumerWidget {
   Widget _buildInsightsSection(
     BuildContext context,
     List<AgentInsight> insights,
-  ) =>
-      Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+  ) => Column(
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: [
+      Row(
         children: [
-          Row(
-            children: [
-              Icon(
-                Icons.psychology,
-                color: Theme.of(context).colorScheme.primary,
-              ),
-              const SizedBox(width: 8),
-              Expanded(
-                child: Text(
-                  'رؤى الوكلاء الأذكياء (Agent Insights)',
-                  style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                        fontWeight: FontWeight.bold,
-                      ),
-                ),
-              ),
-            ],
+          Icon(Icons.psychology, color: Theme.of(context).colorScheme.primary),
+          const SizedBox(width: 8),
+          Expanded(
+            child: Text(
+              'رؤى الوكلاء الأذكياء (Agent Insights)',
+              style: Theme.of(
+                context,
+              ).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold),
+            ),
           ),
-          const SizedBox(height: 12),
-          ...insights.map((insight) => _buildInsightCard(context, insight)),
         ],
-      );
+      ),
+      const SizedBox(height: 12),
+      ...insights.map((insight) => _buildInsightCard(context, insight)),
+    ],
+  );
 
   Widget _buildInsightCard(BuildContext context, AgentInsight insight) {
     // Determine color and icon based on risk and source
@@ -158,24 +154,24 @@ class IntelligenceScreen extends ConsumerWidget {
                     children: [
                       Text(
                         insight.title,
-                        style:
-                            Theme.of(context).textTheme.titleMedium?.copyWith(
-                                  fontWeight: FontWeight.bold,
-                                ),
+                        style: Theme.of(context).textTheme.titleMedium
+                            ?.copyWith(fontWeight: FontWeight.bold),
                       ),
                       Text(
                         _getAgentName(insight.source),
                         style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                              color: Theme.of(context).colorScheme.outline,
-                            ),
+                          color: Theme.of(context).colorScheme.outline,
+                        ),
                       ),
                     ],
                   ),
                 ),
                 if (insight.riskLevel != InsightRiskLevel.info)
                   Container(
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 8,
+                      vertical: 4,
+                    ),
                     decoration: BoxDecoration(
                       color: color.withValues(alpha: 0.1),
                       borderRadius: BorderRadius.circular(12),
@@ -202,16 +198,15 @@ class IntelligenceScreen extends ConsumerWidget {
                     // Navigation logic would go here
                     ScaffoldMessenger.of(context).showSnackBar(
                       SnackBar(
-                        content:
-                            Text('Navigating to ${insight.actionRoute}...'),
+                        content: Text(
+                          'Navigating to ${insight.actionRoute}...',
+                        ),
                       ),
                     );
                   },
                   icon: const Icon(Icons.arrow_forward, size: 16),
                   label: Text(insight.actionLabel!),
-                  style: TextButton.styleFrom(
-                    foregroundColor: color,
-                  ),
+                  style: TextButton.styleFrom(foregroundColor: color),
                 ),
               ),
             ],
@@ -318,9 +313,9 @@ class IntelligenceScreen extends ConsumerWidget {
               '${kpi.value.toStringAsFixed(kpi.unit == 'x' ? 1 : 0)} '
               '${kpi.unit}',
               style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                    fontWeight: FontWeight.bold,
-                    color: color,
-                  ),
+                fontWeight: FontWeight.bold,
+                color: color,
+              ),
             ),
             const SizedBox(height: 4),
             Row(
@@ -346,56 +341,56 @@ class IntelligenceScreen extends ConsumerWidget {
   }
 
   Widget _buildTrendChart(BuildContext context, List<double> trend) => Card(
-        elevation: 2,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-        child: Padding(
-          padding: const EdgeInsets.all(16),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                'اتجاه التدفق النقدي (30 يوم)',
-                style: Theme.of(
-                  context,
-                ).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold),
-              ),
-              const SizedBox(height: 24),
-              SizedBox(
-                height: 200,
-                child: trend.isEmpty
-                    ? const Center(
-                        child: Text('لا توجد بيانات كافية للرسم البياني'),
-                      )
-                    : LineChart(
-                        LineChartData(
-                          gridData: const FlGridData(show: false),
-                          titlesData: const FlTitlesData(show: false),
-                          borderData: FlBorderData(show: false),
-                          lineBarsData: [
-                            LineChartBarData(
-                              spots: trend
-                                  .asMap()
-                                  .entries
-                                  .map((e) => FlSpot(e.key.toDouble(), e.value))
-                                  .toList(),
-                              isCurved: true,
-                              color: Theme.of(context).colorScheme.primary,
-                              barWidth: 4,
-                              isStrokeCapRound: true,
-                              dotData: const FlDotData(show: false),
-                              belowBarData: BarAreaData(
-                                show: true,
-                                color: Theme.of(
-                                  context,
-                                ).colorScheme.primary.withValues(alpha: 0.1),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-              ),
-            ],
+    elevation: 2,
+    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+    child: Padding(
+      padding: const EdgeInsets.all(16),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            'اتجاه التدفق النقدي (30 يوم)',
+            style: Theme.of(
+              context,
+            ).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold),
           ),
-        ),
-      );
+          const SizedBox(height: 24),
+          SizedBox(
+            height: 200,
+            child: trend.isEmpty
+                ? const Center(
+                    child: Text('لا توجد بيانات كافية للرسم البياني'),
+                  )
+                : LineChart(
+                    LineChartData(
+                      gridData: const FlGridData(show: false),
+                      titlesData: const FlTitlesData(show: false),
+                      borderData: FlBorderData(show: false),
+                      lineBarsData: [
+                        LineChartBarData(
+                          spots: trend
+                              .asMap()
+                              .entries
+                              .map((e) => FlSpot(e.key.toDouble(), e.value))
+                              .toList(),
+                          isCurved: true,
+                          color: Theme.of(context).colorScheme.primary,
+                          barWidth: 4,
+                          isStrokeCapRound: true,
+                          dotData: const FlDotData(show: false),
+                          belowBarData: BarAreaData(
+                            show: true,
+                            color: Theme.of(
+                              context,
+                            ).colorScheme.primary.withValues(alpha: 0.1),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+          ),
+        ],
+      ),
+    ),
+  );
 }

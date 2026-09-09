@@ -41,7 +41,8 @@ class ForensicGuardianScreen extends ConsumerWidget {
                 onPressed: () => ref
                     .read(ledgerIntegrityServiceProvider.notifier)
                     .healLedger(),
-                isLoading: health.status == IntegrityStatus.needsHeal &&
+                isLoading:
+                    health.status == IntegrityStatus.needsHeal &&
                     (health.message?.contains('Healing') ?? false),
               ),
             ],
@@ -52,105 +53,101 @@ class ForensicGuardianScreen extends ConsumerWidget {
   }
 
   Widget _buildStatusHeader(LedgerHealth health) => GlassCard(
-        child: Row(
-          children: [
-            Icon(
-              health.status == IntegrityStatus.healthy
-                  ? Icons.gpp_good
-                  : health.status == IntegrityStatus.needsHeal
-                      ? Icons.gpp_maybe
-                      : Icons.gpp_bad,
-              size: 48,
-              color: health.color,
-            ),
-            const SizedBox(width: Spacing.md),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    health.status.toString().split('.').last.toUpperCase(),
-                    style: AppTextStyles.titleLarge.copyWith(
-                      fontWeight: FontWeight.bold,
-                      color: health.color,
-                    ),
-                  ),
-                  Text(
-                    health.message ??
-                        'All systems operational. Ledger integrity verified.',
-                    style: const TextStyle(fontSize: 12),
-                  ),
-                ],
-              ),
-            ),
-          ],
+    child: Row(
+      children: [
+        Icon(
+          health.status == IntegrityStatus.healthy
+              ? Icons.gpp_good
+              : health.status == IntegrityStatus.needsHeal
+              ? Icons.gpp_maybe
+              : Icons.gpp_bad,
+          size: 48,
+          color: health.color,
         ),
-      );
-
-  Widget _buildIntegrityStats(LedgerHealth health) => Row(
-        children: [
-          Expanded(
-            child: _StatTile(
-              label: 'Verified Entries',
-              value: health.verifiedCount.toString(),
-              icon: Icons.history,
-            ),
-          ),
-          const SizedBox(width: Spacing.md),
-          Expanded(
-            child: _StatTile(
-              label: 'Anomalies',
-              value: health.errorCount.toString(),
-              icon: Icons.warning_amber,
-              valueColor: health.errorCount > 0 ? AppColors.error : null,
-            ),
-          ),
-        ],
-      );
-
-  Widget _buildHashChainList() => ListView.builder(
-        shrinkWrap: true,
-        physics: const NeverScrollableScrollPhysics(),
-        itemCount: 5, // Simulated recent blocks
-        itemBuilder: (context, index) => GlassCard(
-          margin: const EdgeInsets.only(bottom: Spacing.sm),
-          padding: const EdgeInsets.all(Spacing.sm),
-          child: Row(
+        const SizedBox(width: Spacing.md),
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Icon(Icons.link, color: AppColors.primary, size: 20),
-              const SizedBox(width: Spacing.sm),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      'Block #${5000 - index}',
-                      style: const TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 12,
-                      ),
-                    ),
-                    Text(
-                      'SHA-256: ${'a1b2c3d4'.padRight(64, '0')}',
-                      style: const TextStyle(
-                        fontSize: 10,
-                        fontFamily: 'monospace',
-                        color: AppColors.textSecondary,
-                      ),
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                  ],
+              Text(
+                health.status.toString().split('.').last.toUpperCase(),
+                style: AppTextStyles.titleLarge.copyWith(
+                  fontWeight: FontWeight.bold,
+                  color: health.color,
                 ),
               ),
-              const Icon(
-                Icons.check_circle,
-                color: AppColors.success,
-                size: 16,
+              Text(
+                health.message ??
+                    'All systems operational. Ledger integrity verified.',
+                style: const TextStyle(fontSize: 12),
               ),
             ],
           ),
         ),
-      );
+      ],
+    ),
+  );
+
+  Widget _buildIntegrityStats(LedgerHealth health) => Row(
+    children: [
+      Expanded(
+        child: _StatTile(
+          label: 'Verified Entries',
+          value: health.verifiedCount.toString(),
+          icon: Icons.history,
+        ),
+      ),
+      const SizedBox(width: Spacing.md),
+      Expanded(
+        child: _StatTile(
+          label: 'Anomalies',
+          value: health.errorCount.toString(),
+          icon: Icons.warning_amber,
+          valueColor: health.errorCount > 0 ? AppColors.error : null,
+        ),
+      ),
+    ],
+  );
+
+  Widget _buildHashChainList() => ListView.builder(
+    shrinkWrap: true,
+    physics: const NeverScrollableScrollPhysics(),
+    itemCount: 5, // Simulated recent blocks
+    itemBuilder: (context, index) => GlassCard(
+      margin: const EdgeInsets.only(bottom: Spacing.sm),
+      padding: const EdgeInsets.all(Spacing.sm),
+      child: Row(
+        children: [
+          const Icon(Icons.link, color: AppColors.primary, size: 20),
+          const SizedBox(width: Spacing.sm),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'Block #${5000 - index}',
+                  style: const TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 12,
+                  ),
+                ),
+                Text(
+                  'SHA-256: ${'a1b2c3d4'.padRight(64, '0')}',
+                  style: const TextStyle(
+                    fontSize: 10,
+                    fontFamily: 'monospace',
+                    color: AppColors.textSecondary,
+                  ),
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ],
+            ),
+          ),
+          const Icon(Icons.check_circle, color: AppColors.success, size: 16),
+        ],
+      ),
+    ),
+  );
 }
 
 class _StatTile extends StatelessWidget {
@@ -168,23 +165,22 @@ class _StatTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => GlassCard(
-        child: Column(
-          children: [
-            Icon(icon, size: 24, color: AppColors.primary),
-            const SizedBox(height: Spacing.xs),
-            Text(
-              value,
-              style: AppTextStyles.titleLarge.copyWith(
-                fontWeight: FontWeight.bold,
-                color: valueColor,
-              ),
-            ),
-            Text(
-              label,
-              style:
-                  const TextStyle(fontSize: 10, color: AppColors.textSecondary),
-            ),
-          ],
+    child: Column(
+      children: [
+        Icon(icon, size: 24, color: AppColors.primary),
+        const SizedBox(height: Spacing.xs),
+        Text(
+          value,
+          style: AppTextStyles.titleLarge.copyWith(
+            fontWeight: FontWeight.bold,
+            color: valueColor,
+          ),
         ),
-      );
+        Text(
+          label,
+          style: const TextStyle(fontSize: 10, color: AppColors.textSecondary),
+        ),
+      ],
+    ),
+  );
 }

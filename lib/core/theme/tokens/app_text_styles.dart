@@ -88,79 +88,79 @@ class AppTextStyles {
   // TextStyles الفعلية
 
   static TextStyle get displayLarge => FontManager.createSafeTextStyle(
-        fontSize: displayLargeSize,
-        fontWeight: bold,
-      );
+    fontSize: displayLargeSize,
+    fontWeight: bold,
+  );
 
   static TextStyle get displayMedium => FontManager.createSafeTextStyle(
-        fontSize: displayMediumSize,
-        fontWeight: bold,
-      );
+    fontSize: displayMediumSize,
+    fontWeight: bold,
+  );
 
   static TextStyle get displaySmall => FontManager.createSafeTextStyle(
-        fontSize: displaySmallSize,
-        fontWeight: bold,
-      );
+    fontSize: displaySmallSize,
+    fontWeight: bold,
+  );
 
   static TextStyle get headlineLarge => FontManager.createSafeTextStyle(
-        fontSize: headlineLargeSize,
-        fontWeight: bold,
-      );
+    fontSize: headlineLargeSize,
+    fontWeight: bold,
+  );
 
   static TextStyle get headlineMedium => FontManager.createSafeTextStyle(
-        fontSize: headlineMediumSize,
-        fontWeight: semiBold,
-      );
+    fontSize: headlineMediumSize,
+    fontWeight: semiBold,
+  );
 
   static TextStyle get headlineSmall => FontManager.createSafeTextStyle(
-        fontSize: headlineSmallSize,
-        fontWeight: semiBold,
-      );
+    fontSize: headlineSmallSize,
+    fontWeight: semiBold,
+  );
 
   static TextStyle get titleLarge => FontManager.createSafeTextStyle(
-        fontSize: titleLargeSize,
-        fontWeight: semiBold,
-      );
+    fontSize: titleLargeSize,
+    fontWeight: semiBold,
+  );
 
   static TextStyle get titleMedium => FontManager.createSafeTextStyle(
-        fontSize: titleMediumSize,
-        fontWeight: medium,
-      );
+    fontSize: titleMediumSize,
+    fontWeight: medium,
+  );
 
   static TextStyle get titleSmall => FontManager.createSafeTextStyle(
-        fontSize: titleSmallSize,
-        fontWeight: medium,
-      );
+    fontSize: titleSmallSize,
+    fontWeight: medium,
+  );
 
   static TextStyle get bodyLarge => FontManager.createSafeTextStyle(
-        fontSize: bodyLargeSize,
-        fontWeight: regular,
-      );
+    fontSize: bodyLargeSize,
+    fontWeight: regular,
+  );
 
   static TextStyle get bodyMedium => FontManager.createSafeTextStyle(
-        fontSize: bodyMediumSize,
-        fontWeight: regular,
-      );
+    fontSize: bodyMediumSize,
+    fontWeight: regular,
+  );
 
   static TextStyle get bodySmall => FontManager.createSafeTextStyle(
-        fontSize: bodySmallSize,
-        fontWeight: regular,
-      );
+    fontSize: bodySmallSize,
+    fontWeight: regular,
+  );
 
   static TextStyle get labelLarge => FontManager.createSafeTextStyle(
-        fontSize: labelLargeSize,
-        fontWeight: medium,
-      );
+    fontSize: labelLargeSize,
+    fontWeight: medium,
+  );
 
   static TextStyle get labelMedium => FontManager.createSafeTextStyle(
-        fontSize: labelMediumSize,
-        fontWeight: medium,
-      );
+    fontSize: labelMediumSize,
+    fontWeight: medium,
+  );
 
   static TextStyle get labelSmall => FontManager.createSafeTextStyle(
-        fontSize: labelSmallSize,
-        fontWeight: medium,
-      );
+    fontSize: labelSmallSize,
+    fontWeight: medium,
+  );
 }
 
 /// Alias for AppTextStyles for compatibility

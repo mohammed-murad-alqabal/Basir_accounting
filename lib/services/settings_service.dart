@@ -32,7 +32,8 @@ class SettingsService {
 
   /// تعيين نسبة الضريبة
   Future<void> setTaxRate(double taxRate) async {
-    final settings = await businessSettingsRepository.getSettings() ??
+    final settings =
+        await businessSettingsRepository.getSettings() ??
         const BusinessSettings(id: 'default', companyName: '');
     await businessSettingsRepository.saveSettings(
       settings.copyWith(
@@ -50,7 +51,8 @@ class SettingsService {
 
   /// تعيين اسم الشركة
   Future<void> setCompanyName(String companyName) async {
-    final settings = await businessSettingsRepository.getSettings() ??
+    final settings =
+        await businessSettingsRepository.getSettings() ??
         BusinessSettings(id: 'default', companyName: companyName);
     await businessSettingsRepository.saveSettings(
       settings.copyWith(
@@ -68,7 +70,8 @@ class SettingsService {
 
   /// تعيين الرقم الضريبي للشركة
   Future<void> setCompanyTaxNumber(String taxNumber) async {
-    final settings = await businessSettingsRepository.getSettings() ??
+    final settings =
+        await businessSettingsRepository.getSettings() ??
         const BusinessSettings(id: 'default', companyName: '');
     await businessSettingsRepository.saveSettings(
       settings.copyWith(
@@ -86,7 +89,8 @@ class SettingsService {
 
   /// تعيين رمز العملة
   Future<void> setCurrencySymbol(String symbol) async {
-    final settings = await businessSettingsRepository.getSettings() ??
+    final settings =
+        await businessSettingsRepository.getSettings() ??
         const BusinessSettings(id: 'default', companyName: '');
     await businessSettingsRepository.saveSettings(
       settings.copyWith(
@@ -104,7 +108,8 @@ class SettingsService {
 
   /// تعيين كود العملة
   Future<void> setCurrencyCode(String code) async {
-    final settings = await businessSettingsRepository.getSettings() ??
+    final settings =
+        await businessSettingsRepository.getSettings() ??
         const BusinessSettings(id: 'default', companyName: '');
     await businessSettingsRepository.saveSettings(
       settings.copyWith(currencyCode: code, syncStatus: SyncStatus.pendingPush),
@@ -181,7 +186,8 @@ class SettingsService {
     String? countryCode,
     String? invoiceStyle,
   }) async {
-    final settings = await businessSettingsRepository.getSettings() ??
+    final settings =
+        await businessSettingsRepository.getSettings() ??
         BusinessSettings(id: 'default', companyName: companyName);
 
     await businessSettingsRepository.saveSettings(

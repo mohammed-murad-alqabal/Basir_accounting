@@ -1,6 +1,6 @@
 import 'package:basir_accounting_system/core/persistence/drift_inventory_shadow_read.dart';
-import 'package:basir_accounting_system/core/persistence/drift_settings_shadow_read.dart';
 import 'package:basir_accounting_system/core/persistence/drift_providers.dart';
+import 'package:basir_accounting_system/core/persistence/drift_settings_shadow_read.dart';
 import 'package:basir_accounting_system/features/inventory/domain/entities/inventory_item.dart';
 import 'package:basir_accounting_system/features/inventory/domain/entities/warehouse.dart';
 import 'package:basir_accounting_system/features/inventory/domain/repositories/warehouse_repository.dart';

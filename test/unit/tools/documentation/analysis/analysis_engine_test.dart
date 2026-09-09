@@ -53,7 +53,6 @@ void main() {
         filePath: 'test.dart',
         undocumentedElements: [],
         coveragePercentage: 100,
-        totalElements: 0,
       );
 
       expect(result.filePath, equals('test.dart'));
@@ -85,7 +84,6 @@ void main() {
         filePath: 'test.dart',
         undocumentedElements: [],
         coveragePercentage: 0,
-        totalElements: 0,
       );
 
       expect(result.coveragePercentage, equals(0.0));
@@ -96,7 +94,6 @@ void main() {
         filePath: 'test.dart',
         undocumentedElements: [],
         coveragePercentage: 100,
-        totalElements: 0,
       );
 
       expect(result.coveragePercentage, equals(100.0));
@@ -316,7 +313,6 @@ void main() {
         filePath: 'documented.dart',
         undocumentedElements: [],
         coveragePercentage: 100,
-        totalElements: 0,
       );
 
       expect(result.undocumentedElements, isEmpty);

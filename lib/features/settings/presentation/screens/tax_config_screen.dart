@@ -19,8 +19,9 @@ class _TaxConfigScreenState extends ConsumerState<TaxConfigScreen> {
   bool _priceIncludesTax = false;
   final _vatNumberController = TextEditingController(text: '300000000000003');
   final _defaultTaxController = TextEditingController(text: '15');
-  final _b2cLabelController =
-      TextEditingController(text: 'Simplified Tax Invoice');
+  final _b2cLabelController = TextEditingController(
+    text: 'Simplified Tax Invoice',
+  );
   final _b2bLabelController = TextEditingController(text: 'Tax Invoice');
 
   @override
@@ -144,53 +145,52 @@ class _TaxConfigScreenState extends ConsumerState<TaxConfigScreen> {
   }
 
   Widget _buildZatcaAlert() => Container(
-        padding: const EdgeInsets.all(Spacing.md),
-        decoration: BoxDecoration(
-          color: Colors.green.withValues(alpha: 0.1),
-          borderRadius: BorderRadius.circular(Spacing.md),
-          border: Border.all(color: Colors.green.withValues(alpha: 0.3)),
-        ),
-        child: Row(
-          children: [
-            const Icon(Icons.verified_user_outlined, color: Colors.green),
-            const SizedBox(width: Spacing.md),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    context.l10n.zatcaPhase2Title,
-                    style: const TextStyle(
-                      fontWeight: FontWeight.bold,
-                      color: Colors.green,
-                    ),
-                  ),
-                  const SizedBox(height: Spacing.xs),
-                  Text(
-                    context.l10n.zatcaPhase2Description,
-                    style: const TextStyle(fontSize: 12),
-                  ),
-                ],
+    padding: const EdgeInsets.all(Spacing.md),
+    decoration: BoxDecoration(
+      color: Colors.green.withValues(alpha: 0.1),
+      borderRadius: BorderRadius.circular(Spacing.md),
+      border: Border.all(color: Colors.green.withValues(alpha: 0.3)),
+    ),
+    child: Row(
+      children: [
+        const Icon(Icons.verified_user_outlined, color: Colors.green),
+        const SizedBox(width: Spacing.md),
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                context.l10n.zatcaPhase2Title,
+                style: const TextStyle(
+                  fontWeight: FontWeight.bold,
+                  color: Colors.green,
+                ),
               ),
-            ),
-          ],
+              const SizedBox(height: Spacing.xs),
+              Text(
+                context.l10n.zatcaPhase2Description,
+                style: const TextStyle(fontSize: 12),
+              ),
+            ],
+          ),
         ),
-      );
+      ],
+    ),
+  );
 
   Widget _buildSectionHeader(String title, IconData icon) => Padding(
-        padding: const EdgeInsets.only(bottom: Spacing.sm, left: Spacing.xs),
-        child: Row(
-          children: [
-            Icon(icon, size: 20, color: Theme.of(context).colorScheme.primary),
-            const SizedBox(width: Spacing.sm),
-            Text(
-              title,
-              style: Theme.of(context)
-                  .textTheme
-                  .titleMedium
-                  ?.copyWith(fontWeight: FontWeight.bold),
-            ),
-          ],
+    padding: const EdgeInsets.only(bottom: Spacing.sm, left: Spacing.xs),
+    child: Row(
+      children: [
+        Icon(icon, size: 20, color: Theme.of(context).colorScheme.primary),
+        const SizedBox(width: Spacing.sm),
+        Text(
+          title,
+          style: Theme.of(
+            context,
+          ).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold),
         ),
-      );
+      ],
+    ),
+  );
 }

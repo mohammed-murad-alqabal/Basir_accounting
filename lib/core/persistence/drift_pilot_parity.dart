@@ -56,10 +56,10 @@ class DriftPilotParityVerifier {
     required MarketPriceMigrationReader marketPriceSource,
     required BarcodeConfigStorage barcodeStorage,
     required MarketPriceStorage marketPriceStorage,
-  })  : _barcodeSource = barcodeSource,
-        _marketPriceSource = marketPriceSource,
-        _barcodeStorage = barcodeStorage,
-        _marketPriceStorage = marketPriceStorage;
+  }) : _barcodeSource = barcodeSource,
+       _marketPriceSource = marketPriceSource,
+       _barcodeStorage = barcodeStorage,
+       _marketPriceStorage = marketPriceStorage;
 
   final BarcodeConfigMigrationReader _barcodeSource;
   final MarketPriceMigrationReader _marketPriceSource;
@@ -117,11 +117,9 @@ class DriftPilotParityVerifier {
   ) async {
     final itemIds = sourcePrices.map((record) => record.itemId).toSet().toList()
       ..sort();
-    final dates = sourcePrices
-        .map((record) => record.asOfDate.toUtc())
-        .toSet()
-        .toList()
-      ..sort();
+    final dates =
+        sourcePrices.map((record) => record.asOfDate.toUtc()).toSet().toList()
+          ..sort();
     final comparisons = <DriftParityComparison>[];
 
     for (final itemId in itemIds) {
@@ -131,8 +129,9 @@ class DriftPilotParityVerifier {
         comparisons.add(
           _comparison(
             scope: 'market-prices/latest/$itemId/${date.toIso8601String()}',
-            expected:
-                expected == null ? const [] : [_canonicalMarketPrice(expected)],
+            expected: expected == null
+                ? const []
+                : [_canonicalMarketPrice(expected)],
             actual: actual == null ? const [] : [_canonicalMarketPrice(actual)],
           ),
         );
@@ -144,11 +143,9 @@ class DriftPilotParityVerifier {
   Future<List<DriftParityComparison>> _verifyValuationQueries(
     List<MarketPriceRecord> sourcePrices,
   ) async {
-    final dates = sourcePrices
-        .map((record) => record.asOfDate.toUtc())
-        .toSet()
-        .toList()
-      ..sort();
+    final dates =
+        sourcePrices.map((record) => record.asOfDate.toUtc()).toSet().toList()
+          ..sort();
     final comparisons = <DriftParityComparison>[];
 
     for (final date in dates) {
@@ -188,14 +185,15 @@ class DriftPilotParityVerifier {
     String itemId,
     DateTime date,
   ) {
-    final matches = records
-        .where(
-          (record) =>
-              record.itemId == itemId &&
-              !record.asOfDate.toUtc().isAfter(date.toUtc()),
-        )
-        .toList()
-      ..sort(_compareLatestRecords);
+    final matches =
+        records
+            .where(
+              (record) =>
+                  record.itemId == itemId &&
+                  !record.asOfDate.toUtc().isAfter(date.toUtc()),
+            )
+            .toList()
+          ..sort(_compareLatestRecords);
     return matches.isEmpty ? null : matches.first;
   }
 
@@ -215,34 +213,33 @@ class DriftPilotParityVerifier {
     required String scope,
     required List<String> expected,
     required List<String> actual,
-  }) =>
-      DriftParityComparison(
-        scope: scope,
-        expectedCount: expected.length,
-        actualCount: actual.length,
-        expectedFingerprint: _fingerprint(expected),
-        actualFingerprint: _fingerprint(actual),
-      );
+  }) => DriftParityComparison(
+    scope: scope,
+    expectedCount: expected.length,
+    actualCount: actual.length,
+    expectedFingerprint: _fingerprint(expected),
+    actualFingerprint: _fingerprint(actual),
+  );
 }
 
 String _canonicalBarcode(BarcodeConfigRecord record) => [
-      record.id,
-      record.printerType,
-      record.columnsPerRow.toString(),
-      record.heightMm.toStringAsPrecision(17),
-      record.widthMm.toStringAsPrecision(17),
-      record.marginMm.toStringAsPrecision(17),
-      record.showItemName.toString(),
-      record.showPrice.toString(),
-    ].join('\u0000');
+  record.id,
+  record.printerType,
+  record.columnsPerRow.toString(),
+  record.heightMm.toStringAsPrecision(17),
+  record.widthMm.toStringAsPrecision(17),
+  record.marginMm.toStringAsPrecision(17),
+  record.showItemName.toString(),
+  record.showPrice.toString(),
+].join('\u0000');
 
 String _canonicalMarketPrice(MarketPriceRecord record) => [
-      record.id,
-      record.itemId,
-      record.price.toStringAsPrecision(17),
-      record.asOfDate.toUtc().toIso8601String(),
-      record.createdAt.toUtc().toIso8601String(),
-    ].join('\u0000');
+  record.id,
+  record.itemId,
+  record.price.toStringAsPrecision(17),
+  record.asOfDate.toUtc().toIso8601String(),
+  record.createdAt.toUtc().toIso8601String(),
+].join('\u0000');
 
 /// بصمة تشخيصية 32-bit ثابتة على Web ولا تصلح لأغراض أمنية أو مصادقة.
 String _fingerprint(List<String> values) {

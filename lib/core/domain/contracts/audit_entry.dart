@@ -135,6 +135,15 @@ class AuditEntry {
     this.referenceId,
   });
 
+  /// يبني حدث التدقيق من تمثيله السلسلةي.
+  factory AuditEntry.fromJson(Map<String, dynamic> json) => AuditEntry(
+    type: AuditEventType.values.firstWhere((type) => type.name == json['type']),
+    operatorName: json['operatorName'] as String,
+    occurredAt: DateTime.parse(json['occurredAt'] as String),
+    reason: json['reason'] as String?,
+    referenceId: json['referenceId'] as String?,
+  );
+
   /// نوع الحدث (إنشاء/تعديل/اعتماد...).
   final AuditEventType type;
 
@@ -156,23 +165,12 @@ class AuditEntry {
 
   /// تمثيل السلسلةية لاستخدام التخزين في Isar.
   Map<String, dynamic> toJson() => {
-        'type': type.name,
-        'operatorName': operatorName,
-        'occurredAt': occurredAt.toIso8601String(),
-        if (reason != null) 'reason': reason,
-        if (referenceId != null) 'referenceId': referenceId,
-      };
-
-  /// يبني حدث التدقيق من تمثيله السلسلةي.
-  factory AuditEntry.fromJson(Map<String, dynamic> json) => AuditEntry(
-        type: AuditEventType.values.firstWhere(
-          (type) => type.name == json['type'],
-        ),
-        operatorName: json['operatorName'] as String,
-        occurredAt: DateTime.parse(json['occurredAt'] as String),
-        reason: json['reason'] as String?,
-        referenceId: json['referenceId'] as String?,
-      );
+    'type': type.name,
+    'operatorName': operatorName,
+    'occurredAt': occurredAt.toIso8601String(),
+    if (reason != null) 'reason': reason,
+    if (referenceId != null) 'referenceId': referenceId,
+  };
 
   @override
   bool operator ==(Object other) =>

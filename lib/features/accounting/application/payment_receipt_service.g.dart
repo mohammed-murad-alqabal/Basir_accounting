@@ -31,14 +31,14 @@ String _$paymentReceiptServiceHash() =>
 @ProviderFor(PaymentReceiptService)
 final paymentReceiptServiceProvider =
     AutoDisposeAsyncNotifierProvider<PaymentReceiptService, void>.internal(
-  PaymentReceiptService.new,
-  name: r'paymentReceiptServiceProvider',
-  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-      ? null
-      : _$paymentReceiptServiceHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
+      PaymentReceiptService.new,
+      name: r'paymentReceiptServiceProvider',
+      debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+          ? null
+          : _$paymentReceiptServiceHash,
+      dependencies: null,
+      allTransitiveDependencies: null,
+    );
 
 typedef _$PaymentReceiptService = AutoDisposeAsyncNotifier<void>;
 // ignore_for_file: type=lint

@@ -71,17 +71,17 @@ class BusinessSettingsModel {
 
   /// التحويل إلى Entity
   BusinessSettings toEntity() => BusinessSettings(
-        id: id,
-        companyName: companyName,
-        taxNumber: taxNumber,
-        address: address,
-        logoUrl: logoUrl,
-        defaultTaxRate: defaultTaxRate,
-        currencyCode: currencyCode,
-        currencySymbol: currencySymbol,
-        userId: userId,
-        syncStatus: syncStatus,
-        serverUpdatedAt: serverUpdatedAt,
-        isDeleted: isDeleted,
-      );
+    id: id,
+    companyName: companyName,
+    taxNumber: taxNumber,
+    address: address,
+    logoUrl: logoUrl,
+    defaultTaxRate: defaultTaxRate,
+    currencyCode: currencyCode,
+    currencySymbol: currencySymbol,
+    userId: userId,
+    syncStatus: syncStatus,
+    serverUpdatedAt: serverUpdatedAt,
+    isDeleted: isDeleted,
+  );
 }

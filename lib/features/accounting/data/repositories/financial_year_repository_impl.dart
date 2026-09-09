@@ -41,8 +41,10 @@ class FinancialYearRepositoryImpl implements FinancialYearRepository {
 
   @override
   Future<List<FinancialYear>> getAllFinancialYears() async {
-    final models =
-        await isar.financialYearModels.filter().userIdEqualTo(userId).findAll();
+    final models = await isar.financialYearModels
+        .filter()
+        .userIdEqualTo(userId)
+        .findAll();
     return models.map((m) => m.toEntity()).toList();
   }
 

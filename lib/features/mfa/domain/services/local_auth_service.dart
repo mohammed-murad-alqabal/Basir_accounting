@@ -133,10 +133,14 @@ class LocalAuthService {
     if (legacy == null) return false;
 
     // تحويل السلسلة النصية إلى مصفوفة
-    final legacyPattern =
-        legacy.split('-').map(int.tryParse).whereType<int>().toList();
+    final legacyPattern = legacy
+        .split('-')
+        .map(int.tryParse)
+        .whereType<int>()
+        .toList();
     if (legacyPattern.isNotEmpty) {
-      final ok = legacyPattern.length == pattern.length &&
+      final ok =
+          legacyPattern.length == pattern.length &&
           List.generate(
             legacyPattern.length,
             (i) => legacyPattern[i] == pattern[i],

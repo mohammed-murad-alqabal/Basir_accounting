@@ -27,21 +27,21 @@ void main() {
       price: 10,
       asOfDate: asOf.subtract(const Duration(days: 1)),
       createdAt: asOf,
-    ));
+    ),);
     await store.upsert(_record(
       id: 'equal-earlier',
       itemId: 'item-a',
       price: 12,
       asOfDate: asOf,
       createdAt: asOf,
-    ));
+    ),);
     await store.upsert(_record(
       id: 'equal-later',
       itemId: 'item-a',
       price: 15,
       asOfDate: asOf,
       createdAt: asOf.add(const Duration(seconds: 1)),
-    ));
+    ),);
 
     final latest = await store.latestForItem('item-a', asOf);
 
@@ -57,14 +57,14 @@ void main() {
       price: 10,
       asOfDate: day.subtract(const Duration(days: 2)),
       createdAt: day,
-    ));
+    ),);
     await store.upsert(_record(
       id: 'two',
       itemId: 'item-a',
       price: 20,
       asOfDate: day.subtract(const Duration(days: 1)),
       createdAt: day,
-    ));
+    ),);
 
     final history = await store.historyForItem('item-a');
 
@@ -80,21 +80,21 @@ void main() {
       price: 10,
       asOfDate: day.subtract(const Duration(days: 1)),
       createdAt: day,
-    ));
+    ),);
     await store.upsert(_record(
       id: 'a-future',
       itemId: 'item-a',
       price: 99,
       asOfDate: day.add(const Duration(days: 1)),
       createdAt: day,
-    ));
+    ),);
     await store.upsert(_record(
       id: 'b-current',
       itemId: 'item-b',
       price: 30,
       asOfDate: day,
       createdAt: day,
-    ));
+    ),);
 
     final prices = await store.latestForAllItems(day);
 
@@ -106,8 +106,8 @@ void main() {
       id: 'price-1',
       itemId: 'item-a',
       price: 10,
-      asOfDate: DateTime.utc(2026, 1, 1),
-      createdAt: DateTime.utc(2026, 1, 1),
+      asOfDate: DateTime.utc(2026),
+      createdAt: DateTime.utc(2026),
     );
     await store.upsert(initial);
     await store.upsert(_record(
@@ -116,7 +116,7 @@ void main() {
       price: 11,
       asOfDate: initial.asOfDate,
       createdAt: initial.createdAt,
-    ));
+    ),);
 
     final rows = await database.select(database.marketPrices).get();
 

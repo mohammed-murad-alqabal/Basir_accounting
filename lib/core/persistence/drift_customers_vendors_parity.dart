@@ -49,10 +49,10 @@ class DriftCustomersVendorsParityVerifier {
     required VendorMigrationReader vendorSource,
     required CustomerStorage customerStorage,
     required VendorStorage vendorStorage,
-  })  : _customerSource = customerSource,
-        _vendorSource = vendorSource,
-        _customerStorage = customerStorage,
-        _vendorStorage = vendorStorage;
+  }) : _customerSource = customerSource,
+       _vendorSource = vendorSource,
+       _customerStorage = customerStorage,
+       _vendorStorage = vendorStorage;
 
   final CustomerMigrationReader _customerSource;
   final VendorMigrationReader _vendorSource;
@@ -68,21 +68,21 @@ class DriftCustomersVendorsParityVerifier {
     return DriftCustomersVendorsParityReport(
       customers: _comparison(
         scope: 'customers/all',
-        expected: _sortCustomers(sourceCustomers)
-            .map(_canonicalCustomer)
-            .toList(growable: false),
-        actual: _sortCustomers(actualCustomers)
-            .map(_canonicalCustomer)
-            .toList(growable: false),
+        expected: _sortCustomers(
+          sourceCustomers,
+        ).map(_canonicalCustomer).toList(growable: false),
+        actual: _sortCustomers(
+          actualCustomers,
+        ).map(_canonicalCustomer).toList(growable: false),
       ),
       vendors: _comparison(
         scope: 'vendors/all',
-        expected: _sortVendors(sourceVendors)
-            .map(_canonicalVendor)
-            .toList(growable: false),
-        actual: _sortVendors(actualVendors)
-            .map(_canonicalVendor)
-            .toList(growable: false),
+        expected: _sortVendors(
+          sourceVendors,
+        ).map(_canonicalVendor).toList(growable: false),
+        actual: _sortVendors(
+          actualVendors,
+        ).map(_canonicalVendor).toList(growable: false),
       ),
       duplicateCustomerKeys: _duplicateKeys(
         sourceCustomers.map((record) => _scopedKey(record.userId, record.id)),
@@ -97,14 +97,13 @@ class DriftCustomersVendorsParityVerifier {
     required String scope,
     required List<String> expected,
     required List<String> actual,
-  }) =>
-      DriftCustomersVendorsParityComparison(
-        scope: scope,
-        expectedCount: expected.length,
-        actualCount: actual.length,
-        expectedFingerprint: _fingerprint(expected),
-        actualFingerprint: _fingerprint(actual),
-      );
+  }) => DriftCustomersVendorsParityComparison(
+    scope: scope,
+    expectedCount: expected.length,
+    actualCount: actual.length,
+    expectedFingerprint: _fingerprint(expected),
+    actualFingerprint: _fingerprint(actual),
+  );
 
   static List<CustomerRecord> _sortCustomers(List<CustomerRecord> records) =>
       [...records]..sort(_compareCustomers);
@@ -114,44 +113,44 @@ class DriftCustomersVendorsParityVerifier {
 }
 
 String _canonicalCustomer(CustomerRecord record) => [
-      record.id,
-      record.nameAr,
-      record.nameEn,
-      _nullable(record.taxNumber),
-      _nullable(record.phone),
-      _nullable(record.email),
-      _nullable(record.address),
-      _nullable(record.notes),
-      record.createdAt.toUtc().toIso8601String(),
-      record.updatedAt.toUtc().toIso8601String(),
-      record.creditLimit.toStringAsPrecision(17),
-      record.balance.toStringAsPrecision(17),
-      _nullable(record.receivableAccountId),
-      _nullable(record.userId),
-      record.syncStatus,
-      _nullable(record.serverUpdatedAt?.toUtc().toIso8601String()),
-      record.isDeleted.toString(),
-    ].join('\u0000');
+  record.id,
+  record.nameAr,
+  record.nameEn,
+  _nullable(record.taxNumber),
+  _nullable(record.phone),
+  _nullable(record.email),
+  _nullable(record.address),
+  _nullable(record.notes),
+  record.createdAt.toUtc().toIso8601String(),
+  record.updatedAt.toUtc().toIso8601String(),
+  record.creditLimit.toStringAsPrecision(17),
+  record.balance.toStringAsPrecision(17),
+  _nullable(record.receivableAccountId),
+  _nullable(record.userId),
+  record.syncStatus,
+  _nullable(record.serverUpdatedAt?.toUtc().toIso8601String()),
+  record.isDeleted.toString(),
+].join('\u0000');
 
 String _canonicalVendor(VendorRecord record) => [
-      record.id,
-      record.nameAr,
-      record.nameEn,
-      _nullable(record.phone),
-      _nullable(record.email),
-      _nullable(record.address),
-      _nullable(record.notes),
-      record.createdAt.toUtc().toIso8601String(),
-      record.updatedAt.toUtc().toIso8601String(),
-      _nullable(record.payableAccountId),
-      _nullable(record.vatNumber),
-      _nullable(record.registrationNumber),
-      record.balance.toStringAsPrecision(17),
-      _nullable(record.userId),
-      record.syncStatus,
-      _nullable(record.serverUpdatedAt?.toUtc().toIso8601String()),
-      record.isDeleted.toString(),
-    ].join('\u0000');
+  record.id,
+  record.nameAr,
+  record.nameEn,
+  _nullable(record.phone),
+  _nullable(record.email),
+  _nullable(record.address),
+  _nullable(record.notes),
+  record.createdAt.toUtc().toIso8601String(),
+  record.updatedAt.toUtc().toIso8601String(),
+  _nullable(record.payableAccountId),
+  _nullable(record.vatNumber),
+  _nullable(record.registrationNumber),
+  record.balance.toStringAsPrecision(17),
+  _nullable(record.userId),
+  record.syncStatus,
+  _nullable(record.serverUpdatedAt?.toUtc().toIso8601String()),
+  record.isDeleted.toString(),
+].join('\u0000');
 
 String _nullable(String? value) => value == null ? '\u0001' : '\u0002$value';
 

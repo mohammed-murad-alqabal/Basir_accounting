@@ -24,8 +24,8 @@ void main() {
   });
 
   test('rejects secret patterns without returning their values', () {
-    final secret = 'ghp_' + '123456789012345678901234';
-    final source = '{"sanitized":true,"token":"$secret"}';
+    const secret = 'ghp_' '123456789012345678901234';
+    const source = '{"sanitized":true,"token":"$secret"}';
 
     final report = DriftSnapshotPreflight.validate(source);
 

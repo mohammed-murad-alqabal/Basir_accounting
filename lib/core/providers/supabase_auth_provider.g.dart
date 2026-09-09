@@ -19,8 +19,9 @@ String _$supabaseAuthHash() => r'79c9d6afa0c0409387592b5bb2cdfd06b4ac9ce7';
 final supabaseAuthProvider = Provider<SupabaseAuthService>.internal(
   supabaseAuth,
   name: r'supabaseAuthProvider',
-  debugGetCreateSourceHash:
-      const bool.fromEnvironment('dart.vm.product') ? null : _$supabaseAuthHash,
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$supabaseAuthHash,
   dependencies: null,
   allTransitiveDependencies: null,
 );
@@ -47,8 +48,9 @@ String _$authStateHash() => r'c14073d271d15a2c32dd13f08daf514c2a5970f1';
 final authStateProvider = StreamProvider<AuthState>.internal(
   authState,
   name: r'authStateProvider',
-  debugGetCreateSourceHash:
-      const bool.fromEnvironment('dart.vm.product') ? null : _$authStateHash,
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$authStateHash,
   dependencies: null,
   allTransitiveDependencies: null,
 );
@@ -66,8 +68,9 @@ String _$currentUserHash() => r'128d56712a53cad1bebf603be1448afe83cf4a72';
 final currentUserProvider = Provider<User?>.internal(
   currentUser,
   name: r'currentUserProvider',
-  debugGetCreateSourceHash:
-      const bool.fromEnvironment('dart.vm.product') ? null : _$currentUserHash,
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$currentUserHash,
   dependencies: null,
   allTransitiveDependencies: null,
 );

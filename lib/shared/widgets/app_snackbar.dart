@@ -2,12 +2,7 @@ import 'package:basir_accounting_system/core/theme/tokens/index.dart';
 import 'package:flutter/material.dart';
 
 /// نوع الرسالة (Snackbar Type)
-enum AppSnackbarType {
-  success,
-  error,
-  warning,
-  info,
-}
+enum AppSnackbarType { success, error, warning, info }
 
 /// رسالة (Snackbar) موحدة للتطبيق
 ///
@@ -20,14 +15,13 @@ abstract final class AppSnackbar {
     String message, {
     String? actionLabel,
     VoidCallback? onActionPressed,
-  }) =>
-      _show(
-        context,
-        message,
-        AppSnackbarType.success,
-        actionLabel,
-        onActionPressed,
-      );
+  }) => _show(
+    context,
+    message,
+    AppSnackbarType.success,
+    actionLabel,
+    onActionPressed,
+  );
 
   /// عرض رسالة خطأ
   static void showError(
@@ -35,14 +29,13 @@ abstract final class AppSnackbar {
     String message, {
     String? actionLabel,
     VoidCallback? onActionPressed,
-  }) =>
-      _show(
-        context,
-        message,
-        AppSnackbarType.error,
-        actionLabel,
-        onActionPressed,
-      );
+  }) => _show(
+    context,
+    message,
+    AppSnackbarType.error,
+    actionLabel,
+    onActionPressed,
+  );
 
   /// عرض رسالة تحذير
   static void showWarning(
@@ -50,14 +43,13 @@ abstract final class AppSnackbar {
     String message, {
     String? actionLabel,
     VoidCallback? onActionPressed,
-  }) =>
-      _show(
-        context,
-        message,
-        AppSnackbarType.warning,
-        actionLabel,
-        onActionPressed,
-      );
+  }) => _show(
+    context,
+    message,
+    AppSnackbarType.warning,
+    actionLabel,
+    onActionPressed,
+  );
 
   /// عرض رسالة معلومات
   static void showInfo(
@@ -65,14 +57,13 @@ abstract final class AppSnackbar {
     String message, {
     String? actionLabel,
     VoidCallback? onActionPressed,
-  }) =>
-      _show(
-        context,
-        message,
-        AppSnackbarType.info,
-        actionLabel,
-        onActionPressed,
-      );
+  }) => _show(
+    context,
+    message,
+    AppSnackbarType.info,
+    actionLabel,
+    onActionPressed,
+  );
 
   static void _show(
     BuildContext context,
@@ -115,17 +106,16 @@ abstract final class AppSnackbar {
             Expanded(
               child: Text(
                 message,
-                style:
-                    AppTextStyles.bodyMedium.copyWith(color: foregroundColor),
+                style: AppTextStyles.bodyMedium.copyWith(
+                  color: foregroundColor,
+                ),
               ),
             ),
           ],
         ),
         backgroundColor: backgroundColor,
         behavior: SnackBarBehavior.floating,
-        shape: const RoundedRectangleBorder(
-          borderRadius: Radii.borderRadiusMd,
-        ),
+        shape: const RoundedRectangleBorder(borderRadius: Radii.borderRadiusMd),
         elevation: Elevation.md,
         action: actionLabel != null && onActionPressed != null
             ? SnackBarAction(

@@ -19,14 +19,14 @@ String _$operationalIntelServiceHash() =>
 @ProviderFor(OperationalIntelService)
 final operationalIntelServiceProvider =
     AsyncNotifierProvider<OperationalIntelService, void>.internal(
-  OperationalIntelService.new,
-  name: r'operationalIntelServiceProvider',
-  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-      ? null
-      : _$operationalIntelServiceHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
+      OperationalIntelService.new,
+      name: r'operationalIntelServiceProvider',
+      debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+          ? null
+          : _$operationalIntelServiceHash,
+      dependencies: null,
+      allTransitiveDependencies: null,
+    );
 
 typedef _$OperationalIntelService = AsyncNotifier<void>;
 // ignore_for_file: type=lint

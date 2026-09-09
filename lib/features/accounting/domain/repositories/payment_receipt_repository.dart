@@ -43,9 +43,7 @@ abstract class PaymentReceiptRepository {
   /// Retrieves all payment receipts with a specific status.
   ///
   /// Results are ordered by receipt date (descending).
-  Future<List<PaymentReceipt>> getReceiptsByStatus(
-    PaymentStatus status,
-  );
+  Future<List<PaymentReceipt>> getReceiptsByStatus(PaymentStatus status);
 
   /// Retrieves all payment receipts in the system.
   ///
@@ -132,9 +130,7 @@ abstract class PaymentVoucherRepository {
   /// Retrieves all payment vouchers with a specific status.
   ///
   /// Results are ordered by payment date (descending).
-  Future<List<PaymentVoucher>> getVouchersByStatus(
-    PaymentStatus status,
-  );
+  Future<List<PaymentVoucher>> getVouchersByStatus(PaymentStatus status);
 
   /// Retrieves all payment vouchers in the system.
   ///
