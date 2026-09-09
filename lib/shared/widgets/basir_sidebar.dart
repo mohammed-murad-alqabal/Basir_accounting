@@ -82,6 +82,7 @@ class BasirSidebar extends ConsumerWidget {
     required this.l10n,
     super.key,
     this.items = basirSidebarItems,
+    this.onItemSelected,
   });
 
   /// الفهرس النشط حاليًا
@@ -95,6 +96,9 @@ class BasirSidebar extends ConsumerWidget {
 
   /// بنود الشريط (قابلة للتخصيص لاختبارات الوحدات)
   final List<SidebarNavItem> items;
+
+  /// callback موحد لاختيار الوحدة النشطة.
+  final ValueChanged<int>? onItemSelected;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -171,19 +175,23 @@ class BasirSidebar extends ConsumerWidget {
           Semantics(
             button: true,
             label: l10n.shellToggleNav,
-            child: SizedBox(
-              width: TouchTargets.minimum,
-              height: TouchTargets.minimum,
-              child: Center(
-                child: AnimatedRotation(
-                  duration: Durations.fast,
-                  turns: (collapsed && !isRtl) || (!collapsed && isRtl)
-                      ? 0.5
-                      : 0.0,
-                  child: const Icon(
-                    Icons.chevron_left,
-                    color: AppColors.textSecondary,
-                    size: IconSizes.md,
+            child: GestureDetector(
+              onTap: () => ref.read(sidebarCollapsedProvider.notifier).state =
+                  !collapsed,
+              child: SizedBox(
+                width: TouchTargets.minimum,
+                height: TouchTargets.minimum,
+                child: Center(
+                  child: AnimatedRotation(
+                    duration: Durations.fast,
+                    turns: (collapsed && !isRtl) || (!collapsed && isRtl)
+                        ? 0.5
+                        : 0.0,
+                    child: const Icon(
+                      Icons.chevron_left,
+                      color: AppColors.textSecondary,
+                      size: IconSizes.md,
+                    ),
                   ),
                 ),
               ),
@@ -212,7 +220,7 @@ class BasirSidebar extends ConsumerWidget {
       child: Material(
         type: MaterialType.transparency,
         child: InkWell(
-          onTap: () {},
+          onTap: () => onItemSelected?.call(index),
           splashColor: AppColors.primary.withValues(alpha: 0.12),
           child: AnimatedContainer(
             duration: Durations.short,
