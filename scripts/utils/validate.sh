@@ -45,12 +45,12 @@ validate_commit_message() {
     fi
     
     # التحقق من صيغة Conventional Commits
-    local pattern="^(feat|fix|docs|style|refactor|test|chore|perf|ci|build|revert)(\(.+\))?: .+"
+    local pattern="^(feat|fix|docs|style|refactor|test|chore|perf|ci|build|revert|audit)(\(.+\))?: .+"
     
     if [[ ! "$message" =~ $pattern ]]; then
         print_error "رسالة الـ commit لا تتبع صيغة Conventional Commits"
         print_info "الصيغة المطلوبة: type(scope): description"
-        print_info "الأنواع المسموحة: feat, fix, docs, style, refactor, test, chore, perf, ci, build, revert"
+        print_info "الأنواع المسموحة: feat, fix, docs, style, refactor, test, chore, perf, ci, build, revert, audit"
         return 1
     fi
     

@@ -6,7 +6,7 @@
 # دالة مساعدة للتحقق من رسالة commit
 validate_commit_message() {
     local message="$1"
-    local pattern="^(feat|fix|docs|style|refactor|test|chore|perf|ci|build|revert)(\(.+\))?: .{1,}"
+    local pattern="^(feat|fix|docs|style|refactor|test|chore|perf|ci|build|revert|audit)(\(.+\))?: .{1,}"
     
     # تجاهل رسائل merge و revert
     if echo "$message" | grep -qE "^(Merge|Revert)"; then
@@ -22,7 +22,7 @@ validate_commit_message() {
 
 # دالة لتوليد رسالة commit عشوائية صحيحة
 generate_valid_commit_message() {
-    local types=("feat" "fix" "docs" "style" "refactor" "test" "chore" "perf" "ci" "build")
+    local types=("feat" "fix" "docs" "style" "refactor" "test" "chore" "perf" "ci" "build" "audit")
     local scopes=("auth" "invoice" "customer" "core" "ui" "api" "db")
     local descriptions=("add new feature" "fix bug" "update docs" "improve performance" "refactor code")
     
@@ -112,6 +112,8 @@ generate_invalid_commit_message() {
     validate_commit_message "docs: update README"
     validate_commit_message "chore(logs): update logs [skip ci]"
     validate_commit_message "refactor: simplify code structure"
+    validate_commit_message "audit: record control findings"
+    validate_commit_message "audit(ledger): verify posting controls"
 }
 
 @test "Example: رسائل خاطئة محددة" {
