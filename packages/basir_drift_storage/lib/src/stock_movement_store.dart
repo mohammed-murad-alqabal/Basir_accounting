@@ -1,4 +1,5 @@
 import 'package:basir_drift_storage/src/basir_database.dart';
+import 'package:basir_drift_storage/src/storage_contract.dart';
 import 'package:basir_drift_storage/src/user_scope.dart';
 import 'package:drift/drift.dart';
 
@@ -228,6 +229,10 @@ class StockMovementStore implements StockMovementStorage {
       );
 
   static void _validate(StockMovementRecord movement) {
+    DriftStorageContract.validateIdentity(
+      userId: movement.userId,
+      recordId: movement.id,
+    );
     if (movement.id.isEmpty || movement.itemId.isEmpty) {
       throw ArgumentError.value(
         movement,
