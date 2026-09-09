@@ -135,7 +135,8 @@ class AppLocalizationsAr extends AppLocalizations {
   String get errNoItems => 'يرجى إضافة بند واحد على الأقل';
 
   @override
-  String get errPasswordShort => 'كلمة المرور يجب أن تكون 6 أحرف على الأقل';
+  String get errPasswordShort =>
+      'كلمة المرور يجب أن تكون 12 حرفًا على الأقل وتحتوي على أحرف كبيرة وصغيرة وأرقام ورمز خاص';
 
   @override
   String get errPasswordsDoNotMatch => 'كلمات المرور غير متطابقة';
@@ -215,7 +216,7 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get zatcaPhase2Description =>
-      'تكوين الإعدادات الخاصة بك للامتثال للمرحلة الثانية من هيئة الزكاة والضريبة والجمارك السعودية.';
+      'إعداد التكامل للفوترة الإلكترونية؛ لا يُثبت الامتثال قبل نجاح التحقق والإبلاغ الفعليين لدى الهيئة.';
 
   @override
   String get enableTax => 'تمكين الضريبة على الفواتير';
@@ -391,7 +392,7 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get zatcaComplianceText =>
-      'هذه الفاتورة متوافقة مع متطلبات هيئة الزكاة والضريبة والجمارك';
+      'لا تتأكد حالة الفوترة الإلكترونية لدى الهيئة إلا بعد نجاح التكامل والتحقق الفعليين في البيئة المهيأة.';
 
   @override
   String get actionCreateFirstInvoice => 'إنشاء أول فاتورة';
@@ -2352,4 +2353,196 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get workEntityPickerDisabled => 'غير مؤهل للاختيار';
+
+  @override
+  String get bulkWizardTitle => 'تغيير أسعار جماعي';
+
+  @override
+  String get bulkWizardStep1 => '1. النطاق';
+
+  @override
+  String get bulkWizardStep2 => '2. القاعدة';
+
+  @override
+  String get bulkWizardStep3 => '3. المعاينة';
+
+  @override
+  String get bulkWizardStep4 => '4. الاعتماد والتنفيذ';
+
+  @override
+  String get bulkWizardNext => 'التالي';
+
+  @override
+  String get bulkWizardPrevious => 'السابق';
+
+  @override
+  String get bulkWizardFinish => 'إنهاء المعالج';
+
+  @override
+  String get bulkWizardReset => 'تغيير أسعار جديد';
+
+  @override
+  String get bulkScopeAll => 'جميع الأصناف';
+
+  @override
+  String get bulkScopeAllDescription =>
+      'تطبيق القاعدة على كل الأصناف غير المحذوفة';
+
+  @override
+  String get bulkScopeSpecific => 'أصناف محددة';
+
+  @override
+  String get bulkScopeSpecificDescription =>
+      'تحديد الأصناف يدويًا من قائمة المخزون';
+
+  @override
+  String get bulkScopeSelectItems => 'تحديد الأصناف';
+
+  @override
+  String bulkScopeSelectedCount(Object count) {
+    return 'تم تحديد $count صنف';
+  }
+
+  @override
+  String get bulkTargetSale => 'سعر البيع';
+
+  @override
+  String get bulkTargetPurchase => 'سعر الشراء';
+
+  @override
+  String get bulkTargetBoth => 'السعران معًا';
+
+  @override
+  String get bulkTargetLabel => 'السعر المستهدف';
+
+  @override
+  String get bulkRulePercentage => 'نسبة مئوية';
+
+  @override
+  String get bulkRuleFixedAmount => 'مبلغ ثابت';
+
+  @override
+  String get bulkRuleSetTo => 'تعيين قيمة';
+
+  @override
+  String get bulkRuleCopyFromPurchase => 'نسخ من سعر الشراء';
+
+  @override
+  String get bulkRuleValueLabel => 'القيمة';
+
+  @override
+  String get bulkRuleValueHint => 'مثال: 10';
+
+  @override
+  String get bulkRuleValuePositive => 'قيمة موجبة';
+
+  @override
+  String get bulkRuleValueNegative => 'قيمة سالبة';
+
+  @override
+  String get bulkPreviewTitle => 'معاينة أثر التغيير';
+
+  @override
+  String bulkPreviewCount(Object count) {
+    return '$count صنف متضمن';
+  }
+
+  @override
+  String get bulkPreviewBlocked => 'محجوب';
+
+  @override
+  String get bulkPreviewSale => 'سعر البيع';
+
+  @override
+  String get bulkPreviewPurchase => 'سعر الشراء';
+
+  @override
+  String get bulkPreviewNoChanges =>
+      'لا توجد تغييرات صالحة ضمن القاعدة الحالية.';
+
+  @override
+  String get bulkPreviewRefresh => 'تحديث المعاينة';
+
+  @override
+  String get bulkApprovalTitle => 'الاعتماد والتنفيذ';
+
+  @override
+  String get bulkApprovalOperator => 'منفّذ العملية';
+
+  @override
+  String get bulkApprovalReason => 'سبب التغيير';
+
+  @override
+  String get bulkApprovalReasonHint =>
+      'اكتب سببًا موثقًا يوضح دافع التغيير الجماعي';
+
+  @override
+  String get bulkApprovalConfirmLabel =>
+      'أقرّ بفهمي أن هذا التغيير يؤثر على أسعار الأصناف المحددة فور التنفيذ.';
+
+  @override
+  String get bulkApprovalWarning =>
+      'هذا تغيير عالي الأثر ولا يعدّل أرصدة الكميات، مع نافذة إلغاء مفتوحة لمدة 24 ساعة من التنفيذ.';
+
+  @override
+  String get bulkApprovalExecute => 'تنفيذ التغيير';
+
+  @override
+  String get bulkSuccessTitle => 'تم التنفيذ بنجاح';
+
+  @override
+  String bulkSuccessCount(Object count) {
+    return 'تأثر $count صنف بالتغيير';
+  }
+
+  @override
+  String bulkSuccessCancellable(Object hours) {
+    return 'يمكن إلغاء هذا التغيير خلال $hours ساعة من التنفيذ.';
+  }
+
+  @override
+  String get bulkCancellationTitle => 'إلغاء آخر تغيير';
+
+  @override
+  String get bulkCancellationWarning =>
+      'سيُعاد سعر كل صنف متأثر إلى قيمته السابقة ويزال التغيير من سجلات الأسعار.';
+
+  @override
+  String get bulkCancellationExecute => 'إلغاء التغيير';
+
+  @override
+  String get bulkCancellationSuccess =>
+      'أُعيدت الأسعار السابقة بنجاح داخل نافذة الإلغاء.';
+
+  @override
+  String get bulkCancellationExpired =>
+      'انقضت نافذة الإلغاء (24 ساعة) ولا يمكن التراجع عن التغيير.';
+
+  @override
+  String get bulkErrorEmptyScope => 'لا توجد أصناف ضمن النطاق المحدد.';
+
+  @override
+  String get bulkErrorRuleRequired => 'القاعدة غير صالحة، راجع القيم المدخلة.';
+
+  @override
+  String get bulkErrorReasonRequired => 'يتطلب التنفيذ سببًا موثقًا.';
+
+  @override
+  String get bulkErrorOperatorRequired => 'يتطلب التنفيذ اسم منفّذ العملية.';
+
+  @override
+  String get bulkErrorCommitFailed =>
+      'تعذر تنفيذ التغيير، لم تُمسّ بيانات الأصناف.';
+
+  @override
+  String get bulkErrorNotCancellable => 'التغيير خارج نافذة الإلغاء الزمنية.';
+
+  @override
+  String get bulkRuleTypeLabel => 'نوع القاعدة';
+
+  @override
+  String get bulkScopeNoItems => 'لا توجد أصناف في المخزون';
+
+  @override
+  String get bulkApprovalReviewSummary => 'ملخص التغيير قبل التنفيذ';
 }

@@ -1,6 +1,9 @@
 use accounting_core::audit::chain::{compute_record_hash, GENESIS_HASH};
 use accounting_core::audit::models::{AuditAction, AuditMetadata, AuditRecord, WhatInfo};
 use accounting_core::ledger::models::{EntryStatus, JournalEntry};
+use accounting_core::ledger::validation::{
+    validate_balance, validate_currency, validate_has_lines, validate_line_amounts,
+};
 use chrono::Utc;
 use rust_decimal::Decimal;
 use sqlx::PgPool;
@@ -47,10 +50,21 @@ impl PgLedgerRepository {
         entry: &JournalEntry,
         metadata: &AuditMetadata,
     ) -> Result<(), anyhow::Error> {
+        // Repository posting is the final boundary for all business flows. The
+        // native API and sub-ledgers can call this method directly, so enforce
+        // the database-independent invariants here as well as in the core service.
+        if entry.status != EntryStatus::Posted {
+            anyhow::bail!("Only entries in Posted status may be persisted to the ledger");
+        }
+        validate_has_lines(entry).map_err(|error| anyhow::anyhow!(error.to_string()))?;
+        validate_line_amounts(entry).map_err(|error| anyhow::anyhow!(error.to_string()))?;
+        validate_balance(entry).map_err(|error| anyhow::anyhow!(error.to_string()))?;
+        validate_currency(entry).map_err(|error| anyhow::anyhow!(error.to_string()))?;
+
         // 1. Insert Header
         let adjustment_reason_str = entry.adjustment_reason.map(|r| format!("{:?}", r));
 
-        sqlx::query!(
+        let header_insert = sqlx::query!(
             r#"
             INSERT INTO journal_entries (
                 id, entry_number, entry_type, status, 
@@ -59,6 +73,7 @@ impl PgLedgerRepository {
                 linked_entry_id, adjustment_reason
             )
             VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12)
+            ON CONFLICT (id) DO NOTHING
             "#,
             entry.entry_id,
             entry.entry_number,
@@ -75,6 +90,12 @@ impl PgLedgerRepository {
         )
         .execute(&mut *tx)
         .await?;
+
+        // A replay with the same operation UUID has already committed the
+        // header, lines and audit record. Do not append partial duplicates.
+        if header_insert.rows_affected() == 0 {
+            return Ok(());
+        }
 
         // 2. Insert Lines
         for line in &entry.lines {

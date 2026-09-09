@@ -14,6 +14,7 @@ class JournalEntryModel {
   /// إنشاء نموذج من كيان.
   JournalEntryModel.fromEntity(JournalEntry entity) {
     id = entity.id;
+    authoritativeEntryId = entity.authoritativeEntryId;
     referenceNumber = entity.referenceNumber;
     date = entity.date;
     temporal = TemporalJustificationModel.fromEntity(entity.temporal);
@@ -41,8 +42,12 @@ class JournalEntryModel {
   Id? isarId;
 
   /// المعرف الفريد.
-  @Index(unique: true, replace: true)
+  @Index(unique: true, replace: false)
   late String id;
+
+  /// Immutable identifier returned by the authoritative Postgres ledger.
+  @Index(unique: true, replace: true)
+  String? authoritativeEntryId;
 
   /// الرقم المرجعي.
   @Index(unique: true)
@@ -120,6 +125,7 @@ class JournalEntryModel {
   /// تحويل النموذج إلى كيان.
   JournalEntry toEntity() => JournalEntry(
         id: id,
+        authoritativeEntryId: authoritativeEntryId,
         referenceNumber: referenceNumber,
         date: date.toUtc(),
         temporal: temporal.toEntity(),

@@ -23,113 +23,118 @@ const JournalEntryModelSchema = CollectionSchema(
       type: IsarType.objectList,
       target: r'AuditLogEntryModel',
     ),
-    r'createdAt': PropertySchema(
+    r'authoritativeEntryId': PropertySchema(
       id: 1,
+      name: r'authoritativeEntryId',
+      type: IsarType.string,
+    ),
+    r'createdAt': PropertySchema(
+      id: 2,
       name: r'createdAt',
       type: IsarType.dateTime,
     ),
     r'createdBy': PropertySchema(
-      id: 2,
+      id: 3,
       name: r'createdBy',
       type: IsarType.string,
     ),
     r'date': PropertySchema(
-      id: 3,
+      id: 4,
       name: r'date',
       type: IsarType.dateTime,
     ),
     r'description': PropertySchema(
-      id: 4,
+      id: 5,
       name: r'description',
       type: IsarType.string,
     ),
     r'hash': PropertySchema(
-      id: 5,
+      id: 6,
       name: r'hash',
       type: IsarType.string,
     ),
     r'id': PropertySchema(
-      id: 6,
+      id: 7,
       name: r'id',
       type: IsarType.string,
     ),
     r'isDeleted': PropertySchema(
-      id: 7,
+      id: 8,
       name: r'isDeleted',
       type: IsarType.bool,
     ),
     r'lines': PropertySchema(
-      id: 8,
+      id: 9,
       name: r'lines',
       type: IsarType.objectList,
       target: r'JournalEntryLineModel',
     ),
     r'postedAt': PropertySchema(
-      id: 9,
+      id: 10,
       name: r'postedAt',
       type: IsarType.dateTime,
     ),
     r'previousHash': PropertySchema(
-      id: 10,
+      id: 11,
       name: r'previousHash',
       type: IsarType.string,
     ),
     r'referenceNumber': PropertySchema(
-      id: 11,
+      id: 12,
       name: r'referenceNumber',
       type: IsarType.string,
     ),
     r'serverUpdatedAt': PropertySchema(
-      id: 12,
+      id: 13,
       name: r'serverUpdatedAt',
       type: IsarType.dateTime,
     ),
     r'sourceDocument': PropertySchema(
-      id: 13,
+      id: 14,
       name: r'sourceDocument',
       type: IsarType.string,
     ),
     r'sourceId': PropertySchema(
-      id: 14,
+      id: 15,
       name: r'sourceId',
       type: IsarType.string,
     ),
     r'standards': PropertySchema(
-      id: 15,
+      id: 16,
       name: r'standards',
       type: IsarType.object,
       target: r'StandardsJustificationModel',
     ),
     r'status': PropertySchema(
-      id: 16,
+      id: 17,
       name: r'status',
       type: IsarType.byte,
       enumMap: _JournalEntryModelstatusEnumValueMap,
     ),
     r'syncStatus': PropertySchema(
-      id: 17,
+      id: 18,
       name: r'syncStatus',
       type: IsarType.byte,
       enumMap: _JournalEntryModelsyncStatusEnumValueMap,
     ),
     r'temporal': PropertySchema(
-      id: 18,
+      id: 19,
       name: r'temporal',
       type: IsarType.object,
       target: r'TemporalJustificationModel',
     ),
     r'updatedAt': PropertySchema(
-      id: 19,
+      id: 20,
       name: r'updatedAt',
       type: IsarType.dateTime,
     ),
     r'userId': PropertySchema(
-      id: 20,
+      id: 21,
       name: r'userId',
       type: IsarType.string,
     ),
     r'warehouseId': PropertySchema(
-      id: 21,
+      id: 22,
       name: r'warehouseId',
       type: IsarType.string,
     )
@@ -144,10 +149,23 @@ const JournalEntryModelSchema = CollectionSchema(
       id: -3268401673993471357,
       name: r'id',
       unique: true,
-      replace: true,
+      replace: false,
       properties: [
         IndexPropertySchema(
           name: r'id',
+          type: IndexType.hash,
+          caseSensitive: true,
+        )
+      ],
+    ),
+    r'authoritativeEntryId': IndexSchema(
+      id: -7679038961251347318,
+      name: r'authoritativeEntryId',
+      unique: true,
+      replace: true,
+      properties: [
+        IndexPropertySchema(
+          name: r'authoritativeEntryId',
           type: IndexType.hash,
           caseSensitive: true,
         )
@@ -247,6 +265,12 @@ int _journalEntryModelEstimateSize(
           AuditLogEntryModelSchema.estimateSize(value, offsets, allOffsets);
     }
   }
+  {
+    final value = object.authoritativeEntryId;
+    if (value != null) {
+      bytesCount += 3 + value.length * 3;
+    }
+  }
   bytesCount += 3 + object.createdBy.length * 3;
   bytesCount += 3 + object.description.length * 3;
   {
@@ -307,42 +331,43 @@ void _journalEntryModelSerialize(
     AuditLogEntryModelSchema.serialize,
     object.auditLogs,
   );
-  writer.writeDateTime(offsets[1], object.createdAt);
-  writer.writeString(offsets[2], object.createdBy);
-  writer.writeDateTime(offsets[3], object.date);
-  writer.writeString(offsets[4], object.description);
-  writer.writeString(offsets[5], object.hash);
-  writer.writeString(offsets[6], object.id);
-  writer.writeBool(offsets[7], object.isDeleted);
+  writer.writeString(offsets[1], object.authoritativeEntryId);
+  writer.writeDateTime(offsets[2], object.createdAt);
+  writer.writeString(offsets[3], object.createdBy);
+  writer.writeDateTime(offsets[4], object.date);
+  writer.writeString(offsets[5], object.description);
+  writer.writeString(offsets[6], object.hash);
+  writer.writeString(offsets[7], object.id);
+  writer.writeBool(offsets[8], object.isDeleted);
   writer.writeObjectList<JournalEntryLineModel>(
-    offsets[8],
+    offsets[9],
     allOffsets,
     JournalEntryLineModelSchema.serialize,
     object.lines,
   );
-  writer.writeDateTime(offsets[9], object.postedAt);
-  writer.writeString(offsets[10], object.previousHash);
-  writer.writeString(offsets[11], object.referenceNumber);
-  writer.writeDateTime(offsets[12], object.serverUpdatedAt);
-  writer.writeString(offsets[13], object.sourceDocument);
-  writer.writeString(offsets[14], object.sourceId);
+  writer.writeDateTime(offsets[10], object.postedAt);
+  writer.writeString(offsets[11], object.previousHash);
+  writer.writeString(offsets[12], object.referenceNumber);
+  writer.writeDateTime(offsets[13], object.serverUpdatedAt);
+  writer.writeString(offsets[14], object.sourceDocument);
+  writer.writeString(offsets[15], object.sourceId);
   writer.writeObject<StandardsJustificationModel>(
-    offsets[15],
+    offsets[16],
     allOffsets,
     StandardsJustificationModelSchema.serialize,
     object.standards,
   );
-  writer.writeByte(offsets[16], object.status.index);
-  writer.writeByte(offsets[17], object.syncStatus.index);
+  writer.writeByte(offsets[17], object.status.index);
+  writer.writeByte(offsets[18], object.syncStatus.index);
   writer.writeObject<TemporalJustificationModel>(
-    offsets[18],
+    offsets[19],
     allOffsets,
     TemporalJustificationModelSchema.serialize,
     object.temporal,
   );
-  writer.writeDateTime(offsets[19], object.updatedAt);
-  writer.writeString(offsets[20], object.userId);
-  writer.writeString(offsets[21], object.warehouseId);
+  writer.writeDateTime(offsets[20], object.updatedAt);
+  writer.writeString(offsets[21], object.userId);
+  writer.writeString(offsets[22], object.warehouseId);
 }
 
 JournalEntryModel _journalEntryModelDeserialize(
@@ -359,48 +384,49 @@ JournalEntryModel _journalEntryModelDeserialize(
         AuditLogEntryModel(),
       ) ??
       [];
-  object.createdAt = reader.readDateTime(offsets[1]);
-  object.createdBy = reader.readString(offsets[2]);
-  object.date = reader.readDateTime(offsets[3]);
-  object.description = reader.readString(offsets[4]);
-  object.hash = reader.readStringOrNull(offsets[5]);
-  object.id = reader.readString(offsets[6]);
-  object.isDeleted = reader.readBool(offsets[7]);
+  object.authoritativeEntryId = reader.readStringOrNull(offsets[1]);
+  object.createdAt = reader.readDateTime(offsets[2]);
+  object.createdBy = reader.readString(offsets[3]);
+  object.date = reader.readDateTime(offsets[4]);
+  object.description = reader.readString(offsets[5]);
+  object.hash = reader.readStringOrNull(offsets[6]);
+  object.id = reader.readString(offsets[7]);
+  object.isDeleted = reader.readBool(offsets[8]);
   object.isarId = id;
   object.lines = reader.readObjectList<JournalEntryLineModel>(
-        offsets[8],
+        offsets[9],
         JournalEntryLineModelSchema.deserialize,
         allOffsets,
         JournalEntryLineModel(),
       ) ??
       [];
-  object.postedAt = reader.readDateTimeOrNull(offsets[9]);
-  object.previousHash = reader.readStringOrNull(offsets[10]);
-  object.referenceNumber = reader.readString(offsets[11]);
-  object.serverUpdatedAt = reader.readDateTimeOrNull(offsets[12]);
-  object.sourceDocument = reader.readString(offsets[13]);
-  object.sourceId = reader.readString(offsets[14]);
+  object.postedAt = reader.readDateTimeOrNull(offsets[10]);
+  object.previousHash = reader.readStringOrNull(offsets[11]);
+  object.referenceNumber = reader.readString(offsets[12]);
+  object.serverUpdatedAt = reader.readDateTimeOrNull(offsets[13]);
+  object.sourceDocument = reader.readString(offsets[14]);
+  object.sourceId = reader.readString(offsets[15]);
   object.standards = reader.readObjectOrNull<StandardsJustificationModel>(
-        offsets[15],
+        offsets[16],
         StandardsJustificationModelSchema.deserialize,
         allOffsets,
       ) ??
       StandardsJustificationModel();
   object.status = _JournalEntryModelstatusValueEnumMap[
-          reader.readByteOrNull(offsets[16])] ??
+          reader.readByteOrNull(offsets[17])] ??
       JournalEntryStatus.draft;
   object.syncStatus = _JournalEntryModelsyncStatusValueEnumMap[
-          reader.readByteOrNull(offsets[17])] ??
+          reader.readByteOrNull(offsets[18])] ??
       SyncStatus.synced;
   object.temporal = reader.readObjectOrNull<TemporalJustificationModel>(
-        offsets[18],
+        offsets[19],
         TemporalJustificationModelSchema.deserialize,
         allOffsets,
       ) ??
       TemporalJustificationModel();
-  object.updatedAt = reader.readDateTime(offsets[19]);
-  object.userId = reader.readStringOrNull(offsets[20]);
-  object.warehouseId = reader.readStringOrNull(offsets[21]);
+  object.updatedAt = reader.readDateTime(offsets[20]);
+  object.userId = reader.readStringOrNull(offsets[21]);
+  object.warehouseId = reader.readStringOrNull(offsets[22]);
   return object;
 }
 
@@ -420,20 +446,22 @@ P _journalEntryModelDeserializeProp<P>(
           ) ??
           []) as P;
     case 1:
-      return (reader.readDateTime(offset)) as P;
-    case 2:
-      return (reader.readString(offset)) as P;
-    case 3:
-      return (reader.readDateTime(offset)) as P;
-    case 4:
-      return (reader.readString(offset)) as P;
-    case 5:
       return (reader.readStringOrNull(offset)) as P;
-    case 6:
+    case 2:
+      return (reader.readDateTime(offset)) as P;
+    case 3:
       return (reader.readString(offset)) as P;
+    case 4:
+      return (reader.readDateTime(offset)) as P;
+    case 5:
+      return (reader.readString(offset)) as P;
+    case 6:
+      return (reader.readStringOrNull(offset)) as P;
     case 7:
-      return (reader.readBool(offset)) as P;
+      return (reader.readString(offset)) as P;
     case 8:
+      return (reader.readBool(offset)) as P;
+    case 9:
       return (reader.readObjectList<JournalEntryLineModel>(
             offset,
             JournalEntryLineModelSchema.deserialize,
@@ -441,45 +469,45 @@ P _journalEntryModelDeserializeProp<P>(
             JournalEntryLineModel(),
           ) ??
           []) as P;
-    case 9:
-      return (reader.readDateTimeOrNull(offset)) as P;
     case 10:
-      return (reader.readStringOrNull(offset)) as P;
-    case 11:
-      return (reader.readString(offset)) as P;
-    case 12:
       return (reader.readDateTimeOrNull(offset)) as P;
-    case 13:
+    case 11:
+      return (reader.readStringOrNull(offset)) as P;
+    case 12:
       return (reader.readString(offset)) as P;
+    case 13:
+      return (reader.readDateTimeOrNull(offset)) as P;
     case 14:
       return (reader.readString(offset)) as P;
     case 15:
+      return (reader.readString(offset)) as P;
+    case 16:
       return (reader.readObjectOrNull<StandardsJustificationModel>(
             offset,
             StandardsJustificationModelSchema.deserialize,
             allOffsets,
           ) ??
           StandardsJustificationModel()) as P;
-    case 16:
+    case 17:
       return (_JournalEntryModelstatusValueEnumMap[
               reader.readByteOrNull(offset)] ??
           JournalEntryStatus.draft) as P;
-    case 17:
+    case 18:
       return (_JournalEntryModelsyncStatusValueEnumMap[
               reader.readByteOrNull(offset)] ??
           SyncStatus.synced) as P;
-    case 18:
+    case 19:
       return (reader.readObjectOrNull<TemporalJustificationModel>(
             offset,
             TemporalJustificationModelSchema.deserialize,
             allOffsets,
           ) ??
           TemporalJustificationModel()) as P;
-    case 19:
-      return (reader.readDateTime(offset)) as P;
     case 20:
-      return (reader.readStringOrNull(offset)) as P;
+      return (reader.readDateTime(offset)) as P;
     case 21:
+      return (reader.readStringOrNull(offset)) as P;
+    case 22:
       return (reader.readStringOrNull(offset)) as P;
     default:
       throw IsarError('Unknown property with id $propertyId');
@@ -575,6 +603,69 @@ extension JournalEntryModelByIndex on IsarCollection<JournalEntryModel> {
   List<Id> putAllByIdSync(List<JournalEntryModel> objects,
       {bool saveLinks = true}) {
     return putAllByIndexSync(r'id', objects, saveLinks: saveLinks);
+  }
+
+  Future<JournalEntryModel?> getByAuthoritativeEntryId(
+      String? authoritativeEntryId) {
+    return getByIndex(r'authoritativeEntryId', [authoritativeEntryId]);
+  }
+
+  JournalEntryModel? getByAuthoritativeEntryIdSync(
+      String? authoritativeEntryId) {
+    return getByIndexSync(r'authoritativeEntryId', [authoritativeEntryId]);
+  }
+
+  Future<bool> deleteByAuthoritativeEntryId(String? authoritativeEntryId) {
+    return deleteByIndex(r'authoritativeEntryId', [authoritativeEntryId]);
+  }
+
+  bool deleteByAuthoritativeEntryIdSync(String? authoritativeEntryId) {
+    return deleteByIndexSync(r'authoritativeEntryId', [authoritativeEntryId]);
+  }
+
+  Future<List<JournalEntryModel?>> getAllByAuthoritativeEntryId(
+      List<String?> authoritativeEntryIdValues) {
+    final values = authoritativeEntryIdValues.map((e) => [e]).toList();
+    return getAllByIndex(r'authoritativeEntryId', values);
+  }
+
+  List<JournalEntryModel?> getAllByAuthoritativeEntryIdSync(
+      List<String?> authoritativeEntryIdValues) {
+    final values = authoritativeEntryIdValues.map((e) => [e]).toList();
+    return getAllByIndexSync(r'authoritativeEntryId', values);
+  }
+
+  Future<int> deleteAllByAuthoritativeEntryId(
+      List<String?> authoritativeEntryIdValues) {
+    final values = authoritativeEntryIdValues.map((e) => [e]).toList();
+    return deleteAllByIndex(r'authoritativeEntryId', values);
+  }
+
+  int deleteAllByAuthoritativeEntryIdSync(
+      List<String?> authoritativeEntryIdValues) {
+    final values = authoritativeEntryIdValues.map((e) => [e]).toList();
+    return deleteAllByIndexSync(r'authoritativeEntryId', values);
+  }
+
+  Future<Id> putByAuthoritativeEntryId(JournalEntryModel object) {
+    return putByIndex(r'authoritativeEntryId', object);
+  }
+
+  Id putByAuthoritativeEntryIdSync(JournalEntryModel object,
+      {bool saveLinks = true}) {
+    return putByIndexSync(r'authoritativeEntryId', object,
+        saveLinks: saveLinks);
+  }
+
+  Future<List<Id>> putAllByAuthoritativeEntryId(
+      List<JournalEntryModel> objects) {
+    return putAllByIndex(r'authoritativeEntryId', objects);
+  }
+
+  List<Id> putAllByAuthoritativeEntryIdSync(List<JournalEntryModel> objects,
+      {bool saveLinks = true}) {
+    return putAllByIndexSync(r'authoritativeEntryId', objects,
+        saveLinks: saveLinks);
   }
 
   Future<JournalEntryModel?> getByReferenceNumber(String referenceNumber) {
@@ -768,6 +859,73 @@ extension JournalEntryModelQueryWhere
               indexName: r'id',
               lower: [],
               upper: [id],
+              includeUpper: false,
+            ));
+      }
+    });
+  }
+
+  QueryBuilder<JournalEntryModel, JournalEntryModel, QAfterWhereClause>
+      authoritativeEntryIdIsNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(IndexWhereClause.equalTo(
+        indexName: r'authoritativeEntryId',
+        value: [null],
+      ));
+    });
+  }
+
+  QueryBuilder<JournalEntryModel, JournalEntryModel, QAfterWhereClause>
+      authoritativeEntryIdIsNotNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(IndexWhereClause.between(
+        indexName: r'authoritativeEntryId',
+        lower: [null],
+        includeLower: false,
+        upper: [],
+      ));
+    });
+  }
+
+  QueryBuilder<JournalEntryModel, JournalEntryModel, QAfterWhereClause>
+      authoritativeEntryIdEqualTo(String? authoritativeEntryId) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(IndexWhereClause.equalTo(
+        indexName: r'authoritativeEntryId',
+        value: [authoritativeEntryId],
+      ));
+    });
+  }
+
+  QueryBuilder<JournalEntryModel, JournalEntryModel, QAfterWhereClause>
+      authoritativeEntryIdNotEqualTo(String? authoritativeEntryId) {
+    return QueryBuilder.apply(this, (query) {
+      if (query.whereSort == Sort.asc) {
+        return query
+            .addWhereClause(IndexWhereClause.between(
+              indexName: r'authoritativeEntryId',
+              lower: [],
+              upper: [authoritativeEntryId],
+              includeUpper: false,
+            ))
+            .addWhereClause(IndexWhereClause.between(
+              indexName: r'authoritativeEntryId',
+              lower: [authoritativeEntryId],
+              includeLower: false,
+              upper: [],
+            ));
+      } else {
+        return query
+            .addWhereClause(IndexWhereClause.between(
+              indexName: r'authoritativeEntryId',
+              lower: [authoritativeEntryId],
+              includeLower: false,
+              upper: [],
+            ))
+            .addWhereClause(IndexWhereClause.between(
+              indexName: r'authoritativeEntryId',
+              lower: [],
+              upper: [authoritativeEntryId],
               includeUpper: false,
             ));
       }
@@ -1228,6 +1386,160 @@ extension JournalEntryModelQueryFilter
         upper,
         includeUpper,
       );
+    });
+  }
+
+  QueryBuilder<JournalEntryModel, JournalEntryModel, QAfterFilterCondition>
+      authoritativeEntryIdIsNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNull(
+        property: r'authoritativeEntryId',
+      ));
+    });
+  }
+
+  QueryBuilder<JournalEntryModel, JournalEntryModel, QAfterFilterCondition>
+      authoritativeEntryIdIsNotNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNotNull(
+        property: r'authoritativeEntryId',
+      ));
+    });
+  }
+
+  QueryBuilder<JournalEntryModel, JournalEntryModel, QAfterFilterCondition>
+      authoritativeEntryIdEqualTo(
+    String? value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'authoritativeEntryId',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<JournalEntryModel, JournalEntryModel, QAfterFilterCondition>
+      authoritativeEntryIdGreaterThan(
+    String? value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'authoritativeEntryId',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<JournalEntryModel, JournalEntryModel, QAfterFilterCondition>
+      authoritativeEntryIdLessThan(
+    String? value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'authoritativeEntryId',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<JournalEntryModel, JournalEntryModel, QAfterFilterCondition>
+      authoritativeEntryIdBetween(
+    String? lower,
+    String? upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'authoritativeEntryId',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<JournalEntryModel, JournalEntryModel, QAfterFilterCondition>
+      authoritativeEntryIdStartsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.startsWith(
+        property: r'authoritativeEntryId',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<JournalEntryModel, JournalEntryModel, QAfterFilterCondition>
+      authoritativeEntryIdEndsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.endsWith(
+        property: r'authoritativeEntryId',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<JournalEntryModel, JournalEntryModel, QAfterFilterCondition>
+      authoritativeEntryIdContains(String value, {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.contains(
+        property: r'authoritativeEntryId',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<JournalEntryModel, JournalEntryModel, QAfterFilterCondition>
+      authoritativeEntryIdMatches(String pattern, {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.matches(
+        property: r'authoritativeEntryId',
+        wildcard: pattern,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<JournalEntryModel, JournalEntryModel, QAfterFilterCondition>
+      authoritativeEntryIdIsEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'authoritativeEntryId',
+        value: '',
+      ));
+    });
+  }
+
+  QueryBuilder<JournalEntryModel, JournalEntryModel, QAfterFilterCondition>
+      authoritativeEntryIdIsNotEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        property: r'authoritativeEntryId',
+        value: '',
+      ));
     });
   }
 
@@ -3302,6 +3614,20 @@ extension JournalEntryModelQueryLinks
 extension JournalEntryModelQuerySortBy
     on QueryBuilder<JournalEntryModel, JournalEntryModel, QSortBy> {
   QueryBuilder<JournalEntryModel, JournalEntryModel, QAfterSortBy>
+      sortByAuthoritativeEntryId() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'authoritativeEntryId', Sort.asc);
+    });
+  }
+
+  QueryBuilder<JournalEntryModel, JournalEntryModel, QAfterSortBy>
+      sortByAuthoritativeEntryIdDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'authoritativeEntryId', Sort.desc);
+    });
+  }
+
+  QueryBuilder<JournalEntryModel, JournalEntryModel, QAfterSortBy>
       sortByCreatedAt() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'createdAt', Sort.asc);
@@ -3555,6 +3881,20 @@ extension JournalEntryModelQuerySortBy
 
 extension JournalEntryModelQuerySortThenBy
     on QueryBuilder<JournalEntryModel, JournalEntryModel, QSortThenBy> {
+  QueryBuilder<JournalEntryModel, JournalEntryModel, QAfterSortBy>
+      thenByAuthoritativeEntryId() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'authoritativeEntryId', Sort.asc);
+    });
+  }
+
+  QueryBuilder<JournalEntryModel, JournalEntryModel, QAfterSortBy>
+      thenByAuthoritativeEntryIdDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'authoritativeEntryId', Sort.desc);
+    });
+  }
+
   QueryBuilder<JournalEntryModel, JournalEntryModel, QAfterSortBy>
       thenByCreatedAt() {
     return QueryBuilder.apply(this, (query) {
@@ -3824,6 +4164,14 @@ extension JournalEntryModelQuerySortThenBy
 extension JournalEntryModelQueryWhereDistinct
     on QueryBuilder<JournalEntryModel, JournalEntryModel, QDistinct> {
   QueryBuilder<JournalEntryModel, JournalEntryModel, QDistinct>
+      distinctByAuthoritativeEntryId({bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'authoritativeEntryId',
+          caseSensitive: caseSensitive);
+    });
+  }
+
+  QueryBuilder<JournalEntryModel, JournalEntryModel, QDistinct>
       distinctByCreatedAt() {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'createdAt');
@@ -3964,6 +4312,13 @@ extension JournalEntryModelQueryProperty
       auditLogsProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'auditLogs');
+    });
+  }
+
+  QueryBuilder<JournalEntryModel, String?, QQueryOperations>
+      authoritativeEntryIdProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'authoritativeEntryId');
     });
   }
 

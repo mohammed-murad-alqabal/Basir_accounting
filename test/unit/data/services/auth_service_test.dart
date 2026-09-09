@@ -19,6 +19,7 @@ void main() {
   setUp(() {
     mockStorage = MockSecureStorage();
     authService = AuthService(secureStorage: mockStorage);
+    addTearDown(authService.dispose);
     // إعادة تعيين حالة الأخطاء
     mockStorage.shouldThrowOnRead = false;
     mockStorage.shouldThrowOnWrite = false;

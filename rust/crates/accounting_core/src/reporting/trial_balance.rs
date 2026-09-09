@@ -14,7 +14,7 @@ use std::collections::HashMap;
 use uuid::Uuid;
 
 use crate::accounts::models::{Account, AccountKind};
-use crate::ledger::models::JournalEntry;
+use crate::ledger::models::{EntryStatus, JournalEntry};
 
 use super::models::{TrialBalance, TrialBalanceLine};
 
@@ -55,6 +55,13 @@ pub fn generate_trial_balance(
     let mut summaries: HashMap<Uuid, AccountSummary> = HashMap::new();
 
     for entry in entries {
+        // Reports must consume committed ledger facts only. Drafts and
+        // approval-stage entries are not financial facts and must not alter
+        // balances even if a caller accidentally supplies them.
+        if entry.status != EntryStatus::Posted {
+            continue;
+        }
+
         // Filter by date if period specified
         let entry_date = entry.temporal.effective_date;
 
@@ -255,6 +262,19 @@ mod tests {
         // Only entry2 should be included
         assert_eq!(tb.total_debits, Decimal::from(500));
         assert_eq!(tb.total_credits, Decimal::from(500));
+    }
+
+    #[test]
+    fn test_trial_balance_ignores_unposted_entries() {
+        let accounts = create_test_accounts();
+        let mut draft = create_test_entry(&accounts, 0, 2, Decimal::from(500));
+        draft.status = EntryStatus::Draft;
+        let report = generate_trial_balance(&[draft], &accounts, Utc::now().date_naive(), None);
+
+        assert!(report.lines.is_empty());
+        assert_eq!(report.total_debits, Decimal::ZERO);
+        assert_eq!(report.total_credits, Decimal::ZERO);
+        assert!(report.is_balanced);
     }
 
     #[test]

@@ -16,11 +16,7 @@ part 'accounting_repository_impl.g.dart';
 /// (FR-ACC-007: تخزين مؤقت للبيانات لسرعة الوصول)
 class IsarAccountingRepository implements AccountingRepository {
   /// إنشاء نسخة جديدة مع تمرير مثيل Isar ومعرف المستخدم.
-  IsarAccountingRepository({
-    required this.isar,
-    required this.userId,
-    this.warehouseId,
-  });
+  IsarAccountingRepository({required this.isar, required this.userId, this.warehouseId});
 
   /// مثيل قاعدة بيانات Isar.
   final Isar isar;
@@ -80,9 +76,7 @@ class IsarAccountingRepository implements AccountingRepository {
         .filter()
         .userIdEqualTo(userId)
         .and()
-        .group(
-          (q) => q.warehouseIdIsNull().or().warehouseIdEqualTo(warehouseId),
-        )
+        .group((q) => q.warehouseIdIsNull().or().warehouseIdEqualTo(warehouseId))
         .sortByDateDesc()
         .findAll();
     return models.map((m) => m.toEntity()).toList();
@@ -90,6 +84,31 @@ class IsarAccountingRepository implements AccountingRepository {
 
   @override
   Future<void> addJournalEntry(JournalEntry entry) async {
+    if (!entry.isBalanced) {
+      throw ArgumentError('Journal entry must be balanced before persistence.');
+    }
+    if (entry.lines.length < 2) {
+      throw ArgumentError('Journal entry must contain at least two lines.');
+    }
+
+    // A posted entry is immutable. Only an existing draft may be replaced,
+    // and it must retain its Isar identifier so account movements cannot be
+    // applied a second time.
+    final existing = await isar.journalEntryModels
+        .filter()
+        .idEqualTo(entry.id)
+        .and()
+        .userIdEqualTo(userId)
+        .findFirst();
+    if (existing != null) {
+      final isDraftTransition =
+          existing.status == JournalEntryStatus.draft &&
+          (entry.status == JournalEntryStatus.draft || entry.status == JournalEntryStatus.posted);
+      if (!isDraftTransition) {
+        throw StateError('Existing journal entries are immutable; create a reversal instead.');
+      }
+    }
+
     // 1. التحقق من السنة المالية والفترة المغلقة (FR-ACC-016)
     final fy = await isar.financialYearModels
         .filter()
@@ -107,18 +126,19 @@ class IsarAccountingRepository implements AccountingRepository {
       throw Exception('Cannot post to a closed financial year: ${fy.name}');
     }
 
-    final periodId = '${entry.date.year}-'
+    final periodId =
+        '${entry.date.year}-'
         '${entry.date.month.toString().padLeft(2, '0')}';
     if (fy.lockedPeriodIds.contains(periodId)) {
       throw Exception('Financial period $periodId is locked');
     }
 
     final model = JournalEntryModel.fromEntity(
-      entry.copyWith(
-        userId: userId,
-        warehouseId: entry.warehouseId ?? warehouseId,
-      ),
+      entry.copyWith(userId: userId, warehouseId: entry.warehouseId ?? warehouseId),
     );
+    if (existing != null) {
+      model.isarId = existing.isarId;
+    }
 
     await isar.writeTxn(() async {
       // 1. حفظ القيد
@@ -164,6 +184,12 @@ class IsarAccountingRepository implements AccountingRepository {
     if (model == null) return Decimal.zero;
     return Decimal.parse(model.balance);
   }
+
+  @override
+  Future<void> cacheAuthoritativeJournalEntry(JournalEntry entry) async {
+    // Write-through cache for authoritative entries
+    await addJournalEntry(entry);
+  }
 }
 
 /// مزود مستودع المحاسبة (Accounting Repository Provider).
@@ -177,9 +203,5 @@ AccountingRepository accountingRepository(AccountingRepositoryRef ref) {
   final user = ref.watch(basirUserProvider);
   final warehouseId = user?.warehouseId;
 
-  return IsarAccountingRepository(
-    isar: isar,
-    userId: user?.id,
-    warehouseId: warehouseId,
-  );
+  return IsarAccountingRepository(isar: isar, userId: user?.id, warehouseId: warehouseId);
 }

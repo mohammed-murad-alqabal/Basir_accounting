@@ -136,6 +136,7 @@ _$JournalEntryImpl _$$JournalEntryImplFromJson(Map<String, dynamic> json) =>
       serverUpdatedAt: json['serverUpdatedAt'] == null
           ? null
           : DateTime.parse(json['serverUpdatedAt'] as String),
+      authoritativeEntryId: json['authoritativeEntryId'] as String?,
       isDeleted: json['isDeleted'] as bool? ?? false,
     );
 
@@ -162,6 +163,7 @@ Map<String, dynamic> _$$JournalEntryImplToJson(_$JournalEntryImpl instance) =>
       'auditLogs': instance.auditLogs.map((e) => e.toJson()).toList(),
       'syncStatus': _$SyncStatusEnumMap[instance.syncStatus]!,
       'serverUpdatedAt': instance.serverUpdatedAt?.toIso8601String(),
+      'authoritativeEntryId': instance.authoritativeEntryId,
       'isDeleted': instance.isDeleted,
     };
 

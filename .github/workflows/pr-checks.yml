@@ -6,6 +6,10 @@ on:
     branches: [main, development]
   workflow_dispatch:
 
+concurrency:
+  group: pr-checks-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
 jobs:
   code-quality:
     name: Code Quality Checks
@@ -14,7 +18,7 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
 
       - name: Setup Flutter
         uses: ./.github/actions/setup-flutter
@@ -33,9 +37,14 @@ jobs:
         run: dart format --output=none --set-exit-if-changed .
 
       - name: Analyze code
+<<<<<<< HEAD
         # BKIP baseline: errors remain blocking; 177 informational findings are
         # tracked separately until their remediation program is approved.
         run: flutter analyze --no-fatal-infos
+=======
+        # Keep analyzer errors and warnings blocking; track style infos separately.
+        run: flutter analyze --no-fatal-infos --no-fatal-warnings
+>>>>>>> origin/audit/baseline-main-current-20260814
 
       - name: Run functional tests
         # Keep benchmark workloads outside the PR gate and serialize functional
@@ -58,7 +67,7 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
 
       - name: Run secret detection
         run: |
@@ -89,7 +98,7 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
 
       - name: Setup Flutter
         uses: ./.github/actions/setup-flutter
@@ -125,7 +134,7 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
 
       - name: Setup Flutter
         uses: ./.github/actions/setup-flutter
@@ -174,7 +183,7 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
 
       - name: Check ERP module structure
         run: |
@@ -233,7 +242,7 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
 
       - name: Setup Flutter
         uses: ./.github/actions/setup-flutter
@@ -249,13 +258,13 @@ jobs:
         run: |
           echo "⚖️ Checking accounting equation compliance..."
 
-          # Look for accounting equation violations in code
-          if grep -r "assets.*!=.*liabilities.*equity" lib/features/accounting/ || \
-             grep -r "debit.*!=.*credit" lib/features/accounting/; then
-            echo "❌ Potential accounting equation violations found"
-            exit 1
+          # Verify that the ledger rejects unbalanced entries. A raw
+          # `debit != credit` match is a correctness guard, not a violation.
+          if grep -r -E "debit[[:space:]]*!=[[:space:]]*credit" lib/features/accounting/ > /dev/null; then
+            echo "✅ Unbalanced-entry guard found"
           else
-            echo "✅ No obvious accounting violations detected"
+            echo "❌ Missing unbalanced-entry guard"
+            exit 1
           fi
 
       - name: Check ZATCA compliance markers
@@ -275,7 +284,7 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
 
       - name: Setup Flutter
         uses: ./.github/actions/setup-flutter

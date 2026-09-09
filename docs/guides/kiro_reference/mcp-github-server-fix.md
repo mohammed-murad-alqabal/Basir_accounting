@@ -272,7 +272,11 @@ python3 fix_github_mcp.py
 ### متغيرات البيئة المطلوبة
 
 ```bash
+<<<<<<< HEAD
 export GITHUB_TOKEN="$GITHUB_TOKEN"
+=======
+export GITHUB_TOKEN="<YOUR_GITHUB_TOKEN>"
+>>>>>>> origin/audit/baseline-main-current-20260814
 ```
 
 ### أذونات التوكن المطلوبة

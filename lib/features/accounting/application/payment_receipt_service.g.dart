@@ -7,7 +7,7 @@ part of 'payment_receipt_service.dart';
 // **************************************************************************
 
 String _$paymentReceiptServiceHash() =>
-    r'7dd2cc15c9595911113c645ca8161c54d402ea54';
+    r'84258b935382430e713d6b5c148f522467156c2d';
 
 /// Payment Receipt Service - Manages customer payment collections.
 ///

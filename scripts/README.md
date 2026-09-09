@@ -115,7 +115,11 @@ jq --version
 
 ```bash
 # GitHub Personal Access Token
+<<<<<<< HEAD
 export GITHUB_TOKEN="$GITHUB_TOKEN"
+=======
+export GITHUB_TOKEN="<YOUR_GITHUB_TOKEN>"
+>>>>>>> origin/audit/baseline-main-current-20260814
 
 # التحقق من وجوده
 echo "Token length: ${#GITHUB_TOKEN}"

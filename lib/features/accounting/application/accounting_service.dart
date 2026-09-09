@@ -43,14 +43,11 @@ part 'accounting_service.g.dart';
 ///   parent/child accounts.
 @Riverpod(keepAlive: true)
 class AccountingService extends _$AccountingService {
-  AccountingRepository get _repository =>
-      ref.read(accountingRepositoryProvider);
+  AccountingRepository get _repository => ref.read(accountingRepositoryProvider);
 
-  FinancialYearService get _financialYearService =>
-      ref.read(financialYearServiceProvider.notifier);
+  FinancialYearService get _financialYearService => ref.read(financialYearServiceProvider.notifier);
 
-  CustomerRepository get _customerRepository =>
-      ref.read(customerRepositoryProvider);
+  CustomerRepository get _customerRepository => ref.read(customerRepositoryProvider);
 
   VendorRepository get _vendorRepository => ref.read(vendorRepositoryProvider);
 
@@ -87,8 +84,7 @@ class AccountingService extends _$AccountingService {
 
     for (final invoice in invoices) {
       // 1. Filter: Only Unpaid (Sent or Overdue)
-      if (invoice.status != InvoiceStatus.sent &&
-          invoice.status != InvoiceStatus.overdue) {
+      if (invoice.status != InvoiceStatus.sent && invoice.status != InvoiceStatus.overdue) {
         continue;
       }
 
@@ -137,8 +133,7 @@ class AccountingService extends _$AccountingService {
       dailyMap[effectiveDate] = daily;
     }
 
-    final dailyBreakdown = dailyMap.values.toList()
-      ..sort((a, b) => a.date.compareTo(b.date));
+    final dailyBreakdown = dailyMap.values.toList()..sort((a, b) => a.date.compareTo(b.date));
 
     return LiquidityForecast(
       startDate: startDate,
@@ -242,8 +237,7 @@ class AccountingService extends _$AccountingService {
     domain_inv.Invoice invoice, {
     bool bypassCognitive = false,
   }) async {
-    final isPeriodOpen =
-        await _financialYearService.canPostToDate(invoice.issuedDate);
+    final isPeriodOpen = await _financialYearService.canPostToDate(invoice.issuedDate);
     if (!isPeriodOpen) {
       throw Exception('Cannot post to a closed or undefined financial period');
     }
@@ -259,8 +253,7 @@ class AccountingService extends _$AccountingService {
     // Debit: Accounts Receivable
     var receivableAccountId = 'acc-1201'; // Default AR
 
-    final customer =
-        await _customerRepository.getCustomerById(invoice.customerId);
+    final customer = await _customerRepository.getCustomerById(invoice.customerId);
     if (customer != null && customer.receivableAccountId != null) {
       receivableAccountId = customer.receivableAccountId!;
     }
@@ -282,8 +275,7 @@ class AccountingService extends _$AccountingService {
     final allAccounts = await _repository.getAccounts();
     final revenueAccount = allAccounts.firstWhere(
       (a) => a.code == '4101' || a.subType == 'revenue',
-      orElse: () =>
-          allAccounts.firstWhere((a) => a.type == AccountType.revenue),
+      orElse: () => allAccounts.firstWhere((a) => a.type == AccountType.revenue),
     );
 
     final revenueLine = JournalEntryLine(
@@ -370,8 +362,7 @@ class AccountingService extends _$AccountingService {
     try {
       final salesBridge = ref.read(salesBridgeServiceProvider);
 
-      final updatedInvoice =
-          await salesBridge.finalizeInvoiceWithZatca(invoice);
+      final updatedInvoice = await salesBridge.finalizeInvoiceWithZatca(invoice);
 
       if (updatedInvoice.qrCode != null) {
         final invoiceRepo = ref.read(invoiceRepositoryProvider);
@@ -394,8 +385,7 @@ class AccountingService extends _$AccountingService {
     required String createdBy,
     required DateTime recordedAt,
   }) async {
-    final isPeriodOpen =
-        await _financialYearService.canPostToDate(invoice.issuedDate);
+    final isPeriodOpen = await _financialYearService.canPostToDate(invoice.issuedDate);
     if (!isPeriodOpen) {
       throw Exception('Cannot post to a closed or undefined financial period');
     }
@@ -408,8 +398,7 @@ class AccountingService extends _$AccountingService {
 
     final lines = <JournalEntryLine>[];
     var receivableAccountId = 'acc-1201';
-    final customer =
-        await _customerRepository.getCustomerById(invoice.customerId);
+    final customer = await _customerRepository.getCustomerById(invoice.customerId);
     if (customer?.receivableAccountId != null) {
       receivableAccountId = customer!.receivableAccountId!;
     }
@@ -430,8 +419,7 @@ class AccountingService extends _$AccountingService {
     final allAccounts = await _repository.getAccounts();
     final revenueAccount = allAccounts.firstWhere(
       (account) => account.code == '4101' || account.subType == 'revenue',
-      orElse: () => allAccounts
-          .firstWhere((account) => account.type == AccountType.revenue),
+      orElse: () => allAccounts.firstWhere((account) => account.type == AccountType.revenue),
     );
     lines.add(
       JournalEntryLine(
@@ -441,8 +429,7 @@ class AccountingService extends _$AccountingService {
         accountName: revenueAccount.nameEn,
         description: 'Revenue for Invoice #${invoice.invoiceNumber}',
         originalCurrency: invoice.currency != 'SAR' ? invoice.currency : null,
-        originalAmount:
-            invoice.currency != 'SAR' ? invoice.subtotalAmount : null,
+        originalAmount: invoice.currency != 'SAR' ? invoice.subtotalAmount : null,
         exchangeRate: invoice.currency != 'SAR' ? invoice.exchangeRate : null,
       ),
     );
@@ -512,8 +499,7 @@ class AccountingService extends _$AccountingService {
     domain_inv.Invoice invoice, {
     bool bypassCognitive = false,
   }) async {
-    final isPeriodOpen =
-        await _financialYearService.canPostToDate(invoice.issuedDate);
+    final isPeriodOpen = await _financialYearService.canPostToDate(invoice.issuedDate);
     if (!isPeriodOpen) {
       throw Exception('Financial period is closed or locked');
     }
@@ -544,8 +530,7 @@ class AccountingService extends _$AccountingService {
     final allAccounts = await _repository.getAccounts();
     final expenseAccount = allAccounts.firstWhere(
       (a) => a.code == '5101' || a.type == AccountType.expense,
-      orElse: () =>
-          allAccounts.firstWhere((a) => a.type == AccountType.expense),
+      orElse: () => allAccounts.firstWhere((a) => a.type == AccountType.expense),
     );
 
     lines.add(
@@ -556,8 +541,7 @@ class AccountingService extends _$AccountingService {
         debit: invoice.subtotalAmountBaseCurrency,
         credit: Decimal.zero,
         originalCurrency: invoice.currency != 'SAR' ? invoice.currency : null,
-        originalAmount:
-            invoice.currency != 'SAR' ? invoice.subtotalAmount : null,
+        originalAmount: invoice.currency != 'SAR' ? invoice.subtotalAmount : null,
         exchangeRate: invoice.currency != 'SAR' ? invoice.exchangeRate : null,
       ),
     );
@@ -597,8 +581,7 @@ class AccountingService extends _$AccountingService {
     domain_inv.Invoice invoice, {
     bool bypassCognitive = false,
   }) async {
-    final isPeriodOpen =
-        await _financialYearService.canPostToDate(invoice.issuedDate);
+    final isPeriodOpen = await _financialYearService.canPostToDate(invoice.issuedDate);
     if (!isPeriodOpen) {
       throw Exception('Financial period is closed or locked');
     }
@@ -608,8 +591,7 @@ class AccountingService extends _$AccountingService {
     final allAccounts = await _repository.getAccounts();
     final revenueAccount = allAccounts.firstWhere(
       (a) => a.code == '4101' || a.subType == 'revenue',
-      orElse: () =>
-          allAccounts.firstWhere((a) => a.type == AccountType.revenue),
+      orElse: () => allAccounts.firstWhere((a) => a.type == AccountType.revenue),
     );
 
     lines.add(
@@ -620,8 +602,7 @@ class AccountingService extends _$AccountingService {
         debit: invoice.subtotalAmountBaseCurrency,
         credit: Decimal.zero,
         originalCurrency: invoice.currency != 'SAR' ? invoice.currency : null,
-        originalAmount:
-            invoice.currency != 'SAR' ? invoice.subtotalAmount : null,
+        originalAmount: invoice.currency != 'SAR' ? invoice.subtotalAmount : null,
         exchangeRate: invoice.currency != 'SAR' ? invoice.exchangeRate : null,
       ),
     );
@@ -646,8 +627,7 @@ class AccountingService extends _$AccountingService {
     }
 
     var receivableAccountId = 'acc-1201';
-    final customer =
-        await _customerRepository.getCustomerById(invoice.customerId);
+    final customer = await _customerRepository.getCustomerById(invoice.customerId);
     if (customer != null && customer.receivableAccountId != null) {
       receivableAccountId = customer.receivableAccountId!;
     }
@@ -677,8 +657,7 @@ class AccountingService extends _$AccountingService {
     domain_inv.Invoice invoice, {
     bool bypassCognitive = false,
   }) async {
-    final isPeriodOpen =
-        await _financialYearService.canPostToDate(invoice.issuedDate);
+    final isPeriodOpen = await _financialYearService.canPostToDate(invoice.issuedDate);
     if (!isPeriodOpen) {
       throw Exception('Financial period is closed or locked');
     }
@@ -707,8 +686,7 @@ class AccountingService extends _$AccountingService {
     final allAccounts = await _repository.getAccounts();
     final expenseAccount = allAccounts.firstWhere(
       (a) => a.code == '5101' || a.type == AccountType.expense,
-      orElse: () =>
-          allAccounts.firstWhere((a) => a.type == AccountType.expense),
+      orElse: () => allAccounts.firstWhere((a) => a.type == AccountType.expense),
     );
 
     lines.add(
@@ -719,8 +697,7 @@ class AccountingService extends _$AccountingService {
         credit: invoice.subtotalAmountBaseCurrency,
         debit: Decimal.zero,
         originalCurrency: invoice.currency != 'SAR' ? invoice.currency : null,
-        originalAmount:
-            invoice.currency != 'SAR' ? invoice.subtotalAmount : null,
+        originalAmount: invoice.currency != 'SAR' ? invoice.subtotalAmount : null,
         exchangeRate: invoice.currency != 'SAR' ? invoice.exchangeRate : null,
       ),
     );
@@ -737,8 +714,7 @@ class AccountingService extends _$AccountingService {
         JournalEntryLine(
           accountId: taxAccount.id,
           accountName: taxAccount.nameEn,
-          description:
-              'Input VAT Reversal for Return #${invoice.invoiceNumber}',
+          description: 'Input VAT Reversal for Return #${invoice.invoiceNumber}',
           credit: invoice.taxAmountBaseCurrency,
           debit: Decimal.zero,
           originalCurrency: invoice.currency != 'SAR' ? invoice.currency : null,
@@ -760,8 +736,7 @@ class AccountingService extends _$AccountingService {
     domain_inv.Invoice invoice, {
     bool bypassCognitive = false,
   }) async {
-    final isPeriodOpen =
-        await _financialYearService.canPostToDate(invoice.issuedDate);
+    final isPeriodOpen = await _financialYearService.canPostToDate(invoice.issuedDate);
     if (!isPeriodOpen) {
       throw Exception('Financial period is closed or locked');
     }
@@ -771,8 +746,7 @@ class AccountingService extends _$AccountingService {
     final allAccounts = await _repository.getAccounts();
     final lossAccount = allAccounts.firstWhere(
       (a) => a.nameEn.contains('Loss') || a.type == AccountType.expense,
-      orElse: () =>
-          allAccounts.firstWhere((a) => a.type == AccountType.expense),
+      orElse: () => allAccounts.firstWhere((a) => a.type == AccountType.expense),
     );
 
     lines.add(
@@ -783,8 +757,7 @@ class AccountingService extends _$AccountingService {
         debit: invoice.subtotalAmountBaseCurrency,
         credit: Decimal.zero,
         originalCurrency: invoice.currency != 'SAR' ? invoice.currency : null,
-        originalAmount:
-            invoice.currency != 'SAR' ? invoice.subtotalAmount : null,
+        originalAmount: invoice.currency != 'SAR' ? invoice.subtotalAmount : null,
         exchangeRate: invoice.currency != 'SAR' ? invoice.exchangeRate : null,
       ),
     );
@@ -798,13 +771,11 @@ class AccountingService extends _$AccountingService {
       JournalEntryLine(
         accountId: inventoryAccount.id,
         accountName: inventoryAccount.nameEn,
-        description:
-            'Inventory Reduction for Damages #${invoice.invoiceNumber}',
+        description: 'Inventory Reduction for Damages #${invoice.invoiceNumber}',
         credit: invoice.subtotalAmountBaseCurrency,
         debit: Decimal.zero,
         originalCurrency: invoice.currency != 'SAR' ? invoice.currency : null,
-        originalAmount:
-            invoice.currency != 'SAR' ? invoice.subtotalAmount : null,
+        originalAmount: invoice.currency != 'SAR' ? invoice.subtotalAmount : null,
         exchangeRate: invoice.currency != 'SAR' ? invoice.exchangeRate : null,
       ),
     );
@@ -842,8 +813,7 @@ class AccountingService extends _$AccountingService {
         recordingDate: now,
       ),
       standards: StandardsJustification(
-        standardReference:
-            sourceDocument == 'purchase_invoice' ? 'IAS 2' : 'IFRS 15',
+        standardReference: sourceDocument == 'purchase_invoice' ? 'IAS 2' : 'IFRS 15',
         recognitionBasis: 'Accrual',
         measurementBasis: 'Transaction Price',
       ),
@@ -900,13 +870,23 @@ class AccountingService extends _$AccountingService {
 
   /// Retrieves a specific account by identifier.
 
-  Future<Account?> getAccountById(String id) async =>
-      _repository.getAccountById(id);
+  Future<Account?> getAccountById(String id) async => _repository.getAccountById(id);
 
   /// Retrieves the complete list of journal entries.
 
-  Future<List<JournalEntry>> getJournalEntries() async =>
-      _repository.getJournalEntries();
+  Future<List<JournalEntry>> getJournalEntries() async => _repository.getJournalEntries();
+
+  /// Saves a journal entry as a draft without posting to the ledger.
+  ///
+  /// Draft entries are stored for later review and posting.
+  /// They do not affect account balances or financial statements.
+  Future<void> saveJournalEntryDraft(JournalEntry entry) async {
+    final draftEntry = entry.copyWith(
+      status: JournalEntryStatus.draft,
+    );
+    await _repository.addJournalEntry(draftEntry);
+    ref.invalidateSelf();
+  }
 
   /// Posts a manual journal entry to the ledger.
   ///
@@ -935,8 +915,7 @@ class AccountingService extends _$AccountingService {
       final orchestrator = ref.read(orchestratorServiceProvider.notifier);
       // Ensure locale is fetched correctly. Use a direct language code if
       // provider is unavailable or defaults.
-      final currentLocale =
-          ref.read(localeProvider).value?.languageCode ?? 'ar';
+      final currentLocale = ref.read(localeProvider).value?.languageCode ?? 'ar';
 
       final context = AccountingContext(
         proposedJournalEntry: entry,
@@ -960,8 +939,7 @@ class AccountingService extends _$AccountingService {
       final log = AuditLogEntry(
         timestamp: DateTime.now(),
         action: 'COGNITIVE_BYPASS',
-        rationale:
-            'Consensus bypassed by specialized service or system override.',
+        rationale: 'Consensus bypassed by specialized service or system override.',
         actor: 'system',
       );
       finalEntry = entry.copyWith(

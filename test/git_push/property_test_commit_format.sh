@@ -86,8 +86,8 @@ check_commit_message_format() {
     
     # التحقق من صيغة Conventional Commits
     # الصيغة: type(scope): description
-    # مثال: chore(logs): update logs
-    if echo "$last_commit" | grep -qE "^(feat|fix|docs|style|refactor|test|chore)\([a-z]+\): .+"; then
+    # مثال: chore(logs): update logs أو audit(logs): record findings
+    if echo "$last_commit" | grep -qE "^(feat|fix|docs|style|refactor|test|chore|perf|ci|build|revert|audit)\([a-z]+\): .+"; then
         return 0
     fi
     

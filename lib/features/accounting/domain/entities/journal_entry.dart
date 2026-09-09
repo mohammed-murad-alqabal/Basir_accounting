@@ -94,8 +94,7 @@ class AuditLogEntry with _$AuditLogEntry {
   }) = _AuditLogEntry;
 
   /// deserialization from JSON format.
-  factory AuditLogEntry.fromJson(Map<String, dynamic> json) =>
-      _$AuditLogEntryFromJson(json);
+  factory AuditLogEntry.fromJson(Map<String, dynamic> json) => _$AuditLogEntryFromJson(json);
 }
 
 /// Represents a single Debit or Credit line within a Journal Entry.
@@ -137,8 +136,7 @@ class JournalEntryLine with _$JournalEntryLine {
   }) = _JournalEntryLine;
 
   /// deserialization from JSON format.
-  factory JournalEntryLine.fromJson(Map<String, dynamic> json) =>
-      _$JournalEntryLineFromJson(json);
+  factory JournalEntryLine.fromJson(Map<String, dynamic> json) => _$JournalEntryLineFromJson(json);
 }
 
 /// The core atomic financial record representing a balanced accounting\n/// transaction.
@@ -212,23 +210,24 @@ class JournalEntry with _$JournalEntry {
     /// Most recent synchronization timestamp from the server.
     DateTime? serverUpdatedAt,
 
+    /// Internal authoritative ledger entry ID for cross-reference.
+    /// (Standard Reference: CP-003: Immutability - Authority Chain)
+    String? authoritativeEntryId,
+
     /// Soft-deletion flag.
     @Default(false) bool isDeleted,
   }) = _JournalEntry;
 
   /// deserialization from JSON format.
-  factory JournalEntry.fromJson(Map<String, dynamic> json) =>
-      _$JournalEntryFromJson(json);
+  factory JournalEntry.fromJson(Map<String, dynamic> json) => _$JournalEntryFromJson(json);
 
   const JournalEntry._();
 
   /// Aggregated total of all Debit lines.
-  Decimal get totalDebit =>
-      lines.fold(Decimal.zero, (sum, line) => sum + line.debit);
+  Decimal get totalDebit => lines.fold(Decimal.zero, (sum, line) => sum + line.debit);
 
   /// Aggregated total of all Credit lines.
-  Decimal get totalCredit =>
-      lines.fold(Decimal.zero, (sum, line) => sum + line.credit);
+  Decimal get totalCredit => lines.fold(Decimal.zero, (sum, line) => sum + line.credit);
 
   /// Mathematical verification of the accounting equation (Debits = Credits).
   /// (Standard Reference: FR-ACC-002)

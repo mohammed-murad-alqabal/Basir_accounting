@@ -10,7 +10,10 @@ on:
     - cron: "0 2 * * *"
   workflow_dispatch:
 
+<<<<<<< HEAD
 # تتيح الصلاحيات للتقارير حيث تسمح سياسة المستودع؛ فشل النشر يبقى استشاريًا.
+=======
+>>>>>>> origin/audit/baseline-main-current-20260814
 permissions:
   contents: read
   issues: write
@@ -23,7 +26,7 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
         with:
           fetch-depth: 0
 
@@ -50,7 +53,11 @@ jobs:
           set -e
           echo "analyze_exit_code=$ANALYZE_EXIT_CODE" >> $GITHUB_OUTPUT
 
+<<<<<<< HEAD
           # استخراج الإحصائيات بقيم أحادية السطر صالحة لمخرجات GitHub Actions.
+=======
+          # استخراج الإحصائيات
+>>>>>>> origin/audit/baseline-main-current-20260814
           ISSUES_COUNT=$(grep -c "issue" analyze_output.txt || true)
           ERRORS_COUNT=$(grep -c "error •" analyze_output.txt || true)
           WARNINGS_COUNT=$(grep -c "warning •" analyze_output.txt || true)
@@ -76,6 +83,7 @@ jobs:
           set -e
           echo "test_exit_code=$TEST_EXIT_CODE" >> $GITHUB_OUTPUT
 
+<<<<<<< HEAD
           # يمثل التقرير نتيجة مجموعة الاختبارات بصورة حتمية بدل تحليل صيغة المخرجات.
           if [ "$TEST_EXIT_CODE" -eq 0 ]; then
             PASSED=1
@@ -85,6 +93,15 @@ jobs:
             FAILED=1
           fi
           SKIPPED=0
+=======
+          # استخراج نتائج الاختبارات
+          PASSED=$(grep -oP '\+\K[0-9]+' test_output.txt | tail -1 || true)
+          FAILED=$(grep -oP '\-\K[0-9]+' test_output.txt | tail -1 || true)
+          SKIPPED=$(grep -oP '~\K[0-9]+' test_output.txt | tail -1 || true)
+          PASSED=${PASSED:-0}
+          FAILED=${FAILED:-0}
+          SKIPPED=${SKIPPED:-0}
+>>>>>>> origin/audit/baseline-main-current-20260814
 
           echo "tests_passed=$PASSED" >> $GITHUB_OUTPUT
           echo "tests_failed=$FAILED" >> $GITHUB_OUTPUT
@@ -132,7 +149,7 @@ jobs:
           EOF
 
       - name: Upload Error Report
-        uses: actions/upload-artifact@5d5d22a31266ced268874388b861e4b58bb5c2f3
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
         with:
           name: error-report-${{ github.run_number }}
           path: logs/reports/
@@ -142,12 +159,12 @@ jobs:
         # تظل نتيجة التحليل منشورة حتى إذا منعت سياسة المستودع إنشاء التذاكر.
         if: steps.analyze.outputs.errors_count > 0
         continue-on-error: true
-        uses: actions/github-script@60a0d83039c74a4aee543508d2ffcb1c3799cdea # v7.0.1
+        uses: actions/github-script@d746ffe35508b1917358783b479e04febd2b8f71 # v7.0.1
         with:
           script: |
-            const errorsCount = ${{ steps.analyze.outputs.errors_count }};
-            const warningsCount = ${{ steps.analyze.outputs.warnings_count }};
-            const testsFailedCount = ${{ steps.test.outputs.tests_failed }};
+            const errorsCount = Number('${{ steps.analyze.outputs.errors_count }}' || '0');
+            const warningsCount = Number('${{ steps.analyze.outputs.warnings_count }}' || '0');
+            const testsFailedCount = Number('${{ steps.test.outputs.tests_failed }}' || '0');
 
             if (errorsCount > 0 || testsFailedCount > 0) {
               const title = `🚨 أخطاء حرجة مكتشفة - ${new Date().toISOString().split('T')[0]}`;
@@ -192,13 +209,13 @@ jobs:
         # يبقى تقرير الجودة مرئيًا في السجل إذا كانت التعليقات محظورة.
         if: github.event_name == 'pull_request'
         continue-on-error: true
-        uses: actions/github-script@60a0d83039c74a4aee543508d2ffcb1c3799cdea # v7.0.1
+        uses: actions/github-script@d746ffe35508b1917358783b479e04febd2b8f71 # v7.0.1
         with:
           script: |
-            const errorsCount = ${{ steps.analyze.outputs.errors_count }};
-            const warningsCount = ${{ steps.analyze.outputs.warnings_count }};
-            const testsPassedCount = ${{ steps.test.outputs.tests_passed }};
-            const testsFailedCount = ${{ steps.test.outputs.tests_failed }};
+            const errorsCount = Number('${{ steps.analyze.outputs.errors_count }}' || '0');
+            const warningsCount = Number('${{ steps.analyze.outputs.warnings_count }}' || '0');
+            const testsPassedCount = Number('${{ steps.test.outputs.tests_passed }}' || '0');
+            const testsFailedCount = Number('${{ steps.test.outputs.tests_failed }}' || '0');
 
             const comment = `
             ## 📊 تقرير جودة الكود

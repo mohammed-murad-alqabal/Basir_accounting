@@ -84,13 +84,18 @@ pub async fn post_journal_entry(
     let pool = get_pool()?;
     let ledger_repo = PgLedgerRepository::new(pool.clone());
     let standards_repo = PgStandardsRepository::new(pool.clone());
+    let account_repo = PgAccountRepository::new(pool.clone());
 
-    let _registry: Vec<accounting_core::standards::models::StandardEntry> =
-        standards_repo.load_all().await?;
+    let standards = standards_repo.load_all().await?;
+    let registry = StandardsRegistry::from_entries(standards);
+    let accounts = account_repo.list_all().await?;
+    let account_registry = AccountRegistry::new(accounts);
     let mut entry = map_dto_to_entity(dto)?;
 
-    // Set to posted before saving (or let repository handle it)
+    // Mark the entry as posted only after the complete canonical validation context
+    // has been loaded. The repository applies the same structural checks again.
     entry.status = EntryStatus::Posted;
+    validate_for_posting(&entry, &registry, &account_registry)?;
 
     let audit_meta: accounting_core::audit::models::AuditMetadata = metadata.try_into()?;
 

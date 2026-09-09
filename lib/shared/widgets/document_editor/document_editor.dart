@@ -79,14 +79,16 @@ class DocumentEditor extends StatelessWidget {
             );
           }
 
-          return Column(
-            key: const Key('documentEditorCompactLayout'),
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              primaryContent,
-              const SizedBox(height: Spacing.lg),
-              summary,
-            ],
+          return SingleChildScrollView(
+            child: Column(
+              key: const Key('documentEditorCompactLayout'),
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                primaryContent,
+                const SizedBox(height: Spacing.lg),
+                summary,
+              ],
+            ),
           );
         },
       );

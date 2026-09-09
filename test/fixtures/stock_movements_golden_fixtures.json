@@ -1,0 +1,323 @@
+{
+  "fixtureVersion": 1,
+  "sanitized": true,
+  "description": "Synthetic deterministic fixtures for StockMovements replay and scope acceptance.",
+  "rules": {
+    "asOfDateInclusive": true,
+    "ordering": ["dateUtcAscending", "uuidAscending"],
+    "generalWarehouseRowsIncludedForSelectedWarehouse": true,
+    "transferRequiresDualEntry": true,
+    "standaloneTransferIsBlocked": true,
+    "negativeAdjustmentIsBlocked": true
+  },
+  "cleanFixtures": [
+    {
+      "id": "basic_lifecycle",
+      "userId": "user-a",
+      "itemId": "item-coffee",
+      "warehouseId": "wh-a",
+      "movements": [
+        {
+          "id": "basic-001",
+          "itemId": "item-coffee",
+          "warehouseId": "wh-a",
+          "type": "inbound",
+          "quantity": 10.0,
+          "unitCost": 12.5,
+          "date": "2026-01-01T00:00:00.000Z",
+          "createdAt": "2026-01-01T00:01:00.000Z",
+          "referenceId": "ref-purchase-001",
+          "description": "synthetic inbound",
+          "userId": "user-a",
+          "syncStatus": "synced"
+        },
+        {
+          "id": "basic-002",
+          "itemId": "item-coffee",
+          "warehouseId": "wh-a",
+          "type": "outbound",
+          "quantity": 3.0,
+          "unitCost": 12.5,
+          "date": "2026-01-02T00:00:00.000Z",
+          "createdAt": "2026-01-02T00:01:00.000Z",
+          "referenceId": "ref-sale-001",
+          "description": "synthetic outbound",
+          "userId": "user-a",
+          "syncStatus": "synced"
+        },
+        {
+          "id": "basic-003",
+          "itemId": "item-coffee",
+          "warehouseId": "wh-a",
+          "type": "adjustment",
+          "quantity": 2.0,
+          "unitCost": 12.5,
+          "date": "2026-01-03T00:00:00.000Z",
+          "createdAt": "2026-01-03T00:01:00.000Z",
+          "referenceId": "ref-count-001",
+          "description": "synthetic positive adjustment",
+          "userId": "user-a",
+          "syncStatus": "synced"
+        }
+      ],
+      "expectedBalances": [
+        {"asOfDate": "2025-12-31T23:59:59.999Z", "warehouseId": "wh-a", "quantity": 0.0},
+        {"asOfDate": "2026-01-01T00:00:00.000Z", "warehouseId": "wh-a", "quantity": 10.0},
+        {"asOfDate": "2026-01-02T00:00:00.000Z", "warehouseId": "wh-a", "quantity": 7.0},
+        {"asOfDate": "2026-01-03T00:00:00.000Z", "warehouseId": "wh-a", "quantity": 9.0}
+      ]
+    },
+    {
+      "id": "general_and_warehouse_scope",
+      "userId": "user-a",
+      "itemId": "item-oil",
+      "warehouseId": "wh-a",
+      "movements": [
+        {
+          "id": "scope-001",
+          "itemId": "item-oil",
+          "warehouseId": null,
+          "type": "inbound",
+          "quantity": 5.0,
+          "unitCost": 4.0,
+          "date": "2026-02-01T00:00:00.000Z",
+          "createdAt": "2026-02-01T00:01:00.000Z",
+          "referenceId": "ref-general-001",
+          "description": "synthetic general stock",
+          "userId": "user-a",
+          "syncStatus": "synced"
+        },
+        {
+          "id": "scope-002",
+          "itemId": "item-oil",
+          "warehouseId": "wh-a",
+          "type": "outbound",
+          "quantity": 2.0,
+          "unitCost": 4.0,
+          "date": "2026-02-02T00:00:00.000Z",
+          "createdAt": "2026-02-02T00:01:00.000Z",
+          "referenceId": "ref-a-001",
+          "description": "synthetic warehouse a outbound",
+          "userId": "user-a",
+          "syncStatus": "synced"
+        },
+        {
+          "id": "scope-003",
+          "itemId": "item-oil",
+          "warehouseId": "wh-b",
+          "type": "inbound",
+          "quantity": 100.0,
+          "unitCost": 4.0,
+          "date": "2026-02-03T00:00:00.000Z",
+          "createdAt": "2026-02-03T00:01:00.000Z",
+          "referenceId": "ref-b-001",
+          "description": "synthetic warehouse b inbound",
+          "userId": "user-a",
+          "syncStatus": "synced"
+        }
+      ],
+      "expectedBalances": [
+        {"asOfDate": "2026-02-03T00:00:00.000Z", "warehouseId": "wh-a", "quantity": 3.0},
+        {"asOfDate": "2026-02-03T00:00:00.000Z", "warehouseId": "wh-b", "quantity": 105.0}
+      ]
+    },
+    {
+      "id": "transfer_dual_entry",
+      "userId": "user-a",
+      "itemId": "item-rice",
+      "warehouseId": "wh-a",
+      "movements": [
+        {
+          "id": "transfer-001-initial",
+          "itemId": "item-rice",
+          "warehouseId": "wh-a",
+          "type": "inbound",
+          "quantity": 20.0,
+          "unitCost": 8.0,
+          "date": "2026-03-01T00:00:00.000Z",
+          "createdAt": "2026-03-01T00:01:00.000Z",
+          "referenceId": "ref-opening-001",
+          "description": "synthetic opening stock",
+          "userId": "user-a",
+          "syncStatus": "synced"
+        },
+        {
+          "id": "transfer-001-out",
+          "itemId": "item-rice",
+          "warehouseId": "wh-a",
+          "type": "outbound",
+          "quantity": 7.0,
+          "unitCost": 8.0,
+          "date": "2026-03-02T00:00:00.000Z",
+          "createdAt": "2026-03-02T00:01:00.000Z",
+          "referenceId": "transfer-001",
+          "description": "synthetic transfer outbound",
+          "userId": "user-a",
+          "syncStatus": "synced"
+        },
+        {
+          "id": "transfer-001-in",
+          "itemId": "item-rice",
+          "warehouseId": "wh-b",
+          "type": "inbound",
+          "quantity": 7.0,
+          "unitCost": 8.0,
+          "date": "2026-03-02T00:00:00.000Z",
+          "createdAt": "2026-03-02T00:02:00.000Z",
+          "referenceId": "transfer-001",
+          "description": "synthetic transfer inbound",
+          "userId": "user-a",
+          "syncStatus": "synced"
+        }
+      ],
+      "expectedBalances": [
+        {"asOfDate": "2026-03-02T00:00:00.000Z", "warehouseId": "wh-a", "quantity": 13.0},
+        {"asOfDate": "2026-03-02T00:00:00.000Z", "warehouseId": "wh-b", "quantity": 7.0}
+      ],
+      "expectedReferenceCounts": {"transfer-001": 2}
+    },
+    {
+      "id": "same_date_inclusive_boundary",
+      "userId": "user-a",
+      "itemId": "item-date",
+      "warehouseId": "wh-a",
+      "movements": [
+        {
+          "id": "same-date-in",
+          "itemId": "item-date",
+          "warehouseId": "wh-a",
+          "type": "inbound",
+          "quantity": 10.0,
+          "unitCost": 1.0,
+          "date": "2026-04-10T12:00:00.000Z",
+          "createdAt": "2026-04-10T12:01:00.000Z",
+          "referenceId": "ref-same-date-in",
+          "description": "synthetic same date inbound",
+          "userId": "user-a",
+          "syncStatus": "synced"
+        },
+        {
+          "id": "same-date-out",
+          "itemId": "item-date",
+          "warehouseId": "wh-a",
+          "type": "outbound",
+          "quantity": 4.0,
+          "unitCost": 1.0,
+          "date": "2026-04-10T12:00:00.000Z",
+          "createdAt": "2026-04-10T12:02:00.000Z",
+          "referenceId": "ref-same-date-out",
+          "description": "synthetic same date outbound",
+          "userId": "user-a",
+          "syncStatus": "synced"
+        }
+      ],
+      "expectedBalances": [
+        {"asOfDate": "2026-04-10T11:59:59.999Z", "warehouseId": "wh-a", "quantity": 0.0},
+        {"asOfDate": "2026-04-10T12:00:00.000Z", "warehouseId": "wh-a", "quantity": 6.0}
+      ]
+    },
+    {
+      "id": "reference_lookup_cross_warehouse",
+      "userId": "user-a",
+      "itemId": "item-reference",
+      "warehouseId": "wh-a",
+      "movements": [
+        {
+          "id": "reference-001-out",
+          "itemId": "item-reference",
+          "warehouseId": "wh-a",
+          "type": "outbound",
+          "quantity": 5.0,
+          "unitCost": 3.0,
+          "date": "2026-05-01T00:00:00.000Z",
+          "createdAt": "2026-05-01T00:01:00.000Z",
+          "referenceId": "reference-transfer-001",
+          "description": "synthetic reference outbound",
+          "userId": "user-a",
+          "syncStatus": "synced"
+        },
+        {
+          "id": "reference-001-in",
+          "itemId": "item-reference",
+          "warehouseId": "wh-b",
+          "type": "inbound",
+          "quantity": 5.0,
+          "unitCost": 3.0,
+          "date": "2026-05-01T00:00:00.000Z",
+          "createdAt": "2026-05-01T00:02:00.000Z",
+          "referenceId": "reference-transfer-001",
+          "description": "synthetic reference inbound",
+          "userId": "user-a",
+          "syncStatus": "synced"
+        }
+      ],
+      "expectedBalances": [
+        {"asOfDate": "2026-05-01T00:00:00.000Z", "warehouseId": "wh-a", "quantity": -5.0},
+        {"asOfDate": "2026-05-01T00:00:00.000Z", "warehouseId": "wh-b", "quantity": 5.0}
+      ],
+      "expectedReferenceCounts": {"reference-transfer-001": 2}
+    },
+    {
+      "id": "user_scope_isolation",
+      "userId": "user-a",
+      "itemId": "item-shared",
+      "warehouseId": "wh-a",
+      "movements": [
+        {
+          "id": "scope-user-a",
+          "itemId": "item-shared",
+          "warehouseId": "wh-a",
+          "type": "inbound",
+          "quantity": 10.0,
+          "unitCost": 2.0,
+          "date": "2026-06-01T00:00:00.000Z",
+          "createdAt": "2026-06-01T00:01:00.000Z",
+          "referenceId": "scope-user-a-ref",
+          "description": "synthetic user a",
+          "userId": "user-a",
+          "syncStatus": "synced"
+        },
+        {
+          "id": "scope-user-b",
+          "itemId": "item-shared",
+          "warehouseId": "wh-a",
+          "type": "inbound",
+          "quantity": 50.0,
+          "unitCost": 2.0,
+          "date": "2026-06-01T00:00:00.000Z",
+          "createdAt": "2026-06-01T00:02:00.000Z",
+          "referenceId": "scope-user-b-ref",
+          "description": "synthetic user b",
+          "userId": "user-b",
+          "syncStatus": "synced"
+        }
+      ],
+      "expectedBalances": [
+        {"asOfDate": "2026-06-01T00:00:00.000Z", "warehouseId": "wh-a", "userId": "user-a", "quantity": 10.0},
+        {"asOfDate": "2026-06-01T00:00:00.000Z", "warehouseId": "wh-a", "userId": "user-b", "quantity": 50.0}
+      ]
+    }
+  ],
+  "blockedFixtures": [
+    {
+      "id": "standalone_transfer_type",
+      "reason": "StockMovementType.transfer has ambiguous direction and must not be silently treated as outbound.",
+      "expectedOutcome": "blocked_before_derived_balance"
+    },
+    {
+      "id": "negative_adjustment",
+      "reason": "Signed adjustment semantics are not approved by the current domain contract.",
+      "expectedOutcome": "blocked_before_derived_balance"
+    },
+    {
+      "id": "non_utc_date",
+      "reason": "Fixture dates must be canonical UTC to avoid cross-platform boundary drift.",
+      "expectedOutcome": "parser_rejects"
+    },
+    {
+      "id": "unknown_enum",
+      "reason": "Unknown movement or sync status must not fall back silently.",
+      "expectedOutcome": "parser_rejects"
+    }
+  ]
+}

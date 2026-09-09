@@ -7,7 +7,7 @@ part of 'simulation_service.dart';
 // **************************************************************************
 
 String _$financialSimulationServiceHash() =>
-    r'9e9b0dee3e0b723bf0a11ed5cf927108657a0cf0';
+    r'e3d36c6df7c9481d763aba2ba361992ce7344298';
 
 /// ***
 /// Cognitive Foundation: FinancialSimulationService

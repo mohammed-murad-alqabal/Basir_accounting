@@ -1,5 +1,8 @@
+import 'dart:async';
+
 import 'package:basir_accounting_system/core/theme/border_contrast_design.dart';
 import 'package:basir_accounting_system/core/theme/tokens/index.dart';
+import 'package:basir_accounting_system/features/navigation/presentation/widgets/omnibar.dart';
 import 'package:basir_accounting_system/l10n/app_localizations.dart';
 import 'package:basir_accounting_system/shared/widgets/app_shell.dart';
 import 'package:flutter/material.dart' hide Durations;
@@ -88,13 +91,17 @@ class BasirTopBar extends StatelessWidget {
                 Expanded(
                   child: ConstrainedBox(
                     constraints: const BoxConstraints(maxWidth: 240),
-                    child: BasirGlobalSearchField(l10n: l10n),
+                    child: BasirGlobalSearchField(
+                      l10n: l10n,
+                      onTap: () => _showSearchDialog(context),
+                    ),
                   ),
                 ),
                 const SizedBox(width: Spacing.sm),
                 _buildIconButton(
                   icon: Icons.notifications_outlined,
                   semanticsLabel: l10n.shellNotifications,
+                  onTap: () => _showNotifications(context, l10n),
                 ),
                 const SizedBox(width: Spacing.sm),
               ],
@@ -153,6 +160,7 @@ class BasirTopBar extends StatelessWidget {
   Widget _buildIconButton({
     required IconData icon,
     required String semanticsLabel,
+    required VoidCallback onTap,
   }) =>
       Semantics(
         button: true,
@@ -161,76 +169,91 @@ class BasirTopBar extends StatelessWidget {
           width: TouchTargets.minimum,
           height: TouchTargets.minimum,
           child: InkWell(
-            onTap: () {},
+            onTap: onTap,
             borderRadius: BorderRadius.circular(Radii.full),
             splashColor: AppColors.primary.withValues(alpha: 0.12),
-            child: Center(
-              child: Icon(icon, color: AppColors.textSecondary),
-            ),
+            child: Center(child: Icon(icon, color: AppColors.textSecondary)),
           ),
         ),
       );
+
+  void _showNotifications(BuildContext context, AppLocalizations l10n) {
+    ScaffoldMessenger.of(
+      context,
+    ).showSnackBar(SnackBar(content: Text(l10n.shellNotifications)));
+  }
+
+  void _showSearchDialog(BuildContext context) {
+    unawaited(showOmnibar<void>(context).then<void>((_) {}));
+  }
 }
 
-/// حقل البحث الشامل في الشريط العلوي
+/// حقل البحث الشامل في الشريط العلوي.
 ///
-/// placeholder جاهز لـ Command Palette الكامل (Phase 5).
+/// يفتح Omnibar الفعلي الذي يجمع الأوامر ونتائج الوحدات في تجربة واحدة.
 class BasirGlobalSearchField extends StatelessWidget {
-  /// إنشاء حقل البحث الشامل
-  const BasirGlobalSearchField({required this.l10n, super.key});
+  /// إنشاء حقل البحث
+  const BasirGlobalSearchField({required this.l10n, super.key, this.onTap});
 
   /// الترجمات النشطة
   final AppLocalizations l10n;
+
+  /// فتح تجربة البحث الشامل.
+  final VoidCallback? onTap;
 
   @override
   Widget build(BuildContext context) => Semantics(
         textField: true,
         label: l10n.shellSearchAll,
-        child: Container(
-          height: 40,
-          padding: const EdgeInsets.symmetric(horizontal: Spacing.sm),
-          decoration: BoxDecoration(
-            color: AppColors.background,
-            borderRadius: BorderRadius.circular(Radii.md),
-            border: Border.all(color: AppColors.borderLight),
-          ),
-          child: Row(
-            children: [
-              const Icon(
-                Icons.search,
-                size: IconSizes.sm,
-                color: AppColors.textHint,
-              ),
-              const SizedBox(width: Spacing.xs),
-              Expanded(
-                child: Text(
-                  l10n.shellSearchHint,
-                  style: AppTextStyles.bodySmall.copyWith(
-                    color: AppColors.textHint,
-                  ),
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
+        child: InkWell(
+          onTap: onTap,
+          borderRadius: BorderRadius.circular(Radii.md),
+          child: Container(
+            height: 40,
+            padding: const EdgeInsets.symmetric(horizontal: Spacing.sm),
+            decoration: BoxDecoration(
+              color: AppColors.background,
+              borderRadius: BorderRadius.circular(Radii.md),
+              border: Border.all(color: AppColors.borderLight),
+            ),
+            child: Row(
+              children: [
+                const Icon(
+                  Icons.search,
+                  size: IconSizes.sm,
+                  color: AppColors.textHint,
                 ),
-              ),
-              const SizedBox(width: Spacing.xs),
-              Container(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: Spacing.xs,
-                  vertical: 2,
-                ),
-                decoration: BoxDecoration(
-                  color: AppColors.surfaceVariant,
-                  borderRadius: BorderRadius.circular(Radii.xs),
-                  border: Border.all(color: AppColors.borderLight),
-                ),
-                child: Text(
-                  '⌘K',
-                  style: AppTextStyles.labelSmall.copyWith(
-                    color: AppColors.textSecondary,
+                const SizedBox(width: Spacing.xs),
+                Expanded(
+                  child: Text(
+                    l10n.shellSearchHint,
+                    style: AppTextStyles.bodySmall.copyWith(
+                      color: AppColors.textHint,
+                    ),
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
                   ),
                 ),
-              ),
-            ],
+                const SizedBox(width: Spacing.xs),
+                Container(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: Spacing.xs,
+                    vertical: 2,
+                  ),
+                  decoration: BoxDecoration(
+                    color: AppColors.surfaceVariant,
+                    borderRadius: BorderRadius.circular(Radii.xs),
+                    border: Border.all(color: AppColors.borderLight),
+                  ),
+                  child: Text(
+                    '⌘K',
+                    style: AppTextStyles.labelSmall.copyWith(
+                      color: AppColors.textSecondary,
+                    ),
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       );
