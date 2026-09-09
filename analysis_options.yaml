@@ -18,6 +18,7 @@ analyzer:
     - "coverage/**"
     - "test/.test_coverage.dart"
     - "tools/**"
+    - "docs/**"
     - android/**
     - ios/**
     - web/**
