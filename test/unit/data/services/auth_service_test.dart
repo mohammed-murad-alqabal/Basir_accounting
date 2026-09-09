@@ -3,11 +3,8 @@
 /// يختبر جميع عمليات المصادقة والأمان
 library;
 
-import 'dart:convert';
-
-import 'package:basir_accounting_system/core/security/password_hasher.dart';
 import 'package:basir_accounting_system/features/auth/application/auth_service.dart';
-import 'package:crypto/crypto.dart';
+import 'package:basir_accounting_system/features/auth/domain/models/auth_models.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../../../mocks/mock_secure_storage.dart';
@@ -52,24 +49,24 @@ void main() {
         const password = 'redacted';
 
         // Act & Assert
-        expect(
-          () => authService.createAccount(username, password),
+        await expectLater(
+          authService.createAccount(username, password),
           throwsException,
         );
       },
     );
 
     test(
-      'should throw exception for password less than 6 characters',
+      'should throw exception for passwords that do not meet the 12-character policy',
       () async {
         // Arrange
         const username = 'testuser';
         const password = '12345'; // أقل من 6 أحرف
 
         // Act & Assert
-        expect(
-          () => authService.createAccount(username, password),
-          throwsException,
+        await expectLater(
+          authService.createAccount(username, password),
+          throwsA(isA<ArgumentError>()),
         );
       },
     );
@@ -80,33 +77,68 @@ void main() {
       const password = 'redacted';
 
       // Act & Assert
-      expect(
-        () => authService.createAccount(username, password),
+      await expectLater(
+        authService.createAccount(username, password),
         throwsException,
       );
     });
 
-    test('should throw exception for empty password', () async {
+    test(
+      'should reject an empty password through the password policy',
+      () async {
+        // Arrange
+        const username = 'testuser';
+        const password = '';
+
+        // Act & Assert
+        await expectLater(
+          authService.createAccount(username, password),
+          throwsA(isA<ArgumentError>()),
+        );
+      },
+    );
+
+    test('should store a versioned PBKDF2 password hash', () async {
       // Arrange
-      const username = 'testuser';
-      const password = '';
-
-      // Act & Assert
-      expect(
-        () => authService.createAccount(username, password),
-        throwsException,
-      );
-    });
-
-    test('should hash password using bcrypt', () async {
       const username = 'testuser';
       const password = 'redacted';
 
+      // Act
       await authService.createAccount(username, password);
 
+      // Assert
       final storedPasswordHash = await mockStorage.read(key: 'password_hash');
-      expect(storedPasswordHash, isNotNull);
-      expect(PasswordHasher.isBcryptHash(storedPasswordHash!), isTrue);
+      expect(storedPasswordHash, startsWith(r'pbkdf2-sha256$310000$'));
+    });
+
+    test('rejects privileged local account creation', () async {
+      await expectLater(
+        authService.createAccount(
+          'testuser',
+          'Password123!',
+          role: UserRole.admin,
+        ),
+        throwsA(isA<UnsupportedError>()),
+      );
+    });
+
+    test('does not replace an existing local account', () async {
+      await mockStorage.write(key: 'username', value: 'existing-user');
+
+      await expectLater(
+        authService.createAccount('testuser', 'Password123!'),
+        throwsA(isA<StateError>()),
+      );
+    });
+
+    test('rejects password reset without a verified recovery flow', () {
+      expect(
+        () => authService.changePasswordWithoutOldPassword(
+          'testuser',
+          'NewPassword456!',
+        ),
+        throwsA(isA<UnsupportedError>()),
+      );
     });
   });
 
@@ -177,32 +209,6 @@ void main() {
         () => authService.login(username, 'wrongpassword'),
         throwsException,
       );
-    });
-
-    test('should upgrade a verified legacy salted SHA-256 hash to bcrypt',
-        () async {
-      const username = 'legacyuser';
-      const password = 'redacted';
-      const userSalt = 'legacy-salt';
-      const appSalt = 'basir_mvp_2025_secure_salt';
-      const combinedSalt = '$appSalt$userSalt';
-      var legacyHash =
-          sha256.convert(utf8.encode('$password$combinedSalt')).toString();
-      for (var iteration = 0; iteration < 1000; iteration++) {
-        legacyHash =
-            sha256.convert(utf8.encode('$legacyHash$combinedSalt')).toString();
-      }
-      await mockStorage.write(key: 'username', value: username);
-      await mockStorage.write(key: 'password_hash', value: legacyHash);
-      await mockStorage.write(key: '${username}_salt', value: userSalt);
-
-      final result = await authService.login(username, password);
-
-      expect(result, isTrue);
-      final upgradedHash = await mockStorage.read(key: 'password_hash');
-      expect(upgradedHash, isNotNull);
-      expect(PasswordHasher.isBcryptHash(upgradedHash!), isTrue);
-      expect(await mockStorage.read(key: '${username}_salt'), isNull);
     });
 
     test('should logout successfully', () async {
@@ -292,8 +298,8 @@ void main() {
     test('changePassword should update password successfully', () async {
       // Arrange
       const username = 'testuser';
-      const oldPassword = 'password123';
-      const newPassword = 'newpassword456';
+      const oldPassword = 'Password123!';
+      const newPassword = 'NewPassword456!';
       await authService.createAccount(username, oldPassword);
 
       // Act
@@ -311,7 +317,7 @@ void main() {
         // Arrange
         const username = 'testuser';
         const password = 'redacted';
-        const newPassword = 'newpassword456';
+        const newPassword = 'NewPassword456!';
         await authService.createAccount(username, password);
 
         // Act & Assert
@@ -328,7 +334,7 @@ void main() {
         // Arrange
         const username = 'testuser';
         const password = 'redacted';
-        const newPassword = '12345'; // أقل من 6 أحرف
+        const newPassword = '12345'; // أقل من سياسة كلمة المرور الجديدة
         await authService.createAccount(username, password);
 
         // Act & Assert
@@ -473,8 +479,8 @@ void main() {
       const password = 'redacted';
 
       // Act & Assert
-      expect(
-        () => authService.createAccount(username, password),
+      await expectLater(
+        authService.createAccount(username, password),
         throwsException,
       );
     });

@@ -13,7 +13,6 @@ import 'package:basir_accounting_system/core/theme/glass_theme.dart';
 import 'package:basir_accounting_system/core/theme/tokens/index.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 /// نظام الثيمات الموحد
 ///
@@ -63,7 +62,9 @@ abstract final class AppTheme {
     }
 
     // 2. تحديد TextTheme وتطبيق الخط والحجم
-    final baseTextTheme = GoogleFonts.cairoTextTheme(_textTheme);
+    final baseTextTheme = _textTheme.apply(
+      fontFamily: fontFamily ?? FontFamilies.arabic,
+    );
     final scaledGenericTextTheme = baseTextTheme.apply(
       fontSizeFactor: textScaleFactor,
       displayColor: colorScheme.onSurface,
@@ -105,12 +106,12 @@ abstract final class AppTheme {
       );
 
   static ColorScheme get _highContrastDarkColorScheme => const ColorScheme.dark(
-        primary: AppPalette.blueSky, // High visibility
-        secondary: AppPalette.greenEmerald, // High visibility
-        error: AppPalette.redAlert,
-        surface: AppPalette.darkBackground,
-        outline: AppPalette.darkTextPrimary,
-      );
+    primary: AppPalette.blueSky, // High visibility
+    secondary: AppPalette.greenEmerald, // High visibility
+    error: AppPalette.redAlert,
+    surface: AppPalette.darkBackground,
+    outline: AppPalette.darkTextPrimary,
+  );
 
   // ═══════════════════════════════════════════════════════════════════════════
   // باني الثيم (Theme Builder)
@@ -124,18 +125,17 @@ abstract final class AppTheme {
     final isDark = colorScheme.brightness == Brightness.dark;
 
     return ThemeData(
-      extensions: [
-        if (isDark) GlassTheme.dark() else GlassTheme.light(),
-      ],
+      extensions: [if (isDark) GlassTheme.dark() else GlassTheme.light()],
       useMaterial3: true,
       colorScheme: colorScheme,
       textTheme: textTheme,
       primaryTextTheme: textTheme,
       // GoogleFonts handles the font family via textTheme, but we set strictly
       // to avoid fallback issues.
-      fontFamily: GoogleFonts.cairo().fontFamily,
+      fontFamily: fontFamily ?? FontFamilies.arabic,
       scaffoldBackgroundColor: colorScheme.brightness == Brightness.dark
-          ? AppPalette.darkBackground // Professional Deep Navy
+          ? AppPalette
+                .darkBackground // Professional Deep Navy
           : AppColors.background,
 
       // AppBar
@@ -150,7 +150,7 @@ abstract final class AppTheme {
           color: colorScheme.brightness == Brightness.dark
               ? colorScheme.onSurface
               : colorScheme.onPrimary,
-          fontFamily: GoogleFonts.cairo().fontFamily,
+          fontFamily: fontFamily ?? FontFamilies.arabic,
         ),
         iconTheme: IconThemeData(
           color: colorScheme.brightness == Brightness.dark
@@ -162,12 +162,12 @@ abstract final class AppTheme {
           statusBarColor: Colors.transparent, // Edge-to-Edge
           statusBarIconBrightness: colorScheme.brightness == Brightness.dark
               ? Brightness.light
-              : Brightness.light, // Usually white icons on colored headers
+              : Brightness.dark,
           systemNavigationBarColor: Colors.transparent, // Edge-to-Edge
           systemNavigationBarIconBrightness:
               colorScheme.brightness == Brightness.dark
-                  ? Brightness.light
-                  : Brightness.dark,
+              ? Brightness.light
+              : Brightness.dark,
         ),
       ),
 
@@ -304,8 +304,10 @@ abstract final class AppTheme {
       ),
 
       // Icons
-      iconTheme:
-          IconThemeData(color: colorScheme.onSurface, size: IconSizes.md),
+      iconTheme: IconThemeData(
+        color: colorScheme.onSurface,
+        size: IconSizes.md,
+      ),
 
       // Divider
       dividerTheme: DividerThemeData(
@@ -364,98 +366,98 @@ abstract final class AppTheme {
   // ═══════════════════════════════════════════════════════════════════════════
 
   static ColorScheme get _lightColorScheme => const ColorScheme.light(
-        // الألوان الأساسية
-        primary: AppColors.primary,
-        primaryContainer: AppColors.primaryLight,
-        onPrimaryContainer: AppColors.primaryDark,
+    // الألوان الأساسية
+    primary: AppColors.primary,
+    primaryContainer: AppColors.primaryLight,
+    onPrimaryContainer: AppColors.primaryDark,
 
-        // الألوان الثانوية
-        secondary: AppColors.secondary,
-        onSecondary: AppColors.textOnDark,
-        secondaryContainer: AppColors.secondaryLight,
-        onSecondaryContainer: AppColors.secondaryDark,
+    // الألوان الثانوية
+    secondary: AppColors.secondary,
+    onSecondary: AppColors.textOnDark,
+    secondaryContainer: AppColors.secondaryLight,
+    onSecondaryContainer: AppColors.secondaryDark,
 
-        // الألوان الإضافية
-        tertiary: AppColors.info,
-        onTertiary: AppColors.textOnDark,
-        tertiaryContainer: AppColors.infoLight,
-        onTertiaryContainer: AppColors.info,
+    // الألوان الإضافية
+    tertiary: AppColors.info,
+    onTertiary: AppColors.textOnDark,
+    tertiaryContainer: AppColors.infoLight,
+    onTertiaryContainer: AppColors.info,
 
-        // ألوان الخطأ
-        error: AppColors.error,
-        errorContainer: AppColors.errorLight,
-        onErrorContainer: AppColors.error,
-        surfaceContainerHighest: AppColors.surfaceVariant,
-        onSurfaceVariant: AppColors.textSecondary,
+    // ألوان الخطأ
+    error: AppColors.error,
+    errorContainer: AppColors.errorLight,
+    onErrorContainer: AppColors.error,
+    surfaceContainerHighest: AppColors.surfaceVariant,
+    onSurfaceVariant: AppColors.textSecondary,
 
-        // الحدود
-        outline: AppColors.border,
-        outlineVariant: AppColors.borderLight,
+    // الحدود
+    outline: AppColors.border,
+    outlineVariant: AppColors.borderLight,
 
-        // الظلال
-        shadow: AppColors.shadow,
-        scrim: AppColors.overlay,
-      );
+    // الظلال
+    shadow: AppColors.shadow,
+    scrim: AppColors.overlay,
+  );
 
   // ═══════════════════════════════════════════════════════════════════════════
   // ColorScheme الداكن
   // ═══════════════════════════════════════════════════════════════════════════
 
   static ColorScheme get _darkColorScheme => const ColorScheme.dark(
-        // الألوان الأساسية - Professional Blue for Dark Mode
-        primary: AppPalette.blueCorporate,
-        onPrimary: AppPalette.white,
-        primaryContainer: AppPalette.navyDeep,
-        onPrimaryContainer: AppPalette.blueLight,
+    // الألوان الأساسية - Professional Blue for Dark Mode
+    primary: AppPalette.blueCorporate,
+    onPrimary: AppPalette.white,
+    primaryContainer: AppPalette.navyDeep,
+    onPrimaryContainer: AppPalette.blueLight,
 
-        // الألوان الثانوية - Accounting Green
-        secondary: AppPalette.greenEmerald,
-        onSecondary: AppPalette.white,
-        secondaryContainer: AppPalette.greenForest,
-        onSecondaryContainer: AppPalette.greenLight,
+    // الألوان الثانوية - Accounting Green
+    secondary: AppPalette.greenEmerald,
+    onSecondary: AppPalette.white,
+    secondaryContainer: AppPalette.greenForest,
+    onSecondaryContainer: AppPalette.greenLight,
 
-        // الخلفيات والأسطح - Professional Deep Navy
-        surface: AppPalette.darkSurface,
-        onSurface: AppPalette.darkTextPrimary,
-        surfaceContainerHighest: AppPalette.darkBorder,
-        onSurfaceVariant: AppPalette.darkTextSecondary,
-        // الأخطاء
-        error: AppPalette.redAlert,
-        onError: AppPalette.white,
-        errorContainer: AppPalette.redBurgundy,
-        // الحدود
-        outline: AppPalette.darkOutline,
-        outlineVariant: AppPalette.darkBorder,
-      );
+    // الخلفيات والأسطح - Professional Deep Navy
+    surface: AppPalette.darkSurface,
+    onSurface: AppPalette.darkTextPrimary,
+    surfaceContainerHighest: AppPalette.darkBorder,
+    onSurfaceVariant: AppPalette.darkTextSecondary,
+    // الأخطاء
+    error: AppPalette.redAlert,
+    onError: AppPalette.white,
+    errorContainer: AppPalette.redBurgundy,
+    // الحدود
+    outline: AppPalette.darkOutline,
+    outlineVariant: AppPalette.darkBorder,
+  );
 
   // ═══════════════════════════════════════════════════════════════════════════
   // TextTheme الموحد
   // ═══════════════════════════════════════════════════════════════════════════
 
   static TextTheme get _textTheme => TextTheme(
-        // العناوين الكبيرة
-        displayLarge: AppTextStyles.headlineLarge,
-        displayMedium: AppTextStyles.headlineMedium,
-        displaySmall: AppTextStyles.headlineSmall,
+    // العناوين الكبيرة
+    displayLarge: AppTextStyles.headlineLarge,
+    displayMedium: AppTextStyles.headlineMedium,
+    displaySmall: AppTextStyles.headlineSmall,
 
-        // العناوين
-        headlineLarge: AppTextStyles.headlineMedium,
-        headlineMedium: AppTextStyles.headlineSmall,
-        headlineSmall: AppTextStyles.titleLarge,
+    // العناوين
+    headlineLarge: AppTextStyles.headlineMedium,
+    headlineMedium: AppTextStyles.headlineSmall,
+    headlineSmall: AppTextStyles.titleLarge,
 
-        // العناوين الرئيسية
-        titleLarge: AppTextStyles.titleLarge,
-        titleMedium: AppTextStyles.titleMedium,
-        titleSmall: AppTextStyles.titleSmall,
+    // العناوين الرئيسية
+    titleLarge: AppTextStyles.titleLarge,
+    titleMedium: AppTextStyles.titleMedium,
+    titleSmall: AppTextStyles.titleSmall,
 
-        // النصوص
-        bodyLarge: AppTextStyles.bodyLarge,
-        bodyMedium: AppTextStyles.bodyMedium,
-        bodySmall: AppTextStyles.bodySmall,
+    // النصوص
+    bodyLarge: AppTextStyles.bodyLarge,
+    bodyMedium: AppTextStyles.bodyMedium,
+    bodySmall: AppTextStyles.bodySmall,
 
-        // التسميات
-        labelLarge: AppTextStyles.labelLarge,
-        labelMedium: AppTextStyles.labelMedium,
-        labelSmall: AppTextStyles.labelSmall,
-      );
+    // التسميات
+    labelLarge: AppTextStyles.labelLarge,
+    labelMedium: AppTextStyles.labelMedium,
+    labelSmall: AppTextStyles.labelSmall,
+  );
 }

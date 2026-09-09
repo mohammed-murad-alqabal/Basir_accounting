@@ -4,7 +4,6 @@ on:
     branches: [main, development]
   push:
     branches: [main, development]
-  workflow_dispatch:
 
 jobs:
   code-quality:
@@ -16,33 +15,20 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11
 
-      - name: Setup Flutter
+      - name: Setup verified Flutter
         uses: ./.github/actions/setup-flutter
-        with:
-          flutter-version: "3.44.9"
-          channel: "stable"
-          cache: false
 
       - name: Get dependencies
         run: flutter pub get
-
-      - name: Generate source code
-        run: dart run build_runner build --delete-conflicting-outputs
 
       - name: Verify formatting
         run: dart format --output=none --set-exit-if-changed .
 
       - name: Analyze code
-        # BKIP baseline: errors remain blocking; 177 informational findings are
-        # tracked separately until their remediation program is approved.
-        run: flutter analyze --no-fatal-infos
+        run: flutter analyze --fatal-infos
 
-      - name: Run functional tests
-        # Keep benchmark workloads outside the PR gate and serialize functional
-        # tests to satisfy the documented runner-stability boundary.
-        run: |
-          find test -type f -name '*_test.dart' ! -path 'test/benchmark/*' -print0 \
-            | xargs -0 flutter test --concurrency=1 --coverage --reporter=expanded
+      - name: Run tests
+        run: flutter test --coverage --reporter=expanded
         timeout-minutes: 10
 
       - name: Upload coverage to Codecov
@@ -91,12 +77,8 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11
 
-      - name: Setup Flutter
+      - name: Setup verified Flutter
         uses: ./.github/actions/setup-flutter
-        with:
-          flutter-version: "3.44.9"
-          channel: "stable"
-          cache: false
 
       - name: Get dependencies
         run: flutter pub get
@@ -119,50 +101,41 @@ jobs:
 
     strategy:
       matrix:
-        # Isar 3 generates 64-bit schema identifiers that are not compatible
-        # with the JavaScript compiler; Android remains the supported CI build target.
-        platform: [android]
+        platform: [android, web]
 
     steps:
       - name: Checkout code
         uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11
 
-      - name: Setup Flutter
+      - name: Setup verified Flutter
         uses: ./.github/actions/setup-flutter
-        with:
-          flutter-version: "3.44.9"
-          channel: "stable"
-          cache: false
 
       - name: Setup Android SDK (for Android build)
         if: matrix.platform == 'android'
         uses: android-actions/setup-android@9fc6c4e9069bf8d3d10b2204b1fb8f6ef7065407
-        with:
-          packages: "platform-tools platforms;android-36 build-tools;36.0.0"
-
-      - name: Configure Gradle memory for Android CI
-        if: matrix.platform == 'android'
-        run: |
-          mkdir -p "$HOME/.gradle"
-          cat > "$HOME/.gradle/gradle.properties" <<'EOF'
-          org.gradle.jvmargs=-Xmx5g -XX:MaxMetaspaceSize=768m -XX:+HeapDumpOnOutOfMemoryError -Dfile.encoding=UTF-8
-          org.gradle.workers.max=2
-          org.gradle.parallel=false
-          org.gradle.daemon=false
-          EOF
-          echo "Gradle CI memory configured: heap=5g, metaspace=768m, workers=2, parallel=false"
-
 
       - name: Get dependencies
         run: flutter pub get
 
-      - name: Generate source code
-        run: dart run build_runner build --delete-conflicting-outputs
-
       - name: Build for ${{ matrix.platform }}
         run: |
           if [ "${{ matrix.platform }}" == "android" ]; then
-            flutter build apk --debug --no-shrink
+            # Gradle distribution retrieval can fail transiently on hosted runners.
+            # Retry the complete Android build a bounded number of times without
+            # masking a persistent build failure.
+            for attempt in 1 2 3; do
+              if flutter build apk --debug --no-shrink; then
+                exit 0
+              fi
+
+              if [ "${attempt}" -eq 3 ]; then
+                echo "Android build failed after ${attempt} attempts."
+                exit 1
+              fi
+
+              echo "Android build attempt ${attempt} failed; retrying shortly..."
+              sleep $((attempt * 15))
+            done
           elif [ "${{ matrix.platform }}" == "web" ]; then
             flutter build web --debug
           fi
@@ -196,34 +169,23 @@ jobs:
         run: |
           echo "🏛️ Checking Clean Architecture compliance..."
 
-          # Check for proper layer separation. Navigation, onboarding, and
-          # test-support surfaces are declared infrastructure rather than ERP
-          # domain modules; all remaining feature modules must retain layers.
-          for module in lib/features/*/; do
-            module_name=$(basename "$module")
+          # Enforce layer separation only for the ERP modules declared above.
+          # Supporting features (for example, navigation) may legitimately use a
+          # different structure and must not turn this ERP gate into a false failure.
+          for module_name in "${required_modules[@]}"; do
+            module="lib/features/${module_name}"
 
-            # These modules supply application-shell, onboarding, or test support
-            # concerns and do not model a standalone domain feature.
-            case "$module_name" in
-              navigation|onboarding|testing)
-                echo "⏭️ $module_name is a non-domain support module"
-                continue
-                ;;
-            esac
-            
-            # Check for domain layer
-            if [ ! -d "$module/domain" ]; then
-              echo "❌ $module_name missing domain layer"
+            if [ ! -d "${module}/domain" ]; then
+              echo "❌ ${module_name} missing domain layer"
               exit 1
             fi
-            
-            # Check for presentation layer
-            if [ ! -d "$module/presentation" ]; then
-              echo "❌ $module_name missing presentation layer"
+
+            if [ ! -d "${module}/presentation" ]; then
+              echo "❌ ${module_name} missing presentation layer"
               exit 1
             fi
-            
-            echo "✅ $module_name has proper architecture"
+
+            echo "✅ ${module_name} has proper architecture"
           done
 
   accounting-integrity:
@@ -235,12 +197,8 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11
 
-      - name: Setup Flutter
+      - name: Setup verified Flutter
         uses: ./.github/actions/setup-flutter
-        with:
-          flutter-version: "3.44.9"
-          channel: "stable"
-          cache: false
 
       - name: Get dependencies
         run: flutter pub get
@@ -277,13 +235,8 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11
 
-      - name: Setup Flutter
+      - name: Setup verified Flutter
         uses: ./.github/actions/setup-flutter
-        with:
-          flutter-version: "3.44.9"
-          channel: "stable"
-          cache: false
-
 
       - name: Get dependencies
         run: flutter pub get

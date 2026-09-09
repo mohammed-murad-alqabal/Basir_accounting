@@ -25,15 +25,14 @@ import 'package:basir_accounting_system/features/accounting/presentation/screens
 import 'package:basir_accounting_system/features/accounting/presentation/screens/voucher_list_screen.dart';
 import 'package:basir_accounting_system/features/assets/presentation/screens/asset_form_screen.dart';
 import 'package:basir_accounting_system/features/assets/presentation/screens/assets_screen.dart';
-import 'package:basir_accounting_system/features/auth/presentation/screens/forgot_password_screen.dart';
 import 'package:basir_accounting_system/features/auth/presentation/screens/guest_upgrade_screen.dart';
 import 'package:basir_accounting_system/features/auth/presentation/screens/login_screen.dart';
-import 'package:basir_accounting_system/features/auth/presentation/screens/reset_password_screen.dart';
 import 'package:basir_accounting_system/features/auth/presentation/screens/setup_screen.dart';
 import 'package:basir_accounting_system/features/customers/domain/entities/customer.dart';
 import 'package:basir_accounting_system/features/customers/presentation/screens/customer_details_screen.dart';
 import 'package:basir_accounting_system/features/customers/presentation/screens/customer_form_screen.dart';
 import 'package:basir_accounting_system/features/customers/presentation/screens/customers_screen.dart';
+import 'package:basir_accounting_system/features/dashboard/presentation/screens/main_shell.dart';
 import 'package:basir_accounting_system/features/expenses/presentation/screens/expense_form_screen.dart';
 import 'package:basir_accounting_system/features/expenses/presentation/screens/expenses_dashboard_screen.dart';
 import 'package:basir_accounting_system/features/forensics/presentation/screens/forensic_portal_screen.dart';
@@ -61,7 +60,6 @@ import 'package:basir_accounting_system/features/users/presentation/screens/user
 import 'package:basir_accounting_system/features/vendors/presentation/screens/vendor_form_screen.dart';
 import 'package:basir_accounting_system/features/vendors/presentation/screens/vendors_screen.dart';
 import 'package:basir_accounting_system/features/zatca/presentation/screens/zatca_onboarding_screen.dart';
-import 'package:basir_accounting_system/shared/widgets/app_shell.dart';
 import 'package:flutter/material.dart';
 
 /// نظام التوجيه للتطبيق
@@ -105,32 +103,8 @@ class AppRouter {
         return MaterialPageRoute(builder: (_) => const SetupScreen());
       case '/login':
         return MaterialPageRoute(builder: (_) => const LoginScreen());
-      case '/forgot-password':
-        return MaterialPageRoute(
-          builder: (_) => const ForgotPasswordScreen(),
-        );
-      case '/reset-password':
-        final args = settings.arguments as Map<String, String>?;
-        final hasEmail = args?.containsKey('email') ?? false;
-        final hasToken = args?.containsKey('token') ?? false;
-
-        if (args != null && hasEmail && hasToken) {
-          return MaterialPageRoute(
-            builder: (_) => ResetPasswordScreen(
-              email: args['email']!,
-              token: args['token']!,
-            ),
-          );
-        }
-        return MaterialPageRoute(
-          builder: (context) => Scaffold(
-            body: Center(
-              child: Text(context.l10n.errInvalidResetLink),
-            ),
-          ),
-        );
       case '/dashboard':
-        return MaterialPageRoute(builder: (_) => const BasirAppShell());
+        return MaterialPageRoute(builder: (_) => const MainShell());
       case '/customers':
         return MaterialPageRoute(builder: (_) => const CustomersScreen());
       case '/vendors':

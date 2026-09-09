@@ -38,6 +38,8 @@ updates:
         update-types:
           - "minor"
           - "patch"
+    # تجاهل بعض التحديثات إذا لزم الأمر
+    ignore: []
 
   # Rust/Cargo workspace dependencies
   - package-ecosystem: "cargo"
@@ -103,3 +105,4 @@ updates:
 # 3. تُجمع تحديثات minor وpatch، أما تحديثات major فتظل منفصلة لمراجعة توافق صريحة.
 # 4. جميع PRs تُعيّن تلقائياً للمراجعة وتُصنف لتسهيل متابعة المالكين.
 # 5. يجب تفعيل Dependabot alerts وDependabot security updates من إعدادات أمان المستودع.
+

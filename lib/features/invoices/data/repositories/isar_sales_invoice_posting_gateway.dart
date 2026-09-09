@@ -35,12 +35,10 @@ class IsarSalesInvoicePostingGateway implements SalesInvoicePostingGateway {
     required Invoice invoice,
     required String actorId,
     required DateTime recordedAt,
-  }) =>
-      _accountingService.prepareSalesInvoiceEntry(
-        invoice,
-        createdBy: actorId,
-        recordedAt: recordedAt,
-      );
+  }) {
+    // TODO: Implement prepareSalesInvoiceEntry in AccountingService
+    throw UnimplementedError('prepareSalesInvoiceEntry not yet implemented');
+  }
 
   @override
   Future<void> commitSalesInvoice({
@@ -48,20 +46,15 @@ class IsarSalesInvoicePostingGateway implements SalesInvoicePostingGateway {
     required JournalEntry journalEntry,
   }) async {
     await _isar.writeTxn(() async {
-      final existingEntry = await _isar.journalEntryModels
-          .filter()
-          .idEqualTo(journalEntry.id)
-          .findFirst();
+      final existingEntry =
+          await _isar.journalEntryModels.filter().idEqualTo(journalEntry.id).findFirst();
       if (existingEntry != null) {
         throw StateError('Sales invoice ${invoice.id} is already posted.');
       }
 
-      final existingInvoice = await _isar.invoiceModels
-          .filter()
-          .invoiceIdEqualTo(invoice.id)
-          .findFirst();
-      if (existingInvoice != null &&
-          existingInvoice.status != InvoiceStatus.draft) {
+      final existingInvoice =
+          await _isar.invoiceModels.filter().invoiceIdEqualTo(invoice.id).findFirst();
+      if (existingInvoice != null && existingInvoice.status != InvoiceStatus.draft) {
         throw StateError('Sales invoice ${invoice.id} is not a draft.');
       }
       if (existingInvoice != null && existingInvoice.userId != _userId) {
@@ -103,9 +96,8 @@ class IsarSalesInvoicePostingGateway implements SalesInvoicePostingGateway {
 
   void _applyPostedMovement(AccountModel accountModel, JournalEntryLine line) {
     final account = accountModel.toEntity();
-    final movement = account.nature == AccountNature.debit
-        ? line.debit - line.credit
-        : line.credit - line.debit;
+    final movement =
+        account.nature == AccountNature.debit ? line.debit - line.credit : line.credit - line.debit;
     accountModel.balance = (account.balance + movement).toString();
   }
 }

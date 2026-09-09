@@ -1,85 +1,27 @@
-name: Setup Flutter (pinned-CI compatible)
-description: Installs a pinned Flutter SDK without third-party composite-action dependencies.
-
-inputs:
-  flutter-version:
-    description: Flutter SDK version to install.
-    default: '3.44.9'
-    required: false
-  channel:
-    description: Flutter release channel.
-    required: false
-    default: stable
-  cache:
-    description: Kept for compatibility with previous workflows; caching is intentionally disabled.
-    required: false
-    default: 'false'
-  pub-cache:
-    description: Kept for compatibility with previous workflows; caching is intentionally disabled.
-    required: false
-    default: 'false'
+name: Setup verified Flutter
+description: Install a pinned Flutter SDK from the official archive with SHA-256 verification.
 
 runs:
   using: composite
   steps:
-    - name: Download and expose Flutter SDK
+    - name: Install Flutter 3.35.5
       shell: bash
-      env:
-        FLUTTER_VERSION: ${{ inputs.flutter-version }}
-        FLUTTER_CHANNEL: ${{ inputs.channel }}
       run: |
-        set -euo pipefail
+        set -Eeuo pipefail
 
-        runner_os="$(uname -s)"
-        runner_arch="$(uname -m)"
-        case "${runner_os}" in
-          Linux)
-            platform="linux"
-            archive="flutter_linux_${FLUTTER_VERSION}-${FLUTTER_CHANNEL}.tar.xz"
-            archive_format="tar.xz"
-            ;;
-          Darwin)
-            platform="macos"
-            if [[ "${runner_arch}" == "arm64" ]]; then
-              archive="flutter_macos_arm64_${FLUTTER_VERSION}-${FLUTTER_CHANNEL}.zip"
-            elif [[ "${runner_arch}" == "x86_64" ]]; then
-              archive="flutter_macos_${FLUTTER_VERSION}-${FLUTTER_CHANNEL}.zip"
-            else
-              echo "Unsupported macOS architecture: ${runner_arch}" >&2
-              exit 1
-            fi
-            archive_format="zip"
-            ;;
-          *)
-            echo "Unsupported runner OS: ${runner_os}" >&2
-            exit 1
-            ;;
-        esac
+        readonly flutter_version='3.35.5'
+        readonly archive="flutter_linux_${flutter_version}-stable.tar.xz"
+        readonly archive_sha256='8eead69e5d84131fcfbb2cfd44164c00e9a04df725f24672ea234c6bd136353d'
+        readonly archive_url="https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/${archive}"
+        readonly install_root="${RUNNER_TEMP}/flutter-sdk"
+        readonly archive_path="${RUNNER_TEMP}/${archive}"
 
-        archive_url="https://storage.googleapis.com/flutter_infra_release/releases/${FLUTTER_CHANNEL}/${platform}/${archive}"
-        sdk_dir="${RUNNER_TEMP}/flutter-${FLUTTER_VERSION}-${FLUTTER_CHANNEL}-${platform}-${runner_arch}"
+        curl --fail --show-error --location --retry 3 --retry-all-errors \
+          --proto '=https' --tlsv1.2 "${archive_url}" --output "${archive_path}"
+        printf '%s  %s\n' "${archive_sha256}" "${archive_path}" | sha256sum --check --status
 
-        if [[ ! -x "${sdk_dir}/bin/flutter" ]]; then
-          download_dir="${RUNNER_TEMP}/basir-flutter-download"
-          archive_path="${download_dir}/${archive}"
-          rm -rf "${download_dir}" "${sdk_dir}" "${RUNNER_TEMP}/flutter"
-          mkdir -p "${download_dir}"
-
-          curl --fail --location --retry 3 --silent --show-error "${archive_url}" --output "${archive_path}"
-          if [[ "${archive_format}" == "tar.xz" ]]; then
-            tar -xJf "${archive_path}" -C "${RUNNER_TEMP}"
-          else
-            unzip -q "${archive_path}" -d "${RUNNER_TEMP}"
-          fi
-          mv "${RUNNER_TEMP}/flutter" "${sdk_dir}"
-        fi
-
-        # The application declares `.env` as a Flutter asset, while the real
-        # environment file is intentionally ignored by Git.  CI needs a
-        # non-secret placeholder so asset-bundle generation can proceed.
-        if [[ ! -f "${GITHUB_WORKSPACE}/.env" ]]; then
-          touch "${GITHUB_WORKSPACE}/.env"
-        fi
-
-        echo "${sdk_dir}/bin" >> "${GITHUB_PATH}"
-        "${sdk_dir}/bin/flutter" --version
+        rm -rf "${install_root}"
+        mkdir -p "${install_root}"
+        tar -xJf "${archive_path}" -C "${install_root}" --strip-components=1
+        printf '%s\n' "${install_root}/bin" >> "${GITHUB_PATH}"
+        "${install_root}/bin/flutter" --version

@@ -41,7 +41,7 @@ class JournalEntryModel {
   Id? isarId;
 
   /// المعرف الفريد.
-  @Index(unique: true, replace: true)
+  @Index(unique: true, replace: false)
   late String id;
 
   /// الرقم المرجعي.

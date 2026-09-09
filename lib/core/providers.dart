@@ -30,12 +30,15 @@ import 'package:basir_accounting_system/features/goals/application/goal_service.
 import 'package:basir_accounting_system/features/goals/data/models/goal_model.dart';
 import 'package:basir_accounting_system/features/goals/data/repositories/isar_goal_repository.dart';
 import 'package:basir_accounting_system/features/goals/domain/repositories/goal_repository.dart';
+import 'package:basir_accounting_system/features/inventory/application/bulk_price_change_service.dart';
 import 'package:basir_accounting_system/features/inventory/application/inventory_service.dart';
+import 'package:basir_accounting_system/features/inventory/data/models/bulk_price_change_execution_model.dart';
 import 'package:basir_accounting_system/features/inventory/data/models/inventory_item_model.dart';
 import 'package:basir_accounting_system/features/inventory/data/models/stock_movement_model.dart';
 import 'package:basir_accounting_system/features/inventory/data/models/warehouse_model.dart';
 import 'package:basir_accounting_system/features/inventory/data/models/warehouse_transfer_model.dart';
 import 'package:basir_accounting_system/features/inventory/data/repositories/inventory_repository_impl.dart';
+import 'package:basir_accounting_system/features/inventory/data/repositories/isar_bulk_change_execution_storage.dart';
 import 'package:basir_accounting_system/features/inventory/data/repositories/stock_movement_repository_impl.dart';
 import 'package:basir_accounting_system/features/inventory/data/repositories/warehouse_repository_impl.dart';
 import 'package:basir_accounting_system/features/inventory/data/repositories/warehouse_transfer_repository_impl.dart';
@@ -79,6 +82,7 @@ export '../features/analytics/application/analytics_service.dart';
 export '../features/auth/presentation/providers/auth_provider.dart';
 export '../features/reports/application/pdf_generation_service.dart';
 export '../features/reports/services/reporting_service.dart';
+// تم إزالة تصدير مزودات التخزين التجريبية مؤقتًا
 // تصدير المزودات الأساسية
 export 'providers/calendar_provider.dart';
 export 'providers/locale_provider.dart';
@@ -172,6 +176,7 @@ final isarProvider = FutureProvider<Isar>((ref) async {
         BarcodeConfigModelSchema,
         BudgetModelSchema,
         GoalModelSchema,
+        BulkPriceChangeExecutionModelSchema,
       ],
       directory: dir.path,
       name: 'basir_db',
@@ -207,8 +212,7 @@ final isarProvider = FutureProvider<Isar>((ref) async {
 });
 
 /// مزود مستودع العملاء (Customer Repository) - Performance Optimized
-final customerRepositoryProvider =
-    Provider.autoDispose<CustomerRepository>((ref) {
+final customerRepositoryProvider = Provider.autoDispose<CustomerRepository>((ref) {
   final isar = ref.watch(isarProvider.select((asyncIsar) => asyncIsar.value));
   if (isar == null) {
     throw Exception('قاعدة البيانات غير جاهزة');
@@ -218,8 +222,7 @@ final customerRepositoryProvider =
 });
 
 /// مزود مستودع الفواتير (Invoice Repository) - Performance Optimized
-final invoiceRepositoryProvider =
-    Provider.autoDispose<InvoiceRepository>((ref) {
+final invoiceRepositoryProvider = Provider.autoDispose<InvoiceRepository>((ref) {
   final isar = ref.watch(isarProvider.select((asyncIsar) => asyncIsar.value));
   if (isar == null) {
     throw Exception('قاعدة البيانات غير جاهزة');
@@ -309,8 +312,7 @@ final assetRepositoryProvider = Provider.autoDispose<AssetRepository>((ref) {
 });
 
 /// مزود مستودع حركات المخزون (Stock Movement Repository) - Performance Optimized
-final stockMovementRepositoryProvider =
-    Provider.autoDispose<StockMovementRepository>((ref) {
+final stockMovementRepositoryProvider = Provider.autoDispose<StockMovementRepository>((ref) {
   final isar = ref.watch(isarProvider.select((asyncIsar) => asyncIsar.value));
   if (isar == null) throw Exception('قاعدة البيانات غير جاهزة');
   final user = ref.watch(basirUserProvider);
@@ -387,8 +389,7 @@ final userRepositoryProvider = Provider<UserRepository>((ref) {
 });
 
 /// مزود مستودع إعدادات الباركود (Barcode Config Repository)
-final barcodeConfigRepositoryProvider =
-    Provider<BarcodeConfigRepository>((ref) {
+final barcodeConfigRepositoryProvider = Provider<BarcodeConfigRepository>((ref) {
   final isar = ref.watch(isarProvider.select((async) => async.value));
   if (isar == null) throw Exception('قاعدة البيانات غير جاهزة');
   return IsarBarcodeConfigRepository(isar);
@@ -420,6 +421,23 @@ final goalRepositoryProvider = Provider<GoalRepository>((ref) {
 final goalServiceProvider = Provider<GoalService>((ref) {
   final goalRepo = ref.watch(goalRepositoryProvider);
   return GoalService(goalRepo);
+});
+
+/// مزود تخزين سجلات تنفيذ تغيير الأسعار الجماعي (Isar).
+final bulkChangeExecutionStorageProvider = Provider<BulkChangeExecutionStorage>((ref) {
+  final isar = ref.watch(isarProvider.select((async) => async.value));
+  if (isar == null) throw Exception('قاعدة البيانات غير جاهزة');
+  return IsarBulkChangeExecutionStorage(isar: isar);
+});
+
+/// مزود خدمة تغيير الأسعار الجماعي (المعاينة، التنفيذ، الإلغاء).
+final bulkPriceChangeServiceProvider = Provider<BulkPriceChangeService>((ref) {
+  final repository = ref.watch(inventoryRepositoryProvider);
+  final storage = ref.watch(bulkChangeExecutionStorageProvider);
+  return BulkPriceChangeService(
+    repository: repository,
+    storage: storage,
+  );
 });
 
 /// Provider for Google Sign-In instance.

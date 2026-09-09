@@ -9,26 +9,27 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 /// Shows the Omnibar overlay.
-Future<T?> showOmnibar<T>(BuildContext context) => showGeneralDialog<T>(
-      context: context,
-      barrierDismissible: true,
-      barrierLabel: 'Omnibar',
-      barrierColor: Colors.black.withValues(alpha: 0.3),
-      pageBuilder: (context, animation, secondaryAnimation) => const Omnibar(),
-      transitionBuilder: (context, animation, secondaryAnimation, child) =>
-          FadeTransition(
-        opacity: animation,
-        child: ScaleTransition(
-          scale: Tween<double>(begin: 0.95, end: 1).animate(
-            CurvedAnimation(
-              parent: animation,
-              curve: Curves.easeOutQuart,
-            ),
-          ),
-          child: child,
+Future<T?> showOmnibar<T>(BuildContext context) {
+  final container = ProviderScope.containerOf(context, listen: false);
+  return showGeneralDialog<T>(
+    context: context,
+    barrierDismissible: true,
+    barrierLabel: 'Omnibar',
+    barrierColor: Colors.black.withValues(alpha: 0.3),
+    pageBuilder: (context, animation, secondaryAnimation) =>
+        UncontrolledProviderScope(container: container, child: const Omnibar()),
+    transitionBuilder: (context, animation, secondaryAnimation, child) =>
+        FadeTransition(
+      opacity: animation,
+      child: ScaleTransition(
+        scale: Tween<double>(begin: 0.95, end: 1).animate(
+          CurvedAnimation(parent: animation, curve: Curves.easeOutQuart),
         ),
+        child: child,
       ),
-    );
+    ),
+  );
+}
 
 /// Global command and search overlay.
 class Omnibar extends ConsumerStatefulWidget {
@@ -164,8 +165,9 @@ class _OmnibarState extends ConsumerState<Omnibar> {
                           Icons.assignment_return_outlined,
                           'Returns & Damages',
                           'Process returns or damaged items',
-                          onTap: () => Navigator.of(context)
-                              .pushNamed('/returns-and-damages'),
+                          onTap: () => Navigator.of(
+                            context,
+                          ).pushNamed('/returns-and-damages'),
                         ),
                       ] else ...[
                         _buildSectionHeader('Results for "$_query"'),
@@ -230,31 +232,26 @@ class _OmnibarState extends ConsumerState<Omnibar> {
     switch (result.type) {
       case OmnibarResultType.invoice:
         unawaited(
-          Navigator.of(context).pushNamed(
-            '/invoice-detail',
-            arguments: result.data as Invoice,
-          ),
+          Navigator.of(
+            context,
+          ).pushNamed('/invoice-detail', arguments: result.data as Invoice),
         );
       case OmnibarResultType.customer:
         unawaited(
-          Navigator.of(context).pushNamed(
-            '/customer-detail',
-            arguments: result.data as Customer,
-          ),
+          Navigator.of(
+            context,
+          ).pushNamed('/customer-detail', arguments: result.data as Customer),
         );
       case OmnibarResultType.item:
         // Navigate to item form in view/edit mode
         unawaited(
-          Navigator.of(context).pushNamed(
-            '/inventory-form',
-            arguments: result.data,
-          ),
+          Navigator.of(
+            context,
+          ).pushNamed('/inventory-form', arguments: result.data),
         );
       case OmnibarResultType.action:
         if (result.data is String) {
-          unawaited(
-            Navigator.of(context).pushNamed(result.data as String),
-          );
+          unawaited(Navigator.of(context).pushNamed(result.data as String));
         }
     }
   }

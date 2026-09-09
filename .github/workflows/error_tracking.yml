@@ -23,7 +23,7 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
         with:
           fetch-depth: 0
 
@@ -142,12 +142,12 @@ jobs:
         # تظل نتيجة التحليل منشورة حتى إذا منعت سياسة المستودع إنشاء التذاكر.
         if: steps.analyze.outputs.errors_count > 0
         continue-on-error: true
-        uses: actions/github-script@60a0d83039c74a4aee543508d2ffcb1c3799cdea # v7.0.1
+        uses: actions/github-script@d746ffe35508b1917358783b479e04febd2b8f71 # v7.0.1
         with:
           script: |
-            const errorsCount = ${{ steps.analyze.outputs.errors_count }};
-            const warningsCount = ${{ steps.analyze.outputs.warnings_count }};
-            const testsFailedCount = ${{ steps.test.outputs.tests_failed }};
+            const errorsCount = Number('${{ steps.analyze.outputs.errors_count }}' || '0');
+            const warningsCount = Number('${{ steps.analyze.outputs.warnings_count }}' || '0');
+            const testsFailedCount = Number('${{ steps.test.outputs.tests_failed }}' || '0');
 
             if (errorsCount > 0 || testsFailedCount > 0) {
               const title = `🚨 أخطاء حرجة مكتشفة - ${new Date().toISOString().split('T')[0]}`;
@@ -192,13 +192,13 @@ jobs:
         # يبقى تقرير الجودة مرئيًا في السجل إذا كانت التعليقات محظورة.
         if: github.event_name == 'pull_request'
         continue-on-error: true
-        uses: actions/github-script@60a0d83039c74a4aee543508d2ffcb1c3799cdea # v7.0.1
+        uses: actions/github-script@d746ffe35508b1917358783b479e04febd2b8f71 # v7.0.1
         with:
           script: |
-            const errorsCount = ${{ steps.analyze.outputs.errors_count }};
-            const warningsCount = ${{ steps.analyze.outputs.warnings_count }};
-            const testsPassedCount = ${{ steps.test.outputs.tests_passed }};
-            const testsFailedCount = ${{ steps.test.outputs.tests_failed }};
+            const errorsCount = Number('${{ steps.analyze.outputs.errors_count }}' || '0');
+            const warningsCount = Number('${{ steps.analyze.outputs.warnings_count }}' || '0');
+            const testsPassedCount = Number('${{ steps.test.outputs.tests_passed }}' || '0');
+            const testsFailedCount = Number('${{ steps.test.outputs.tests_failed }}' || '0');
 
             const comment = `
             ## 📊 تقرير جودة الكود

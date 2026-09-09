@@ -35,24 +35,24 @@ test_sanitization() {
     local input_content=$2
     local sensitive_pattern=$3
     
-    ((TOTAL_TESTS++))
+    TOTAL_TESTS=$((TOTAL_TESTS + 1))
     
     # إنشاء ملف تجريبي
     local test_file=$(mktemp)
     echo "$input_content" > "$test_file"
     
     # تشغيل التنظيف
-    bash scripts/utils/sanitize.sh file "$test_file" > /dev/null 2>&1
+    bash scripts/utils/sanitize.sh -f "$test_file" > /dev/null 2>&1
     
     # التحقق من عدم وجود البيانات الحساسة
     if grep -q "$sensitive_pattern" "$test_file" 2>/dev/null; then
         print_error "✗ $test_name: البيانات الحساسة لا تزال موجودة"
-        ((FAILED_TESTS++))
+        FAILED_TESTS=$((FAILED_TESTS + 1))
         rm -f "$test_file"
         return 1
     else
         print_success "✓ $test_name: تم تنظيف البيانات الحساسة"
-        ((PASSED_TESTS++))
+        PASSED_TESTS=$((PASSED_TESTS + 1))
         rm -f "$test_file"
         return 0
     fi

@@ -120,7 +120,10 @@ class _SetupScreenState extends ConsumerState<SetupScreen> {
                       if (value == null || value.isEmpty) {
                         return context.l10n.errEmptyField;
                       }
-                      if (value.length < 6) {
+                      final passwordPolicy = RegExp(
+                        r'^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%^&*(),.?":{}|<>]).{12,}$',
+                      );
+                      if (!passwordPolicy.hasMatch(value)) {
                         return context.l10n.errPasswordShort;
                       }
                       return null;

@@ -1,10 +1,10 @@
 Basir Accounting System - The Cognitive Financial Intelligence Platform
 
-Basir is not just an accounting app; it's a cognitive financial partner designed for the modern Saudi enterprise. Built on the "Diamond Purity" standard, Basir integrates advanced AI agents with strict ZATCA Phase 2 compliance to deliver an unparalleled accounting experience.
+Basir is an accounting application designed for Saudi enterprises. It includes local e-invoicing capabilities that require approved ZATCA integration, clearance/reporting validation, and production verification before any compliance claim is made.
 
 💎 Key Features:
 - **Cognitive Hexagon Architecture**: Six specialized AI agents (Auditors, Tax Experts, Strategists) analyze every transaction in real-time.
-- **ZATCA Phase 2 Ready**: Fully compliant e-invoicing with cryptographic stamping and XML validation.
+- **E-invoicing capability**: Local cryptographic stamping and XML validation; ZATCA Phase 2 compliance remains subject to approved integration and production verification.
 - **Multi-Currency Treasury**: Manage global transactions with our "Platinum Treasury" vault, featuring real-time liquidity forecasting.
 - **Forensic Audit Engine**: Deep historical scrutiny and anomaly detection to safeguard your business against fraud.
 - **Smart Reports**: One-click VAT returns, IFRS-compliant financial statements, and intelligent insights.

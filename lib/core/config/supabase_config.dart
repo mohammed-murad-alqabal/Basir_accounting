@@ -9,15 +9,13 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 class SupabaseConfig {
   /// رابط مشروع Supabase
   static String get supabaseUrl => AppEnvironmentConfig.get(
-        'SUPABASE_URL',
-        'https://your-project-url.supabase.co',
-      )!;
+    'SUPABASE_URL',
+    'https://your-project-url.supabase.co',
+  )!;
 
   /// المفتاح المجهول (Anonymous Key)
-  static String get anonKey => AppEnvironmentConfig.get(
-        'SUPABASE_ANON_KEY',
-        'your-anon-key',
-      )!;
+  static String get anonKey =>
+      AppEnvironmentConfig.get('SUPABASE_ANON_KEY', 'your-anon-key')!;
 
   /// تهيئة Supabase
   static Future<void> initialize() async {
@@ -25,7 +23,10 @@ class SupabaseConfig {
       await Supabase.initialize(url: supabaseUrl, publishableKey: anonKey);
     } on Exception catch (e) {
       debugPrint('⚠️ Failed to initialize Supabase: $e');
-      // Continue without Supabase if it fails to initialize
+      if (AppEnvironmentConfig.isProduction) {
+        rethrow;
+      }
+      // Continue without Supabase only in non-production environments
     }
   }
 

@@ -1,4 +1,6 @@
+import 'package:basir_accounting_system/core/constants.dart';
 import 'package:basir_accounting_system/core/extensions/context_extensions.dart';
+import 'package:basir_accounting_system/core/providers/supabase_auth_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -26,14 +28,14 @@ class ResetPasswordScreen extends ConsumerStatefulWidget {
   final String token;
 
   @override
-  ConsumerState<ResetPasswordScreen> createState() =>
-      _ResetPasswordScreenState();
+  ConsumerState<ResetPasswordScreen> createState() => _ResetPasswordScreenState();
 }
 
 class _ResetPasswordScreenState extends ConsumerState<ResetPasswordScreen> {
   final _formKey = GlobalKey<FormState>();
   final _passwordController = TextEditingController();
   final _confirmController = TextEditingController();
+  bool _isSubmitting = false;
 
   @override
   void dispose() {
@@ -42,9 +44,31 @@ class _ResetPasswordScreenState extends ConsumerState<ResetPasswordScreen> {
     super.dispose();
   }
 
-  void _onSubmit() {
-    if (!(_formKey.currentState?.validate() ?? false)) return;
-    // Submission will be wired when the recovery service is implemented.
+  Future<void> _onSubmit() async {
+    if (_isSubmitting || !(_formKey.currentState?.validate() ?? false)) {
+      return;
+    }
+
+    setState(() => _isSubmitting = true);
+    try {
+      final auth = ref.read(supabaseAuthProvider);
+      if (auth.currentUser == null) {
+        throw StateError('Recovery session is missing or expired.');
+      }
+      await auth.updateUser(password: _passwordController.text);
+      if (!mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text(context.l10n.msgPasswordResetSuccess)),
+      );
+      Navigator.of(context).pushNamedAndRemoveUntil('/login', (_) => false);
+    } on Exception {
+      if (!mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text(context.l10n.msgPasswordResetSuccess)),
+      );
+    } finally {
+      if (mounted) setState(() => _isSubmitting = false);
+    }
   }
 
   @override
@@ -68,12 +92,12 @@ class _ResetPasswordScreenState extends ConsumerState<ResetPasswordScreen> {
               TextFormField(
                 controller: _passwordController,
                 obscureText: true,
-                decoration: const InputDecoration(
-                  border: OutlineInputBorder(),
-                ),
+                decoration: const InputDecoration(border: OutlineInputBorder()),
                 validator: (value) {
-                  if (value == null || value.isEmpty || value.length < 6) {
-                    return 'At least 6 characters';
+                  if (value == null ||
+                      value.isEmpty ||
+                      value.length < AppConfig.minPasswordLength) {
+                    return l10n.errPasswordShort;
                   }
                   return null;
                 },
@@ -82,9 +106,7 @@ class _ResetPasswordScreenState extends ConsumerState<ResetPasswordScreen> {
               TextFormField(
                 controller: _confirmController,
                 obscureText: true,
-                decoration: const InputDecoration(
-                  border: OutlineInputBorder(),
-                ),
+                decoration: const InputDecoration(border: OutlineInputBorder()),
                 validator: (value) {
                   if (value != _passwordController.text) {
                     return 'Passwords do not match';
@@ -94,8 +116,14 @@ class _ResetPasswordScreenState extends ConsumerState<ResetPasswordScreen> {
               ),
               const SizedBox(height: 16),
               ElevatedButton(
-                onPressed: _onSubmit,
-                child: Text(l10n.resetPassword),
+                onPressed: _isSubmitting ? null : _onSubmit,
+                child: _isSubmitting
+                    ? const SizedBox(
+                        height: 18,
+                        width: 18,
+                        child: CircularProgressIndicator(strokeWidth: 2),
+                      )
+                    : Text(l10n.resetPassword),
               ),
             ],
           ),

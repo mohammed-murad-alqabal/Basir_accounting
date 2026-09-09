@@ -9,6 +9,8 @@
 /// ***
 library;
 
+export 'package:basir_accounting_system/features/users/domain/entities/user_role.dart';
+import 'package:basir_accounting_system/features/users/domain/entities/user_role.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 /// [PasswordStrengthResult]
@@ -83,23 +85,6 @@ class SecurityAuditResult {
   }
 }
 
-/// [UserRole]
-///
-/// Defines the institutional hierarchy of operators.
-enum UserRole {
-  /// Full administrative privileges.
-  admin,
-
-  /// Financial data management role.
-  accountant,
-
-  /// Inventory and warehouse management role.
-  storeManager,
-
-  /// Read-only access for oversight.
-  viewer,
-}
-
 /// [Permission]
 ///
 /// Bitmask flags for granular access control.
@@ -126,7 +111,8 @@ class Permission {
   static const int viewSensitiveReports = 1 << 5;
 
   /// All permissions combined.
-  static const int all = viewFinancials |
+  static const int all =
+      viewFinancials |
       postJournalEntry |
       manageInventory |
       manageUsers |
@@ -162,7 +148,8 @@ class BasirUser {
     );
 
     // Determine permissions from metadata or role defaults
-    final permissions = user.userMetadata?['permissions'] as int? ??
+    final permissions =
+        user.userMetadata?['permissions'] as int? ??
         getDefaultPermissions(role);
 
     return BasirUser(
@@ -219,8 +206,11 @@ class BasirUser {
         return Permission.viewFinancials |
             Permission.postJournalEntry |
             Permission.viewSensitiveReports;
-      case UserRole.storeManager:
+      case UserRole.manager:
+      case UserRole.clerk:
         return Permission.manageInventory;
+      case UserRole.auditor:
+        return Permission.viewFinancials | Permission.viewSensitiveReports;
       case UserRole.viewer:
         return Permission.viewFinancials;
     }

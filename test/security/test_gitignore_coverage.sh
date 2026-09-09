@@ -34,16 +34,16 @@ test_gitignore_pattern() {
     local test_name=$1
     local file_pattern=$2
     
-    ((TOTAL_TESTS++))
+    TOTAL_TESTS=$((TOTAL_TESTS + 1))
     
     # التحقق من وجود النمط في .gitignore
     if grep -q "$file_pattern" .gitignore 2>/dev/null; then
         print_success "✓ $test_name: النمط موجود في .gitignore"
-        ((PASSED_TESTS++))
+        PASSED_TESTS=$((PASSED_TESTS + 1))
         return 0
     else
         print_error "✗ $test_name: النمط غير موجود في .gitignore"
-        ((FAILED_TESTS++))
+        FAILED_TESTS=$((FAILED_TESTS + 1))
         return 1
     fi
 }

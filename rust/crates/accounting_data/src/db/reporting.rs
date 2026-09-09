@@ -11,7 +11,7 @@ pub struct PgReportingRepository {
 }
 
 /// Raw row from the database aggregation query.
-#[derive(Debug)]
+#[derive(Debug, sqlx::FromRow)]
 struct BalanceRow {
     account_id: Uuid,
     account_code: String,
@@ -19,6 +19,25 @@ struct BalanceRow {
     #[allow(dead_code)]
     account_name_en: String,
     account_type: String,
+    total_debits: Decimal,
+    total_credits: Decimal,
+}
+
+#[derive(Debug, sqlx::FromRow)]
+struct AccountStatementRow {
+    id: Uuid,
+    code: String,
+    account_name_ar: String,
+    account_name_en: String,
+    account_type: String,
+    account_classification: Option<String>,
+    total_debits: Decimal,
+    total_credits: Decimal,
+}
+
+#[derive(Debug, sqlx::FromRow)]
+struct AccountBalanceSummaryRow {
+    id: Uuid,
     total_debits: Decimal,
     total_credits: Decimal,
 }
@@ -42,8 +61,7 @@ impl PgReportingRepository {
         // We use a Recursive CTE to aggregate balances from leaf accounts up to all their parents
         // This ensures the Trial Balance reflects the hierarchy correctly
         let rows = if let Some(start) = period_start {
-            sqlx::query_as!(
-                BalanceRow,
+            sqlx::query_as::<_, BalanceRow>(
                 r#"
                 WITH RECURSIVE account_tree AS (
                     -- Base case: Leaf accounts and their balances in the period
@@ -56,6 +74,7 @@ impl PgReportingRepository {
                     LEFT JOIN journal_entry_lines l ON a.id = l.account_id
                     LEFT JOIN journal_entries e ON l.entry_id = e.id
                     WHERE a.is_leaf = true
+                      AND e.status = 'Posted'
                       AND e.effective_date >= $1 AND e.effective_date <= $2
                     GROUP BY a.id, a.parent_id
                     
@@ -83,14 +102,13 @@ impl PgReportingRepository {
                 GROUP BY t.id, a.code, a.name_ar, a.name_en, a.type
                 ORDER BY a.code
                 "#,
-                start,
-                as_of_date
             )
+            .bind(start)
+            .bind(as_of_date)
             .fetch_all(&self.pool)
             .await?
         } else {
-            sqlx::query_as!(
-                BalanceRow,
+            sqlx::query_as::<_, BalanceRow>(
                 r#"
                 WITH RECURSIVE account_tree AS (
                     -- Base case: Leaf accounts and their total balances up to date
@@ -103,7 +121,7 @@ impl PgReportingRepository {
                     LEFT JOIN journal_entry_lines l ON a.id = l.account_id
                     LEFT JOIN journal_entries e ON l.entry_id = e.id
                     WHERE a.is_leaf = true
-                      AND (e.effective_date IS NULL OR e.effective_date <= $1)
+                      AND (e.status = 'Posted' AND e.effective_date <= $1)
                     GROUP BY a.id, a.parent_id
                     
                     UNION ALL
@@ -130,8 +148,8 @@ impl PgReportingRepository {
                 GROUP BY t.id, a.code, a.name_ar, a.name_en, a.type
                 ORDER BY a.code
                 "#,
-                as_of_date
             )
+            .bind(as_of_date)
             .fetch_all(&self.pool)
             .await?
         };
@@ -196,8 +214,7 @@ impl PgReportingRepository {
         period_end: NaiveDate,
     ) -> Result<Vec<DrillDownEntry>, anyhow::Error> {
         let entries = if let Some(start) = period_start {
-            sqlx::query_as!(
-                DrillDownEntry,
+            sqlx::query_as::<_, DrillDownEntry>(
                 r#"
                 SELECT 
                     e.id as entry_id,
@@ -210,19 +227,19 @@ impl PgReportingRepository {
                 FROM journal_entries e
                 JOIN journal_entry_lines l ON e.id = l.entry_id
                 WHERE l.account_id = $1
+                  AND e.status = 'Posted'
                   AND e.effective_date >= $2
                   AND e.effective_date <= $3
                 ORDER BY e.effective_date, e.entry_number
                 "#,
-                account_id,
-                start,
-                period_end
             )
+            .bind(account_id)
+            .bind(start)
+            .bind(period_end)
             .fetch_all(&self.pool)
             .await?
         } else {
-            sqlx::query_as!(
-                DrillDownEntry,
+            sqlx::query_as::<_, DrillDownEntry>(
                 r#"
                 SELECT 
                     e.id as entry_id,
@@ -235,12 +252,13 @@ impl PgReportingRepository {
                 FROM journal_entries e
                 JOIN journal_entry_lines l ON e.id = l.entry_id
                 WHERE l.account_id = $1
+                  AND e.status = 'Posted'
                   AND e.effective_date <= $2
                 ORDER BY e.effective_date, e.entry_number
                 "#,
-                account_id,
-                period_end
             )
+            .bind(account_id)
+            .bind(period_end)
             .fetch_all(&self.pool)
             .await?
         };
@@ -254,29 +272,30 @@ impl PgReportingRepository {
         from_date: NaiveDate,
         to_date: NaiveDate,
     ) -> Result<FinancialReport, anyhow::Error> {
-        let rows = sqlx::query!(
+        let rows = sqlx::query_as::<_, AccountStatementRow>(
             r#"
             SELECT 
                 a.id,
                 a.code,
                 a.name_ar as account_name_ar,
                 a.name_en as account_name_en,
-                a.type as "account_type!",
+                a.type as account_type,
                 a.classification as account_classification,
-                COALESCE(SUM(l.debit), 0) as "total_debits!: Decimal",
-                COALESCE(SUM(l.credit), 0) as "total_credits!: Decimal"
+                COALESCE(SUM(l.debit), 0) as total_debits,
+                COALESCE(SUM(l.credit), 0) as total_credits
             FROM accounts a
             LEFT JOIN journal_entry_lines l ON a.id = l.account_id
             LEFT JOIN journal_entries e ON l.entry_id = e.id
             WHERE a.is_leaf = true
               AND (a.type = 'Income' OR a.type = 'Expense')
+              AND e.status = 'Posted'
               AND e.effective_date >= $1
               AND e.effective_date <= $2
             GROUP BY a.id, a.code, a.name_ar, a.name_en, a.type, a.classification
             "#,
-            from_date,
-            to_date
         )
+        .bind(from_date)
+        .bind(to_date)
         .fetch_all(&self.pool)
         .await?;
 
@@ -342,27 +361,28 @@ impl PgReportingRepository {
         use accounting_core::accounts::models::{Account, AccountClassification, AccountKind};
         use accounting_core::reporting::generator::FinancialReportGenerator;
 
-        let rows = sqlx::query!(
+        let rows = sqlx::query_as::<_, AccountStatementRow>(
             r#"
             SELECT 
                 a.id,
                 a.code,
                 a.name_ar as account_name_ar,
                 a.name_en as account_name_en,
-                a.type as "account_type!",
+                a.type as account_type,
                 a.classification as account_classification,
-                COALESCE(SUM(l.debit), 0) as "total_debits!: Decimal",
-                COALESCE(SUM(l.credit), 0) as "total_credits!: Decimal"
+                COALESCE(SUM(l.debit), 0) as total_debits,
+                COALESCE(SUM(l.credit), 0) as total_credits
             FROM accounts a
             LEFT JOIN journal_entry_lines l ON a.id = l.account_id
             LEFT JOIN journal_entries e ON l.entry_id = e.id
             WHERE a.is_leaf = true
               AND (a.type = 'Asset' OR a.type = 'Liability' OR a.type = 'Equity')
+              AND e.status = 'Posted'
               AND e.effective_date <= $1
             GROUP BY a.id, a.code, a.name_ar, a.name_en, a.type, a.classification
             "#,
-            as_of_date
         )
+        .bind(as_of_date)
         .fetch_all(&self.pool)
         .await?;
 
@@ -480,20 +500,20 @@ impl PgReportingRepository {
         &self,
         date: NaiveDate,
     ) -> Result<std::collections::HashMap<Uuid, Decimal>, anyhow::Error> {
-        let rows = sqlx::query!(
+        let rows = sqlx::query_as::<_, AccountBalanceSummaryRow>(
             r#"
             SELECT 
                 a.id,
-                COALESCE(SUM(l.debit), 0) as "total_debits!: Decimal",
-                COALESCE(SUM(l.credit), 0) as "total_credits!: Decimal"
+                COALESCE(SUM(l.debit), 0) as total_debits,
+                COALESCE(SUM(l.credit), 0) as total_credits
             FROM accounts a
             LEFT JOIN journal_entry_lines l ON a.id = l.account_id
             LEFT JOIN journal_entries e ON l.entry_id = e.id
-            WHERE e.effective_date <= $1 OR e.effective_date IS NULL
+            WHERE e.status = 'Posted' AND e.effective_date <= $1
             GROUP BY a.id
             "#,
-            date
         )
+        .bind(date)
         .fetch_all(&self.pool)
         .await?;
 

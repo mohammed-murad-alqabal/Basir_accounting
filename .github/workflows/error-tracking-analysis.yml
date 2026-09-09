@@ -27,14 +27,14 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v4
         with:
           fetch-depth: 0
 
       - name: Setup Flutter
         uses: ./.github/actions/setup-flutter
         with:
-          flutter-version: "3.44.9"
+          flutter-version: "3.35.5"
           channel: "stable"
           cache: false
 
@@ -81,7 +81,8 @@ jobs:
         run: |
           echo "Running tests..."
           set +e
-          flutter test --concurrency=1 --no-pub --reporter expanded $(find test -name '*_test.dart' ! -path 'test/benchmark/*') > test_output.txt 2>&1
+          # تشغيل Flutter test تسلسيًا يمنع انهيار flutter_tester في CI عند تجميع suites كثيرة.
+          flutter test --no-pub --concurrency=1 --reporter expanded $(find test -name '*_test.dart' ! -path 'test/benchmark/*') > test_output.txt 2>&1
           TEST_EXIT_CODE=$?
           set -e
 
@@ -156,7 +157,7 @@ jobs:
 
       - name: Add PR Comment
         if: github.event_name == 'pull_request' && always()
-        uses: actions/github-script@60a0d83039c74a4aee543508d2ffcb1c3799cdea # v7
+        uses: actions/github-script@d746ffe35508b1917358783b479e04febd2b8f71 # v7
         with:
           script: |
             const errorCount = '${{ steps.analyze.outputs.error_count }}';
