@@ -185,22 +185,6 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                           color: colorScheme.onSurface,
                         ),
                       ),
-                      const Spacer(),
-                      // رابط نسيت كلمة المرور
-                      TextButton(
-                        onPressed: _isLoading
-                            ? null
-                            : () => Navigator.of(context).pushNamed(
-                                  '/forgot-password',
-                                ),
-                        child: Text(
-                          context.l10n.forgotPassword,
-                          style: AppTextStyles.bodySmall.copyWith(
-                            color: colorScheme.primary,
-                            fontWeight: FontWeight.w500,
-                          ),
-                        ),
-                      ),
                     ],
                   ),
                   const SizedBox(height: Spacing.md),

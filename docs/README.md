@@ -2,7 +2,7 @@
 
 **Project:** Basir Accounting System - Professional High-Fidelity FinTech Infrastructure  
 **Revision:** 1.1.0  
-**Status:** 💎 Diamond Purity Verified (100% Technical English)
+**Status:** Engineering documentation; production and regulatory readiness require independent verification.
 
 ---
 
@@ -14,7 +14,7 @@ The **Basir Accounting System** is an institutional-grade, local-first financial
 
 - **🧮 Pure Accounting**: General Ledger (GL), Journal Entries, IFRS 18 Compliance, Balance Sheets, and P&L.
 - **💰 Treasury Management**: High-precision Cash Flow, Multi-Currency support, and Bank Reconciliation.
-- **📄 Electronic Invoicing**: Native ZATCA Phase 2 compliance (QR, Cryptographic Signing, XML/UBL 2.1).
+- **📄 Electronic Invoicing**: Local QR, signing, and XML/UBL capabilities. ZATCA Phase 2 compliance is not represented as achieved until approved integration, reporting/clearance, and production verification are evidenced.
 - **🤝 Ledger Core**: Integrated Accounts Receivable (AR) and Accounts Payable (AP).
 - **📦 Inventory & Assets**: Itemized tracking, Depreciation, and Lifecycle management.
 - **📊 Cognitive Analytics**: Real-time financial KPIs and multi-agent AI diagnostics.

@@ -136,7 +136,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get errNoItems => 'Please add at least one item';
 
   @override
-  String get errPasswordShort => 'Password must be at least 6 characters';
+  String get errPasswordShort =>
+      'Password must be at least 12 characters and include uppercase, lowercase, a number, and a special character';
 
   @override
   String get errPasswordsDoNotMatch => 'Passwords do not match';
@@ -391,7 +392,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get zatcaComplianceText =>
-      'This invoice is compliant with ZATCA electronic invoicing requirements.';
+      'ZATCA status is not confirmed until the invoice completes the configured authority integration and validation flow.';
 
   @override
   String get actionCreateFirstInvoice => 'Create Your First Invoice';

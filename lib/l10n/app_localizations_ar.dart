@@ -135,7 +135,8 @@ class AppLocalizationsAr extends AppLocalizations {
   String get errNoItems => 'يرجى إضافة بند واحد على الأقل';
 
   @override
-  String get errPasswordShort => 'كلمة المرور يجب أن تكون 6 أحرف على الأقل';
+  String get errPasswordShort =>
+      'كلمة المرور يجب أن تكون 12 حرفًا على الأقل وتحتوي على أحرف كبيرة وصغيرة وأرقام ورمز خاص';
 
   @override
   String get errPasswordsDoNotMatch => 'كلمات المرور غير متطابقة';
@@ -215,7 +216,7 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get zatcaPhase2Description =>
-      'تكوين الإعدادات الخاصة بك للامتثال للمرحلة الثانية من هيئة الزكاة والضريبة والجمارك السعودية.';
+      'إعداد التكامل للفوترة الإلكترونية؛ لا يُثبت الامتثال قبل نجاح التحقق والإبلاغ الفعليين لدى الهيئة.';
 
   @override
   String get enableTax => 'تمكين الضريبة على الفواتير';
@@ -391,7 +392,7 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get zatcaComplianceText =>
-      'هذه الفاتورة متوافقة مع متطلبات هيئة الزكاة والضريبة والجمارك';
+      'لا تتأكد حالة الفوترة الإلكترونية لدى الهيئة إلا بعد نجاح التكامل والتحقق الفعليين في البيئة المهيأة.';
 
   @override
   String get actionCreateFirstInvoice => 'إنشاء أول فاتورة';
