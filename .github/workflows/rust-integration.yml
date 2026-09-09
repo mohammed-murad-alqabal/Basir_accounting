@@ -1,0 +1,284 @@
+name: Rust Integration Tests
+
+on:
+  push:
+    branches:
+      - main
+      - master
+      - 'audit/**'
+  pull_request:
+    branches:
+      - main
+      - master
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: rust-integration-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  rust-quality:
+    name: Rust quality + unit tests
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+
+    defaults:
+      run:
+        working-directory: rust
+
+    env:
+      CARGO_TERM_COLOR: always
+      RUST_BACKTRACE: 1
+      SQLX_OFFLINE: true
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+
+      - name: Install stable Rust toolchain
+        uses: dtolnay/rust-toolchain@6c977a6ca4077a0ceb28ffbe03f59d46e9ac8772 # master snapshot
+        with:
+          toolchain: stable
+          components: rustfmt
+
+      - name: Install cargo-nextest
+        env:
+          NEXTEST_VERSION: 0.9.143
+        run: |
+          set -euo pipefail
+          archive="cargo-nextest-${NEXTEST_VERSION}-x86_64-unknown-linux-gnu.tar.gz"
+          base_url="https://github.com/nextest-rs/nextest/releases/download/cargo-nextest-${NEXTEST_VERSION}"
+          temp_dir="$(mktemp -d)"
+          trap 'rm -rf "${temp_dir}"' EXIT
+
+          curl --fail --silent --show-error --location --retry 3 \
+            --output "${temp_dir}/${archive}" "${base_url}/${archive}"
+          curl --fail --silent --show-error --location --retry 3 \
+            --output "${temp_dir}/checksum.txt" \
+            "${base_url}/cargo-nextest-${NEXTEST_VERSION}-x86_64-unknown-linux-gnu.sha256"
+
+          expected_checksum="$(awk '{print $1}' "${temp_dir}/checksum.txt")"
+          actual_checksum="$(sha256sum "${temp_dir}/${archive}" | awk '{print $1}')"
+          test "${expected_checksum}" = "${actual_checksum}"
+
+          tar -xzf "${temp_dir}/${archive}" -C "${temp_dir}"
+          install -m 0755 "${temp_dir}/cargo-nextest" "${HOME}/.cargo/bin/cargo-nextest"
+          echo "${HOME}/.cargo/bin" >> "${GITHUB_PATH}"
+          cargo nextest --version
+
+      - name: Cache Cargo registry, Git dependencies, and build output
+        uses: actions/cache@0400d5f644dc74513175e3cd8d07132dd4860809 # v4.2.4
+        with:
+          path: |
+            ~/.cargo/registry
+            ~/.cargo/git
+            rust/target
+          key: ${{ runner.os }}-${{ runner.arch }}-rust-${{ hashFiles('rust/Cargo.lock', 'rust/**/Cargo.toml', 'rust/rust-toolchain.toml') }}
+          restore-keys: |
+            ${{ runner.os }}-${{ runner.arch }}-rust-
+
+      - name: Check Rust formatting
+        id: formatting
+        run: |
+          set -euo pipefail
+          started_at=$(date +%s)
+          cargo fmt --all -- --check
+          finished_at=$(date +%s)
+          duration=$((finished_at - started_at))
+          echo "duration_seconds=${duration}" >> "${GITHUB_OUTPUT}"
+          {
+            echo "## CI timing"
+            echo "- Rust formatting check: **${duration}s**"
+          } >> "${GITHUB_STEP_SUMMARY}"
+
+      - name: Run database-independent tests with nextest
+        id: unit_tests
+        run: |
+          started_at=$(date +%s)
+          set +e
+          set -o pipefail
+          {
+            core_status=0
+            data_status=0
+            cargo nextest run --locked -p accounting_core -p accounting_zatca --all-targets || core_status=$?
+            cargo nextest run --locked -p accounting_data --lib || data_status=$?
+            if [ "${core_status}" -ne 0 ]; then
+              exit "${core_status}"
+            fi
+            exit "${data_status}"
+          } 2>&1 | tee "${GITHUB_WORKSPACE}/rust-quality-test.log"
+          test_status=${PIPESTATUS[0]}
+          set -e
+          finished_at=$(date +%s)
+          duration=$((finished_at - started_at))
+          echo "duration_seconds=${duration}" >> "${GITHUB_OUTPUT}"
+          {
+            echo "## CI timing"
+            echo "- Database-independent tests with cargo-nextest: **${duration}s**"
+            echo "- cargo-nextest version: **0.9.143**"
+          } >> "${GITHUB_STEP_SUMMARY}"
+          exit "${test_status}"
+
+      - name: Check workspace compilation
+        id: workspace_check
+        run: |
+          started_at=$(date +%s)
+          cargo check --locked --workspace
+          finished_at=$(date +%s)
+          duration=$((finished_at - started_at))
+          echo "duration_seconds=${duration}" >> "${GITHUB_OUTPUT}"
+          {
+            echo "## CI timing"
+            echo "- Workspace compilation check: **${duration}s**"
+          } >> "${GITHUB_STEP_SUMMARY}"
+
+      - name: Upload quality log
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: rust-quality-log-${{ github.run_id }}
+          path: rust-quality-test.log
+          if-no-files-found: warn
+          retention-days: 14
+
+  rust-integration:
+    name: PostgreSQL integration (${{ matrix.shard }})
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    strategy:
+      fail-fast: false
+      max-parallel: 2
+      matrix:
+        shard:
+          - persistence
+          - hash_chain
+
+    services:
+      postgres:
+        image: postgres:16-alpine
+        env:
+          POSTGRES_USER: basir_test
+          POSTGRES_PASSWORD: basir_test_password
+          POSTGRES_DB: basir_accounting_${{ matrix.shard }}
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U basir_test -d basir_accounting_${{ matrix.shard }}"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 20
+
+    defaults:
+      run:
+        working-directory: rust
+
+    env:
+      DATABASE_URL: postgres://basir_test:basir_test_password@127.0.0.1:5432/basir_accounting_${{ matrix.shard }}
+      INTEGRATION_SHARD: ${{ matrix.shard }}
+      CARGO_TERM_COLOR: always
+      RUST_BACKTRACE: 1
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+
+      - name: Install PostgreSQL client
+        run: |
+          sudo apt-get update -y
+          sudo apt-get install -y postgresql-client
+
+      - name: Install stable Rust toolchain
+        uses: dtolnay/rust-toolchain@6c977a6ca4077a0ceb28ffbe03f59d46e9ac8772 # master snapshot
+        with:
+          toolchain: stable
+
+      - name: Cache Cargo registry, Git dependencies, and build output
+        uses: actions/cache@0400d5f644dc74513175e3cd8d07132dd4860809 # v4.2.4
+        with:
+          path: |
+            ~/.cargo/registry
+            ~/.cargo/git
+            rust/target
+          key: ${{ runner.os }}-${{ runner.arch }}-rust-${{ hashFiles('rust/Cargo.lock', 'rust/**/Cargo.toml', 'rust/rust-toolchain.toml') }}
+          restore-keys: |
+            ${{ runner.os }}-${{ runner.arch }}-rust-
+
+      - name: Wait for PostgreSQL
+        run: pg_isready -h 127.0.0.1 -p 5432 -U basir_test -d "basir_accounting_${INTEGRATION_SHARD}"
+
+      - name: Apply PostgreSQL migrations
+        id: migrations
+        run: |
+          set -euo pipefail
+          started_at=$(date +%s)
+          for migration in migrations/*.sql; do
+            echo "Applying ${migration} to shard ${INTEGRATION_SHARD}"
+            psql "${DATABASE_URL}" -v ON_ERROR_STOP=1 -f "${migration}"
+          done
+          finished_at=$(date +%s)
+          duration=$((finished_at - started_at))
+          echo "duration_seconds=${duration}" >> "${GITHUB_OUTPUT}"
+          {
+            echo "## CI timing"
+            echo "- PostgreSQL migrations (${INTEGRATION_SHARD}): **${duration}s**"
+          } >> "${GITHUB_STEP_SUMMARY}"
+
+      - name: Run PostgreSQL integration shard
+        id: integration_tests
+        run: |
+          case "${INTEGRATION_SHARD}" in
+            persistence)
+              test_target="db_persistence"
+              ;;
+            hash_chain)
+              test_target="db_hash_chain"
+              ;;
+            *)
+              echo "Unknown integration shard: ${INTEGRATION_SHARD}" >&2
+              exit 2
+              ;;
+          esac
+
+          started_at=$(date +%s)
+          set +e
+          set -o pipefail
+          cargo test --locked -p accounting_data --test "${test_target}" -- --test-threads=1 2>&1 | tee "${GITHUB_WORKSPACE}/rust-integration-${INTEGRATION_SHARD}.log"
+          test_status=${PIPESTATUS[0]}
+          set -e
+          finished_at=$(date +%s)
+          duration=$((finished_at - started_at))
+          echo "duration_seconds=${duration}" >> "${GITHUB_OUTPUT}"
+          {
+            echo "## CI timing"
+            echo "- PostgreSQL integration shard (${INTEGRATION_SHARD}): **${duration}s**"
+          } >> "${GITHUB_STEP_SUMMARY}"
+          exit "${test_status}"
+
+      - name: Upload integration shard log
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: rust-integration-${{ matrix.shard }}-${{ github.run_id }}
+          path: rust-integration-${{ matrix.shard }}.log
+          if-no-files-found: warn
+          retention-days: 14
+
+  ci-gate:
+    name: Rust CI gate
+    runs-on: ubuntu-24.04
+    if: always()
+    needs:
+      - rust-quality
+      - rust-integration
+    steps:
+      - name: Require quality and every integration shard to pass
+        run: |
+          if [[ "${{ needs.rust-quality.result }}" != "success" || "${{ needs.rust-integration.result }}" != "success" ]]; then
+            echo "Rust quality result: ${{ needs.rust-quality.result }}"
+            echo "PostgreSQL integration shards result: ${{ needs.rust-integration.result }}"
+            exit 1
+          fi
+          echo "Rust quality and every PostgreSQL integration shard passed."
