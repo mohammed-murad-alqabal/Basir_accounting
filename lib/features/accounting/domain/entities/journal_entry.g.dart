@@ -59,16 +59,30 @@ _$JournalEntryLineImpl _$$JournalEntryLineImplFromJson(
     _$JournalEntryLineImpl(
       accountId: json['accountId'] as String,
       accountName: json['accountName'] as String,
+<<<<<<< HEAD
       debit: const DecimalJsonConverter().fromJson(json['debit'] as String),
       credit: const DecimalJsonConverter().fromJson(json['credit'] as String),
+=======
+      debit: Decimal.fromJson(json['debit'] as String),
+      credit: Decimal.fromJson(json['credit'] as String),
+>>>>>>> origin/audit/baseline-main-current-20260814
       description: json['description'] as String?,
       sourceDocumentRef: json['sourceDocumentRef'] as String?,
       costCenterId: json['costCenterId'] as String?,
       originalCurrency: json['originalCurrency'] as String?,
+<<<<<<< HEAD
       exchangeRate: _$JsonConverterFromJson<String, Decimal>(
           json['exchangeRate'], const DecimalJsonConverter().fromJson),
       originalAmount: _$JsonConverterFromJson<String, Decimal>(
           json['originalAmount'], const DecimalJsonConverter().fromJson),
+=======
+      exchangeRate: json['exchangeRate'] == null
+          ? null
+          : Decimal.fromJson(json['exchangeRate'] as String),
+      originalAmount: json['originalAmount'] == null
+          ? null
+          : Decimal.fromJson(json['originalAmount'] as String),
+>>>>>>> origin/audit/baseline-main-current-20260814
     );
 
 Map<String, dynamic> _$$JournalEntryLineImplToJson(
@@ -76,12 +90,18 @@ Map<String, dynamic> _$$JournalEntryLineImplToJson(
     <String, dynamic>{
       'accountId': instance.accountId,
       'accountName': instance.accountName,
+<<<<<<< HEAD
       'debit': const DecimalJsonConverter().toJson(instance.debit),
       'credit': const DecimalJsonConverter().toJson(instance.credit),
+=======
+      'debit': instance.debit,
+      'credit': instance.credit,
+>>>>>>> origin/audit/baseline-main-current-20260814
       'description': instance.description,
       'sourceDocumentRef': instance.sourceDocumentRef,
       'costCenterId': instance.costCenterId,
       'originalCurrency': instance.originalCurrency,
+<<<<<<< HEAD
       'exchangeRate': _$JsonConverterToJson<String, Decimal>(
           instance.exchangeRate, const DecimalJsonConverter().toJson),
       'originalAmount': _$JsonConverterToJson<String, Decimal>(
@@ -100,6 +120,12 @@ Json? _$JsonConverterToJson<Json, Value>(
 ) =>
     value == null ? null : toJson(value);
 
+=======
+      'exchangeRate': instance.exchangeRate,
+      'originalAmount': instance.originalAmount,
+    };
+
+>>>>>>> origin/audit/baseline-main-current-20260814
 _$JournalEntryImpl _$$JournalEntryImplFromJson(Map<String, dynamic> json) =>
     _$JournalEntryImpl(
       id: json['id'] as String,
@@ -144,11 +170,19 @@ Map<String, dynamic> _$$JournalEntryImplToJson(_$JournalEntryImpl instance) =>
       'id': instance.id,
       'referenceNumber': instance.referenceNumber,
       'date': instance.date.toIso8601String(),
+<<<<<<< HEAD
       'temporal': instance.temporal.toJson(),
       'standards': instance.standards.toJson(),
       'description': instance.description,
       'status': _$JournalEntryStatusEnumMap[instance.status]!,
       'lines': instance.lines.map((e) => e.toJson()).toList(),
+=======
+      'temporal': instance.temporal,
+      'standards': instance.standards,
+      'description': instance.description,
+      'status': _$JournalEntryStatusEnumMap[instance.status]!,
+      'lines': instance.lines,
+>>>>>>> origin/audit/baseline-main-current-20260814
       'sourceDocument': instance.sourceDocument,
       'sourceId': instance.sourceId,
       'createdBy': instance.createdBy,
@@ -159,7 +193,11 @@ Map<String, dynamic> _$$JournalEntryImplToJson(_$JournalEntryImpl instance) =>
       'postedAt': instance.postedAt?.toIso8601String(),
       'userId': instance.userId,
       'warehouseId': instance.warehouseId,
+<<<<<<< HEAD
       'auditLogs': instance.auditLogs.map((e) => e.toJson()).toList(),
+=======
+      'auditLogs': instance.auditLogs,
+>>>>>>> origin/audit/baseline-main-current-20260814
       'syncStatus': _$SyncStatusEnumMap[instance.syncStatus]!,
       'serverUpdatedAt': instance.serverUpdatedAt?.toIso8601String(),
       'isDeleted': instance.isDeleted,

@@ -6,7 +6,11 @@ part of 'sync_service.dart';
 // RiverpodGenerator
 // **************************************************************************
 
+<<<<<<< HEAD
 String _$syncServiceHash() => r'eb1b94de2f3569b4880f7cddeee0e844c2d5b326';
+=======
+String _$syncServiceHash() => r'ab2e1851e201e4280dc6ca5f6f815e6e3df5e141';
+>>>>>>> origin/audit/baseline-main-current-20260814
 
 /// Bidirectional data synchronization service.
 ///

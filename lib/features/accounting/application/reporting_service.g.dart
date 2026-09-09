@@ -6,7 +6,11 @@ part of 'reporting_service.dart';
 // RiverpodGenerator
 // **************************************************************************
 
+<<<<<<< HEAD
 String _$reportingServiceHash() => r'5ee0f50dd269fa9182185365d89f794e279066e6';
+=======
+String _$reportingServiceHash() => r'd824a7c76045cc03d255c4b52cefb63b62c814a0';
+>>>>>>> origin/audit/baseline-main-current-20260814
 
 /// Reporting Service for high-level financial intelligence and dashboarding.
 ///

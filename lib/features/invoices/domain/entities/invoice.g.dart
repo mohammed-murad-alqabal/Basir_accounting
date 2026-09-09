@@ -10,6 +10,7 @@ _$InvoiceItemImpl _$$InvoiceItemImplFromJson(Map<String, dynamic> json) =>
     _$InvoiceItemImpl(
       id: json['id'] as String,
       name: json['name'] as String,
+<<<<<<< HEAD
       quantity:
           const DecimalJsonConverter().fromJson(json['quantity'] as String),
       price: const DecimalJsonConverter().fromJson(json['price'] as String),
@@ -17,6 +18,13 @@ _$InvoiceItemImpl _$$InvoiceItemImplFromJson(Map<String, dynamic> json) =>
       taxAmount:
           const DecimalJsonConverter().fromJson(json['taxAmount'] as String),
       taxRate: const DecimalJsonConverter().fromJson(json['taxRate'] as String),
+=======
+      quantity: Decimal.fromJson(json['quantity'] as String),
+      price: Decimal.fromJson(json['price'] as String),
+      total: Decimal.fromJson(json['total'] as String),
+      taxAmount: Decimal.fromJson(json['taxAmount'] as String),
+      taxRate: Decimal.fromJson(json['taxRate'] as String),
+>>>>>>> origin/audit/baseline-main-current-20260814
       description: json['description'] as String?,
       taxCategory: json['taxCategory'] as String? ?? 'S',
     );
@@ -25,11 +33,19 @@ Map<String, dynamic> _$$InvoiceItemImplToJson(_$InvoiceItemImpl instance) =>
     <String, dynamic>{
       'id': instance.id,
       'name': instance.name,
+<<<<<<< HEAD
       'quantity': const DecimalJsonConverter().toJson(instance.quantity),
       'price': const DecimalJsonConverter().toJson(instance.price),
       'total': const DecimalJsonConverter().toJson(instance.total),
       'taxAmount': const DecimalJsonConverter().toJson(instance.taxAmount),
       'taxRate': const DecimalJsonConverter().toJson(instance.taxRate),
+=======
+      'quantity': instance.quantity,
+      'price': instance.price,
+      'total': instance.total,
+      'taxAmount': instance.taxAmount,
+      'taxRate': instance.taxRate,
+>>>>>>> origin/audit/baseline-main-current-20260814
       'description': instance.description,
       'taxCategory': instance.taxCategory,
     };
@@ -48,6 +64,7 @@ _$InvoiceImpl _$$InvoiceImplFromJson(Map<String, dynamic> json) =>
       createdAt: DateTime.parse(json['createdAt'] as String),
       updatedAt: DateTime.parse(json['updatedAt'] as String),
       status: $enumDecode(_$InvoiceStatusEnumMap, json['status']),
+<<<<<<< HEAD
       subtotalAmount: const DecimalJsonConverter()
           .fromJson(json['subtotalAmount'] as String),
       taxAmount:
@@ -63,6 +80,16 @@ _$InvoiceImpl _$$InvoiceImplFromJson(Map<String, dynamic> json) =>
           const DecimalJsonConverter().fromJson(json['discountRate'] as String),
       exchangeRate:
           const DecimalJsonConverter().fromJson(json['exchangeRate'] as String),
+=======
+      subtotalAmount: Decimal.fromJson(json['subtotalAmount'] as String),
+      taxAmount: Decimal.fromJson(json['taxAmount'] as String),
+      discountAmount: Decimal.fromJson(json['discountAmount'] as String),
+      totalAmount: Decimal.fromJson(json['totalAmount'] as String),
+      paidAmount: Decimal.fromJson(json['paidAmount'] as String),
+      taxRate: Decimal.fromJson(json['taxRate'] as String),
+      discountRate: Decimal.fromJson(json['discountRate'] as String),
+      exchangeRate: Decimal.fromJson(json['exchangeRate'] as String),
+>>>>>>> origin/audit/baseline-main-current-20260814
       type: $enumDecodeNullable(_$InvoiceTypeEnumMap, json['type']) ??
           InvoiceType.sales,
       paidDate: json['paidDate'] == null
@@ -97,12 +124,17 @@ Map<String, dynamic> _$$InvoiceImplToJson(_$InvoiceImpl instance) =>
       'invoiceNumber': instance.invoiceNumber,
       'customerId': instance.customerId,
       'customerName': instance.customerName,
+<<<<<<< HEAD
       'items': instance.items.map((e) => e.toJson()).toList(),
+=======
+      'items': instance.items,
+>>>>>>> origin/audit/baseline-main-current-20260814
       'issuedDate': instance.issuedDate.toIso8601String(),
       'dueDate': instance.dueDate.toIso8601String(),
       'createdAt': instance.createdAt.toIso8601String(),
       'updatedAt': instance.updatedAt.toIso8601String(),
       'status': _$InvoiceStatusEnumMap[instance.status]!,
+<<<<<<< HEAD
       'subtotalAmount':
           const DecimalJsonConverter().toJson(instance.subtotalAmount),
       'taxAmount': const DecimalJsonConverter().toJson(instance.taxAmount),
@@ -115,6 +147,16 @@ Map<String, dynamic> _$$InvoiceImplToJson(_$InvoiceImpl instance) =>
           const DecimalJsonConverter().toJson(instance.discountRate),
       'exchangeRate':
           const DecimalJsonConverter().toJson(instance.exchangeRate),
+=======
+      'subtotalAmount': instance.subtotalAmount,
+      'taxAmount': instance.taxAmount,
+      'discountAmount': instance.discountAmount,
+      'totalAmount': instance.totalAmount,
+      'paidAmount': instance.paidAmount,
+      'taxRate': instance.taxRate,
+      'discountRate': instance.discountRate,
+      'exchangeRate': instance.exchangeRate,
+>>>>>>> origin/audit/baseline-main-current-20260814
       'type': _$InvoiceTypeEnumMap[instance.type]!,
       'paidDate': instance.paidDate?.toIso8601String(),
       'currency': instance.currency,

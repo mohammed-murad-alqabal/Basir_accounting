@@ -33,9 +33,14 @@ jobs:
         run: dart format --output=none --set-exit-if-changed .
 
       - name: Analyze code
+<<<<<<< HEAD
         # BKIP baseline: errors remain blocking; 177 informational findings are
         # tracked separately until their remediation program is approved.
         run: flutter analyze --no-fatal-infos
+=======
+        # Keep analyzer errors and warnings blocking; track style infos separately.
+        run: flutter analyze --no-fatal-infos --no-fatal-warnings
+>>>>>>> origin/audit/baseline-main-current-20260814
 
       - name: Run functional tests
         # Keep benchmark workloads outside the PR gate and serialize functional

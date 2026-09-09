@@ -650,18 +650,28 @@ JournalEntryLine _$JournalEntryLineFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$JournalEntryLine {
+<<<<<<< HEAD
   /// Identifier of the target account.
+=======
+  /// Reference to the target [Account] ID.
+>>>>>>> origin/audit/baseline-main-current-20260814
   String get accountId => throw _privateConstructorUsedError;
 
   /// Denormalized account name for high-performance listing and audit.
   String get accountName => throw _privateConstructorUsedError;
 
   /// Positive increase for Debit-nature accounts.
+<<<<<<< HEAD
   @DecimalJsonConverter()
   Decimal get debit => throw _privateConstructorUsedError;
 
   /// Positive increase for Credit-nature accounts.
   @DecimalJsonConverter()
+=======
+  Decimal get debit => throw _privateConstructorUsedError;
+
+  /// Positive increase for Credit-nature accounts.
+>>>>>>> origin/audit/baseline-main-current-20260814
   Decimal get credit => throw _privateConstructorUsedError;
 
   /// Line-specific memo or explanation.
@@ -678,11 +688,17 @@ mixin _$JournalEntryLine {
   String? get originalCurrency => throw _privateConstructorUsedError;
 
   /// Spot exchange rate at the time of recording.
+<<<<<<< HEAD
   @DecimalJsonConverter()
   Decimal? get exchangeRate => throw _privateConstructorUsedError;
 
   /// Original amount in the source currency before conversion.
   @DecimalJsonConverter()
+=======
+  Decimal? get exchangeRate => throw _privateConstructorUsedError;
+
+  /// Original amount in the source currency before conversion.
+>>>>>>> origin/audit/baseline-main-current-20260814
   Decimal? get originalAmount => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -700,14 +716,24 @@ abstract class $JournalEntryLineCopyWith<$Res> {
   $Res call(
       {String accountId,
       String accountName,
+<<<<<<< HEAD
       @DecimalJsonConverter() Decimal debit,
       @DecimalJsonConverter() Decimal credit,
+=======
+      Decimal debit,
+      Decimal credit,
+>>>>>>> origin/audit/baseline-main-current-20260814
       String? description,
       String? sourceDocumentRef,
       String? costCenterId,
       String? originalCurrency,
+<<<<<<< HEAD
       @DecimalJsonConverter() Decimal? exchangeRate,
       @DecimalJsonConverter() Decimal? originalAmount});
+=======
+      Decimal? exchangeRate,
+      Decimal? originalAmount});
+>>>>>>> origin/audit/baseline-main-current-20260814
 }
 
 /// @nodoc
@@ -790,14 +816,24 @@ abstract class _$$JournalEntryLineImplCopyWith<$Res>
   $Res call(
       {String accountId,
       String accountName,
+<<<<<<< HEAD
       @DecimalJsonConverter() Decimal debit,
       @DecimalJsonConverter() Decimal credit,
+=======
+      Decimal debit,
+      Decimal credit,
+>>>>>>> origin/audit/baseline-main-current-20260814
       String? description,
       String? sourceDocumentRef,
       String? costCenterId,
       String? originalCurrency,
+<<<<<<< HEAD
       @DecimalJsonConverter() Decimal? exchangeRate,
       @DecimalJsonConverter() Decimal? originalAmount});
+=======
+      Decimal? exchangeRate,
+      Decimal? originalAmount});
+>>>>>>> origin/audit/baseline-main-current-20260814
 }
 
 /// @nodoc
@@ -868,25 +904,43 @@ class __$$JournalEntryLineImplCopyWithImpl<$Res>
 }
 
 /// @nodoc
+<<<<<<< HEAD
 
 @JsonSerializable(explicitToJson: true)
+=======
+@JsonSerializable()
+>>>>>>> origin/audit/baseline-main-current-20260814
 class _$JournalEntryLineImpl implements _JournalEntryLine {
   const _$JournalEntryLineImpl(
       {required this.accountId,
       required this.accountName,
+<<<<<<< HEAD
       @DecimalJsonConverter() required this.debit,
       @DecimalJsonConverter() required this.credit,
+=======
+      required this.debit,
+      required this.credit,
+>>>>>>> origin/audit/baseline-main-current-20260814
       this.description,
       this.sourceDocumentRef,
       this.costCenterId,
       this.originalCurrency,
+<<<<<<< HEAD
       @DecimalJsonConverter() this.exchangeRate,
       @DecimalJsonConverter() this.originalAmount});
+=======
+      this.exchangeRate,
+      this.originalAmount});
+>>>>>>> origin/audit/baseline-main-current-20260814
 
   factory _$JournalEntryLineImpl.fromJson(Map<String, dynamic> json) =>
       _$$JournalEntryLineImplFromJson(json);
 
+<<<<<<< HEAD
   /// Identifier of the target account.
+=======
+  /// Reference to the target [Account] ID.
+>>>>>>> origin/audit/baseline-main-current-20260814
   @override
   final String accountId;
 
@@ -896,12 +950,18 @@ class _$JournalEntryLineImpl implements _JournalEntryLine {
 
   /// Positive increase for Debit-nature accounts.
   @override
+<<<<<<< HEAD
   @DecimalJsonConverter()
+=======
+>>>>>>> origin/audit/baseline-main-current-20260814
   final Decimal debit;
 
   /// Positive increase for Credit-nature accounts.
   @override
+<<<<<<< HEAD
   @DecimalJsonConverter()
+=======
+>>>>>>> origin/audit/baseline-main-current-20260814
   final Decimal credit;
 
   /// Line-specific memo or explanation.
@@ -923,12 +983,18 @@ class _$JournalEntryLineImpl implements _JournalEntryLine {
 
   /// Spot exchange rate at the time of recording.
   @override
+<<<<<<< HEAD
   @DecimalJsonConverter()
+=======
+>>>>>>> origin/audit/baseline-main-current-20260814
   final Decimal? exchangeRate;
 
   /// Original amount in the source currency before conversion.
   @override
+<<<<<<< HEAD
   @DecimalJsonConverter()
+=======
+>>>>>>> origin/audit/baseline-main-current-20260814
   final Decimal? originalAmount;
 
   @override
@@ -993,6 +1059,7 @@ class _$JournalEntryLineImpl implements _JournalEntryLine {
 
 abstract class _JournalEntryLine implements JournalEntryLine {
   const factory _JournalEntryLine(
+<<<<<<< HEAD
           {required final String accountId,
           required final String accountName,
           @DecimalJsonConverter() required final Decimal debit,
@@ -1004,13 +1071,29 @@ abstract class _JournalEntryLine implements JournalEntryLine {
           @DecimalJsonConverter() final Decimal? exchangeRate,
           @DecimalJsonConverter() final Decimal? originalAmount}) =
       _$JournalEntryLineImpl;
+=======
+      {required final String accountId,
+      required final String accountName,
+      required final Decimal debit,
+      required final Decimal credit,
+      final String? description,
+      final String? sourceDocumentRef,
+      final String? costCenterId,
+      final String? originalCurrency,
+      final Decimal? exchangeRate,
+      final Decimal? originalAmount}) = _$JournalEntryLineImpl;
+>>>>>>> origin/audit/baseline-main-current-20260814
 
   factory _JournalEntryLine.fromJson(Map<String, dynamic> json) =
       _$JournalEntryLineImpl.fromJson;
 
   @override
 
+<<<<<<< HEAD
   /// Identifier of the target account.
+=======
+  /// Reference to the target [Account] ID.
+>>>>>>> origin/audit/baseline-main-current-20260814
   String get accountId;
   @override
 
@@ -1019,12 +1102,18 @@ abstract class _JournalEntryLine implements JournalEntryLine {
   @override
 
   /// Positive increase for Debit-nature accounts.
+<<<<<<< HEAD
   @DecimalJsonConverter()
+=======
+>>>>>>> origin/audit/baseline-main-current-20260814
   Decimal get debit;
   @override
 
   /// Positive increase for Credit-nature accounts.
+<<<<<<< HEAD
   @DecimalJsonConverter()
+=======
+>>>>>>> origin/audit/baseline-main-current-20260814
   Decimal get credit;
   @override
 
@@ -1046,12 +1135,18 @@ abstract class _JournalEntryLine implements JournalEntryLine {
   @override
 
   /// Spot exchange rate at the time of recording.
+<<<<<<< HEAD
   @DecimalJsonConverter()
+=======
+>>>>>>> origin/audit/baseline-main-current-20260814
   Decimal? get exchangeRate;
   @override
 
   /// Original amount in the source currency before conversion.
+<<<<<<< HEAD
   @DecimalJsonConverter()
+=======
+>>>>>>> origin/audit/baseline-main-current-20260814
   Decimal? get originalAmount;
   @override
   @JsonKey(ignore: true)
@@ -1483,8 +1578,12 @@ class __$$JournalEntryImplCopyWithImpl<$Res>
 }
 
 /// @nodoc
+<<<<<<< HEAD
 
 @JsonSerializable(explicitToJson: true)
+=======
+@JsonSerializable()
+>>>>>>> origin/audit/baseline-main-current-20260814
 class _$JournalEntryImpl extends _JournalEntry {
   const _$JournalEntryImpl(
       {required this.id,

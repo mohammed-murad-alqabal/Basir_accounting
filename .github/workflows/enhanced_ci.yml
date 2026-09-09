@@ -191,8 +191,13 @@ jobs:
           echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
           echo ""
 
+<<<<<<< HEAD
           # تُبلَّغ ملاحظات الأسلوب؛ أما الأخطاء والتحذيرات فتمنع الدمج.
           flutter analyze --no-fatal-infos
+=======
+          # Keep analyzer errors blocking while baseline lint information and warnings remain advisory.
+          flutter analyze --no-fatal-infos --no-fatal-warnings
+>>>>>>> origin/audit/baseline-main-current-20260814
 
           echo ""
           echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
@@ -324,10 +329,15 @@ jobs:
           SECRETS_FOUND=0
 
           echo "🔍 Checking for hardcoded secrets..."
+<<<<<<< HEAD
           # لا تُعامل أسماء المتغيرات أو حقول كلمة المرور الشرعية كأسرار.
           # لا يوقف البناء إلا نمط اعتماد معروف أو إسناد نصي لحقل حساس.
           if grep -r -n -E '(ghp_[A-Za-z0-9]{36}|github_pat_[A-Za-z0-9_]{20,}|AKIA[0-9A-Z]{16})' lib/ --include='*.dart' || \
             grep -r -n -E "(password|secret|api[_-]?key|token)[[:space:]]*[:=][[:space:]]*['\"][^'\"]{8,}" lib/ --include='*.dart'; then
+=======
+          # Match assigned credential-like values, not ordinary words in UI text or metadata.
+          if grep -r -i -E "(password|api[_-]?key|secret|token)[[:space:]]*[:=][[:space:]]*['\"][^'\"]{8,}['\"]|-----BEGIN[[:space:]].*PRIVATE[[:space:]]KEY-----" lib/ --include="*.dart" | grep -v "SecureStorage\|// TODO\|// FIXME\|test"; then
+>>>>>>> origin/audit/baseline-main-current-20260814
             echo ""
             echo "❌ Found potential hardcoded secrets"
             echo "💡 Security First: Never hardcode secrets"
