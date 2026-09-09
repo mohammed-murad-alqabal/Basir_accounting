@@ -7,6 +7,10 @@ on:
     branches: [main, develop]
   workflow_dispatch:
 
+concurrency:
+  group: flutter-ci-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
 env:
   FLUTTER_VERSION: "3.44.9"
   # الخط الأساس المقاس في CI هو 25.5%. تُمنع أي تراجعات بينما تُرفع
