@@ -6,11 +6,7 @@ part of 'accounting_service.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-<<<<<<< HEAD
-String _$accountingServiceHash() => r'207e69b7654adc3cd599c94c70c703c98fe3e974';
-=======
-String _$accountingServiceHash() => r'81d5b3c429e4e9f351bf21b7329efc0a10e61e7c';
->>>>>>> origin/audit/baseline-main-current-20260814
+String _$accountingServiceHash() => r'ec2ebf36a5dcbc8347d5af42cd212607c312f330';
 
 /// Central Accounting Service managing the Chart of Accounts and core ledger
 /// operations.

@@ -22,7 +22,6 @@ InvoiceItem _$InvoiceItemFromJson(Map<String, dynamic> json) {
 mixin _$InvoiceItem {
   String get id => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
-<<<<<<< HEAD
   @DecimalJsonConverter()
   Decimal get quantity => throw _privateConstructorUsedError;
   @DecimalJsonConverter()
@@ -38,18 +37,6 @@ mixin _$InvoiceItem {
 
   /// VAT rate applied to this item (e.g., 0.15, 0.05, 0.0).
   @DecimalJsonConverter()
-=======
-  Decimal get quantity => throw _privateConstructorUsedError;
-  Decimal get price => throw _privateConstructorUsedError;
-
-  /// Calculated subtotal: quantity * price.
-  Decimal get total => throw _privateConstructorUsedError;
-
-  /// VAT amount calculated for this specific item.
-  Decimal get taxAmount => throw _privateConstructorUsedError;
-
-  /// VAT rate applied to this item (e.g., 0.15, 0.05, 0.0).
->>>>>>> origin/audit/baseline-main-current-20260814
   Decimal get taxRate => throw _privateConstructorUsedError;
 
   /// Semantic description or notes.
@@ -73,19 +60,11 @@ abstract class $InvoiceItemCopyWith<$Res> {
   $Res call(
       {String id,
       String name,
-<<<<<<< HEAD
       @DecimalJsonConverter() Decimal quantity,
       @DecimalJsonConverter() Decimal price,
       @DecimalJsonConverter() Decimal total,
       @DecimalJsonConverter() Decimal taxAmount,
       @DecimalJsonConverter() Decimal taxRate,
-=======
-      Decimal quantity,
-      Decimal price,
-      Decimal total,
-      Decimal taxAmount,
-      Decimal taxRate,
->>>>>>> origin/audit/baseline-main-current-20260814
       String? description,
       String taxCategory});
 }
@@ -165,19 +144,11 @@ abstract class _$$InvoiceItemImplCopyWith<$Res>
   $Res call(
       {String id,
       String name,
-<<<<<<< HEAD
       @DecimalJsonConverter() Decimal quantity,
       @DecimalJsonConverter() Decimal price,
       @DecimalJsonConverter() Decimal total,
       @DecimalJsonConverter() Decimal taxAmount,
       @DecimalJsonConverter() Decimal taxRate,
-=======
-      Decimal quantity,
-      Decimal price,
-      Decimal total,
-      Decimal taxAmount,
-      Decimal taxRate,
->>>>>>> origin/audit/baseline-main-current-20260814
       String? description,
       String taxCategory});
 }
@@ -250,19 +221,11 @@ class _$InvoiceItemImpl extends _InvoiceItem {
   _$InvoiceItemImpl(
       {required this.id,
       required this.name,
-<<<<<<< HEAD
       @DecimalJsonConverter() required this.quantity,
       @DecimalJsonConverter() required this.price,
       @DecimalJsonConverter() required this.total,
       @DecimalJsonConverter() required this.taxAmount,
       @DecimalJsonConverter() required this.taxRate,
-=======
-      required this.quantity,
-      required this.price,
-      required this.total,
-      required this.taxAmount,
-      required this.taxRate,
->>>>>>> origin/audit/baseline-main-current-20260814
       this.description,
       this.taxCategory = 'S'})
       : super._();
@@ -275,39 +238,25 @@ class _$InvoiceItemImpl extends _InvoiceItem {
   @override
   final String name;
   @override
-<<<<<<< HEAD
   @DecimalJsonConverter()
   final Decimal quantity;
   @override
   @DecimalJsonConverter()
-=======
-  final Decimal quantity;
-  @override
->>>>>>> origin/audit/baseline-main-current-20260814
   final Decimal price;
 
   /// Calculated subtotal: quantity * price.
   @override
-<<<<<<< HEAD
   @DecimalJsonConverter()
-=======
->>>>>>> origin/audit/baseline-main-current-20260814
   final Decimal total;
 
   /// VAT amount calculated for this specific item.
   @override
-<<<<<<< HEAD
   @DecimalJsonConverter()
-=======
->>>>>>> origin/audit/baseline-main-current-20260814
   final Decimal taxAmount;
 
   /// VAT rate applied to this item (e.g., 0.15, 0.05, 0.0).
   @override
-<<<<<<< HEAD
   @DecimalJsonConverter()
-=======
->>>>>>> origin/audit/baseline-main-current-20260814
   final Decimal taxRate;
 
   /// Semantic description or notes.
@@ -367,19 +316,11 @@ abstract class _InvoiceItem extends InvoiceItem {
   factory _InvoiceItem(
       {required final String id,
       required final String name,
-<<<<<<< HEAD
       @DecimalJsonConverter() required final Decimal quantity,
       @DecimalJsonConverter() required final Decimal price,
       @DecimalJsonConverter() required final Decimal total,
       @DecimalJsonConverter() required final Decimal taxAmount,
       @DecimalJsonConverter() required final Decimal taxRate,
-=======
-      required final Decimal quantity,
-      required final Decimal price,
-      required final Decimal total,
-      required final Decimal taxAmount,
-      required final Decimal taxRate,
->>>>>>> origin/audit/baseline-main-current-20260814
       final String? description,
       final String taxCategory}) = _$InvoiceItemImpl;
   _InvoiceItem._() : super._();
@@ -392,39 +333,25 @@ abstract class _InvoiceItem extends InvoiceItem {
   @override
   String get name;
   @override
-<<<<<<< HEAD
   @DecimalJsonConverter()
   Decimal get quantity;
   @override
   @DecimalJsonConverter()
-=======
-  Decimal get quantity;
-  @override
->>>>>>> origin/audit/baseline-main-current-20260814
   Decimal get price;
   @override
 
   /// Calculated subtotal: quantity * price.
-<<<<<<< HEAD
   @DecimalJsonConverter()
-=======
->>>>>>> origin/audit/baseline-main-current-20260814
   Decimal get total;
   @override
 
   /// VAT amount calculated for this specific item.
-<<<<<<< HEAD
   @DecimalJsonConverter()
-=======
->>>>>>> origin/audit/baseline-main-current-20260814
   Decimal get taxAmount;
   @override
 
   /// VAT rate applied to this item (e.g., 0.15, 0.05, 0.0).
-<<<<<<< HEAD
   @DecimalJsonConverter()
-=======
->>>>>>> origin/audit/baseline-main-current-20260814
   Decimal get taxRate;
   @override
 
@@ -469,7 +396,6 @@ mixin _$Invoice {
   InvoiceStatus get status => throw _privateConstructorUsedError;
 
   /// Financial aggregates (Persisted for Data Integrity).
-<<<<<<< HEAD
   @DecimalJsonConverter()
   Decimal get subtotalAmount => throw _privateConstructorUsedError;
   @DecimalJsonConverter()
@@ -489,19 +415,6 @@ mixin _$Invoice {
 
   /// Exchange rate to base currency (SAR).
   @DecimalJsonConverter()
-=======
-  Decimal get subtotalAmount => throw _privateConstructorUsedError;
-  Decimal get taxAmount => throw _privateConstructorUsedError;
-  Decimal get discountAmount => throw _privateConstructorUsedError;
-  Decimal get totalAmount => throw _privateConstructorUsedError;
-  Decimal get paidAmount => throw _privateConstructorUsedError;
-
-  /// Rates and adjustments.
-  Decimal get taxRate => throw _privateConstructorUsedError;
-  Decimal get discountRate => throw _privateConstructorUsedError;
-
-  /// Exchange rate to base currency (SAR).
->>>>>>> origin/audit/baseline-main-current-20260814
   Decimal get exchangeRate => throw _privateConstructorUsedError;
 
   /// Granular transaction categorization (Sales, Return, etc.)
@@ -560,7 +473,6 @@ abstract class $InvoiceCopyWith<$Res> {
       DateTime createdAt,
       DateTime updatedAt,
       InvoiceStatus status,
-<<<<<<< HEAD
       @DecimalJsonConverter() Decimal subtotalAmount,
       @DecimalJsonConverter() Decimal taxAmount,
       @DecimalJsonConverter() Decimal discountAmount,
@@ -569,16 +481,6 @@ abstract class $InvoiceCopyWith<$Res> {
       @DecimalJsonConverter() Decimal taxRate,
       @DecimalJsonConverter() Decimal discountRate,
       @DecimalJsonConverter() Decimal exchangeRate,
-=======
-      Decimal subtotalAmount,
-      Decimal taxAmount,
-      Decimal discountAmount,
-      Decimal totalAmount,
-      Decimal paidAmount,
-      Decimal taxRate,
-      Decimal discountRate,
-      Decimal exchangeRate,
->>>>>>> origin/audit/baseline-main-current-20260814
       InvoiceType type,
       DateTime? paidDate,
       String currency,
@@ -810,7 +712,6 @@ abstract class _$$InvoiceImplCopyWith<$Res> implements $InvoiceCopyWith<$Res> {
       DateTime createdAt,
       DateTime updatedAt,
       InvoiceStatus status,
-<<<<<<< HEAD
       @DecimalJsonConverter() Decimal subtotalAmount,
       @DecimalJsonConverter() Decimal taxAmount,
       @DecimalJsonConverter() Decimal discountAmount,
@@ -819,16 +720,6 @@ abstract class _$$InvoiceImplCopyWith<$Res> implements $InvoiceCopyWith<$Res> {
       @DecimalJsonConverter() Decimal taxRate,
       @DecimalJsonConverter() Decimal discountRate,
       @DecimalJsonConverter() Decimal exchangeRate,
-=======
-      Decimal subtotalAmount,
-      Decimal taxAmount,
-      Decimal discountAmount,
-      Decimal totalAmount,
-      Decimal paidAmount,
-      Decimal taxRate,
-      Decimal discountRate,
-      Decimal exchangeRate,
->>>>>>> origin/audit/baseline-main-current-20260814
       InvoiceType type,
       DateTime? paidDate,
       String currency,
@@ -1041,12 +932,8 @@ class __$$InvoiceImplCopyWithImpl<$Res>
 }
 
 /// @nodoc
-<<<<<<< HEAD
 
 @JsonSerializable(explicitToJson: true)
-=======
-@JsonSerializable()
->>>>>>> origin/audit/baseline-main-current-20260814
 class _$InvoiceImpl extends _Invoice {
   _$InvoiceImpl(
       {required this.id,
@@ -1059,7 +946,6 @@ class _$InvoiceImpl extends _Invoice {
       required this.createdAt,
       required this.updatedAt,
       required this.status,
-<<<<<<< HEAD
       @DecimalJsonConverter() required this.subtotalAmount,
       @DecimalJsonConverter() required this.taxAmount,
       @DecimalJsonConverter() required this.discountAmount,
@@ -1068,16 +954,6 @@ class _$InvoiceImpl extends _Invoice {
       @DecimalJsonConverter() required this.taxRate,
       @DecimalJsonConverter() required this.discountRate,
       @DecimalJsonConverter() required this.exchangeRate,
-=======
-      required this.subtotalAmount,
-      required this.taxAmount,
-      required this.discountAmount,
-      required this.totalAmount,
-      required this.paidAmount,
-      required this.taxRate,
-      required this.discountRate,
-      required this.exchangeRate,
->>>>>>> origin/audit/baseline-main-current-20260814
       this.type = InvoiceType.sales,
       this.paidDate,
       this.currency = 'SAR',
@@ -1142,7 +1018,6 @@ class _$InvoiceImpl extends _Invoice {
 
   /// Financial aggregates (Persisted for Data Integrity).
   @override
-<<<<<<< HEAD
   @DecimalJsonConverter()
   final Decimal subtotalAmount;
   @override
@@ -1156,37 +1031,19 @@ class _$InvoiceImpl extends _Invoice {
   final Decimal totalAmount;
   @override
   @DecimalJsonConverter()
-=======
-  final Decimal subtotalAmount;
-  @override
-  final Decimal taxAmount;
-  @override
-  final Decimal discountAmount;
-  @override
-  final Decimal totalAmount;
-  @override
->>>>>>> origin/audit/baseline-main-current-20260814
   final Decimal paidAmount;
 
   /// Rates and adjustments.
   @override
-<<<<<<< HEAD
   @DecimalJsonConverter()
   final Decimal taxRate;
   @override
   @DecimalJsonConverter()
-=======
-  final Decimal taxRate;
-  @override
->>>>>>> origin/audit/baseline-main-current-20260814
   final Decimal discountRate;
 
   /// Exchange rate to base currency (SAR).
   @override
-<<<<<<< HEAD
   @DecimalJsonConverter()
-=======
->>>>>>> origin/audit/baseline-main-current-20260814
   final Decimal exchangeRate;
 
   /// Granular transaction categorization (Sales, Return, etc.)
@@ -1386,7 +1243,6 @@ abstract class _Invoice extends Invoice {
       required final DateTime createdAt,
       required final DateTime updatedAt,
       required final InvoiceStatus status,
-<<<<<<< HEAD
       @DecimalJsonConverter() required final Decimal subtotalAmount,
       @DecimalJsonConverter() required final Decimal taxAmount,
       @DecimalJsonConverter() required final Decimal discountAmount,
@@ -1395,16 +1251,6 @@ abstract class _Invoice extends Invoice {
       @DecimalJsonConverter() required final Decimal taxRate,
       @DecimalJsonConverter() required final Decimal discountRate,
       @DecimalJsonConverter() required final Decimal exchangeRate,
-=======
-      required final Decimal subtotalAmount,
-      required final Decimal taxAmount,
-      required final Decimal discountAmount,
-      required final Decimal totalAmount,
-      required final Decimal paidAmount,
-      required final Decimal taxRate,
-      required final Decimal discountRate,
-      required final Decimal exchangeRate,
->>>>>>> origin/audit/baseline-main-current-20260814
       final InvoiceType type,
       final DateTime? paidDate,
       final String currency,
@@ -1461,7 +1307,6 @@ abstract class _Invoice extends Invoice {
   @override
 
   /// Financial aggregates (Persisted for Data Integrity).
-<<<<<<< HEAD
   @DecimalJsonConverter()
   Decimal get subtotalAmount;
   @override
@@ -1475,37 +1320,19 @@ abstract class _Invoice extends Invoice {
   Decimal get totalAmount;
   @override
   @DecimalJsonConverter()
-=======
-  Decimal get subtotalAmount;
-  @override
-  Decimal get taxAmount;
-  @override
-  Decimal get discountAmount;
-  @override
-  Decimal get totalAmount;
-  @override
->>>>>>> origin/audit/baseline-main-current-20260814
   Decimal get paidAmount;
   @override
 
   /// Rates and adjustments.
-<<<<<<< HEAD
   @DecimalJsonConverter()
   Decimal get taxRate;
   @override
   @DecimalJsonConverter()
-=======
-  Decimal get taxRate;
-  @override
->>>>>>> origin/audit/baseline-main-current-20260814
   Decimal get discountRate;
   @override
 
   /// Exchange rate to base currency (SAR).
-<<<<<<< HEAD
   @DecimalJsonConverter()
-=======
->>>>>>> origin/audit/baseline-main-current-20260814
   Decimal get exchangeRate;
   @override
 

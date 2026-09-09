@@ -23,7 +23,6 @@ const InventoryItemModelSchema = CollectionSchema(
       name: r'assetAccountId',
       type: IsarType.string,
     ),
-<<<<<<< HEAD
     r'barcode': PropertySchema(
       id: 1,
       name: r'barcode',
@@ -31,201 +30,113 @@ const InventoryItemModelSchema = CollectionSchema(
     ),
     r'categoryId': PropertySchema(
       id: 2,
-=======
-    r'categoryId': PropertySchema(
-      id: 1,
->>>>>>> origin/audit/baseline-main-current-20260814
       name: r'categoryId',
       type: IsarType.string,
     ),
     r'cogsAccountId': PropertySchema(
-<<<<<<< HEAD
       id: 3,
-=======
-      id: 2,
->>>>>>> origin/audit/baseline-main-current-20260814
       name: r'cogsAccountId',
       type: IsarType.string,
     ),
     r'createdAt': PropertySchema(
-<<<<<<< HEAD
       id: 4,
-=======
-      id: 3,
->>>>>>> origin/audit/baseline-main-current-20260814
       name: r'createdAt',
       type: IsarType.dateTime,
     ),
     r'currentQuantity': PropertySchema(
-<<<<<<< HEAD
       id: 5,
-=======
-      id: 4,
->>>>>>> origin/audit/baseline-main-current-20260814
       name: r'currentQuantity',
       type: IsarType.double,
     ),
     r'description': PropertySchema(
-<<<<<<< HEAD
       id: 6,
-=======
-      id: 5,
->>>>>>> origin/audit/baseline-main-current-20260814
       name: r'description',
       type: IsarType.string,
     ),
     r'id': PropertySchema(
-<<<<<<< HEAD
       id: 7,
-=======
-      id: 6,
->>>>>>> origin/audit/baseline-main-current-20260814
       name: r'id',
       type: IsarType.string,
     ),
     r'isDeleted': PropertySchema(
-<<<<<<< HEAD
       id: 8,
-=======
-      id: 7,
->>>>>>> origin/audit/baseline-main-current-20260814
       name: r'isDeleted',
       type: IsarType.bool,
     ),
     r'nameAr': PropertySchema(
-<<<<<<< HEAD
       id: 9,
-=======
-      id: 8,
->>>>>>> origin/audit/baseline-main-current-20260814
       name: r'nameAr',
       type: IsarType.string,
     ),
     r'nameEn': PropertySchema(
-<<<<<<< HEAD
       id: 10,
-=======
-      id: 9,
->>>>>>> origin/audit/baseline-main-current-20260814
       name: r'nameEn',
       type: IsarType.string,
     ),
     r'primaryAccountId': PropertySchema(
-<<<<<<< HEAD
       id: 11,
-=======
-      id: 10,
->>>>>>> origin/audit/baseline-main-current-20260814
       name: r'primaryAccountId',
       type: IsarType.string,
     ),
     r'purchasePrice': PropertySchema(
-<<<<<<< HEAD
       id: 12,
-=======
-      id: 11,
->>>>>>> origin/audit/baseline-main-current-20260814
       name: r'purchasePrice',
       type: IsarType.double,
     ),
     r'revenueAccountId': PropertySchema(
-<<<<<<< HEAD
       id: 13,
-=======
-      id: 12,
->>>>>>> origin/audit/baseline-main-current-20260814
       name: r'revenueAccountId',
       type: IsarType.string,
     ),
     r'salePrice': PropertySchema(
-<<<<<<< HEAD
       id: 14,
-=======
-      id: 13,
->>>>>>> origin/audit/baseline-main-current-20260814
       name: r'salePrice',
       type: IsarType.double,
     ),
     r'serverUpdatedAt': PropertySchema(
-<<<<<<< HEAD
       id: 15,
-=======
-      id: 14,
->>>>>>> origin/audit/baseline-main-current-20260814
       name: r'serverUpdatedAt',
       type: IsarType.dateTime,
     ),
     r'sku': PropertySchema(
-<<<<<<< HEAD
       id: 16,
-=======
-      id: 15,
->>>>>>> origin/audit/baseline-main-current-20260814
       name: r'sku',
       type: IsarType.string,
     ),
     r'syncStatus': PropertySchema(
-<<<<<<< HEAD
       id: 17,
-=======
-      id: 16,
->>>>>>> origin/audit/baseline-main-current-20260814
       name: r'syncStatus',
       type: IsarType.string,
       enumMap: _InventoryItemModelsyncStatusEnumValueMap,
     ),
     r'taxCategory': PropertySchema(
-<<<<<<< HEAD
       id: 18,
-=======
-      id: 17,
->>>>>>> origin/audit/baseline-main-current-20260814
       name: r'taxCategory',
       type: IsarType.string,
     ),
     r'unit': PropertySchema(
-<<<<<<< HEAD
       id: 19,
-=======
-      id: 18,
->>>>>>> origin/audit/baseline-main-current-20260814
       name: r'unit',
       type: IsarType.string,
     ),
     r'updatedAt': PropertySchema(
-<<<<<<< HEAD
       id: 20,
-=======
-      id: 19,
->>>>>>> origin/audit/baseline-main-current-20260814
       name: r'updatedAt',
       type: IsarType.dateTime,
     ),
     r'userId': PropertySchema(
-<<<<<<< HEAD
       id: 21,
-=======
-      id: 20,
->>>>>>> origin/audit/baseline-main-current-20260814
       name: r'userId',
       type: IsarType.string,
     ),
     r'valuationMethod': PropertySchema(
-<<<<<<< HEAD
       id: 22,
-=======
-      id: 21,
->>>>>>> origin/audit/baseline-main-current-20260814
       name: r'valuationMethod',
       type: IsarType.string,
       enumMap: _InventoryItemModelvaluationMethodEnumValueMap,
     ),
     r'warehouseId': PropertySchema(
-<<<<<<< HEAD
       id: 23,
-=======
-      id: 22,
->>>>>>> origin/audit/baseline-main-current-20260814
       name: r'warehouseId',
       type: IsarType.string,
     )
@@ -275,7 +186,6 @@ const InventoryItemModelSchema = CollectionSchema(
         )
       ],
     ),
-<<<<<<< HEAD
     r'barcode': IndexSchema(
       id: 1156800733621869998,
       name: r'barcode',
@@ -289,8 +199,6 @@ const InventoryItemModelSchema = CollectionSchema(
         )
       ],
     ),
-=======
->>>>>>> origin/audit/baseline-main-current-20260814
     r'warehouseId': IndexSchema(
       id: -3759612439572445753,
       name: r'warehouseId',
@@ -326,15 +234,12 @@ int _inventoryItemModelEstimateSize(
     }
   }
   {
-<<<<<<< HEAD
     final value = object.barcode;
     if (value != null) {
       bytesCount += 3 + value.length * 3;
     }
   }
   {
-=======
->>>>>>> origin/audit/baseline-main-current-20260814
     final value = object.categoryId;
     if (value != null) {
       bytesCount += 3 + value.length * 3;
@@ -409,7 +314,6 @@ void _inventoryItemModelSerialize(
   Map<Type, List<int>> allOffsets,
 ) {
   writer.writeString(offsets[0], object.assetAccountId);
-<<<<<<< HEAD
   writer.writeString(offsets[1], object.barcode);
   writer.writeString(offsets[2], object.categoryId);
   writer.writeString(offsets[3], object.cogsAccountId);
@@ -433,30 +337,6 @@ void _inventoryItemModelSerialize(
   writer.writeString(offsets[21], object.userId);
   writer.writeString(offsets[22], object.valuationMethod.name);
   writer.writeString(offsets[23], object.warehouseId);
-=======
-  writer.writeString(offsets[1], object.categoryId);
-  writer.writeString(offsets[2], object.cogsAccountId);
-  writer.writeDateTime(offsets[3], object.createdAt);
-  writer.writeDouble(offsets[4], object.currentQuantity);
-  writer.writeString(offsets[5], object.description);
-  writer.writeString(offsets[6], object.id);
-  writer.writeBool(offsets[7], object.isDeleted);
-  writer.writeString(offsets[8], object.nameAr);
-  writer.writeString(offsets[9], object.nameEn);
-  writer.writeString(offsets[10], object.primaryAccountId);
-  writer.writeDouble(offsets[11], object.purchasePrice);
-  writer.writeString(offsets[12], object.revenueAccountId);
-  writer.writeDouble(offsets[13], object.salePrice);
-  writer.writeDateTime(offsets[14], object.serverUpdatedAt);
-  writer.writeString(offsets[15], object.sku);
-  writer.writeString(offsets[16], object.syncStatus.name);
-  writer.writeString(offsets[17], object.taxCategory);
-  writer.writeString(offsets[18], object.unit);
-  writer.writeDateTime(offsets[19], object.updatedAt);
-  writer.writeString(offsets[20], object.userId);
-  writer.writeString(offsets[21], object.valuationMethod.name);
-  writer.writeString(offsets[22], object.warehouseId);
->>>>>>> origin/audit/baseline-main-current-20260814
 }
 
 InventoryItemModel _inventoryItemModelDeserialize(
@@ -467,7 +347,6 @@ InventoryItemModel _inventoryItemModelDeserialize(
 ) {
   final object = InventoryItemModel();
   object.assetAccountId = reader.readStringOrNull(offsets[0]);
-<<<<<<< HEAD
   object.barcode = reader.readStringOrNull(offsets[1]);
   object.categoryId = reader.readStringOrNull(offsets[2]);
   object.cogsAccountId = reader.readStringOrNull(offsets[3]);
@@ -496,35 +375,6 @@ InventoryItemModel _inventoryItemModelDeserialize(
           reader.readStringOrNull(offsets[22])] ??
       ValuationMethod.fifo;
   object.warehouseId = reader.readStringOrNull(offsets[23]);
-=======
-  object.categoryId = reader.readStringOrNull(offsets[1]);
-  object.cogsAccountId = reader.readStringOrNull(offsets[2]);
-  object.createdAt = reader.readDateTime(offsets[3]);
-  object.currentQuantity = reader.readDoubleOrNull(offsets[4]);
-  object.description = reader.readStringOrNull(offsets[5]);
-  object.id = reader.readStringOrNull(offsets[6]);
-  object.isDeleted = reader.readBool(offsets[7]);
-  object.isarId = id;
-  object.nameAr = reader.readString(offsets[8]);
-  object.nameEn = reader.readString(offsets[9]);
-  object.primaryAccountId = reader.readStringOrNull(offsets[10]);
-  object.purchasePrice = reader.readDoubleOrNull(offsets[11]);
-  object.revenueAccountId = reader.readStringOrNull(offsets[12]);
-  object.salePrice = reader.readDoubleOrNull(offsets[13]);
-  object.serverUpdatedAt = reader.readDateTimeOrNull(offsets[14]);
-  object.sku = reader.readStringOrNull(offsets[15]);
-  object.syncStatus = _InventoryItemModelsyncStatusValueEnumMap[
-          reader.readStringOrNull(offsets[16])] ??
-      SyncStatus.synced;
-  object.taxCategory = reader.readString(offsets[17]);
-  object.unit = reader.readStringOrNull(offsets[18]);
-  object.updatedAt = reader.readDateTime(offsets[19]);
-  object.userId = reader.readStringOrNull(offsets[20]);
-  object.valuationMethod = _InventoryItemModelvaluationMethodValueEnumMap[
-          reader.readStringOrNull(offsets[21])] ??
-      ValuationMethod.fifo;
-  object.warehouseId = reader.readStringOrNull(offsets[22]);
->>>>>>> origin/audit/baseline-main-current-20260814
   return object;
 }
 
@@ -542,7 +392,6 @@ P _inventoryItemModelDeserializeProp<P>(
     case 2:
       return (reader.readStringOrNull(offset)) as P;
     case 3:
-<<<<<<< HEAD
       return (reader.readStringOrNull(offset)) as P;
     case 4:
       return (reader.readDateTime(offset)) as P;
@@ -587,50 +436,6 @@ P _inventoryItemModelDeserializeProp<P>(
               reader.readStringOrNull(offset)] ??
           ValuationMethod.fifo) as P;
     case 23:
-=======
-      return (reader.readDateTime(offset)) as P;
-    case 4:
-      return (reader.readDoubleOrNull(offset)) as P;
-    case 5:
-      return (reader.readStringOrNull(offset)) as P;
-    case 6:
-      return (reader.readStringOrNull(offset)) as P;
-    case 7:
-      return (reader.readBool(offset)) as P;
-    case 8:
-      return (reader.readString(offset)) as P;
-    case 9:
-      return (reader.readString(offset)) as P;
-    case 10:
-      return (reader.readStringOrNull(offset)) as P;
-    case 11:
-      return (reader.readDoubleOrNull(offset)) as P;
-    case 12:
-      return (reader.readStringOrNull(offset)) as P;
-    case 13:
-      return (reader.readDoubleOrNull(offset)) as P;
-    case 14:
-      return (reader.readDateTimeOrNull(offset)) as P;
-    case 15:
-      return (reader.readStringOrNull(offset)) as P;
-    case 16:
-      return (_InventoryItemModelsyncStatusValueEnumMap[
-              reader.readStringOrNull(offset)] ??
-          SyncStatus.synced) as P;
-    case 17:
-      return (reader.readString(offset)) as P;
-    case 18:
-      return (reader.readStringOrNull(offset)) as P;
-    case 19:
-      return (reader.readDateTime(offset)) as P;
-    case 20:
-      return (reader.readStringOrNull(offset)) as P;
-    case 21:
-      return (_InventoryItemModelvaluationMethodValueEnumMap[
-              reader.readStringOrNull(offset)] ??
-          ValuationMethod.fifo) as P;
-    case 22:
->>>>>>> origin/audit/baseline-main-current-20260814
       return (reader.readStringOrNull(offset)) as P;
     default:
       throw IsarError('Unknown property with id $propertyId');
@@ -1175,7 +980,6 @@ extension InventoryItemModelQueryWhere
   }
 
   QueryBuilder<InventoryItemModel, InventoryItemModel, QAfterWhereClause>
-<<<<<<< HEAD
       barcodeIsNull() {
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(IndexWhereClause.equalTo(
@@ -1243,8 +1047,6 @@ extension InventoryItemModelQueryWhere
   }
 
   QueryBuilder<InventoryItemModel, InventoryItemModel, QAfterWhereClause>
-=======
->>>>>>> origin/audit/baseline-main-current-20260814
       warehouseIdIsNull() {
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(IndexWhereClause.equalTo(
@@ -1469,7 +1271,6 @@ extension InventoryItemModelQueryFilter
   }
 
   QueryBuilder<InventoryItemModel, InventoryItemModel, QAfterFilterCondition>
-<<<<<<< HEAD
       barcodeIsNull() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(const FilterCondition.isNull(
@@ -1624,8 +1425,6 @@ extension InventoryItemModelQueryFilter
   }
 
   QueryBuilder<InventoryItemModel, InventoryItemModel, QAfterFilterCondition>
-=======
->>>>>>> origin/audit/baseline-main-current-20260814
       categoryIdIsNull() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(const FilterCondition.isNull(
@@ -4391,7 +4190,6 @@ extension InventoryItemModelQuerySortBy
   }
 
   QueryBuilder<InventoryItemModel, InventoryItemModel, QAfterSortBy>
-<<<<<<< HEAD
       sortByBarcode() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'barcode', Sort.asc);
@@ -4406,8 +4204,6 @@ extension InventoryItemModelQuerySortBy
   }
 
   QueryBuilder<InventoryItemModel, InventoryItemModel, QAfterSortBy>
-=======
->>>>>>> origin/audit/baseline-main-current-20260814
       sortByCategoryId() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'categoryId', Sort.asc);
@@ -4733,7 +4529,6 @@ extension InventoryItemModelQuerySortThenBy
   }
 
   QueryBuilder<InventoryItemModel, InventoryItemModel, QAfterSortBy>
-<<<<<<< HEAD
       thenByBarcode() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'barcode', Sort.asc);
@@ -4748,8 +4543,6 @@ extension InventoryItemModelQuerySortThenBy
   }
 
   QueryBuilder<InventoryItemModel, InventoryItemModel, QAfterSortBy>
-=======
->>>>>>> origin/audit/baseline-main-current-20260814
       thenByCategoryId() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'categoryId', Sort.asc);
@@ -5083,7 +4876,6 @@ extension InventoryItemModelQueryWhereDistinct
   }
 
   QueryBuilder<InventoryItemModel, InventoryItemModel, QDistinct>
-<<<<<<< HEAD
       distinctByBarcode({bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'barcode', caseSensitive: caseSensitive);
@@ -5091,8 +4883,6 @@ extension InventoryItemModelQueryWhereDistinct
   }
 
   QueryBuilder<InventoryItemModel, InventoryItemModel, QDistinct>
-=======
->>>>>>> origin/audit/baseline-main-current-20260814
       distinctByCategoryId({bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'categoryId', caseSensitive: caseSensitive);
@@ -5267,7 +5057,6 @@ extension InventoryItemModelQueryProperty
   }
 
   QueryBuilder<InventoryItemModel, String?, QQueryOperations>
-<<<<<<< HEAD
       barcodeProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'barcode');
@@ -5275,8 +5064,6 @@ extension InventoryItemModelQueryProperty
   }
 
   QueryBuilder<InventoryItemModel, String?, QQueryOperations>
-=======
->>>>>>> origin/audit/baseline-main-current-20260814
       categoryIdProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'categoryId');
