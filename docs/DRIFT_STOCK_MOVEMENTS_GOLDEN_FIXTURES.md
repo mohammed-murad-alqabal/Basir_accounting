@@ -121,9 +121,17 @@
 
 أُضيف اختبار SQLite يحمّل clean fixtures نفسها ويقارن الأرصدة المتوقعة مع `StockMovementStore`، واختبارات scope وasOfDate وbatch/reference وround-trip والبوابة المحجوبة. نجحت **50 اختبارًا** في الاختبارات المستهدفة، ونجح `flutter analyze` للملفات المتأثرة بلا ملاحظات، و`git diff --check`. لم يتغير Isar أو Providers أو `sync_service`، ولا يوجد commit أو push لشريحة Storage هذه حتى الآن.
 
+## التنفيذ المحلي الحالي: importer وparity
+
+بعد PR #159، أُضيف importer معزول في `lib/core/persistence/drift_stock_movements_migration.dart`. يقرأ المصدر عبر `StockMovementMigrationReader` أو `IsarStockMovementMigrationSource`، يرتب السجلات deterministic، يفحص duplicate scoped UUIDs وstandalone `transfer` وsigned adjustment والقيم غير الصالحة، ثم يوقف العملية قبل أي كتابة إذا وُجد hazard. عند نجاح الفحص يكتب batches إلى `StockMovementStorage` ويحفظ checkpoints في `MigrationCheckpointStorage`.
+
+أُضيف verifier في `lib/core/persistence/drift_stock_movements_parity.dart` لمقارنة raw fingerprints حسب user scope، وreference fingerprints، وderived balance queries باستخدام `date` و`asOfDate` الشامل. التقارير لا تطبع payload أو معرفات أعمال كاملة؛ وتظهر blocked reasons وduplicate scoped keys كإشارات قبول/رفض فقط. importer وparity تشخيصيان، ولا يربطان أي Provider ولا يفعّلان Drift write أو shadow-read.
+
+أُضيفت اختبارات `drift_stock_movements_migration_parity_test.dart` لتغطية batching وcheckpoint completion، parity النظيفة، حجب standalone transfer وsigned adjustment قبل الكتابة، ومنع duplicate scoped UUID مع السماح بنفس UUID عبر user scopes مختلفة. نجحت **54 اختبارًا** في المجموعة المستهدفة، ونجح `flutter analyze` بلا ملاحظات، و`git diff --check` سليم. التغييرات الجديدة ما تزال محلية وغير ملتزمة.
+
 ## الخطوة التالية بعد اعتماد التصميم
 
-بعد المراجعة البشرية، يمكن طلب إذن مستقل لإنشاء commit محلي لشريحة StockMovements Storage. لا يُسمح بإنشاء importer من Isar أو parity على بيانات فعلية أو shadow-read قبل تثبيت قرار `asOfDate` في domain، واعتماد positive/negative adjustment، والتحقق من dual-entry transfer. لا يُسمح بأي push أو PR جديدة دون موافقة مستقلة.
+قبل أي commit أو رفع، يجب أن يراجع الفريق contract الخاص بإضافة `asOfDate` إلى domain، ودلالة negative adjustment، وقاعدة dual-entry transfer. بعد اعتماد هذه القرارات يمكن طلب commit محلي مستقل لهذه الموجة، ثم push وDraft PR بموافقتين مستقلتين. لا يُسمح بتفعيل importer على بيانات إنتاجية، أو parity فعلية، أو shadow-read، أو canary قبل تقرير بشري نظيف.
 
 ## المراجع الداخلية
 
