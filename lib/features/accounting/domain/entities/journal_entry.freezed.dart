@@ -1129,6 +1129,10 @@ mixin _$JournalEntry {
   /// Most recent synchronization timestamp from the server.
   DateTime? get serverUpdatedAt => throw _privateConstructorUsedError;
 
+  /// Internal authoritative ledger entry ID for cross-reference.
+  /// (Standard Reference: CP-003: Immutability - Authority Chain)
+  String? get authoritativeEntryId => throw _privateConstructorUsedError;
+
   /// Soft-deletion flag.
   bool get isDeleted => throw _privateConstructorUsedError;
 
@@ -1166,6 +1170,7 @@ abstract class $JournalEntryCopyWith<$Res> {
       List<AuditLogEntry> auditLogs,
       SyncStatus syncStatus,
       DateTime? serverUpdatedAt,
+      String? authoritativeEntryId,
       bool isDeleted});
 
   $TemporalJustificationCopyWith<$Res> get temporal;
@@ -1206,6 +1211,7 @@ class _$JournalEntryCopyWithImpl<$Res, $Val extends JournalEntry>
     Object? auditLogs = null,
     Object? syncStatus = null,
     Object? serverUpdatedAt = freezed,
+    Object? authoritativeEntryId = freezed,
     Object? isDeleted = null,
   }) {
     return _then(_value.copyWith(
@@ -1293,6 +1299,10 @@ class _$JournalEntryCopyWithImpl<$Res, $Val extends JournalEntry>
           ? _value.serverUpdatedAt
           : serverUpdatedAt // ignore: cast_nullable_to_non_nullable
               as DateTime?,
+      authoritativeEntryId: freezed == authoritativeEntryId
+          ? _value.authoritativeEntryId
+          : authoritativeEntryId // ignore: cast_nullable_to_non_nullable
+              as String?,
       isDeleted: null == isDeleted
           ? _value.isDeleted
           : isDeleted // ignore: cast_nullable_to_non_nullable
@@ -1347,6 +1357,7 @@ abstract class _$$JournalEntryImplCopyWith<$Res>
       List<AuditLogEntry> auditLogs,
       SyncStatus syncStatus,
       DateTime? serverUpdatedAt,
+      String? authoritativeEntryId,
       bool isDeleted});
 
   @override
@@ -1387,6 +1398,7 @@ class __$$JournalEntryImplCopyWithImpl<$Res>
     Object? auditLogs = null,
     Object? syncStatus = null,
     Object? serverUpdatedAt = freezed,
+    Object? authoritativeEntryId = freezed,
     Object? isDeleted = null,
   }) {
     return _then(_$JournalEntryImpl(
@@ -1474,6 +1486,10 @@ class __$$JournalEntryImplCopyWithImpl<$Res>
           ? _value.serverUpdatedAt
           : serverUpdatedAt // ignore: cast_nullable_to_non_nullable
               as DateTime?,
+      authoritativeEntryId: freezed == authoritativeEntryId
+          ? _value.authoritativeEntryId
+          : authoritativeEntryId // ignore: cast_nullable_to_non_nullable
+              as String?,
       isDeleted: null == isDeleted
           ? _value.isDeleted
           : isDeleted // ignore: cast_nullable_to_non_nullable
@@ -1508,6 +1524,7 @@ class _$JournalEntryImpl extends _JournalEntry {
       final List<AuditLogEntry> auditLogs = const [],
       this.syncStatus = SyncStatus.synced,
       this.serverUpdatedAt,
+      this.authoritativeEntryId,
       this.isDeleted = false})
       : _lines = lines,
         _auditLogs = auditLogs,
@@ -1617,6 +1634,11 @@ class _$JournalEntryImpl extends _JournalEntry {
   @override
   final DateTime? serverUpdatedAt;
 
+  /// Internal authoritative ledger entry ID for cross-reference.
+  /// (Standard Reference: CP-003: Immutability - Authority Chain)
+  @override
+  final String? authoritativeEntryId;
+
   /// Soft-deletion flag.
   @override
   @JsonKey()
@@ -1624,7 +1646,7 @@ class _$JournalEntryImpl extends _JournalEntry {
 
   @override
   String toString() {
-    return 'JournalEntry(id: $id, referenceNumber: $referenceNumber, date: $date, temporal: $temporal, standards: $standards, description: $description, status: $status, lines: $lines, sourceDocument: $sourceDocument, sourceId: $sourceId, createdBy: $createdBy, createdAt: $createdAt, updatedAt: $updatedAt, hash: $hash, previousHash: $previousHash, postedAt: $postedAt, userId: $userId, warehouseId: $warehouseId, auditLogs: $auditLogs, syncStatus: $syncStatus, serverUpdatedAt: $serverUpdatedAt, isDeleted: $isDeleted)';
+    return 'JournalEntry(id: $id, referenceNumber: $referenceNumber, date: $date, temporal: $temporal, standards: $standards, description: $description, status: $status, lines: $lines, sourceDocument: $sourceDocument, sourceId: $sourceId, createdBy: $createdBy, createdAt: $createdAt, updatedAt: $updatedAt, hash: $hash, previousHash: $previousHash, postedAt: $postedAt, userId: $userId, warehouseId: $warehouseId, auditLogs: $auditLogs, syncStatus: $syncStatus, serverUpdatedAt: $serverUpdatedAt, authoritativeEntryId: $authoritativeEntryId, isDeleted: $isDeleted)';
   }
 
   @override
@@ -1668,6 +1690,8 @@ class _$JournalEntryImpl extends _JournalEntry {
                 other.syncStatus == syncStatus) &&
             (identical(other.serverUpdatedAt, serverUpdatedAt) ||
                 other.serverUpdatedAt == serverUpdatedAt) &&
+            (identical(other.authoritativeEntryId, authoritativeEntryId) ||
+                other.authoritativeEntryId == authoritativeEntryId) &&
             (identical(other.isDeleted, isDeleted) ||
                 other.isDeleted == isDeleted));
   }
@@ -1697,6 +1721,7 @@ class _$JournalEntryImpl extends _JournalEntry {
         const DeepCollectionEquality().hash(_auditLogs),
         syncStatus,
         serverUpdatedAt,
+        authoritativeEntryId,
         isDeleted
       ]);
 
@@ -1737,6 +1762,7 @@ abstract class _JournalEntry extends JournalEntry {
       final List<AuditLogEntry> auditLogs,
       final SyncStatus syncStatus,
       final DateTime? serverUpdatedAt,
+      final String? authoritativeEntryId,
       final bool isDeleted}) = _$JournalEntryImpl;
   const _JournalEntry._() : super._();
 
@@ -1828,6 +1854,11 @@ abstract class _JournalEntry extends JournalEntry {
 
   /// Most recent synchronization timestamp from the server.
   DateTime? get serverUpdatedAt;
+  @override
+
+  /// Internal authoritative ledger entry ID for cross-reference.
+  /// (Standard Reference: CP-003: Immutability - Authority Chain)
+  String? get authoritativeEntryId;
   @override
 
   /// Soft-deletion flag.
