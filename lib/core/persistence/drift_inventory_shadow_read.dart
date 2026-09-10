@@ -165,9 +165,7 @@ class DriftInventoryShadowReadComparator {
     return _record(
       slice: slice,
       operation: operation,
-      outcome: matches
-          ? DriftShadowReadOutcome.match
-          : DriftShadowReadOutcome.mismatch,
+      outcome: matches ? DriftShadowReadOutcome.match : DriftShadowReadOutcome.mismatch,
     );
   }
 
@@ -227,8 +225,8 @@ class DriftInventoryShadowReadComparator {
   }
 }
 
-/// Decorator اختياري. عند [enabled] = false لا يستدعي المرشح إطلاقًا.
-/// [DriftInventoryShadowReadComparator] is used to compare source and candidate data.
+/// Decorator اختياري. عند enabled = false لا يستدعي المرشح إطلاقًا.
+/// DriftInventoryShadowReadComparator is used to compare source and candidate data.
 class ShadowReadWarehouseRepository implements WarehouseRepository {
   ShadowReadWarehouseRepository({
     required WarehouseRepository source,
@@ -272,12 +270,10 @@ class ShadowReadWarehouseRepository implements WarehouseRepository {
   }
 
   @override
-  Future<void> addWarehouse(Warehouse warehouse) =>
-      _source.addWarehouse(warehouse);
+  Future<void> addWarehouse(Warehouse warehouse) => _source.addWarehouse(warehouse);
 
   @override
-  Future<void> updateWarehouse(Warehouse warehouse) =>
-      _source.updateWarehouse(warehouse);
+  Future<void> updateWarehouse(Warehouse warehouse) => _source.updateWarehouse(warehouse);
 
   @override
   Future<void> deleteWarehouse(String id) => _source.deleteWarehouse(id);
@@ -392,20 +388,15 @@ class ShadowReadStockMovementRepository implements StockMovementRepository {
       await _comparator.compareStockMovements(
         operation: 'getMovementsForItem',
         sourceRead: () async => sourceValue,
-        candidateRead: () => _candidate.getMovementsForItem(
-          itemId,
-          warehouseId: warehouseId,
-          asOfDate: asOfDate,
-        ),
+        candidateRead: () =>
+            _candidate.getMovementsForItem(itemId, warehouseId: warehouseId, asOfDate: asOfDate),
       );
     }
     return sourceValue;
   }
 
   @override
-  Future<List<StockMovement>> getMovementsByReference(
-    String referenceId,
-  ) async {
+  Future<List<StockMovement>> getMovementsByReference(String referenceId) async {
     final sourceValue = await _source.getMovementsByReference(referenceId);
     if (_enabled) {
       await _comparator.compareStockMovements(
@@ -418,19 +409,13 @@ class ShadowReadStockMovementRepository implements StockMovementRepository {
   }
 
   @override
-  Future<void> addMovement(StockMovement movement) =>
-      _source.addMovement(movement);
+  Future<void> addMovement(StockMovement movement) => _source.addMovement(movement);
 
   @override
-  Future<void> addMovements(List<StockMovement> movements) =>
-      _source.addMovements(movements);
+  Future<void> addMovements(List<StockMovement> movements) => _source.addMovements(movements);
 
   @override
-  Future<double> getStockLevel(
-    String itemId, {
-    String? warehouseId,
-    DateTime? asOfDate,
-  }) async {
+  Future<double> getStockLevel(String itemId, {String? warehouseId, DateTime? asOfDate}) async {
     final sourceValue = await _source.getStockLevel(
       itemId,
       warehouseId: warehouseId,
@@ -440,11 +425,8 @@ class ShadowReadStockMovementRepository implements StockMovementRepository {
       await _comparator.compareStockLevel(
         operation: 'getStockLevel',
         sourceRead: () async => sourceValue,
-        candidateRead: () => _candidate.getStockLevel(
-          itemId,
-          warehouseId: warehouseId,
-          asOfDate: asOfDate,
-        ),
+        candidateRead: () =>
+            _candidate.getStockLevel(itemId, warehouseId: warehouseId, asOfDate: asOfDate),
       );
     }
     return sourceValue;
@@ -461,10 +443,7 @@ bool _warehouseListsEqual(List<Warehouse> left, List<Warehouse> right) {
   return true;
 }
 
-bool _inventoryItemListsEqual(
-  List<InventoryItem> left,
-  List<InventoryItem> right,
-) {
+bool _inventoryItemListsEqual(List<InventoryItem> left, List<InventoryItem> right) {
   final sortedLeft = [...left]..sort(_compareInventoryItems);
   final sortedRight = [...right]..sort(_compareInventoryItems);
   if (sortedLeft.length != sortedRight.length) return false;
@@ -476,10 +455,7 @@ bool _inventoryItemListsEqual(
   return true;
 }
 
-bool _stockMovementListsEqual(
-  List<StockMovement> left,
-  List<StockMovement> right,
-) {
+bool _stockMovementListsEqual(List<StockMovement> left, List<StockMovement> right) {
   final sortedLeft = [...left]..sort(_compareStockMovements);
   final sortedRight = [...right]..sort(_compareStockMovements);
   if (sortedLeft.length != sortedRight.length) return false;
