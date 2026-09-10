@@ -233,9 +233,11 @@ class _CustomerFormScreenState extends ConsumerState<CustomerFormScreen> {
             itemCount: contacts.length,
             itemBuilder: (context, index) {
               final contact = contacts[index];
+              final firstName = contact.name?.first ?? '';
+              final lastName = contact.name?.last ?? '';
               return ListTile(
                 leading: Icon(appIcons.person),
-                title: Text('${contact.name.first ?? ''} ${contact.name.last ?? ''}'),
+                title: Text('$firstName $lastName'),
                 subtitle: Text(contact.phones.isNotEmpty ? contact.phones.first.number : ''),
                 onTap: () => Navigator.pop(context, contact),
               );
@@ -246,13 +248,11 @@ class _CustomerFormScreenState extends ConsumerState<CustomerFormScreen> {
 
       if (result != null && result is Contact) {
         final selectedContact = result;
+        final firstName = selectedContact.name?.first ?? '';
+        final lastName = selectedContact.name?.last ?? '';
         setState(() {
-          _nameArController.text =
-              '${selectedContact.name.first ?? ''} '
-              '${selectedContact.name.last ?? ''}';
-          _nameEnController.text =
-              '${selectedContact.name.first ?? ''} '
-              '${selectedContact.name.last ?? ''}';
+          _nameArController.text = '$firstName $lastName';
+          _nameEnController.text = '$firstName $lastName';
           if (selectedContact.phones.isNotEmpty) {
             _phoneController.text = selectedContact.phones.first.number;
           }

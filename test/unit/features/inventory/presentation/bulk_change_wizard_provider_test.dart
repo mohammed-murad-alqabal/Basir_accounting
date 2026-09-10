@@ -141,11 +141,6 @@ class _FakeBulkChangeExecutionStorage implements BulkChangeExecutionStorage {
   }
 }
 
-final _fixedNowProvider = Provider<DateTime Function()>(
-  (ref) =>
-      () => DateTime.utc(2026, 8, 15, 12),
-);
-
 Future<ProviderContainer> buildContainer({required InventoryRepository repository}) async {
   final fakeService = _FakeBulkService();
   final container = ProviderContainer(
@@ -153,7 +148,10 @@ Future<ProviderContainer> buildContainer({required InventoryRepository repositor
       inventoryRepositoryProvider.overrideWithValue(repository),
       bulkChangeExecutionStorageProvider.overrideWithValue(_FakeBulkChangeExecutionStorage()),
       bulkPriceChangeServiceProvider.overrideWithValue(fakeService),
-      bulkChangeNowProvider.overrideWith(_fixedNowProvider),
+      bulkChangeNowProvider.overrideWith(
+        (ref) =>
+            () => DateTime.utc(2026, 8, 15, 12),
+      ),
     ],
   );
   addTearDown(container.dispose);
@@ -408,10 +406,6 @@ void main() {
       final repository = _FakeInventoryRepository([]);
 
       // ترحيل الزمن إلى ما بعد نافذة الـ 24 ساعة عبر ProviderScope كامل.
-      final lateNowProvider = Provider<DateTime Function()>(
-        (ref) =>
-            () => DateTime.utc(2026, 8, 16, 12),
-      );
       final container = ProviderContainer(
         overrides: [
           inventoryRepositoryProvider.overrideWithValue(repository),
@@ -419,7 +413,10 @@ void main() {
           bulkPriceChangeServiceProvider.overrideWithValue(
             _FakeBulkService()..executeResult = OperationResult.success(value: buildRecord()),
           ),
-          bulkChangeNowProvider.overrideWith(lateNowProvider),
+          bulkChangeNowProvider.overrideWith(
+            (ref) =>
+                () => DateTime.utc(2026, 8, 16, 12),
+          ),
         ],
       );
       addTearDown(container.dispose);

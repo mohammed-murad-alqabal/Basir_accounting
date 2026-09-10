@@ -41,7 +41,7 @@ class NotificationService {
       macOS: initializationSettingsDarwin,
     );
 
-    await _notificationsPlugin.initialize(initializationSettings);
+    await _notificationsPlugin.initialize(settings: initializationSettings);
     _isInitialized = true;
   }
 
@@ -64,7 +64,12 @@ class NotificationService {
       macOS: DarwinNotificationDetails(),
     );
 
-    await _notificationsPlugin.show(id, title, body, notificationDetails);
+    await _notificationsPlugin.show(
+      id: id,
+      title: title,
+      body: body,
+      notificationDetails: notificationDetails,
+    );
   }
 
   /// Schedules a notification for a future date.
@@ -88,18 +93,18 @@ class NotificationService {
     );
 
     await _notificationsPlugin.zonedSchedule(
-      id,
-      title,
-      body,
-      tz.TZDateTime.from(scheduledDate, tz.local),
-      notificationDetails,
+      id: id,
+      title: title,
+      body: body,
+      scheduledDate: tz.TZDateTime.from(scheduledDate, tz.local),
+      notificationDetails: notificationDetails,
       androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
     );
   }
 
   /// Cancels a specific notification by ID.
   Future<void> cancelNotification(int id) async {
-    await _notificationsPlugin.cancel(id);
+    await _notificationsPlugin.cancel(id: id);
   }
 
   /// Cancels all pending notifications.

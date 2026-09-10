@@ -29,17 +29,14 @@ class ExcelImportService extends _$ExcelImportService {
   Future<void> pickAndParse() async {
     state = const AsyncValue.loading();
     try {
-      final result = await FilePicker.platform.pickFiles(
-        type: FileType.custom,
-        allowedExtensions: ['xlsx'],
-      );
+      final result = await FilePicker.pickFiles(type: FileType.custom, allowedExtensions: ['xlsx']);
 
-      if (result == null || result.files.isEmpty) {
+      if (result.isEmpty) {
         state = const AsyncValue.data([]);
         return;
       }
 
-      final filePath = result.files.first.path;
+      final filePath = result.first.path;
       if (filePath == null) {
         state = const AsyncValue.data([]);
         return;
