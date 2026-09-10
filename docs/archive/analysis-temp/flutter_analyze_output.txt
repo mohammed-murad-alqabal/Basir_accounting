@@ -1,0 +1,10 @@
+Analyzing basir_accounting_system...                            
+
+   info • 'Future'-returning calls in a non-'async' function • lib/features/settings/application/cloud_backup_service.dart:34:13 • discarded_futures
+  error • The method 'authenticatedClient' isn't defined for the type 'GoogleSignIn' • lib/features/settings/application/cloud_backup_service.dart:43:42 • undefined_method
+   info • Missing documentation for a public member • lib/features/settings/application/cloud_backup_service.dart:87:32 • public_member_api_docs
+  error • The method 'authenticatedClient' isn't defined for the type 'GoogleSignIn' • lib/features/settings/application/cloud_backup_service.dart:116:42 • undefined_method
+  error • The method 'authenticatedClient' isn't defined for the type 'GoogleSignIn' • lib/features/settings/application/cloud_backup_service.dart:171:42 • undefined_method
+  error • The method 'authenticatedClient' isn't defined for the type 'GoogleSignIn' • lib/features/settings/application/cloud_backup_service.dart:209:42 • undefined_method
+
+6 issues found. (ran in 6.4s)
