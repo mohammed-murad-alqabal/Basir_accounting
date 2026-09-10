@@ -18,8 +18,9 @@ String _$accountsHash() => r'2bed557249e96cc1c01dd29314ad0b9b97f0dc82';
 final accountsProvider = AutoDisposeFutureProvider<List<Account>>.internal(
   accounts,
   name: r'accountsProvider',
-  debugGetCreateSourceHash:
-      const bool.fromEnvironment('dart.vm.product') ? null : _$accountsHash,
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$accountsHash,
   dependencies: null,
   allTransitiveDependencies: null,
 );
@@ -78,21 +79,15 @@ class AccountsByTypeFamily extends Family<AsyncValue<List<Account>>> {
   /// useful for account selection in forms (e.g., filtering for Assets only).
   ///
   /// Copied from [accountsByType].
-  AccountsByTypeProvider call(
-    AccountType type,
-  ) {
-    return AccountsByTypeProvider(
-      type,
-    );
+  AccountsByTypeProvider call(AccountType type) {
+    return AccountsByTypeProvider(type);
   }
 
   @override
   AccountsByTypeProvider getProviderOverride(
     covariant AccountsByTypeProvider provider,
   ) {
-    return call(
-      provider.type,
-    );
+    return call(provider.type);
   }
 
   static const Iterable<ProviderOrFamily>? _dependencies = null;
@@ -123,24 +118,19 @@ class AccountsByTypeProvider extends AutoDisposeFutureProvider<List<Account>> {
   /// useful for account selection in forms (e.g., filtering for Assets only).
   ///
   /// Copied from [accountsByType].
-  AccountsByTypeProvider(
-    AccountType type,
-  ) : this._internal(
-          (ref) => accountsByType(
-            ref as AccountsByTypeRef,
-            type,
-          ),
-          from: accountsByTypeProvider,
-          name: r'accountsByTypeProvider',
-          debugGetCreateSourceHash:
-              const bool.fromEnvironment('dart.vm.product')
-                  ? null
-                  : _$accountsByTypeHash,
-          dependencies: AccountsByTypeFamily._dependencies,
-          allTransitiveDependencies:
-              AccountsByTypeFamily._allTransitiveDependencies,
-          type: type,
-        );
+  AccountsByTypeProvider(AccountType type)
+    : this._internal(
+        (ref) => accountsByType(ref as AccountsByTypeRef, type),
+        from: accountsByTypeProvider,
+        name: r'accountsByTypeProvider',
+        debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+            ? null
+            : _$accountsByTypeHash,
+        dependencies: AccountsByTypeFamily._dependencies,
+        allTransitiveDependencies:
+            AccountsByTypeFamily._allTransitiveDependencies,
+        type: type,
+      );
 
   AccountsByTypeProvider._internal(
     super._createNotifier, {

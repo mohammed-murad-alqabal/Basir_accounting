@@ -34,7 +34,7 @@ run_test_suite() {
     local suite_name=$1
     local suite_script=$2
     
-    ((TOTAL_SUITES++))
+    TOTAL_SUITES=$((TOTAL_SUITES + 1))
     
     print_colored "$CYAN" "\n═══════════════════════════════════════════════════════════"
     print_colored "$CYAN" "  تشغيل: $suite_name"
@@ -43,11 +43,11 @@ run_test_suite() {
     
     if bash "$suite_script"; then
         print_success "\n✓ $suite_name: نجح"
-        ((PASSED_SUITES++))
+        PASSED_SUITES=$((PASSED_SUITES + 1))
         return 0
     else
         print_error "\n✗ $suite_name: فشل"
-        ((FAILED_SUITES++))
+        FAILED_SUITES=$((FAILED_SUITES + 1))
         return 1
     fi
 }

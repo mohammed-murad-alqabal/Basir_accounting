@@ -114,10 +114,7 @@ class FinancialSimulationService extends _$FinancialSimulationService {
           zatcaHash: _generateMockHash(uuid.v4()),
         );
 
-        await accountingService.postSalesInvoice(
-          invoice,
-          bypassCognitive: true,
-        );
+        await accountingService.postSalesInvoice(invoice);
       }
 
       // 30% probability of a direct expense
@@ -184,7 +181,7 @@ class FinancialSimulationService extends _$FinancialSimulationService {
       ],
     );
 
-    await accountingService.postJournalEntry(entry, bypassCognitive: true);
+    await accountingService.postJournalEntry(entry);
   }
 
   String _generateMockHash(String input) =>

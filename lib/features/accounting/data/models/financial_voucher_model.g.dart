@@ -23,21 +23,13 @@ const FinancialVoucherModelSchema = CollectionSchema(
       name: r'accountId',
       type: IsarType.string,
     ),
-    r'amount': PropertySchema(
-      id: 1,
-      name: r'amount',
-      type: IsarType.string,
-    ),
+    r'amount': PropertySchema(id: 1, name: r'amount', type: IsarType.string),
     r'createdAt': PropertySchema(
       id: 2,
       name: r'createdAt',
       type: IsarType.dateTime,
     ),
-    r'date': PropertySchema(
-      id: 3,
-      name: r'date',
-      type: IsarType.dateTime,
-    ),
+    r'date': PropertySchema(id: 3, name: r'date', type: IsarType.dateTime),
     r'description': PropertySchema(
       id: 4,
       name: r'description',
@@ -48,21 +40,13 @@ const FinancialVoucherModelSchema = CollectionSchema(
       name: r'exchangeRate',
       type: IsarType.string,
     ),
-    r'id': PropertySchema(
-      id: 6,
-      name: r'id',
-      type: IsarType.string,
-    ),
+    r'id': PropertySchema(id: 6, name: r'id', type: IsarType.string),
     r'isDeleted': PropertySchema(
       id: 7,
       name: r'isDeleted',
       type: IsarType.bool,
     ),
-    r'isPosted': PropertySchema(
-      id: 8,
-      name: r'isPosted',
-      type: IsarType.bool,
-    ),
+    r'isPosted': PropertySchema(id: 8, name: r'isPosted', type: IsarType.bool),
     r'journalEntryId': PropertySchema(
       id: 9,
       name: r'journalEntryId',
@@ -116,11 +100,7 @@ const FinancialVoucherModelSchema = CollectionSchema(
       type: IsarType.byte,
       enumMap: _FinancialVoucherModeltypeEnumValueMap,
     ),
-    r'userId': PropertySchema(
-      id: 19,
-      name: r'userId',
-      type: IsarType.string,
-    )
+    r'userId': PropertySchema(id: 19, name: r'userId', type: IsarType.string),
   },
   estimateSize: _financialVoucherModelEstimateSize,
   serialize: _financialVoucherModelSerialize,
@@ -138,7 +118,7 @@ const FinancialVoucherModelSchema = CollectionSchema(
           name: r'id',
           type: IndexType.hash,
           caseSensitive: true,
-        )
+        ),
       ],
     ),
     r'referenceNumber': IndexSchema(
@@ -151,7 +131,7 @@ const FinancialVoucherModelSchema = CollectionSchema(
           name: r'referenceNumber',
           type: IndexType.hash,
           caseSensitive: true,
-        )
+        ),
       ],
     ),
     r'date': IndexSchema(
@@ -164,7 +144,7 @@ const FinancialVoucherModelSchema = CollectionSchema(
           name: r'date',
           type: IndexType.value,
           caseSensitive: false,
-        )
+        ),
       ],
     ),
     r'userId': IndexSchema(
@@ -177,9 +157,9 @@ const FinancialVoucherModelSchema = CollectionSchema(
           name: r'userId',
           type: IndexType.hash,
           caseSensitive: true,
-        )
+        ),
       ],
-    )
+    ),
   },
   links: {},
   embeddedSchemas: {},
@@ -288,18 +268,24 @@ FinancialVoucherModel _financialVoucherModelDeserialize(
   object.journalEntryId = reader.readStringOrNull(offsets[9]);
   object.originalAmount = reader.readStringOrNull(offsets[10]);
   object.originalCurrency = reader.readStringOrNull(offsets[11]);
-  object.paymentMethod = _FinancialVoucherModelpaymentMethodValueEnumMap[
-          reader.readByteOrNull(offsets[12])] ??
+  object.paymentMethod =
+      _FinancialVoucherModelpaymentMethodValueEnumMap[reader.readByteOrNull(
+        offsets[12],
+      )] ??
       PaymentMethod.cash;
   object.personName = reader.readStringOrNull(offsets[13]);
   object.referenceNumber = reader.readString(offsets[14]);
   object.serverUpdatedAt = reader.readDateTimeOrNull(offsets[15]);
-  object.syncStatus = _FinancialVoucherModelsyncStatusValueEnumMap[
-          reader.readByteOrNull(offsets[16])] ??
+  object.syncStatus =
+      _FinancialVoucherModelsyncStatusValueEnumMap[reader.readByteOrNull(
+        offsets[16],
+      )] ??
       SyncStatus.synced;
   object.treasuryAccountId = reader.readString(offsets[17]);
-  object.type = _FinancialVoucherModeltypeValueEnumMap[
-          reader.readByteOrNull(offsets[18])] ??
+  object.type =
+      _FinancialVoucherModeltypeValueEnumMap[reader.readByteOrNull(
+        offsets[18],
+      )] ??
       VoucherType.receipt;
   object.userId = reader.readStringOrNull(offsets[19]);
   return object;
@@ -337,9 +323,10 @@ P _financialVoucherModelDeserializeProp<P>(
     case 11:
       return (reader.readStringOrNull(offset)) as P;
     case 12:
-      return (_FinancialVoucherModelpaymentMethodValueEnumMap[
-              reader.readByteOrNull(offset)] ??
-          PaymentMethod.cash) as P;
+      return (_FinancialVoucherModelpaymentMethodValueEnumMap[reader
+                  .readByteOrNull(offset)] ??
+              PaymentMethod.cash)
+          as P;
     case 13:
       return (reader.readStringOrNull(offset)) as P;
     case 14:
@@ -347,15 +334,18 @@ P _financialVoucherModelDeserializeProp<P>(
     case 15:
       return (reader.readDateTimeOrNull(offset)) as P;
     case 16:
-      return (_FinancialVoucherModelsyncStatusValueEnumMap[
-              reader.readByteOrNull(offset)] ??
-          SyncStatus.synced) as P;
+      return (_FinancialVoucherModelsyncStatusValueEnumMap[reader
+                  .readByteOrNull(offset)] ??
+              SyncStatus.synced)
+          as P;
     case 17:
       return (reader.readString(offset)) as P;
     case 18:
-      return (_FinancialVoucherModeltypeValueEnumMap[
-              reader.readByteOrNull(offset)] ??
-          VoucherType.receipt) as P;
+      return (_FinancialVoucherModeltypeValueEnumMap[reader.readByteOrNull(
+                offset,
+              )] ??
+              VoucherType.receipt)
+          as P;
     case 19:
       return (reader.readStringOrNull(offset)) as P;
     default:
@@ -385,10 +375,7 @@ const _FinancialVoucherModelsyncStatusValueEnumMap = {
   2: SyncStatus.pendingPull,
   3: SyncStatus.conflict,
 };
-const _FinancialVoucherModeltypeEnumValueMap = {
-  'receipt': 0,
-  'payment': 1,
-};
+const _FinancialVoucherModeltypeEnumValueMap = {'receipt': 0, 'payment': 1};
 const _FinancialVoucherModeltypeValueEnumMap = {
   0: VoucherType.receipt,
   1: VoucherType.payment,
@@ -399,12 +386,16 @@ Id _financialVoucherModelGetId(FinancialVoucherModel object) {
 }
 
 List<IsarLinkBase<dynamic>> _financialVoucherModelGetLinks(
-    FinancialVoucherModel object) {
+  FinancialVoucherModel object,
+) {
   return [];
 }
 
 void _financialVoucherModelAttach(
-    IsarCollection<dynamic> col, Id id, FinancialVoucherModel object) {
+  IsarCollection<dynamic> col,
+  Id id,
+  FinancialVoucherModel object,
+) {
   object.isarId = id;
 }
 
@@ -458,8 +449,10 @@ extension FinancialVoucherModelByIndex
     return putAllByIndex(r'id', objects);
   }
 
-  List<Id> putAllByIdSync(List<FinancialVoucherModel> objects,
-      {bool saveLinks = true}) {
+  List<Id> putAllByIdSync(
+    List<FinancialVoucherModel> objects, {
+    bool saveLinks = true,
+  }) {
     return putAllByIndexSync(r'id', objects, saveLinks: saveLinks);
   }
 }
@@ -467,14 +460,14 @@ extension FinancialVoucherModelByIndex
 extension FinancialVoucherModelQueryWhereSort
     on QueryBuilder<FinancialVoucherModel, FinancialVoucherModel, QWhere> {
   QueryBuilder<FinancialVoucherModel, FinancialVoucherModel, QAfterWhere>
-      anyIsarId() {
+  anyIsarId() {
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(const IdWhereClause.any());
     });
   }
 
   QueryBuilder<FinancialVoucherModel, FinancialVoucherModel, QAfterWhere>
-      anyDate() {
+  anyDate() {
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(
         const IndexWhereClause.any(indexName: r'date'),
@@ -483,20 +476,24 @@ extension FinancialVoucherModelQueryWhereSort
   }
 }
 
-extension FinancialVoucherModelQueryWhere on QueryBuilder<FinancialVoucherModel,
-    FinancialVoucherModel, QWhereClause> {
+extension FinancialVoucherModelQueryWhere
+    on
+        QueryBuilder<
+          FinancialVoucherModel,
+          FinancialVoucherModel,
+          QWhereClause
+        > {
   QueryBuilder<FinancialVoucherModel, FinancialVoucherModel, QAfterWhereClause>
-      isarIdEqualTo(Id isarId) {
+  isarIdEqualTo(Id isarId) {
     return QueryBuilder.apply(this, (query) {
-      return query.addWhereClause(IdWhereClause.between(
-        lower: isarId,
-        upper: isarId,
-      ));
+      return query.addWhereClause(
+        IdWhereClause.between(lower: isarId, upper: isarId),
+      );
     });
   }
 
   QueryBuilder<FinancialVoucherModel, FinancialVoucherModel, QAfterWhereClause>
-      isarIdNotEqualTo(Id isarId) {
+  isarIdNotEqualTo(Id isarId) {
     return QueryBuilder.apply(this, (query) {
       if (query.whereSort == Sort.asc) {
         return query
@@ -519,7 +516,7 @@ extension FinancialVoucherModelQueryWhere on QueryBuilder<FinancialVoucherModel,
   }
 
   QueryBuilder<FinancialVoucherModel, FinancialVoucherModel, QAfterWhereClause>
-      isarIdGreaterThan(Id isarId, {bool include = false}) {
+  isarIdGreaterThan(Id isarId, {bool include = false}) {
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(
         IdWhereClause.greaterThan(lower: isarId, includeLower: include),
@@ -528,7 +525,7 @@ extension FinancialVoucherModelQueryWhere on QueryBuilder<FinancialVoucherModel,
   }
 
   QueryBuilder<FinancialVoucherModel, FinancialVoucherModel, QAfterWhereClause>
-      isarIdLessThan(Id isarId, {bool include = false}) {
+  isarIdLessThan(Id isarId, {bool include = false}) {
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(
         IdWhereClause.lessThan(upper: isarId, includeUpper: include),
@@ -537,323 +534,381 @@ extension FinancialVoucherModelQueryWhere on QueryBuilder<FinancialVoucherModel,
   }
 
   QueryBuilder<FinancialVoucherModel, FinancialVoucherModel, QAfterWhereClause>
-      isarIdBetween(
+  isarIdBetween(
     Id lowerIsarId,
     Id upperIsarId, {
     bool includeLower = true,
     bool includeUpper = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addWhereClause(IdWhereClause.between(
-        lower: lowerIsarId,
-        includeLower: includeLower,
-        upper: upperIsarId,
-        includeUpper: includeUpper,
-      ));
+      return query.addWhereClause(
+        IdWhereClause.between(
+          lower: lowerIsarId,
+          includeLower: includeLower,
+          upper: upperIsarId,
+          includeUpper: includeUpper,
+        ),
+      );
     });
   }
 
   QueryBuilder<FinancialVoucherModel, FinancialVoucherModel, QAfterWhereClause>
-      idEqualTo(String id) {
+  idEqualTo(String id) {
     return QueryBuilder.apply(this, (query) {
-      return query.addWhereClause(IndexWhereClause.equalTo(
-        indexName: r'id',
-        value: [id],
-      ));
+      return query.addWhereClause(
+        IndexWhereClause.equalTo(indexName: r'id', value: [id]),
+      );
     });
   }
 
   QueryBuilder<FinancialVoucherModel, FinancialVoucherModel, QAfterWhereClause>
-      idNotEqualTo(String id) {
+  idNotEqualTo(String id) {
     return QueryBuilder.apply(this, (query) {
       if (query.whereSort == Sort.asc) {
         return query
-            .addWhereClause(IndexWhereClause.between(
-              indexName: r'id',
-              lower: [],
-              upper: [id],
-              includeUpper: false,
-            ))
-            .addWhereClause(IndexWhereClause.between(
-              indexName: r'id',
-              lower: [id],
-              includeLower: false,
-              upper: [],
-            ));
+            .addWhereClause(
+              IndexWhereClause.between(
+                indexName: r'id',
+                lower: [],
+                upper: [id],
+                includeUpper: false,
+              ),
+            )
+            .addWhereClause(
+              IndexWhereClause.between(
+                indexName: r'id',
+                lower: [id],
+                includeLower: false,
+                upper: [],
+              ),
+            );
       } else {
         return query
-            .addWhereClause(IndexWhereClause.between(
-              indexName: r'id',
-              lower: [id],
-              includeLower: false,
-              upper: [],
-            ))
-            .addWhereClause(IndexWhereClause.between(
-              indexName: r'id',
-              lower: [],
-              upper: [id],
-              includeUpper: false,
-            ));
+            .addWhereClause(
+              IndexWhereClause.between(
+                indexName: r'id',
+                lower: [id],
+                includeLower: false,
+                upper: [],
+              ),
+            )
+            .addWhereClause(
+              IndexWhereClause.between(
+                indexName: r'id',
+                lower: [],
+                upper: [id],
+                includeUpper: false,
+              ),
+            );
       }
     });
   }
 
   QueryBuilder<FinancialVoucherModel, FinancialVoucherModel, QAfterWhereClause>
-      referenceNumberEqualTo(String referenceNumber) {
+  referenceNumberEqualTo(String referenceNumber) {
     return QueryBuilder.apply(this, (query) {
-      return query.addWhereClause(IndexWhereClause.equalTo(
-        indexName: r'referenceNumber',
-        value: [referenceNumber],
-      ));
+      return query.addWhereClause(
+        IndexWhereClause.equalTo(
+          indexName: r'referenceNumber',
+          value: [referenceNumber],
+        ),
+      );
     });
   }
 
   QueryBuilder<FinancialVoucherModel, FinancialVoucherModel, QAfterWhereClause>
-      referenceNumberNotEqualTo(String referenceNumber) {
+  referenceNumberNotEqualTo(String referenceNumber) {
     return QueryBuilder.apply(this, (query) {
       if (query.whereSort == Sort.asc) {
         return query
-            .addWhereClause(IndexWhereClause.between(
-              indexName: r'referenceNumber',
-              lower: [],
-              upper: [referenceNumber],
-              includeUpper: false,
-            ))
-            .addWhereClause(IndexWhereClause.between(
-              indexName: r'referenceNumber',
-              lower: [referenceNumber],
-              includeLower: false,
-              upper: [],
-            ));
+            .addWhereClause(
+              IndexWhereClause.between(
+                indexName: r'referenceNumber',
+                lower: [],
+                upper: [referenceNumber],
+                includeUpper: false,
+              ),
+            )
+            .addWhereClause(
+              IndexWhereClause.between(
+                indexName: r'referenceNumber',
+                lower: [referenceNumber],
+                includeLower: false,
+                upper: [],
+              ),
+            );
       } else {
         return query
-            .addWhereClause(IndexWhereClause.between(
-              indexName: r'referenceNumber',
-              lower: [referenceNumber],
-              includeLower: false,
-              upper: [],
-            ))
-            .addWhereClause(IndexWhereClause.between(
-              indexName: r'referenceNumber',
-              lower: [],
-              upper: [referenceNumber],
-              includeUpper: false,
-            ));
+            .addWhereClause(
+              IndexWhereClause.between(
+                indexName: r'referenceNumber',
+                lower: [referenceNumber],
+                includeLower: false,
+                upper: [],
+              ),
+            )
+            .addWhereClause(
+              IndexWhereClause.between(
+                indexName: r'referenceNumber',
+                lower: [],
+                upper: [referenceNumber],
+                includeUpper: false,
+              ),
+            );
       }
     });
   }
 
   QueryBuilder<FinancialVoucherModel, FinancialVoucherModel, QAfterWhereClause>
-      dateEqualTo(DateTime date) {
+  dateEqualTo(DateTime date) {
     return QueryBuilder.apply(this, (query) {
-      return query.addWhereClause(IndexWhereClause.equalTo(
-        indexName: r'date',
-        value: [date],
-      ));
+      return query.addWhereClause(
+        IndexWhereClause.equalTo(indexName: r'date', value: [date]),
+      );
     });
   }
 
   QueryBuilder<FinancialVoucherModel, FinancialVoucherModel, QAfterWhereClause>
-      dateNotEqualTo(DateTime date) {
+  dateNotEqualTo(DateTime date) {
     return QueryBuilder.apply(this, (query) {
       if (query.whereSort == Sort.asc) {
         return query
-            .addWhereClause(IndexWhereClause.between(
-              indexName: r'date',
-              lower: [],
-              upper: [date],
-              includeUpper: false,
-            ))
-            .addWhereClause(IndexWhereClause.between(
-              indexName: r'date',
-              lower: [date],
-              includeLower: false,
-              upper: [],
-            ));
+            .addWhereClause(
+              IndexWhereClause.between(
+                indexName: r'date',
+                lower: [],
+                upper: [date],
+                includeUpper: false,
+              ),
+            )
+            .addWhereClause(
+              IndexWhereClause.between(
+                indexName: r'date',
+                lower: [date],
+                includeLower: false,
+                upper: [],
+              ),
+            );
       } else {
         return query
-            .addWhereClause(IndexWhereClause.between(
-              indexName: r'date',
-              lower: [date],
-              includeLower: false,
-              upper: [],
-            ))
-            .addWhereClause(IndexWhereClause.between(
-              indexName: r'date',
-              lower: [],
-              upper: [date],
-              includeUpper: false,
-            ));
+            .addWhereClause(
+              IndexWhereClause.between(
+                indexName: r'date',
+                lower: [date],
+                includeLower: false,
+                upper: [],
+              ),
+            )
+            .addWhereClause(
+              IndexWhereClause.between(
+                indexName: r'date',
+                lower: [],
+                upper: [date],
+                includeUpper: false,
+              ),
+            );
       }
     });
   }
 
   QueryBuilder<FinancialVoucherModel, FinancialVoucherModel, QAfterWhereClause>
-      dateGreaterThan(
-    DateTime date, {
-    bool include = false,
-  }) {
+  dateGreaterThan(DateTime date, {bool include = false}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addWhereClause(IndexWhereClause.between(
-        indexName: r'date',
-        lower: [date],
-        includeLower: include,
-        upper: [],
-      ));
+      return query.addWhereClause(
+        IndexWhereClause.between(
+          indexName: r'date',
+          lower: [date],
+          includeLower: include,
+          upper: [],
+        ),
+      );
     });
   }
 
   QueryBuilder<FinancialVoucherModel, FinancialVoucherModel, QAfterWhereClause>
-      dateLessThan(
-    DateTime date, {
-    bool include = false,
-  }) {
+  dateLessThan(DateTime date, {bool include = false}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addWhereClause(IndexWhereClause.between(
-        indexName: r'date',
-        lower: [],
-        upper: [date],
-        includeUpper: include,
-      ));
+      return query.addWhereClause(
+        IndexWhereClause.between(
+          indexName: r'date',
+          lower: [],
+          upper: [date],
+          includeUpper: include,
+        ),
+      );
     });
   }
 
   QueryBuilder<FinancialVoucherModel, FinancialVoucherModel, QAfterWhereClause>
-      dateBetween(
+  dateBetween(
     DateTime lowerDate,
     DateTime upperDate, {
     bool includeLower = true,
     bool includeUpper = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addWhereClause(IndexWhereClause.between(
-        indexName: r'date',
-        lower: [lowerDate],
-        includeLower: includeLower,
-        upper: [upperDate],
-        includeUpper: includeUpper,
-      ));
+      return query.addWhereClause(
+        IndexWhereClause.between(
+          indexName: r'date',
+          lower: [lowerDate],
+          includeLower: includeLower,
+          upper: [upperDate],
+          includeUpper: includeUpper,
+        ),
+      );
     });
   }
 
   QueryBuilder<FinancialVoucherModel, FinancialVoucherModel, QAfterWhereClause>
-      userIdIsNull() {
+  userIdIsNull() {
     return QueryBuilder.apply(this, (query) {
-      return query.addWhereClause(IndexWhereClause.equalTo(
-        indexName: r'userId',
-        value: [null],
-      ));
+      return query.addWhereClause(
+        IndexWhereClause.equalTo(indexName: r'userId', value: [null]),
+      );
     });
   }
 
   QueryBuilder<FinancialVoucherModel, FinancialVoucherModel, QAfterWhereClause>
-      userIdIsNotNull() {
+  userIdIsNotNull() {
     return QueryBuilder.apply(this, (query) {
-      return query.addWhereClause(IndexWhereClause.between(
-        indexName: r'userId',
-        lower: [null],
-        includeLower: false,
-        upper: [],
-      ));
+      return query.addWhereClause(
+        IndexWhereClause.between(
+          indexName: r'userId',
+          lower: [null],
+          includeLower: false,
+          upper: [],
+        ),
+      );
     });
   }
 
   QueryBuilder<FinancialVoucherModel, FinancialVoucherModel, QAfterWhereClause>
-      userIdEqualTo(String? userId) {
+  userIdEqualTo(String? userId) {
     return QueryBuilder.apply(this, (query) {
-      return query.addWhereClause(IndexWhereClause.equalTo(
-        indexName: r'userId',
-        value: [userId],
-      ));
+      return query.addWhereClause(
+        IndexWhereClause.equalTo(indexName: r'userId', value: [userId]),
+      );
     });
   }
 
   QueryBuilder<FinancialVoucherModel, FinancialVoucherModel, QAfterWhereClause>
-      userIdNotEqualTo(String? userId) {
+  userIdNotEqualTo(String? userId) {
     return QueryBuilder.apply(this, (query) {
       if (query.whereSort == Sort.asc) {
         return query
-            .addWhereClause(IndexWhereClause.between(
-              indexName: r'userId',
-              lower: [],
-              upper: [userId],
-              includeUpper: false,
-            ))
-            .addWhereClause(IndexWhereClause.between(
-              indexName: r'userId',
-              lower: [userId],
-              includeLower: false,
-              upper: [],
-            ));
+            .addWhereClause(
+              IndexWhereClause.between(
+                indexName: r'userId',
+                lower: [],
+                upper: [userId],
+                includeUpper: false,
+              ),
+            )
+            .addWhereClause(
+              IndexWhereClause.between(
+                indexName: r'userId',
+                lower: [userId],
+                includeLower: false,
+                upper: [],
+              ),
+            );
       } else {
         return query
-            .addWhereClause(IndexWhereClause.between(
-              indexName: r'userId',
-              lower: [userId],
-              includeLower: false,
-              upper: [],
-            ))
-            .addWhereClause(IndexWhereClause.between(
-              indexName: r'userId',
-              lower: [],
-              upper: [userId],
-              includeUpper: false,
-            ));
+            .addWhereClause(
+              IndexWhereClause.between(
+                indexName: r'userId',
+                lower: [userId],
+                includeLower: false,
+                upper: [],
+              ),
+            )
+            .addWhereClause(
+              IndexWhereClause.between(
+                indexName: r'userId',
+                lower: [],
+                upper: [userId],
+                includeUpper: false,
+              ),
+            );
       }
     });
   }
 }
 
-extension FinancialVoucherModelQueryFilter on QueryBuilder<
-    FinancialVoucherModel, FinancialVoucherModel, QFilterCondition> {
-  QueryBuilder<FinancialVoucherModel, FinancialVoucherModel,
-      QAfterFilterCondition> accountIdEqualTo(
-    String value, {
-    bool caseSensitive = true,
-  }) {
+extension FinancialVoucherModelQueryFilter
+    on
+        QueryBuilder<
+          FinancialVoucherModel,
+          FinancialVoucherModel,
+          QFilterCondition
+        > {
+  QueryBuilder<
+    FinancialVoucherModel,
+    FinancialVoucherModel,
+    QAfterFilterCondition
+  >
+  accountIdEqualTo(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'accountId',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.equalTo(
+          property: r'accountId',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
-  QueryBuilder<FinancialVoucherModel, FinancialVoucherModel,
-      QAfterFilterCondition> accountIdGreaterThan(
-    String value, {
-    bool include = false,
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        include: include,
-        property: r'accountId',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<FinancialVoucherModel, FinancialVoucherModel,
-      QAfterFilterCondition> accountIdLessThan(
+  QueryBuilder<
+    FinancialVoucherModel,
+    FinancialVoucherModel,
+    QAfterFilterCondition
+  >
+  accountIdGreaterThan(
     String value, {
     bool include = false,
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.lessThan(
-        include: include,
-        property: r'accountId',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.greaterThan(
+          include: include,
+          property: r'accountId',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
-  QueryBuilder<FinancialVoucherModel, FinancialVoucherModel,
-      QAfterFilterCondition> accountIdBetween(
+  QueryBuilder<
+    FinancialVoucherModel,
+    FinancialVoucherModel,
+    QAfterFilterCondition
+  >
+  accountIdLessThan(
+    String value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        FilterCondition.lessThan(
+          include: include,
+          property: r'accountId',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<
+    FinancialVoucherModel,
+    FinancialVoucherModel,
+    QAfterFilterCondition
+  >
+  accountIdBetween(
     String lower,
     String upper, {
     bool includeLower = true,
@@ -861,137 +916,180 @@ extension FinancialVoucherModelQueryFilter on QueryBuilder<
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.between(
-        property: r'accountId',
-        lower: lower,
-        includeLower: includeLower,
-        upper: upper,
-        includeUpper: includeUpper,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.between(
+          property: r'accountId',
+          lower: lower,
+          includeLower: includeLower,
+          upper: upper,
+          includeUpper: includeUpper,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
-  QueryBuilder<FinancialVoucherModel, FinancialVoucherModel,
-      QAfterFilterCondition> accountIdStartsWith(
-    String value, {
-    bool caseSensitive = true,
-  }) {
+  QueryBuilder<
+    FinancialVoucherModel,
+    FinancialVoucherModel,
+    QAfterFilterCondition
+  >
+  accountIdStartsWith(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.startsWith(
-        property: r'accountId',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.startsWith(
+          property: r'accountId',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
-  QueryBuilder<FinancialVoucherModel, FinancialVoucherModel,
-      QAfterFilterCondition> accountIdEndsWith(
-    String value, {
-    bool caseSensitive = true,
-  }) {
+  QueryBuilder<
+    FinancialVoucherModel,
+    FinancialVoucherModel,
+    QAfterFilterCondition
+  >
+  accountIdEndsWith(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.endsWith(
-        property: r'accountId',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.endsWith(
+          property: r'accountId',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
-  QueryBuilder<FinancialVoucherModel, FinancialVoucherModel,
-          QAfterFilterCondition>
-      accountIdContains(String value, {bool caseSensitive = true}) {
+  QueryBuilder<
+    FinancialVoucherModel,
+    FinancialVoucherModel,
+    QAfterFilterCondition
+  >
+  accountIdContains(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.contains(
-        property: r'accountId',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.contains(
+          property: r'accountId',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
-  QueryBuilder<FinancialVoucherModel, FinancialVoucherModel,
-          QAfterFilterCondition>
-      accountIdMatches(String pattern, {bool caseSensitive = true}) {
+  QueryBuilder<
+    FinancialVoucherModel,
+    FinancialVoucherModel,
+    QAfterFilterCondition
+  >
+  accountIdMatches(String pattern, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.matches(
-        property: r'accountId',
-        wildcard: pattern,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.matches(
+          property: r'accountId',
+          wildcard: pattern,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
-  QueryBuilder<FinancialVoucherModel, FinancialVoucherModel,
-      QAfterFilterCondition> accountIdIsEmpty() {
+  QueryBuilder<
+    FinancialVoucherModel,
+    FinancialVoucherModel,
+    QAfterFilterCondition
+  >
+  accountIdIsEmpty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'accountId',
-        value: '',
-      ));
+      return query.addFilterCondition(
+        FilterCondition.equalTo(property: r'accountId', value: ''),
+      );
     });
   }
 
-  QueryBuilder<FinancialVoucherModel, FinancialVoucherModel,
-      QAfterFilterCondition> accountIdIsNotEmpty() {
+  QueryBuilder<
+    FinancialVoucherModel,
+    FinancialVoucherModel,
+    QAfterFilterCondition
+  >
+  accountIdIsNotEmpty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        property: r'accountId',
-        value: '',
-      ));
+      return query.addFilterCondition(
+        FilterCondition.greaterThan(property: r'accountId', value: ''),
+      );
     });
   }
 
-  QueryBuilder<FinancialVoucherModel, FinancialVoucherModel,
-      QAfterFilterCondition> amountEqualTo(
-    String value, {
-    bool caseSensitive = true,
-  }) {
+  QueryBuilder<
+    FinancialVoucherModel,
+    FinancialVoucherModel,
+    QAfterFilterCondition
+  >
+  amountEqualTo(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'amount',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.equalTo(
+          property: r'amount',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
-  QueryBuilder<FinancialVoucherModel, FinancialVoucherModel,
-      QAfterFilterCondition> amountGreaterThan(
+  QueryBuilder<
+    FinancialVoucherModel,
+    FinancialVoucherModel,
+    QAfterFilterCondition
+  >
+  amountGreaterThan(
     String value, {
     bool include = false,
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        include: include,
-        property: r'amount',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.greaterThan(
+          include: include,
+          property: r'amount',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
-  QueryBuilder<FinancialVoucherModel, FinancialVoucherModel,
-      QAfterFilterCondition> amountLessThan(
+  QueryBuilder<
+    FinancialVoucherModel,
+    FinancialVoucherModel,
+    QAfterFilterCondition
+  >
+  amountLessThan(
     String value, {
     bool include = false,
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.lessThan(
-        include: include,
-        property: r'amount',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.lessThan(
+          include: include,
+          property: r'amount',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
-  QueryBuilder<FinancialVoucherModel, FinancialVoucherModel,
-      QAfterFilterCondition> amountBetween(
+  QueryBuilder<
+    FinancialVoucherModel,
+    FinancialVoucherModel,
+    QAfterFilterCondition
+  >
+  amountBetween(
     String lower,
     String upper, {
     bool includeLower = true,
@@ -999,249 +1097,322 @@ extension FinancialVoucherModelQueryFilter on QueryBuilder<
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.between(
-        property: r'amount',
-        lower: lower,
-        includeLower: includeLower,
-        upper: upper,
-        includeUpper: includeUpper,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.between(
+          property: r'amount',
+          lower: lower,
+          includeLower: includeLower,
+          upper: upper,
+          includeUpper: includeUpper,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
-  QueryBuilder<FinancialVoucherModel, FinancialVoucherModel,
-      QAfterFilterCondition> amountStartsWith(
-    String value, {
-    bool caseSensitive = true,
-  }) {
+  QueryBuilder<
+    FinancialVoucherModel,
+    FinancialVoucherModel,
+    QAfterFilterCondition
+  >
+  amountStartsWith(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.startsWith(
-        property: r'amount',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.startsWith(
+          property: r'amount',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
-  QueryBuilder<FinancialVoucherModel, FinancialVoucherModel,
-      QAfterFilterCondition> amountEndsWith(
-    String value, {
-    bool caseSensitive = true,
-  }) {
+  QueryBuilder<
+    FinancialVoucherModel,
+    FinancialVoucherModel,
+    QAfterFilterCondition
+  >
+  amountEndsWith(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.endsWith(
-        property: r'amount',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.endsWith(
+          property: r'amount',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
-  QueryBuilder<FinancialVoucherModel, FinancialVoucherModel,
-          QAfterFilterCondition>
-      amountContains(String value, {bool caseSensitive = true}) {
+  QueryBuilder<
+    FinancialVoucherModel,
+    FinancialVoucherModel,
+    QAfterFilterCondition
+  >
+  amountContains(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.contains(
-        property: r'amount',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.contains(
+          property: r'amount',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
-  QueryBuilder<FinancialVoucherModel, FinancialVoucherModel,
-          QAfterFilterCondition>
-      amountMatches(String pattern, {bool caseSensitive = true}) {
+  QueryBuilder<
+    FinancialVoucherModel,
+    FinancialVoucherModel,
+    QAfterFilterCondition
+  >
+  amountMatches(String pattern, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.matches(
-        property: r'amount',
-        wildcard: pattern,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.matches(
+          property: r'amount',
+          wildcard: pattern,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
-  QueryBuilder<FinancialVoucherModel, FinancialVoucherModel,
-      QAfterFilterCondition> amountIsEmpty() {
+  QueryBuilder<
+    FinancialVoucherModel,
+    FinancialVoucherModel,
+    QAfterFilterCondition
+  >
+  amountIsEmpty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'amount',
-        value: '',
-      ));
+      return query.addFilterCondition(
+        FilterCondition.equalTo(property: r'amount', value: ''),
+      );
     });
   }
 
-  QueryBuilder<FinancialVoucherModel, FinancialVoucherModel,
-      QAfterFilterCondition> amountIsNotEmpty() {
+  QueryBuilder<
+    FinancialVoucherModel,
+    FinancialVoucherModel,
+    QAfterFilterCondition
+  >
+  amountIsNotEmpty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        property: r'amount',
-        value: '',
-      ));
+      return query.addFilterCondition(
+        FilterCondition.greaterThan(property: r'amount', value: ''),
+      );
     });
   }
 
-  QueryBuilder<FinancialVoucherModel, FinancialVoucherModel,
-      QAfterFilterCondition> createdAtEqualTo(DateTime value) {
+  QueryBuilder<
+    FinancialVoucherModel,
+    FinancialVoucherModel,
+    QAfterFilterCondition
+  >
+  createdAtEqualTo(DateTime value) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'createdAt',
-        value: value,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.equalTo(property: r'createdAt', value: value),
+      );
     });
   }
 
-  QueryBuilder<FinancialVoucherModel, FinancialVoucherModel,
-      QAfterFilterCondition> createdAtGreaterThan(
-    DateTime value, {
-    bool include = false,
-  }) {
+  QueryBuilder<
+    FinancialVoucherModel,
+    FinancialVoucherModel,
+    QAfterFilterCondition
+  >
+  createdAtGreaterThan(DateTime value, {bool include = false}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        include: include,
-        property: r'createdAt',
-        value: value,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.greaterThan(
+          include: include,
+          property: r'createdAt',
+          value: value,
+        ),
+      );
     });
   }
 
-  QueryBuilder<FinancialVoucherModel, FinancialVoucherModel,
-      QAfterFilterCondition> createdAtLessThan(
-    DateTime value, {
-    bool include = false,
-  }) {
+  QueryBuilder<
+    FinancialVoucherModel,
+    FinancialVoucherModel,
+    QAfterFilterCondition
+  >
+  createdAtLessThan(DateTime value, {bool include = false}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.lessThan(
-        include: include,
-        property: r'createdAt',
-        value: value,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.lessThan(
+          include: include,
+          property: r'createdAt',
+          value: value,
+        ),
+      );
     });
   }
 
-  QueryBuilder<FinancialVoucherModel, FinancialVoucherModel,
-      QAfterFilterCondition> createdAtBetween(
+  QueryBuilder<
+    FinancialVoucherModel,
+    FinancialVoucherModel,
+    QAfterFilterCondition
+  >
+  createdAtBetween(
     DateTime lower,
     DateTime upper, {
     bool includeLower = true,
     bool includeUpper = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.between(
-        property: r'createdAt',
-        lower: lower,
-        includeLower: includeLower,
-        upper: upper,
-        includeUpper: includeUpper,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.between(
+          property: r'createdAt',
+          lower: lower,
+          includeLower: includeLower,
+          upper: upper,
+          includeUpper: includeUpper,
+        ),
+      );
     });
   }
 
-  QueryBuilder<FinancialVoucherModel, FinancialVoucherModel,
-      QAfterFilterCondition> dateEqualTo(DateTime value) {
+  QueryBuilder<
+    FinancialVoucherModel,
+    FinancialVoucherModel,
+    QAfterFilterCondition
+  >
+  dateEqualTo(DateTime value) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'date',
-        value: value,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.equalTo(property: r'date', value: value),
+      );
     });
   }
 
-  QueryBuilder<FinancialVoucherModel, FinancialVoucherModel,
-      QAfterFilterCondition> dateGreaterThan(
-    DateTime value, {
-    bool include = false,
-  }) {
+  QueryBuilder<
+    FinancialVoucherModel,
+    FinancialVoucherModel,
+    QAfterFilterCondition
+  >
+  dateGreaterThan(DateTime value, {bool include = false}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        include: include,
-        property: r'date',
-        value: value,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.greaterThan(
+          include: include,
+          property: r'date',
+          value: value,
+        ),
+      );
     });
   }
 
-  QueryBuilder<FinancialVoucherModel, FinancialVoucherModel,
-      QAfterFilterCondition> dateLessThan(
-    DateTime value, {
-    bool include = false,
-  }) {
+  QueryBuilder<
+    FinancialVoucherModel,
+    FinancialVoucherModel,
+    QAfterFilterCondition
+  >
+  dateLessThan(DateTime value, {bool include = false}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.lessThan(
-        include: include,
-        property: r'date',
-        value: value,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.lessThan(
+          include: include,
+          property: r'date',
+          value: value,
+        ),
+      );
     });
   }
 
-  QueryBuilder<FinancialVoucherModel, FinancialVoucherModel,
-      QAfterFilterCondition> dateBetween(
+  QueryBuilder<
+    FinancialVoucherModel,
+    FinancialVoucherModel,
+    QAfterFilterCondition
+  >
+  dateBetween(
     DateTime lower,
     DateTime upper, {
     bool includeLower = true,
     bool includeUpper = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.between(
-        property: r'date',
-        lower: lower,
-        includeLower: includeLower,
-        upper: upper,
-        includeUpper: includeUpper,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.between(
+          property: r'date',
+          lower: lower,
+          includeLower: includeLower,
+          upper: upper,
+          includeUpper: includeUpper,
+        ),
+      );
     });
   }
 
-  QueryBuilder<FinancialVoucherModel, FinancialVoucherModel,
-      QAfterFilterCondition> descriptionEqualTo(
-    String value, {
-    bool caseSensitive = true,
-  }) {
+  QueryBuilder<
+    FinancialVoucherModel,
+    FinancialVoucherModel,
+    QAfterFilterCondition
+  >
+  descriptionEqualTo(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'description',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.equalTo(
+          property: r'description',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
-  QueryBuilder<FinancialVoucherModel, FinancialVoucherModel,
-      QAfterFilterCondition> descriptionGreaterThan(
-    String value, {
-    bool include = false,
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        include: include,
-        property: r'description',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<FinancialVoucherModel, FinancialVoucherModel,
-      QAfterFilterCondition> descriptionLessThan(
+  QueryBuilder<
+    FinancialVoucherModel,
+    FinancialVoucherModel,
+    QAfterFilterCondition
+  >
+  descriptionGreaterThan(
     String value, {
     bool include = false,
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.lessThan(
-        include: include,
-        property: r'description',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.greaterThan(
+          include: include,
+          property: r'description',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
-  QueryBuilder<FinancialVoucherModel, FinancialVoucherModel,
-      QAfterFilterCondition> descriptionBetween(
+  QueryBuilder<
+    FinancialVoucherModel,
+    FinancialVoucherModel,
+    QAfterFilterCondition
+  >
+  descriptionLessThan(
+    String value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        FilterCondition.lessThan(
+          include: include,
+          property: r'description',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<
+    FinancialVoucherModel,
+    FinancialVoucherModel,
+    QAfterFilterCondition
+  >
+  descriptionBetween(
     String lower,
     String upper, {
     bool includeLower = true,
@@ -1249,155 +1420,206 @@ extension FinancialVoucherModelQueryFilter on QueryBuilder<
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.between(
-        property: r'description',
-        lower: lower,
-        includeLower: includeLower,
-        upper: upper,
-        includeUpper: includeUpper,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.between(
+          property: r'description',
+          lower: lower,
+          includeLower: includeLower,
+          upper: upper,
+          includeUpper: includeUpper,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
-  QueryBuilder<FinancialVoucherModel, FinancialVoucherModel,
-      QAfterFilterCondition> descriptionStartsWith(
-    String value, {
-    bool caseSensitive = true,
-  }) {
+  QueryBuilder<
+    FinancialVoucherModel,
+    FinancialVoucherModel,
+    QAfterFilterCondition
+  >
+  descriptionStartsWith(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.startsWith(
-        property: r'description',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.startsWith(
+          property: r'description',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
-  QueryBuilder<FinancialVoucherModel, FinancialVoucherModel,
-      QAfterFilterCondition> descriptionEndsWith(
-    String value, {
-    bool caseSensitive = true,
-  }) {
+  QueryBuilder<
+    FinancialVoucherModel,
+    FinancialVoucherModel,
+    QAfterFilterCondition
+  >
+  descriptionEndsWith(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.endsWith(
-        property: r'description',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.endsWith(
+          property: r'description',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
-  QueryBuilder<FinancialVoucherModel, FinancialVoucherModel,
-          QAfterFilterCondition>
-      descriptionContains(String value, {bool caseSensitive = true}) {
+  QueryBuilder<
+    FinancialVoucherModel,
+    FinancialVoucherModel,
+    QAfterFilterCondition
+  >
+  descriptionContains(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.contains(
-        property: r'description',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.contains(
+          property: r'description',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
-  QueryBuilder<FinancialVoucherModel, FinancialVoucherModel,
-          QAfterFilterCondition>
-      descriptionMatches(String pattern, {bool caseSensitive = true}) {
+  QueryBuilder<
+    FinancialVoucherModel,
+    FinancialVoucherModel,
+    QAfterFilterCondition
+  >
+  descriptionMatches(String pattern, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.matches(
-        property: r'description',
-        wildcard: pattern,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.matches(
+          property: r'description',
+          wildcard: pattern,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
-  QueryBuilder<FinancialVoucherModel, FinancialVoucherModel,
-      QAfterFilterCondition> descriptionIsEmpty() {
+  QueryBuilder<
+    FinancialVoucherModel,
+    FinancialVoucherModel,
+    QAfterFilterCondition
+  >
+  descriptionIsEmpty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'description',
-        value: '',
-      ));
+      return query.addFilterCondition(
+        FilterCondition.equalTo(property: r'description', value: ''),
+      );
     });
   }
 
-  QueryBuilder<FinancialVoucherModel, FinancialVoucherModel,
-      QAfterFilterCondition> descriptionIsNotEmpty() {
+  QueryBuilder<
+    FinancialVoucherModel,
+    FinancialVoucherModel,
+    QAfterFilterCondition
+  >
+  descriptionIsNotEmpty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        property: r'description',
-        value: '',
-      ));
+      return query.addFilterCondition(
+        FilterCondition.greaterThan(property: r'description', value: ''),
+      );
     });
   }
 
-  QueryBuilder<FinancialVoucherModel, FinancialVoucherModel,
-      QAfterFilterCondition> exchangeRateIsNull() {
+  QueryBuilder<
+    FinancialVoucherModel,
+    FinancialVoucherModel,
+    QAfterFilterCondition
+  >
+  exchangeRateIsNull() {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const FilterCondition.isNull(
-        property: r'exchangeRate',
-      ));
+      return query.addFilterCondition(
+        const FilterCondition.isNull(property: r'exchangeRate'),
+      );
     });
   }
 
-  QueryBuilder<FinancialVoucherModel, FinancialVoucherModel,
-      QAfterFilterCondition> exchangeRateIsNotNull() {
+  QueryBuilder<
+    FinancialVoucherModel,
+    FinancialVoucherModel,
+    QAfterFilterCondition
+  >
+  exchangeRateIsNotNull() {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const FilterCondition.isNotNull(
-        property: r'exchangeRate',
-      ));
+      return query.addFilterCondition(
+        const FilterCondition.isNotNull(property: r'exchangeRate'),
+      );
     });
   }
 
-  QueryBuilder<FinancialVoucherModel, FinancialVoucherModel,
-      QAfterFilterCondition> exchangeRateEqualTo(
-    String? value, {
-    bool caseSensitive = true,
-  }) {
+  QueryBuilder<
+    FinancialVoucherModel,
+    FinancialVoucherModel,
+    QAfterFilterCondition
+  >
+  exchangeRateEqualTo(String? value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'exchangeRate',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.equalTo(
+          property: r'exchangeRate',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
-  QueryBuilder<FinancialVoucherModel, FinancialVoucherModel,
-      QAfterFilterCondition> exchangeRateGreaterThan(
+  QueryBuilder<
+    FinancialVoucherModel,
+    FinancialVoucherModel,
+    QAfterFilterCondition
+  >
+  exchangeRateGreaterThan(
     String? value, {
     bool include = false,
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        include: include,
-        property: r'exchangeRate',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.greaterThan(
+          include: include,
+          property: r'exchangeRate',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
-  QueryBuilder<FinancialVoucherModel, FinancialVoucherModel,
-      QAfterFilterCondition> exchangeRateLessThan(
+  QueryBuilder<
+    FinancialVoucherModel,
+    FinancialVoucherModel,
+    QAfterFilterCondition
+  >
+  exchangeRateLessThan(
     String? value, {
     bool include = false,
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.lessThan(
-        include: include,
-        property: r'exchangeRate',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.lessThan(
+          include: include,
+          property: r'exchangeRate',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
-  QueryBuilder<FinancialVoucherModel, FinancialVoucherModel,
-      QAfterFilterCondition> exchangeRateBetween(
+  QueryBuilder<
+    FinancialVoucherModel,
+    FinancialVoucherModel,
+    QAfterFilterCondition
+  >
+  exchangeRateBetween(
     String? lower,
     String? upper, {
     bool includeLower = true,
@@ -1405,137 +1627,176 @@ extension FinancialVoucherModelQueryFilter on QueryBuilder<
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.between(
-        property: r'exchangeRate',
-        lower: lower,
-        includeLower: includeLower,
-        upper: upper,
-        includeUpper: includeUpper,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.between(
+          property: r'exchangeRate',
+          lower: lower,
+          includeLower: includeLower,
+          upper: upper,
+          includeUpper: includeUpper,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
-  QueryBuilder<FinancialVoucherModel, FinancialVoucherModel,
-      QAfterFilterCondition> exchangeRateStartsWith(
-    String value, {
-    bool caseSensitive = true,
-  }) {
+  QueryBuilder<
+    FinancialVoucherModel,
+    FinancialVoucherModel,
+    QAfterFilterCondition
+  >
+  exchangeRateStartsWith(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.startsWith(
-        property: r'exchangeRate',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.startsWith(
+          property: r'exchangeRate',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
-  QueryBuilder<FinancialVoucherModel, FinancialVoucherModel,
-      QAfterFilterCondition> exchangeRateEndsWith(
-    String value, {
-    bool caseSensitive = true,
-  }) {
+  QueryBuilder<
+    FinancialVoucherModel,
+    FinancialVoucherModel,
+    QAfterFilterCondition
+  >
+  exchangeRateEndsWith(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.endsWith(
-        property: r'exchangeRate',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.endsWith(
+          property: r'exchangeRate',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
-  QueryBuilder<FinancialVoucherModel, FinancialVoucherModel,
-          QAfterFilterCondition>
-      exchangeRateContains(String value, {bool caseSensitive = true}) {
+  QueryBuilder<
+    FinancialVoucherModel,
+    FinancialVoucherModel,
+    QAfterFilterCondition
+  >
+  exchangeRateContains(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.contains(
-        property: r'exchangeRate',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.contains(
+          property: r'exchangeRate',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
-  QueryBuilder<FinancialVoucherModel, FinancialVoucherModel,
-          QAfterFilterCondition>
-      exchangeRateMatches(String pattern, {bool caseSensitive = true}) {
+  QueryBuilder<
+    FinancialVoucherModel,
+    FinancialVoucherModel,
+    QAfterFilterCondition
+  >
+  exchangeRateMatches(String pattern, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.matches(
-        property: r'exchangeRate',
-        wildcard: pattern,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.matches(
+          property: r'exchangeRate',
+          wildcard: pattern,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
-  QueryBuilder<FinancialVoucherModel, FinancialVoucherModel,
-      QAfterFilterCondition> exchangeRateIsEmpty() {
+  QueryBuilder<
+    FinancialVoucherModel,
+    FinancialVoucherModel,
+    QAfterFilterCondition
+  >
+  exchangeRateIsEmpty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'exchangeRate',
-        value: '',
-      ));
+      return query.addFilterCondition(
+        FilterCondition.equalTo(property: r'exchangeRate', value: ''),
+      );
     });
   }
 
-  QueryBuilder<FinancialVoucherModel, FinancialVoucherModel,
-      QAfterFilterCondition> exchangeRateIsNotEmpty() {
+  QueryBuilder<
+    FinancialVoucherModel,
+    FinancialVoucherModel,
+    QAfterFilterCondition
+  >
+  exchangeRateIsNotEmpty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        property: r'exchangeRate',
-        value: '',
-      ));
+      return query.addFilterCondition(
+        FilterCondition.greaterThan(property: r'exchangeRate', value: ''),
+      );
     });
   }
 
-  QueryBuilder<FinancialVoucherModel, FinancialVoucherModel,
-      QAfterFilterCondition> idEqualTo(
-    String value, {
-    bool caseSensitive = true,
-  }) {
+  QueryBuilder<
+    FinancialVoucherModel,
+    FinancialVoucherModel,
+    QAfterFilterCondition
+  >
+  idEqualTo(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'id',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.equalTo(
+          property: r'id',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
-  QueryBuilder<FinancialVoucherModel, FinancialVoucherModel,
-      QAfterFilterCondition> idGreaterThan(
+  QueryBuilder<
+    FinancialVoucherModel,
+    FinancialVoucherModel,
+    QAfterFilterCondition
+  >
+  idGreaterThan(
     String value, {
     bool include = false,
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        include: include,
-        property: r'id',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.greaterThan(
+          include: include,
+          property: r'id',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
-  QueryBuilder<FinancialVoucherModel, FinancialVoucherModel,
-      QAfterFilterCondition> idLessThan(
-    String value, {
-    bool include = false,
-    bool caseSensitive = true,
-  }) {
+  QueryBuilder<
+    FinancialVoucherModel,
+    FinancialVoucherModel,
+    QAfterFilterCondition
+  >
+  idLessThan(String value, {bool include = false, bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.lessThan(
-        include: include,
-        property: r'id',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.lessThan(
+          include: include,
+          property: r'id',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
-  QueryBuilder<FinancialVoucherModel, FinancialVoucherModel,
-      QAfterFilterCondition> idBetween(
+  QueryBuilder<
+    FinancialVoucherModel,
+    FinancialVoucherModel,
+    QAfterFilterCondition
+  >
+  idBetween(
     String lower,
     String upper, {
     bool includeLower = true,
@@ -1543,231 +1804,303 @@ extension FinancialVoucherModelQueryFilter on QueryBuilder<
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.between(
-        property: r'id',
-        lower: lower,
-        includeLower: includeLower,
-        upper: upper,
-        includeUpper: includeUpper,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.between(
+          property: r'id',
+          lower: lower,
+          includeLower: includeLower,
+          upper: upper,
+          includeUpper: includeUpper,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
-  QueryBuilder<FinancialVoucherModel, FinancialVoucherModel,
-      QAfterFilterCondition> idStartsWith(
-    String value, {
-    bool caseSensitive = true,
-  }) {
+  QueryBuilder<
+    FinancialVoucherModel,
+    FinancialVoucherModel,
+    QAfterFilterCondition
+  >
+  idStartsWith(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.startsWith(
-        property: r'id',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.startsWith(
+          property: r'id',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
-  QueryBuilder<FinancialVoucherModel, FinancialVoucherModel,
-      QAfterFilterCondition> idEndsWith(
-    String value, {
-    bool caseSensitive = true,
-  }) {
+  QueryBuilder<
+    FinancialVoucherModel,
+    FinancialVoucherModel,
+    QAfterFilterCondition
+  >
+  idEndsWith(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.endsWith(
-        property: r'id',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.endsWith(
+          property: r'id',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
-  QueryBuilder<FinancialVoucherModel, FinancialVoucherModel,
-          QAfterFilterCondition>
-      idContains(String value, {bool caseSensitive = true}) {
+  QueryBuilder<
+    FinancialVoucherModel,
+    FinancialVoucherModel,
+    QAfterFilterCondition
+  >
+  idContains(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.contains(
-        property: r'id',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.contains(
+          property: r'id',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
-  QueryBuilder<FinancialVoucherModel, FinancialVoucherModel,
-          QAfterFilterCondition>
-      idMatches(String pattern, {bool caseSensitive = true}) {
+  QueryBuilder<
+    FinancialVoucherModel,
+    FinancialVoucherModel,
+    QAfterFilterCondition
+  >
+  idMatches(String pattern, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.matches(
-        property: r'id',
-        wildcard: pattern,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.matches(
+          property: r'id',
+          wildcard: pattern,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
-  QueryBuilder<FinancialVoucherModel, FinancialVoucherModel,
-      QAfterFilterCondition> idIsEmpty() {
+  QueryBuilder<
+    FinancialVoucherModel,
+    FinancialVoucherModel,
+    QAfterFilterCondition
+  >
+  idIsEmpty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'id',
-        value: '',
-      ));
+      return query.addFilterCondition(
+        FilterCondition.equalTo(property: r'id', value: ''),
+      );
     });
   }
 
-  QueryBuilder<FinancialVoucherModel, FinancialVoucherModel,
-      QAfterFilterCondition> idIsNotEmpty() {
+  QueryBuilder<
+    FinancialVoucherModel,
+    FinancialVoucherModel,
+    QAfterFilterCondition
+  >
+  idIsNotEmpty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        property: r'id',
-        value: '',
-      ));
+      return query.addFilterCondition(
+        FilterCondition.greaterThan(property: r'id', value: ''),
+      );
     });
   }
 
-  QueryBuilder<FinancialVoucherModel, FinancialVoucherModel,
-      QAfterFilterCondition> isDeletedEqualTo(bool value) {
+  QueryBuilder<
+    FinancialVoucherModel,
+    FinancialVoucherModel,
+    QAfterFilterCondition
+  >
+  isDeletedEqualTo(bool value) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'isDeleted',
-        value: value,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.equalTo(property: r'isDeleted', value: value),
+      );
     });
   }
 
-  QueryBuilder<FinancialVoucherModel, FinancialVoucherModel,
-      QAfterFilterCondition> isPostedEqualTo(bool value) {
+  QueryBuilder<
+    FinancialVoucherModel,
+    FinancialVoucherModel,
+    QAfterFilterCondition
+  >
+  isPostedEqualTo(bool value) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'isPosted',
-        value: value,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.equalTo(property: r'isPosted', value: value),
+      );
     });
   }
 
-  QueryBuilder<FinancialVoucherModel, FinancialVoucherModel,
-      QAfterFilterCondition> isarIdEqualTo(Id value) {
+  QueryBuilder<
+    FinancialVoucherModel,
+    FinancialVoucherModel,
+    QAfterFilterCondition
+  >
+  isarIdEqualTo(Id value) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'isarId',
-        value: value,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.equalTo(property: r'isarId', value: value),
+      );
     });
   }
 
-  QueryBuilder<FinancialVoucherModel, FinancialVoucherModel,
-      QAfterFilterCondition> isarIdGreaterThan(
-    Id value, {
-    bool include = false,
-  }) {
+  QueryBuilder<
+    FinancialVoucherModel,
+    FinancialVoucherModel,
+    QAfterFilterCondition
+  >
+  isarIdGreaterThan(Id value, {bool include = false}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        include: include,
-        property: r'isarId',
-        value: value,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.greaterThan(
+          include: include,
+          property: r'isarId',
+          value: value,
+        ),
+      );
     });
   }
 
-  QueryBuilder<FinancialVoucherModel, FinancialVoucherModel,
-      QAfterFilterCondition> isarIdLessThan(
-    Id value, {
-    bool include = false,
-  }) {
+  QueryBuilder<
+    FinancialVoucherModel,
+    FinancialVoucherModel,
+    QAfterFilterCondition
+  >
+  isarIdLessThan(Id value, {bool include = false}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.lessThan(
-        include: include,
-        property: r'isarId',
-        value: value,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.lessThan(
+          include: include,
+          property: r'isarId',
+          value: value,
+        ),
+      );
     });
   }
 
-  QueryBuilder<FinancialVoucherModel, FinancialVoucherModel,
-      QAfterFilterCondition> isarIdBetween(
+  QueryBuilder<
+    FinancialVoucherModel,
+    FinancialVoucherModel,
+    QAfterFilterCondition
+  >
+  isarIdBetween(
     Id lower,
     Id upper, {
     bool includeLower = true,
     bool includeUpper = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.between(
-        property: r'isarId',
-        lower: lower,
-        includeLower: includeLower,
-        upper: upper,
-        includeUpper: includeUpper,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.between(
+          property: r'isarId',
+          lower: lower,
+          includeLower: includeLower,
+          upper: upper,
+          includeUpper: includeUpper,
+        ),
+      );
     });
   }
 
-  QueryBuilder<FinancialVoucherModel, FinancialVoucherModel,
-      QAfterFilterCondition> journalEntryIdIsNull() {
+  QueryBuilder<
+    FinancialVoucherModel,
+    FinancialVoucherModel,
+    QAfterFilterCondition
+  >
+  journalEntryIdIsNull() {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const FilterCondition.isNull(
-        property: r'journalEntryId',
-      ));
+      return query.addFilterCondition(
+        const FilterCondition.isNull(property: r'journalEntryId'),
+      );
     });
   }
 
-  QueryBuilder<FinancialVoucherModel, FinancialVoucherModel,
-      QAfterFilterCondition> journalEntryIdIsNotNull() {
+  QueryBuilder<
+    FinancialVoucherModel,
+    FinancialVoucherModel,
+    QAfterFilterCondition
+  >
+  journalEntryIdIsNotNull() {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const FilterCondition.isNotNull(
-        property: r'journalEntryId',
-      ));
+      return query.addFilterCondition(
+        const FilterCondition.isNotNull(property: r'journalEntryId'),
+      );
     });
   }
 
-  QueryBuilder<FinancialVoucherModel, FinancialVoucherModel,
-      QAfterFilterCondition> journalEntryIdEqualTo(
-    String? value, {
-    bool caseSensitive = true,
-  }) {
+  QueryBuilder<
+    FinancialVoucherModel,
+    FinancialVoucherModel,
+    QAfterFilterCondition
+  >
+  journalEntryIdEqualTo(String? value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'journalEntryId',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.equalTo(
+          property: r'journalEntryId',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
-  QueryBuilder<FinancialVoucherModel, FinancialVoucherModel,
-      QAfterFilterCondition> journalEntryIdGreaterThan(
+  QueryBuilder<
+    FinancialVoucherModel,
+    FinancialVoucherModel,
+    QAfterFilterCondition
+  >
+  journalEntryIdGreaterThan(
     String? value, {
     bool include = false,
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        include: include,
-        property: r'journalEntryId',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.greaterThan(
+          include: include,
+          property: r'journalEntryId',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
-  QueryBuilder<FinancialVoucherModel, FinancialVoucherModel,
-      QAfterFilterCondition> journalEntryIdLessThan(
+  QueryBuilder<
+    FinancialVoucherModel,
+    FinancialVoucherModel,
+    QAfterFilterCondition
+  >
+  journalEntryIdLessThan(
     String? value, {
     bool include = false,
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.lessThan(
-        include: include,
-        property: r'journalEntryId',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.lessThan(
+          include: include,
+          property: r'journalEntryId',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
-  QueryBuilder<FinancialVoucherModel, FinancialVoucherModel,
-      QAfterFilterCondition> journalEntryIdBetween(
+  QueryBuilder<
+    FinancialVoucherModel,
+    FinancialVoucherModel,
+    QAfterFilterCondition
+  >
+  journalEntryIdBetween(
     String? lower,
     String? upper, {
     bool includeLower = true,
@@ -1775,155 +2108,206 @@ extension FinancialVoucherModelQueryFilter on QueryBuilder<
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.between(
-        property: r'journalEntryId',
-        lower: lower,
-        includeLower: includeLower,
-        upper: upper,
-        includeUpper: includeUpper,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.between(
+          property: r'journalEntryId',
+          lower: lower,
+          includeLower: includeLower,
+          upper: upper,
+          includeUpper: includeUpper,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
-  QueryBuilder<FinancialVoucherModel, FinancialVoucherModel,
-      QAfterFilterCondition> journalEntryIdStartsWith(
-    String value, {
-    bool caseSensitive = true,
-  }) {
+  QueryBuilder<
+    FinancialVoucherModel,
+    FinancialVoucherModel,
+    QAfterFilterCondition
+  >
+  journalEntryIdStartsWith(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.startsWith(
-        property: r'journalEntryId',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.startsWith(
+          property: r'journalEntryId',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
-  QueryBuilder<FinancialVoucherModel, FinancialVoucherModel,
-      QAfterFilterCondition> journalEntryIdEndsWith(
-    String value, {
-    bool caseSensitive = true,
-  }) {
+  QueryBuilder<
+    FinancialVoucherModel,
+    FinancialVoucherModel,
+    QAfterFilterCondition
+  >
+  journalEntryIdEndsWith(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.endsWith(
-        property: r'journalEntryId',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.endsWith(
+          property: r'journalEntryId',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
-  QueryBuilder<FinancialVoucherModel, FinancialVoucherModel,
-          QAfterFilterCondition>
-      journalEntryIdContains(String value, {bool caseSensitive = true}) {
+  QueryBuilder<
+    FinancialVoucherModel,
+    FinancialVoucherModel,
+    QAfterFilterCondition
+  >
+  journalEntryIdContains(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.contains(
-        property: r'journalEntryId',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.contains(
+          property: r'journalEntryId',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
-  QueryBuilder<FinancialVoucherModel, FinancialVoucherModel,
-          QAfterFilterCondition>
-      journalEntryIdMatches(String pattern, {bool caseSensitive = true}) {
+  QueryBuilder<
+    FinancialVoucherModel,
+    FinancialVoucherModel,
+    QAfterFilterCondition
+  >
+  journalEntryIdMatches(String pattern, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.matches(
-        property: r'journalEntryId',
-        wildcard: pattern,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.matches(
+          property: r'journalEntryId',
+          wildcard: pattern,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
-  QueryBuilder<FinancialVoucherModel, FinancialVoucherModel,
-      QAfterFilterCondition> journalEntryIdIsEmpty() {
+  QueryBuilder<
+    FinancialVoucherModel,
+    FinancialVoucherModel,
+    QAfterFilterCondition
+  >
+  journalEntryIdIsEmpty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'journalEntryId',
-        value: '',
-      ));
+      return query.addFilterCondition(
+        FilterCondition.equalTo(property: r'journalEntryId', value: ''),
+      );
     });
   }
 
-  QueryBuilder<FinancialVoucherModel, FinancialVoucherModel,
-      QAfterFilterCondition> journalEntryIdIsNotEmpty() {
+  QueryBuilder<
+    FinancialVoucherModel,
+    FinancialVoucherModel,
+    QAfterFilterCondition
+  >
+  journalEntryIdIsNotEmpty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        property: r'journalEntryId',
-        value: '',
-      ));
+      return query.addFilterCondition(
+        FilterCondition.greaterThan(property: r'journalEntryId', value: ''),
+      );
     });
   }
 
-  QueryBuilder<FinancialVoucherModel, FinancialVoucherModel,
-      QAfterFilterCondition> originalAmountIsNull() {
+  QueryBuilder<
+    FinancialVoucherModel,
+    FinancialVoucherModel,
+    QAfterFilterCondition
+  >
+  originalAmountIsNull() {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const FilterCondition.isNull(
-        property: r'originalAmount',
-      ));
+      return query.addFilterCondition(
+        const FilterCondition.isNull(property: r'originalAmount'),
+      );
     });
   }
 
-  QueryBuilder<FinancialVoucherModel, FinancialVoucherModel,
-      QAfterFilterCondition> originalAmountIsNotNull() {
+  QueryBuilder<
+    FinancialVoucherModel,
+    FinancialVoucherModel,
+    QAfterFilterCondition
+  >
+  originalAmountIsNotNull() {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const FilterCondition.isNotNull(
-        property: r'originalAmount',
-      ));
+      return query.addFilterCondition(
+        const FilterCondition.isNotNull(property: r'originalAmount'),
+      );
     });
   }
 
-  QueryBuilder<FinancialVoucherModel, FinancialVoucherModel,
-      QAfterFilterCondition> originalAmountEqualTo(
-    String? value, {
-    bool caseSensitive = true,
-  }) {
+  QueryBuilder<
+    FinancialVoucherModel,
+    FinancialVoucherModel,
+    QAfterFilterCondition
+  >
+  originalAmountEqualTo(String? value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'originalAmount',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.equalTo(
+          property: r'originalAmount',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
-  QueryBuilder<FinancialVoucherModel, FinancialVoucherModel,
-      QAfterFilterCondition> originalAmountGreaterThan(
+  QueryBuilder<
+    FinancialVoucherModel,
+    FinancialVoucherModel,
+    QAfterFilterCondition
+  >
+  originalAmountGreaterThan(
     String? value, {
     bool include = false,
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        include: include,
-        property: r'originalAmount',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.greaterThan(
+          include: include,
+          property: r'originalAmount',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
-  QueryBuilder<FinancialVoucherModel, FinancialVoucherModel,
-      QAfterFilterCondition> originalAmountLessThan(
+  QueryBuilder<
+    FinancialVoucherModel,
+    FinancialVoucherModel,
+    QAfterFilterCondition
+  >
+  originalAmountLessThan(
     String? value, {
     bool include = false,
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.lessThan(
-        include: include,
-        property: r'originalAmount',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.lessThan(
+          include: include,
+          property: r'originalAmount',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
-  QueryBuilder<FinancialVoucherModel, FinancialVoucherModel,
-      QAfterFilterCondition> originalAmountBetween(
+  QueryBuilder<
+    FinancialVoucherModel,
+    FinancialVoucherModel,
+    QAfterFilterCondition
+  >
+  originalAmountBetween(
     String? lower,
     String? upper, {
     bool includeLower = true,
@@ -1931,155 +2315,206 @@ extension FinancialVoucherModelQueryFilter on QueryBuilder<
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.between(
-        property: r'originalAmount',
-        lower: lower,
-        includeLower: includeLower,
-        upper: upper,
-        includeUpper: includeUpper,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.between(
+          property: r'originalAmount',
+          lower: lower,
+          includeLower: includeLower,
+          upper: upper,
+          includeUpper: includeUpper,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
-  QueryBuilder<FinancialVoucherModel, FinancialVoucherModel,
-      QAfterFilterCondition> originalAmountStartsWith(
-    String value, {
-    bool caseSensitive = true,
-  }) {
+  QueryBuilder<
+    FinancialVoucherModel,
+    FinancialVoucherModel,
+    QAfterFilterCondition
+  >
+  originalAmountStartsWith(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.startsWith(
-        property: r'originalAmount',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.startsWith(
+          property: r'originalAmount',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
-  QueryBuilder<FinancialVoucherModel, FinancialVoucherModel,
-      QAfterFilterCondition> originalAmountEndsWith(
-    String value, {
-    bool caseSensitive = true,
-  }) {
+  QueryBuilder<
+    FinancialVoucherModel,
+    FinancialVoucherModel,
+    QAfterFilterCondition
+  >
+  originalAmountEndsWith(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.endsWith(
-        property: r'originalAmount',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.endsWith(
+          property: r'originalAmount',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
-  QueryBuilder<FinancialVoucherModel, FinancialVoucherModel,
-          QAfterFilterCondition>
-      originalAmountContains(String value, {bool caseSensitive = true}) {
+  QueryBuilder<
+    FinancialVoucherModel,
+    FinancialVoucherModel,
+    QAfterFilterCondition
+  >
+  originalAmountContains(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.contains(
-        property: r'originalAmount',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.contains(
+          property: r'originalAmount',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
-  QueryBuilder<FinancialVoucherModel, FinancialVoucherModel,
-          QAfterFilterCondition>
-      originalAmountMatches(String pattern, {bool caseSensitive = true}) {
+  QueryBuilder<
+    FinancialVoucherModel,
+    FinancialVoucherModel,
+    QAfterFilterCondition
+  >
+  originalAmountMatches(String pattern, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.matches(
-        property: r'originalAmount',
-        wildcard: pattern,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.matches(
+          property: r'originalAmount',
+          wildcard: pattern,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
-  QueryBuilder<FinancialVoucherModel, FinancialVoucherModel,
-      QAfterFilterCondition> originalAmountIsEmpty() {
+  QueryBuilder<
+    FinancialVoucherModel,
+    FinancialVoucherModel,
+    QAfterFilterCondition
+  >
+  originalAmountIsEmpty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'originalAmount',
-        value: '',
-      ));
+      return query.addFilterCondition(
+        FilterCondition.equalTo(property: r'originalAmount', value: ''),
+      );
     });
   }
 
-  QueryBuilder<FinancialVoucherModel, FinancialVoucherModel,
-      QAfterFilterCondition> originalAmountIsNotEmpty() {
+  QueryBuilder<
+    FinancialVoucherModel,
+    FinancialVoucherModel,
+    QAfterFilterCondition
+  >
+  originalAmountIsNotEmpty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        property: r'originalAmount',
-        value: '',
-      ));
+      return query.addFilterCondition(
+        FilterCondition.greaterThan(property: r'originalAmount', value: ''),
+      );
     });
   }
 
-  QueryBuilder<FinancialVoucherModel, FinancialVoucherModel,
-      QAfterFilterCondition> originalCurrencyIsNull() {
+  QueryBuilder<
+    FinancialVoucherModel,
+    FinancialVoucherModel,
+    QAfterFilterCondition
+  >
+  originalCurrencyIsNull() {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const FilterCondition.isNull(
-        property: r'originalCurrency',
-      ));
+      return query.addFilterCondition(
+        const FilterCondition.isNull(property: r'originalCurrency'),
+      );
     });
   }
 
-  QueryBuilder<FinancialVoucherModel, FinancialVoucherModel,
-      QAfterFilterCondition> originalCurrencyIsNotNull() {
+  QueryBuilder<
+    FinancialVoucherModel,
+    FinancialVoucherModel,
+    QAfterFilterCondition
+  >
+  originalCurrencyIsNotNull() {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const FilterCondition.isNotNull(
-        property: r'originalCurrency',
-      ));
+      return query.addFilterCondition(
+        const FilterCondition.isNotNull(property: r'originalCurrency'),
+      );
     });
   }
 
-  QueryBuilder<FinancialVoucherModel, FinancialVoucherModel,
-      QAfterFilterCondition> originalCurrencyEqualTo(
-    String? value, {
-    bool caseSensitive = true,
-  }) {
+  QueryBuilder<
+    FinancialVoucherModel,
+    FinancialVoucherModel,
+    QAfterFilterCondition
+  >
+  originalCurrencyEqualTo(String? value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'originalCurrency',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.equalTo(
+          property: r'originalCurrency',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
-  QueryBuilder<FinancialVoucherModel, FinancialVoucherModel,
-      QAfterFilterCondition> originalCurrencyGreaterThan(
+  QueryBuilder<
+    FinancialVoucherModel,
+    FinancialVoucherModel,
+    QAfterFilterCondition
+  >
+  originalCurrencyGreaterThan(
     String? value, {
     bool include = false,
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        include: include,
-        property: r'originalCurrency',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.greaterThan(
+          include: include,
+          property: r'originalCurrency',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
-  QueryBuilder<FinancialVoucherModel, FinancialVoucherModel,
-      QAfterFilterCondition> originalCurrencyLessThan(
+  QueryBuilder<
+    FinancialVoucherModel,
+    FinancialVoucherModel,
+    QAfterFilterCondition
+  >
+  originalCurrencyLessThan(
     String? value, {
     bool include = false,
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.lessThan(
-        include: include,
-        property: r'originalCurrency',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.lessThan(
+          include: include,
+          property: r'originalCurrency',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
-  QueryBuilder<FinancialVoucherModel, FinancialVoucherModel,
-      QAfterFilterCondition> originalCurrencyBetween(
+  QueryBuilder<
+    FinancialVoucherModel,
+    FinancialVoucherModel,
+    QAfterFilterCondition
+  >
+  originalCurrencyBetween(
     String? lower,
     String? upper, {
     bool includeLower = true,
@@ -2087,211 +2522,277 @@ extension FinancialVoucherModelQueryFilter on QueryBuilder<
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.between(
-        property: r'originalCurrency',
-        lower: lower,
-        includeLower: includeLower,
-        upper: upper,
-        includeUpper: includeUpper,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.between(
+          property: r'originalCurrency',
+          lower: lower,
+          includeLower: includeLower,
+          upper: upper,
+          includeUpper: includeUpper,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
-  QueryBuilder<FinancialVoucherModel, FinancialVoucherModel,
-      QAfterFilterCondition> originalCurrencyStartsWith(
-    String value, {
-    bool caseSensitive = true,
-  }) {
+  QueryBuilder<
+    FinancialVoucherModel,
+    FinancialVoucherModel,
+    QAfterFilterCondition
+  >
+  originalCurrencyStartsWith(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.startsWith(
-        property: r'originalCurrency',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.startsWith(
+          property: r'originalCurrency',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
-  QueryBuilder<FinancialVoucherModel, FinancialVoucherModel,
-      QAfterFilterCondition> originalCurrencyEndsWith(
-    String value, {
-    bool caseSensitive = true,
-  }) {
+  QueryBuilder<
+    FinancialVoucherModel,
+    FinancialVoucherModel,
+    QAfterFilterCondition
+  >
+  originalCurrencyEndsWith(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.endsWith(
-        property: r'originalCurrency',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.endsWith(
+          property: r'originalCurrency',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
-  QueryBuilder<FinancialVoucherModel, FinancialVoucherModel,
-          QAfterFilterCondition>
-      originalCurrencyContains(String value, {bool caseSensitive = true}) {
+  QueryBuilder<
+    FinancialVoucherModel,
+    FinancialVoucherModel,
+    QAfterFilterCondition
+  >
+  originalCurrencyContains(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.contains(
-        property: r'originalCurrency',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.contains(
+          property: r'originalCurrency',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
-  QueryBuilder<FinancialVoucherModel, FinancialVoucherModel,
-          QAfterFilterCondition>
-      originalCurrencyMatches(String pattern, {bool caseSensitive = true}) {
+  QueryBuilder<
+    FinancialVoucherModel,
+    FinancialVoucherModel,
+    QAfterFilterCondition
+  >
+  originalCurrencyMatches(String pattern, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.matches(
-        property: r'originalCurrency',
-        wildcard: pattern,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.matches(
+          property: r'originalCurrency',
+          wildcard: pattern,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
-  QueryBuilder<FinancialVoucherModel, FinancialVoucherModel,
-      QAfterFilterCondition> originalCurrencyIsEmpty() {
+  QueryBuilder<
+    FinancialVoucherModel,
+    FinancialVoucherModel,
+    QAfterFilterCondition
+  >
+  originalCurrencyIsEmpty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'originalCurrency',
-        value: '',
-      ));
+      return query.addFilterCondition(
+        FilterCondition.equalTo(property: r'originalCurrency', value: ''),
+      );
     });
   }
 
-  QueryBuilder<FinancialVoucherModel, FinancialVoucherModel,
-      QAfterFilterCondition> originalCurrencyIsNotEmpty() {
+  QueryBuilder<
+    FinancialVoucherModel,
+    FinancialVoucherModel,
+    QAfterFilterCondition
+  >
+  originalCurrencyIsNotEmpty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        property: r'originalCurrency',
-        value: '',
-      ));
+      return query.addFilterCondition(
+        FilterCondition.greaterThan(property: r'originalCurrency', value: ''),
+      );
     });
   }
 
-  QueryBuilder<FinancialVoucherModel, FinancialVoucherModel,
-      QAfterFilterCondition> paymentMethodEqualTo(PaymentMethod value) {
+  QueryBuilder<
+    FinancialVoucherModel,
+    FinancialVoucherModel,
+    QAfterFilterCondition
+  >
+  paymentMethodEqualTo(PaymentMethod value) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'paymentMethod',
-        value: value,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.equalTo(property: r'paymentMethod', value: value),
+      );
     });
   }
 
-  QueryBuilder<FinancialVoucherModel, FinancialVoucherModel,
-      QAfterFilterCondition> paymentMethodGreaterThan(
-    PaymentMethod value, {
-    bool include = false,
-  }) {
+  QueryBuilder<
+    FinancialVoucherModel,
+    FinancialVoucherModel,
+    QAfterFilterCondition
+  >
+  paymentMethodGreaterThan(PaymentMethod value, {bool include = false}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        include: include,
-        property: r'paymentMethod',
-        value: value,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.greaterThan(
+          include: include,
+          property: r'paymentMethod',
+          value: value,
+        ),
+      );
     });
   }
 
-  QueryBuilder<FinancialVoucherModel, FinancialVoucherModel,
-      QAfterFilterCondition> paymentMethodLessThan(
-    PaymentMethod value, {
-    bool include = false,
-  }) {
+  QueryBuilder<
+    FinancialVoucherModel,
+    FinancialVoucherModel,
+    QAfterFilterCondition
+  >
+  paymentMethodLessThan(PaymentMethod value, {bool include = false}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.lessThan(
-        include: include,
-        property: r'paymentMethod',
-        value: value,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.lessThan(
+          include: include,
+          property: r'paymentMethod',
+          value: value,
+        ),
+      );
     });
   }
 
-  QueryBuilder<FinancialVoucherModel, FinancialVoucherModel,
-      QAfterFilterCondition> paymentMethodBetween(
+  QueryBuilder<
+    FinancialVoucherModel,
+    FinancialVoucherModel,
+    QAfterFilterCondition
+  >
+  paymentMethodBetween(
     PaymentMethod lower,
     PaymentMethod upper, {
     bool includeLower = true,
     bool includeUpper = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.between(
-        property: r'paymentMethod',
-        lower: lower,
-        includeLower: includeLower,
-        upper: upper,
-        includeUpper: includeUpper,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.between(
+          property: r'paymentMethod',
+          lower: lower,
+          includeLower: includeLower,
+          upper: upper,
+          includeUpper: includeUpper,
+        ),
+      );
     });
   }
 
-  QueryBuilder<FinancialVoucherModel, FinancialVoucherModel,
-      QAfterFilterCondition> personNameIsNull() {
+  QueryBuilder<
+    FinancialVoucherModel,
+    FinancialVoucherModel,
+    QAfterFilterCondition
+  >
+  personNameIsNull() {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const FilterCondition.isNull(
-        property: r'personName',
-      ));
+      return query.addFilterCondition(
+        const FilterCondition.isNull(property: r'personName'),
+      );
     });
   }
 
-  QueryBuilder<FinancialVoucherModel, FinancialVoucherModel,
-      QAfterFilterCondition> personNameIsNotNull() {
+  QueryBuilder<
+    FinancialVoucherModel,
+    FinancialVoucherModel,
+    QAfterFilterCondition
+  >
+  personNameIsNotNull() {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const FilterCondition.isNotNull(
-        property: r'personName',
-      ));
+      return query.addFilterCondition(
+        const FilterCondition.isNotNull(property: r'personName'),
+      );
     });
   }
 
-  QueryBuilder<FinancialVoucherModel, FinancialVoucherModel,
-      QAfterFilterCondition> personNameEqualTo(
-    String? value, {
-    bool caseSensitive = true,
-  }) {
+  QueryBuilder<
+    FinancialVoucherModel,
+    FinancialVoucherModel,
+    QAfterFilterCondition
+  >
+  personNameEqualTo(String? value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'personName',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.equalTo(
+          property: r'personName',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
-  QueryBuilder<FinancialVoucherModel, FinancialVoucherModel,
-      QAfterFilterCondition> personNameGreaterThan(
+  QueryBuilder<
+    FinancialVoucherModel,
+    FinancialVoucherModel,
+    QAfterFilterCondition
+  >
+  personNameGreaterThan(
     String? value, {
     bool include = false,
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        include: include,
-        property: r'personName',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.greaterThan(
+          include: include,
+          property: r'personName',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
-  QueryBuilder<FinancialVoucherModel, FinancialVoucherModel,
-      QAfterFilterCondition> personNameLessThan(
+  QueryBuilder<
+    FinancialVoucherModel,
+    FinancialVoucherModel,
+    QAfterFilterCondition
+  >
+  personNameLessThan(
     String? value, {
     bool include = false,
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.lessThan(
-        include: include,
-        property: r'personName',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.lessThan(
+          include: include,
+          property: r'personName',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
-  QueryBuilder<FinancialVoucherModel, FinancialVoucherModel,
-      QAfterFilterCondition> personNameBetween(
+  QueryBuilder<
+    FinancialVoucherModel,
+    FinancialVoucherModel,
+    QAfterFilterCondition
+  >
+  personNameBetween(
     String? lower,
     String? upper, {
     bool includeLower = true,
@@ -2299,137 +2800,180 @@ extension FinancialVoucherModelQueryFilter on QueryBuilder<
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.between(
-        property: r'personName',
-        lower: lower,
-        includeLower: includeLower,
-        upper: upper,
-        includeUpper: includeUpper,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.between(
+          property: r'personName',
+          lower: lower,
+          includeLower: includeLower,
+          upper: upper,
+          includeUpper: includeUpper,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
-  QueryBuilder<FinancialVoucherModel, FinancialVoucherModel,
-      QAfterFilterCondition> personNameStartsWith(
-    String value, {
-    bool caseSensitive = true,
-  }) {
+  QueryBuilder<
+    FinancialVoucherModel,
+    FinancialVoucherModel,
+    QAfterFilterCondition
+  >
+  personNameStartsWith(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.startsWith(
-        property: r'personName',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.startsWith(
+          property: r'personName',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
-  QueryBuilder<FinancialVoucherModel, FinancialVoucherModel,
-      QAfterFilterCondition> personNameEndsWith(
-    String value, {
-    bool caseSensitive = true,
-  }) {
+  QueryBuilder<
+    FinancialVoucherModel,
+    FinancialVoucherModel,
+    QAfterFilterCondition
+  >
+  personNameEndsWith(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.endsWith(
-        property: r'personName',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.endsWith(
+          property: r'personName',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
-  QueryBuilder<FinancialVoucherModel, FinancialVoucherModel,
-          QAfterFilterCondition>
-      personNameContains(String value, {bool caseSensitive = true}) {
+  QueryBuilder<
+    FinancialVoucherModel,
+    FinancialVoucherModel,
+    QAfterFilterCondition
+  >
+  personNameContains(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.contains(
-        property: r'personName',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.contains(
+          property: r'personName',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
-  QueryBuilder<FinancialVoucherModel, FinancialVoucherModel,
-          QAfterFilterCondition>
-      personNameMatches(String pattern, {bool caseSensitive = true}) {
+  QueryBuilder<
+    FinancialVoucherModel,
+    FinancialVoucherModel,
+    QAfterFilterCondition
+  >
+  personNameMatches(String pattern, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.matches(
-        property: r'personName',
-        wildcard: pattern,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.matches(
+          property: r'personName',
+          wildcard: pattern,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
-  QueryBuilder<FinancialVoucherModel, FinancialVoucherModel,
-      QAfterFilterCondition> personNameIsEmpty() {
+  QueryBuilder<
+    FinancialVoucherModel,
+    FinancialVoucherModel,
+    QAfterFilterCondition
+  >
+  personNameIsEmpty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'personName',
-        value: '',
-      ));
+      return query.addFilterCondition(
+        FilterCondition.equalTo(property: r'personName', value: ''),
+      );
     });
   }
 
-  QueryBuilder<FinancialVoucherModel, FinancialVoucherModel,
-      QAfterFilterCondition> personNameIsNotEmpty() {
+  QueryBuilder<
+    FinancialVoucherModel,
+    FinancialVoucherModel,
+    QAfterFilterCondition
+  >
+  personNameIsNotEmpty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        property: r'personName',
-        value: '',
-      ));
+      return query.addFilterCondition(
+        FilterCondition.greaterThan(property: r'personName', value: ''),
+      );
     });
   }
 
-  QueryBuilder<FinancialVoucherModel, FinancialVoucherModel,
-      QAfterFilterCondition> referenceNumberEqualTo(
-    String value, {
-    bool caseSensitive = true,
-  }) {
+  QueryBuilder<
+    FinancialVoucherModel,
+    FinancialVoucherModel,
+    QAfterFilterCondition
+  >
+  referenceNumberEqualTo(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'referenceNumber',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.equalTo(
+          property: r'referenceNumber',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
-  QueryBuilder<FinancialVoucherModel, FinancialVoucherModel,
-      QAfterFilterCondition> referenceNumberGreaterThan(
+  QueryBuilder<
+    FinancialVoucherModel,
+    FinancialVoucherModel,
+    QAfterFilterCondition
+  >
+  referenceNumberGreaterThan(
     String value, {
     bool include = false,
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        include: include,
-        property: r'referenceNumber',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.greaterThan(
+          include: include,
+          property: r'referenceNumber',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
-  QueryBuilder<FinancialVoucherModel, FinancialVoucherModel,
-      QAfterFilterCondition> referenceNumberLessThan(
+  QueryBuilder<
+    FinancialVoucherModel,
+    FinancialVoucherModel,
+    QAfterFilterCondition
+  >
+  referenceNumberLessThan(
     String value, {
     bool include = false,
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.lessThan(
-        include: include,
-        property: r'referenceNumber',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.lessThan(
+          include: include,
+          property: r'referenceNumber',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
-  QueryBuilder<FinancialVoucherModel, FinancialVoucherModel,
-      QAfterFilterCondition> referenceNumberBetween(
+  QueryBuilder<
+    FinancialVoucherModel,
+    FinancialVoucherModel,
+    QAfterFilterCondition
+  >
+  referenceNumberBetween(
     String lower,
     String upper, {
     bool includeLower = true,
@@ -2437,267 +2981,348 @@ extension FinancialVoucherModelQueryFilter on QueryBuilder<
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.between(
-        property: r'referenceNumber',
-        lower: lower,
-        includeLower: includeLower,
-        upper: upper,
-        includeUpper: includeUpper,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.between(
+          property: r'referenceNumber',
+          lower: lower,
+          includeLower: includeLower,
+          upper: upper,
+          includeUpper: includeUpper,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
-  QueryBuilder<FinancialVoucherModel, FinancialVoucherModel,
-      QAfterFilterCondition> referenceNumberStartsWith(
-    String value, {
-    bool caseSensitive = true,
-  }) {
+  QueryBuilder<
+    FinancialVoucherModel,
+    FinancialVoucherModel,
+    QAfterFilterCondition
+  >
+  referenceNumberStartsWith(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.startsWith(
-        property: r'referenceNumber',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.startsWith(
+          property: r'referenceNumber',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
-  QueryBuilder<FinancialVoucherModel, FinancialVoucherModel,
-      QAfterFilterCondition> referenceNumberEndsWith(
-    String value, {
-    bool caseSensitive = true,
-  }) {
+  QueryBuilder<
+    FinancialVoucherModel,
+    FinancialVoucherModel,
+    QAfterFilterCondition
+  >
+  referenceNumberEndsWith(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.endsWith(
-        property: r'referenceNumber',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.endsWith(
+          property: r'referenceNumber',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
-  QueryBuilder<FinancialVoucherModel, FinancialVoucherModel,
-          QAfterFilterCondition>
-      referenceNumberContains(String value, {bool caseSensitive = true}) {
+  QueryBuilder<
+    FinancialVoucherModel,
+    FinancialVoucherModel,
+    QAfterFilterCondition
+  >
+  referenceNumberContains(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.contains(
-        property: r'referenceNumber',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.contains(
+          property: r'referenceNumber',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
-  QueryBuilder<FinancialVoucherModel, FinancialVoucherModel,
-          QAfterFilterCondition>
-      referenceNumberMatches(String pattern, {bool caseSensitive = true}) {
+  QueryBuilder<
+    FinancialVoucherModel,
+    FinancialVoucherModel,
+    QAfterFilterCondition
+  >
+  referenceNumberMatches(String pattern, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.matches(
-        property: r'referenceNumber',
-        wildcard: pattern,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.matches(
+          property: r'referenceNumber',
+          wildcard: pattern,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
-  QueryBuilder<FinancialVoucherModel, FinancialVoucherModel,
-      QAfterFilterCondition> referenceNumberIsEmpty() {
+  QueryBuilder<
+    FinancialVoucherModel,
+    FinancialVoucherModel,
+    QAfterFilterCondition
+  >
+  referenceNumberIsEmpty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'referenceNumber',
-        value: '',
-      ));
+      return query.addFilterCondition(
+        FilterCondition.equalTo(property: r'referenceNumber', value: ''),
+      );
     });
   }
 
-  QueryBuilder<FinancialVoucherModel, FinancialVoucherModel,
-      QAfterFilterCondition> referenceNumberIsNotEmpty() {
+  QueryBuilder<
+    FinancialVoucherModel,
+    FinancialVoucherModel,
+    QAfterFilterCondition
+  >
+  referenceNumberIsNotEmpty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        property: r'referenceNumber',
-        value: '',
-      ));
+      return query.addFilterCondition(
+        FilterCondition.greaterThan(property: r'referenceNumber', value: ''),
+      );
     });
   }
 
-  QueryBuilder<FinancialVoucherModel, FinancialVoucherModel,
-      QAfterFilterCondition> serverUpdatedAtIsNull() {
+  QueryBuilder<
+    FinancialVoucherModel,
+    FinancialVoucherModel,
+    QAfterFilterCondition
+  >
+  serverUpdatedAtIsNull() {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const FilterCondition.isNull(
-        property: r'serverUpdatedAt',
-      ));
+      return query.addFilterCondition(
+        const FilterCondition.isNull(property: r'serverUpdatedAt'),
+      );
     });
   }
 
-  QueryBuilder<FinancialVoucherModel, FinancialVoucherModel,
-      QAfterFilterCondition> serverUpdatedAtIsNotNull() {
+  QueryBuilder<
+    FinancialVoucherModel,
+    FinancialVoucherModel,
+    QAfterFilterCondition
+  >
+  serverUpdatedAtIsNotNull() {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const FilterCondition.isNotNull(
-        property: r'serverUpdatedAt',
-      ));
+      return query.addFilterCondition(
+        const FilterCondition.isNotNull(property: r'serverUpdatedAt'),
+      );
     });
   }
 
-  QueryBuilder<FinancialVoucherModel, FinancialVoucherModel,
-      QAfterFilterCondition> serverUpdatedAtEqualTo(DateTime? value) {
+  QueryBuilder<
+    FinancialVoucherModel,
+    FinancialVoucherModel,
+    QAfterFilterCondition
+  >
+  serverUpdatedAtEqualTo(DateTime? value) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'serverUpdatedAt',
-        value: value,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.equalTo(property: r'serverUpdatedAt', value: value),
+      );
     });
   }
 
-  QueryBuilder<FinancialVoucherModel, FinancialVoucherModel,
-      QAfterFilterCondition> serverUpdatedAtGreaterThan(
-    DateTime? value, {
-    bool include = false,
-  }) {
+  QueryBuilder<
+    FinancialVoucherModel,
+    FinancialVoucherModel,
+    QAfterFilterCondition
+  >
+  serverUpdatedAtGreaterThan(DateTime? value, {bool include = false}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        include: include,
-        property: r'serverUpdatedAt',
-        value: value,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.greaterThan(
+          include: include,
+          property: r'serverUpdatedAt',
+          value: value,
+        ),
+      );
     });
   }
 
-  QueryBuilder<FinancialVoucherModel, FinancialVoucherModel,
-      QAfterFilterCondition> serverUpdatedAtLessThan(
-    DateTime? value, {
-    bool include = false,
-  }) {
+  QueryBuilder<
+    FinancialVoucherModel,
+    FinancialVoucherModel,
+    QAfterFilterCondition
+  >
+  serverUpdatedAtLessThan(DateTime? value, {bool include = false}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.lessThan(
-        include: include,
-        property: r'serverUpdatedAt',
-        value: value,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.lessThan(
+          include: include,
+          property: r'serverUpdatedAt',
+          value: value,
+        ),
+      );
     });
   }
 
-  QueryBuilder<FinancialVoucherModel, FinancialVoucherModel,
-      QAfterFilterCondition> serverUpdatedAtBetween(
+  QueryBuilder<
+    FinancialVoucherModel,
+    FinancialVoucherModel,
+    QAfterFilterCondition
+  >
+  serverUpdatedAtBetween(
     DateTime? lower,
     DateTime? upper, {
     bool includeLower = true,
     bool includeUpper = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.between(
-        property: r'serverUpdatedAt',
-        lower: lower,
-        includeLower: includeLower,
-        upper: upper,
-        includeUpper: includeUpper,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.between(
+          property: r'serverUpdatedAt',
+          lower: lower,
+          includeLower: includeLower,
+          upper: upper,
+          includeUpper: includeUpper,
+        ),
+      );
     });
   }
 
-  QueryBuilder<FinancialVoucherModel, FinancialVoucherModel,
-      QAfterFilterCondition> syncStatusEqualTo(SyncStatus value) {
+  QueryBuilder<
+    FinancialVoucherModel,
+    FinancialVoucherModel,
+    QAfterFilterCondition
+  >
+  syncStatusEqualTo(SyncStatus value) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'syncStatus',
-        value: value,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.equalTo(property: r'syncStatus', value: value),
+      );
     });
   }
 
-  QueryBuilder<FinancialVoucherModel, FinancialVoucherModel,
-      QAfterFilterCondition> syncStatusGreaterThan(
-    SyncStatus value, {
-    bool include = false,
-  }) {
+  QueryBuilder<
+    FinancialVoucherModel,
+    FinancialVoucherModel,
+    QAfterFilterCondition
+  >
+  syncStatusGreaterThan(SyncStatus value, {bool include = false}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        include: include,
-        property: r'syncStatus',
-        value: value,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.greaterThan(
+          include: include,
+          property: r'syncStatus',
+          value: value,
+        ),
+      );
     });
   }
 
-  QueryBuilder<FinancialVoucherModel, FinancialVoucherModel,
-      QAfterFilterCondition> syncStatusLessThan(
-    SyncStatus value, {
-    bool include = false,
-  }) {
+  QueryBuilder<
+    FinancialVoucherModel,
+    FinancialVoucherModel,
+    QAfterFilterCondition
+  >
+  syncStatusLessThan(SyncStatus value, {bool include = false}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.lessThan(
-        include: include,
-        property: r'syncStatus',
-        value: value,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.lessThan(
+          include: include,
+          property: r'syncStatus',
+          value: value,
+        ),
+      );
     });
   }
 
-  QueryBuilder<FinancialVoucherModel, FinancialVoucherModel,
-      QAfterFilterCondition> syncStatusBetween(
+  QueryBuilder<
+    FinancialVoucherModel,
+    FinancialVoucherModel,
+    QAfterFilterCondition
+  >
+  syncStatusBetween(
     SyncStatus lower,
     SyncStatus upper, {
     bool includeLower = true,
     bool includeUpper = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.between(
-        property: r'syncStatus',
-        lower: lower,
-        includeLower: includeLower,
-        upper: upper,
-        includeUpper: includeUpper,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.between(
+          property: r'syncStatus',
+          lower: lower,
+          includeLower: includeLower,
+          upper: upper,
+          includeUpper: includeUpper,
+        ),
+      );
     });
   }
 
-  QueryBuilder<FinancialVoucherModel, FinancialVoucherModel,
-      QAfterFilterCondition> treasuryAccountIdEqualTo(
-    String value, {
-    bool caseSensitive = true,
-  }) {
+  QueryBuilder<
+    FinancialVoucherModel,
+    FinancialVoucherModel,
+    QAfterFilterCondition
+  >
+  treasuryAccountIdEqualTo(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'treasuryAccountId',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.equalTo(
+          property: r'treasuryAccountId',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
-  QueryBuilder<FinancialVoucherModel, FinancialVoucherModel,
-      QAfterFilterCondition> treasuryAccountIdGreaterThan(
-    String value, {
-    bool include = false,
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        include: include,
-        property: r'treasuryAccountId',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<FinancialVoucherModel, FinancialVoucherModel,
-      QAfterFilterCondition> treasuryAccountIdLessThan(
+  QueryBuilder<
+    FinancialVoucherModel,
+    FinancialVoucherModel,
+    QAfterFilterCondition
+  >
+  treasuryAccountIdGreaterThan(
     String value, {
     bool include = false,
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.lessThan(
-        include: include,
-        property: r'treasuryAccountId',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.greaterThan(
+          include: include,
+          property: r'treasuryAccountId',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
-  QueryBuilder<FinancialVoucherModel, FinancialVoucherModel,
-      QAfterFilterCondition> treasuryAccountIdBetween(
+  QueryBuilder<
+    FinancialVoucherModel,
+    FinancialVoucherModel,
+    QAfterFilterCondition
+  >
+  treasuryAccountIdLessThan(
+    String value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        FilterCondition.lessThan(
+          include: include,
+          property: r'treasuryAccountId',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<
+    FinancialVoucherModel,
+    FinancialVoucherModel,
+    QAfterFilterCondition
+  >
+  treasuryAccountIdBetween(
     String lower,
     String upper, {
     bool includeLower = true,
@@ -2705,211 +3330,277 @@ extension FinancialVoucherModelQueryFilter on QueryBuilder<
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.between(
-        property: r'treasuryAccountId',
-        lower: lower,
-        includeLower: includeLower,
-        upper: upper,
-        includeUpper: includeUpper,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.between(
+          property: r'treasuryAccountId',
+          lower: lower,
+          includeLower: includeLower,
+          upper: upper,
+          includeUpper: includeUpper,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
-  QueryBuilder<FinancialVoucherModel, FinancialVoucherModel,
-      QAfterFilterCondition> treasuryAccountIdStartsWith(
-    String value, {
-    bool caseSensitive = true,
-  }) {
+  QueryBuilder<
+    FinancialVoucherModel,
+    FinancialVoucherModel,
+    QAfterFilterCondition
+  >
+  treasuryAccountIdStartsWith(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.startsWith(
-        property: r'treasuryAccountId',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.startsWith(
+          property: r'treasuryAccountId',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
-  QueryBuilder<FinancialVoucherModel, FinancialVoucherModel,
-      QAfterFilterCondition> treasuryAccountIdEndsWith(
-    String value, {
-    bool caseSensitive = true,
-  }) {
+  QueryBuilder<
+    FinancialVoucherModel,
+    FinancialVoucherModel,
+    QAfterFilterCondition
+  >
+  treasuryAccountIdEndsWith(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.endsWith(
-        property: r'treasuryAccountId',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.endsWith(
+          property: r'treasuryAccountId',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
-  QueryBuilder<FinancialVoucherModel, FinancialVoucherModel,
-          QAfterFilterCondition>
-      treasuryAccountIdContains(String value, {bool caseSensitive = true}) {
+  QueryBuilder<
+    FinancialVoucherModel,
+    FinancialVoucherModel,
+    QAfterFilterCondition
+  >
+  treasuryAccountIdContains(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.contains(
-        property: r'treasuryAccountId',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.contains(
+          property: r'treasuryAccountId',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
-  QueryBuilder<FinancialVoucherModel, FinancialVoucherModel,
-          QAfterFilterCondition>
-      treasuryAccountIdMatches(String pattern, {bool caseSensitive = true}) {
+  QueryBuilder<
+    FinancialVoucherModel,
+    FinancialVoucherModel,
+    QAfterFilterCondition
+  >
+  treasuryAccountIdMatches(String pattern, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.matches(
-        property: r'treasuryAccountId',
-        wildcard: pattern,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.matches(
+          property: r'treasuryAccountId',
+          wildcard: pattern,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
-  QueryBuilder<FinancialVoucherModel, FinancialVoucherModel,
-      QAfterFilterCondition> treasuryAccountIdIsEmpty() {
+  QueryBuilder<
+    FinancialVoucherModel,
+    FinancialVoucherModel,
+    QAfterFilterCondition
+  >
+  treasuryAccountIdIsEmpty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'treasuryAccountId',
-        value: '',
-      ));
+      return query.addFilterCondition(
+        FilterCondition.equalTo(property: r'treasuryAccountId', value: ''),
+      );
     });
   }
 
-  QueryBuilder<FinancialVoucherModel, FinancialVoucherModel,
-      QAfterFilterCondition> treasuryAccountIdIsNotEmpty() {
+  QueryBuilder<
+    FinancialVoucherModel,
+    FinancialVoucherModel,
+    QAfterFilterCondition
+  >
+  treasuryAccountIdIsNotEmpty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        property: r'treasuryAccountId',
-        value: '',
-      ));
+      return query.addFilterCondition(
+        FilterCondition.greaterThan(property: r'treasuryAccountId', value: ''),
+      );
     });
   }
 
-  QueryBuilder<FinancialVoucherModel, FinancialVoucherModel,
-      QAfterFilterCondition> typeEqualTo(VoucherType value) {
+  QueryBuilder<
+    FinancialVoucherModel,
+    FinancialVoucherModel,
+    QAfterFilterCondition
+  >
+  typeEqualTo(VoucherType value) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'type',
-        value: value,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.equalTo(property: r'type', value: value),
+      );
     });
   }
 
-  QueryBuilder<FinancialVoucherModel, FinancialVoucherModel,
-      QAfterFilterCondition> typeGreaterThan(
-    VoucherType value, {
-    bool include = false,
-  }) {
+  QueryBuilder<
+    FinancialVoucherModel,
+    FinancialVoucherModel,
+    QAfterFilterCondition
+  >
+  typeGreaterThan(VoucherType value, {bool include = false}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        include: include,
-        property: r'type',
-        value: value,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.greaterThan(
+          include: include,
+          property: r'type',
+          value: value,
+        ),
+      );
     });
   }
 
-  QueryBuilder<FinancialVoucherModel, FinancialVoucherModel,
-      QAfterFilterCondition> typeLessThan(
-    VoucherType value, {
-    bool include = false,
-  }) {
+  QueryBuilder<
+    FinancialVoucherModel,
+    FinancialVoucherModel,
+    QAfterFilterCondition
+  >
+  typeLessThan(VoucherType value, {bool include = false}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.lessThan(
-        include: include,
-        property: r'type',
-        value: value,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.lessThan(
+          include: include,
+          property: r'type',
+          value: value,
+        ),
+      );
     });
   }
 
-  QueryBuilder<FinancialVoucherModel, FinancialVoucherModel,
-      QAfterFilterCondition> typeBetween(
+  QueryBuilder<
+    FinancialVoucherModel,
+    FinancialVoucherModel,
+    QAfterFilterCondition
+  >
+  typeBetween(
     VoucherType lower,
     VoucherType upper, {
     bool includeLower = true,
     bool includeUpper = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.between(
-        property: r'type',
-        lower: lower,
-        includeLower: includeLower,
-        upper: upper,
-        includeUpper: includeUpper,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.between(
+          property: r'type',
+          lower: lower,
+          includeLower: includeLower,
+          upper: upper,
+          includeUpper: includeUpper,
+        ),
+      );
     });
   }
 
-  QueryBuilder<FinancialVoucherModel, FinancialVoucherModel,
-      QAfterFilterCondition> userIdIsNull() {
+  QueryBuilder<
+    FinancialVoucherModel,
+    FinancialVoucherModel,
+    QAfterFilterCondition
+  >
+  userIdIsNull() {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const FilterCondition.isNull(
-        property: r'userId',
-      ));
+      return query.addFilterCondition(
+        const FilterCondition.isNull(property: r'userId'),
+      );
     });
   }
 
-  QueryBuilder<FinancialVoucherModel, FinancialVoucherModel,
-      QAfterFilterCondition> userIdIsNotNull() {
+  QueryBuilder<
+    FinancialVoucherModel,
+    FinancialVoucherModel,
+    QAfterFilterCondition
+  >
+  userIdIsNotNull() {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const FilterCondition.isNotNull(
-        property: r'userId',
-      ));
+      return query.addFilterCondition(
+        const FilterCondition.isNotNull(property: r'userId'),
+      );
     });
   }
 
-  QueryBuilder<FinancialVoucherModel, FinancialVoucherModel,
-      QAfterFilterCondition> userIdEqualTo(
-    String? value, {
-    bool caseSensitive = true,
-  }) {
+  QueryBuilder<
+    FinancialVoucherModel,
+    FinancialVoucherModel,
+    QAfterFilterCondition
+  >
+  userIdEqualTo(String? value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'userId',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.equalTo(
+          property: r'userId',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
-  QueryBuilder<FinancialVoucherModel, FinancialVoucherModel,
-      QAfterFilterCondition> userIdGreaterThan(
+  QueryBuilder<
+    FinancialVoucherModel,
+    FinancialVoucherModel,
+    QAfterFilterCondition
+  >
+  userIdGreaterThan(
     String? value, {
     bool include = false,
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        include: include,
-        property: r'userId',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.greaterThan(
+          include: include,
+          property: r'userId',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
-  QueryBuilder<FinancialVoucherModel, FinancialVoucherModel,
-      QAfterFilterCondition> userIdLessThan(
+  QueryBuilder<
+    FinancialVoucherModel,
+    FinancialVoucherModel,
+    QAfterFilterCondition
+  >
+  userIdLessThan(
     String? value, {
     bool include = false,
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.lessThan(
-        include: include,
-        property: r'userId',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.lessThan(
+          include: include,
+          property: r'userId',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
-  QueryBuilder<FinancialVoucherModel, FinancialVoucherModel,
-      QAfterFilterCondition> userIdBetween(
+  QueryBuilder<
+    FinancialVoucherModel,
+    FinancialVoucherModel,
+    QAfterFilterCondition
+  >
+  userIdBetween(
     String? lower,
     String? upper, {
     bool includeLower = true,
@@ -2917,373 +3608,407 @@ extension FinancialVoucherModelQueryFilter on QueryBuilder<
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.between(
-        property: r'userId',
-        lower: lower,
-        includeLower: includeLower,
-        upper: upper,
-        includeUpper: includeUpper,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.between(
+          property: r'userId',
+          lower: lower,
+          includeLower: includeLower,
+          upper: upper,
+          includeUpper: includeUpper,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
-  QueryBuilder<FinancialVoucherModel, FinancialVoucherModel,
-      QAfterFilterCondition> userIdStartsWith(
-    String value, {
-    bool caseSensitive = true,
-  }) {
+  QueryBuilder<
+    FinancialVoucherModel,
+    FinancialVoucherModel,
+    QAfterFilterCondition
+  >
+  userIdStartsWith(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.startsWith(
-        property: r'userId',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.startsWith(
+          property: r'userId',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
-  QueryBuilder<FinancialVoucherModel, FinancialVoucherModel,
-      QAfterFilterCondition> userIdEndsWith(
-    String value, {
-    bool caseSensitive = true,
-  }) {
+  QueryBuilder<
+    FinancialVoucherModel,
+    FinancialVoucherModel,
+    QAfterFilterCondition
+  >
+  userIdEndsWith(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.endsWith(
-        property: r'userId',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.endsWith(
+          property: r'userId',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
-  QueryBuilder<FinancialVoucherModel, FinancialVoucherModel,
-          QAfterFilterCondition>
-      userIdContains(String value, {bool caseSensitive = true}) {
+  QueryBuilder<
+    FinancialVoucherModel,
+    FinancialVoucherModel,
+    QAfterFilterCondition
+  >
+  userIdContains(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.contains(
-        property: r'userId',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.contains(
+          property: r'userId',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
-  QueryBuilder<FinancialVoucherModel, FinancialVoucherModel,
-          QAfterFilterCondition>
-      userIdMatches(String pattern, {bool caseSensitive = true}) {
+  QueryBuilder<
+    FinancialVoucherModel,
+    FinancialVoucherModel,
+    QAfterFilterCondition
+  >
+  userIdMatches(String pattern, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.matches(
-        property: r'userId',
-        wildcard: pattern,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.matches(
+          property: r'userId',
+          wildcard: pattern,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
-  QueryBuilder<FinancialVoucherModel, FinancialVoucherModel,
-      QAfterFilterCondition> userIdIsEmpty() {
+  QueryBuilder<
+    FinancialVoucherModel,
+    FinancialVoucherModel,
+    QAfterFilterCondition
+  >
+  userIdIsEmpty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'userId',
-        value: '',
-      ));
+      return query.addFilterCondition(
+        FilterCondition.equalTo(property: r'userId', value: ''),
+      );
     });
   }
 
-  QueryBuilder<FinancialVoucherModel, FinancialVoucherModel,
-      QAfterFilterCondition> userIdIsNotEmpty() {
+  QueryBuilder<
+    FinancialVoucherModel,
+    FinancialVoucherModel,
+    QAfterFilterCondition
+  >
+  userIdIsNotEmpty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        property: r'userId',
-        value: '',
-      ));
+      return query.addFilterCondition(
+        FilterCondition.greaterThan(property: r'userId', value: ''),
+      );
     });
   }
 }
 
-extension FinancialVoucherModelQueryObject on QueryBuilder<
-    FinancialVoucherModel, FinancialVoucherModel, QFilterCondition> {}
+extension FinancialVoucherModelQueryObject
+    on
+        QueryBuilder<
+          FinancialVoucherModel,
+          FinancialVoucherModel,
+          QFilterCondition
+        > {}
 
-extension FinancialVoucherModelQueryLinks on QueryBuilder<FinancialVoucherModel,
-    FinancialVoucherModel, QFilterCondition> {}
+extension FinancialVoucherModelQueryLinks
+    on
+        QueryBuilder<
+          FinancialVoucherModel,
+          FinancialVoucherModel,
+          QFilterCondition
+        > {}
 
 extension FinancialVoucherModelQuerySortBy
     on QueryBuilder<FinancialVoucherModel, FinancialVoucherModel, QSortBy> {
   QueryBuilder<FinancialVoucherModel, FinancialVoucherModel, QAfterSortBy>
-      sortByAccountId() {
+  sortByAccountId() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'accountId', Sort.asc);
     });
   }
 
   QueryBuilder<FinancialVoucherModel, FinancialVoucherModel, QAfterSortBy>
-      sortByAccountIdDesc() {
+  sortByAccountIdDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'accountId', Sort.desc);
     });
   }
 
   QueryBuilder<FinancialVoucherModel, FinancialVoucherModel, QAfterSortBy>
-      sortByAmount() {
+  sortByAmount() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'amount', Sort.asc);
     });
   }
 
   QueryBuilder<FinancialVoucherModel, FinancialVoucherModel, QAfterSortBy>
-      sortByAmountDesc() {
+  sortByAmountDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'amount', Sort.desc);
     });
   }
 
   QueryBuilder<FinancialVoucherModel, FinancialVoucherModel, QAfterSortBy>
-      sortByCreatedAt() {
+  sortByCreatedAt() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'createdAt', Sort.asc);
     });
   }
 
   QueryBuilder<FinancialVoucherModel, FinancialVoucherModel, QAfterSortBy>
-      sortByCreatedAtDesc() {
+  sortByCreatedAtDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'createdAt', Sort.desc);
     });
   }
 
   QueryBuilder<FinancialVoucherModel, FinancialVoucherModel, QAfterSortBy>
-      sortByDate() {
+  sortByDate() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'date', Sort.asc);
     });
   }
 
   QueryBuilder<FinancialVoucherModel, FinancialVoucherModel, QAfterSortBy>
-      sortByDateDesc() {
+  sortByDateDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'date', Sort.desc);
     });
   }
 
   QueryBuilder<FinancialVoucherModel, FinancialVoucherModel, QAfterSortBy>
-      sortByDescription() {
+  sortByDescription() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'description', Sort.asc);
     });
   }
 
   QueryBuilder<FinancialVoucherModel, FinancialVoucherModel, QAfterSortBy>
-      sortByDescriptionDesc() {
+  sortByDescriptionDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'description', Sort.desc);
     });
   }
 
   QueryBuilder<FinancialVoucherModel, FinancialVoucherModel, QAfterSortBy>
-      sortByExchangeRate() {
+  sortByExchangeRate() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'exchangeRate', Sort.asc);
     });
   }
 
   QueryBuilder<FinancialVoucherModel, FinancialVoucherModel, QAfterSortBy>
-      sortByExchangeRateDesc() {
+  sortByExchangeRateDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'exchangeRate', Sort.desc);
     });
   }
 
   QueryBuilder<FinancialVoucherModel, FinancialVoucherModel, QAfterSortBy>
-      sortById() {
+  sortById() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'id', Sort.asc);
     });
   }
 
   QueryBuilder<FinancialVoucherModel, FinancialVoucherModel, QAfterSortBy>
-      sortByIdDesc() {
+  sortByIdDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'id', Sort.desc);
     });
   }
 
   QueryBuilder<FinancialVoucherModel, FinancialVoucherModel, QAfterSortBy>
-      sortByIsDeleted() {
+  sortByIsDeleted() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'isDeleted', Sort.asc);
     });
   }
 
   QueryBuilder<FinancialVoucherModel, FinancialVoucherModel, QAfterSortBy>
-      sortByIsDeletedDesc() {
+  sortByIsDeletedDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'isDeleted', Sort.desc);
     });
   }
 
   QueryBuilder<FinancialVoucherModel, FinancialVoucherModel, QAfterSortBy>
-      sortByIsPosted() {
+  sortByIsPosted() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'isPosted', Sort.asc);
     });
   }
 
   QueryBuilder<FinancialVoucherModel, FinancialVoucherModel, QAfterSortBy>
-      sortByIsPostedDesc() {
+  sortByIsPostedDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'isPosted', Sort.desc);
     });
   }
 
   QueryBuilder<FinancialVoucherModel, FinancialVoucherModel, QAfterSortBy>
-      sortByJournalEntryId() {
+  sortByJournalEntryId() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'journalEntryId', Sort.asc);
     });
   }
 
   QueryBuilder<FinancialVoucherModel, FinancialVoucherModel, QAfterSortBy>
-      sortByJournalEntryIdDesc() {
+  sortByJournalEntryIdDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'journalEntryId', Sort.desc);
     });
   }
 
   QueryBuilder<FinancialVoucherModel, FinancialVoucherModel, QAfterSortBy>
-      sortByOriginalAmount() {
+  sortByOriginalAmount() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'originalAmount', Sort.asc);
     });
   }
 
   QueryBuilder<FinancialVoucherModel, FinancialVoucherModel, QAfterSortBy>
-      sortByOriginalAmountDesc() {
+  sortByOriginalAmountDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'originalAmount', Sort.desc);
     });
   }
 
   QueryBuilder<FinancialVoucherModel, FinancialVoucherModel, QAfterSortBy>
-      sortByOriginalCurrency() {
+  sortByOriginalCurrency() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'originalCurrency', Sort.asc);
     });
   }
 
   QueryBuilder<FinancialVoucherModel, FinancialVoucherModel, QAfterSortBy>
-      sortByOriginalCurrencyDesc() {
+  sortByOriginalCurrencyDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'originalCurrency', Sort.desc);
     });
   }
 
   QueryBuilder<FinancialVoucherModel, FinancialVoucherModel, QAfterSortBy>
-      sortByPaymentMethod() {
+  sortByPaymentMethod() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'paymentMethod', Sort.asc);
     });
   }
 
   QueryBuilder<FinancialVoucherModel, FinancialVoucherModel, QAfterSortBy>
-      sortByPaymentMethodDesc() {
+  sortByPaymentMethodDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'paymentMethod', Sort.desc);
     });
   }
 
   QueryBuilder<FinancialVoucherModel, FinancialVoucherModel, QAfterSortBy>
-      sortByPersonName() {
+  sortByPersonName() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'personName', Sort.asc);
     });
   }
 
   QueryBuilder<FinancialVoucherModel, FinancialVoucherModel, QAfterSortBy>
-      sortByPersonNameDesc() {
+  sortByPersonNameDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'personName', Sort.desc);
     });
   }
 
   QueryBuilder<FinancialVoucherModel, FinancialVoucherModel, QAfterSortBy>
-      sortByReferenceNumber() {
+  sortByReferenceNumber() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'referenceNumber', Sort.asc);
     });
   }
 
   QueryBuilder<FinancialVoucherModel, FinancialVoucherModel, QAfterSortBy>
-      sortByReferenceNumberDesc() {
+  sortByReferenceNumberDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'referenceNumber', Sort.desc);
     });
   }
 
   QueryBuilder<FinancialVoucherModel, FinancialVoucherModel, QAfterSortBy>
-      sortByServerUpdatedAt() {
+  sortByServerUpdatedAt() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'serverUpdatedAt', Sort.asc);
     });
   }
 
   QueryBuilder<FinancialVoucherModel, FinancialVoucherModel, QAfterSortBy>
-      sortByServerUpdatedAtDesc() {
+  sortByServerUpdatedAtDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'serverUpdatedAt', Sort.desc);
     });
   }
 
   QueryBuilder<FinancialVoucherModel, FinancialVoucherModel, QAfterSortBy>
-      sortBySyncStatus() {
+  sortBySyncStatus() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'syncStatus', Sort.asc);
     });
   }
 
   QueryBuilder<FinancialVoucherModel, FinancialVoucherModel, QAfterSortBy>
-      sortBySyncStatusDesc() {
+  sortBySyncStatusDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'syncStatus', Sort.desc);
     });
   }
 
   QueryBuilder<FinancialVoucherModel, FinancialVoucherModel, QAfterSortBy>
-      sortByTreasuryAccountId() {
+  sortByTreasuryAccountId() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'treasuryAccountId', Sort.asc);
     });
   }
 
   QueryBuilder<FinancialVoucherModel, FinancialVoucherModel, QAfterSortBy>
-      sortByTreasuryAccountIdDesc() {
+  sortByTreasuryAccountIdDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'treasuryAccountId', Sort.desc);
     });
   }
 
   QueryBuilder<FinancialVoucherModel, FinancialVoucherModel, QAfterSortBy>
-      sortByType() {
+  sortByType() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'type', Sort.asc);
     });
   }
 
   QueryBuilder<FinancialVoucherModel, FinancialVoucherModel, QAfterSortBy>
-      sortByTypeDesc() {
+  sortByTypeDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'type', Sort.desc);
     });
   }
 
   QueryBuilder<FinancialVoucherModel, FinancialVoucherModel, QAfterSortBy>
-      sortByUserId() {
+  sortByUserId() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'userId', Sort.asc);
     });
   }
 
   QueryBuilder<FinancialVoucherModel, FinancialVoucherModel, QAfterSortBy>
-      sortByUserIdDesc() {
+  sortByUserIdDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'userId', Sort.desc);
     });
@@ -3293,294 +4018,294 @@ extension FinancialVoucherModelQuerySortBy
 extension FinancialVoucherModelQuerySortThenBy
     on QueryBuilder<FinancialVoucherModel, FinancialVoucherModel, QSortThenBy> {
   QueryBuilder<FinancialVoucherModel, FinancialVoucherModel, QAfterSortBy>
-      thenByAccountId() {
+  thenByAccountId() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'accountId', Sort.asc);
     });
   }
 
   QueryBuilder<FinancialVoucherModel, FinancialVoucherModel, QAfterSortBy>
-      thenByAccountIdDesc() {
+  thenByAccountIdDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'accountId', Sort.desc);
     });
   }
 
   QueryBuilder<FinancialVoucherModel, FinancialVoucherModel, QAfterSortBy>
-      thenByAmount() {
+  thenByAmount() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'amount', Sort.asc);
     });
   }
 
   QueryBuilder<FinancialVoucherModel, FinancialVoucherModel, QAfterSortBy>
-      thenByAmountDesc() {
+  thenByAmountDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'amount', Sort.desc);
     });
   }
 
   QueryBuilder<FinancialVoucherModel, FinancialVoucherModel, QAfterSortBy>
-      thenByCreatedAt() {
+  thenByCreatedAt() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'createdAt', Sort.asc);
     });
   }
 
   QueryBuilder<FinancialVoucherModel, FinancialVoucherModel, QAfterSortBy>
-      thenByCreatedAtDesc() {
+  thenByCreatedAtDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'createdAt', Sort.desc);
     });
   }
 
   QueryBuilder<FinancialVoucherModel, FinancialVoucherModel, QAfterSortBy>
-      thenByDate() {
+  thenByDate() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'date', Sort.asc);
     });
   }
 
   QueryBuilder<FinancialVoucherModel, FinancialVoucherModel, QAfterSortBy>
-      thenByDateDesc() {
+  thenByDateDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'date', Sort.desc);
     });
   }
 
   QueryBuilder<FinancialVoucherModel, FinancialVoucherModel, QAfterSortBy>
-      thenByDescription() {
+  thenByDescription() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'description', Sort.asc);
     });
   }
 
   QueryBuilder<FinancialVoucherModel, FinancialVoucherModel, QAfterSortBy>
-      thenByDescriptionDesc() {
+  thenByDescriptionDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'description', Sort.desc);
     });
   }
 
   QueryBuilder<FinancialVoucherModel, FinancialVoucherModel, QAfterSortBy>
-      thenByExchangeRate() {
+  thenByExchangeRate() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'exchangeRate', Sort.asc);
     });
   }
 
   QueryBuilder<FinancialVoucherModel, FinancialVoucherModel, QAfterSortBy>
-      thenByExchangeRateDesc() {
+  thenByExchangeRateDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'exchangeRate', Sort.desc);
     });
   }
 
   QueryBuilder<FinancialVoucherModel, FinancialVoucherModel, QAfterSortBy>
-      thenById() {
+  thenById() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'id', Sort.asc);
     });
   }
 
   QueryBuilder<FinancialVoucherModel, FinancialVoucherModel, QAfterSortBy>
-      thenByIdDesc() {
+  thenByIdDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'id', Sort.desc);
     });
   }
 
   QueryBuilder<FinancialVoucherModel, FinancialVoucherModel, QAfterSortBy>
-      thenByIsDeleted() {
+  thenByIsDeleted() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'isDeleted', Sort.asc);
     });
   }
 
   QueryBuilder<FinancialVoucherModel, FinancialVoucherModel, QAfterSortBy>
-      thenByIsDeletedDesc() {
+  thenByIsDeletedDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'isDeleted', Sort.desc);
     });
   }
 
   QueryBuilder<FinancialVoucherModel, FinancialVoucherModel, QAfterSortBy>
-      thenByIsPosted() {
+  thenByIsPosted() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'isPosted', Sort.asc);
     });
   }
 
   QueryBuilder<FinancialVoucherModel, FinancialVoucherModel, QAfterSortBy>
-      thenByIsPostedDesc() {
+  thenByIsPostedDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'isPosted', Sort.desc);
     });
   }
 
   QueryBuilder<FinancialVoucherModel, FinancialVoucherModel, QAfterSortBy>
-      thenByIsarId() {
+  thenByIsarId() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'isarId', Sort.asc);
     });
   }
 
   QueryBuilder<FinancialVoucherModel, FinancialVoucherModel, QAfterSortBy>
-      thenByIsarIdDesc() {
+  thenByIsarIdDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'isarId', Sort.desc);
     });
   }
 
   QueryBuilder<FinancialVoucherModel, FinancialVoucherModel, QAfterSortBy>
-      thenByJournalEntryId() {
+  thenByJournalEntryId() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'journalEntryId', Sort.asc);
     });
   }
 
   QueryBuilder<FinancialVoucherModel, FinancialVoucherModel, QAfterSortBy>
-      thenByJournalEntryIdDesc() {
+  thenByJournalEntryIdDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'journalEntryId', Sort.desc);
     });
   }
 
   QueryBuilder<FinancialVoucherModel, FinancialVoucherModel, QAfterSortBy>
-      thenByOriginalAmount() {
+  thenByOriginalAmount() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'originalAmount', Sort.asc);
     });
   }
 
   QueryBuilder<FinancialVoucherModel, FinancialVoucherModel, QAfterSortBy>
-      thenByOriginalAmountDesc() {
+  thenByOriginalAmountDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'originalAmount', Sort.desc);
     });
   }
 
   QueryBuilder<FinancialVoucherModel, FinancialVoucherModel, QAfterSortBy>
-      thenByOriginalCurrency() {
+  thenByOriginalCurrency() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'originalCurrency', Sort.asc);
     });
   }
 
   QueryBuilder<FinancialVoucherModel, FinancialVoucherModel, QAfterSortBy>
-      thenByOriginalCurrencyDesc() {
+  thenByOriginalCurrencyDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'originalCurrency', Sort.desc);
     });
   }
 
   QueryBuilder<FinancialVoucherModel, FinancialVoucherModel, QAfterSortBy>
-      thenByPaymentMethod() {
+  thenByPaymentMethod() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'paymentMethod', Sort.asc);
     });
   }
 
   QueryBuilder<FinancialVoucherModel, FinancialVoucherModel, QAfterSortBy>
-      thenByPaymentMethodDesc() {
+  thenByPaymentMethodDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'paymentMethod', Sort.desc);
     });
   }
 
   QueryBuilder<FinancialVoucherModel, FinancialVoucherModel, QAfterSortBy>
-      thenByPersonName() {
+  thenByPersonName() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'personName', Sort.asc);
     });
   }
 
   QueryBuilder<FinancialVoucherModel, FinancialVoucherModel, QAfterSortBy>
-      thenByPersonNameDesc() {
+  thenByPersonNameDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'personName', Sort.desc);
     });
   }
 
   QueryBuilder<FinancialVoucherModel, FinancialVoucherModel, QAfterSortBy>
-      thenByReferenceNumber() {
+  thenByReferenceNumber() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'referenceNumber', Sort.asc);
     });
   }
 
   QueryBuilder<FinancialVoucherModel, FinancialVoucherModel, QAfterSortBy>
-      thenByReferenceNumberDesc() {
+  thenByReferenceNumberDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'referenceNumber', Sort.desc);
     });
   }
 
   QueryBuilder<FinancialVoucherModel, FinancialVoucherModel, QAfterSortBy>
-      thenByServerUpdatedAt() {
+  thenByServerUpdatedAt() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'serverUpdatedAt', Sort.asc);
     });
   }
 
   QueryBuilder<FinancialVoucherModel, FinancialVoucherModel, QAfterSortBy>
-      thenByServerUpdatedAtDesc() {
+  thenByServerUpdatedAtDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'serverUpdatedAt', Sort.desc);
     });
   }
 
   QueryBuilder<FinancialVoucherModel, FinancialVoucherModel, QAfterSortBy>
-      thenBySyncStatus() {
+  thenBySyncStatus() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'syncStatus', Sort.asc);
     });
   }
 
   QueryBuilder<FinancialVoucherModel, FinancialVoucherModel, QAfterSortBy>
-      thenBySyncStatusDesc() {
+  thenBySyncStatusDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'syncStatus', Sort.desc);
     });
   }
 
   QueryBuilder<FinancialVoucherModel, FinancialVoucherModel, QAfterSortBy>
-      thenByTreasuryAccountId() {
+  thenByTreasuryAccountId() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'treasuryAccountId', Sort.asc);
     });
   }
 
   QueryBuilder<FinancialVoucherModel, FinancialVoucherModel, QAfterSortBy>
-      thenByTreasuryAccountIdDesc() {
+  thenByTreasuryAccountIdDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'treasuryAccountId', Sort.desc);
     });
   }
 
   QueryBuilder<FinancialVoucherModel, FinancialVoucherModel, QAfterSortBy>
-      thenByType() {
+  thenByType() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'type', Sort.asc);
     });
   }
 
   QueryBuilder<FinancialVoucherModel, FinancialVoucherModel, QAfterSortBy>
-      thenByTypeDesc() {
+  thenByTypeDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'type', Sort.desc);
     });
   }
 
   QueryBuilder<FinancialVoucherModel, FinancialVoucherModel, QAfterSortBy>
-      thenByUserId() {
+  thenByUserId() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'userId', Sort.asc);
     });
   }
 
   QueryBuilder<FinancialVoucherModel, FinancialVoucherModel, QAfterSortBy>
-      thenByUserIdDesc() {
+  thenByUserIdDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'userId', Sort.desc);
     });
@@ -3590,153 +4315,168 @@ extension FinancialVoucherModelQuerySortThenBy
 extension FinancialVoucherModelQueryWhereDistinct
     on QueryBuilder<FinancialVoucherModel, FinancialVoucherModel, QDistinct> {
   QueryBuilder<FinancialVoucherModel, FinancialVoucherModel, QDistinct>
-      distinctByAccountId({bool caseSensitive = true}) {
+  distinctByAccountId({bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'accountId', caseSensitive: caseSensitive);
     });
   }
 
   QueryBuilder<FinancialVoucherModel, FinancialVoucherModel, QDistinct>
-      distinctByAmount({bool caseSensitive = true}) {
+  distinctByAmount({bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'amount', caseSensitive: caseSensitive);
     });
   }
 
   QueryBuilder<FinancialVoucherModel, FinancialVoucherModel, QDistinct>
-      distinctByCreatedAt() {
+  distinctByCreatedAt() {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'createdAt');
     });
   }
 
   QueryBuilder<FinancialVoucherModel, FinancialVoucherModel, QDistinct>
-      distinctByDate() {
+  distinctByDate() {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'date');
     });
   }
 
   QueryBuilder<FinancialVoucherModel, FinancialVoucherModel, QDistinct>
-      distinctByDescription({bool caseSensitive = true}) {
+  distinctByDescription({bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'description', caseSensitive: caseSensitive);
     });
   }
 
   QueryBuilder<FinancialVoucherModel, FinancialVoucherModel, QDistinct>
-      distinctByExchangeRate({bool caseSensitive = true}) {
+  distinctByExchangeRate({bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'exchangeRate', caseSensitive: caseSensitive);
     });
   }
 
   QueryBuilder<FinancialVoucherModel, FinancialVoucherModel, QDistinct>
-      distinctById({bool caseSensitive = true}) {
+  distinctById({bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'id', caseSensitive: caseSensitive);
     });
   }
 
   QueryBuilder<FinancialVoucherModel, FinancialVoucherModel, QDistinct>
-      distinctByIsDeleted() {
+  distinctByIsDeleted() {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'isDeleted');
     });
   }
 
   QueryBuilder<FinancialVoucherModel, FinancialVoucherModel, QDistinct>
-      distinctByIsPosted() {
+  distinctByIsPosted() {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'isPosted');
     });
   }
 
   QueryBuilder<FinancialVoucherModel, FinancialVoucherModel, QDistinct>
-      distinctByJournalEntryId({bool caseSensitive = true}) {
+  distinctByJournalEntryId({bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy(r'journalEntryId',
-          caseSensitive: caseSensitive);
+      return query.addDistinctBy(
+        r'journalEntryId',
+        caseSensitive: caseSensitive,
+      );
     });
   }
 
   QueryBuilder<FinancialVoucherModel, FinancialVoucherModel, QDistinct>
-      distinctByOriginalAmount({bool caseSensitive = true}) {
+  distinctByOriginalAmount({bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy(r'originalAmount',
-          caseSensitive: caseSensitive);
+      return query.addDistinctBy(
+        r'originalAmount',
+        caseSensitive: caseSensitive,
+      );
     });
   }
 
   QueryBuilder<FinancialVoucherModel, FinancialVoucherModel, QDistinct>
-      distinctByOriginalCurrency({bool caseSensitive = true}) {
+  distinctByOriginalCurrency({bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy(r'originalCurrency',
-          caseSensitive: caseSensitive);
+      return query.addDistinctBy(
+        r'originalCurrency',
+        caseSensitive: caseSensitive,
+      );
     });
   }
 
   QueryBuilder<FinancialVoucherModel, FinancialVoucherModel, QDistinct>
-      distinctByPaymentMethod() {
+  distinctByPaymentMethod() {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'paymentMethod');
     });
   }
 
   QueryBuilder<FinancialVoucherModel, FinancialVoucherModel, QDistinct>
-      distinctByPersonName({bool caseSensitive = true}) {
+  distinctByPersonName({bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'personName', caseSensitive: caseSensitive);
     });
   }
 
   QueryBuilder<FinancialVoucherModel, FinancialVoucherModel, QDistinct>
-      distinctByReferenceNumber({bool caseSensitive = true}) {
+  distinctByReferenceNumber({bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy(r'referenceNumber',
-          caseSensitive: caseSensitive);
+      return query.addDistinctBy(
+        r'referenceNumber',
+        caseSensitive: caseSensitive,
+      );
     });
   }
 
   QueryBuilder<FinancialVoucherModel, FinancialVoucherModel, QDistinct>
-      distinctByServerUpdatedAt() {
+  distinctByServerUpdatedAt() {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'serverUpdatedAt');
     });
   }
 
   QueryBuilder<FinancialVoucherModel, FinancialVoucherModel, QDistinct>
-      distinctBySyncStatus() {
+  distinctBySyncStatus() {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'syncStatus');
     });
   }
 
   QueryBuilder<FinancialVoucherModel, FinancialVoucherModel, QDistinct>
-      distinctByTreasuryAccountId({bool caseSensitive = true}) {
+  distinctByTreasuryAccountId({bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy(r'treasuryAccountId',
-          caseSensitive: caseSensitive);
+      return query.addDistinctBy(
+        r'treasuryAccountId',
+        caseSensitive: caseSensitive,
+      );
     });
   }
 
   QueryBuilder<FinancialVoucherModel, FinancialVoucherModel, QDistinct>
-      distinctByType() {
+  distinctByType() {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'type');
     });
   }
 
   QueryBuilder<FinancialVoucherModel, FinancialVoucherModel, QDistinct>
-      distinctByUserId({bool caseSensitive = true}) {
+  distinctByUserId({bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'userId', caseSensitive: caseSensitive);
     });
   }
 }
 
-extension FinancialVoucherModelQueryProperty on QueryBuilder<
-    FinancialVoucherModel, FinancialVoucherModel, QQueryProperty> {
+extension FinancialVoucherModelQueryProperty
+    on
+        QueryBuilder<
+          FinancialVoucherModel,
+          FinancialVoucherModel,
+          QQueryProperty
+        > {
   QueryBuilder<FinancialVoucherModel, int, QQueryOperations> isarIdProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'isarId');
@@ -3744,42 +4484,42 @@ extension FinancialVoucherModelQueryProperty on QueryBuilder<
   }
 
   QueryBuilder<FinancialVoucherModel, String, QQueryOperations>
-      accountIdProperty() {
+  accountIdProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'accountId');
     });
   }
 
   QueryBuilder<FinancialVoucherModel, String, QQueryOperations>
-      amountProperty() {
+  amountProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'amount');
     });
   }
 
   QueryBuilder<FinancialVoucherModel, DateTime, QQueryOperations>
-      createdAtProperty() {
+  createdAtProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'createdAt');
     });
   }
 
   QueryBuilder<FinancialVoucherModel, DateTime, QQueryOperations>
-      dateProperty() {
+  dateProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'date');
     });
   }
 
   QueryBuilder<FinancialVoucherModel, String, QQueryOperations>
-      descriptionProperty() {
+  descriptionProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'description');
     });
   }
 
   QueryBuilder<FinancialVoucherModel, String?, QQueryOperations>
-      exchangeRateProperty() {
+  exchangeRateProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'exchangeRate');
     });
@@ -3792,91 +4532,91 @@ extension FinancialVoucherModelQueryProperty on QueryBuilder<
   }
 
   QueryBuilder<FinancialVoucherModel, bool, QQueryOperations>
-      isDeletedProperty() {
+  isDeletedProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'isDeleted');
     });
   }
 
   QueryBuilder<FinancialVoucherModel, bool, QQueryOperations>
-      isPostedProperty() {
+  isPostedProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'isPosted');
     });
   }
 
   QueryBuilder<FinancialVoucherModel, String?, QQueryOperations>
-      journalEntryIdProperty() {
+  journalEntryIdProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'journalEntryId');
     });
   }
 
   QueryBuilder<FinancialVoucherModel, String?, QQueryOperations>
-      originalAmountProperty() {
+  originalAmountProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'originalAmount');
     });
   }
 
   QueryBuilder<FinancialVoucherModel, String?, QQueryOperations>
-      originalCurrencyProperty() {
+  originalCurrencyProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'originalCurrency');
     });
   }
 
   QueryBuilder<FinancialVoucherModel, PaymentMethod, QQueryOperations>
-      paymentMethodProperty() {
+  paymentMethodProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'paymentMethod');
     });
   }
 
   QueryBuilder<FinancialVoucherModel, String?, QQueryOperations>
-      personNameProperty() {
+  personNameProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'personName');
     });
   }
 
   QueryBuilder<FinancialVoucherModel, String, QQueryOperations>
-      referenceNumberProperty() {
+  referenceNumberProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'referenceNumber');
     });
   }
 
   QueryBuilder<FinancialVoucherModel, DateTime?, QQueryOperations>
-      serverUpdatedAtProperty() {
+  serverUpdatedAtProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'serverUpdatedAt');
     });
   }
 
   QueryBuilder<FinancialVoucherModel, SyncStatus, QQueryOperations>
-      syncStatusProperty() {
+  syncStatusProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'syncStatus');
     });
   }
 
   QueryBuilder<FinancialVoucherModel, String, QQueryOperations>
-      treasuryAccountIdProperty() {
+  treasuryAccountIdProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'treasuryAccountId');
     });
   }
 
   QueryBuilder<FinancialVoucherModel, VoucherType, QQueryOperations>
-      typeProperty() {
+  typeProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'type');
     });
   }
 
   QueryBuilder<FinancialVoucherModel, String?, QQueryOperations>
-      userIdProperty() {
+  userIdProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'userId');
     });

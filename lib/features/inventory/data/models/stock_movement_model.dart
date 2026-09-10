@@ -74,17 +74,17 @@ class StockMovementModel {
 
   /// تحويل النموذج إلى كائن Entity
   StockMovement toEntity() => StockMovement(
-        id: id ?? '',
-        itemId: itemId,
-        warehouseId: warehouseId ?? '',
-        type: type,
-        quantity: quantity,
-        unitCost: unitCost,
-        date: date,
-        referenceId: referenceId,
-        description: description,
-        userId: userId,
-        syncStatus: syncStatus,
-        createdAt: createdAt,
-      );
+    id: id ?? '',
+    itemId: itemId,
+    warehouseId: warehouseId ?? '',
+    type: type,
+    quantity: quantity,
+    unitCost: unitCost,
+    date: date,
+    referenceId: referenceId,
+    description: description,
+    userId: userId,
+    syncStatus: syncStatus,
+    createdAt: createdAt,
+  );
 }

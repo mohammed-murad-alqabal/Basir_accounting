@@ -64,7 +64,8 @@ class InventoryService {
           unitCost: unitCost,
           date: transfer.date,
           referenceId: transfer.id,
-          description: 'Transfer to ${transfer.destinationWarehouseId} '
+          description:
+              'Transfer to ${transfer.destinationWarehouseId} '
               '(Ref: ${transfer.transferNumber})',
           createdAt: now,
         ),
@@ -81,7 +82,8 @@ class InventoryService {
           unitCost: unitCost,
           date: transfer.date,
           referenceId: transfer.id,
-          description: 'Transfer from ${transfer.sourceWarehouseId} '
+          description:
+              'Transfer from ${transfer.sourceWarehouseId} '
               '(Ref: ${transfer.transferNumber})',
           createdAt: now,
         ),

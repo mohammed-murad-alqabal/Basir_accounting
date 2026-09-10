@@ -23,7 +23,8 @@ class AppearanceSettingsScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final themeMode = ref.watch(themeProvider).value ?? ThemeMode.system;
-    final appearanceState = ref.watch(appearanceServiceProvider).value ??
+    final appearanceState =
+        ref.watch(appearanceServiceProvider).value ??
         const AppearanceState(highContrast: false, reduceMotion: false);
     final calendarType =
         ref.watch(calendarProvider).value ?? CalendarType.gregorian;

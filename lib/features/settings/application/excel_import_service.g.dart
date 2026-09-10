@@ -13,16 +13,19 @@ String _$excelImportServiceHash() =>
 ///
 /// Copied from [ExcelImportService].
 @ProviderFor(ExcelImportService)
-final excelImportServiceProvider = AutoDisposeAsyncNotifierProvider<
-    ExcelImportService, List<ImportRow>>.internal(
-  ExcelImportService.new,
-  name: r'excelImportServiceProvider',
-  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-      ? null
-      : _$excelImportServiceHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
+final excelImportServiceProvider =
+    AutoDisposeAsyncNotifierProvider<
+      ExcelImportService,
+      List<ImportRow>
+    >.internal(
+      ExcelImportService.new,
+      name: r'excelImportServiceProvider',
+      debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+          ? null
+          : _$excelImportServiceHash,
+      dependencies: null,
+      allTransitiveDependencies: null,
+    );
 
 typedef _$ExcelImportService = AutoDisposeAsyncNotifier<List<ImportRow>>;
 // ignore_for_file: type=lint

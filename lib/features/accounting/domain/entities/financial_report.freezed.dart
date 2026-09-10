@@ -12,7 +12,8 @@ part of 'financial_report.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
+  'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models',
+);
 
 /// @nodoc
 mixin _$FinancialReportLine {
@@ -42,16 +43,18 @@ mixin _$FinancialReportLine {
 /// @nodoc
 abstract class $FinancialReportLineCopyWith<$Res> {
   factory $FinancialReportLineCopyWith(
-          FinancialReportLine value, $Res Function(FinancialReportLine) then) =
-      _$FinancialReportLineCopyWithImpl<$Res, FinancialReportLine>;
+    FinancialReportLine value,
+    $Res Function(FinancialReportLine) then,
+  ) = _$FinancialReportLineCopyWithImpl<$Res, FinancialReportLine>;
   @useResult
-  $Res call(
-      {String label,
-      Decimal amount,
-      bool isTitle,
-      bool isTotal,
-      int indentLevel,
-      String? accountId});
+  $Res call({
+    String label,
+    Decimal amount,
+    bool isTitle,
+    bool isTotal,
+    int indentLevel,
+    String? accountId,
+  });
 }
 
 /// @nodoc
@@ -74,59 +77,65 @@ class _$FinancialReportLineCopyWithImpl<$Res, $Val extends FinancialReportLine>
     Object? indentLevel = null,
     Object? accountId = freezed,
   }) {
-    return _then(_value.copyWith(
-      label: null == label
-          ? _value.label
-          : label // ignore: cast_nullable_to_non_nullable
-              as String,
-      amount: null == amount
-          ? _value.amount
-          : amount // ignore: cast_nullable_to_non_nullable
-              as Decimal,
-      isTitle: null == isTitle
-          ? _value.isTitle
-          : isTitle // ignore: cast_nullable_to_non_nullable
-              as bool,
-      isTotal: null == isTotal
-          ? _value.isTotal
-          : isTotal // ignore: cast_nullable_to_non_nullable
-              as bool,
-      indentLevel: null == indentLevel
-          ? _value.indentLevel
-          : indentLevel // ignore: cast_nullable_to_non_nullable
-              as int,
-      accountId: freezed == accountId
-          ? _value.accountId
-          : accountId // ignore: cast_nullable_to_non_nullable
-              as String?,
-    ) as $Val);
+    return _then(
+      _value.copyWith(
+            label: null == label
+                ? _value.label
+                : label // ignore: cast_nullable_to_non_nullable
+                      as String,
+            amount: null == amount
+                ? _value.amount
+                : amount // ignore: cast_nullable_to_non_nullable
+                      as Decimal,
+            isTitle: null == isTitle
+                ? _value.isTitle
+                : isTitle // ignore: cast_nullable_to_non_nullable
+                      as bool,
+            isTotal: null == isTotal
+                ? _value.isTotal
+                : isTotal // ignore: cast_nullable_to_non_nullable
+                      as bool,
+            indentLevel: null == indentLevel
+                ? _value.indentLevel
+                : indentLevel // ignore: cast_nullable_to_non_nullable
+                      as int,
+            accountId: freezed == accountId
+                ? _value.accountId
+                : accountId // ignore: cast_nullable_to_non_nullable
+                      as String?,
+          )
+          as $Val,
+    );
   }
 }
 
 /// @nodoc
 abstract class _$$FinancialReportLineImplCopyWith<$Res>
     implements $FinancialReportLineCopyWith<$Res> {
-  factory _$$FinancialReportLineImplCopyWith(_$FinancialReportLineImpl value,
-          $Res Function(_$FinancialReportLineImpl) then) =
-      __$$FinancialReportLineImplCopyWithImpl<$Res>;
+  factory _$$FinancialReportLineImplCopyWith(
+    _$FinancialReportLineImpl value,
+    $Res Function(_$FinancialReportLineImpl) then,
+  ) = __$$FinancialReportLineImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call(
-      {String label,
-      Decimal amount,
-      bool isTitle,
-      bool isTotal,
-      int indentLevel,
-      String? accountId});
+  $Res call({
+    String label,
+    Decimal amount,
+    bool isTitle,
+    bool isTotal,
+    int indentLevel,
+    String? accountId,
+  });
 }
 
 /// @nodoc
 class __$$FinancialReportLineImplCopyWithImpl<$Res>
     extends _$FinancialReportLineCopyWithImpl<$Res, _$FinancialReportLineImpl>
     implements _$$FinancialReportLineImplCopyWith<$Res> {
-  __$$FinancialReportLineImplCopyWithImpl(_$FinancialReportLineImpl _value,
-      $Res Function(_$FinancialReportLineImpl) _then)
-      : super(_value, _then);
+  __$$FinancialReportLineImplCopyWithImpl(
+    _$FinancialReportLineImpl _value,
+    $Res Function(_$FinancialReportLineImpl) _then,
+  ) : super(_value, _then);
 
   @pragma('vm:prefer-inline')
   @override
@@ -138,45 +147,48 @@ class __$$FinancialReportLineImplCopyWithImpl<$Res>
     Object? indentLevel = null,
     Object? accountId = freezed,
   }) {
-    return _then(_$FinancialReportLineImpl(
-      label: null == label
-          ? _value.label
-          : label // ignore: cast_nullable_to_non_nullable
-              as String,
-      amount: null == amount
-          ? _value.amount
-          : amount // ignore: cast_nullable_to_non_nullable
-              as Decimal,
-      isTitle: null == isTitle
-          ? _value.isTitle
-          : isTitle // ignore: cast_nullable_to_non_nullable
-              as bool,
-      isTotal: null == isTotal
-          ? _value.isTotal
-          : isTotal // ignore: cast_nullable_to_non_nullable
-              as bool,
-      indentLevel: null == indentLevel
-          ? _value.indentLevel
-          : indentLevel // ignore: cast_nullable_to_non_nullable
-              as int,
-      accountId: freezed == accountId
-          ? _value.accountId
-          : accountId // ignore: cast_nullable_to_non_nullable
-              as String?,
-    ));
+    return _then(
+      _$FinancialReportLineImpl(
+        label: null == label
+            ? _value.label
+            : label // ignore: cast_nullable_to_non_nullable
+                  as String,
+        amount: null == amount
+            ? _value.amount
+            : amount // ignore: cast_nullable_to_non_nullable
+                  as Decimal,
+        isTitle: null == isTitle
+            ? _value.isTitle
+            : isTitle // ignore: cast_nullable_to_non_nullable
+                  as bool,
+        isTotal: null == isTotal
+            ? _value.isTotal
+            : isTotal // ignore: cast_nullable_to_non_nullable
+                  as bool,
+        indentLevel: null == indentLevel
+            ? _value.indentLevel
+            : indentLevel // ignore: cast_nullable_to_non_nullable
+                  as int,
+        accountId: freezed == accountId
+            ? _value.accountId
+            : accountId // ignore: cast_nullable_to_non_nullable
+                  as String?,
+      ),
+    );
   }
 }
 
 /// @nodoc
 
 class _$FinancialReportLineImpl implements _FinancialReportLine {
-  const _$FinancialReportLineImpl(
-      {required this.label,
-      required this.amount,
-      this.isTitle = false,
-      this.isTotal = false,
-      this.indentLevel = 0,
-      this.accountId});
+  const _$FinancialReportLineImpl({
+    required this.label,
+    required this.amount,
+    this.isTitle = false,
+    this.isTotal = false,
+    this.indentLevel = 0,
+    this.accountId,
+  });
 
   /// Descriptive text for the line (e.g., "Gross Revenue", "Depreciation").
   @override
@@ -227,47 +239,51 @@ class _$FinancialReportLineImpl implements _FinancialReportLine {
 
   @override
   int get hashCode => Object.hash(
-      runtimeType, label, amount, isTitle, isTotal, indentLevel, accountId);
+    runtimeType,
+    label,
+    amount,
+    isTitle,
+    isTotal,
+    indentLevel,
+    accountId,
+  );
 
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
   _$$FinancialReportLineImplCopyWith<_$FinancialReportLineImpl> get copyWith =>
       __$$FinancialReportLineImplCopyWithImpl<_$FinancialReportLineImpl>(
-          this, _$identity);
+        this,
+        _$identity,
+      );
 }
 
 abstract class _FinancialReportLine implements FinancialReportLine {
-  const factory _FinancialReportLine(
-      {required final String label,
-      required final Decimal amount,
-      final bool isTitle,
-      final bool isTotal,
-      final int indentLevel,
-      final String? accountId}) = _$FinancialReportLineImpl;
+  const factory _FinancialReportLine({
+    required final String label,
+    required final Decimal amount,
+    final bool isTitle,
+    final bool isTotal,
+    final int indentLevel,
+    final String? accountId,
+  }) = _$FinancialReportLineImpl;
 
   @override
-
   /// Descriptive text for the line (e.g., "Gross Revenue", "Depreciation").
   String get label;
   @override
-
   /// The numerical value as a high-precision [Decimal].
   Decimal get amount;
   @override
-
   /// If true, this line serves as a header or section title.
   bool get isTitle;
   @override
-
   /// If true, this line represents a subtotal or grand total.
   bool get isTotal;
   @override
-
   /// Visual depth level for hierarchical presentation (0 = root).
   int get indentLevel;
   @override
-
   /// Optional reference to the underlying account for drill-down.
   String? get accountId;
   @override
@@ -301,15 +317,17 @@ mixin _$FinancialReport {
 /// @nodoc
 abstract class $FinancialReportCopyWith<$Res> {
   factory $FinancialReportCopyWith(
-          FinancialReport value, $Res Function(FinancialReport) then) =
-      _$FinancialReportCopyWithImpl<$Res, FinancialReport>;
+    FinancialReport value,
+    $Res Function(FinancialReport) then,
+  ) = _$FinancialReportCopyWithImpl<$Res, FinancialReport>;
   @useResult
-  $Res call(
-      {String title,
-      DateTime fromDate,
-      DateTime toDate,
-      List<FinancialReportLine> lines,
-      DateTime generatedAt});
+  $Res call({
+    String title,
+    DateTime fromDate,
+    DateTime toDate,
+    List<FinancialReportLine> lines,
+    DateTime generatedAt,
+  });
 }
 
 /// @nodoc
@@ -331,45 +349,50 @@ class _$FinancialReportCopyWithImpl<$Res, $Val extends FinancialReport>
     Object? lines = null,
     Object? generatedAt = null,
   }) {
-    return _then(_value.copyWith(
-      title: null == title
-          ? _value.title
-          : title // ignore: cast_nullable_to_non_nullable
-              as String,
-      fromDate: null == fromDate
-          ? _value.fromDate
-          : fromDate // ignore: cast_nullable_to_non_nullable
-              as DateTime,
-      toDate: null == toDate
-          ? _value.toDate
-          : toDate // ignore: cast_nullable_to_non_nullable
-              as DateTime,
-      lines: null == lines
-          ? _value.lines
-          : lines // ignore: cast_nullable_to_non_nullable
-              as List<FinancialReportLine>,
-      generatedAt: null == generatedAt
-          ? _value.generatedAt
-          : generatedAt // ignore: cast_nullable_to_non_nullable
-              as DateTime,
-    ) as $Val);
+    return _then(
+      _value.copyWith(
+            title: null == title
+                ? _value.title
+                : title // ignore: cast_nullable_to_non_nullable
+                      as String,
+            fromDate: null == fromDate
+                ? _value.fromDate
+                : fromDate // ignore: cast_nullable_to_non_nullable
+                      as DateTime,
+            toDate: null == toDate
+                ? _value.toDate
+                : toDate // ignore: cast_nullable_to_non_nullable
+                      as DateTime,
+            lines: null == lines
+                ? _value.lines
+                : lines // ignore: cast_nullable_to_non_nullable
+                      as List<FinancialReportLine>,
+            generatedAt: null == generatedAt
+                ? _value.generatedAt
+                : generatedAt // ignore: cast_nullable_to_non_nullable
+                      as DateTime,
+          )
+          as $Val,
+    );
   }
 }
 
 /// @nodoc
 abstract class _$$FinancialReportImplCopyWith<$Res>
     implements $FinancialReportCopyWith<$Res> {
-  factory _$$FinancialReportImplCopyWith(_$FinancialReportImpl value,
-          $Res Function(_$FinancialReportImpl) then) =
-      __$$FinancialReportImplCopyWithImpl<$Res>;
+  factory _$$FinancialReportImplCopyWith(
+    _$FinancialReportImpl value,
+    $Res Function(_$FinancialReportImpl) then,
+  ) = __$$FinancialReportImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call(
-      {String title,
-      DateTime fromDate,
-      DateTime toDate,
-      List<FinancialReportLine> lines,
-      DateTime generatedAt});
+  $Res call({
+    String title,
+    DateTime fromDate,
+    DateTime toDate,
+    List<FinancialReportLine> lines,
+    DateTime generatedAt,
+  });
 }
 
 /// @nodoc
@@ -377,8 +400,9 @@ class __$$FinancialReportImplCopyWithImpl<$Res>
     extends _$FinancialReportCopyWithImpl<$Res, _$FinancialReportImpl>
     implements _$$FinancialReportImplCopyWith<$Res> {
   __$$FinancialReportImplCopyWithImpl(
-      _$FinancialReportImpl _value, $Res Function(_$FinancialReportImpl) _then)
-      : super(_value, _then);
+    _$FinancialReportImpl _value,
+    $Res Function(_$FinancialReportImpl) _then,
+  ) : super(_value, _then);
 
   @pragma('vm:prefer-inline')
   @override
@@ -389,41 +413,43 @@ class __$$FinancialReportImplCopyWithImpl<$Res>
     Object? lines = null,
     Object? generatedAt = null,
   }) {
-    return _then(_$FinancialReportImpl(
-      title: null == title
-          ? _value.title
-          : title // ignore: cast_nullable_to_non_nullable
-              as String,
-      fromDate: null == fromDate
-          ? _value.fromDate
-          : fromDate // ignore: cast_nullable_to_non_nullable
-              as DateTime,
-      toDate: null == toDate
-          ? _value.toDate
-          : toDate // ignore: cast_nullable_to_non_nullable
-              as DateTime,
-      lines: null == lines
-          ? _value._lines
-          : lines // ignore: cast_nullable_to_non_nullable
-              as List<FinancialReportLine>,
-      generatedAt: null == generatedAt
-          ? _value.generatedAt
-          : generatedAt // ignore: cast_nullable_to_non_nullable
-              as DateTime,
-    ));
+    return _then(
+      _$FinancialReportImpl(
+        title: null == title
+            ? _value.title
+            : title // ignore: cast_nullable_to_non_nullable
+                  as String,
+        fromDate: null == fromDate
+            ? _value.fromDate
+            : fromDate // ignore: cast_nullable_to_non_nullable
+                  as DateTime,
+        toDate: null == toDate
+            ? _value.toDate
+            : toDate // ignore: cast_nullable_to_non_nullable
+                  as DateTime,
+        lines: null == lines
+            ? _value._lines
+            : lines // ignore: cast_nullable_to_non_nullable
+                  as List<FinancialReportLine>,
+        generatedAt: null == generatedAt
+            ? _value.generatedAt
+            : generatedAt // ignore: cast_nullable_to_non_nullable
+                  as DateTime,
+      ),
+    );
   }
 }
 
 /// @nodoc
 
 class _$FinancialReportImpl implements _FinancialReport {
-  const _$FinancialReportImpl(
-      {required this.title,
-      required this.fromDate,
-      required this.toDate,
-      required final List<FinancialReportLine> lines,
-      required this.generatedAt})
-      : _lines = lines;
+  const _$FinancialReportImpl({
+    required this.title,
+    required this.fromDate,
+    required this.toDate,
+    required final List<FinancialReportLine> lines,
+    required this.generatedAt,
+  }) : _lines = lines;
 
   /// Report name (e.g., "Statutory Balance Sheet").
   @override
@@ -472,43 +498,47 @@ class _$FinancialReportImpl implements _FinancialReport {
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, title, fromDate, toDate,
-      const DeepCollectionEquality().hash(_lines), generatedAt);
+  int get hashCode => Object.hash(
+    runtimeType,
+    title,
+    fromDate,
+    toDate,
+    const DeepCollectionEquality().hash(_lines),
+    generatedAt,
+  );
 
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
   _$$FinancialReportImplCopyWith<_$FinancialReportImpl> get copyWith =>
       __$$FinancialReportImplCopyWithImpl<_$FinancialReportImpl>(
-          this, _$identity);
+        this,
+        _$identity,
+      );
 }
 
 abstract class _FinancialReport implements FinancialReport {
-  const factory _FinancialReport(
-      {required final String title,
-      required final DateTime fromDate,
-      required final DateTime toDate,
-      required final List<FinancialReportLine> lines,
-      required final DateTime generatedAt}) = _$FinancialReportImpl;
+  const factory _FinancialReport({
+    required final String title,
+    required final DateTime fromDate,
+    required final DateTime toDate,
+    required final List<FinancialReportLine> lines,
+    required final DateTime generatedAt,
+  }) = _$FinancialReportImpl;
 
   @override
-
   /// Report name (e.g., "Statutory Balance Sheet").
   String get title;
   @override
-
   /// Start of the reporting period.
   DateTime get fromDate;
   @override
-
   /// End of the reporting period.
   DateTime get toDate;
   @override
-
   /// Ordered sequence of report lines.
   List<FinancialReportLine> get lines;
   @override
-
   /// System timestamp of report generation.
   DateTime get generatedAt;
   @override
@@ -539,14 +569,16 @@ mixin _$TrialBalanceLine {
 /// @nodoc
 abstract class $TrialBalanceLineCopyWith<$Res> {
   factory $TrialBalanceLineCopyWith(
-          TrialBalanceLine value, $Res Function(TrialBalanceLine) then) =
-      _$TrialBalanceLineCopyWithImpl<$Res, TrialBalanceLine>;
+    TrialBalanceLine value,
+    $Res Function(TrialBalanceLine) then,
+  ) = _$TrialBalanceLineCopyWithImpl<$Res, TrialBalanceLine>;
   @useResult
-  $Res call(
-      {String accountCode,
-      String accountName,
-      Decimal debitBalance,
-      Decimal creditBalance});
+  $Res call({
+    String accountCode,
+    String accountName,
+    Decimal debitBalance,
+    Decimal creditBalance,
+  });
 }
 
 /// @nodoc
@@ -567,49 +599,55 @@ class _$TrialBalanceLineCopyWithImpl<$Res, $Val extends TrialBalanceLine>
     Object? debitBalance = null,
     Object? creditBalance = null,
   }) {
-    return _then(_value.copyWith(
-      accountCode: null == accountCode
-          ? _value.accountCode
-          : accountCode // ignore: cast_nullable_to_non_nullable
-              as String,
-      accountName: null == accountName
-          ? _value.accountName
-          : accountName // ignore: cast_nullable_to_non_nullable
-              as String,
-      debitBalance: null == debitBalance
-          ? _value.debitBalance
-          : debitBalance // ignore: cast_nullable_to_non_nullable
-              as Decimal,
-      creditBalance: null == creditBalance
-          ? _value.creditBalance
-          : creditBalance // ignore: cast_nullable_to_non_nullable
-              as Decimal,
-    ) as $Val);
+    return _then(
+      _value.copyWith(
+            accountCode: null == accountCode
+                ? _value.accountCode
+                : accountCode // ignore: cast_nullable_to_non_nullable
+                      as String,
+            accountName: null == accountName
+                ? _value.accountName
+                : accountName // ignore: cast_nullable_to_non_nullable
+                      as String,
+            debitBalance: null == debitBalance
+                ? _value.debitBalance
+                : debitBalance // ignore: cast_nullable_to_non_nullable
+                      as Decimal,
+            creditBalance: null == creditBalance
+                ? _value.creditBalance
+                : creditBalance // ignore: cast_nullable_to_non_nullable
+                      as Decimal,
+          )
+          as $Val,
+    );
   }
 }
 
 /// @nodoc
 abstract class _$$TrialBalanceLineImplCopyWith<$Res>
     implements $TrialBalanceLineCopyWith<$Res> {
-  factory _$$TrialBalanceLineImplCopyWith(_$TrialBalanceLineImpl value,
-          $Res Function(_$TrialBalanceLineImpl) then) =
-      __$$TrialBalanceLineImplCopyWithImpl<$Res>;
+  factory _$$TrialBalanceLineImplCopyWith(
+    _$TrialBalanceLineImpl value,
+    $Res Function(_$TrialBalanceLineImpl) then,
+  ) = __$$TrialBalanceLineImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call(
-      {String accountCode,
-      String accountName,
-      Decimal debitBalance,
-      Decimal creditBalance});
+  $Res call({
+    String accountCode,
+    String accountName,
+    Decimal debitBalance,
+    Decimal creditBalance,
+  });
 }
 
 /// @nodoc
 class __$$TrialBalanceLineImplCopyWithImpl<$Res>
     extends _$TrialBalanceLineCopyWithImpl<$Res, _$TrialBalanceLineImpl>
     implements _$$TrialBalanceLineImplCopyWith<$Res> {
-  __$$TrialBalanceLineImplCopyWithImpl(_$TrialBalanceLineImpl _value,
-      $Res Function(_$TrialBalanceLineImpl) _then)
-      : super(_value, _then);
+  __$$TrialBalanceLineImplCopyWithImpl(
+    _$TrialBalanceLineImpl _value,
+    $Res Function(_$TrialBalanceLineImpl) _then,
+  ) : super(_value, _then);
 
   @pragma('vm:prefer-inline')
   @override
@@ -619,35 +657,38 @@ class __$$TrialBalanceLineImplCopyWithImpl<$Res>
     Object? debitBalance = null,
     Object? creditBalance = null,
   }) {
-    return _then(_$TrialBalanceLineImpl(
-      accountCode: null == accountCode
-          ? _value.accountCode
-          : accountCode // ignore: cast_nullable_to_non_nullable
-              as String,
-      accountName: null == accountName
-          ? _value.accountName
-          : accountName // ignore: cast_nullable_to_non_nullable
-              as String,
-      debitBalance: null == debitBalance
-          ? _value.debitBalance
-          : debitBalance // ignore: cast_nullable_to_non_nullable
-              as Decimal,
-      creditBalance: null == creditBalance
-          ? _value.creditBalance
-          : creditBalance // ignore: cast_nullable_to_non_nullable
-              as Decimal,
-    ));
+    return _then(
+      _$TrialBalanceLineImpl(
+        accountCode: null == accountCode
+            ? _value.accountCode
+            : accountCode // ignore: cast_nullable_to_non_nullable
+                  as String,
+        accountName: null == accountName
+            ? _value.accountName
+            : accountName // ignore: cast_nullable_to_non_nullable
+                  as String,
+        debitBalance: null == debitBalance
+            ? _value.debitBalance
+            : debitBalance // ignore: cast_nullable_to_non_nullable
+                  as Decimal,
+        creditBalance: null == creditBalance
+            ? _value.creditBalance
+            : creditBalance // ignore: cast_nullable_to_non_nullable
+                  as Decimal,
+      ),
+    );
   }
 }
 
 /// @nodoc
 
 class _$TrialBalanceLineImpl implements _TrialBalanceLine {
-  const _$TrialBalanceLineImpl(
-      {required this.accountCode,
-      required this.accountName,
-      required this.debitBalance,
-      required this.creditBalance});
+  const _$TrialBalanceLineImpl({
+    required this.accountCode,
+    required this.accountName,
+    required this.debitBalance,
+    required this.creditBalance,
+  });
 
   /// Unique accounting code string.
   @override
@@ -687,37 +728,41 @@ class _$TrialBalanceLineImpl implements _TrialBalanceLine {
 
   @override
   int get hashCode => Object.hash(
-      runtimeType, accountCode, accountName, debitBalance, creditBalance);
+    runtimeType,
+    accountCode,
+    accountName,
+    debitBalance,
+    creditBalance,
+  );
 
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
   _$$TrialBalanceLineImplCopyWith<_$TrialBalanceLineImpl> get copyWith =>
       __$$TrialBalanceLineImplCopyWithImpl<_$TrialBalanceLineImpl>(
-          this, _$identity);
+        this,
+        _$identity,
+      );
 }
 
 abstract class _TrialBalanceLine implements TrialBalanceLine {
-  const factory _TrialBalanceLine(
-      {required final String accountCode,
-      required final String accountName,
-      required final Decimal debitBalance,
-      required final Decimal creditBalance}) = _$TrialBalanceLineImpl;
+  const factory _TrialBalanceLine({
+    required final String accountCode,
+    required final String accountName,
+    required final Decimal debitBalance,
+    required final Decimal creditBalance,
+  }) = _$TrialBalanceLineImpl;
 
   @override
-
   /// Unique accounting code string.
   String get accountCode;
   @override
-
   /// Localized account name.
   String get accountName;
   @override
-
   /// Period-to-date Debit total.
   Decimal get debitBalance;
   @override
-
   /// Period-to-date Credit total.
   Decimal get creditBalance;
   @override
@@ -748,14 +793,16 @@ mixin _$TrialBalance {
 /// @nodoc
 abstract class $TrialBalanceCopyWith<$Res> {
   factory $TrialBalanceCopyWith(
-          TrialBalance value, $Res Function(TrialBalance) then) =
-      _$TrialBalanceCopyWithImpl<$Res, TrialBalance>;
+    TrialBalance value,
+    $Res Function(TrialBalance) then,
+  ) = _$TrialBalanceCopyWithImpl<$Res, TrialBalance>;
   @useResult
-  $Res call(
-      {DateTime date,
-      List<TrialBalanceLine> lines,
-      Decimal totalDebit,
-      Decimal totalCredit});
+  $Res call({
+    DateTime date,
+    List<TrialBalanceLine> lines,
+    Decimal totalDebit,
+    Decimal totalCredit,
+  });
 }
 
 /// @nodoc
@@ -776,24 +823,27 @@ class _$TrialBalanceCopyWithImpl<$Res, $Val extends TrialBalance>
     Object? totalDebit = null,
     Object? totalCredit = null,
   }) {
-    return _then(_value.copyWith(
-      date: null == date
-          ? _value.date
-          : date // ignore: cast_nullable_to_non_nullable
-              as DateTime,
-      lines: null == lines
-          ? _value.lines
-          : lines // ignore: cast_nullable_to_non_nullable
-              as List<TrialBalanceLine>,
-      totalDebit: null == totalDebit
-          ? _value.totalDebit
-          : totalDebit // ignore: cast_nullable_to_non_nullable
-              as Decimal,
-      totalCredit: null == totalCredit
-          ? _value.totalCredit
-          : totalCredit // ignore: cast_nullable_to_non_nullable
-              as Decimal,
-    ) as $Val);
+    return _then(
+      _value.copyWith(
+            date: null == date
+                ? _value.date
+                : date // ignore: cast_nullable_to_non_nullable
+                      as DateTime,
+            lines: null == lines
+                ? _value.lines
+                : lines // ignore: cast_nullable_to_non_nullable
+                      as List<TrialBalanceLine>,
+            totalDebit: null == totalDebit
+                ? _value.totalDebit
+                : totalDebit // ignore: cast_nullable_to_non_nullable
+                      as Decimal,
+            totalCredit: null == totalCredit
+                ? _value.totalCredit
+                : totalCredit // ignore: cast_nullable_to_non_nullable
+                      as Decimal,
+          )
+          as $Val,
+    );
   }
 }
 
@@ -801,15 +851,17 @@ class _$TrialBalanceCopyWithImpl<$Res, $Val extends TrialBalance>
 abstract class _$$TrialBalanceImplCopyWith<$Res>
     implements $TrialBalanceCopyWith<$Res> {
   factory _$$TrialBalanceImplCopyWith(
-          _$TrialBalanceImpl value, $Res Function(_$TrialBalanceImpl) then) =
-      __$$TrialBalanceImplCopyWithImpl<$Res>;
+    _$TrialBalanceImpl value,
+    $Res Function(_$TrialBalanceImpl) then,
+  ) = __$$TrialBalanceImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call(
-      {DateTime date,
-      List<TrialBalanceLine> lines,
-      Decimal totalDebit,
-      Decimal totalCredit});
+  $Res call({
+    DateTime date,
+    List<TrialBalanceLine> lines,
+    Decimal totalDebit,
+    Decimal totalCredit,
+  });
 }
 
 /// @nodoc
@@ -817,8 +869,9 @@ class __$$TrialBalanceImplCopyWithImpl<$Res>
     extends _$TrialBalanceCopyWithImpl<$Res, _$TrialBalanceImpl>
     implements _$$TrialBalanceImplCopyWith<$Res> {
   __$$TrialBalanceImplCopyWithImpl(
-      _$TrialBalanceImpl _value, $Res Function(_$TrialBalanceImpl) _then)
-      : super(_value, _then);
+    _$TrialBalanceImpl _value,
+    $Res Function(_$TrialBalanceImpl) _then,
+  ) : super(_value, _then);
 
   @pragma('vm:prefer-inline')
   @override
@@ -828,36 +881,38 @@ class __$$TrialBalanceImplCopyWithImpl<$Res>
     Object? totalDebit = null,
     Object? totalCredit = null,
   }) {
-    return _then(_$TrialBalanceImpl(
-      date: null == date
-          ? _value.date
-          : date // ignore: cast_nullable_to_non_nullable
-              as DateTime,
-      lines: null == lines
-          ? _value._lines
-          : lines // ignore: cast_nullable_to_non_nullable
-              as List<TrialBalanceLine>,
-      totalDebit: null == totalDebit
-          ? _value.totalDebit
-          : totalDebit // ignore: cast_nullable_to_non_nullable
-              as Decimal,
-      totalCredit: null == totalCredit
-          ? _value.totalCredit
-          : totalCredit // ignore: cast_nullable_to_non_nullable
-              as Decimal,
-    ));
+    return _then(
+      _$TrialBalanceImpl(
+        date: null == date
+            ? _value.date
+            : date // ignore: cast_nullable_to_non_nullable
+                  as DateTime,
+        lines: null == lines
+            ? _value._lines
+            : lines // ignore: cast_nullable_to_non_nullable
+                  as List<TrialBalanceLine>,
+        totalDebit: null == totalDebit
+            ? _value.totalDebit
+            : totalDebit // ignore: cast_nullable_to_non_nullable
+                  as Decimal,
+        totalCredit: null == totalCredit
+            ? _value.totalCredit
+            : totalCredit // ignore: cast_nullable_to_non_nullable
+                  as Decimal,
+      ),
+    );
   }
 }
 
 /// @nodoc
 
 class _$TrialBalanceImpl implements _TrialBalance {
-  const _$TrialBalanceImpl(
-      {required this.date,
-      required final List<TrialBalanceLine> lines,
-      required this.totalDebit,
-      required this.totalCredit})
-      : _lines = lines;
+  const _$TrialBalanceImpl({
+    required this.date,
+    required final List<TrialBalanceLine> lines,
+    required this.totalDebit,
+    required this.totalCredit,
+  }) : _lines = lines;
 
   /// The specific date the snapshot was taken.
   @override
@@ -901,8 +956,13 @@ class _$TrialBalanceImpl implements _TrialBalance {
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, date,
-      const DeepCollectionEquality().hash(_lines), totalDebit, totalCredit);
+  int get hashCode => Object.hash(
+    runtimeType,
+    date,
+    const DeepCollectionEquality().hash(_lines),
+    totalDebit,
+    totalCredit,
+  );
 
   @JsonKey(ignore: true)
   @override
@@ -912,26 +972,23 @@ class _$TrialBalanceImpl implements _TrialBalance {
 }
 
 abstract class _TrialBalance implements TrialBalance {
-  const factory _TrialBalance(
-      {required final DateTime date,
-      required final List<TrialBalanceLine> lines,
-      required final Decimal totalDebit,
-      required final Decimal totalCredit}) = _$TrialBalanceImpl;
+  const factory _TrialBalance({
+    required final DateTime date,
+    required final List<TrialBalanceLine> lines,
+    required final Decimal totalDebit,
+    required final Decimal totalCredit,
+  }) = _$TrialBalanceImpl;
 
   @override
-
   /// The specific date the snapshot was taken.
   DateTime get date;
   @override
-
   /// Collection of account-level balances.
   List<TrialBalanceLine> get lines;
   @override
-
   /// Grand sum of all Debit balances (must match totalCredit).
   Decimal get totalDebit;
   @override
-
   /// Grand sum of all Credit balances (must match totalDebit).
   Decimal get totalCredit;
   @override

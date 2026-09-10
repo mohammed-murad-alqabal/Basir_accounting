@@ -14,32 +14,29 @@ class GlassTheme extends ThemeExtension<GlassTheme> {
 
   /// Light theme default configuration.
   factory GlassTheme.light() => const GlassTheme(
-        glassColor: Colors.white,
-        glassBorder: Color(0xFFE5E7EB), // Gray 200
-        blurSigma: 16,
-        primaryGradient: LinearGradient(
-          colors: [Color(0xFF006D77), Color(0xFF83C5BE)],
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-        ),
-        surfaceOpacity: 0.75,
-      );
+    glassColor: Colors.white,
+    glassBorder: Color(0xFFE5E7EB), // Gray 200
+    blurSigma: 16,
+    primaryGradient: LinearGradient(
+      colors: [Color(0xFF006D77), Color(0xFF83C5BE)],
+      begin: Alignment.topLeft,
+      end: Alignment.bottomRight,
+    ),
+    surfaceOpacity: 0.75,
+  );
 
   /// Dark theme default configuration.
   factory GlassTheme.dark() => const GlassTheme(
-        glassColor: Color(0xFF111827), // Gray 900
-        glassBorder: Color(0xFF374151), // Gray 700
-        blurSigma: 24,
-        primaryGradient: LinearGradient(
-          colors: [
-            Color(0xFF0F766E),
-            Color(0xFF2DD4BF),
-          ], // Teal 700 -> Teal 400
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-        ),
-        surfaceOpacity: 0.65,
-      );
+    glassColor: Color(0xFF111827), // Gray 900
+    glassBorder: Color(0xFF374151), // Gray 700
+    blurSigma: 24,
+    primaryGradient: LinearGradient(
+      colors: [Color(0xFF0F766E), Color(0xFF2DD4BF)], // Teal 700 -> Teal 400
+      begin: Alignment.topLeft,
+      end: Alignment.bottomRight,
+    ),
+    surfaceOpacity: 0.65,
+  );
 
   /// The base background color of the glass surface.
   final Color glassColor;
@@ -63,14 +60,13 @@ class GlassTheme extends ThemeExtension<GlassTheme> {
     double? blurSigma,
     LinearGradient? primaryGradient,
     double? surfaceOpacity,
-  }) =>
-      GlassTheme(
-        glassColor: glassColor ?? this.glassColor,
-        glassBorder: glassBorder ?? this.glassBorder,
-        blurSigma: blurSigma ?? this.blurSigma,
-        primaryGradient: primaryGradient ?? this.primaryGradient,
-        surfaceOpacity: surfaceOpacity ?? this.surfaceOpacity,
-      );
+  }) => GlassTheme(
+    glassColor: glassColor ?? this.glassColor,
+    glassBorder: glassBorder ?? this.glassBorder,
+    blurSigma: blurSigma ?? this.blurSigma,
+    primaryGradient: primaryGradient ?? this.primaryGradient,
+    surfaceOpacity: surfaceOpacity ?? this.surfaceOpacity,
+  );
 
   @override
   GlassTheme lerp(ThemeExtension<GlassTheme>? other, double t) {
@@ -79,8 +75,11 @@ class GlassTheme extends ThemeExtension<GlassTheme> {
       glassColor: Color.lerp(glassColor, other.glassColor, t)!,
       glassBorder: Color.lerp(glassBorder, other.glassBorder, t)!,
       blurSigma: blurSigma + (other.blurSigma - blurSigma) * t,
-      primaryGradient:
-          LinearGradient.lerp(primaryGradient, other.primaryGradient, t)!,
+      primaryGradient: LinearGradient.lerp(
+        primaryGradient,
+        other.primaryGradient,
+        t,
+      )!,
       surfaceOpacity:
           surfaceOpacity + (other.surfaceOpacity - surfaceOpacity) * t,
     );

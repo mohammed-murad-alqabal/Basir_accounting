@@ -82,20 +82,20 @@ class FixedAssetModel {
 
   /// تحويل النموذج إلى كيان
   FixedAsset toEntity() => FixedAsset(
-        id: id,
-        code: code,
-        nameAr: nameAr,
-        nameEn: nameEn,
-        categoryId: categoryId,
-        acquisitionDate: acquisitionDate,
-        cost: cost,
-        residualValue: residualValue,
-        usefulLifeYears: usefulLifeYears,
-        depreciationMethod: depreciationMethod,
-        assetAccountId: assetAccountId,
-        depreciationAccountId: depreciationAccountId,
-        accumDepreciationAccountId: accumDepreciationAccountId,
-        accumulatedDepreciation: accumulatedDepreciation,
-        isActive: isActive,
-      );
+    id: id,
+    code: code,
+    nameAr: nameAr,
+    nameEn: nameEn,
+    categoryId: categoryId,
+    acquisitionDate: acquisitionDate,
+    cost: cost,
+    residualValue: residualValue,
+    usefulLifeYears: usefulLifeYears,
+    depreciationMethod: depreciationMethod,
+    assetAccountId: assetAccountId,
+    depreciationAccountId: depreciationAccountId,
+    accumDepreciationAccountId: accumDepreciationAccountId,
+    accumulatedDepreciation: accumulatedDepreciation,
+    isActive: isActive,
+  );
 }

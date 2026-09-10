@@ -55,8 +55,9 @@ class ThemeController extends AsyncNotifier<ThemeMode> {
   /// If currently in system mode, switches to dark mode first.
   Future<void> toggleTheme() async {
     final currentMode = state.value ?? ThemeMode.light;
-    final newMode =
-        currentMode == ThemeMode.dark ? ThemeMode.light : ThemeMode.dark;
+    final newMode = currentMode == ThemeMode.dark
+        ? ThemeMode.light
+        : ThemeMode.dark;
     await setThemeMode(newMode);
   }
 

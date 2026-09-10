@@ -12,7 +12,8 @@ part of 'fixed_asset.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
+  'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models',
+);
 
 FixedAsset _$FixedAssetFromJson(Map<String, dynamic> json) {
   return _FixedAsset.fromJson(json);
@@ -74,25 +75,27 @@ mixin _$FixedAsset {
 /// @nodoc
 abstract class $FixedAssetCopyWith<$Res> {
   factory $FixedAssetCopyWith(
-          FixedAsset value, $Res Function(FixedAsset) then) =
-      _$FixedAssetCopyWithImpl<$Res, FixedAsset>;
+    FixedAsset value,
+    $Res Function(FixedAsset) then,
+  ) = _$FixedAssetCopyWithImpl<$Res, FixedAsset>;
   @useResult
-  $Res call(
-      {String code,
-      String nameAr,
-      String nameEn,
-      String categoryId,
-      DateTime acquisitionDate,
-      double cost,
-      double residualValue,
-      int usefulLifeYears,
-      String depreciationMethod,
-      String assetAccountId,
-      String depreciationAccountId,
-      String accumDepreciationAccountId,
-      double accumulatedDepreciation,
-      String? id,
-      bool isActive});
+  $Res call({
+    String code,
+    String nameAr,
+    String nameEn,
+    String categoryId,
+    DateTime acquisitionDate,
+    double cost,
+    double residualValue,
+    int usefulLifeYears,
+    String depreciationMethod,
+    String assetAccountId,
+    String depreciationAccountId,
+    String accumDepreciationAccountId,
+    double accumulatedDepreciation,
+    String? id,
+    bool isActive,
+  });
 }
 
 /// @nodoc
@@ -124,68 +127,71 @@ class _$FixedAssetCopyWithImpl<$Res, $Val extends FixedAsset>
     Object? id = freezed,
     Object? isActive = null,
   }) {
-    return _then(_value.copyWith(
-      code: null == code
-          ? _value.code
-          : code // ignore: cast_nullable_to_non_nullable
-              as String,
-      nameAr: null == nameAr
-          ? _value.nameAr
-          : nameAr // ignore: cast_nullable_to_non_nullable
-              as String,
-      nameEn: null == nameEn
-          ? _value.nameEn
-          : nameEn // ignore: cast_nullable_to_non_nullable
-              as String,
-      categoryId: null == categoryId
-          ? _value.categoryId
-          : categoryId // ignore: cast_nullable_to_non_nullable
-              as String,
-      acquisitionDate: null == acquisitionDate
-          ? _value.acquisitionDate
-          : acquisitionDate // ignore: cast_nullable_to_non_nullable
-              as DateTime,
-      cost: null == cost
-          ? _value.cost
-          : cost // ignore: cast_nullable_to_non_nullable
-              as double,
-      residualValue: null == residualValue
-          ? _value.residualValue
-          : residualValue // ignore: cast_nullable_to_non_nullable
-              as double,
-      usefulLifeYears: null == usefulLifeYears
-          ? _value.usefulLifeYears
-          : usefulLifeYears // ignore: cast_nullable_to_non_nullable
-              as int,
-      depreciationMethod: null == depreciationMethod
-          ? _value.depreciationMethod
-          : depreciationMethod // ignore: cast_nullable_to_non_nullable
-              as String,
-      assetAccountId: null == assetAccountId
-          ? _value.assetAccountId
-          : assetAccountId // ignore: cast_nullable_to_non_nullable
-              as String,
-      depreciationAccountId: null == depreciationAccountId
-          ? _value.depreciationAccountId
-          : depreciationAccountId // ignore: cast_nullable_to_non_nullable
-              as String,
-      accumDepreciationAccountId: null == accumDepreciationAccountId
-          ? _value.accumDepreciationAccountId
-          : accumDepreciationAccountId // ignore: cast_nullable_to_non_nullable
-              as String,
-      accumulatedDepreciation: null == accumulatedDepreciation
-          ? _value.accumulatedDepreciation
-          : accumulatedDepreciation // ignore: cast_nullable_to_non_nullable
-              as double,
-      id: freezed == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as String?,
-      isActive: null == isActive
-          ? _value.isActive
-          : isActive // ignore: cast_nullable_to_non_nullable
-              as bool,
-    ) as $Val);
+    return _then(
+      _value.copyWith(
+            code: null == code
+                ? _value.code
+                : code // ignore: cast_nullable_to_non_nullable
+                      as String,
+            nameAr: null == nameAr
+                ? _value.nameAr
+                : nameAr // ignore: cast_nullable_to_non_nullable
+                      as String,
+            nameEn: null == nameEn
+                ? _value.nameEn
+                : nameEn // ignore: cast_nullable_to_non_nullable
+                      as String,
+            categoryId: null == categoryId
+                ? _value.categoryId
+                : categoryId // ignore: cast_nullable_to_non_nullable
+                      as String,
+            acquisitionDate: null == acquisitionDate
+                ? _value.acquisitionDate
+                : acquisitionDate // ignore: cast_nullable_to_non_nullable
+                      as DateTime,
+            cost: null == cost
+                ? _value.cost
+                : cost // ignore: cast_nullable_to_non_nullable
+                      as double,
+            residualValue: null == residualValue
+                ? _value.residualValue
+                : residualValue // ignore: cast_nullable_to_non_nullable
+                      as double,
+            usefulLifeYears: null == usefulLifeYears
+                ? _value.usefulLifeYears
+                : usefulLifeYears // ignore: cast_nullable_to_non_nullable
+                      as int,
+            depreciationMethod: null == depreciationMethod
+                ? _value.depreciationMethod
+                : depreciationMethod // ignore: cast_nullable_to_non_nullable
+                      as String,
+            assetAccountId: null == assetAccountId
+                ? _value.assetAccountId
+                : assetAccountId // ignore: cast_nullable_to_non_nullable
+                      as String,
+            depreciationAccountId: null == depreciationAccountId
+                ? _value.depreciationAccountId
+                : depreciationAccountId // ignore: cast_nullable_to_non_nullable
+                      as String,
+            accumDepreciationAccountId: null == accumDepreciationAccountId
+                ? _value.accumDepreciationAccountId
+                : accumDepreciationAccountId // ignore: cast_nullable_to_non_nullable
+                      as String,
+            accumulatedDepreciation: null == accumulatedDepreciation
+                ? _value.accumulatedDepreciation
+                : accumulatedDepreciation // ignore: cast_nullable_to_non_nullable
+                      as double,
+            id: freezed == id
+                ? _value.id
+                : id // ignore: cast_nullable_to_non_nullable
+                      as String?,
+            isActive: null == isActive
+                ? _value.isActive
+                : isActive // ignore: cast_nullable_to_non_nullable
+                      as bool,
+          )
+          as $Val,
+    );
   }
 }
 
@@ -193,26 +199,28 @@ class _$FixedAssetCopyWithImpl<$Res, $Val extends FixedAsset>
 abstract class _$$FixedAssetImplCopyWith<$Res>
     implements $FixedAssetCopyWith<$Res> {
   factory _$$FixedAssetImplCopyWith(
-          _$FixedAssetImpl value, $Res Function(_$FixedAssetImpl) then) =
-      __$$FixedAssetImplCopyWithImpl<$Res>;
+    _$FixedAssetImpl value,
+    $Res Function(_$FixedAssetImpl) then,
+  ) = __$$FixedAssetImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call(
-      {String code,
-      String nameAr,
-      String nameEn,
-      String categoryId,
-      DateTime acquisitionDate,
-      double cost,
-      double residualValue,
-      int usefulLifeYears,
-      String depreciationMethod,
-      String assetAccountId,
-      String depreciationAccountId,
-      String accumDepreciationAccountId,
-      double accumulatedDepreciation,
-      String? id,
-      bool isActive});
+  $Res call({
+    String code,
+    String nameAr,
+    String nameEn,
+    String categoryId,
+    DateTime acquisitionDate,
+    double cost,
+    double residualValue,
+    int usefulLifeYears,
+    String depreciationMethod,
+    String assetAccountId,
+    String depreciationAccountId,
+    String accumDepreciationAccountId,
+    double accumulatedDepreciation,
+    String? id,
+    bool isActive,
+  });
 }
 
 /// @nodoc
@@ -220,8 +228,9 @@ class __$$FixedAssetImplCopyWithImpl<$Res>
     extends _$FixedAssetCopyWithImpl<$Res, _$FixedAssetImpl>
     implements _$$FixedAssetImplCopyWith<$Res> {
   __$$FixedAssetImplCopyWithImpl(
-      _$FixedAssetImpl _value, $Res Function(_$FixedAssetImpl) _then)
-      : super(_value, _then);
+    _$FixedAssetImpl _value,
+    $Res Function(_$FixedAssetImpl) _then,
+  ) : super(_value, _then);
 
   @pragma('vm:prefer-inline')
   @override
@@ -242,91 +251,93 @@ class __$$FixedAssetImplCopyWithImpl<$Res>
     Object? id = freezed,
     Object? isActive = null,
   }) {
-    return _then(_$FixedAssetImpl(
-      code: null == code
-          ? _value.code
-          : code // ignore: cast_nullable_to_non_nullable
-              as String,
-      nameAr: null == nameAr
-          ? _value.nameAr
-          : nameAr // ignore: cast_nullable_to_non_nullable
-              as String,
-      nameEn: null == nameEn
-          ? _value.nameEn
-          : nameEn // ignore: cast_nullable_to_non_nullable
-              as String,
-      categoryId: null == categoryId
-          ? _value.categoryId
-          : categoryId // ignore: cast_nullable_to_non_nullable
-              as String,
-      acquisitionDate: null == acquisitionDate
-          ? _value.acquisitionDate
-          : acquisitionDate // ignore: cast_nullable_to_non_nullable
-              as DateTime,
-      cost: null == cost
-          ? _value.cost
-          : cost // ignore: cast_nullable_to_non_nullable
-              as double,
-      residualValue: null == residualValue
-          ? _value.residualValue
-          : residualValue // ignore: cast_nullable_to_non_nullable
-              as double,
-      usefulLifeYears: null == usefulLifeYears
-          ? _value.usefulLifeYears
-          : usefulLifeYears // ignore: cast_nullable_to_non_nullable
-              as int,
-      depreciationMethod: null == depreciationMethod
-          ? _value.depreciationMethod
-          : depreciationMethod // ignore: cast_nullable_to_non_nullable
-              as String,
-      assetAccountId: null == assetAccountId
-          ? _value.assetAccountId
-          : assetAccountId // ignore: cast_nullable_to_non_nullable
-              as String,
-      depreciationAccountId: null == depreciationAccountId
-          ? _value.depreciationAccountId
-          : depreciationAccountId // ignore: cast_nullable_to_non_nullable
-              as String,
-      accumDepreciationAccountId: null == accumDepreciationAccountId
-          ? _value.accumDepreciationAccountId
-          : accumDepreciationAccountId // ignore: cast_nullable_to_non_nullable
-              as String,
-      accumulatedDepreciation: null == accumulatedDepreciation
-          ? _value.accumulatedDepreciation
-          : accumulatedDepreciation // ignore: cast_nullable_to_non_nullable
-              as double,
-      id: freezed == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as String?,
-      isActive: null == isActive
-          ? _value.isActive
-          : isActive // ignore: cast_nullable_to_non_nullable
-              as bool,
-    ));
+    return _then(
+      _$FixedAssetImpl(
+        code: null == code
+            ? _value.code
+            : code // ignore: cast_nullable_to_non_nullable
+                  as String,
+        nameAr: null == nameAr
+            ? _value.nameAr
+            : nameAr // ignore: cast_nullable_to_non_nullable
+                  as String,
+        nameEn: null == nameEn
+            ? _value.nameEn
+            : nameEn // ignore: cast_nullable_to_non_nullable
+                  as String,
+        categoryId: null == categoryId
+            ? _value.categoryId
+            : categoryId // ignore: cast_nullable_to_non_nullable
+                  as String,
+        acquisitionDate: null == acquisitionDate
+            ? _value.acquisitionDate
+            : acquisitionDate // ignore: cast_nullable_to_non_nullable
+                  as DateTime,
+        cost: null == cost
+            ? _value.cost
+            : cost // ignore: cast_nullable_to_non_nullable
+                  as double,
+        residualValue: null == residualValue
+            ? _value.residualValue
+            : residualValue // ignore: cast_nullable_to_non_nullable
+                  as double,
+        usefulLifeYears: null == usefulLifeYears
+            ? _value.usefulLifeYears
+            : usefulLifeYears // ignore: cast_nullable_to_non_nullable
+                  as int,
+        depreciationMethod: null == depreciationMethod
+            ? _value.depreciationMethod
+            : depreciationMethod // ignore: cast_nullable_to_non_nullable
+                  as String,
+        assetAccountId: null == assetAccountId
+            ? _value.assetAccountId
+            : assetAccountId // ignore: cast_nullable_to_non_nullable
+                  as String,
+        depreciationAccountId: null == depreciationAccountId
+            ? _value.depreciationAccountId
+            : depreciationAccountId // ignore: cast_nullable_to_non_nullable
+                  as String,
+        accumDepreciationAccountId: null == accumDepreciationAccountId
+            ? _value.accumDepreciationAccountId
+            : accumDepreciationAccountId // ignore: cast_nullable_to_non_nullable
+                  as String,
+        accumulatedDepreciation: null == accumulatedDepreciation
+            ? _value.accumulatedDepreciation
+            : accumulatedDepreciation // ignore: cast_nullable_to_non_nullable
+                  as double,
+        id: freezed == id
+            ? _value.id
+            : id // ignore: cast_nullable_to_non_nullable
+                  as String?,
+        isActive: null == isActive
+            ? _value.isActive
+            : isActive // ignore: cast_nullable_to_non_nullable
+                  as bool,
+      ),
+    );
   }
 }
 
 /// @nodoc
 @JsonSerializable()
 class _$FixedAssetImpl extends _FixedAsset {
-  const _$FixedAssetImpl(
-      {required this.code,
-      required this.nameAr,
-      required this.nameEn,
-      required this.categoryId,
-      required this.acquisitionDate,
-      required this.cost,
-      required this.residualValue,
-      required this.usefulLifeYears,
-      required this.depreciationMethod,
-      required this.assetAccountId,
-      required this.depreciationAccountId,
-      required this.accumDepreciationAccountId,
-      this.accumulatedDepreciation = 0.0,
-      this.id,
-      this.isActive = true})
-      : super._();
+  const _$FixedAssetImpl({
+    required this.code,
+    required this.nameAr,
+    required this.nameEn,
+    required this.categoryId,
+    required this.acquisitionDate,
+    required this.cost,
+    required this.residualValue,
+    required this.usefulLifeYears,
+    required this.depreciationMethod,
+    required this.assetAccountId,
+    required this.depreciationAccountId,
+    required this.accumDepreciationAccountId,
+    this.accumulatedDepreciation = 0.0,
+    this.id,
+    this.isActive = true,
+  }) : super._();
 
   factory _$FixedAssetImpl.fromJson(Map<String, dynamic> json) =>
       _$$FixedAssetImplFromJson(json);
@@ -421,12 +432,16 @@ class _$FixedAssetImpl extends _FixedAsset {
                 other.assetAccountId == assetAccountId) &&
             (identical(other.depreciationAccountId, depreciationAccountId) ||
                 other.depreciationAccountId == depreciationAccountId) &&
-            (identical(other.accumDepreciationAccountId,
-                    accumDepreciationAccountId) ||
+            (identical(
+                  other.accumDepreciationAccountId,
+                  accumDepreciationAccountId,
+                ) ||
                 other.accumDepreciationAccountId ==
                     accumDepreciationAccountId) &&
             (identical(
-                    other.accumulatedDepreciation, accumulatedDepreciation) ||
+                  other.accumulatedDepreciation,
+                  accumulatedDepreciation,
+                ) ||
                 other.accumulatedDepreciation == accumulatedDepreciation) &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.isActive, isActive) ||
@@ -436,22 +451,23 @@ class _$FixedAssetImpl extends _FixedAsset {
   @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(
-      runtimeType,
-      code,
-      nameAr,
-      nameEn,
-      categoryId,
-      acquisitionDate,
-      cost,
-      residualValue,
-      usefulLifeYears,
-      depreciationMethod,
-      assetAccountId,
-      depreciationAccountId,
-      accumDepreciationAccountId,
-      accumulatedDepreciation,
-      id,
-      isActive);
+    runtimeType,
+    code,
+    nameAr,
+    nameEn,
+    categoryId,
+    acquisitionDate,
+    cost,
+    residualValue,
+    usefulLifeYears,
+    depreciationMethod,
+    assetAccountId,
+    depreciationAccountId,
+    accumDepreciationAccountId,
+    accumulatedDepreciation,
+    id,
+    isActive,
+  );
 
   @JsonKey(ignore: true)
   @override
@@ -461,92 +477,76 @@ class _$FixedAssetImpl extends _FixedAsset {
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$FixedAssetImplToJson(
-      this,
-    );
+    return _$$FixedAssetImplToJson(this);
   }
 }
 
 abstract class _FixedAsset extends FixedAsset {
-  const factory _FixedAsset(
-      {required final String code,
-      required final String nameAr,
-      required final String nameEn,
-      required final String categoryId,
-      required final DateTime acquisitionDate,
-      required final double cost,
-      required final double residualValue,
-      required final int usefulLifeYears,
-      required final String depreciationMethod,
-      required final String assetAccountId,
-      required final String depreciationAccountId,
-      required final String accumDepreciationAccountId,
-      final double accumulatedDepreciation,
-      final String? id,
-      final bool isActive}) = _$FixedAssetImpl;
+  const factory _FixedAsset({
+    required final String code,
+    required final String nameAr,
+    required final String nameEn,
+    required final String categoryId,
+    required final DateTime acquisitionDate,
+    required final double cost,
+    required final double residualValue,
+    required final int usefulLifeYears,
+    required final String depreciationMethod,
+    required final String assetAccountId,
+    required final String depreciationAccountId,
+    required final String accumDepreciationAccountId,
+    final double accumulatedDepreciation,
+    final String? id,
+    final bool isActive,
+  }) = _$FixedAssetImpl;
   const _FixedAsset._() : super._();
 
   factory _FixedAsset.fromJson(Map<String, dynamic> json) =
       _$FixedAssetImpl.fromJson;
 
   @override
-
   /// كود الأصل (مثلاً: AST-001)
   String get code;
   @override
-
   /// الاسم بالعربية
   String get nameAr;
   @override
-
   /// الاسم بالإنجليزية
   String get nameEn;
   @override
-
   /// معرف الفئة
   String get categoryId;
   @override
-
   /// تاريخ الاستحواذ
   DateTime get acquisitionDate;
   @override
-
   /// التكلفة التاريخية
   double get cost;
   @override
-
   /// القيمة المتبقية (الخرداة)
   double get residualValue;
   @override
-
   /// العمر الإنتاجي بالسنوات
   int get usefulLifeYears;
   @override
-
   /// طريقة الإهلاك
   String get depreciationMethod;
   @override
-
   /// معرف حساب الأصل
   String get assetAccountId;
   @override
-
   /// معرف حساب مصروف الإهلاك
   String get depreciationAccountId;
   @override
-
   /// معرف حساب مجمع الإهلاك
   String get accumDepreciationAccountId;
   @override
-
   /// مجمع الإهلاك الحالي
   double get accumulatedDepreciation;
   @override
-
   /// معرف فريد للأصل
   String? get id;
   @override
-
   /// هل الأصل ما زال نشطاً (قيد الاستخدام)
   bool get isActive;
   @override

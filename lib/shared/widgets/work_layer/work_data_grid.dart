@@ -62,7 +62,7 @@ enum DataGridCellFormat {
   number,
 
   /// تاريخ بتنسيق محلي.
-  date;
+  date,
 }
 
 /// وصف كيان في صف الجدول مع إمكانية التحديد.
@@ -146,70 +146,54 @@ class _WorkDataGridState<T> extends State<WorkDataGrid<T>> {
         if (widget.entities.isEmpty)
           _buildEmptyState()
         else
-          ...widget.entities
-              .map((entity) => _buildRow(effectiveColumns, entity)),
+          ...widget.entities.map(
+            (entity) => _buildRow(effectiveColumns, entity),
+          ),
       ],
     );
   }
 
   WorkDataGridColumn<T> get _selectionColumn => WorkDataGridColumn<T>(
-        key: '__selection__',
-        label: AppLocalizations.of(context).workGridSelect,
-        builder: (_) => const SizedBox.shrink(),
-        flex: 0,
-        sortable: false,
-      );
+    key: '__selection__',
+    label: AppLocalizations.of(context).workGridSelect,
+    builder: (_) => const SizedBox.shrink(),
+    flex: 0,
+    sortable: false,
+  );
 
   Widget _buildHeader(List<WorkDataGridColumn<T>> columns) => Container(
-        padding: const EdgeInsets.symmetric(
-          horizontal: Spacing.md,
-          vertical: Spacing.sm,
+    padding: const EdgeInsets.symmetric(
+      horizontal: Spacing.md,
+      vertical: Spacing.sm,
+    ),
+    decoration: const BoxDecoration(
+      color: AppColors.surfaceVariant,
+      border: Border(
+        bottom: BorderSide(
+          color: AppColors.borderLight,
+          width: BorderWidths.normal,
         ),
-        decoration: const BoxDecoration(
-          color: AppColors.surfaceVariant,
-          border: Border(
-            bottom: BorderSide(
-              color: AppColors.borderLight,
-              width: BorderWidths.normal,
-            ),
-          ),
-        ),
-        child: Row(
-          children: [
-            ...columns.asMap().entries.map((entry) {
-              final column = entry.value;
-              return Expanded(
-                flex: column.flex + (column.key == '__selection__' ? 1 : 0),
-                child: column.sortable && column.key != '__selection__'
-                    ? Semantics(
-                        label: AppLocalizations.of(context)
-                            .workGridSortableColumn(column.label),
-                        button: true,
-                        child: InkWell(
-                          onTap: () => widget.onSort?.call(
-                            (
-                              column.key,
-                              !(widget.sortKey == column.key) ||
-                                  !widget.sortAscending
-                            ),
-                          ),
-                          child: Row(
-                            mainAxisAlignment: _alignmentFor(column),
-                            children: [
-                              Text(
-                                column.label,
-                                style: AppTextStyles.labelMedium.copyWith(
-                                  fontWeight: FontWeights.semiBold,
-                                  color: AppColors.textSecondary,
-                                ),
-                              ),
-                              const SizedBox(width: Spacing.xs),
-                              _sortIndicator(column),
-                            ],
-                          ),
-                        ),
-                      )
-                    : Row(
+      ),
+    ),
+    child: Row(
+      children: [
+        ...columns.asMap().entries.map((entry) {
+          final column = entry.value;
+          return Expanded(
+            flex: column.flex + (column.key == '__selection__' ? 1 : 0),
+            child: column.sortable && column.key != '__selection__'
+                ? Semantics(
+                    label: AppLocalizations.of(
+                      context,
+                    ).workGridSortableColumn(column.label),
+                    button: true,
+                    child: InkWell(
+                      onTap: () => widget.onSort?.call((
+                        column.key,
+                        !(widget.sortKey == column.key) ||
+                            !widget.sortAscending,
+                      )),
+                      child: Row(
                         mainAxisAlignment: _alignmentFor(column),
                         children: [
                           Text(
@@ -219,13 +203,29 @@ class _WorkDataGridState<T> extends State<WorkDataGrid<T>> {
                               color: AppColors.textSecondary,
                             ),
                           ),
+                          const SizedBox(width: Spacing.xs),
+                          _sortIndicator(column),
                         ],
                       ),
-              );
-            }),
-          ],
-        ),
-      );
+                    ),
+                  )
+                : Row(
+                    mainAxisAlignment: _alignmentFor(column),
+                    children: [
+                      Text(
+                        column.label,
+                        style: AppTextStyles.labelMedium.copyWith(
+                          fontWeight: FontWeights.semiBold,
+                          color: AppColors.textSecondary,
+                        ),
+                      ),
+                    ],
+                  ),
+          );
+        }),
+      ],
+    ),
+  );
 
   Widget _sortIndicator(WorkDataGridColumn<T> column) {
     if (widget.sortKey != column.key) {
@@ -247,60 +247,59 @@ class _WorkDataGridState<T> extends State<WorkDataGrid<T>> {
   Widget _buildRow(
     List<WorkDataGridColumn<T>> columns,
     WorkDataGridEntity<T> entity,
-  ) =>
-      Semantics(
-        label: AppLocalizations.of(context).workGridRow,
-        child: GestureDetector(
-          onTap: widget.onSelect != null
-              ? () => widget.onSelect?.call(entity)
-              : null,
-          child: Container(
-            height: widget.rowHeight,
-            padding: const EdgeInsets.symmetric(horizontal: Spacing.md),
-            decoration: BoxDecoration(
-              color: entity.selected
-                  ? AppColors.selectedOverlay
-                  : AppColors.surface,
-              border: const Border(
-                bottom: BorderSide(
-                  color: AppColors.borderLight,
-                  width: BorderWidths.normal,
-                ),
-              ),
-            ),
-            child: Row(
-              children: [
-                ...columns.asMap().entries.map((entry) {
-                  final column = entry.value;
-                  if (column.key == '__selection__') {
-                    return _selectionCell(entity);
-                  }
-                  return Expanded(
-                    flex: column.flex,
-                    child: Align(
-                      alignment: _cellAlignmentFor(column),
-                      child: column.semanticsLabel != null
-                          ? Semantics(
-                              label: column.semanticsLabel,
-                              child: column.builder(entity.entity),
-                            )
-                          : column.builder(entity.entity),
-                    ),
-                  );
-                }),
-              ],
+  ) => Semantics(
+    label: AppLocalizations.of(context).workGridRow,
+    child: GestureDetector(
+      onTap: widget.onSelect != null
+          ? () => widget.onSelect?.call(entity)
+          : null,
+      child: Container(
+        height: widget.rowHeight,
+        padding: const EdgeInsets.symmetric(horizontal: Spacing.md),
+        decoration: BoxDecoration(
+          color: entity.selected
+              ? AppColors.selectedOverlay
+              : AppColors.surface,
+          border: const Border(
+            bottom: BorderSide(
+              color: AppColors.borderLight,
+              width: BorderWidths.normal,
             ),
           ),
         ),
-      );
+        child: Row(
+          children: [
+            ...columns.asMap().entries.map((entry) {
+              final column = entry.value;
+              if (column.key == '__selection__') {
+                return _selectionCell(entity);
+              }
+              return Expanded(
+                flex: column.flex,
+                child: Align(
+                  alignment: _cellAlignmentFor(column),
+                  child: column.semanticsLabel != null
+                      ? Semantics(
+                          label: column.semanticsLabel,
+                          child: column.builder(entity.entity),
+                        )
+                      : column.builder(entity.entity),
+                ),
+              );
+            }),
+          ],
+        ),
+      ),
+    ),
+  );
 
   Widget _selectionCell(WorkDataGridEntity<T> entity) => const Expanded(
-        child: Checkbox(
-          value: false,
-          onChanged: null,
-          materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-        ),
-      );
+    child: Checkbox(
+      value: false,
+      onChanged: null,
+      materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+    ),
+  );
 
   Alignment _cellAlignmentFor(WorkDataGridColumn<T> column) {
     final isLtr = Directionality.of(context) == TextDirection.ltr;

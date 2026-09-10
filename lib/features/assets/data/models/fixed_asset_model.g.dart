@@ -42,16 +42,8 @@ const FixedAssetModelSchema = CollectionSchema(
       name: r'categoryId',
       type: IsarType.string,
     ),
-    r'code': PropertySchema(
-      id: 5,
-      name: r'code',
-      type: IsarType.string,
-    ),
-    r'cost': PropertySchema(
-      id: 6,
-      name: r'cost',
-      type: IsarType.double,
-    ),
+    r'code': PropertySchema(id: 5, name: r'code', type: IsarType.string),
+    r'cost': PropertySchema(id: 6, name: r'cost', type: IsarType.double),
     r'depreciationAccountId': PropertySchema(
       id: 7,
       name: r'depreciationAccountId',
@@ -62,26 +54,10 @@ const FixedAssetModelSchema = CollectionSchema(
       name: r'depreciationMethod',
       type: IsarType.string,
     ),
-    r'id': PropertySchema(
-      id: 9,
-      name: r'id',
-      type: IsarType.string,
-    ),
-    r'isActive': PropertySchema(
-      id: 10,
-      name: r'isActive',
-      type: IsarType.bool,
-    ),
-    r'nameAr': PropertySchema(
-      id: 11,
-      name: r'nameAr',
-      type: IsarType.string,
-    ),
-    r'nameEn': PropertySchema(
-      id: 12,
-      name: r'nameEn',
-      type: IsarType.string,
-    ),
+    r'id': PropertySchema(id: 9, name: r'id', type: IsarType.string),
+    r'isActive': PropertySchema(id: 10, name: r'isActive', type: IsarType.bool),
+    r'nameAr': PropertySchema(id: 11, name: r'nameAr', type: IsarType.string),
+    r'nameEn': PropertySchema(id: 12, name: r'nameEn', type: IsarType.string),
     r'residualValue': PropertySchema(
       id: 13,
       name: r'residualValue',
@@ -92,11 +68,7 @@ const FixedAssetModelSchema = CollectionSchema(
       name: r'usefulLifeYears',
       type: IsarType.long,
     ),
-    r'userId': PropertySchema(
-      id: 15,
-      name: r'userId',
-      type: IsarType.string,
-    )
+    r'userId': PropertySchema(id: 15, name: r'userId', type: IsarType.string),
   },
   estimateSize: _fixedAssetModelEstimateSize,
   serialize: _fixedAssetModelSerialize,
@@ -114,7 +86,7 @@ const FixedAssetModelSchema = CollectionSchema(
           name: r'id',
           type: IndexType.hash,
           caseSensitive: true,
-        )
+        ),
       ],
     ),
     r'code': IndexSchema(
@@ -127,9 +99,9 @@ const FixedAssetModelSchema = CollectionSchema(
           name: r'code',
           type: IndexType.hash,
           caseSensitive: true,
-        )
+        ),
       ],
-    )
+    ),
   },
   links: {},
   embeddedSchemas: {},
@@ -267,7 +239,10 @@ List<IsarLinkBase<dynamic>> _fixedAssetModelGetLinks(FixedAssetModel object) {
 }
 
 void _fixedAssetModelAttach(
-    IsarCollection<dynamic> col, Id id, FixedAssetModel object) {
+  IsarCollection<dynamic> col,
+  Id id,
+  FixedAssetModel object,
+) {
   object.isarId = id;
 }
 
@@ -320,8 +295,10 @@ extension FixedAssetModelByIndex on IsarCollection<FixedAssetModel> {
     return putAllByIndex(r'id', objects);
   }
 
-  List<Id> putAllByIdSync(List<FixedAssetModel> objects,
-      {bool saveLinks = true}) {
+  List<Id> putAllByIdSync(
+    List<FixedAssetModel> objects, {
+    bool saveLinks = true,
+  }) {
     return putAllByIndexSync(r'id', objects, saveLinks: saveLinks);
   }
 
@@ -373,8 +350,10 @@ extension FixedAssetModelByIndex on IsarCollection<FixedAssetModel> {
     return putAllByIndex(r'code', objects);
   }
 
-  List<Id> putAllByCodeSync(List<FixedAssetModel> objects,
-      {bool saveLinks = true}) {
+  List<Id> putAllByCodeSync(
+    List<FixedAssetModel> objects, {
+    bool saveLinks = true,
+  }) {
     return putAllByIndexSync(r'code', objects, saveLinks: saveLinks);
   }
 }
@@ -391,17 +370,16 @@ extension FixedAssetModelQueryWhereSort
 extension FixedAssetModelQueryWhere
     on QueryBuilder<FixedAssetModel, FixedAssetModel, QWhereClause> {
   QueryBuilder<FixedAssetModel, FixedAssetModel, QAfterWhereClause>
-      isarIdEqualTo(Id isarId) {
+  isarIdEqualTo(Id isarId) {
     return QueryBuilder.apply(this, (query) {
-      return query.addWhereClause(IdWhereClause.between(
-        lower: isarId,
-        upper: isarId,
-      ));
+      return query.addWhereClause(
+        IdWhereClause.between(lower: isarId, upper: isarId),
+      );
     });
   }
 
   QueryBuilder<FixedAssetModel, FixedAssetModel, QAfterWhereClause>
-      isarIdNotEqualTo(Id isarId) {
+  isarIdNotEqualTo(Id isarId) {
     return QueryBuilder.apply(this, (query) {
       if (query.whereSort == Sort.asc) {
         return query
@@ -424,7 +402,7 @@ extension FixedAssetModelQueryWhere
   }
 
   QueryBuilder<FixedAssetModel, FixedAssetModel, QAfterWhereClause>
-      isarIdGreaterThan(Id isarId, {bool include = false}) {
+  isarIdGreaterThan(Id isarId, {bool include = false}) {
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(
         IdWhereClause.greaterThan(lower: isarId, includeLower: include),
@@ -433,7 +411,7 @@ extension FixedAssetModelQueryWhere
   }
 
   QueryBuilder<FixedAssetModel, FixedAssetModel, QAfterWhereClause>
-      isarIdLessThan(Id isarId, {bool include = false}) {
+  isarIdLessThan(Id isarId, {bool include = false}) {
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(
         IdWhereClause.lessThan(upper: isarId, includeUpper: include),
@@ -442,108 +420,126 @@ extension FixedAssetModelQueryWhere
   }
 
   QueryBuilder<FixedAssetModel, FixedAssetModel, QAfterWhereClause>
-      isarIdBetween(
+  isarIdBetween(
     Id lowerIsarId,
     Id upperIsarId, {
     bool includeLower = true,
     bool includeUpper = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addWhereClause(IdWhereClause.between(
-        lower: lowerIsarId,
-        includeLower: includeLower,
-        upper: upperIsarId,
-        includeUpper: includeUpper,
-      ));
+      return query.addWhereClause(
+        IdWhereClause.between(
+          lower: lowerIsarId,
+          includeLower: includeLower,
+          upper: upperIsarId,
+          includeUpper: includeUpper,
+        ),
+      );
     });
   }
 
   QueryBuilder<FixedAssetModel, FixedAssetModel, QAfterWhereClause> idEqualTo(
-      String id) {
+    String id,
+  ) {
     return QueryBuilder.apply(this, (query) {
-      return query.addWhereClause(IndexWhereClause.equalTo(
-        indexName: r'id',
-        value: [id],
-      ));
+      return query.addWhereClause(
+        IndexWhereClause.equalTo(indexName: r'id', value: [id]),
+      );
     });
   }
 
   QueryBuilder<FixedAssetModel, FixedAssetModel, QAfterWhereClause>
-      idNotEqualTo(String id) {
+  idNotEqualTo(String id) {
     return QueryBuilder.apply(this, (query) {
       if (query.whereSort == Sort.asc) {
         return query
-            .addWhereClause(IndexWhereClause.between(
-              indexName: r'id',
-              lower: [],
-              upper: [id],
-              includeUpper: false,
-            ))
-            .addWhereClause(IndexWhereClause.between(
-              indexName: r'id',
-              lower: [id],
-              includeLower: false,
-              upper: [],
-            ));
+            .addWhereClause(
+              IndexWhereClause.between(
+                indexName: r'id',
+                lower: [],
+                upper: [id],
+                includeUpper: false,
+              ),
+            )
+            .addWhereClause(
+              IndexWhereClause.between(
+                indexName: r'id',
+                lower: [id],
+                includeLower: false,
+                upper: [],
+              ),
+            );
       } else {
         return query
-            .addWhereClause(IndexWhereClause.between(
-              indexName: r'id',
-              lower: [id],
-              includeLower: false,
-              upper: [],
-            ))
-            .addWhereClause(IndexWhereClause.between(
-              indexName: r'id',
-              lower: [],
-              upper: [id],
-              includeUpper: false,
-            ));
+            .addWhereClause(
+              IndexWhereClause.between(
+                indexName: r'id',
+                lower: [id],
+                includeLower: false,
+                upper: [],
+              ),
+            )
+            .addWhereClause(
+              IndexWhereClause.between(
+                indexName: r'id',
+                lower: [],
+                upper: [id],
+                includeUpper: false,
+              ),
+            );
       }
     });
   }
 
   QueryBuilder<FixedAssetModel, FixedAssetModel, QAfterWhereClause> codeEqualTo(
-      String code) {
+    String code,
+  ) {
     return QueryBuilder.apply(this, (query) {
-      return query.addWhereClause(IndexWhereClause.equalTo(
-        indexName: r'code',
-        value: [code],
-      ));
+      return query.addWhereClause(
+        IndexWhereClause.equalTo(indexName: r'code', value: [code]),
+      );
     });
   }
 
   QueryBuilder<FixedAssetModel, FixedAssetModel, QAfterWhereClause>
-      codeNotEqualTo(String code) {
+  codeNotEqualTo(String code) {
     return QueryBuilder.apply(this, (query) {
       if (query.whereSort == Sort.asc) {
         return query
-            .addWhereClause(IndexWhereClause.between(
-              indexName: r'code',
-              lower: [],
-              upper: [code],
-              includeUpper: false,
-            ))
-            .addWhereClause(IndexWhereClause.between(
-              indexName: r'code',
-              lower: [code],
-              includeLower: false,
-              upper: [],
-            ));
+            .addWhereClause(
+              IndexWhereClause.between(
+                indexName: r'code',
+                lower: [],
+                upper: [code],
+                includeUpper: false,
+              ),
+            )
+            .addWhereClause(
+              IndexWhereClause.between(
+                indexName: r'code',
+                lower: [code],
+                includeLower: false,
+                upper: [],
+              ),
+            );
       } else {
         return query
-            .addWhereClause(IndexWhereClause.between(
-              indexName: r'code',
-              lower: [code],
-              includeLower: false,
-              upper: [],
-            ))
-            .addWhereClause(IndexWhereClause.between(
-              indexName: r'code',
-              lower: [],
-              upper: [code],
-              includeUpper: false,
-            ));
+            .addWhereClause(
+              IndexWhereClause.between(
+                indexName: r'code',
+                lower: [code],
+                includeLower: false,
+                upper: [],
+              ),
+            )
+            .addWhereClause(
+              IndexWhereClause.between(
+                indexName: r'code',
+                lower: [],
+                upper: [code],
+                includeUpper: false,
+              ),
+            );
       }
     });
   }
@@ -552,53 +548,56 @@ extension FixedAssetModelQueryWhere
 extension FixedAssetModelQueryFilter
     on QueryBuilder<FixedAssetModel, FixedAssetModel, QFilterCondition> {
   QueryBuilder<FixedAssetModel, FixedAssetModel, QAfterFilterCondition>
-      accumDepreciationAccountIdEqualTo(
-    String value, {
-    bool caseSensitive = true,
-  }) {
+  accumDepreciationAccountIdEqualTo(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'accumDepreciationAccountId',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.equalTo(
+          property: r'accumDepreciationAccountId',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
   QueryBuilder<FixedAssetModel, FixedAssetModel, QAfterFilterCondition>
-      accumDepreciationAccountIdGreaterThan(
-    String value, {
-    bool include = false,
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        include: include,
-        property: r'accumDepreciationAccountId',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<FixedAssetModel, FixedAssetModel, QAfterFilterCondition>
-      accumDepreciationAccountIdLessThan(
+  accumDepreciationAccountIdGreaterThan(
     String value, {
     bool include = false,
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.lessThan(
-        include: include,
-        property: r'accumDepreciationAccountId',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.greaterThan(
+          include: include,
+          property: r'accumDepreciationAccountId',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
   QueryBuilder<FixedAssetModel, FixedAssetModel, QAfterFilterCondition>
-      accumDepreciationAccountIdBetween(
+  accumDepreciationAccountIdLessThan(
+    String value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        FilterCondition.lessThan(
+          include: include,
+          property: r'accumDepreciationAccountId',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<FixedAssetModel, FixedAssetModel, QAfterFilterCondition>
+  accumDepreciationAccountIdBetween(
     String lower,
     String upper, {
     bool includeLower = true,
@@ -606,137 +605,161 @@ extension FixedAssetModelQueryFilter
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.between(
-        property: r'accumDepreciationAccountId',
-        lower: lower,
-        includeLower: includeLower,
-        upper: upper,
-        includeUpper: includeUpper,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.between(
+          property: r'accumDepreciationAccountId',
+          lower: lower,
+          includeLower: includeLower,
+          upper: upper,
+          includeUpper: includeUpper,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
   QueryBuilder<FixedAssetModel, FixedAssetModel, QAfterFilterCondition>
-      accumDepreciationAccountIdStartsWith(
+  accumDepreciationAccountIdStartsWith(
     String value, {
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.startsWith(
-        property: r'accumDepreciationAccountId',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.startsWith(
+          property: r'accumDepreciationAccountId',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
   QueryBuilder<FixedAssetModel, FixedAssetModel, QAfterFilterCondition>
-      accumDepreciationAccountIdEndsWith(
+  accumDepreciationAccountIdEndsWith(
     String value, {
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.endsWith(
-        property: r'accumDepreciationAccountId',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.endsWith(
+          property: r'accumDepreciationAccountId',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
   QueryBuilder<FixedAssetModel, FixedAssetModel, QAfterFilterCondition>
-      accumDepreciationAccountIdContains(String value,
-          {bool caseSensitive = true}) {
+  accumDepreciationAccountIdContains(
+    String value, {
+    bool caseSensitive = true,
+  }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.contains(
-        property: r'accumDepreciationAccountId',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.contains(
+          property: r'accumDepreciationAccountId',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
   QueryBuilder<FixedAssetModel, FixedAssetModel, QAfterFilterCondition>
-      accumDepreciationAccountIdMatches(String pattern,
-          {bool caseSensitive = true}) {
+  accumDepreciationAccountIdMatches(
+    String pattern, {
+    bool caseSensitive = true,
+  }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.matches(
-        property: r'accumDepreciationAccountId',
-        wildcard: pattern,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.matches(
+          property: r'accumDepreciationAccountId',
+          wildcard: pattern,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
   QueryBuilder<FixedAssetModel, FixedAssetModel, QAfterFilterCondition>
-      accumDepreciationAccountIdIsEmpty() {
+  accumDepreciationAccountIdIsEmpty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'accumDepreciationAccountId',
-        value: '',
-      ));
+      return query.addFilterCondition(
+        FilterCondition.equalTo(
+          property: r'accumDepreciationAccountId',
+          value: '',
+        ),
+      );
     });
   }
 
   QueryBuilder<FixedAssetModel, FixedAssetModel, QAfterFilterCondition>
-      accumDepreciationAccountIdIsNotEmpty() {
+  accumDepreciationAccountIdIsNotEmpty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        property: r'accumDepreciationAccountId',
-        value: '',
-      ));
+      return query.addFilterCondition(
+        FilterCondition.greaterThan(
+          property: r'accumDepreciationAccountId',
+          value: '',
+        ),
+      );
     });
   }
 
   QueryBuilder<FixedAssetModel, FixedAssetModel, QAfterFilterCondition>
-      accumulatedDepreciationEqualTo(
+  accumulatedDepreciationEqualTo(
     double value, {
     double epsilon = Query.epsilon,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'accumulatedDepreciation',
-        value: value,
-        epsilon: epsilon,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.equalTo(
+          property: r'accumulatedDepreciation',
+          value: value,
+          epsilon: epsilon,
+        ),
+      );
     });
   }
 
   QueryBuilder<FixedAssetModel, FixedAssetModel, QAfterFilterCondition>
-      accumulatedDepreciationGreaterThan(
+  accumulatedDepreciationGreaterThan(
     double value, {
     bool include = false,
     double epsilon = Query.epsilon,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        include: include,
-        property: r'accumulatedDepreciation',
-        value: value,
-        epsilon: epsilon,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.greaterThan(
+          include: include,
+          property: r'accumulatedDepreciation',
+          value: value,
+          epsilon: epsilon,
+        ),
+      );
     });
   }
 
   QueryBuilder<FixedAssetModel, FixedAssetModel, QAfterFilterCondition>
-      accumulatedDepreciationLessThan(
+  accumulatedDepreciationLessThan(
     double value, {
     bool include = false,
     double epsilon = Query.epsilon,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.lessThan(
-        include: include,
-        property: r'accumulatedDepreciation',
-        value: value,
-        epsilon: epsilon,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.lessThan(
+          include: include,
+          property: r'accumulatedDepreciation',
+          value: value,
+          epsilon: epsilon,
+        ),
+      );
     });
   }
 
   QueryBuilder<FixedAssetModel, FixedAssetModel, QAfterFilterCondition>
-      accumulatedDepreciationBetween(
+  accumulatedDepreciationBetween(
     double lower,
     double upper, {
     bool includeLower = true,
@@ -744,121 +767,125 @@ extension FixedAssetModelQueryFilter
     double epsilon = Query.epsilon,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.between(
-        property: r'accumulatedDepreciation',
-        lower: lower,
-        includeLower: includeLower,
-        upper: upper,
-        includeUpper: includeUpper,
-        epsilon: epsilon,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.between(
+          property: r'accumulatedDepreciation',
+          lower: lower,
+          includeLower: includeLower,
+          upper: upper,
+          includeUpper: includeUpper,
+          epsilon: epsilon,
+        ),
+      );
     });
   }
 
   QueryBuilder<FixedAssetModel, FixedAssetModel, QAfterFilterCondition>
-      acquisitionDateEqualTo(DateTime value) {
+  acquisitionDateEqualTo(DateTime value) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'acquisitionDate',
-        value: value,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.equalTo(property: r'acquisitionDate', value: value),
+      );
     });
   }
 
   QueryBuilder<FixedAssetModel, FixedAssetModel, QAfterFilterCondition>
-      acquisitionDateGreaterThan(
-    DateTime value, {
-    bool include = false,
-  }) {
+  acquisitionDateGreaterThan(DateTime value, {bool include = false}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        include: include,
-        property: r'acquisitionDate',
-        value: value,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.greaterThan(
+          include: include,
+          property: r'acquisitionDate',
+          value: value,
+        ),
+      );
     });
   }
 
   QueryBuilder<FixedAssetModel, FixedAssetModel, QAfterFilterCondition>
-      acquisitionDateLessThan(
-    DateTime value, {
-    bool include = false,
-  }) {
+  acquisitionDateLessThan(DateTime value, {bool include = false}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.lessThan(
-        include: include,
-        property: r'acquisitionDate',
-        value: value,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.lessThan(
+          include: include,
+          property: r'acquisitionDate',
+          value: value,
+        ),
+      );
     });
   }
 
   QueryBuilder<FixedAssetModel, FixedAssetModel, QAfterFilterCondition>
-      acquisitionDateBetween(
+  acquisitionDateBetween(
     DateTime lower,
     DateTime upper, {
     bool includeLower = true,
     bool includeUpper = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.between(
-        property: r'acquisitionDate',
-        lower: lower,
-        includeLower: includeLower,
-        upper: upper,
-        includeUpper: includeUpper,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.between(
+          property: r'acquisitionDate',
+          lower: lower,
+          includeLower: includeLower,
+          upper: upper,
+          includeUpper: includeUpper,
+        ),
+      );
     });
   }
 
   QueryBuilder<FixedAssetModel, FixedAssetModel, QAfterFilterCondition>
-      assetAccountIdEqualTo(
-    String value, {
-    bool caseSensitive = true,
-  }) {
+  assetAccountIdEqualTo(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'assetAccountId',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.equalTo(
+          property: r'assetAccountId',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
   QueryBuilder<FixedAssetModel, FixedAssetModel, QAfterFilterCondition>
-      assetAccountIdGreaterThan(
-    String value, {
-    bool include = false,
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        include: include,
-        property: r'assetAccountId',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<FixedAssetModel, FixedAssetModel, QAfterFilterCondition>
-      assetAccountIdLessThan(
+  assetAccountIdGreaterThan(
     String value, {
     bool include = false,
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.lessThan(
-        include: include,
-        property: r'assetAccountId',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.greaterThan(
+          include: include,
+          property: r'assetAccountId',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
   QueryBuilder<FixedAssetModel, FixedAssetModel, QAfterFilterCondition>
-      assetAccountIdBetween(
+  assetAccountIdLessThan(
+    String value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        FilterCondition.lessThan(
+          include: include,
+          property: r'assetAccountId',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<FixedAssetModel, FixedAssetModel, QAfterFilterCondition>
+  assetAccountIdBetween(
     String lower,
     String upper, {
     bool includeLower = true,
@@ -866,135 +893,140 @@ extension FixedAssetModelQueryFilter
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.between(
-        property: r'assetAccountId',
-        lower: lower,
-        includeLower: includeLower,
-        upper: upper,
-        includeUpper: includeUpper,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.between(
+          property: r'assetAccountId',
+          lower: lower,
+          includeLower: includeLower,
+          upper: upper,
+          includeUpper: includeUpper,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
   QueryBuilder<FixedAssetModel, FixedAssetModel, QAfterFilterCondition>
-      assetAccountIdStartsWith(
-    String value, {
-    bool caseSensitive = true,
-  }) {
+  assetAccountIdStartsWith(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.startsWith(
-        property: r'assetAccountId',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.startsWith(
+          property: r'assetAccountId',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
   QueryBuilder<FixedAssetModel, FixedAssetModel, QAfterFilterCondition>
-      assetAccountIdEndsWith(
-    String value, {
-    bool caseSensitive = true,
-  }) {
+  assetAccountIdEndsWith(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.endsWith(
-        property: r'assetAccountId',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.endsWith(
+          property: r'assetAccountId',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
   QueryBuilder<FixedAssetModel, FixedAssetModel, QAfterFilterCondition>
-      assetAccountIdContains(String value, {bool caseSensitive = true}) {
+  assetAccountIdContains(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.contains(
-        property: r'assetAccountId',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.contains(
+          property: r'assetAccountId',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
   QueryBuilder<FixedAssetModel, FixedAssetModel, QAfterFilterCondition>
-      assetAccountIdMatches(String pattern, {bool caseSensitive = true}) {
+  assetAccountIdMatches(String pattern, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.matches(
-        property: r'assetAccountId',
-        wildcard: pattern,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.matches(
+          property: r'assetAccountId',
+          wildcard: pattern,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
   QueryBuilder<FixedAssetModel, FixedAssetModel, QAfterFilterCondition>
-      assetAccountIdIsEmpty() {
+  assetAccountIdIsEmpty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'assetAccountId',
-        value: '',
-      ));
+      return query.addFilterCondition(
+        FilterCondition.equalTo(property: r'assetAccountId', value: ''),
+      );
     });
   }
 
   QueryBuilder<FixedAssetModel, FixedAssetModel, QAfterFilterCondition>
-      assetAccountIdIsNotEmpty() {
+  assetAccountIdIsNotEmpty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        property: r'assetAccountId',
-        value: '',
-      ));
+      return query.addFilterCondition(
+        FilterCondition.greaterThan(property: r'assetAccountId', value: ''),
+      );
     });
   }
 
   QueryBuilder<FixedAssetModel, FixedAssetModel, QAfterFilterCondition>
-      categoryIdEqualTo(
-    String value, {
-    bool caseSensitive = true,
-  }) {
+  categoryIdEqualTo(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'categoryId',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.equalTo(
+          property: r'categoryId',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
   QueryBuilder<FixedAssetModel, FixedAssetModel, QAfterFilterCondition>
-      categoryIdGreaterThan(
-    String value, {
-    bool include = false,
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        include: include,
-        property: r'categoryId',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<FixedAssetModel, FixedAssetModel, QAfterFilterCondition>
-      categoryIdLessThan(
+  categoryIdGreaterThan(
     String value, {
     bool include = false,
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.lessThan(
-        include: include,
-        property: r'categoryId',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.greaterThan(
+          include: include,
+          property: r'categoryId',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
   QueryBuilder<FixedAssetModel, FixedAssetModel, QAfterFilterCondition>
-      categoryIdBetween(
+  categoryIdLessThan(
+    String value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        FilterCondition.lessThan(
+          include: include,
+          property: r'categoryId',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<FixedAssetModel, FixedAssetModel, QAfterFilterCondition>
+  categoryIdBetween(
     String lower,
     String upper, {
     bool includeLower = true,
@@ -1002,135 +1034,140 @@ extension FixedAssetModelQueryFilter
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.between(
-        property: r'categoryId',
-        lower: lower,
-        includeLower: includeLower,
-        upper: upper,
-        includeUpper: includeUpper,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.between(
+          property: r'categoryId',
+          lower: lower,
+          includeLower: includeLower,
+          upper: upper,
+          includeUpper: includeUpper,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
   QueryBuilder<FixedAssetModel, FixedAssetModel, QAfterFilterCondition>
-      categoryIdStartsWith(
-    String value, {
-    bool caseSensitive = true,
-  }) {
+  categoryIdStartsWith(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.startsWith(
-        property: r'categoryId',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.startsWith(
+          property: r'categoryId',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
   QueryBuilder<FixedAssetModel, FixedAssetModel, QAfterFilterCondition>
-      categoryIdEndsWith(
-    String value, {
-    bool caseSensitive = true,
-  }) {
+  categoryIdEndsWith(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.endsWith(
-        property: r'categoryId',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.endsWith(
+          property: r'categoryId',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
   QueryBuilder<FixedAssetModel, FixedAssetModel, QAfterFilterCondition>
-      categoryIdContains(String value, {bool caseSensitive = true}) {
+  categoryIdContains(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.contains(
-        property: r'categoryId',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.contains(
+          property: r'categoryId',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
   QueryBuilder<FixedAssetModel, FixedAssetModel, QAfterFilterCondition>
-      categoryIdMatches(String pattern, {bool caseSensitive = true}) {
+  categoryIdMatches(String pattern, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.matches(
-        property: r'categoryId',
-        wildcard: pattern,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.matches(
+          property: r'categoryId',
+          wildcard: pattern,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
   QueryBuilder<FixedAssetModel, FixedAssetModel, QAfterFilterCondition>
-      categoryIdIsEmpty() {
+  categoryIdIsEmpty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'categoryId',
-        value: '',
-      ));
+      return query.addFilterCondition(
+        FilterCondition.equalTo(property: r'categoryId', value: ''),
+      );
     });
   }
 
   QueryBuilder<FixedAssetModel, FixedAssetModel, QAfterFilterCondition>
-      categoryIdIsNotEmpty() {
+  categoryIdIsNotEmpty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        property: r'categoryId',
-        value: '',
-      ));
+      return query.addFilterCondition(
+        FilterCondition.greaterThan(property: r'categoryId', value: ''),
+      );
     });
   }
 
   QueryBuilder<FixedAssetModel, FixedAssetModel, QAfterFilterCondition>
-      codeEqualTo(
-    String value, {
-    bool caseSensitive = true,
-  }) {
+  codeEqualTo(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'code',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.equalTo(
+          property: r'code',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
   QueryBuilder<FixedAssetModel, FixedAssetModel, QAfterFilterCondition>
-      codeGreaterThan(
-    String value, {
-    bool include = false,
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        include: include,
-        property: r'code',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<FixedAssetModel, FixedAssetModel, QAfterFilterCondition>
-      codeLessThan(
+  codeGreaterThan(
     String value, {
     bool include = false,
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.lessThan(
-        include: include,
-        property: r'code',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.greaterThan(
+          include: include,
+          property: r'code',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
   QueryBuilder<FixedAssetModel, FixedAssetModel, QAfterFilterCondition>
-      codeBetween(
+  codeLessThan(
+    String value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        FilterCondition.lessThan(
+          include: include,
+          property: r'code',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<FixedAssetModel, FixedAssetModel, QAfterFilterCondition>
+  codeBetween(
     String lower,
     String upper, {
     bool includeLower = true,
@@ -1138,135 +1175,140 @@ extension FixedAssetModelQueryFilter
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.between(
-        property: r'code',
-        lower: lower,
-        includeLower: includeLower,
-        upper: upper,
-        includeUpper: includeUpper,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.between(
+          property: r'code',
+          lower: lower,
+          includeLower: includeLower,
+          upper: upper,
+          includeUpper: includeUpper,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
   QueryBuilder<FixedAssetModel, FixedAssetModel, QAfterFilterCondition>
-      codeStartsWith(
-    String value, {
-    bool caseSensitive = true,
-  }) {
+  codeStartsWith(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.startsWith(
-        property: r'code',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.startsWith(
+          property: r'code',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
   QueryBuilder<FixedAssetModel, FixedAssetModel, QAfterFilterCondition>
-      codeEndsWith(
-    String value, {
-    bool caseSensitive = true,
-  }) {
+  codeEndsWith(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.endsWith(
-        property: r'code',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.endsWith(
+          property: r'code',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
   QueryBuilder<FixedAssetModel, FixedAssetModel, QAfterFilterCondition>
-      codeContains(String value, {bool caseSensitive = true}) {
+  codeContains(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.contains(
-        property: r'code',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.contains(
+          property: r'code',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
   QueryBuilder<FixedAssetModel, FixedAssetModel, QAfterFilterCondition>
-      codeMatches(String pattern, {bool caseSensitive = true}) {
+  codeMatches(String pattern, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.matches(
-        property: r'code',
-        wildcard: pattern,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.matches(
+          property: r'code',
+          wildcard: pattern,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
   QueryBuilder<FixedAssetModel, FixedAssetModel, QAfterFilterCondition>
-      codeIsEmpty() {
+  codeIsEmpty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'code',
-        value: '',
-      ));
+      return query.addFilterCondition(
+        FilterCondition.equalTo(property: r'code', value: ''),
+      );
     });
   }
 
   QueryBuilder<FixedAssetModel, FixedAssetModel, QAfterFilterCondition>
-      codeIsNotEmpty() {
+  codeIsNotEmpty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        property: r'code',
-        value: '',
-      ));
+      return query.addFilterCondition(
+        FilterCondition.greaterThan(property: r'code', value: ''),
+      );
     });
   }
 
   QueryBuilder<FixedAssetModel, FixedAssetModel, QAfterFilterCondition>
-      costEqualTo(
-    double value, {
-    double epsilon = Query.epsilon,
-  }) {
+  costEqualTo(double value, {double epsilon = Query.epsilon}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'cost',
-        value: value,
-        epsilon: epsilon,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.equalTo(
+          property: r'cost',
+          value: value,
+          epsilon: epsilon,
+        ),
+      );
     });
   }
 
   QueryBuilder<FixedAssetModel, FixedAssetModel, QAfterFilterCondition>
-      costGreaterThan(
-    double value, {
-    bool include = false,
-    double epsilon = Query.epsilon,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        include: include,
-        property: r'cost',
-        value: value,
-        epsilon: epsilon,
-      ));
-    });
-  }
-
-  QueryBuilder<FixedAssetModel, FixedAssetModel, QAfterFilterCondition>
-      costLessThan(
+  costGreaterThan(
     double value, {
     bool include = false,
     double epsilon = Query.epsilon,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.lessThan(
-        include: include,
-        property: r'cost',
-        value: value,
-        epsilon: epsilon,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.greaterThan(
+          include: include,
+          property: r'cost',
+          value: value,
+          epsilon: epsilon,
+        ),
+      );
     });
   }
 
   QueryBuilder<FixedAssetModel, FixedAssetModel, QAfterFilterCondition>
-      costBetween(
+  costLessThan(
+    double value, {
+    bool include = false,
+    double epsilon = Query.epsilon,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        FilterCondition.lessThan(
+          include: include,
+          property: r'cost',
+          value: value,
+          epsilon: epsilon,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<FixedAssetModel, FixedAssetModel, QAfterFilterCondition>
+  costBetween(
     double lower,
     double upper, {
     bool includeLower = true,
@@ -1274,65 +1316,70 @@ extension FixedAssetModelQueryFilter
     double epsilon = Query.epsilon,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.between(
-        property: r'cost',
-        lower: lower,
-        includeLower: includeLower,
-        upper: upper,
-        includeUpper: includeUpper,
-        epsilon: epsilon,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.between(
+          property: r'cost',
+          lower: lower,
+          includeLower: includeLower,
+          upper: upper,
+          includeUpper: includeUpper,
+          epsilon: epsilon,
+        ),
+      );
     });
   }
 
   QueryBuilder<FixedAssetModel, FixedAssetModel, QAfterFilterCondition>
-      depreciationAccountIdEqualTo(
-    String value, {
-    bool caseSensitive = true,
-  }) {
+  depreciationAccountIdEqualTo(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'depreciationAccountId',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.equalTo(
+          property: r'depreciationAccountId',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
   QueryBuilder<FixedAssetModel, FixedAssetModel, QAfterFilterCondition>
-      depreciationAccountIdGreaterThan(
-    String value, {
-    bool include = false,
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        include: include,
-        property: r'depreciationAccountId',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<FixedAssetModel, FixedAssetModel, QAfterFilterCondition>
-      depreciationAccountIdLessThan(
+  depreciationAccountIdGreaterThan(
     String value, {
     bool include = false,
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.lessThan(
-        include: include,
-        property: r'depreciationAccountId',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.greaterThan(
+          include: include,
+          property: r'depreciationAccountId',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
   QueryBuilder<FixedAssetModel, FixedAssetModel, QAfterFilterCondition>
-      depreciationAccountIdBetween(
+  depreciationAccountIdLessThan(
+    String value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        FilterCondition.lessThan(
+          include: include,
+          property: r'depreciationAccountId',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<FixedAssetModel, FixedAssetModel, QAfterFilterCondition>
+  depreciationAccountIdBetween(
     String lower,
     String upper, {
     bool includeLower = true,
@@ -1340,136 +1387,143 @@ extension FixedAssetModelQueryFilter
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.between(
-        property: r'depreciationAccountId',
-        lower: lower,
-        includeLower: includeLower,
-        upper: upper,
-        includeUpper: includeUpper,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.between(
+          property: r'depreciationAccountId',
+          lower: lower,
+          includeLower: includeLower,
+          upper: upper,
+          includeUpper: includeUpper,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
   QueryBuilder<FixedAssetModel, FixedAssetModel, QAfterFilterCondition>
-      depreciationAccountIdStartsWith(
-    String value, {
-    bool caseSensitive = true,
-  }) {
+  depreciationAccountIdStartsWith(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.startsWith(
-        property: r'depreciationAccountId',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.startsWith(
+          property: r'depreciationAccountId',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
   QueryBuilder<FixedAssetModel, FixedAssetModel, QAfterFilterCondition>
-      depreciationAccountIdEndsWith(
-    String value, {
-    bool caseSensitive = true,
-  }) {
+  depreciationAccountIdEndsWith(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.endsWith(
-        property: r'depreciationAccountId',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.endsWith(
+          property: r'depreciationAccountId',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
   QueryBuilder<FixedAssetModel, FixedAssetModel, QAfterFilterCondition>
-      depreciationAccountIdContains(String value, {bool caseSensitive = true}) {
+  depreciationAccountIdContains(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.contains(
-        property: r'depreciationAccountId',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.contains(
+          property: r'depreciationAccountId',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
   QueryBuilder<FixedAssetModel, FixedAssetModel, QAfterFilterCondition>
-      depreciationAccountIdMatches(String pattern,
-          {bool caseSensitive = true}) {
+  depreciationAccountIdMatches(String pattern, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.matches(
-        property: r'depreciationAccountId',
-        wildcard: pattern,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.matches(
+          property: r'depreciationAccountId',
+          wildcard: pattern,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
   QueryBuilder<FixedAssetModel, FixedAssetModel, QAfterFilterCondition>
-      depreciationAccountIdIsEmpty() {
+  depreciationAccountIdIsEmpty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'depreciationAccountId',
-        value: '',
-      ));
+      return query.addFilterCondition(
+        FilterCondition.equalTo(property: r'depreciationAccountId', value: ''),
+      );
     });
   }
 
   QueryBuilder<FixedAssetModel, FixedAssetModel, QAfterFilterCondition>
-      depreciationAccountIdIsNotEmpty() {
+  depreciationAccountIdIsNotEmpty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        property: r'depreciationAccountId',
-        value: '',
-      ));
+      return query.addFilterCondition(
+        FilterCondition.greaterThan(
+          property: r'depreciationAccountId',
+          value: '',
+        ),
+      );
     });
   }
 
   QueryBuilder<FixedAssetModel, FixedAssetModel, QAfterFilterCondition>
-      depreciationMethodEqualTo(
-    String value, {
-    bool caseSensitive = true,
-  }) {
+  depreciationMethodEqualTo(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'depreciationMethod',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.equalTo(
+          property: r'depreciationMethod',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
   QueryBuilder<FixedAssetModel, FixedAssetModel, QAfterFilterCondition>
-      depreciationMethodGreaterThan(
-    String value, {
-    bool include = false,
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        include: include,
-        property: r'depreciationMethod',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<FixedAssetModel, FixedAssetModel, QAfterFilterCondition>
-      depreciationMethodLessThan(
+  depreciationMethodGreaterThan(
     String value, {
     bool include = false,
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.lessThan(
-        include: include,
-        property: r'depreciationMethod',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.greaterThan(
+          include: include,
+          property: r'depreciationMethod',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
   QueryBuilder<FixedAssetModel, FixedAssetModel, QAfterFilterCondition>
-      depreciationMethodBetween(
+  depreciationMethodLessThan(
+    String value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        FilterCondition.lessThan(
+          include: include,
+          property: r'depreciationMethod',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<FixedAssetModel, FixedAssetModel, QAfterFilterCondition>
+  depreciationMethodBetween(
     String lower,
     String upper, {
     bool includeLower = true,
@@ -1477,135 +1531,136 @@ extension FixedAssetModelQueryFilter
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.between(
-        property: r'depreciationMethod',
-        lower: lower,
-        includeLower: includeLower,
-        upper: upper,
-        includeUpper: includeUpper,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.between(
+          property: r'depreciationMethod',
+          lower: lower,
+          includeLower: includeLower,
+          upper: upper,
+          includeUpper: includeUpper,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
   QueryBuilder<FixedAssetModel, FixedAssetModel, QAfterFilterCondition>
-      depreciationMethodStartsWith(
-    String value, {
-    bool caseSensitive = true,
-  }) {
+  depreciationMethodStartsWith(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.startsWith(
-        property: r'depreciationMethod',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.startsWith(
+          property: r'depreciationMethod',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
   QueryBuilder<FixedAssetModel, FixedAssetModel, QAfterFilterCondition>
-      depreciationMethodEndsWith(
-    String value, {
-    bool caseSensitive = true,
-  }) {
+  depreciationMethodEndsWith(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.endsWith(
-        property: r'depreciationMethod',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.endsWith(
+          property: r'depreciationMethod',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
   QueryBuilder<FixedAssetModel, FixedAssetModel, QAfterFilterCondition>
-      depreciationMethodContains(String value, {bool caseSensitive = true}) {
+  depreciationMethodContains(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.contains(
-        property: r'depreciationMethod',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.contains(
+          property: r'depreciationMethod',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
   QueryBuilder<FixedAssetModel, FixedAssetModel, QAfterFilterCondition>
-      depreciationMethodMatches(String pattern, {bool caseSensitive = true}) {
+  depreciationMethodMatches(String pattern, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.matches(
-        property: r'depreciationMethod',
-        wildcard: pattern,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.matches(
+          property: r'depreciationMethod',
+          wildcard: pattern,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
   QueryBuilder<FixedAssetModel, FixedAssetModel, QAfterFilterCondition>
-      depreciationMethodIsEmpty() {
+  depreciationMethodIsEmpty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'depreciationMethod',
-        value: '',
-      ));
+      return query.addFilterCondition(
+        FilterCondition.equalTo(property: r'depreciationMethod', value: ''),
+      );
     });
   }
 
   QueryBuilder<FixedAssetModel, FixedAssetModel, QAfterFilterCondition>
-      depreciationMethodIsNotEmpty() {
+  depreciationMethodIsNotEmpty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        property: r'depreciationMethod',
-        value: '',
-      ));
+      return query.addFilterCondition(
+        FilterCondition.greaterThan(property: r'depreciationMethod', value: ''),
+      );
     });
   }
 
   QueryBuilder<FixedAssetModel, FixedAssetModel, QAfterFilterCondition>
-      idEqualTo(
-    String value, {
-    bool caseSensitive = true,
-  }) {
+  idEqualTo(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'id',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.equalTo(
+          property: r'id',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
   QueryBuilder<FixedAssetModel, FixedAssetModel, QAfterFilterCondition>
-      idGreaterThan(
-    String value, {
-    bool include = false,
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        include: include,
-        property: r'id',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<FixedAssetModel, FixedAssetModel, QAfterFilterCondition>
-      idLessThan(
+  idGreaterThan(
     String value, {
     bool include = false,
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.lessThan(
-        include: include,
-        property: r'id',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.greaterThan(
+          include: include,
+          property: r'id',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
   QueryBuilder<FixedAssetModel, FixedAssetModel, QAfterFilterCondition>
-      idBetween(
+  idLessThan(String value, {bool include = false, bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        FilterCondition.lessThan(
+          include: include,
+          property: r'id',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<FixedAssetModel, FixedAssetModel, QAfterFilterCondition>
+  idBetween(
     String lower,
     String upper, {
     bool includeLower = true,
@@ -1613,201 +1668,204 @@ extension FixedAssetModelQueryFilter
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.between(
-        property: r'id',
-        lower: lower,
-        includeLower: includeLower,
-        upper: upper,
-        includeUpper: includeUpper,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.between(
+          property: r'id',
+          lower: lower,
+          includeLower: includeLower,
+          upper: upper,
+          includeUpper: includeUpper,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
   QueryBuilder<FixedAssetModel, FixedAssetModel, QAfterFilterCondition>
-      idStartsWith(
-    String value, {
-    bool caseSensitive = true,
-  }) {
+  idStartsWith(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.startsWith(
-        property: r'id',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.startsWith(
+          property: r'id',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
   QueryBuilder<FixedAssetModel, FixedAssetModel, QAfterFilterCondition>
-      idEndsWith(
-    String value, {
-    bool caseSensitive = true,
-  }) {
+  idEndsWith(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.endsWith(
-        property: r'id',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.endsWith(
+          property: r'id',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
   QueryBuilder<FixedAssetModel, FixedAssetModel, QAfterFilterCondition>
-      idContains(String value, {bool caseSensitive = true}) {
+  idContains(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.contains(
-        property: r'id',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.contains(
+          property: r'id',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
   QueryBuilder<FixedAssetModel, FixedAssetModel, QAfterFilterCondition>
-      idMatches(String pattern, {bool caseSensitive = true}) {
+  idMatches(String pattern, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.matches(
-        property: r'id',
-        wildcard: pattern,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.matches(
+          property: r'id',
+          wildcard: pattern,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
   QueryBuilder<FixedAssetModel, FixedAssetModel, QAfterFilterCondition>
-      idIsEmpty() {
+  idIsEmpty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'id',
-        value: '',
-      ));
+      return query.addFilterCondition(
+        FilterCondition.equalTo(property: r'id', value: ''),
+      );
     });
   }
 
   QueryBuilder<FixedAssetModel, FixedAssetModel, QAfterFilterCondition>
-      idIsNotEmpty() {
+  idIsNotEmpty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        property: r'id',
-        value: '',
-      ));
+      return query.addFilterCondition(
+        FilterCondition.greaterThan(property: r'id', value: ''),
+      );
     });
   }
 
   QueryBuilder<FixedAssetModel, FixedAssetModel, QAfterFilterCondition>
-      isActiveEqualTo(bool value) {
+  isActiveEqualTo(bool value) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'isActive',
-        value: value,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.equalTo(property: r'isActive', value: value),
+      );
     });
   }
 
   QueryBuilder<FixedAssetModel, FixedAssetModel, QAfterFilterCondition>
-      isarIdEqualTo(Id value) {
+  isarIdEqualTo(Id value) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'isarId',
-        value: value,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.equalTo(property: r'isarId', value: value),
+      );
     });
   }
 
   QueryBuilder<FixedAssetModel, FixedAssetModel, QAfterFilterCondition>
-      isarIdGreaterThan(
-    Id value, {
-    bool include = false,
-  }) {
+  isarIdGreaterThan(Id value, {bool include = false}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        include: include,
-        property: r'isarId',
-        value: value,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.greaterThan(
+          include: include,
+          property: r'isarId',
+          value: value,
+        ),
+      );
     });
   }
 
   QueryBuilder<FixedAssetModel, FixedAssetModel, QAfterFilterCondition>
-      isarIdLessThan(
-    Id value, {
-    bool include = false,
-  }) {
+  isarIdLessThan(Id value, {bool include = false}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.lessThan(
-        include: include,
-        property: r'isarId',
-        value: value,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.lessThan(
+          include: include,
+          property: r'isarId',
+          value: value,
+        ),
+      );
     });
   }
 
   QueryBuilder<FixedAssetModel, FixedAssetModel, QAfterFilterCondition>
-      isarIdBetween(
+  isarIdBetween(
     Id lower,
     Id upper, {
     bool includeLower = true,
     bool includeUpper = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.between(
-        property: r'isarId',
-        lower: lower,
-        includeLower: includeLower,
-        upper: upper,
-        includeUpper: includeUpper,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.between(
+          property: r'isarId',
+          lower: lower,
+          includeLower: includeLower,
+          upper: upper,
+          includeUpper: includeUpper,
+        ),
+      );
     });
   }
 
   QueryBuilder<FixedAssetModel, FixedAssetModel, QAfterFilterCondition>
-      nameArEqualTo(
-    String value, {
-    bool caseSensitive = true,
-  }) {
+  nameArEqualTo(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'nameAr',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.equalTo(
+          property: r'nameAr',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
   QueryBuilder<FixedAssetModel, FixedAssetModel, QAfterFilterCondition>
-      nameArGreaterThan(
-    String value, {
-    bool include = false,
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        include: include,
-        property: r'nameAr',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<FixedAssetModel, FixedAssetModel, QAfterFilterCondition>
-      nameArLessThan(
+  nameArGreaterThan(
     String value, {
     bool include = false,
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.lessThan(
-        include: include,
-        property: r'nameAr',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.greaterThan(
+          include: include,
+          property: r'nameAr',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
   QueryBuilder<FixedAssetModel, FixedAssetModel, QAfterFilterCondition>
-      nameArBetween(
+  nameArLessThan(
+    String value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        FilterCondition.lessThan(
+          include: include,
+          property: r'nameAr',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<FixedAssetModel, FixedAssetModel, QAfterFilterCondition>
+  nameArBetween(
     String lower,
     String upper, {
     bool includeLower = true,
@@ -1815,135 +1873,140 @@ extension FixedAssetModelQueryFilter
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.between(
-        property: r'nameAr',
-        lower: lower,
-        includeLower: includeLower,
-        upper: upper,
-        includeUpper: includeUpper,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.between(
+          property: r'nameAr',
+          lower: lower,
+          includeLower: includeLower,
+          upper: upper,
+          includeUpper: includeUpper,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
   QueryBuilder<FixedAssetModel, FixedAssetModel, QAfterFilterCondition>
-      nameArStartsWith(
-    String value, {
-    bool caseSensitive = true,
-  }) {
+  nameArStartsWith(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.startsWith(
-        property: r'nameAr',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.startsWith(
+          property: r'nameAr',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
   QueryBuilder<FixedAssetModel, FixedAssetModel, QAfterFilterCondition>
-      nameArEndsWith(
-    String value, {
-    bool caseSensitive = true,
-  }) {
+  nameArEndsWith(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.endsWith(
-        property: r'nameAr',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.endsWith(
+          property: r'nameAr',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
   QueryBuilder<FixedAssetModel, FixedAssetModel, QAfterFilterCondition>
-      nameArContains(String value, {bool caseSensitive = true}) {
+  nameArContains(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.contains(
-        property: r'nameAr',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.contains(
+          property: r'nameAr',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
   QueryBuilder<FixedAssetModel, FixedAssetModel, QAfterFilterCondition>
-      nameArMatches(String pattern, {bool caseSensitive = true}) {
+  nameArMatches(String pattern, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.matches(
-        property: r'nameAr',
-        wildcard: pattern,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.matches(
+          property: r'nameAr',
+          wildcard: pattern,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
   QueryBuilder<FixedAssetModel, FixedAssetModel, QAfterFilterCondition>
-      nameArIsEmpty() {
+  nameArIsEmpty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'nameAr',
-        value: '',
-      ));
+      return query.addFilterCondition(
+        FilterCondition.equalTo(property: r'nameAr', value: ''),
+      );
     });
   }
 
   QueryBuilder<FixedAssetModel, FixedAssetModel, QAfterFilterCondition>
-      nameArIsNotEmpty() {
+  nameArIsNotEmpty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        property: r'nameAr',
-        value: '',
-      ));
+      return query.addFilterCondition(
+        FilterCondition.greaterThan(property: r'nameAr', value: ''),
+      );
     });
   }
 
   QueryBuilder<FixedAssetModel, FixedAssetModel, QAfterFilterCondition>
-      nameEnEqualTo(
-    String value, {
-    bool caseSensitive = true,
-  }) {
+  nameEnEqualTo(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'nameEn',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.equalTo(
+          property: r'nameEn',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
   QueryBuilder<FixedAssetModel, FixedAssetModel, QAfterFilterCondition>
-      nameEnGreaterThan(
-    String value, {
-    bool include = false,
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        include: include,
-        property: r'nameEn',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<FixedAssetModel, FixedAssetModel, QAfterFilterCondition>
-      nameEnLessThan(
+  nameEnGreaterThan(
     String value, {
     bool include = false,
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.lessThan(
-        include: include,
-        property: r'nameEn',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.greaterThan(
+          include: include,
+          property: r'nameEn',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
   QueryBuilder<FixedAssetModel, FixedAssetModel, QAfterFilterCondition>
-      nameEnBetween(
+  nameEnLessThan(
+    String value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        FilterCondition.lessThan(
+          include: include,
+          property: r'nameEn',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<FixedAssetModel, FixedAssetModel, QAfterFilterCondition>
+  nameEnBetween(
     String lower,
     String upper, {
     bool includeLower = true,
@@ -1951,135 +2014,140 @@ extension FixedAssetModelQueryFilter
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.between(
-        property: r'nameEn',
-        lower: lower,
-        includeLower: includeLower,
-        upper: upper,
-        includeUpper: includeUpper,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.between(
+          property: r'nameEn',
+          lower: lower,
+          includeLower: includeLower,
+          upper: upper,
+          includeUpper: includeUpper,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
   QueryBuilder<FixedAssetModel, FixedAssetModel, QAfterFilterCondition>
-      nameEnStartsWith(
-    String value, {
-    bool caseSensitive = true,
-  }) {
+  nameEnStartsWith(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.startsWith(
-        property: r'nameEn',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.startsWith(
+          property: r'nameEn',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
   QueryBuilder<FixedAssetModel, FixedAssetModel, QAfterFilterCondition>
-      nameEnEndsWith(
-    String value, {
-    bool caseSensitive = true,
-  }) {
+  nameEnEndsWith(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.endsWith(
-        property: r'nameEn',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.endsWith(
+          property: r'nameEn',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
   QueryBuilder<FixedAssetModel, FixedAssetModel, QAfterFilterCondition>
-      nameEnContains(String value, {bool caseSensitive = true}) {
+  nameEnContains(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.contains(
-        property: r'nameEn',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.contains(
+          property: r'nameEn',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
   QueryBuilder<FixedAssetModel, FixedAssetModel, QAfterFilterCondition>
-      nameEnMatches(String pattern, {bool caseSensitive = true}) {
+  nameEnMatches(String pattern, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.matches(
-        property: r'nameEn',
-        wildcard: pattern,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.matches(
+          property: r'nameEn',
+          wildcard: pattern,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
   QueryBuilder<FixedAssetModel, FixedAssetModel, QAfterFilterCondition>
-      nameEnIsEmpty() {
+  nameEnIsEmpty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'nameEn',
-        value: '',
-      ));
+      return query.addFilterCondition(
+        FilterCondition.equalTo(property: r'nameEn', value: ''),
+      );
     });
   }
 
   QueryBuilder<FixedAssetModel, FixedAssetModel, QAfterFilterCondition>
-      nameEnIsNotEmpty() {
+  nameEnIsNotEmpty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        property: r'nameEn',
-        value: '',
-      ));
+      return query.addFilterCondition(
+        FilterCondition.greaterThan(property: r'nameEn', value: ''),
+      );
     });
   }
 
   QueryBuilder<FixedAssetModel, FixedAssetModel, QAfterFilterCondition>
-      residualValueEqualTo(
-    double value, {
-    double epsilon = Query.epsilon,
-  }) {
+  residualValueEqualTo(double value, {double epsilon = Query.epsilon}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'residualValue',
-        value: value,
-        epsilon: epsilon,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.equalTo(
+          property: r'residualValue',
+          value: value,
+          epsilon: epsilon,
+        ),
+      );
     });
   }
 
   QueryBuilder<FixedAssetModel, FixedAssetModel, QAfterFilterCondition>
-      residualValueGreaterThan(
-    double value, {
-    bool include = false,
-    double epsilon = Query.epsilon,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        include: include,
-        property: r'residualValue',
-        value: value,
-        epsilon: epsilon,
-      ));
-    });
-  }
-
-  QueryBuilder<FixedAssetModel, FixedAssetModel, QAfterFilterCondition>
-      residualValueLessThan(
+  residualValueGreaterThan(
     double value, {
     bool include = false,
     double epsilon = Query.epsilon,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.lessThan(
-        include: include,
-        property: r'residualValue',
-        value: value,
-        epsilon: epsilon,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.greaterThan(
+          include: include,
+          property: r'residualValue',
+          value: value,
+          epsilon: epsilon,
+        ),
+      );
     });
   }
 
   QueryBuilder<FixedAssetModel, FixedAssetModel, QAfterFilterCondition>
-      residualValueBetween(
+  residualValueLessThan(
+    double value, {
+    bool include = false,
+    double epsilon = Query.epsilon,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        FilterCondition.lessThan(
+          include: include,
+          property: r'residualValue',
+          value: value,
+          epsilon: epsilon,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<FixedAssetModel, FixedAssetModel, QAfterFilterCondition>
+  residualValueBetween(
     double lower,
     double upper, {
     bool includeLower = true,
@@ -2087,139 +2155,143 @@ extension FixedAssetModelQueryFilter
     double epsilon = Query.epsilon,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.between(
-        property: r'residualValue',
-        lower: lower,
-        includeLower: includeLower,
-        upper: upper,
-        includeUpper: includeUpper,
-        epsilon: epsilon,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.between(
+          property: r'residualValue',
+          lower: lower,
+          includeLower: includeLower,
+          upper: upper,
+          includeUpper: includeUpper,
+          epsilon: epsilon,
+        ),
+      );
     });
   }
 
   QueryBuilder<FixedAssetModel, FixedAssetModel, QAfterFilterCondition>
-      usefulLifeYearsEqualTo(int value) {
+  usefulLifeYearsEqualTo(int value) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'usefulLifeYears',
-        value: value,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.equalTo(property: r'usefulLifeYears', value: value),
+      );
     });
   }
 
   QueryBuilder<FixedAssetModel, FixedAssetModel, QAfterFilterCondition>
-      usefulLifeYearsGreaterThan(
-    int value, {
-    bool include = false,
-  }) {
+  usefulLifeYearsGreaterThan(int value, {bool include = false}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        include: include,
-        property: r'usefulLifeYears',
-        value: value,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.greaterThan(
+          include: include,
+          property: r'usefulLifeYears',
+          value: value,
+        ),
+      );
     });
   }
 
   QueryBuilder<FixedAssetModel, FixedAssetModel, QAfterFilterCondition>
-      usefulLifeYearsLessThan(
-    int value, {
-    bool include = false,
-  }) {
+  usefulLifeYearsLessThan(int value, {bool include = false}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.lessThan(
-        include: include,
-        property: r'usefulLifeYears',
-        value: value,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.lessThan(
+          include: include,
+          property: r'usefulLifeYears',
+          value: value,
+        ),
+      );
     });
   }
 
   QueryBuilder<FixedAssetModel, FixedAssetModel, QAfterFilterCondition>
-      usefulLifeYearsBetween(
+  usefulLifeYearsBetween(
     int lower,
     int upper, {
     bool includeLower = true,
     bool includeUpper = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.between(
-        property: r'usefulLifeYears',
-        lower: lower,
-        includeLower: includeLower,
-        upper: upper,
-        includeUpper: includeUpper,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.between(
+          property: r'usefulLifeYears',
+          lower: lower,
+          includeLower: includeLower,
+          upper: upper,
+          includeUpper: includeUpper,
+        ),
+      );
     });
   }
 
   QueryBuilder<FixedAssetModel, FixedAssetModel, QAfterFilterCondition>
-      userIdIsNull() {
+  userIdIsNull() {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const FilterCondition.isNull(
-        property: r'userId',
-      ));
+      return query.addFilterCondition(
+        const FilterCondition.isNull(property: r'userId'),
+      );
     });
   }
 
   QueryBuilder<FixedAssetModel, FixedAssetModel, QAfterFilterCondition>
-      userIdIsNotNull() {
+  userIdIsNotNull() {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const FilterCondition.isNotNull(
-        property: r'userId',
-      ));
+      return query.addFilterCondition(
+        const FilterCondition.isNotNull(property: r'userId'),
+      );
     });
   }
 
   QueryBuilder<FixedAssetModel, FixedAssetModel, QAfterFilterCondition>
-      userIdEqualTo(
-    String? value, {
-    bool caseSensitive = true,
-  }) {
+  userIdEqualTo(String? value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'userId',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.equalTo(
+          property: r'userId',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
   QueryBuilder<FixedAssetModel, FixedAssetModel, QAfterFilterCondition>
-      userIdGreaterThan(
-    String? value, {
-    bool include = false,
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        include: include,
-        property: r'userId',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<FixedAssetModel, FixedAssetModel, QAfterFilterCondition>
-      userIdLessThan(
+  userIdGreaterThan(
     String? value, {
     bool include = false,
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.lessThan(
-        include: include,
-        property: r'userId',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.greaterThan(
+          include: include,
+          property: r'userId',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
   QueryBuilder<FixedAssetModel, FixedAssetModel, QAfterFilterCondition>
-      userIdBetween(
+  userIdLessThan(
+    String? value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        FilterCondition.lessThan(
+          include: include,
+          property: r'userId',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<FixedAssetModel, FixedAssetModel, QAfterFilterCondition>
+  userIdBetween(
     String? lower,
     String? upper, {
     bool includeLower = true,
@@ -2227,84 +2299,86 @@ extension FixedAssetModelQueryFilter
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.between(
-        property: r'userId',
-        lower: lower,
-        includeLower: includeLower,
-        upper: upper,
-        includeUpper: includeUpper,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.between(
+          property: r'userId',
+          lower: lower,
+          includeLower: includeLower,
+          upper: upper,
+          includeUpper: includeUpper,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
   QueryBuilder<FixedAssetModel, FixedAssetModel, QAfterFilterCondition>
-      userIdStartsWith(
-    String value, {
-    bool caseSensitive = true,
-  }) {
+  userIdStartsWith(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.startsWith(
-        property: r'userId',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.startsWith(
+          property: r'userId',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
   QueryBuilder<FixedAssetModel, FixedAssetModel, QAfterFilterCondition>
-      userIdEndsWith(
-    String value, {
-    bool caseSensitive = true,
-  }) {
+  userIdEndsWith(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.endsWith(
-        property: r'userId',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.endsWith(
+          property: r'userId',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
   QueryBuilder<FixedAssetModel, FixedAssetModel, QAfterFilterCondition>
-      userIdContains(String value, {bool caseSensitive = true}) {
+  userIdContains(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.contains(
-        property: r'userId',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.contains(
+          property: r'userId',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
   QueryBuilder<FixedAssetModel, FixedAssetModel, QAfterFilterCondition>
-      userIdMatches(String pattern, {bool caseSensitive = true}) {
+  userIdMatches(String pattern, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.matches(
-        property: r'userId',
-        wildcard: pattern,
-        caseSensitive: caseSensitive,
-      ));
+      return query.addFilterCondition(
+        FilterCondition.matches(
+          property: r'userId',
+          wildcard: pattern,
+          caseSensitive: caseSensitive,
+        ),
+      );
     });
   }
 
   QueryBuilder<FixedAssetModel, FixedAssetModel, QAfterFilterCondition>
-      userIdIsEmpty() {
+  userIdIsEmpty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'userId',
-        value: '',
-      ));
+      return query.addFilterCondition(
+        FilterCondition.equalTo(property: r'userId', value: ''),
+      );
     });
   }
 
   QueryBuilder<FixedAssetModel, FixedAssetModel, QAfterFilterCondition>
-      userIdIsNotEmpty() {
+  userIdIsNotEmpty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        property: r'userId',
-        value: '',
-      ));
+      return query.addFilterCondition(
+        FilterCondition.greaterThan(property: r'userId', value: ''),
+      );
     });
   }
 }
@@ -2318,70 +2392,70 @@ extension FixedAssetModelQueryLinks
 extension FixedAssetModelQuerySortBy
     on QueryBuilder<FixedAssetModel, FixedAssetModel, QSortBy> {
   QueryBuilder<FixedAssetModel, FixedAssetModel, QAfterSortBy>
-      sortByAccumDepreciationAccountId() {
+  sortByAccumDepreciationAccountId() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'accumDepreciationAccountId', Sort.asc);
     });
   }
 
   QueryBuilder<FixedAssetModel, FixedAssetModel, QAfterSortBy>
-      sortByAccumDepreciationAccountIdDesc() {
+  sortByAccumDepreciationAccountIdDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'accumDepreciationAccountId', Sort.desc);
     });
   }
 
   QueryBuilder<FixedAssetModel, FixedAssetModel, QAfterSortBy>
-      sortByAccumulatedDepreciation() {
+  sortByAccumulatedDepreciation() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'accumulatedDepreciation', Sort.asc);
     });
   }
 
   QueryBuilder<FixedAssetModel, FixedAssetModel, QAfterSortBy>
-      sortByAccumulatedDepreciationDesc() {
+  sortByAccumulatedDepreciationDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'accumulatedDepreciation', Sort.desc);
     });
   }
 
   QueryBuilder<FixedAssetModel, FixedAssetModel, QAfterSortBy>
-      sortByAcquisitionDate() {
+  sortByAcquisitionDate() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'acquisitionDate', Sort.asc);
     });
   }
 
   QueryBuilder<FixedAssetModel, FixedAssetModel, QAfterSortBy>
-      sortByAcquisitionDateDesc() {
+  sortByAcquisitionDateDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'acquisitionDate', Sort.desc);
     });
   }
 
   QueryBuilder<FixedAssetModel, FixedAssetModel, QAfterSortBy>
-      sortByAssetAccountId() {
+  sortByAssetAccountId() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'assetAccountId', Sort.asc);
     });
   }
 
   QueryBuilder<FixedAssetModel, FixedAssetModel, QAfterSortBy>
-      sortByAssetAccountIdDesc() {
+  sortByAssetAccountIdDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'assetAccountId', Sort.desc);
     });
   }
 
   QueryBuilder<FixedAssetModel, FixedAssetModel, QAfterSortBy>
-      sortByCategoryId() {
+  sortByCategoryId() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'categoryId', Sort.asc);
     });
   }
 
   QueryBuilder<FixedAssetModel, FixedAssetModel, QAfterSortBy>
-      sortByCategoryIdDesc() {
+  sortByCategoryIdDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'categoryId', Sort.desc);
     });
@@ -2394,7 +2468,7 @@ extension FixedAssetModelQuerySortBy
   }
 
   QueryBuilder<FixedAssetModel, FixedAssetModel, QAfterSortBy>
-      sortByCodeDesc() {
+  sortByCodeDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'code', Sort.desc);
     });
@@ -2407,35 +2481,35 @@ extension FixedAssetModelQuerySortBy
   }
 
   QueryBuilder<FixedAssetModel, FixedAssetModel, QAfterSortBy>
-      sortByCostDesc() {
+  sortByCostDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'cost', Sort.desc);
     });
   }
 
   QueryBuilder<FixedAssetModel, FixedAssetModel, QAfterSortBy>
-      sortByDepreciationAccountId() {
+  sortByDepreciationAccountId() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'depreciationAccountId', Sort.asc);
     });
   }
 
   QueryBuilder<FixedAssetModel, FixedAssetModel, QAfterSortBy>
-      sortByDepreciationAccountIdDesc() {
+  sortByDepreciationAccountIdDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'depreciationAccountId', Sort.desc);
     });
   }
 
   QueryBuilder<FixedAssetModel, FixedAssetModel, QAfterSortBy>
-      sortByDepreciationMethod() {
+  sortByDepreciationMethod() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'depreciationMethod', Sort.asc);
     });
   }
 
   QueryBuilder<FixedAssetModel, FixedAssetModel, QAfterSortBy>
-      sortByDepreciationMethodDesc() {
+  sortByDepreciationMethodDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'depreciationMethod', Sort.desc);
     });
@@ -2454,14 +2528,14 @@ extension FixedAssetModelQuerySortBy
   }
 
   QueryBuilder<FixedAssetModel, FixedAssetModel, QAfterSortBy>
-      sortByIsActive() {
+  sortByIsActive() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'isActive', Sort.asc);
     });
   }
 
   QueryBuilder<FixedAssetModel, FixedAssetModel, QAfterSortBy>
-      sortByIsActiveDesc() {
+  sortByIsActiveDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'isActive', Sort.desc);
     });
@@ -2474,7 +2548,7 @@ extension FixedAssetModelQuerySortBy
   }
 
   QueryBuilder<FixedAssetModel, FixedAssetModel, QAfterSortBy>
-      sortByNameArDesc() {
+  sortByNameArDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'nameAr', Sort.desc);
     });
@@ -2487,35 +2561,35 @@ extension FixedAssetModelQuerySortBy
   }
 
   QueryBuilder<FixedAssetModel, FixedAssetModel, QAfterSortBy>
-      sortByNameEnDesc() {
+  sortByNameEnDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'nameEn', Sort.desc);
     });
   }
 
   QueryBuilder<FixedAssetModel, FixedAssetModel, QAfterSortBy>
-      sortByResidualValue() {
+  sortByResidualValue() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'residualValue', Sort.asc);
     });
   }
 
   QueryBuilder<FixedAssetModel, FixedAssetModel, QAfterSortBy>
-      sortByResidualValueDesc() {
+  sortByResidualValueDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'residualValue', Sort.desc);
     });
   }
 
   QueryBuilder<FixedAssetModel, FixedAssetModel, QAfterSortBy>
-      sortByUsefulLifeYears() {
+  sortByUsefulLifeYears() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'usefulLifeYears', Sort.asc);
     });
   }
 
   QueryBuilder<FixedAssetModel, FixedAssetModel, QAfterSortBy>
-      sortByUsefulLifeYearsDesc() {
+  sortByUsefulLifeYearsDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'usefulLifeYears', Sort.desc);
     });
@@ -2528,7 +2602,7 @@ extension FixedAssetModelQuerySortBy
   }
 
   QueryBuilder<FixedAssetModel, FixedAssetModel, QAfterSortBy>
-      sortByUserIdDesc() {
+  sortByUserIdDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'userId', Sort.desc);
     });
@@ -2538,70 +2612,70 @@ extension FixedAssetModelQuerySortBy
 extension FixedAssetModelQuerySortThenBy
     on QueryBuilder<FixedAssetModel, FixedAssetModel, QSortThenBy> {
   QueryBuilder<FixedAssetModel, FixedAssetModel, QAfterSortBy>
-      thenByAccumDepreciationAccountId() {
+  thenByAccumDepreciationAccountId() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'accumDepreciationAccountId', Sort.asc);
     });
   }
 
   QueryBuilder<FixedAssetModel, FixedAssetModel, QAfterSortBy>
-      thenByAccumDepreciationAccountIdDesc() {
+  thenByAccumDepreciationAccountIdDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'accumDepreciationAccountId', Sort.desc);
     });
   }
 
   QueryBuilder<FixedAssetModel, FixedAssetModel, QAfterSortBy>
-      thenByAccumulatedDepreciation() {
+  thenByAccumulatedDepreciation() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'accumulatedDepreciation', Sort.asc);
     });
   }
 
   QueryBuilder<FixedAssetModel, FixedAssetModel, QAfterSortBy>
-      thenByAccumulatedDepreciationDesc() {
+  thenByAccumulatedDepreciationDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'accumulatedDepreciation', Sort.desc);
     });
   }
 
   QueryBuilder<FixedAssetModel, FixedAssetModel, QAfterSortBy>
-      thenByAcquisitionDate() {
+  thenByAcquisitionDate() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'acquisitionDate', Sort.asc);
     });
   }
 
   QueryBuilder<FixedAssetModel, FixedAssetModel, QAfterSortBy>
-      thenByAcquisitionDateDesc() {
+  thenByAcquisitionDateDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'acquisitionDate', Sort.desc);
     });
   }
 
   QueryBuilder<FixedAssetModel, FixedAssetModel, QAfterSortBy>
-      thenByAssetAccountId() {
+  thenByAssetAccountId() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'assetAccountId', Sort.asc);
     });
   }
 
   QueryBuilder<FixedAssetModel, FixedAssetModel, QAfterSortBy>
-      thenByAssetAccountIdDesc() {
+  thenByAssetAccountIdDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'assetAccountId', Sort.desc);
     });
   }
 
   QueryBuilder<FixedAssetModel, FixedAssetModel, QAfterSortBy>
-      thenByCategoryId() {
+  thenByCategoryId() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'categoryId', Sort.asc);
     });
   }
 
   QueryBuilder<FixedAssetModel, FixedAssetModel, QAfterSortBy>
-      thenByCategoryIdDesc() {
+  thenByCategoryIdDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'categoryId', Sort.desc);
     });
@@ -2614,7 +2688,7 @@ extension FixedAssetModelQuerySortThenBy
   }
 
   QueryBuilder<FixedAssetModel, FixedAssetModel, QAfterSortBy>
-      thenByCodeDesc() {
+  thenByCodeDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'code', Sort.desc);
     });
@@ -2627,35 +2701,35 @@ extension FixedAssetModelQuerySortThenBy
   }
 
   QueryBuilder<FixedAssetModel, FixedAssetModel, QAfterSortBy>
-      thenByCostDesc() {
+  thenByCostDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'cost', Sort.desc);
     });
   }
 
   QueryBuilder<FixedAssetModel, FixedAssetModel, QAfterSortBy>
-      thenByDepreciationAccountId() {
+  thenByDepreciationAccountId() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'depreciationAccountId', Sort.asc);
     });
   }
 
   QueryBuilder<FixedAssetModel, FixedAssetModel, QAfterSortBy>
-      thenByDepreciationAccountIdDesc() {
+  thenByDepreciationAccountIdDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'depreciationAccountId', Sort.desc);
     });
   }
 
   QueryBuilder<FixedAssetModel, FixedAssetModel, QAfterSortBy>
-      thenByDepreciationMethod() {
+  thenByDepreciationMethod() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'depreciationMethod', Sort.asc);
     });
   }
 
   QueryBuilder<FixedAssetModel, FixedAssetModel, QAfterSortBy>
-      thenByDepreciationMethodDesc() {
+  thenByDepreciationMethodDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'depreciationMethod', Sort.desc);
     });
@@ -2674,14 +2748,14 @@ extension FixedAssetModelQuerySortThenBy
   }
 
   QueryBuilder<FixedAssetModel, FixedAssetModel, QAfterSortBy>
-      thenByIsActive() {
+  thenByIsActive() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'isActive', Sort.asc);
     });
   }
 
   QueryBuilder<FixedAssetModel, FixedAssetModel, QAfterSortBy>
-      thenByIsActiveDesc() {
+  thenByIsActiveDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'isActive', Sort.desc);
     });
@@ -2694,7 +2768,7 @@ extension FixedAssetModelQuerySortThenBy
   }
 
   QueryBuilder<FixedAssetModel, FixedAssetModel, QAfterSortBy>
-      thenByIsarIdDesc() {
+  thenByIsarIdDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'isarId', Sort.desc);
     });
@@ -2707,7 +2781,7 @@ extension FixedAssetModelQuerySortThenBy
   }
 
   QueryBuilder<FixedAssetModel, FixedAssetModel, QAfterSortBy>
-      thenByNameArDesc() {
+  thenByNameArDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'nameAr', Sort.desc);
     });
@@ -2720,35 +2794,35 @@ extension FixedAssetModelQuerySortThenBy
   }
 
   QueryBuilder<FixedAssetModel, FixedAssetModel, QAfterSortBy>
-      thenByNameEnDesc() {
+  thenByNameEnDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'nameEn', Sort.desc);
     });
   }
 
   QueryBuilder<FixedAssetModel, FixedAssetModel, QAfterSortBy>
-      thenByResidualValue() {
+  thenByResidualValue() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'residualValue', Sort.asc);
     });
   }
 
   QueryBuilder<FixedAssetModel, FixedAssetModel, QAfterSortBy>
-      thenByResidualValueDesc() {
+  thenByResidualValueDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'residualValue', Sort.desc);
     });
   }
 
   QueryBuilder<FixedAssetModel, FixedAssetModel, QAfterSortBy>
-      thenByUsefulLifeYears() {
+  thenByUsefulLifeYears() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'usefulLifeYears', Sort.asc);
     });
   }
 
   QueryBuilder<FixedAssetModel, FixedAssetModel, QAfterSortBy>
-      thenByUsefulLifeYearsDesc() {
+  thenByUsefulLifeYearsDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'usefulLifeYears', Sort.desc);
     });
@@ -2761,7 +2835,7 @@ extension FixedAssetModelQuerySortThenBy
   }
 
   QueryBuilder<FixedAssetModel, FixedAssetModel, QAfterSortBy>
-      thenByUserIdDesc() {
+  thenByUserIdDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'userId', Sort.desc);
     });
@@ -2771,44 +2845,49 @@ extension FixedAssetModelQuerySortThenBy
 extension FixedAssetModelQueryWhereDistinct
     on QueryBuilder<FixedAssetModel, FixedAssetModel, QDistinct> {
   QueryBuilder<FixedAssetModel, FixedAssetModel, QDistinct>
-      distinctByAccumDepreciationAccountId({bool caseSensitive = true}) {
+  distinctByAccumDepreciationAccountId({bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy(r'accumDepreciationAccountId',
-          caseSensitive: caseSensitive);
+      return query.addDistinctBy(
+        r'accumDepreciationAccountId',
+        caseSensitive: caseSensitive,
+      );
     });
   }
 
   QueryBuilder<FixedAssetModel, FixedAssetModel, QDistinct>
-      distinctByAccumulatedDepreciation() {
+  distinctByAccumulatedDepreciation() {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'accumulatedDepreciation');
     });
   }
 
   QueryBuilder<FixedAssetModel, FixedAssetModel, QDistinct>
-      distinctByAcquisitionDate() {
+  distinctByAcquisitionDate() {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'acquisitionDate');
     });
   }
 
   QueryBuilder<FixedAssetModel, FixedAssetModel, QDistinct>
-      distinctByAssetAccountId({bool caseSensitive = true}) {
+  distinctByAssetAccountId({bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy(r'assetAccountId',
-          caseSensitive: caseSensitive);
+      return query.addDistinctBy(
+        r'assetAccountId',
+        caseSensitive: caseSensitive,
+      );
     });
   }
 
   QueryBuilder<FixedAssetModel, FixedAssetModel, QDistinct>
-      distinctByCategoryId({bool caseSensitive = true}) {
+  distinctByCategoryId({bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'categoryId', caseSensitive: caseSensitive);
     });
   }
 
-  QueryBuilder<FixedAssetModel, FixedAssetModel, QDistinct> distinctByCode(
-      {bool caseSensitive = true}) {
+  QueryBuilder<FixedAssetModel, FixedAssetModel, QDistinct> distinctByCode({
+    bool caseSensitive = true,
+  }) {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'code', caseSensitive: caseSensitive);
     });
@@ -2821,65 +2900,73 @@ extension FixedAssetModelQueryWhereDistinct
   }
 
   QueryBuilder<FixedAssetModel, FixedAssetModel, QDistinct>
-      distinctByDepreciationAccountId({bool caseSensitive = true}) {
+  distinctByDepreciationAccountId({bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy(r'depreciationAccountId',
-          caseSensitive: caseSensitive);
+      return query.addDistinctBy(
+        r'depreciationAccountId',
+        caseSensitive: caseSensitive,
+      );
     });
   }
 
   QueryBuilder<FixedAssetModel, FixedAssetModel, QDistinct>
-      distinctByDepreciationMethod({bool caseSensitive = true}) {
+  distinctByDepreciationMethod({bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy(r'depreciationMethod',
-          caseSensitive: caseSensitive);
+      return query.addDistinctBy(
+        r'depreciationMethod',
+        caseSensitive: caseSensitive,
+      );
     });
   }
 
-  QueryBuilder<FixedAssetModel, FixedAssetModel, QDistinct> distinctById(
-      {bool caseSensitive = true}) {
+  QueryBuilder<FixedAssetModel, FixedAssetModel, QDistinct> distinctById({
+    bool caseSensitive = true,
+  }) {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'id', caseSensitive: caseSensitive);
     });
   }
 
   QueryBuilder<FixedAssetModel, FixedAssetModel, QDistinct>
-      distinctByIsActive() {
+  distinctByIsActive() {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'isActive');
     });
   }
 
-  QueryBuilder<FixedAssetModel, FixedAssetModel, QDistinct> distinctByNameAr(
-      {bool caseSensitive = true}) {
+  QueryBuilder<FixedAssetModel, FixedAssetModel, QDistinct> distinctByNameAr({
+    bool caseSensitive = true,
+  }) {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'nameAr', caseSensitive: caseSensitive);
     });
   }
 
-  QueryBuilder<FixedAssetModel, FixedAssetModel, QDistinct> distinctByNameEn(
-      {bool caseSensitive = true}) {
+  QueryBuilder<FixedAssetModel, FixedAssetModel, QDistinct> distinctByNameEn({
+    bool caseSensitive = true,
+  }) {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'nameEn', caseSensitive: caseSensitive);
     });
   }
 
   QueryBuilder<FixedAssetModel, FixedAssetModel, QDistinct>
-      distinctByResidualValue() {
+  distinctByResidualValue() {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'residualValue');
     });
   }
 
   QueryBuilder<FixedAssetModel, FixedAssetModel, QDistinct>
-      distinctByUsefulLifeYears() {
+  distinctByUsefulLifeYears() {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'usefulLifeYears');
     });
   }
 
-  QueryBuilder<FixedAssetModel, FixedAssetModel, QDistinct> distinctByUserId(
-      {bool caseSensitive = true}) {
+  QueryBuilder<FixedAssetModel, FixedAssetModel, QDistinct> distinctByUserId({
+    bool caseSensitive = true,
+  }) {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'userId', caseSensitive: caseSensitive);
     });
@@ -2895,28 +2982,28 @@ extension FixedAssetModelQueryProperty
   }
 
   QueryBuilder<FixedAssetModel, String, QQueryOperations>
-      accumDepreciationAccountIdProperty() {
+  accumDepreciationAccountIdProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'accumDepreciationAccountId');
     });
   }
 
   QueryBuilder<FixedAssetModel, double, QQueryOperations>
-      accumulatedDepreciationProperty() {
+  accumulatedDepreciationProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'accumulatedDepreciation');
     });
   }
 
   QueryBuilder<FixedAssetModel, DateTime, QQueryOperations>
-      acquisitionDateProperty() {
+  acquisitionDateProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'acquisitionDate');
     });
   }
 
   QueryBuilder<FixedAssetModel, String, QQueryOperations>
-      assetAccountIdProperty() {
+  assetAccountIdProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'assetAccountId');
     });
@@ -2941,14 +3028,14 @@ extension FixedAssetModelQueryProperty
   }
 
   QueryBuilder<FixedAssetModel, String, QQueryOperations>
-      depreciationAccountIdProperty() {
+  depreciationAccountIdProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'depreciationAccountId');
     });
   }
 
   QueryBuilder<FixedAssetModel, String, QQueryOperations>
-      depreciationMethodProperty() {
+  depreciationMethodProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'depreciationMethod');
     });
@@ -2979,14 +3066,14 @@ extension FixedAssetModelQueryProperty
   }
 
   QueryBuilder<FixedAssetModel, double, QQueryOperations>
-      residualValueProperty() {
+  residualValueProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'residualValue');
     });
   }
 
   QueryBuilder<FixedAssetModel, int, QQueryOperations>
-      usefulLifeYearsProperty() {
+  usefulLifeYearsProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'usefulLifeYears');
     });

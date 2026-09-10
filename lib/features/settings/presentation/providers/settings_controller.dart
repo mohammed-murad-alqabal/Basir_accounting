@@ -29,12 +29,11 @@ class SettingsState {
     bool? isLoading,
     String? error,
     bool? notificationsEnabled,
-  }) =>
-      SettingsState(
-        isLoading: isLoading ?? this.isLoading,
-        error: error,
-        notificationsEnabled: notificationsEnabled ?? this.notificationsEnabled,
-      );
+  }) => SettingsState(
+    isLoading: isLoading ?? this.isLoading,
+    error: error,
+    notificationsEnabled: notificationsEnabled ?? this.notificationsEnabled,
+  );
 }
 
 /// وحدة التحكم في الإعدادات (Settings Controller)
@@ -128,7 +127,8 @@ class SettingsController extends StateNotifier<SettingsState> {
     state = state.copyWith(isLoading: true);
     try {
       final repository = _ref.read(profileRepositoryProvider);
-      final profile = await repository.getProfile() ??
+      final profile =
+          await repository.getProfile() ??
           Profile(
             id: DateTime.now().millisecondsSinceEpoch.toString(),
             email: _ref.read(supabaseAuthProvider).currentUser?.email ?? '',
@@ -160,5 +160,5 @@ class SettingsController extends StateNotifier<SettingsState> {
 /// مزود وحدة تحكم الإعدادات
 final settingsControllerProvider =
     StateNotifierProvider<SettingsController, SettingsState>(
-  SettingsController.new,
-);
+      SettingsController.new,
+    );

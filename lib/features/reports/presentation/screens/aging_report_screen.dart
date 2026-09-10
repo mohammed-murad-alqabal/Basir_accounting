@@ -35,18 +35,16 @@ class _AgingReportScreenState extends ConsumerState<AgingReportScreen> {
 
   String _getTitle(BuildContext context) =>
       widget.reportType == AgingReportType.receivables
-          ? context.l10n.receivablesAgingTitle
-          : context.l10n.payablesAgingTitle;
+      ? context.l10n.receivablesAgingTitle
+      : context.l10n.payablesAgingTitle;
 
   @override
   Widget build(BuildContext context) {
     final reportAsync = ref.watch(
-      _agingReportProvider(
-        (
-          type: widget.reportType,
-          asOfDate: DateFormat('yyyy-MM-dd').format(_asOfDate),
-        ),
-      ),
+      _agingReportProvider((
+        type: widget.reportType,
+        asOfDate: DateFormat('yyyy-MM-dd').format(_asOfDate),
+      )),
     );
 
     return GlassScaffold(
@@ -76,12 +74,10 @@ class _AgingReportScreenState extends ConsumerState<AgingReportScreen> {
               error: (err, stack) => AppErrorWidget(
                 message: err.toString(),
                 onRetry: () => ref.refresh(
-                  _agingReportProvider(
-                    (
-                      type: widget.reportType,
-                      asOfDate: DateFormat('yyyy-MM-dd').format(_asOfDate),
-                    ),
-                  ).future,
+                  _agingReportProvider((
+                    type: widget.reportType,
+                    asOfDate: DateFormat('yyyy-MM-dd').format(_asOfDate),
+                  )).future,
                 ),
               ),
               data: (lines) => _buildReportContent(context, lines),
@@ -162,13 +158,15 @@ class _AgingReportScreenState extends ConsumerState<AgingReportScreen> {
 }
 
 // Internal provider for aging data
-final _agingReportProvider = FutureProvider.autoDispose.family<
-    List<AgingReportLineDto>,
-    ({AgingReportType type, String asOfDate})>((ref, params) {
-  final service = ref.watch(nativeReportingServiceProvider);
-  if (params.type == AgingReportType.receivables) {
-    return service.getReceivablesAging(asOfDate: params.asOfDate);
-  } else {
-    return service.getPayablesAging(asOfDate: params.asOfDate);
-  }
-});
+final _agingReportProvider = FutureProvider.autoDispose
+    .family<
+      List<AgingReportLineDto>,
+      ({AgingReportType type, String asOfDate})
+    >((ref, params) {
+      final service = ref.watch(nativeReportingServiceProvider);
+      if (params.type == AgingReportType.receivables) {
+        return service.getReceivablesAging(asOfDate: params.asOfDate);
+      } else {
+        return service.getPayablesAging(asOfDate: params.asOfDate);
+      }
+    });

@@ -79,7 +79,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
 
       // الانتقال إلى لوحة التحكم
       if (!mounted) return;
-      await Navigator.of(context).pushReplacementNamed('/dashboard');
+      await Navigator.of(context).pushReplacementNamed('/mfa-gate');
     } on Exception catch (e) {
       if (!mounted) return;
 
@@ -185,22 +185,6 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                           color: colorScheme.onSurface,
                         ),
                       ),
-                      const Spacer(),
-                      // رابط نسيت كلمة المرور
-                      TextButton(
-                        onPressed: _isLoading
-                            ? null
-                            : () => Navigator.of(context).pushNamed(
-                                  '/forgot-password',
-                                ),
-                        child: Text(
-                          context.l10n.forgotPassword,
-                          style: AppTextStyles.bodySmall.copyWith(
-                            color: colorScheme.primary,
-                            fontWeight: FontWeight.w500,
-                          ),
-                        ),
-                      ),
                     ],
                   ),
                   const SizedBox(height: Spacing.md),
@@ -258,28 +242,28 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
   }
 
   Widget _buildHeader(ColorScheme colorScheme) => Column(
-        children: [
-          Semantics(
-            label: context.l10n.dashboardBasirSystemTitle,
-            image: true,
-            child: const BasirLogo(size: 140),
-          ),
-          const SizedBox(height: Spacing.lg),
-          Text(
-            context.l10n.loginTitle,
-            style: AppTextStyles.headlineSmall.copyWith(
-              fontWeight: FontWeights.bold,
-              color: colorScheme.onSurface,
-            ),
-          ),
-          const SizedBox(height: Spacing.xs),
-          Text(
-            context.l10n.loginSubtitle,
-            textAlign: TextAlign.center,
-            style: AppTextStyles.bodyMedium.copyWith(
-              color: colorScheme.onSurfaceVariant,
-            ),
-          ),
-        ],
-      );
+    children: [
+      Semantics(
+        label: context.l10n.dashboardBasirSystemTitle,
+        image: true,
+        child: const BasirLogo(size: 140),
+      ),
+      const SizedBox(height: Spacing.lg),
+      Text(
+        context.l10n.loginTitle,
+        style: AppTextStyles.headlineSmall.copyWith(
+          fontWeight: FontWeights.bold,
+          color: colorScheme.onSurface,
+        ),
+      ),
+      const SizedBox(height: Spacing.xs),
+      Text(
+        context.l10n.loginSubtitle,
+        textAlign: TextAlign.center,
+        style: AppTextStyles.bodyMedium.copyWith(
+          color: colorScheme.onSurfaceVariant,
+        ),
+      ),
+    ],
+  );
 }

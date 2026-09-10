@@ -256,3 +256,35 @@ mod tests {
         assert!(StandardReference::parse("15.35").is_none()); // No body
     }
 }
+
+/// Islamic Finance Transaction Types according to AAOIFI.
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash, Serialize, Deserialize)]
+pub enum IslamicFinanceContract {
+    /// Murabaha (Cost-plus financing)
+    Murabaha,
+    /// Mudaraba (Profit-sharing partnership)
+    Mudaraba,
+    /// Musharaka (Joint venture partnership)
+    Musharaka,
+    /// Ijara (Leasing)
+    Ijara,
+    /// Istisna (Manufacturing finance)
+    Istisna,
+    /// Salam (Forward sale)
+    Salam,
+    /// Sukuk (Islamic investment certificates)
+    Sukuk,
+}
+
+/// Sharia Compliance Status for transactions.
+#[derive(Debug, Clone, Serialize, Deserialize)]
+pub struct ShariaComplianceStatus {
+    /// Is the contract type valid according to AAOIFI?
+    pub contract_valid: bool,
+    /// Is the profit calculation compliant?
+    pub profit_calculation_valid: bool,
+    /// Is the transaction free from Riba (Usury)?
+    pub riba_free: bool,
+    /// Is the transaction free from Gharar (Uncertainty)?
+    pub gharar_free: bool,
+}

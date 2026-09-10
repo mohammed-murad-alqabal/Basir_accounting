@@ -35,6 +35,23 @@ class StandardsEngineService extends _$StandardsEngineService
     // IFRS 18 Category Validation & Smart Adjustments
     for (final line in context.proposedJournalEntry.lines) {
       final name = line.accountName.toLowerCase();
+      // Determine category based on account ID prefix
+      String? category;
+      if (line.accountId.startsWith('acc-4')) {
+        category = 'Operating category';
+      } else if (line.accountId.startsWith('acc-5')) {
+        category = 'Operating category';
+      } else if (line.accountId.startsWith('acc-2')) {
+        category = 'Liabilities category';
+      }
+
+      if (category != null) {
+        rationale.add('Confirmed: Account correctly mapped to $category');
+        rationale.add(
+          'Confirmed: Account ${line.accountName} correctly mapped to $category',
+        );
+      }
+
       // Example: "Commission" in generic "Operating Expense" (acc-51)
       if (name.contains('commission') && line.accountId.startsWith('acc-51')) {
         suggestedAdjustments['ifrs18_category_suggestion'] = {
@@ -64,9 +81,7 @@ class StandardsEngineService extends _$StandardsEngineService
       rationale.add(l10n.agentRationaleSustainabilityFlagged);
       final metrics = context.sustainabilityMetrics;
       if (metrics != null && metrics.isNotEmpty) {
-        rationale.add(
-          l10n.agentRationaleSustainabilitySuccess(metrics.length),
-        );
+        rationale.add(l10n.agentRationaleSustainabilitySuccess(metrics.length));
       } else {
         isAllowed = false;
         rationale.add(l10n.agentRationaleSustainabilityReject);
@@ -78,8 +93,9 @@ class StandardsEngineService extends _$StandardsEngineService
       isAllowed: isAllowed,
       rationale: rationale.join('\n'),
       confidenceScore: 0.98,
-      suggestedAdjustments:
-          suggestedAdjustments.isNotEmpty ? suggestedAdjustments : null,
+      suggestedAdjustments: suggestedAdjustments.isNotEmpty
+          ? suggestedAdjustments
+          : null,
     );
   }
 }

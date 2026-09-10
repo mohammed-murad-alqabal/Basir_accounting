@@ -50,10 +50,8 @@ class Expense with _$Expense {
 
     /// The current status of the expense (e.g., pending, approved).
     @Default('pending') String status, // pending, approved, rejected, posted
-
     /// The ID of the associated GL journal entry when posted.
     String? journalEntryId, // Link to GL when posted
-
     /// The ID of the user who created this record.
     String? createdBy,
 
@@ -98,7 +96,6 @@ class ExpenseCategory with _$ExpenseCategory {
 
     /// Linked GL account ID.
     String? accountId, // GL account for posting
-
     /// Whether category is active.
     @Default(true) bool isActive,
   }) = _ExpenseCategory;

@@ -18,14 +18,14 @@ String _$basirInsightsEngineHash() =>
 @ProviderFor(BasirInsightsEngine)
 final basirInsightsEngineProvider =
     AutoDisposeNotifierProvider<BasirInsightsEngine, void>.internal(
-  BasirInsightsEngine.new,
-  name: r'basirInsightsEngineProvider',
-  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-      ? null
-      : _$basirInsightsEngineHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
+      BasirInsightsEngine.new,
+      name: r'basirInsightsEngineProvider',
+      debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+          ? null
+          : _$basirInsightsEngineHash,
+      dependencies: null,
+      allTransitiveDependencies: null,
+    );
 
 typedef _$BasirInsightsEngine = AutoDisposeNotifier<void>;
 // ignore_for_file: type=lint

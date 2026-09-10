@@ -15,10 +15,14 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
 
       - name: Dependency Review
+<<<<<<< HEAD
         uses: actions/dependency-review-action@2031cfc080254a8a887f58cffee85186f0e49e48 # v4.9.0
+=======
+        uses: actions/dependency-review-action@a1d282b36b6f3519aa1f3fc636f609c47dddb294 # v5.0.0
+>>>>>>> origin/audit/baseline-main-current-20260814
         with:
           fail-on-severity: moderate
           comment-summary-in-pr: always
@@ -52,6 +56,7 @@ jobs:
           OSV_SCANNER_VERSION: v2.5.0
           OSV_SCANNER_SHA256: edcfc41d257db36148f065055655fe3fcfc434b0b423ea67468a84c207524e0c
         run: |
+<<<<<<< HEAD
           set -euo pipefail
           scanner="$RUNNER_TEMP/osv-scanner"
           curl --fail --location --proto '=https' --tlsv1.2 \
@@ -61,6 +66,14 @@ jobs:
           chmod 0755 "$scanner"
           "$scanner" --version
           "$scanner" scan source --lockfile pubspec.lock
+=======
+          echo "🔒 Checking for security vulnerabilities..."
+
+          # Check pub.dev for known vulnerabilities
+          flutter pub outdated
+
+          echo "✅ Security check completed"
+>>>>>>> origin/audit/baseline-main-current-20260814
 
       - name: Analyze dependency licenses
         run: |
@@ -73,7 +86,7 @@ jobs:
 
       - name: Comment on PR
         if: github.event_name == 'pull_request'
-        uses: actions/github-script@60a0d83039c74a4aee543508d2ffcb1c3799cdea # v7.0.1
+        uses: actions/github-script@d746ffe35508b1917358783b479e04febd2b8f71 # v7.0.1
         with:
           script: |
             const fs = require('fs');

@@ -12,8 +12,8 @@ class InventoryItemService {
   InventoryItemService({
     required InventoryRepository repository,
     DateTime Function()? now,
-  })  : _repository = repository,
-        _now = now ?? DateTime.now;
+  }) : _repository = repository,
+       _now = now ?? DateTime.now;
 
   /// رمز فشل عند غياب اسم الصنف العربي.
   static const emptyArabicNameCode = 'inventory_item_name_ar_required';
@@ -92,10 +92,7 @@ class InventoryItemService {
         ],
       );
     } on Object catch (error) {
-      return OperationResult.failure(
-        message: commitFailedCode,
-        cause: error,
-      );
+      return OperationResult.failure(message: commitFailedCode, cause: error);
     }
   }
 
@@ -150,10 +147,7 @@ class InventoryItemService {
         ],
       );
     } on Object catch (error) {
-      return OperationResult.failure(
-        message: commitFailedCode,
-        cause: error,
-      );
+      return OperationResult.failure(message: commitFailedCode, cause: error);
     }
   }
 
@@ -203,13 +197,13 @@ class InventoryItemService {
   }
 
   InventoryItem _normalize(InventoryItem item) => item.copyWith(
-        nameAr: item.nameAr.trim(),
-        nameEn: item.nameEn.trim(),
-        sku: _normalizeIdentifier(item.sku),
-        barcode: _normalizeIdentifier(item.barcode),
-        unit: _nullIfBlank(item.unit),
-        description: _nullIfBlank(item.description),
-      );
+    nameAr: item.nameAr.trim(),
+    nameEn: item.nameEn.trim(),
+    sku: _normalizeIdentifier(item.sku),
+    barcode: _normalizeIdentifier(item.barcode),
+    unit: _nullIfBlank(item.unit),
+    description: _nullIfBlank(item.description),
+  );
 
   String? _normalizeIdentifier(String? value) {
     final normalized = _nullIfBlank(value);

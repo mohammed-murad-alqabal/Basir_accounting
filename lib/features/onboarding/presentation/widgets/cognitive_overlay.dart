@@ -60,10 +60,7 @@ void showCognitiveHint(BuildContext context, String message, {String? title}) {
                         ],
                       ),
                       const SizedBox(height: 8),
-                      Text(
-                        message,
-                        style: const TextStyle(fontSize: 13),
-                      ),
+                      Text(message, style: const TextStyle(fontSize: 13)),
                     ],
                   ),
                 ),

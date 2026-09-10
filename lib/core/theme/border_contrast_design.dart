@@ -53,22 +53,15 @@ abstract final class BorderContrastDesign {
     double? width,
     BorderRadius? radius,
     double circularRadius = 12,
-  }) =>
-      OutlineInputBorder(
-        borderSide: BorderSide(
-          color: color ?? borderNormal,
-          width: width ?? borderWidthNormal,
-        ),
-        borderRadius: radius ?? BorderRadius.circular(circularRadius),
-      );
+  }) => OutlineInputBorder(
+    borderSide: BorderSide(
+      color: color ?? borderNormal,
+      width: width ?? borderWidthNormal,
+    ),
+    borderRadius: radius ?? BorderRadius.circular(circularRadius),
+  );
 
   /// Build an enhanced divider
-  static Divider buildEnhancedDivider({
-    Color? color,
-    double thickness = 1.0,
-  }) =>
-      Divider(
-        color: color ?? borderNormal,
-        thickness: thickness,
-      );
+  static Divider buildEnhancedDivider({Color? color, double thickness = 1.0}) =>
+      Divider(color: color ?? borderNormal, thickness: thickness);
 }

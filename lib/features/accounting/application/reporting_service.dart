@@ -225,8 +225,9 @@ class ReportingService extends _$ReportingService {
     final liabilities = balanceSheet['liabilities'] ?? Decimal.zero;
 
     // 1. Current Ratio (Approximate)
-    final liquidity =
-        liabilities != Decimal.zero ? (assets / liabilities).toDouble() : 0.0;
+    final liquidity = liabilities != Decimal.zero
+        ? (assets / liabilities).toDouble()
+        : 0.0;
 
     // 2. Net Margin
     final revenue = accounts
@@ -238,8 +239,9 @@ class ReportingService extends _$ReportingService {
       (prev, curr) => prev + curr,
     );
 
-    final profitability =
-        revenue != Decimal.zero ? (netIncome / revenue).toDouble() : 0.0;
+    final profitability = revenue != Decimal.zero
+        ? (netIncome / revenue).toDouble()
+        : 0.0;
 
     return {
       'liquidity': liquidity,

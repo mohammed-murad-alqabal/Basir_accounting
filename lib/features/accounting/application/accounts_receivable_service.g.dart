@@ -18,14 +18,14 @@ String _$accountsReceivableServiceHash() =>
 @ProviderFor(AccountsReceivableService)
 final accountsReceivableServiceProvider =
     AutoDisposeAsyncNotifierProvider<AccountsReceivableService, void>.internal(
-  AccountsReceivableService.new,
-  name: r'accountsReceivableServiceProvider',
-  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-      ? null
-      : _$accountsReceivableServiceHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
+      AccountsReceivableService.new,
+      name: r'accountsReceivableServiceProvider',
+      debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+          ? null
+          : _$accountsReceivableServiceHash,
+      dependencies: null,
+      allTransitiveDependencies: null,
+    );
 
 typedef _$AccountsReceivableService = AutoDisposeAsyncNotifier<void>;
 // ignore_for_file: type=lint

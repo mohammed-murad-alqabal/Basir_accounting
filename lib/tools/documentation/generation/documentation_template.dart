@@ -31,40 +31,40 @@ class DocumentationTemplate {
 
   /// قالب للـ enums
   factory DocumentationTemplate.enumTemplate() => const DocumentationTemplate(
-        type: ElementType.enumType,
-        arabicTemplate: '''
+    type: ElementType.enumType,
+    arabicTemplate: '''
 /// {description}
 ///
 /// {details}
 ''',
-        englishTemplate: '''
+    englishTemplate: '''
 /// {description}
 ///
 /// {details}
 ''',
-        requiredSections: ['description', 'details'],
-      );
+    requiredSections: ['description', 'details'],
+  );
 
   /// قالب للكلاسات
   factory DocumentationTemplate.classTemplate() => const DocumentationTemplate(
-        type: ElementType.classType,
-        arabicTemplate: '''
+    type: ElementType.classType,
+    arabicTemplate: '''
 /// {description}
 ///
 /// {details}
 ''',
-        englishTemplate: '''
+    englishTemplate: '''
 /// {description}
 ///
 /// {details}
 ''',
-        requiredSections: ['description', 'details'],
-      );
+    requiredSections: ['description', 'details'],
+  );
 
   /// قالب للدوال
   factory DocumentationTemplate.methodTemplate() => const DocumentationTemplate(
-        type: ElementType.method,
-        arabicTemplate: '''
+    type: ElementType.method,
+    arabicTemplate: '''
 /// {description}
 ///
 /// {details}
@@ -74,7 +74,7 @@ class DocumentationTemplate {
 ///
 /// Returns: {returns}
 ''',
-        englishTemplate: '''
+    englishTemplate: '''
 /// {description}
 ///
 /// {details}
@@ -84,8 +84,8 @@ class DocumentationTemplate {
 ///
 /// Returns: {returns}
 ''',
-        requiredSections: ['description', 'parameters', 'returns'],
-      );
+    requiredSections: ['description', 'parameters', 'returns'],
+  );
 
   /// قالب للخصائص
   // ignore: prefer_expression_function_bodies
@@ -121,7 +121,70 @@ class DocumentationTemplate {
   ///
   /// Returns: نص التوثيق المولد
   String generate(Map<String, dynamic> context) {
-    // TODO(basir): تنفيذ توليد التوثيق
-    throw UnimplementedError('generate not implemented yet');
+    final useArabic = context['useArabic'] as bool? ?? true;
+    final template = useArabic ? arabicTemplate : englishTemplate;
+    var result = template;
+
+    for (final entry in context.entries) {
+      final key = entry.key;
+      final value = entry.value;
+      if (key == 'useArabic') continue;
+      final placeholder = '{$key}';
+      if (result.contains(placeholder)) {
+        result = result.replaceAll(placeholder, _formatValue(value, key));
+      }
+    }
+
+    for (final section in requiredSections) {
+      final placeholder = '{$section}';
+      if (result.contains(placeholder)) {
+        result = result.replaceAll(
+          placeholder,
+          context[section]?.toString() ?? _fallbackForSection(section),
+        );
+      }
+    }
+
+    return result.trim();
+  }
+
+  String _formatValue(dynamic value, String key) {
+    if (value is List) {
+      if (key == 'parameters') {
+        return value
+            .map((p) {
+              if (p is Map<String, dynamic>) {
+                final Object? nameValue = p['name'];
+                final Object? descriptionValue = p['description'];
+                final name = nameValue is String
+                    ? nameValue
+                    : nameValue?.toString() ?? '';
+                final description = descriptionValue is String
+                    ? descriptionValue
+                    : (descriptionValue?.toString() ?? name);
+                return '/// - [$name]: $description';
+              }
+              return '/// - $p';
+            })
+            .join('\n');
+      }
+      return value.map((e) => '/// $e').join('\n');
+    }
+    return value.toString();
+  }
+
+  String _fallbackForSection(String section) {
+    switch (section) {
+      case 'description':
+        return 'Element documentation placeholder.';
+      case 'details':
+        return 'No additional details available.';
+      case 'parameters':
+        return '/// No parameters.';
+      case 'returns':
+        return 'No return value description.';
+      default:
+        return '';
+    }
   }
 }

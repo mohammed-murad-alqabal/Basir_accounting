@@ -7,13 +7,7 @@ import 'package:flutter/material.dart' hide Durations;
 import 'package:flutter/services.dart';
 
 /// شارة الحالة للبطاقة (Card Status Badge)
-enum CardBadgeStatus {
-  success,
-  error,
-  warning,
-  info,
-  custom,
-}
+enum CardBadgeStatus { success, error, warning, info, custom }
 
 /// بطاقة تطبيق موحدة (Unified App Card)
 ///
@@ -134,15 +128,16 @@ class _AppCardState extends State<AppCard> with SingleTickerProviderStateMixin {
       duration: Durations.fast,
       vsync: this,
     );
-    _scaleAnimation = Tween<double>(
-      begin: TransformScales.normal,
-      end: TransformScales.pressed,
-    ).animate(
-      CurvedAnimation(
-        parent: _scaleController,
-        curve: AnimationCurves.decelerate,
-      ),
-    );
+    _scaleAnimation =
+        Tween<double>(
+          begin: TransformScales.normal,
+          end: TransformScales.pressed,
+        ).animate(
+          CurvedAnimation(
+            parent: _scaleController,
+            curve: AnimationCurves.decelerate,
+          ),
+        );
   }
 
   @override
@@ -210,8 +205,9 @@ class _AppCardState extends State<AppCard> with SingleTickerProviderStateMixin {
         widget.backgroundColor ?? CardColors.background;
     final effectiveBorderRadius = widget.borderRadius ?? Radii.borderRadiusMd;
     final baseElevation = widget.elevation ?? Elevation.sm;
-    final effectiveElevation =
-        _isHovered ? baseElevation + _hoverElevationBoost : baseElevation;
+    final effectiveElevation = _isHovered
+        ? baseElevation + _hoverElevationBoost
+        : baseElevation;
     final effectivePadding = widget.padding ?? Spacing.paddingMd;
 
     Widget cardContent = Padding(
@@ -249,19 +245,23 @@ class _AppCardState extends State<AppCard> with SingleTickerProviderStateMixin {
         children: [
           cardContent,
           PositionedDirectional(
-            top: widget.badgeAlignment == AlignmentDirectional.topEnd ||
+            top:
+                widget.badgeAlignment == AlignmentDirectional.topEnd ||
                     widget.badgeAlignment == AlignmentDirectional.topStart
                 ? -Spacing.sm
                 : null,
-            bottom: widget.badgeAlignment == AlignmentDirectional.bottomEnd ||
+            bottom:
+                widget.badgeAlignment == AlignmentDirectional.bottomEnd ||
                     widget.badgeAlignment == AlignmentDirectional.bottomStart
                 ? -Spacing.sm
                 : null,
-            end: widget.badgeAlignment == AlignmentDirectional.topEnd ||
+            end:
+                widget.badgeAlignment == AlignmentDirectional.topEnd ||
                     widget.badgeAlignment == AlignmentDirectional.bottomEnd
                 ? -Spacing.sm
                 : null,
-            start: widget.badgeAlignment == AlignmentDirectional.topStart ||
+            start:
+                widget.badgeAlignment == AlignmentDirectional.topStart ||
                     widget.badgeAlignment == AlignmentDirectional.bottomStart
                 ? -Spacing.sm
                 : null,
@@ -307,7 +307,7 @@ class _AppCardState extends State<AppCard> with SingleTickerProviderStateMixin {
           color: widget.isSelected
               ? BorderContrastDesign.getBorderFocused(brightness)
               : (widget.borderColor ??
-                  BorderContrastDesign.getBorderNormal(brightness)),
+                    BorderContrastDesign.getBorderNormal(brightness)),
           width: widget.isSelected ? BorderWidths.normal : BorderWidths.thin,
         ),
         boxShadow: effectiveElevation > 0
@@ -360,19 +360,12 @@ class _AppCardState extends State<AppCard> with SingleTickerProviderStateMixin {
           duration: Durations.fast,
           curve: AnimationCurves.fastOutSlowIn,
           scale: _isHovered ? _hoverScale : 1.0,
-          child: ScaleTransition(
-            scale: _scaleAnimation,
-            child: card,
-          ),
+          child: ScaleTransition(scale: _scaleAnimation, child: card),
         ),
       );
     }
 
-    return Semantics(
-      container: true,
-      label: semanticsLabel,
-      child: card,
-    );
+    return Semantics(container: true, label: semanticsLabel, child: card);
   }
 }
 
@@ -521,43 +514,39 @@ class AppStatCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => AppCard(
-        backgroundColor: backgroundColor,
-        padding: Spacing.paddingSm,
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Icon(
-              icon,
-              color: iconColor ?? AppColors.primary,
-              size: IconSizes.md,
+    backgroundColor: backgroundColor,
+    padding: Spacing.paddingSm,
+    child: Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Icon(icon, color: iconColor ?? AppColors.primary, size: IconSizes.md),
+        const SizedBox(height: Spacing.xs),
+        Flexible(
+          child: ResponsiveText(
+            label,
+            style: AppTextStyles.labelSmall.copyWith(
+              color: AppColors.textSecondary,
             ),
-            const SizedBox(height: Spacing.xs),
-            Flexible(
-              child: ResponsiveText(
-                label,
-                style: AppTextStyles.labelSmall.copyWith(
-                  color: AppColors.textSecondary,
-                ),
-                maxLines: 1,
-                textAlign: TextAlign.center,
-              ),
-            ),
-            const SizedBox(height: Spacing.xs),
-            Flexible(
-              child: FittedBox(
-                fit: BoxFit.scaleDown,
-                child: ResponsiveText(
-                  value,
-                  style: AppTextStyles.headlineSmall.copyWith(
-                    fontWeight: FontWeights.bold,
-                    color: AppColors.textPrimary,
-                  ),
-                  maxLines: 1,
-                  textAlign: TextAlign.center,
-                ),
-              ),
-            ),
-          ],
+            maxLines: 1,
+            textAlign: TextAlign.center,
+          ),
         ),
-      );
+        const SizedBox(height: Spacing.xs),
+        Flexible(
+          child: FittedBox(
+            fit: BoxFit.scaleDown,
+            child: ResponsiveText(
+              value,
+              style: AppTextStyles.headlineSmall.copyWith(
+                fontWeight: FontWeights.bold,
+                color: AppColors.textPrimary,
+              ),
+              maxLines: 1,
+              textAlign: TextAlign.center,
+            ),
+          ),
+        ),
+      ],
+    ),
+  );
 }

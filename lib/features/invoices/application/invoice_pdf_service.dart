@@ -23,9 +23,6 @@ class InvoicePdfService {
     final settings = await _settingsService.getCompanySettings();
 
     // Delegate to the centralized rendering engine
-    return _pdfService.generateInvoicePdf(
-      invoice,
-      companySettings: settings,
-    );
+    return _pdfService.generateInvoicePdf(invoice, companySettings: settings);
   }
 }

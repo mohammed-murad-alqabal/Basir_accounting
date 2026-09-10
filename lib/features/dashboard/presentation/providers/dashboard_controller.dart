@@ -8,8 +8,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 /// مزود وحدة تحكم لوحة التحكم (Dashboard Controller Provider)
 final dashboardControllerProvider =
     AsyncNotifierProvider<DashboardController, DashboardData>(
-  DashboardController.new,
-);
+      DashboardController.new,
+    );
 
 /// فئة مساعدة لتجميع إحصائيات الفواتير
 class _InvoiceStatistics {
@@ -141,18 +141,18 @@ class DashboardController extends AsyncNotifier<DashboardData> {
 
   /// إنشاء بيانات فارغة في حالة الخطأ
   DashboardData _createEmptyDashboardData() => DashboardData(
-        totalInvoices: 0,
-        paidInvoices: 0,
-        overdueInvoices: 0,
-        pendingInvoices: 0,
-        totalSales: Decimal.zero,
-        paidRevenue: Decimal.zero,
-        pendingRevenue: Decimal.zero,
-        overdueRevenue: Decimal.zero,
-        activeCustomersCount: 0,
-        recentInvoices: const [],
-        salesTrend: const {},
-      );
+    totalInvoices: 0,
+    paidInvoices: 0,
+    overdueInvoices: 0,
+    pendingInvoices: 0,
+    totalSales: Decimal.zero,
+    paidRevenue: Decimal.zero,
+    pendingRevenue: Decimal.zero,
+    overdueRevenue: Decimal.zero,
+    activeCustomersCount: 0,
+    recentInvoices: const [],
+    salesTrend: const {},
+  );
 
   /// حساب اتجاه المبيعات لآخر 7 أيام بطريقة محسنة
   Map<String, double> _calculateSalesTrend(List<Invoice> invoices) {

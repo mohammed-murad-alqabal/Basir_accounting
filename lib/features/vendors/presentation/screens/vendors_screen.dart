@@ -156,7 +156,8 @@ class _VendorsScreenState extends ConsumerState<VendorsScreen> {
         final vendor = vendors[index];
         final localizedName = vendor.name(isArabic: context.isArabic);
         return Semantics(
-          label: '$localizedName, '
+          label:
+              '$localizedName, '
               '${vendor.email ?? ""}, '
               '${vendor.phone ?? ""}',
           button: true,
@@ -184,7 +185,7 @@ class _VendorsScreenState extends ConsumerState<VendorsScreen> {
   Future<void> _addVendor() async {
     final result = await Navigator.push<bool>(
       context,
-      MaterialPageRoute(builder: (context) => const VendorFormScreen()),
+      MaterialPageRoute<bool>(builder: (context) => const VendorFormScreen()),
     );
     if (result ?? false) ref.invalidate(vendorsProvider);
   }
@@ -192,7 +193,7 @@ class _VendorsScreenState extends ConsumerState<VendorsScreen> {
   Future<void> _viewVendorDetails(Vendor vendor) async {
     final result = await Navigator.push<bool>(
       context,
-      MaterialPageRoute(
+      MaterialPageRoute<bool>(
         builder: (context) => VendorDetailsScreen(vendor: vendor),
       ),
     );

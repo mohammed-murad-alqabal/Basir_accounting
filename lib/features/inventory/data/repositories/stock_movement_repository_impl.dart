@@ -36,8 +36,8 @@ class StockMovementRepositoryImpl implements StockMovementRepository {
         .and()
         .group(
           (q) => q.warehouseIdIsNull().or().warehouseIdEqualTo(
-                effectiveWarehouseId ?? '',
-              ),
+            effectiveWarehouseId ?? '',
+          ),
         );
 
     if (asOfDate != null) {
@@ -75,11 +75,7 @@ class StockMovementRepositoryImpl implements StockMovementRepository {
   @override
   Future<void> addMovements(List<StockMovement> movements) async {
     final models = movements
-        .map(
-          (m) => StockMovementModel.fromEntity(
-            m.copyWith(userId: userId),
-          ),
-        )
+        .map((m) => StockMovementModel.fromEntity(m.copyWith(userId: userId)))
         .toList();
     await isar.writeTxn(() => isar.stockMovementModels.putAll(models));
   }

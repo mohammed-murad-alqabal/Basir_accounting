@@ -9,6 +9,7 @@ import 'package:basir_accounting_system/features/customers/presentation/screens/
 import 'package:basir_accounting_system/features/dashboard/presentation/screens/dashboard_screen.dart';
 import 'package:basir_accounting_system/features/inventory/presentation/screens/inventory_items_screen.dart';
 import 'package:basir_accounting_system/features/invoices/presentation/screens/invoices_screen.dart';
+import 'package:basir_accounting_system/features/mfa/presentation/providers/mfa_providers.dart';
 import 'package:basir_accounting_system/features/settings/presentation/screens/settings_screen.dart';
 import 'package:basir_accounting_system/features/vendors/presentation/screens/vendors_screen.dart';
 import 'package:basir_accounting_system/l10n/app_localizations.dart';
@@ -26,10 +27,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 /// - حركات انتقالية سلسة بين الشاشات
 class MainShell extends ConsumerStatefulWidget {
   /// إنشاء الهيكل الرئيسي للتطبيق
-  const MainShell({
-    super.key,
-    this.screens,
-  });
+  const MainShell({super.key, this.screens});
 
   final List<Widget>? screens;
 
@@ -38,13 +36,15 @@ class MainShell extends ConsumerStatefulWidget {
 }
 
 class _MainShellState extends ConsumerState<MainShell>
-    with TickerProviderStateMixin {
+    with TickerProviderStateMixin, WidgetsBindingObserver {
   late int _selectedIndex;
   late AnimationController _indicatorController;
   late AnimationController _pageTransitionController;
+  var _lockShowing = false;
 
   static const Duration _indicatorUpdateDuration = Durations.short;
   static const double _indicatorElevationBoost = 4;
+  static const Duration _resumeLockGrace = Duration(seconds: 20);
 
   static const List<Widget> _defaultScreens = [
     DashboardScreen(),
@@ -59,6 +59,7 @@ class _MainShellState extends ConsumerState<MainShell>
   @override
   void initState() {
     super.initState();
+    WidgetsBinding.instance.addObserver(this);
     _selectedIndex = 0;
     _indicatorController = AnimationController(
       vsync: this,
@@ -74,9 +75,50 @@ class _MainShellState extends ConsumerState<MainShell>
 
   @override
   void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
     _indicatorController.dispose();
     _pageTransitionController.dispose();
     super.dispose();
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state == AppLifecycleState.resumed) {
+      _maybeLockOnResume();
+    }
+  }
+
+  Future<void> _maybeLockOnResume() async {
+    if (!mounted || _lockShowing) return;
+
+    final navigator = Navigator.of(context);
+    final localAuth = ref.read(localAuthServiceProvider);
+    final enabled = await localAuth.isAppLockEnabled();
+    if (!enabled) return;
+
+    final lockOnResume = await localAuth.isLockOnResume();
+    if (!lockOnResume) return;
+
+    final lastUnlock = await localAuth.getLastMfaUnlockAt();
+    if (lastUnlock != null &&
+        DateTime.now().difference(lastUnlock) <= _resumeLockGrace) {
+      return;
+    }
+
+    _lockShowing = true;
+    try {
+      final ok =
+          await navigator.pushNamed<bool>(
+            '/mfa-challenge',
+            arguments: const {'after': '/dashboard'},
+          ) ??
+          false;
+      if (!ok && mounted) {
+        await navigator.pushNamedAndRemoveUntil('/login', (route) => false);
+      }
+    } finally {
+      _lockShowing = false;
+    }
   }
 
   void _onItemTapped(int index) {
@@ -95,44 +137,43 @@ class _MainShellState extends ConsumerState<MainShell>
   List<_NavItemData> _buildNavItems(
     AppIconsBase appIcons,
     AppLocalizations l10n,
-  ) =>
-      [
-        _NavItemData(
-          icon: appIcons.home,
-          label: l10n.navHome,
-          semanticLabel: 'الصفحة الرئيسية',
-        ),
-        _NavItemData(
-          icon: appIcons.invoices,
-          label: l10n.navInvoices,
-          semanticLabel: 'الفواتير',
-        ),
-        _NavItemData(
-          icon: Icons.business_center,
-          label: l10n.navVendors,
-          semanticLabel: 'الموردون',
-        ),
-        _NavItemData(
-          icon: appIcons.customers,
-          label: l10n.navCustomers,
-          semanticLabel: 'العملاء',
-        ),
-        _NavItemData(
-          icon: Icons.inventory_2,
-          label: l10n.navInventory,
-          semanticLabel: 'المخزون',
-        ),
-        _NavItemData(
-          icon: Icons.account_balance_wallet_outlined,
-          label: l10n.navAssets,
-          semanticLabel: 'الأصول',
-        ),
-        _NavItemData(
-          icon: appIcons.settings,
-          label: l10n.navSettings,
-          semanticLabel: 'الإعدادات',
-        ),
-      ];
+  ) => [
+    _NavItemData(
+      icon: appIcons.home,
+      label: l10n.navHome,
+      semanticLabel: 'الصفحة الرئيسية',
+    ),
+    _NavItemData(
+      icon: appIcons.invoices,
+      label: l10n.navInvoices,
+      semanticLabel: 'الفواتير',
+    ),
+    _NavItemData(
+      icon: Icons.business_center,
+      label: l10n.navVendors,
+      semanticLabel: 'الموردون',
+    ),
+    _NavItemData(
+      icon: appIcons.customers,
+      label: l10n.navCustomers,
+      semanticLabel: 'العملاء',
+    ),
+    _NavItemData(
+      icon: Icons.inventory_2,
+      label: l10n.navInventory,
+      semanticLabel: 'المخزون',
+    ),
+    _NavItemData(
+      icon: Icons.account_balance_wallet_outlined,
+      label: l10n.navAssets,
+      semanticLabel: 'الأصول',
+    ),
+    _NavItemData(
+      icon: appIcons.settings,
+      label: l10n.navSettings,
+      semanticLabel: 'الإعدادات',
+    ),
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -202,84 +243,82 @@ class _MainShellState extends ConsumerState<MainShell>
     required _NavItemData item,
     required int index,
     required bool isSelected,
-  }) =>
-      Semantics(
-        button: true,
-        selected: isSelected,
-        label: item.semanticLabel,
-        hint: isSelected ? 'عنصر التنقل المحدد حالياً' : 'اضغط للانتقال',
-        child: Material(
-          type: MaterialType.transparency,
-          child: InkWell(
-            onTap: () => _onItemTapped(index),
-            borderRadius: BorderRadius.circular(Radii.md),
-            splashColor: AppColors.primary.withValues(alpha: 0.12),
-            highlightColor: Colors.transparent,
-            child: SizedBox(
-              width: TouchTargets.minimum,
-              height: kBottomNavigationBarHeight,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  AnimatedScale(
-                    duration: _indicatorUpdateDuration,
-                    curve: AnimationCurves.fastOutSlowIn,
-                    scale: isSelected ? 1.1 : 1.0,
-                    child: AnimatedContainer(
-                      duration: _indicatorUpdateDuration,
-                      curve: AnimationCurves.fastOutSlowIn,
-                      padding: EdgeInsets.all(isSelected ? Spacing.xs : 0),
-                      decoration: BoxDecoration(
-                        color: isSelected
-                            ? AppColors.primaryLight
-                            : Colors.transparent,
-                        borderRadius: BorderRadius.circular(Radii.sm),
-                        boxShadow: isSelected
-                            ? [
-                                BoxShadow(
-                                  color: AppColors.primary.withValues(
-                                    alpha: 0.12,
-                                  ),
-                                  blurRadius: _indicatorElevationBoost,
-                                  offset: const Offset(0, Elevation.sm / 2),
-                                ),
-                              ]
-                            : null,
-                      ),
-                      child: Icon(
-                        item.icon,
-                        size: IconSizes.md,
-                        color: isSelected
-                            ? AppColors.primary
-                            : AppColors.textSecondary,
-                      ),
-                    ),
+  }) => Semantics(
+    button: true,
+    selected: isSelected,
+    label: item.semanticLabel,
+    hint: isSelected ? 'عنصر التنقل المحدد حالياً' : 'اضغط للانتقال',
+    child: Material(
+      type: MaterialType.transparency,
+      child: InkWell(
+        onTap: () => _onItemTapped(index),
+        borderRadius: BorderRadius.circular(Radii.md),
+        splashColor: AppColors.primary.withValues(alpha: 0.12),
+        highlightColor: Colors.transparent,
+        child: SizedBox(
+          width: TouchTargets.minimum,
+          height: kBottomNavigationBarHeight,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              AnimatedScale(
+                duration: _indicatorUpdateDuration,
+                curve: AnimationCurves.fastOutSlowIn,
+                scale: isSelected ? 1.1 : 1.0,
+                child: AnimatedContainer(
+                  duration: _indicatorUpdateDuration,
+                  curve: AnimationCurves.fastOutSlowIn,
+                  padding: EdgeInsets.all(isSelected ? Spacing.xs : 0),
+                  decoration: BoxDecoration(
+                    color: isSelected
+                        ? AppColors.primaryLight
+                        : Colors.transparent,
+                    borderRadius: BorderRadius.circular(Radii.sm),
+                    boxShadow: isSelected
+                        ? [
+                            BoxShadow(
+                              color: AppColors.primary.withValues(alpha: 0.12),
+                              blurRadius: _indicatorElevationBoost,
+                              offset: const Offset(0, Elevation.sm / 2),
+                            ),
+                          ]
+                        : null,
                   ),
-                  const SizedBox(height: 2),
-                  AnimatedDefaultTextStyle(
-                    duration: _indicatorUpdateDuration,
-                    curve: AnimationCurves.fastOutSlowIn,
-                    style: AppTextStyles.labelSmall.copyWith(
-                      color: isSelected
-                          ? AppColors.primary
-                          : AppColors.textSecondary,
-                      fontWeight:
-                          isSelected ? FontWeights.bold : FontWeights.medium,
-                    ),
-                    child: Text(
-                      item.label,
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      textScaler: TextScaler.noScaling,
-                    ),
+                  child: Icon(
+                    item.icon,
+                    size: IconSizes.md,
+                    color: isSelected
+                        ? AppColors.primary
+                        : AppColors.textSecondary,
                   ),
-                ],
+                ),
               ),
-            ),
+              const SizedBox(height: 2),
+              AnimatedDefaultTextStyle(
+                duration: _indicatorUpdateDuration,
+                curve: AnimationCurves.fastOutSlowIn,
+                style: AppTextStyles.labelSmall.copyWith(
+                  color: isSelected
+                      ? AppColors.primary
+                      : AppColors.textSecondary,
+                  fontWeight: isSelected
+                      ? FontWeights.bold
+                      : FontWeights.medium,
+                ),
+                child: Text(
+                  item.label,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  textScaler: TextScaler.noScaling,
+                ),
+              ),
+            ],
           ),
         ),
-      );
+      ),
+    ),
+  );
 }
 
 class _NavItemData {

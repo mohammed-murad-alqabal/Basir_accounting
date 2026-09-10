@@ -82,6 +82,7 @@ class BasirSidebar extends ConsumerWidget {
     required this.l10n,
     super.key,
     this.items = basirSidebarItems,
+    this.onItemSelected,
   });
 
   /// الفهرس النشط حاليًا
@@ -95,6 +96,9 @@ class BasirSidebar extends ConsumerWidget {
 
   /// بنود الشريط (قابلة للتخصيص لاختبارات الوحدات)
   final List<SidebarNavItem> items;
+
+  /// callback موحد لاختيار الوحدة النشطة.
+  final ValueChanged<int>? onItemSelected;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -171,19 +175,23 @@ class BasirSidebar extends ConsumerWidget {
           Semantics(
             button: true,
             label: l10n.shellToggleNav,
-            child: SizedBox(
-              width: TouchTargets.minimum,
-              height: TouchTargets.minimum,
-              child: Center(
-                child: AnimatedRotation(
-                  duration: Durations.fast,
-                  turns: (collapsed && !isRtl) || (!collapsed && isRtl)
-                      ? 0.5
-                      : 0.0,
-                  child: const Icon(
-                    Icons.chevron_left,
-                    color: AppColors.textSecondary,
-                    size: IconSizes.md,
+            child: GestureDetector(
+              onTap: () => ref.read(sidebarCollapsedProvider.notifier).state =
+                  !collapsed,
+              child: SizedBox(
+                width: TouchTargets.minimum,
+                height: TouchTargets.minimum,
+                child: Center(
+                  child: AnimatedRotation(
+                    duration: Durations.fast,
+                    turns: (collapsed && !isRtl) || (!collapsed && isRtl)
+                        ? 0.5
+                        : 0.0,
+                    child: const Icon(
+                      Icons.chevron_left,
+                      color: AppColors.textSecondary,
+                      size: IconSizes.md,
+                    ),
                   ),
                 ),
               ),
@@ -212,7 +220,7 @@ class BasirSidebar extends ConsumerWidget {
       child: Material(
         type: MaterialType.transparency,
         child: InkWell(
-          onTap: () {},
+          onTap: () => onItemSelected?.call(index),
           splashColor: AppColors.primary.withValues(alpha: 0.12),
           child: AnimatedContainer(
             duration: Durations.short,
@@ -227,10 +235,7 @@ class BasirSidebar extends ConsumerWidget {
               borderRadius: BorderRadius.circular(Radii.sm),
               border: isSelected
                   ? const Border(
-                      right: BorderSide(
-                        color: AppColors.primary,
-                        width: 3,
-                      ),
+                      right: BorderSide(color: AppColors.primary, width: 3),
                     )
                   : null,
             ),
@@ -243,8 +248,9 @@ class BasirSidebar extends ConsumerWidget {
                 Icon(
                   isSelected ? item.selectedIcon : item.icon,
                   size: IconSizes.md,
-                  color:
-                      isSelected ? AppColors.primary : AppColors.textSecondary,
+                  color: isSelected
+                      ? AppColors.primary
+                      : AppColors.textSecondary,
                 ),
                 if (!collapsed) ...[
                   const SizedBox(width: Spacing.sm),
@@ -255,8 +261,9 @@ class BasirSidebar extends ConsumerWidget {
                         color: isSelected
                             ? AppColors.primary
                             : AppColors.textPrimary,
-                        fontWeight:
-                            isSelected ? FontWeights.bold : FontWeights.medium,
+                        fontWeight: isSelected
+                            ? FontWeights.bold
+                            : FontWeights.medium,
                       ),
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
@@ -274,14 +281,14 @@ class BasirSidebar extends ConsumerWidget {
 
   /// ترجمة مفتاح البند إلى التسمية النشطة
   String _labelFor(String key) => switch (key) {
-        'navHome' => l10n.navHome,
-        'navInvoices' => l10n.navInvoices,
-        'navVendors' => l10n.navVendors,
-        'navCustomers' => l10n.navCustomers,
-        'navInventory' => l10n.navInventory,
-        'navAssets' => l10n.navAssets,
-        'navReports' => l10n.navReports,
-        'navSettings' => l10n.navSettings,
-        _ => key,
-      };
+    'navHome' => l10n.navHome,
+    'navInvoices' => l10n.navInvoices,
+    'navVendors' => l10n.navVendors,
+    'navCustomers' => l10n.navCustomers,
+    'navInventory' => l10n.navInventory,
+    'navAssets' => l10n.navAssets,
+    'navReports' => l10n.navReports,
+    'navSettings' => l10n.navSettings,
+    _ => key,
+  };
 }

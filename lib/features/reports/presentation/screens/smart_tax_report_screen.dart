@@ -15,8 +15,9 @@ class SmartTaxReportScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     // Assuming we can access the notifier to call the method.
     // In a real app, this should probably be a separate provider or cached.
-    final vatReturnFuture =
-        ref.read(taxEngineServiceProvider.notifier).calculateVatReturn();
+    final vatReturnFuture = ref
+        .read(taxEngineServiceProvider.notifier)
+        .calculateVatReturn();
 
     return GlassScaffold(
       title: 'تقرير الضريبة الذكي (Smart VAT Return)',
@@ -118,10 +119,7 @@ class SmartTaxReportScreen extends ConsumerWidget {
     );
   }
 
-  Widget _buildSummaryCard(
-    BuildContext context,
-    VatReturnStatement data,
-  ) =>
+  Widget _buildSummaryCard(BuildContext context, VatReturnStatement data) =>
       Card(
         color: Theme.of(context).colorScheme.primaryContainer,
         child: Padding(
@@ -133,9 +131,9 @@ class SmartTaxReportScreen extends ConsumerWidget {
               Text(
                 '${data.netVatDue.toStringAsFixed(2)} SAR',
                 style: Theme.of(context).textTheme.displaySmall?.copyWith(
-                      fontWeight: FontWeight.bold,
-                      color: Theme.of(context).colorScheme.onPrimaryContainer,
-                    ),
+                  fontWeight: FontWeight.bold,
+                  color: Theme.of(context).colorScheme.onPrimaryContainer,
+                ),
               ),
             ],
           ),
@@ -143,71 +141,68 @@ class SmartTaxReportScreen extends ConsumerWidget {
       );
 
   Widget _buildSectionTitle(BuildContext context, String title) => Text(
-        title,
-        style: Theme.of(context).textTheme.titleLarge?.copyWith(
-              fontWeight: FontWeight.bold,
-            ),
-      );
+    title,
+    style: Theme.of(
+      context,
+    ).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold),
+  );
 
   Widget _buildDetailTable(BuildContext context, List<_RowData> rows) => Table(
-        border: TableBorder.all(
-          color: Theme.of(context).dividerColor,
-          borderRadius: BorderRadius.circular(8),
+    border: TableBorder.all(
+      color: Theme.of(context).dividerColor,
+      borderRadius: BorderRadius.circular(8),
+    ),
+    columnWidths: const {
+      0: FlexColumnWidth(3),
+      1: FlexColumnWidth(2),
+      2: FlexColumnWidth(2),
+    },
+    children: [
+      TableRow(
+        decoration: BoxDecoration(
+          color: Theme.of(context).colorScheme.surfaceContainerHighest,
         ),
-        columnWidths: const {
-          0: FlexColumnWidth(3),
-          1: FlexColumnWidth(2),
-          2: FlexColumnWidth(2),
-        },
-        children: [
-          TableRow(
-            decoration: BoxDecoration(
-              color: Theme.of(context).colorScheme.surfaceContainerHighest,
-            ),
-            children: const [
-              Padding(
-                padding: EdgeInsets.all(8),
-                child: Text(
-                  'الوصف',
-                  style: TextStyle(fontWeight: FontWeight.bold),
-                ),
-              ),
-              Padding(
-                padding: EdgeInsets.all(8),
-                child: Text(
-                  'المبلغ',
-                  style: TextStyle(fontWeight: FontWeight.bold),
-                ),
-              ),
-              Padding(
-                padding: EdgeInsets.all(8),
-                child: Text(
-                  'الضريبة',
-                  style: TextStyle(fontWeight: FontWeight.bold),
-                ),
-              ),
-            ],
+        children: const [
+          Padding(
+            padding: EdgeInsets.all(8),
+            child: Text('الوصف', style: TextStyle(fontWeight: FontWeight.bold)),
           ),
-          ...rows.map(
-            (row) => TableRow(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.all(8),
-                  child: Text(row.description),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(8),
-                  child: Text(row.baseAmount.toStringAsFixed(2)),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(8),
-                  child: Text(row.taxAmount.toStringAsFixed(2)),
-                ),
-              ],
+          Padding(
+            padding: EdgeInsets.all(8),
+            child: Text(
+              'المبلغ',
+              style: TextStyle(fontWeight: FontWeight.bold),
+            ),
+          ),
+          Padding(
+            padding: EdgeInsets.all(8),
+            child: Text(
+              'الضريبة',
+              style: TextStyle(fontWeight: FontWeight.bold),
             ),
           ),
         ],
-      );
+      ),
+      ...rows.map(
+        (row) => TableRow(
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(8),
+              child: Text(row.description),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8),
+              child: Text(row.baseAmount.toStringAsFixed(2)),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8),
+              child: Text(row.taxAmount.toStringAsFixed(2)),
+            ),
+          ],
+        ),
+      ),
+    ],
+  );
 }
 
 class _RowData {

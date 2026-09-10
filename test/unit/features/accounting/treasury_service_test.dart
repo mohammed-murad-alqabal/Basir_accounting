@@ -1,4 +1,5 @@
 import 'package:basir_accounting_system/core/providers.dart';
+import 'package:basir_accounting_system/features/accounting/application/authoritative_ledger_gateway.dart';
 import 'package:basir_accounting_system/features/accounting/application/treasury_service.dart';
 import 'package:basir_accounting_system/features/accounting/domain/entities/account.dart';
 import 'package:basir_accounting_system/features/accounting/domain/entities/financial_voucher.dart';
@@ -44,6 +45,9 @@ void main() {
         overrides: [
           financialVoucherRepositoryProvider.overrideWithValue(mockVoucherRepo),
           accountingRepositoryProvider.overrideWithValue(mockAccountingRepo),
+          authoritativeLedgerGatewayProvider.overrideWithValue(
+            const TestAuthoritativeLedgerGateway(),
+          ),
           financialYearRepositoryProvider.overrideWithValue(mockFyRepo),
           basirUserProvider.overrideWith((ref) => null),
         ],
@@ -62,7 +66,7 @@ void main() {
 
       // 2. Accounting Repo mocks
       when(
-        () => mockAccountingRepo.addJournalEntry(any()),
+        () => mockAccountingRepo.cacheAuthoritativeJournalEntry(any()),
       ).thenAnswer((_) async {});
       when(
         () => mockAccountingRepo.getJournalEntries(),
@@ -113,7 +117,10 @@ void main() {
         final service = container.read(treasuryServiceProvider.notifier);
         await service.issueReceipt(voucher);
 
-        verify(() => mockAccountingRepo.addJournalEntry(any())).called(1);
+        verify(
+          () => mockAccountingRepo.cacheAuthoritativeJournalEntry(any()),
+        ).called(1);
+        verifyNever(() => mockAccountingRepo.addJournalEntry(any()));
         verify(() => mockVoucherRepo.addVoucher(any())).called(1);
       },
     );
@@ -177,7 +184,10 @@ void main() {
             .read(treasuryServiceProvider.notifier)
             .issuePayment(voucher);
 
-        verify(() => mockAccountingRepo.addJournalEntry(any())).called(1);
+        verify(
+          () => mockAccountingRepo.cacheAuthoritativeJournalEntry(any()),
+        ).called(1);
+        verifyNever(() => mockAccountingRepo.addJournalEntry(any()));
         verify(() => mockVoucherRepo.addVoucher(any())).called(1);
       },
     );

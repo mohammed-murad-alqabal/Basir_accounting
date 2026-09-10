@@ -62,47 +62,47 @@ class _CloudBackupScreenState extends ConsumerState<CloudBackupScreen>
   Widget _buildLocalBackupTab(
     AsyncValue<void> state,
     CloudBackupService service,
-  ) =>
-      Padding(
-        padding: const EdgeInsets.all(Spacing.md),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            _buildInfoCard(
-              title: 'النسخ الاحتياطي المحلي',
-              description: 'يتم حفظ نسخة من قاعدة البيانات في ذاكرة الهاتف '
-                  'الداخلية. يمكنك استخدامها لاستعادة البيانات يدوياً.',
-              icon: Icons.sd_storage,
-              color: Colors.blue,
-            ),
-            const SizedBox(height: Spacing.xl),
-            ElevatedButton.icon(
-              onPressed: state.isLoading
-                  ? null
-                  : () async {
-                      final file = await service.createLocalBackup();
-                      if (file != null && mounted) {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(
-                            content: Text('تم إنشاء النسخة في: ${file.path}'),
-                          ),
-                        );
-                      }
-                    },
-              icon: const Icon(Icons.backup),
-              label: const Text('إنشاء نسخة احتياطية الآن'),
-              style: ElevatedButton.styleFrom(
-                backgroundColor: AppColors.secondary,
-                foregroundColor: AppColors.onSecondary,
-                padding: const EdgeInsets.symmetric(vertical: Spacing.md),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10),
-                ),
-              ),
-            ),
-          ],
+  ) => Padding(
+    padding: const EdgeInsets.all(Spacing.md),
+    child: Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        _buildInfoCard(
+          title: 'النسخ الاحتياطي المحلي',
+          description:
+              'يتم حفظ نسخة من قاعدة البيانات في ذاكرة الهاتف '
+              'الداخلية. يمكنك استخدامها لاستعادة البيانات يدوياً.',
+          icon: Icons.sd_storage,
+          color: Colors.blue,
         ),
-      );
+        const SizedBox(height: Spacing.xl),
+        ElevatedButton.icon(
+          onPressed: state.isLoading
+              ? null
+              : () async {
+                  final file = await service.createLocalBackup();
+                  if (file != null && mounted) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text('تم إنشاء النسخة في: ${file.path}'),
+                      ),
+                    );
+                  }
+                },
+          icon: const Icon(Icons.backup),
+          label: const Text('إنشاء نسخة احتياطية الآن'),
+          style: ElevatedButton.styleFrom(
+            backgroundColor: AppColors.secondary,
+            foregroundColor: AppColors.onSecondary,
+            padding: const EdgeInsets.symmetric(vertical: Spacing.md),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10),
+            ),
+          ),
+        ),
+      ],
+    ),
+  );
 
   Widget _buildCloudSyncTab(
     AsyncValue<void> state,
@@ -117,7 +117,8 @@ class _CloudBackupScreenState extends ConsumerState<CloudBackupScreen>
         children: [
           _buildInfoCard(
             title: 'مزامنة Google Drive',
-            description: 'اربط حسابك لتتمكن من رفع واستعادة بياناتك من السحابة '
+            description:
+                'اربط حسابك لتتمكن من رفع واستعادة بياناتك من السحابة '
                 'تلقائياً. المزامنة تضمن عدم فقدان بياناتك '
                 'حتى عند تغيير الهاتف.',
             icon: Icons.cloud_done,
@@ -204,42 +205,41 @@ class _CloudBackupScreenState extends ConsumerState<CloudBackupScreen>
     required String description,
     required IconData icon,
     required Color color,
-  }) =>
-      Card(
-        elevation: 0,
-        color: color.withValues(alpha: 0.05),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(12),
-          side: BorderSide(color: color.withValues(alpha: 0.2)),
-        ),
-        child: Padding(
-          padding: const EdgeInsets.all(Spacing.md),
-          child: Row(
-            children: [
-              Icon(icon, size: 40, color: color),
-              const SizedBox(width: Spacing.md),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      title,
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 16,
-                        color: color.withValues(alpha: 0.8),
-                      ),
-                    ),
-                    const SizedBox(height: Spacing.xs),
-                    Text(
-                      description,
-                      style: const TextStyle(fontSize: 13, height: 1.5),
-                    ),
-                  ],
+  }) => Card(
+    elevation: 0,
+    color: color.withValues(alpha: 0.05),
+    shape: RoundedRectangleBorder(
+      borderRadius: BorderRadius.circular(12),
+      side: BorderSide(color: color.withValues(alpha: 0.2)),
+    ),
+    child: Padding(
+      padding: const EdgeInsets.all(Spacing.md),
+      child: Row(
+        children: [
+          Icon(icon, size: 40, color: color),
+          const SizedBox(width: Spacing.md),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  title,
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 16,
+                    color: color.withValues(alpha: 0.8),
+                  ),
                 ),
-              ),
-            ],
+                const SizedBox(height: Spacing.xs),
+                Text(
+                  description,
+                  style: const TextStyle(fontSize: 13, height: 1.5),
+                ),
+              ],
+            ),
           ),
-        ),
-      );
+        ],
+      ),
+    ),
+  );
 }

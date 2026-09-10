@@ -298,86 +298,88 @@ class _AccountTreeItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Semantics(
-        label: '${account.code}: ${account.nameAr}, '
-            '${context.l10n.labelBalance}: '
-            '${_formatCurrency(balance)}',
-        child: InkWell(
-          onTap: account.isParent ? onToggle : null,
-          child: Padding(
-            padding: EdgeInsets.only(
-              left: (depth * Spacing.lg) + Spacing.md,
-              right: Spacing.md,
-              top: Spacing.sm,
-              bottom: Spacing.sm,
-            ),
-            child: Row(
-              children: [
-                _buildLeading(context),
-                const SizedBox(width: Spacing.md),
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        '${account.code} - ${account.nameAr}',
-                        style: (account.isParent
+    label:
+        '${account.code}: ${account.nameAr}, '
+        '${context.l10n.labelBalance}: '
+        '${_formatCurrency(balance)}',
+    child: InkWell(
+      onTap: account.isParent ? onToggle : null,
+      child: Padding(
+        padding: EdgeInsets.only(
+          left: (depth * Spacing.lg) + Spacing.md,
+          right: Spacing.md,
+          top: Spacing.sm,
+          bottom: Spacing.sm,
+        ),
+        child: Row(
+          children: [
+            _buildLeading(context),
+            const SizedBox(width: Spacing.md),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    '${account.code} - ${account.nameAr}',
+                    style:
+                        (account.isParent
                                 ? AppTextStyles.titleMedium
                                 : AppTextStyles.bodyLarge)
                             .copyWith(
-                          fontWeight: account.isParent
-                              ? FontWeight.bold
-                              : FontWeight.w600,
-                        ),
-                      ),
-                      Text(
-                        account.nameEn,
-                        style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                              color: AppColors.textSecondary,
+                              fontWeight: account.isParent
+                                  ? FontWeight.bold
+                                  : FontWeight.w600,
                             ),
-                      ),
-                    ],
                   ),
-                ),
-                Text(
-                  _formatCurrency(balance),
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    color: balance < Decimal.zero
-                        ? AppColors.error
-                        : AppColors.success,
-                  ),
-                ),
-                const SizedBox(width: Spacing.sm),
-                IconButton(
-                  icon: const Icon(Icons.edit_outlined, size: 18),
-                  padding: EdgeInsets.zero,
-                  constraints: const BoxConstraints(),
-                  onPressed: () => Navigator.pushNamed(
-                    context,
-                    '/account-form',
-                    arguments: {'account': account},
-                  ),
-                  tooltip: context.l10n.btnEdit,
-                ),
-                if (account.isParent) ...[
-                  const SizedBox(width: Spacing.xs),
-                  IconButton(
-                    icon: const Icon(Icons.add_circle_outline, size: 18),
-                    padding: EdgeInsets.zero,
-                    constraints: const BoxConstraints(),
-                    onPressed: () => Navigator.pushNamed(
-                      context,
-                      '/account-form',
-                      arguments: {'parentId': account.id},
+                  Text(
+                    account.nameEn,
+                    style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                      color: AppColors.textSecondary,
                     ),
-                    tooltip: 'إضافة حساب تابع',
                   ),
                 ],
-              ],
+              ),
             ),
-          ),
+            Text(
+              _formatCurrency(balance),
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                color: balance < Decimal.zero
+                    ? AppColors.error
+                    : AppColors.success,
+              ),
+            ),
+            const SizedBox(width: Spacing.sm),
+            IconButton(
+              icon: const Icon(Icons.edit_outlined, size: 18),
+              padding: EdgeInsets.zero,
+              constraints: const BoxConstraints(),
+              onPressed: () => Navigator.pushNamed(
+                context,
+                '/account-form',
+                arguments: {'account': account},
+              ),
+              tooltip: context.l10n.btnEdit,
+            ),
+            if (account.isParent) ...[
+              const SizedBox(width: Spacing.xs),
+              IconButton(
+                icon: const Icon(Icons.add_circle_outline, size: 18),
+                padding: EdgeInsets.zero,
+                constraints: const BoxConstraints(),
+                onPressed: () => Navigator.pushNamed(
+                  context,
+                  '/account-form',
+                  arguments: {'parentId': account.id},
+                ),
+                tooltip: 'إضافة حساب تابع',
+              ),
+            ],
+          ],
         ),
-      );
+      ),
+    ),
+  );
 
   /// Renders expansion indicators or account type markers.
   Widget _buildLeading(BuildContext context) {

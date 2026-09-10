@@ -96,7 +96,8 @@ class AccessibilityChecker {
 
     // Check contrast if color is specified
     if (style.color != null) {
-      final isLarge = isLargeText ||
+      final isLarge =
+          isLargeText ||
           fontSize >= 18.0 ||
           (fontSize >= 14.0 && style.fontWeight == FontWeight.bold);
       final minRatio = isLarge ? 3.0 : 4.5;

@@ -87,14 +87,16 @@ class _AssetsScreenState extends ConsumerState<AssetsScreen> {
         final asset = assets[index];
         final localizedName = asset.name(isArabic: context.isArabic);
         return Semantics(
-          label: '$localizedName, '
+          label:
+              '$localizedName, '
               '${asset.code}, '
               '${asset.cost}',
           button: true,
           child: AppListCard(
             title: localizedName,
             subtitle: asset.code,
-            trailing: '${asset.cost.toStringAsFixed(2)} '
+            trailing:
+                '${asset.cost.toStringAsFixed(2)} '
                 '${context.l10n.labelCurrencySAR}',
             leading: CircleAvatar(
               backgroundColor: AppColors.primary.withValues(alpha: 0.2),

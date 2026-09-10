@@ -23,11 +23,10 @@ class FontCustomizationState {
   FontCustomizationState copyWith({
     String? fontFamily,
     double? textScaleFactor,
-  }) =>
-      FontCustomizationState(
-        fontFamily: fontFamily ?? this.fontFamily,
-        textScaleFactor: textScaleFactor ?? this.textScaleFactor,
-      );
+  }) => FontCustomizationState(
+    fontFamily: fontFamily ?? this.fontFamily,
+    textScaleFactor: textScaleFactor ?? this.textScaleFactor,
+  );
 }
 
 /// خدمة تخصيص الخطوط والأحجام
@@ -131,5 +130,5 @@ class FontCustomizationService extends AsyncNotifier<FontCustomizationState> {
 /// موفر خدمة تخصيص الخطوط
 final fontCustomizationProvider =
     AsyncNotifierProvider<FontCustomizationService, FontCustomizationState>(
-  FontCustomizationService.new,
-);
+      FontCustomizationService.new,
+    );

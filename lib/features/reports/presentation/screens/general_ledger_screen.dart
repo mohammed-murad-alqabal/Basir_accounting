@@ -67,7 +67,7 @@ class _GeneralLedgerScreenState extends ConsumerState<GeneralLedgerScreen> {
                 return ListView.separated(
                   padding: const EdgeInsets.all(16),
                   itemCount: relevantEntries.length,
-                  separatorBuilder: (_, __) => const SizedBox(height: 8),
+                  separatorBuilder: (_, _) => const SizedBox(height: 8),
                   itemBuilder: (context, index) {
                     final entry = relevantEntries[index];
                     return _buildLedgerItem(context, entry);
@@ -82,8 +82,9 @@ class _GeneralLedgerScreenState extends ConsumerState<GeneralLedgerScreen> {
   }
 
   Widget _buildHeader(BuildContext context) {
-    final dateFormat =
-        DateFormat.yMMMd(Localizations.localeOf(context).languageCode);
+    final dateFormat = DateFormat.yMMMd(
+      Localizations.localeOf(context).languageCode,
+    );
     return Padding(
       padding: const EdgeInsets.all(16),
       child: GlassCard(
@@ -111,15 +112,16 @@ class _GeneralLedgerScreenState extends ConsumerState<GeneralLedgerScreen> {
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
                   Text(
-                    context.l10n
+                    context
+                        .l10n
                         .labelGeneralLedger, // "General Ledger" / "دفتر الأستاذ"
                     style: Theme.of(context).textTheme.labelSmall,
                   ),
                   Text(
                     widget.accountName,
                     style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                          fontWeight: FontWeight.bold,
-                        ),
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ],
               ),
@@ -158,8 +160,9 @@ class _GeneralLedgerScreenState extends ConsumerState<GeneralLedgerScreen> {
         ),
         title: Text(entry.description),
         subtitle: Text(
-          DateFormat.yMMMd(Localizations.localeOf(context).languageCode)
-              .format(entry.date),
+          DateFormat.yMMMd(
+            Localizations.localeOf(context).languageCode,
+          ).format(entry.date),
         ),
         trailing: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -188,6 +191,5 @@ class _GeneralLedgerScreenState extends ConsumerState<GeneralLedgerScreen> {
           return false;
         }
         return e.lines.any((l) => l.accountId == widget.accountId);
-      }).toList()
-        ..sort((a, b) => b.date.compareTo(a.date));
+      }).toList()..sort((a, b) => b.date.compareTo(a.date));
 }

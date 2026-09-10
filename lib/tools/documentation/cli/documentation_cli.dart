@@ -15,10 +15,10 @@ import 'package:basir_accounting_system/tools/documentation/validation/validatio
 class DocumentationCLI {
   /// إنشاء أداة CLI
   DocumentationCLI()
-      : _analysisEngine = AnalysisEngine(),
-        _generationEngine = GenerationEngine(),
-        _validationEngine = ValidationEngine(),
-        _repository = DocumentationRepository();
+    : _analysisEngine = AnalysisEngine(),
+      _generationEngine = GenerationEngine(),
+      _validationEngine = ValidationEngine(),
+      _repository = DocumentationRepository();
 
   /// محرك التحليل
   final AnalysisEngine _analysisEngine;
@@ -110,7 +110,8 @@ class DocumentationCLI {
       // عرض الإحصاءات الفعلية بصيغة ثابتة تستهلكها بوابة CI.
       print('Coverage: ${stats.coveragePercentage.toStringAsFixed(1)}%');
       print(
-          'Documented elements: ${stats.documentedElements}/${stats.totalElements}');
+        'Documented elements: ${stats.documentedElements}/${stats.totalElements}',
+      );
       print('Undocumented elements: ${stats.undocumentedElements}');
 
       if (verbose) {
@@ -263,11 +264,12 @@ class DocumentationCLI {
       final changedFiles = changedFilesFile == null
           ? await engine.changedFiles(root: root, base: base, head: head)
           : LineSplitter.split(await File(changedFilesFile).readAsString())
-              .map((String value) => value.trim())
-              .where((String value) => value.isNotEmpty)
-              .toList(growable: false);
-      final prBody =
-          prBodyFile == null ? '' : await File(prBodyFile).readAsString();
+                .map((String value) => value.trim())
+                .where((String value) => value.isNotEmpty)
+                .toList(growable: false);
+      final prBody = prBodyFile == null
+          ? ''
+          : await File(prBodyFile).readAsString();
       final report = await engine.analyze(
         root: root,
         changedFiles: changedFiles,
@@ -275,7 +277,8 @@ class DocumentationCLI {
       );
 
       await File(output).writeAsString(
-          const JsonEncoder.withIndent('  ').convert(report.toJson()));
+        const JsonEncoder.withIndent('  ').convert(report.toJson()),
+      );
       await File(markdownOutput).writeAsString(report.toMarkdown());
       print(report.toMarkdown());
 
@@ -333,11 +336,13 @@ class DocumentationCLI {
         'documented_elements': stats.documentedElements,
         'undocumented_elements': stats.undocumentedElements,
         'files_below_70_percent': lowCoverage
-            .map((AnalysisResult result) => <String, Object?>{
-                  'path': result.filePath,
-                  'coverage_percentage': result.coveragePercentage,
-                  'undocumented_elements': result.undocumentedElements.length,
-                })
+            .map(
+              (AnalysisResult result) => <String, Object?>{
+                'path': result.filePath,
+                'coverage_percentage': result.coveragePercentage,
+                'undocumented_elements': result.undocumentedElements.length,
+              },
+            )
             .toList(growable: false),
       };
       final normalizedFormat = format.toLowerCase();
@@ -363,11 +368,14 @@ class DocumentationCLI {
       ..writeln('| --- | ---: |')
       ..writeln('| Path | `${report['path']}` |')
       ..writeln(
-          '| Coverage | ${(report['coverage_percentage']! as double).toStringAsFixed(1)}% |')
+        '| Coverage | ${(report['coverage_percentage']! as double).toStringAsFixed(1)}% |',
+      )
       ..writeln(
-          '| Documented elements | ${report['documented_elements']} / ${report['total_elements']} |')
+        '| Documented elements | ${report['documented_elements']} / ${report['total_elements']} |',
+      )
       ..writeln(
-          '| Undocumented elements | ${report['undocumented_elements']} |')
+        '| Undocumented elements | ${report['undocumented_elements']} |',
+      )
       ..writeln();
     if (lowCoverage.isEmpty) {
       buffer.writeln('No files are below 70% documented coverage.');

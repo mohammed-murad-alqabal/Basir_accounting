@@ -59,11 +59,7 @@ class OcrService extends _$OcrService {
         }
       }
 
-      return {
-        'total': total,
-        'date': date,
-        'rawText': recognizedText.text,
-      };
+      return {'total': total, 'date': date, 'rawText': recognizedText.text};
     } finally {
       await textRecognizer.close();
     }

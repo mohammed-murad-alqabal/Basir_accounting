@@ -34,6 +34,9 @@ class AuthService {
   /// دفق التغييرات في حالة المصادقة (يرجع اسم المستخدم أو null)
   Stream<String?> get onAuthStateChange => _authStateController.stream;
 
+  /// Releases resources owned by the authentication service.
+  Future<void> dispose() => _authStateController.close();
+
   /// Changes password without requiring old password verification
   ///
   /// Used for password reset operations where the user has been
@@ -155,7 +158,8 @@ class AuthService {
         orElse: () => UserRole.viewer,
       );
 
-      final permissions = int.tryParse(permissionsStr ?? '') ??
+      final permissions =
+          int.tryParse(permissionsStr ?? '') ??
           BasirUser.getDefaultPermissions(role);
 
       return BasirUser(
@@ -191,9 +195,7 @@ class AuthService {
       final storedPasswordHash = await secureStorage.read(
         key: StorageKeys.passwordHash,
       );
-      final userSalt = await secureStorage.read(
-        key: '${username}_salt',
-      );
+      final userSalt = await secureStorage.read(key: '${username}_salt');
 
       if (storedUsername == null || storedPasswordHash == null) {
         throw Exception('لا يوجد حساب مسجل');
@@ -207,11 +209,11 @@ class AuthService {
       final isValid = isCurrentHash
           ? PasswordHasher.verifyBcrypt(password, storedPasswordHash)
           : userSalt != null &&
-              PasswordHasher.verifyLegacySaltedSha256(
-                password: password,
-                encodedHash: storedPasswordHash,
-                userSalt: userSalt,
-              );
+                PasswordHasher.verifyLegacySaltedSha256(
+                  password: password,
+                  encodedHash: storedPasswordHash,
+                  userSalt: userSalt,
+                );
 
       if (!isValid) {
         throw Exception('كلمة المرور غير صحيحة');
@@ -408,9 +410,7 @@ class AuthService {
         key: StorageKeys.passwordHash,
       );
       final username = await secureStorage.read(key: StorageKeys.username);
-      final userSalt = await secureStorage.read(
-        key: '${username}_salt',
-      );
+      final userSalt = await secureStorage.read(key: '${username}_salt');
 
       if (storedPasswordHash == null) {
         throw Exception('لا يوجد حساب مسجل');
@@ -420,11 +420,11 @@ class AuthService {
       final isValid = isCurrentHash
           ? PasswordHasher.verifyBcrypt(oldPassword, storedPasswordHash)
           : userSalt != null &&
-              PasswordHasher.verifyLegacySaltedSha256(
-                password: oldPassword,
-                encodedHash: storedPasswordHash,
-                userSalt: userSalt,
-              );
+                PasswordHasher.verifyLegacySaltedSha256(
+                  password: oldPassword,
+                  encodedHash: storedPasswordHash,
+                  userSalt: userSalt,
+                );
       if (!isValid) {
         throw Exception('كلمة المرور القديمة غير صحيحة');
       }
@@ -502,9 +502,7 @@ class AuthService {
       final passwordHash = await secureStorage.read(
         key: StorageKeys.passwordHash,
       );
-      final userSalt = await secureStorage.read(
-        key: '${username}_salt',
-      );
+      final userSalt = await secureStorage.read(key: '${username}_salt');
 
       if (username != null && passwordHash == null) {
         issues.add('اسم المستخدم موجود لكن كلمة المرور مفقودة');

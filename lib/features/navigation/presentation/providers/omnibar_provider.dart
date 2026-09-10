@@ -42,8 +42,10 @@ enum OmnibarResultType {
 }
 
 /// مزود نتائج البحث في الـ Omnibar
-final omnibarSearchProvider =
-    Provider.family<List<OmnibarResult>, String>((ref, query) {
+final omnibarSearchProvider = Provider.family<List<OmnibarResult>, String>((
+  ref,
+  query,
+) {
   if (query.isEmpty) return [];
 
   final invoicesAsync = ref.watch(invoicesProvider);

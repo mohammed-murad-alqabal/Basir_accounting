@@ -16,8 +16,10 @@ class VendorRepositoryImpl implements VendorRepository {
 
   @override
   Future<List<Vendor>> getAllVendors() async {
-    final models =
-        await isar.vendorModels.filter().userIdEqualTo(userId).findAll();
+    final models = await isar.vendorModels
+        .filter()
+        .userIdEqualTo(userId)
+        .findAll();
     return models.map((m) => m.toEntity()).toList();
   }
 

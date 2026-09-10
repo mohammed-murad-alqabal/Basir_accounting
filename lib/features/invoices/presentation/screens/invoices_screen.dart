@@ -137,9 +137,7 @@ class _InvoicesScreenState extends ConsumerState<InvoicesScreen> {
         decoration: BoxDecoration(
           color: AppColors.surface,
           border: Border(
-            bottom: BorderSide(
-              color: AppColors.border.withValues(alpha: 0.5),
-            ),
+            bottom: BorderSide(color: AppColors.border.withValues(alpha: 0.5)),
           ),
         ),
         child: statsAsync.when(
@@ -178,27 +176,25 @@ class _InvoicesScreenState extends ConsumerState<InvoicesScreen> {
             ],
           ),
           loading: () => const LinearProgressIndicator(),
-          error: (_, __) => const SizedBox.shrink(),
+          error: (_, _) => const SizedBox.shrink(),
         ),
       );
 
   Widget _buildStatItem(String label, String value, Color color) => Column(
-        children: [
-          Text(
-            value,
-            style: AppTextStyles.titleLarge.copyWith(
-              fontWeight: FontWeight.bold,
-              color: color,
-            ),
-          ),
-          Text(
-            label,
-            style: AppTextStyles.bodySmall.copyWith(
-              color: AppColors.textHint,
-            ),
-          ),
-        ],
-      );
+    children: [
+      Text(
+        value,
+        style: AppTextStyles.titleLarge.copyWith(
+          fontWeight: FontWeight.bold,
+          color: color,
+        ),
+      ),
+      Text(
+        label,
+        style: AppTextStyles.bodySmall.copyWith(color: AppColors.textHint),
+      ),
+    ],
+  );
 
   /// شريط الأدوات الموحد: بحث نصي + فرز + شرائح حالة الفاتورة.
   Widget _buildToolbar(int matchedCount) {
@@ -210,9 +206,7 @@ class _InvoicesScreenState extends ConsumerState<InvoicesScreen> {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          InvoiceListToolbar(
-            totalMatches: isSearching ? matchedCount : null,
-          ),
+          InvoiceListToolbar(totalMatches: isSearching ? matchedCount : null),
           SingleChildScrollView(
             scrollDirection: Axis.horizontal,
             padding: const EdgeInsets.symmetric(
@@ -452,10 +446,7 @@ class _InvoicesScreenState extends ConsumerState<InvoicesScreen> {
       );
     } on Exception catch (e) {
       if (!mounted) return;
-      AppSnackbar.showError(
-        context,
-        context.l10n.errorSharePdf(e.toString()),
-      );
+      AppSnackbar.showError(context, context.l10n.errorSharePdf(e.toString()));
     }
   }
 

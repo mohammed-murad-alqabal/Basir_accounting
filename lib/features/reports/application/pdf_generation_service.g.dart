@@ -15,14 +15,14 @@ String _$pdfGenerationServiceHash() =>
 @ProviderFor(PdfGenerationService)
 final pdfGenerationServiceProvider =
     AsyncNotifierProvider<PdfGenerationService, void>.internal(
-  PdfGenerationService.new,
-  name: r'pdfGenerationServiceProvider',
-  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-      ? null
-      : _$pdfGenerationServiceHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
+      PdfGenerationService.new,
+      name: r'pdfGenerationServiceProvider',
+      debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+          ? null
+          : _$pdfGenerationServiceHash,
+      dependencies: null,
+      allTransitiveDependencies: null,
+    );
 
 typedef _$PdfGenerationService = AsyncNotifier<void>;
 // ignore_for_file: type=lint

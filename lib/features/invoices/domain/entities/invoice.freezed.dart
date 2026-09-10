@@ -12,7 +12,8 @@ part of 'invoice.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
+  'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models',
+);
 
 InvoiceItem _$InvoiceItemFromJson(Map<String, dynamic> json) {
   return _InvoiceItem.fromJson(json);
@@ -54,19 +55,21 @@ mixin _$InvoiceItem {
 /// @nodoc
 abstract class $InvoiceItemCopyWith<$Res> {
   factory $InvoiceItemCopyWith(
-          InvoiceItem value, $Res Function(InvoiceItem) then) =
-      _$InvoiceItemCopyWithImpl<$Res, InvoiceItem>;
+    InvoiceItem value,
+    $Res Function(InvoiceItem) then,
+  ) = _$InvoiceItemCopyWithImpl<$Res, InvoiceItem>;
   @useResult
-  $Res call(
-      {String id,
-      String name,
-      @DecimalJsonConverter() Decimal quantity,
-      @DecimalJsonConverter() Decimal price,
-      @DecimalJsonConverter() Decimal total,
-      @DecimalJsonConverter() Decimal taxAmount,
-      @DecimalJsonConverter() Decimal taxRate,
-      String? description,
-      String taxCategory});
+  $Res call({
+    String id,
+    String name,
+    @DecimalJsonConverter() Decimal quantity,
+    @DecimalJsonConverter() Decimal price,
+    @DecimalJsonConverter() Decimal total,
+    @DecimalJsonConverter() Decimal taxAmount,
+    @DecimalJsonConverter() Decimal taxRate,
+    String? description,
+    String taxCategory,
+  });
 }
 
 /// @nodoc
@@ -92,44 +95,47 @@ class _$InvoiceItemCopyWithImpl<$Res, $Val extends InvoiceItem>
     Object? description = freezed,
     Object? taxCategory = null,
   }) {
-    return _then(_value.copyWith(
-      id: null == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as String,
-      name: null == name
-          ? _value.name
-          : name // ignore: cast_nullable_to_non_nullable
-              as String,
-      quantity: null == quantity
-          ? _value.quantity
-          : quantity // ignore: cast_nullable_to_non_nullable
-              as Decimal,
-      price: null == price
-          ? _value.price
-          : price // ignore: cast_nullable_to_non_nullable
-              as Decimal,
-      total: null == total
-          ? _value.total
-          : total // ignore: cast_nullable_to_non_nullable
-              as Decimal,
-      taxAmount: null == taxAmount
-          ? _value.taxAmount
-          : taxAmount // ignore: cast_nullable_to_non_nullable
-              as Decimal,
-      taxRate: null == taxRate
-          ? _value.taxRate
-          : taxRate // ignore: cast_nullable_to_non_nullable
-              as Decimal,
-      description: freezed == description
-          ? _value.description
-          : description // ignore: cast_nullable_to_non_nullable
-              as String?,
-      taxCategory: null == taxCategory
-          ? _value.taxCategory
-          : taxCategory // ignore: cast_nullable_to_non_nullable
-              as String,
-    ) as $Val);
+    return _then(
+      _value.copyWith(
+            id: null == id
+                ? _value.id
+                : id // ignore: cast_nullable_to_non_nullable
+                      as String,
+            name: null == name
+                ? _value.name
+                : name // ignore: cast_nullable_to_non_nullable
+                      as String,
+            quantity: null == quantity
+                ? _value.quantity
+                : quantity // ignore: cast_nullable_to_non_nullable
+                      as Decimal,
+            price: null == price
+                ? _value.price
+                : price // ignore: cast_nullable_to_non_nullable
+                      as Decimal,
+            total: null == total
+                ? _value.total
+                : total // ignore: cast_nullable_to_non_nullable
+                      as Decimal,
+            taxAmount: null == taxAmount
+                ? _value.taxAmount
+                : taxAmount // ignore: cast_nullable_to_non_nullable
+                      as Decimal,
+            taxRate: null == taxRate
+                ? _value.taxRate
+                : taxRate // ignore: cast_nullable_to_non_nullable
+                      as Decimal,
+            description: freezed == description
+                ? _value.description
+                : description // ignore: cast_nullable_to_non_nullable
+                      as String?,
+            taxCategory: null == taxCategory
+                ? _value.taxCategory
+                : taxCategory // ignore: cast_nullable_to_non_nullable
+                      as String,
+          )
+          as $Val,
+    );
   }
 }
 
@@ -137,20 +143,22 @@ class _$InvoiceItemCopyWithImpl<$Res, $Val extends InvoiceItem>
 abstract class _$$InvoiceItemImplCopyWith<$Res>
     implements $InvoiceItemCopyWith<$Res> {
   factory _$$InvoiceItemImplCopyWith(
-          _$InvoiceItemImpl value, $Res Function(_$InvoiceItemImpl) then) =
-      __$$InvoiceItemImplCopyWithImpl<$Res>;
+    _$InvoiceItemImpl value,
+    $Res Function(_$InvoiceItemImpl) then,
+  ) = __$$InvoiceItemImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call(
-      {String id,
-      String name,
-      @DecimalJsonConverter() Decimal quantity,
-      @DecimalJsonConverter() Decimal price,
-      @DecimalJsonConverter() Decimal total,
-      @DecimalJsonConverter() Decimal taxAmount,
-      @DecimalJsonConverter() Decimal taxRate,
-      String? description,
-      String taxCategory});
+  $Res call({
+    String id,
+    String name,
+    @DecimalJsonConverter() Decimal quantity,
+    @DecimalJsonConverter() Decimal price,
+    @DecimalJsonConverter() Decimal total,
+    @DecimalJsonConverter() Decimal taxAmount,
+    @DecimalJsonConverter() Decimal taxRate,
+    String? description,
+    String taxCategory,
+  });
 }
 
 /// @nodoc
@@ -158,8 +166,9 @@ class __$$InvoiceItemImplCopyWithImpl<$Res>
     extends _$InvoiceItemCopyWithImpl<$Res, _$InvoiceItemImpl>
     implements _$$InvoiceItemImplCopyWith<$Res> {
   __$$InvoiceItemImplCopyWithImpl(
-      _$InvoiceItemImpl _value, $Res Function(_$InvoiceItemImpl) _then)
-      : super(_value, _then);
+    _$InvoiceItemImpl _value,
+    $Res Function(_$InvoiceItemImpl) _then,
+  ) : super(_value, _then);
 
   @pragma('vm:prefer-inline')
   @override
@@ -174,61 +183,63 @@ class __$$InvoiceItemImplCopyWithImpl<$Res>
     Object? description = freezed,
     Object? taxCategory = null,
   }) {
-    return _then(_$InvoiceItemImpl(
-      id: null == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as String,
-      name: null == name
-          ? _value.name
-          : name // ignore: cast_nullable_to_non_nullable
-              as String,
-      quantity: null == quantity
-          ? _value.quantity
-          : quantity // ignore: cast_nullable_to_non_nullable
-              as Decimal,
-      price: null == price
-          ? _value.price
-          : price // ignore: cast_nullable_to_non_nullable
-              as Decimal,
-      total: null == total
-          ? _value.total
-          : total // ignore: cast_nullable_to_non_nullable
-              as Decimal,
-      taxAmount: null == taxAmount
-          ? _value.taxAmount
-          : taxAmount // ignore: cast_nullable_to_non_nullable
-              as Decimal,
-      taxRate: null == taxRate
-          ? _value.taxRate
-          : taxRate // ignore: cast_nullable_to_non_nullable
-              as Decimal,
-      description: freezed == description
-          ? _value.description
-          : description // ignore: cast_nullable_to_non_nullable
-              as String?,
-      taxCategory: null == taxCategory
-          ? _value.taxCategory
-          : taxCategory // ignore: cast_nullable_to_non_nullable
-              as String,
-    ));
+    return _then(
+      _$InvoiceItemImpl(
+        id: null == id
+            ? _value.id
+            : id // ignore: cast_nullable_to_non_nullable
+                  as String,
+        name: null == name
+            ? _value.name
+            : name // ignore: cast_nullable_to_non_nullable
+                  as String,
+        quantity: null == quantity
+            ? _value.quantity
+            : quantity // ignore: cast_nullable_to_non_nullable
+                  as Decimal,
+        price: null == price
+            ? _value.price
+            : price // ignore: cast_nullable_to_non_nullable
+                  as Decimal,
+        total: null == total
+            ? _value.total
+            : total // ignore: cast_nullable_to_non_nullable
+                  as Decimal,
+        taxAmount: null == taxAmount
+            ? _value.taxAmount
+            : taxAmount // ignore: cast_nullable_to_non_nullable
+                  as Decimal,
+        taxRate: null == taxRate
+            ? _value.taxRate
+            : taxRate // ignore: cast_nullable_to_non_nullable
+                  as Decimal,
+        description: freezed == description
+            ? _value.description
+            : description // ignore: cast_nullable_to_non_nullable
+                  as String?,
+        taxCategory: null == taxCategory
+            ? _value.taxCategory
+            : taxCategory // ignore: cast_nullable_to_non_nullable
+                  as String,
+      ),
+    );
   }
 }
 
 /// @nodoc
 @JsonSerializable()
 class _$InvoiceItemImpl extends _InvoiceItem {
-  _$InvoiceItemImpl(
-      {required this.id,
-      required this.name,
-      @DecimalJsonConverter() required this.quantity,
-      @DecimalJsonConverter() required this.price,
-      @DecimalJsonConverter() required this.total,
-      @DecimalJsonConverter() required this.taxAmount,
-      @DecimalJsonConverter() required this.taxRate,
-      this.description,
-      this.taxCategory = 'S'})
-      : super._();
+  _$InvoiceItemImpl({
+    required this.id,
+    required this.name,
+    @DecimalJsonConverter() required this.quantity,
+    @DecimalJsonConverter() required this.price,
+    @DecimalJsonConverter() required this.total,
+    @DecimalJsonConverter() required this.taxAmount,
+    @DecimalJsonConverter() required this.taxRate,
+    this.description,
+    this.taxCategory = 'S',
+  }) : super._();
 
   factory _$InvoiceItemImpl.fromJson(Map<String, dynamic> json) =>
       _$$InvoiceItemImplFromJson(json);
@@ -295,8 +306,18 @@ class _$InvoiceItemImpl extends _InvoiceItem {
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, id, name, quantity, price, total,
-      taxAmount, taxRate, description, taxCategory);
+  int get hashCode => Object.hash(
+    runtimeType,
+    id,
+    name,
+    quantity,
+    price,
+    total,
+    taxAmount,
+    taxRate,
+    description,
+    taxCategory,
+  );
 
   @JsonKey(ignore: true)
   @override
@@ -306,23 +327,22 @@ class _$InvoiceItemImpl extends _InvoiceItem {
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$InvoiceItemImplToJson(
-      this,
-    );
+    return _$$InvoiceItemImplToJson(this);
   }
 }
 
 abstract class _InvoiceItem extends InvoiceItem {
-  factory _InvoiceItem(
-      {required final String id,
-      required final String name,
-      @DecimalJsonConverter() required final Decimal quantity,
-      @DecimalJsonConverter() required final Decimal price,
-      @DecimalJsonConverter() required final Decimal total,
-      @DecimalJsonConverter() required final Decimal taxAmount,
-      @DecimalJsonConverter() required final Decimal taxRate,
-      final String? description,
-      final String taxCategory}) = _$InvoiceItemImpl;
+  factory _InvoiceItem({
+    required final String id,
+    required final String name,
+    @DecimalJsonConverter() required final Decimal quantity,
+    @DecimalJsonConverter() required final Decimal price,
+    @DecimalJsonConverter() required final Decimal total,
+    @DecimalJsonConverter() required final Decimal taxAmount,
+    @DecimalJsonConverter() required final Decimal taxRate,
+    final String? description,
+    final String taxCategory,
+  }) = _$InvoiceItemImpl;
   _InvoiceItem._() : super._();
 
   factory _InvoiceItem.fromJson(Map<String, dynamic> json) =
@@ -339,26 +359,21 @@ abstract class _InvoiceItem extends InvoiceItem {
   @DecimalJsonConverter()
   Decimal get price;
   @override
-
   /// Calculated subtotal: quantity * price.
   @DecimalJsonConverter()
   Decimal get total;
   @override
-
   /// VAT amount calculated for this specific item.
   @DecimalJsonConverter()
   Decimal get taxAmount;
   @override
-
   /// VAT rate applied to this item (e.g., 0.15, 0.05, 0.0).
   @DecimalJsonConverter()
   Decimal get taxRate;
   @override
-
   /// Semantic description or notes.
   String? get description;
   @override
-
   /// VAT category (e.g., 'S' for Standard, 'Z' for Zero, etc.)
   String get taxCategory;
   @override
@@ -462,42 +477,43 @@ abstract class $InvoiceCopyWith<$Res> {
   factory $InvoiceCopyWith(Invoice value, $Res Function(Invoice) then) =
       _$InvoiceCopyWithImpl<$Res, Invoice>;
   @useResult
-  $Res call(
-      {String id,
-      String invoiceNumber,
-      String customerId,
-      String customerName,
-      List<InvoiceItem> items,
-      DateTime issuedDate,
-      DateTime dueDate,
-      DateTime createdAt,
-      DateTime updatedAt,
-      InvoiceStatus status,
-      @DecimalJsonConverter() Decimal subtotalAmount,
-      @DecimalJsonConverter() Decimal taxAmount,
-      @DecimalJsonConverter() Decimal discountAmount,
-      @DecimalJsonConverter() Decimal totalAmount,
-      @DecimalJsonConverter() Decimal paidAmount,
-      @DecimalJsonConverter() Decimal taxRate,
-      @DecimalJsonConverter() Decimal discountRate,
-      @DecimalJsonConverter() Decimal exchangeRate,
-      InvoiceType type,
-      DateTime? paidDate,
-      String currency,
-      String? notes,
-      String? terms,
-      String? zatcaUuid,
-      String? zatcaHash,
-      String? qrCode,
-      String? xmlContent,
-      String? zatcaDeviceId,
-      ZatcaSubmissionStatus zatcaStatus,
-      int zatcaCounter,
-      String? userId,
-      String? warehouseId,
-      SyncStatus syncStatus,
-      DateTime? serverUpdatedAt,
-      bool isDeleted});
+  $Res call({
+    String id,
+    String invoiceNumber,
+    String customerId,
+    String customerName,
+    List<InvoiceItem> items,
+    DateTime issuedDate,
+    DateTime dueDate,
+    DateTime createdAt,
+    DateTime updatedAt,
+    InvoiceStatus status,
+    @DecimalJsonConverter() Decimal subtotalAmount,
+    @DecimalJsonConverter() Decimal taxAmount,
+    @DecimalJsonConverter() Decimal discountAmount,
+    @DecimalJsonConverter() Decimal totalAmount,
+    @DecimalJsonConverter() Decimal paidAmount,
+    @DecimalJsonConverter() Decimal taxRate,
+    @DecimalJsonConverter() Decimal discountRate,
+    @DecimalJsonConverter() Decimal exchangeRate,
+    InvoiceType type,
+    DateTime? paidDate,
+    String currency,
+    String? notes,
+    String? terms,
+    String? zatcaUuid,
+    String? zatcaHash,
+    String? qrCode,
+    String? xmlContent,
+    String? zatcaDeviceId,
+    ZatcaSubmissionStatus zatcaStatus,
+    int zatcaCounter,
+    String? userId,
+    String? warehouseId,
+    SyncStatus syncStatus,
+    DateTime? serverUpdatedAt,
+    bool isDeleted,
+  });
 }
 
 /// @nodoc
@@ -549,194 +565,199 @@ class _$InvoiceCopyWithImpl<$Res, $Val extends Invoice>
     Object? serverUpdatedAt = freezed,
     Object? isDeleted = null,
   }) {
-    return _then(_value.copyWith(
-      id: null == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as String,
-      invoiceNumber: null == invoiceNumber
-          ? _value.invoiceNumber
-          : invoiceNumber // ignore: cast_nullable_to_non_nullable
-              as String,
-      customerId: null == customerId
-          ? _value.customerId
-          : customerId // ignore: cast_nullable_to_non_nullable
-              as String,
-      customerName: null == customerName
-          ? _value.customerName
-          : customerName // ignore: cast_nullable_to_non_nullable
-              as String,
-      items: null == items
-          ? _value.items
-          : items // ignore: cast_nullable_to_non_nullable
-              as List<InvoiceItem>,
-      issuedDate: null == issuedDate
-          ? _value.issuedDate
-          : issuedDate // ignore: cast_nullable_to_non_nullable
-              as DateTime,
-      dueDate: null == dueDate
-          ? _value.dueDate
-          : dueDate // ignore: cast_nullable_to_non_nullable
-              as DateTime,
-      createdAt: null == createdAt
-          ? _value.createdAt
-          : createdAt // ignore: cast_nullable_to_non_nullable
-              as DateTime,
-      updatedAt: null == updatedAt
-          ? _value.updatedAt
-          : updatedAt // ignore: cast_nullable_to_non_nullable
-              as DateTime,
-      status: null == status
-          ? _value.status
-          : status // ignore: cast_nullable_to_non_nullable
-              as InvoiceStatus,
-      subtotalAmount: null == subtotalAmount
-          ? _value.subtotalAmount
-          : subtotalAmount // ignore: cast_nullable_to_non_nullable
-              as Decimal,
-      taxAmount: null == taxAmount
-          ? _value.taxAmount
-          : taxAmount // ignore: cast_nullable_to_non_nullable
-              as Decimal,
-      discountAmount: null == discountAmount
-          ? _value.discountAmount
-          : discountAmount // ignore: cast_nullable_to_non_nullable
-              as Decimal,
-      totalAmount: null == totalAmount
-          ? _value.totalAmount
-          : totalAmount // ignore: cast_nullable_to_non_nullable
-              as Decimal,
-      paidAmount: null == paidAmount
-          ? _value.paidAmount
-          : paidAmount // ignore: cast_nullable_to_non_nullable
-              as Decimal,
-      taxRate: null == taxRate
-          ? _value.taxRate
-          : taxRate // ignore: cast_nullable_to_non_nullable
-              as Decimal,
-      discountRate: null == discountRate
-          ? _value.discountRate
-          : discountRate // ignore: cast_nullable_to_non_nullable
-              as Decimal,
-      exchangeRate: null == exchangeRate
-          ? _value.exchangeRate
-          : exchangeRate // ignore: cast_nullable_to_non_nullable
-              as Decimal,
-      type: null == type
-          ? _value.type
-          : type // ignore: cast_nullable_to_non_nullable
-              as InvoiceType,
-      paidDate: freezed == paidDate
-          ? _value.paidDate
-          : paidDate // ignore: cast_nullable_to_non_nullable
-              as DateTime?,
-      currency: null == currency
-          ? _value.currency
-          : currency // ignore: cast_nullable_to_non_nullable
-              as String,
-      notes: freezed == notes
-          ? _value.notes
-          : notes // ignore: cast_nullable_to_non_nullable
-              as String?,
-      terms: freezed == terms
-          ? _value.terms
-          : terms // ignore: cast_nullable_to_non_nullable
-              as String?,
-      zatcaUuid: freezed == zatcaUuid
-          ? _value.zatcaUuid
-          : zatcaUuid // ignore: cast_nullable_to_non_nullable
-              as String?,
-      zatcaHash: freezed == zatcaHash
-          ? _value.zatcaHash
-          : zatcaHash // ignore: cast_nullable_to_non_nullable
-              as String?,
-      qrCode: freezed == qrCode
-          ? _value.qrCode
-          : qrCode // ignore: cast_nullable_to_non_nullable
-              as String?,
-      xmlContent: freezed == xmlContent
-          ? _value.xmlContent
-          : xmlContent // ignore: cast_nullable_to_non_nullable
-              as String?,
-      zatcaDeviceId: freezed == zatcaDeviceId
-          ? _value.zatcaDeviceId
-          : zatcaDeviceId // ignore: cast_nullable_to_non_nullable
-              as String?,
-      zatcaStatus: null == zatcaStatus
-          ? _value.zatcaStatus
-          : zatcaStatus // ignore: cast_nullable_to_non_nullable
-              as ZatcaSubmissionStatus,
-      zatcaCounter: null == zatcaCounter
-          ? _value.zatcaCounter
-          : zatcaCounter // ignore: cast_nullable_to_non_nullable
-              as int,
-      userId: freezed == userId
-          ? _value.userId
-          : userId // ignore: cast_nullable_to_non_nullable
-              as String?,
-      warehouseId: freezed == warehouseId
-          ? _value.warehouseId
-          : warehouseId // ignore: cast_nullable_to_non_nullable
-              as String?,
-      syncStatus: null == syncStatus
-          ? _value.syncStatus
-          : syncStatus // ignore: cast_nullable_to_non_nullable
-              as SyncStatus,
-      serverUpdatedAt: freezed == serverUpdatedAt
-          ? _value.serverUpdatedAt
-          : serverUpdatedAt // ignore: cast_nullable_to_non_nullable
-              as DateTime?,
-      isDeleted: null == isDeleted
-          ? _value.isDeleted
-          : isDeleted // ignore: cast_nullable_to_non_nullable
-              as bool,
-    ) as $Val);
+    return _then(
+      _value.copyWith(
+            id: null == id
+                ? _value.id
+                : id // ignore: cast_nullable_to_non_nullable
+                      as String,
+            invoiceNumber: null == invoiceNumber
+                ? _value.invoiceNumber
+                : invoiceNumber // ignore: cast_nullable_to_non_nullable
+                      as String,
+            customerId: null == customerId
+                ? _value.customerId
+                : customerId // ignore: cast_nullable_to_non_nullable
+                      as String,
+            customerName: null == customerName
+                ? _value.customerName
+                : customerName // ignore: cast_nullable_to_non_nullable
+                      as String,
+            items: null == items
+                ? _value.items
+                : items // ignore: cast_nullable_to_non_nullable
+                      as List<InvoiceItem>,
+            issuedDate: null == issuedDate
+                ? _value.issuedDate
+                : issuedDate // ignore: cast_nullable_to_non_nullable
+                      as DateTime,
+            dueDate: null == dueDate
+                ? _value.dueDate
+                : dueDate // ignore: cast_nullable_to_non_nullable
+                      as DateTime,
+            createdAt: null == createdAt
+                ? _value.createdAt
+                : createdAt // ignore: cast_nullable_to_non_nullable
+                      as DateTime,
+            updatedAt: null == updatedAt
+                ? _value.updatedAt
+                : updatedAt // ignore: cast_nullable_to_non_nullable
+                      as DateTime,
+            status: null == status
+                ? _value.status
+                : status // ignore: cast_nullable_to_non_nullable
+                      as InvoiceStatus,
+            subtotalAmount: null == subtotalAmount
+                ? _value.subtotalAmount
+                : subtotalAmount // ignore: cast_nullable_to_non_nullable
+                      as Decimal,
+            taxAmount: null == taxAmount
+                ? _value.taxAmount
+                : taxAmount // ignore: cast_nullable_to_non_nullable
+                      as Decimal,
+            discountAmount: null == discountAmount
+                ? _value.discountAmount
+                : discountAmount // ignore: cast_nullable_to_non_nullable
+                      as Decimal,
+            totalAmount: null == totalAmount
+                ? _value.totalAmount
+                : totalAmount // ignore: cast_nullable_to_non_nullable
+                      as Decimal,
+            paidAmount: null == paidAmount
+                ? _value.paidAmount
+                : paidAmount // ignore: cast_nullable_to_non_nullable
+                      as Decimal,
+            taxRate: null == taxRate
+                ? _value.taxRate
+                : taxRate // ignore: cast_nullable_to_non_nullable
+                      as Decimal,
+            discountRate: null == discountRate
+                ? _value.discountRate
+                : discountRate // ignore: cast_nullable_to_non_nullable
+                      as Decimal,
+            exchangeRate: null == exchangeRate
+                ? _value.exchangeRate
+                : exchangeRate // ignore: cast_nullable_to_non_nullable
+                      as Decimal,
+            type: null == type
+                ? _value.type
+                : type // ignore: cast_nullable_to_non_nullable
+                      as InvoiceType,
+            paidDate: freezed == paidDate
+                ? _value.paidDate
+                : paidDate // ignore: cast_nullable_to_non_nullable
+                      as DateTime?,
+            currency: null == currency
+                ? _value.currency
+                : currency // ignore: cast_nullable_to_non_nullable
+                      as String,
+            notes: freezed == notes
+                ? _value.notes
+                : notes // ignore: cast_nullable_to_non_nullable
+                      as String?,
+            terms: freezed == terms
+                ? _value.terms
+                : terms // ignore: cast_nullable_to_non_nullable
+                      as String?,
+            zatcaUuid: freezed == zatcaUuid
+                ? _value.zatcaUuid
+                : zatcaUuid // ignore: cast_nullable_to_non_nullable
+                      as String?,
+            zatcaHash: freezed == zatcaHash
+                ? _value.zatcaHash
+                : zatcaHash // ignore: cast_nullable_to_non_nullable
+                      as String?,
+            qrCode: freezed == qrCode
+                ? _value.qrCode
+                : qrCode // ignore: cast_nullable_to_non_nullable
+                      as String?,
+            xmlContent: freezed == xmlContent
+                ? _value.xmlContent
+                : xmlContent // ignore: cast_nullable_to_non_nullable
+                      as String?,
+            zatcaDeviceId: freezed == zatcaDeviceId
+                ? _value.zatcaDeviceId
+                : zatcaDeviceId // ignore: cast_nullable_to_non_nullable
+                      as String?,
+            zatcaStatus: null == zatcaStatus
+                ? _value.zatcaStatus
+                : zatcaStatus // ignore: cast_nullable_to_non_nullable
+                      as ZatcaSubmissionStatus,
+            zatcaCounter: null == zatcaCounter
+                ? _value.zatcaCounter
+                : zatcaCounter // ignore: cast_nullable_to_non_nullable
+                      as int,
+            userId: freezed == userId
+                ? _value.userId
+                : userId // ignore: cast_nullable_to_non_nullable
+                      as String?,
+            warehouseId: freezed == warehouseId
+                ? _value.warehouseId
+                : warehouseId // ignore: cast_nullable_to_non_nullable
+                      as String?,
+            syncStatus: null == syncStatus
+                ? _value.syncStatus
+                : syncStatus // ignore: cast_nullable_to_non_nullable
+                      as SyncStatus,
+            serverUpdatedAt: freezed == serverUpdatedAt
+                ? _value.serverUpdatedAt
+                : serverUpdatedAt // ignore: cast_nullable_to_non_nullable
+                      as DateTime?,
+            isDeleted: null == isDeleted
+                ? _value.isDeleted
+                : isDeleted // ignore: cast_nullable_to_non_nullable
+                      as bool,
+          )
+          as $Val,
+    );
   }
 }
 
 /// @nodoc
 abstract class _$$InvoiceImplCopyWith<$Res> implements $InvoiceCopyWith<$Res> {
   factory _$$InvoiceImplCopyWith(
-          _$InvoiceImpl value, $Res Function(_$InvoiceImpl) then) =
-      __$$InvoiceImplCopyWithImpl<$Res>;
+    _$InvoiceImpl value,
+    $Res Function(_$InvoiceImpl) then,
+  ) = __$$InvoiceImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call(
-      {String id,
-      String invoiceNumber,
-      String customerId,
-      String customerName,
-      List<InvoiceItem> items,
-      DateTime issuedDate,
-      DateTime dueDate,
-      DateTime createdAt,
-      DateTime updatedAt,
-      InvoiceStatus status,
-      @DecimalJsonConverter() Decimal subtotalAmount,
-      @DecimalJsonConverter() Decimal taxAmount,
-      @DecimalJsonConverter() Decimal discountAmount,
-      @DecimalJsonConverter() Decimal totalAmount,
-      @DecimalJsonConverter() Decimal paidAmount,
-      @DecimalJsonConverter() Decimal taxRate,
-      @DecimalJsonConverter() Decimal discountRate,
-      @DecimalJsonConverter() Decimal exchangeRate,
-      InvoiceType type,
-      DateTime? paidDate,
-      String currency,
-      String? notes,
-      String? terms,
-      String? zatcaUuid,
-      String? zatcaHash,
-      String? qrCode,
-      String? xmlContent,
-      String? zatcaDeviceId,
-      ZatcaSubmissionStatus zatcaStatus,
-      int zatcaCounter,
-      String? userId,
-      String? warehouseId,
-      SyncStatus syncStatus,
-      DateTime? serverUpdatedAt,
-      bool isDeleted});
+  $Res call({
+    String id,
+    String invoiceNumber,
+    String customerId,
+    String customerName,
+    List<InvoiceItem> items,
+    DateTime issuedDate,
+    DateTime dueDate,
+    DateTime createdAt,
+    DateTime updatedAt,
+    InvoiceStatus status,
+    @DecimalJsonConverter() Decimal subtotalAmount,
+    @DecimalJsonConverter() Decimal taxAmount,
+    @DecimalJsonConverter() Decimal discountAmount,
+    @DecimalJsonConverter() Decimal totalAmount,
+    @DecimalJsonConverter() Decimal paidAmount,
+    @DecimalJsonConverter() Decimal taxRate,
+    @DecimalJsonConverter() Decimal discountRate,
+    @DecimalJsonConverter() Decimal exchangeRate,
+    InvoiceType type,
+    DateTime? paidDate,
+    String currency,
+    String? notes,
+    String? terms,
+    String? zatcaUuid,
+    String? zatcaHash,
+    String? qrCode,
+    String? xmlContent,
+    String? zatcaDeviceId,
+    ZatcaSubmissionStatus zatcaStatus,
+    int zatcaCounter,
+    String? userId,
+    String? warehouseId,
+    SyncStatus syncStatus,
+    DateTime? serverUpdatedAt,
+    bool isDeleted,
+  });
 }
 
 /// @nodoc
@@ -744,8 +765,9 @@ class __$$InvoiceImplCopyWithImpl<$Res>
     extends _$InvoiceCopyWithImpl<$Res, _$InvoiceImpl>
     implements _$$InvoiceImplCopyWith<$Res> {
   __$$InvoiceImplCopyWithImpl(
-      _$InvoiceImpl _value, $Res Function(_$InvoiceImpl) _then)
-      : super(_value, _then);
+    _$InvoiceImpl _value,
+    $Res Function(_$InvoiceImpl) _then,
+  ) : super(_value, _then);
 
   @pragma('vm:prefer-inline')
   @override
@@ -786,148 +808,150 @@ class __$$InvoiceImplCopyWithImpl<$Res>
     Object? serverUpdatedAt = freezed,
     Object? isDeleted = null,
   }) {
-    return _then(_$InvoiceImpl(
-      id: null == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as String,
-      invoiceNumber: null == invoiceNumber
-          ? _value.invoiceNumber
-          : invoiceNumber // ignore: cast_nullable_to_non_nullable
-              as String,
-      customerId: null == customerId
-          ? _value.customerId
-          : customerId // ignore: cast_nullable_to_non_nullable
-              as String,
-      customerName: null == customerName
-          ? _value.customerName
-          : customerName // ignore: cast_nullable_to_non_nullable
-              as String,
-      items: null == items
-          ? _value._items
-          : items // ignore: cast_nullable_to_non_nullable
-              as List<InvoiceItem>,
-      issuedDate: null == issuedDate
-          ? _value.issuedDate
-          : issuedDate // ignore: cast_nullable_to_non_nullable
-              as DateTime,
-      dueDate: null == dueDate
-          ? _value.dueDate
-          : dueDate // ignore: cast_nullable_to_non_nullable
-              as DateTime,
-      createdAt: null == createdAt
-          ? _value.createdAt
-          : createdAt // ignore: cast_nullable_to_non_nullable
-              as DateTime,
-      updatedAt: null == updatedAt
-          ? _value.updatedAt
-          : updatedAt // ignore: cast_nullable_to_non_nullable
-              as DateTime,
-      status: null == status
-          ? _value.status
-          : status // ignore: cast_nullable_to_non_nullable
-              as InvoiceStatus,
-      subtotalAmount: null == subtotalAmount
-          ? _value.subtotalAmount
-          : subtotalAmount // ignore: cast_nullable_to_non_nullable
-              as Decimal,
-      taxAmount: null == taxAmount
-          ? _value.taxAmount
-          : taxAmount // ignore: cast_nullable_to_non_nullable
-              as Decimal,
-      discountAmount: null == discountAmount
-          ? _value.discountAmount
-          : discountAmount // ignore: cast_nullable_to_non_nullable
-              as Decimal,
-      totalAmount: null == totalAmount
-          ? _value.totalAmount
-          : totalAmount // ignore: cast_nullable_to_non_nullable
-              as Decimal,
-      paidAmount: null == paidAmount
-          ? _value.paidAmount
-          : paidAmount // ignore: cast_nullable_to_non_nullable
-              as Decimal,
-      taxRate: null == taxRate
-          ? _value.taxRate
-          : taxRate // ignore: cast_nullable_to_non_nullable
-              as Decimal,
-      discountRate: null == discountRate
-          ? _value.discountRate
-          : discountRate // ignore: cast_nullable_to_non_nullable
-              as Decimal,
-      exchangeRate: null == exchangeRate
-          ? _value.exchangeRate
-          : exchangeRate // ignore: cast_nullable_to_non_nullable
-              as Decimal,
-      type: null == type
-          ? _value.type
-          : type // ignore: cast_nullable_to_non_nullable
-              as InvoiceType,
-      paidDate: freezed == paidDate
-          ? _value.paidDate
-          : paidDate // ignore: cast_nullable_to_non_nullable
-              as DateTime?,
-      currency: null == currency
-          ? _value.currency
-          : currency // ignore: cast_nullable_to_non_nullable
-              as String,
-      notes: freezed == notes
-          ? _value.notes
-          : notes // ignore: cast_nullable_to_non_nullable
-              as String?,
-      terms: freezed == terms
-          ? _value.terms
-          : terms // ignore: cast_nullable_to_non_nullable
-              as String?,
-      zatcaUuid: freezed == zatcaUuid
-          ? _value.zatcaUuid
-          : zatcaUuid // ignore: cast_nullable_to_non_nullable
-              as String?,
-      zatcaHash: freezed == zatcaHash
-          ? _value.zatcaHash
-          : zatcaHash // ignore: cast_nullable_to_non_nullable
-              as String?,
-      qrCode: freezed == qrCode
-          ? _value.qrCode
-          : qrCode // ignore: cast_nullable_to_non_nullable
-              as String?,
-      xmlContent: freezed == xmlContent
-          ? _value.xmlContent
-          : xmlContent // ignore: cast_nullable_to_non_nullable
-              as String?,
-      zatcaDeviceId: freezed == zatcaDeviceId
-          ? _value.zatcaDeviceId
-          : zatcaDeviceId // ignore: cast_nullable_to_non_nullable
-              as String?,
-      zatcaStatus: null == zatcaStatus
-          ? _value.zatcaStatus
-          : zatcaStatus // ignore: cast_nullable_to_non_nullable
-              as ZatcaSubmissionStatus,
-      zatcaCounter: null == zatcaCounter
-          ? _value.zatcaCounter
-          : zatcaCounter // ignore: cast_nullable_to_non_nullable
-              as int,
-      userId: freezed == userId
-          ? _value.userId
-          : userId // ignore: cast_nullable_to_non_nullable
-              as String?,
-      warehouseId: freezed == warehouseId
-          ? _value.warehouseId
-          : warehouseId // ignore: cast_nullable_to_non_nullable
-              as String?,
-      syncStatus: null == syncStatus
-          ? _value.syncStatus
-          : syncStatus // ignore: cast_nullable_to_non_nullable
-              as SyncStatus,
-      serverUpdatedAt: freezed == serverUpdatedAt
-          ? _value.serverUpdatedAt
-          : serverUpdatedAt // ignore: cast_nullable_to_non_nullable
-              as DateTime?,
-      isDeleted: null == isDeleted
-          ? _value.isDeleted
-          : isDeleted // ignore: cast_nullable_to_non_nullable
-              as bool,
-    ));
+    return _then(
+      _$InvoiceImpl(
+        id: null == id
+            ? _value.id
+            : id // ignore: cast_nullable_to_non_nullable
+                  as String,
+        invoiceNumber: null == invoiceNumber
+            ? _value.invoiceNumber
+            : invoiceNumber // ignore: cast_nullable_to_non_nullable
+                  as String,
+        customerId: null == customerId
+            ? _value.customerId
+            : customerId // ignore: cast_nullable_to_non_nullable
+                  as String,
+        customerName: null == customerName
+            ? _value.customerName
+            : customerName // ignore: cast_nullable_to_non_nullable
+                  as String,
+        items: null == items
+            ? _value._items
+            : items // ignore: cast_nullable_to_non_nullable
+                  as List<InvoiceItem>,
+        issuedDate: null == issuedDate
+            ? _value.issuedDate
+            : issuedDate // ignore: cast_nullable_to_non_nullable
+                  as DateTime,
+        dueDate: null == dueDate
+            ? _value.dueDate
+            : dueDate // ignore: cast_nullable_to_non_nullable
+                  as DateTime,
+        createdAt: null == createdAt
+            ? _value.createdAt
+            : createdAt // ignore: cast_nullable_to_non_nullable
+                  as DateTime,
+        updatedAt: null == updatedAt
+            ? _value.updatedAt
+            : updatedAt // ignore: cast_nullable_to_non_nullable
+                  as DateTime,
+        status: null == status
+            ? _value.status
+            : status // ignore: cast_nullable_to_non_nullable
+                  as InvoiceStatus,
+        subtotalAmount: null == subtotalAmount
+            ? _value.subtotalAmount
+            : subtotalAmount // ignore: cast_nullable_to_non_nullable
+                  as Decimal,
+        taxAmount: null == taxAmount
+            ? _value.taxAmount
+            : taxAmount // ignore: cast_nullable_to_non_nullable
+                  as Decimal,
+        discountAmount: null == discountAmount
+            ? _value.discountAmount
+            : discountAmount // ignore: cast_nullable_to_non_nullable
+                  as Decimal,
+        totalAmount: null == totalAmount
+            ? _value.totalAmount
+            : totalAmount // ignore: cast_nullable_to_non_nullable
+                  as Decimal,
+        paidAmount: null == paidAmount
+            ? _value.paidAmount
+            : paidAmount // ignore: cast_nullable_to_non_nullable
+                  as Decimal,
+        taxRate: null == taxRate
+            ? _value.taxRate
+            : taxRate // ignore: cast_nullable_to_non_nullable
+                  as Decimal,
+        discountRate: null == discountRate
+            ? _value.discountRate
+            : discountRate // ignore: cast_nullable_to_non_nullable
+                  as Decimal,
+        exchangeRate: null == exchangeRate
+            ? _value.exchangeRate
+            : exchangeRate // ignore: cast_nullable_to_non_nullable
+                  as Decimal,
+        type: null == type
+            ? _value.type
+            : type // ignore: cast_nullable_to_non_nullable
+                  as InvoiceType,
+        paidDate: freezed == paidDate
+            ? _value.paidDate
+            : paidDate // ignore: cast_nullable_to_non_nullable
+                  as DateTime?,
+        currency: null == currency
+            ? _value.currency
+            : currency // ignore: cast_nullable_to_non_nullable
+                  as String,
+        notes: freezed == notes
+            ? _value.notes
+            : notes // ignore: cast_nullable_to_non_nullable
+                  as String?,
+        terms: freezed == terms
+            ? _value.terms
+            : terms // ignore: cast_nullable_to_non_nullable
+                  as String?,
+        zatcaUuid: freezed == zatcaUuid
+            ? _value.zatcaUuid
+            : zatcaUuid // ignore: cast_nullable_to_non_nullable
+                  as String?,
+        zatcaHash: freezed == zatcaHash
+            ? _value.zatcaHash
+            : zatcaHash // ignore: cast_nullable_to_non_nullable
+                  as String?,
+        qrCode: freezed == qrCode
+            ? _value.qrCode
+            : qrCode // ignore: cast_nullable_to_non_nullable
+                  as String?,
+        xmlContent: freezed == xmlContent
+            ? _value.xmlContent
+            : xmlContent // ignore: cast_nullable_to_non_nullable
+                  as String?,
+        zatcaDeviceId: freezed == zatcaDeviceId
+            ? _value.zatcaDeviceId
+            : zatcaDeviceId // ignore: cast_nullable_to_non_nullable
+                  as String?,
+        zatcaStatus: null == zatcaStatus
+            ? _value.zatcaStatus
+            : zatcaStatus // ignore: cast_nullable_to_non_nullable
+                  as ZatcaSubmissionStatus,
+        zatcaCounter: null == zatcaCounter
+            ? _value.zatcaCounter
+            : zatcaCounter // ignore: cast_nullable_to_non_nullable
+                  as int,
+        userId: freezed == userId
+            ? _value.userId
+            : userId // ignore: cast_nullable_to_non_nullable
+                  as String?,
+        warehouseId: freezed == warehouseId
+            ? _value.warehouseId
+            : warehouseId // ignore: cast_nullable_to_non_nullable
+                  as String?,
+        syncStatus: null == syncStatus
+            ? _value.syncStatus
+            : syncStatus // ignore: cast_nullable_to_non_nullable
+                  as SyncStatus,
+        serverUpdatedAt: freezed == serverUpdatedAt
+            ? _value.serverUpdatedAt
+            : serverUpdatedAt // ignore: cast_nullable_to_non_nullable
+                  as DateTime?,
+        isDeleted: null == isDeleted
+            ? _value.isDeleted
+            : isDeleted // ignore: cast_nullable_to_non_nullable
+                  as bool,
+      ),
+    );
   }
 }
 
@@ -935,44 +959,44 @@ class __$$InvoiceImplCopyWithImpl<$Res>
 
 @JsonSerializable(explicitToJson: true)
 class _$InvoiceImpl extends _Invoice {
-  _$InvoiceImpl(
-      {required this.id,
-      required this.invoiceNumber,
-      required this.customerId,
-      required this.customerName,
-      required final List<InvoiceItem> items,
-      required this.issuedDate,
-      required this.dueDate,
-      required this.createdAt,
-      required this.updatedAt,
-      required this.status,
-      @DecimalJsonConverter() required this.subtotalAmount,
-      @DecimalJsonConverter() required this.taxAmount,
-      @DecimalJsonConverter() required this.discountAmount,
-      @DecimalJsonConverter() required this.totalAmount,
-      @DecimalJsonConverter() required this.paidAmount,
-      @DecimalJsonConverter() required this.taxRate,
-      @DecimalJsonConverter() required this.discountRate,
-      @DecimalJsonConverter() required this.exchangeRate,
-      this.type = InvoiceType.sales,
-      this.paidDate,
-      this.currency = 'SAR',
-      this.notes,
-      this.terms,
-      this.zatcaUuid,
-      this.zatcaHash,
-      this.qrCode,
-      this.xmlContent,
-      this.zatcaDeviceId,
-      this.zatcaStatus = ZatcaSubmissionStatus.notReported,
-      this.zatcaCounter = 0,
-      this.userId,
-      this.warehouseId,
-      this.syncStatus = SyncStatus.synced,
-      this.serverUpdatedAt,
-      this.isDeleted = false})
-      : _items = items,
-        super._();
+  _$InvoiceImpl({
+    required this.id,
+    required this.invoiceNumber,
+    required this.customerId,
+    required this.customerName,
+    required final List<InvoiceItem> items,
+    required this.issuedDate,
+    required this.dueDate,
+    required this.createdAt,
+    required this.updatedAt,
+    required this.status,
+    @DecimalJsonConverter() required this.subtotalAmount,
+    @DecimalJsonConverter() required this.taxAmount,
+    @DecimalJsonConverter() required this.discountAmount,
+    @DecimalJsonConverter() required this.totalAmount,
+    @DecimalJsonConverter() required this.paidAmount,
+    @DecimalJsonConverter() required this.taxRate,
+    @DecimalJsonConverter() required this.discountRate,
+    @DecimalJsonConverter() required this.exchangeRate,
+    this.type = InvoiceType.sales,
+    this.paidDate,
+    this.currency = 'SAR',
+    this.notes,
+    this.terms,
+    this.zatcaUuid,
+    this.zatcaHash,
+    this.qrCode,
+    this.xmlContent,
+    this.zatcaDeviceId,
+    this.zatcaStatus = ZatcaSubmissionStatus.notReported,
+    this.zatcaCounter = 0,
+    this.userId,
+    this.warehouseId,
+    this.syncStatus = SyncStatus.synced,
+    this.serverUpdatedAt,
+    this.isDeleted = false,
+  }) : _items = items,
+       super._();
 
   factory _$InvoiceImpl.fromJson(Map<String, dynamic> json) =>
       _$$InvoiceImplFromJson(json);
@@ -1179,43 +1203,43 @@ class _$InvoiceImpl extends _Invoice {
   @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hashAll([
-        runtimeType,
-        id,
-        invoiceNumber,
-        customerId,
-        customerName,
-        const DeepCollectionEquality().hash(_items),
-        issuedDate,
-        dueDate,
-        createdAt,
-        updatedAt,
-        status,
-        subtotalAmount,
-        taxAmount,
-        discountAmount,
-        totalAmount,
-        paidAmount,
-        taxRate,
-        discountRate,
-        exchangeRate,
-        type,
-        paidDate,
-        currency,
-        notes,
-        terms,
-        zatcaUuid,
-        zatcaHash,
-        qrCode,
-        xmlContent,
-        zatcaDeviceId,
-        zatcaStatus,
-        zatcaCounter,
-        userId,
-        warehouseId,
-        syncStatus,
-        serverUpdatedAt,
-        isDeleted
-      ]);
+    runtimeType,
+    id,
+    invoiceNumber,
+    customerId,
+    customerName,
+    const DeepCollectionEquality().hash(_items),
+    issuedDate,
+    dueDate,
+    createdAt,
+    updatedAt,
+    status,
+    subtotalAmount,
+    taxAmount,
+    discountAmount,
+    totalAmount,
+    paidAmount,
+    taxRate,
+    discountRate,
+    exchangeRate,
+    type,
+    paidDate,
+    currency,
+    notes,
+    terms,
+    zatcaUuid,
+    zatcaHash,
+    qrCode,
+    xmlContent,
+    zatcaDeviceId,
+    zatcaStatus,
+    zatcaCounter,
+    userId,
+    warehouseId,
+    syncStatus,
+    serverUpdatedAt,
+    isDeleted,
+  ]);
 
   @JsonKey(ignore: true)
   @override
@@ -1225,73 +1249,67 @@ class _$InvoiceImpl extends _Invoice {
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$InvoiceImplToJson(
-      this,
-    );
+    return _$$InvoiceImplToJson(this);
   }
 }
 
 abstract class _Invoice extends Invoice {
-  factory _Invoice(
-      {required final String id,
-      required final String invoiceNumber,
-      required final String customerId,
-      required final String customerName,
-      required final List<InvoiceItem> items,
-      required final DateTime issuedDate,
-      required final DateTime dueDate,
-      required final DateTime createdAt,
-      required final DateTime updatedAt,
-      required final InvoiceStatus status,
-      @DecimalJsonConverter() required final Decimal subtotalAmount,
-      @DecimalJsonConverter() required final Decimal taxAmount,
-      @DecimalJsonConverter() required final Decimal discountAmount,
-      @DecimalJsonConverter() required final Decimal totalAmount,
-      @DecimalJsonConverter() required final Decimal paidAmount,
-      @DecimalJsonConverter() required final Decimal taxRate,
-      @DecimalJsonConverter() required final Decimal discountRate,
-      @DecimalJsonConverter() required final Decimal exchangeRate,
-      final InvoiceType type,
-      final DateTime? paidDate,
-      final String currency,
-      final String? notes,
-      final String? terms,
-      final String? zatcaUuid,
-      final String? zatcaHash,
-      final String? qrCode,
-      final String? xmlContent,
-      final String? zatcaDeviceId,
-      final ZatcaSubmissionStatus zatcaStatus,
-      final int zatcaCounter,
-      final String? userId,
-      final String? warehouseId,
-      final SyncStatus syncStatus,
-      final DateTime? serverUpdatedAt,
-      final bool isDeleted}) = _$InvoiceImpl;
+  factory _Invoice({
+    required final String id,
+    required final String invoiceNumber,
+    required final String customerId,
+    required final String customerName,
+    required final List<InvoiceItem> items,
+    required final DateTime issuedDate,
+    required final DateTime dueDate,
+    required final DateTime createdAt,
+    required final DateTime updatedAt,
+    required final InvoiceStatus status,
+    @DecimalJsonConverter() required final Decimal subtotalAmount,
+    @DecimalJsonConverter() required final Decimal taxAmount,
+    @DecimalJsonConverter() required final Decimal discountAmount,
+    @DecimalJsonConverter() required final Decimal totalAmount,
+    @DecimalJsonConverter() required final Decimal paidAmount,
+    @DecimalJsonConverter() required final Decimal taxRate,
+    @DecimalJsonConverter() required final Decimal discountRate,
+    @DecimalJsonConverter() required final Decimal exchangeRate,
+    final InvoiceType type,
+    final DateTime? paidDate,
+    final String currency,
+    final String? notes,
+    final String? terms,
+    final String? zatcaUuid,
+    final String? zatcaHash,
+    final String? qrCode,
+    final String? xmlContent,
+    final String? zatcaDeviceId,
+    final ZatcaSubmissionStatus zatcaStatus,
+    final int zatcaCounter,
+    final String? userId,
+    final String? warehouseId,
+    final SyncStatus syncStatus,
+    final DateTime? serverUpdatedAt,
+    final bool isDeleted,
+  }) = _$InvoiceImpl;
   _Invoice._() : super._();
 
   factory _Invoice.fromJson(Map<String, dynamic> json) = _$InvoiceImpl.fromJson;
 
   @override
-
   /// Unique immutable identifier (UUID).
   String get id;
   @override
-
   /// Human-readable sequential reference code.
   String get invoiceNumber;
   @override
-
   /// Target entity identifier.
   String get customerId;
   @override
   String get customerName;
   @override
-
   /// Granular list of products or services.
   List<InvoiceItem> get items;
   @override
-
   /// Execution and audit timestamps.
   DateTime get issuedDate;
   @override
@@ -1301,11 +1319,9 @@ abstract class _Invoice extends Invoice {
   @override
   DateTime get updatedAt;
   @override
-
   /// Transaction lifecycle status.
   InvoiceStatus get status;
   @override
-
   /// Financial aggregates (Persisted for Data Integrity).
   @DecimalJsonConverter()
   Decimal get subtotalAmount;
@@ -1322,7 +1338,6 @@ abstract class _Invoice extends Invoice {
   @DecimalJsonConverter()
   Decimal get paidAmount;
   @override
-
   /// Rates and adjustments.
   @DecimalJsonConverter()
   Decimal get taxRate;
@@ -1330,28 +1345,23 @@ abstract class _Invoice extends Invoice {
   @DecimalJsonConverter()
   Decimal get discountRate;
   @override
-
   /// Exchange rate to base currency (SAR).
   @DecimalJsonConverter()
   Decimal get exchangeRate;
   @override
-
   /// Granular transaction categorization (Sales, Return, etc.)
   InvoiceType get type;
   @override
   DateTime? get paidDate;
   @override
-
   /// Multi-currency support (Default: SAR).
   String get currency;
   @override
-
   /// Institutional memos and terms.
   String? get notes;
   @override
   String? get terms;
   @override
-
   /// ZATCA (Fatoora) Compliance Data.
   String? get zatcaUuid;
   @override
@@ -1367,23 +1377,18 @@ abstract class _Invoice extends Invoice {
   @override
   int get zatcaCounter;
   @override
-
   /// Data isolation handle.
   String? get userId;
   @override
-
   /// Warehouse scope identifier.
   String? get warehouseId;
   @override
-
   /// Distributed ledger synchronization state.
   SyncStatus get syncStatus;
   @override
-
   /// Authority-verified timestamp.
   DateTime? get serverUpdatedAt;
   @override
-
   /// Soft-deletion flag for audit preservation.
   bool get isDeleted;
   @override

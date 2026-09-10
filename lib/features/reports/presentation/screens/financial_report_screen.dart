@@ -70,14 +70,12 @@ class _FinancialReportScreenState extends ConsumerState<FinancialReportScreen> {
   Widget build(BuildContext context) {
     // Determine which API to call
     final reportAsync = ref.watch(
-      _financialReportProvider(
-        (
-          type: widget.reportType,
-          fromDate: DateFormat('yyyy-MM-dd').format(_fromDate),
-          toDate: DateFormat('yyyy-MM-dd').format(_toDate),
-          useFairValue: _useFairValue,
-        ),
-      ),
+      _financialReportProvider((
+        type: widget.reportType,
+        fromDate: DateFormat('yyyy-MM-dd').format(_fromDate),
+        toDate: DateFormat('yyyy-MM-dd').format(_toDate),
+        useFairValue: _useFairValue,
+      )),
     );
 
     return GlassScaffold(
@@ -88,10 +86,12 @@ class _FinancialReportScreenState extends ConsumerState<FinancialReportScreen> {
             icon: const Icon(Icons.share),
             tooltip: context.l10n.actionShare,
             onPressed: () async {
-              final pdfService =
-                  ref.read(pdfGenerationServiceProvider.notifier);
-              final pdfBytes =
-                  await pdfService.generateReportPdf(reportAsync.value!);
+              final pdfService = ref.read(
+                pdfGenerationServiceProvider.notifier,
+              );
+              final pdfBytes = await pdfService.generateReportPdf(
+                reportAsync.value!,
+              );
 
               await Printing.sharePdf(
                 bytes: pdfBytes,
@@ -127,14 +127,12 @@ class _FinancialReportScreenState extends ConsumerState<FinancialReportScreen> {
               error: (err, stack) => AppErrorWidget(
                 message: err.toString(),
                 onRetry: () => ref.refresh(
-                  _financialReportProvider(
-                    (
-                      type: widget.reportType,
-                      fromDate: DateFormat('yyyy-MM-dd').format(_fromDate),
-                      toDate: DateFormat('yyyy-MM-dd').format(_toDate),
-                      useFairValue: _useFairValue,
-                    ),
-                  ).future,
+                  _financialReportProvider((
+                    type: widget.reportType,
+                    fromDate: DateFormat('yyyy-MM-dd').format(_fromDate),
+                    toDate: DateFormat('yyyy-MM-dd').format(_toDate),
+                    useFairValue: _useFairValue,
+                  )).future,
                 ),
               ),
               data: _buildReportContent,
@@ -145,145 +143,143 @@ class _FinancialReportScreenState extends ConsumerState<FinancialReportScreen> {
     );
   }
 
-  Widget _buildReportContent(FinancialReportDto report) =>
-      SingleChildScrollView(
-        padding: const EdgeInsets.all(16),
-        child: GlassCard(
-          padding: const EdgeInsets.symmetric(vertical: 16),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              // Internal Title from Report
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16),
-                child: Text(
-                  report.title,
-                  style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                        fontWeight: FontWeight.bold,
-                        decoration: TextDecoration.underline,
-                      ),
-                  textAlign: TextAlign.center,
-                ),
+  Widget _buildReportContent(
+    FinancialReportDto report,
+  ) => SingleChildScrollView(
+    padding: const EdgeInsets.all(16),
+    child: GlassCard(
+      padding: const EdgeInsets.symmetric(vertical: 16),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          // Internal Title from Report
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            child: Text(
+              report.title,
+              style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                fontWeight: FontWeight.bold,
+                decoration: TextDecoration.underline,
               ),
-              Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 16,
-                  vertical: 8,
-                ),
-                child: Text(
-                  _isPointInTime
-                      ? 'كما في: ${report.toDate}'
-                      : 'عن الفترة من ${report.fromDate} إلى ${report.toDate}',
-                  style: Theme.of(context).textTheme.bodySmall,
-                  textAlign: TextAlign.center,
-                ),
-              ),
-              const Divider(height: 24),
-              // Lines
-              ...report.lines.map((line) => ReportLineItem(line: line)),
-
-              const SizedBox(height: 32),
-              const Divider(),
-              const SizedBox(height: 16),
-
-              // Cognitive Insights Section
-              Text(
-                'Cognitive Hexagon Insights',
-                style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                      fontWeight: FontWeight.bold,
-                      color: Theme.of(context).primaryColor,
-                    ),
-              ),
-              const SizedBox(height: 8),
-              FutureBuilder<List<AgentResult>>(
-                future: ref
-                    .read(orchestratorServiceProvider.notifier)
-                    .getPeriodInsights(_fromDate, _toDate),
-                builder: (context, snapshot) {
-                  if (snapshot.connectionState == ConnectionState.waiting) {
-                    return const Padding(
-                      padding: EdgeInsets.all(16),
-                      child: Center(child: LinearProgressIndicator()),
-                    );
-                  }
-                  if (snapshot.hasError) {
-                    return Text('Error loading insights: ${snapshot.error}');
-                  }
-
-                  final insights = snapshot.data ?? [];
-                  if (insights.isEmpty) {
-                    return const Text('No insights available for this period.');
-                  }
-
-                  return Column(
-                    children: insights
-                        .map(
-                          (agentResult) => ListTile(
-                            leading: const Icon(
-                              Icons.psychology,
-                              color: Colors.purple,
-                            ),
-                            title: Text(agentResult.agentId),
-                            subtitle: Text(agentResult.rationale),
-                            dense: true,
-                            trailing: agentResult.isAllowed
-                                ? const Icon(
-                                    Icons.check_circle,
-                                    color: Colors.green,
-                                  )
-                                : const Icon(
-                                    Icons.warning,
-                                    color: Colors.orange,
-                                  ),
-                          ),
-                        )
-                        .toList(),
-                  );
-                },
-              ),
-            ],
+              textAlign: TextAlign.center,
+            ),
           ),
-        ),
-      );
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+            child: Text(
+              _isPointInTime
+                  ? 'كما في: ${report.toDate}'
+                  : 'عن الفترة من ${report.fromDate} إلى ${report.toDate}',
+              style: Theme.of(context).textTheme.bodySmall,
+              textAlign: TextAlign.center,
+            ),
+          ),
+          const Divider(height: 24),
+          // Lines
+          ...report.lines.map((line) => ReportLineItem(line: line)),
+
+          const SizedBox(height: 32),
+          const Divider(),
+          const SizedBox(height: 16),
+
+          // Cognitive Insights Section
+          Text(
+            'Cognitive Hexagon Insights',
+            style: Theme.of(context).textTheme.titleMedium?.copyWith(
+              fontWeight: FontWeight.bold,
+              color: Theme.of(context).primaryColor,
+            ),
+          ),
+          const SizedBox(height: 8),
+          FutureBuilder<List<AgentResult>>(
+            future: ref
+                .read(orchestratorServiceProvider.notifier)
+                .getPeriodInsights(_fromDate, _toDate),
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return const Padding(
+                  padding: EdgeInsets.all(16),
+                  child: Center(child: LinearProgressIndicator()),
+                );
+              }
+              if (snapshot.hasError) {
+                return Text('Error loading insights: ${snapshot.error}');
+              }
+
+              final insights = snapshot.data ?? [];
+              if (insights.isEmpty) {
+                return const Text('No insights available for this period.');
+              }
+
+              return Column(
+                children: insights
+                    .map(
+                      (agentResult) => ListTile(
+                        leading: const Icon(
+                          Icons.psychology,
+                          color: Colors.purple,
+                        ),
+                        title: Text(agentResult.agentId),
+                        subtitle: Text(agentResult.rationale),
+                        dense: true,
+                        trailing: agentResult.isAllowed
+                            ? const Icon(
+                                Icons.check_circle,
+                                color: Colors.green,
+                              )
+                            : const Icon(Icons.warning, color: Colors.orange),
+                      ),
+                    )
+                    .toList(),
+              );
+            },
+          ),
+        ],
+      ),
+    ),
+  );
 }
 
 // Internal provider for fetching generic reports
-final _financialReportProvider = FutureProvider.autoDispose.family<
-    FinancialReportDto,
-    ({
-      FinancialReportType type,
-      String fromDate,
-      String toDate,
-      bool useFairValue,
-    })>((ref, params) async {
-  final service = ref.watch(nativeReportingServiceProvider);
+final _financialReportProvider = FutureProvider.autoDispose
+    .family<
+      FinancialReportDto,
+      ({
+        FinancialReportType type,
+        String fromDate,
+        String toDate,
+        bool useFairValue,
+      })
+    >((ref, params) async {
+      final service = ref.watch(nativeReportingServiceProvider);
 
-  switch (params.type) {
-    case FinancialReportType.incomeStatement:
-      return service.generateIncomeStatement(
-        fromDate: params.fromDate,
-        toDate: params.toDate,
-      );
-    case FinancialReportType.balanceSheet:
-      // For BS, 'toDate' is the 'As Of' date.
-      Map<String, String>? updates;
-      if (params.useFairValue) {
-        final fairValueService = ref.watch(fairValuationServiceProvider);
-        final asOfDate = DateTime.parse(params.toDate);
-        final adjustments =
-            await fairValueService.getFairValueAdjustments(asOfDate);
-        if (adjustments.isNotEmpty) {
-          updates = adjustments.map((k, v) => MapEntry(k, v.toString()));
-        }
+      switch (params.type) {
+        case FinancialReportType.incomeStatement:
+          return service.generateIncomeStatement(
+            fromDate: params.fromDate,
+            toDate: params.toDate,
+          );
+        case FinancialReportType.balanceSheet:
+          // For BS, 'toDate' is the 'As Of' date.
+          Map<String, String>? updates;
+          if (params.useFairValue) {
+            final fairValueService = ref.watch(fairValuationServiceProvider);
+            final asOfDate = DateTime.parse(params.toDate);
+            final adjustments = await fairValueService.getFairValueAdjustments(
+              asOfDate,
+            );
+            if (adjustments.isNotEmpty) {
+              updates = adjustments.map((k, v) => MapEntry(k, v.toString()));
+            }
+          }
+          return service.generateBalanceSheet(
+            asOfDate: params.toDate,
+            fairValuationUpdates: updates,
+          );
+        case FinancialReportType.cashFlow:
+          return service.generateCashFlowStatement(
+            fromDate: params.fromDate,
+            toDate: params.toDate,
+          );
       }
-      return service.generateBalanceSheet(
-        asOfDate: params.toDate,
-        fairValuationUpdates: updates,
-      );
-    case FinancialReportType.cashFlow:
-      return service.generateCashFlowStatement(
-        fromDate: params.fromDate,
-        toDate: params.toDate,
-      );
-  }
-});
+    });

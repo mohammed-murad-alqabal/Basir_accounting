@@ -12,7 +12,8 @@ part of 'financial_voucher.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
+  'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models',
+);
 
 FinancialVoucher _$FinancialVoucherFromJson(Map<String, dynamic> json) {
   return _FinancialVoucher.fromJson(json);
@@ -90,30 +91,32 @@ mixin _$FinancialVoucher {
 /// @nodoc
 abstract class $FinancialVoucherCopyWith<$Res> {
   factory $FinancialVoucherCopyWith(
-          FinancialVoucher value, $Res Function(FinancialVoucher) then) =
-      _$FinancialVoucherCopyWithImpl<$Res, FinancialVoucher>;
+    FinancialVoucher value,
+    $Res Function(FinancialVoucher) then,
+  ) = _$FinancialVoucherCopyWithImpl<$Res, FinancialVoucher>;
   @useResult
-  $Res call(
-      {String id,
-      String referenceNumber,
-      DateTime date,
-      VoucherType type,
-      PaymentMethod paymentMethod,
-      Decimal amount,
-      String accountId,
-      String treasuryAccountId,
-      String description,
-      DateTime createdAt,
-      String? personName,
-      bool isPosted,
-      String? journalEntryId,
-      String? userId,
-      String? originalCurrency,
-      Decimal? exchangeRate,
-      Decimal? originalAmount,
-      SyncStatus syncStatus,
-      DateTime? serverUpdatedAt,
-      bool isDeleted});
+  $Res call({
+    String id,
+    String referenceNumber,
+    DateTime date,
+    VoucherType type,
+    PaymentMethod paymentMethod,
+    Decimal amount,
+    String accountId,
+    String treasuryAccountId,
+    String description,
+    DateTime createdAt,
+    String? personName,
+    bool isPosted,
+    String? journalEntryId,
+    String? userId,
+    String? originalCurrency,
+    Decimal? exchangeRate,
+    Decimal? originalAmount,
+    SyncStatus syncStatus,
+    DateTime? serverUpdatedAt,
+    bool isDeleted,
+  });
 }
 
 /// @nodoc
@@ -150,129 +153,135 @@ class _$FinancialVoucherCopyWithImpl<$Res, $Val extends FinancialVoucher>
     Object? serverUpdatedAt = freezed,
     Object? isDeleted = null,
   }) {
-    return _then(_value.copyWith(
-      id: null == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as String,
-      referenceNumber: null == referenceNumber
-          ? _value.referenceNumber
-          : referenceNumber // ignore: cast_nullable_to_non_nullable
-              as String,
-      date: null == date
-          ? _value.date
-          : date // ignore: cast_nullable_to_non_nullable
-              as DateTime,
-      type: null == type
-          ? _value.type
-          : type // ignore: cast_nullable_to_non_nullable
-              as VoucherType,
-      paymentMethod: null == paymentMethod
-          ? _value.paymentMethod
-          : paymentMethod // ignore: cast_nullable_to_non_nullable
-              as PaymentMethod,
-      amount: null == amount
-          ? _value.amount
-          : amount // ignore: cast_nullable_to_non_nullable
-              as Decimal,
-      accountId: null == accountId
-          ? _value.accountId
-          : accountId // ignore: cast_nullable_to_non_nullable
-              as String,
-      treasuryAccountId: null == treasuryAccountId
-          ? _value.treasuryAccountId
-          : treasuryAccountId // ignore: cast_nullable_to_non_nullable
-              as String,
-      description: null == description
-          ? _value.description
-          : description // ignore: cast_nullable_to_non_nullable
-              as String,
-      createdAt: null == createdAt
-          ? _value.createdAt
-          : createdAt // ignore: cast_nullable_to_non_nullable
-              as DateTime,
-      personName: freezed == personName
-          ? _value.personName
-          : personName // ignore: cast_nullable_to_non_nullable
-              as String?,
-      isPosted: null == isPosted
-          ? _value.isPosted
-          : isPosted // ignore: cast_nullable_to_non_nullable
-              as bool,
-      journalEntryId: freezed == journalEntryId
-          ? _value.journalEntryId
-          : journalEntryId // ignore: cast_nullable_to_non_nullable
-              as String?,
-      userId: freezed == userId
-          ? _value.userId
-          : userId // ignore: cast_nullable_to_non_nullable
-              as String?,
-      originalCurrency: freezed == originalCurrency
-          ? _value.originalCurrency
-          : originalCurrency // ignore: cast_nullable_to_non_nullable
-              as String?,
-      exchangeRate: freezed == exchangeRate
-          ? _value.exchangeRate
-          : exchangeRate // ignore: cast_nullable_to_non_nullable
-              as Decimal?,
-      originalAmount: freezed == originalAmount
-          ? _value.originalAmount
-          : originalAmount // ignore: cast_nullable_to_non_nullable
-              as Decimal?,
-      syncStatus: null == syncStatus
-          ? _value.syncStatus
-          : syncStatus // ignore: cast_nullable_to_non_nullable
-              as SyncStatus,
-      serverUpdatedAt: freezed == serverUpdatedAt
-          ? _value.serverUpdatedAt
-          : serverUpdatedAt // ignore: cast_nullable_to_non_nullable
-              as DateTime?,
-      isDeleted: null == isDeleted
-          ? _value.isDeleted
-          : isDeleted // ignore: cast_nullable_to_non_nullable
-              as bool,
-    ) as $Val);
+    return _then(
+      _value.copyWith(
+            id: null == id
+                ? _value.id
+                : id // ignore: cast_nullable_to_non_nullable
+                      as String,
+            referenceNumber: null == referenceNumber
+                ? _value.referenceNumber
+                : referenceNumber // ignore: cast_nullable_to_non_nullable
+                      as String,
+            date: null == date
+                ? _value.date
+                : date // ignore: cast_nullable_to_non_nullable
+                      as DateTime,
+            type: null == type
+                ? _value.type
+                : type // ignore: cast_nullable_to_non_nullable
+                      as VoucherType,
+            paymentMethod: null == paymentMethod
+                ? _value.paymentMethod
+                : paymentMethod // ignore: cast_nullable_to_non_nullable
+                      as PaymentMethod,
+            amount: null == amount
+                ? _value.amount
+                : amount // ignore: cast_nullable_to_non_nullable
+                      as Decimal,
+            accountId: null == accountId
+                ? _value.accountId
+                : accountId // ignore: cast_nullable_to_non_nullable
+                      as String,
+            treasuryAccountId: null == treasuryAccountId
+                ? _value.treasuryAccountId
+                : treasuryAccountId // ignore: cast_nullable_to_non_nullable
+                      as String,
+            description: null == description
+                ? _value.description
+                : description // ignore: cast_nullable_to_non_nullable
+                      as String,
+            createdAt: null == createdAt
+                ? _value.createdAt
+                : createdAt // ignore: cast_nullable_to_non_nullable
+                      as DateTime,
+            personName: freezed == personName
+                ? _value.personName
+                : personName // ignore: cast_nullable_to_non_nullable
+                      as String?,
+            isPosted: null == isPosted
+                ? _value.isPosted
+                : isPosted // ignore: cast_nullable_to_non_nullable
+                      as bool,
+            journalEntryId: freezed == journalEntryId
+                ? _value.journalEntryId
+                : journalEntryId // ignore: cast_nullable_to_non_nullable
+                      as String?,
+            userId: freezed == userId
+                ? _value.userId
+                : userId // ignore: cast_nullable_to_non_nullable
+                      as String?,
+            originalCurrency: freezed == originalCurrency
+                ? _value.originalCurrency
+                : originalCurrency // ignore: cast_nullable_to_non_nullable
+                      as String?,
+            exchangeRate: freezed == exchangeRate
+                ? _value.exchangeRate
+                : exchangeRate // ignore: cast_nullable_to_non_nullable
+                      as Decimal?,
+            originalAmount: freezed == originalAmount
+                ? _value.originalAmount
+                : originalAmount // ignore: cast_nullable_to_non_nullable
+                      as Decimal?,
+            syncStatus: null == syncStatus
+                ? _value.syncStatus
+                : syncStatus // ignore: cast_nullable_to_non_nullable
+                      as SyncStatus,
+            serverUpdatedAt: freezed == serverUpdatedAt
+                ? _value.serverUpdatedAt
+                : serverUpdatedAt // ignore: cast_nullable_to_non_nullable
+                      as DateTime?,
+            isDeleted: null == isDeleted
+                ? _value.isDeleted
+                : isDeleted // ignore: cast_nullable_to_non_nullable
+                      as bool,
+          )
+          as $Val,
+    );
   }
 }
 
 /// @nodoc
 abstract class _$$FinancialVoucherImplCopyWith<$Res>
     implements $FinancialVoucherCopyWith<$Res> {
-  factory _$$FinancialVoucherImplCopyWith(_$FinancialVoucherImpl value,
-          $Res Function(_$FinancialVoucherImpl) then) =
-      __$$FinancialVoucherImplCopyWithImpl<$Res>;
+  factory _$$FinancialVoucherImplCopyWith(
+    _$FinancialVoucherImpl value,
+    $Res Function(_$FinancialVoucherImpl) then,
+  ) = __$$FinancialVoucherImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call(
-      {String id,
-      String referenceNumber,
-      DateTime date,
-      VoucherType type,
-      PaymentMethod paymentMethod,
-      Decimal amount,
-      String accountId,
-      String treasuryAccountId,
-      String description,
-      DateTime createdAt,
-      String? personName,
-      bool isPosted,
-      String? journalEntryId,
-      String? userId,
-      String? originalCurrency,
-      Decimal? exchangeRate,
-      Decimal? originalAmount,
-      SyncStatus syncStatus,
-      DateTime? serverUpdatedAt,
-      bool isDeleted});
+  $Res call({
+    String id,
+    String referenceNumber,
+    DateTime date,
+    VoucherType type,
+    PaymentMethod paymentMethod,
+    Decimal amount,
+    String accountId,
+    String treasuryAccountId,
+    String description,
+    DateTime createdAt,
+    String? personName,
+    bool isPosted,
+    String? journalEntryId,
+    String? userId,
+    String? originalCurrency,
+    Decimal? exchangeRate,
+    Decimal? originalAmount,
+    SyncStatus syncStatus,
+    DateTime? serverUpdatedAt,
+    bool isDeleted,
+  });
 }
 
 /// @nodoc
 class __$$FinancialVoucherImplCopyWithImpl<$Res>
     extends _$FinancialVoucherCopyWithImpl<$Res, _$FinancialVoucherImpl>
     implements _$$FinancialVoucherImplCopyWith<$Res> {
-  __$$FinancialVoucherImplCopyWithImpl(_$FinancialVoucherImpl _value,
-      $Res Function(_$FinancialVoucherImpl) _then)
-      : super(_value, _then);
+  __$$FinancialVoucherImplCopyWithImpl(
+    _$FinancialVoucherImpl _value,
+    $Res Function(_$FinancialVoucherImpl) _then,
+  ) : super(_value, _then);
 
   @pragma('vm:prefer-inline')
   @override
@@ -298,115 +307,118 @@ class __$$FinancialVoucherImplCopyWithImpl<$Res>
     Object? serverUpdatedAt = freezed,
     Object? isDeleted = null,
   }) {
-    return _then(_$FinancialVoucherImpl(
-      id: null == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as String,
-      referenceNumber: null == referenceNumber
-          ? _value.referenceNumber
-          : referenceNumber // ignore: cast_nullable_to_non_nullable
-              as String,
-      date: null == date
-          ? _value.date
-          : date // ignore: cast_nullable_to_non_nullable
-              as DateTime,
-      type: null == type
-          ? _value.type
-          : type // ignore: cast_nullable_to_non_nullable
-              as VoucherType,
-      paymentMethod: null == paymentMethod
-          ? _value.paymentMethod
-          : paymentMethod // ignore: cast_nullable_to_non_nullable
-              as PaymentMethod,
-      amount: null == amount
-          ? _value.amount
-          : amount // ignore: cast_nullable_to_non_nullable
-              as Decimal,
-      accountId: null == accountId
-          ? _value.accountId
-          : accountId // ignore: cast_nullable_to_non_nullable
-              as String,
-      treasuryAccountId: null == treasuryAccountId
-          ? _value.treasuryAccountId
-          : treasuryAccountId // ignore: cast_nullable_to_non_nullable
-              as String,
-      description: null == description
-          ? _value.description
-          : description // ignore: cast_nullable_to_non_nullable
-              as String,
-      createdAt: null == createdAt
-          ? _value.createdAt
-          : createdAt // ignore: cast_nullable_to_non_nullable
-              as DateTime,
-      personName: freezed == personName
-          ? _value.personName
-          : personName // ignore: cast_nullable_to_non_nullable
-              as String?,
-      isPosted: null == isPosted
-          ? _value.isPosted
-          : isPosted // ignore: cast_nullable_to_non_nullable
-              as bool,
-      journalEntryId: freezed == journalEntryId
-          ? _value.journalEntryId
-          : journalEntryId // ignore: cast_nullable_to_non_nullable
-              as String?,
-      userId: freezed == userId
-          ? _value.userId
-          : userId // ignore: cast_nullable_to_non_nullable
-              as String?,
-      originalCurrency: freezed == originalCurrency
-          ? _value.originalCurrency
-          : originalCurrency // ignore: cast_nullable_to_non_nullable
-              as String?,
-      exchangeRate: freezed == exchangeRate
-          ? _value.exchangeRate
-          : exchangeRate // ignore: cast_nullable_to_non_nullable
-              as Decimal?,
-      originalAmount: freezed == originalAmount
-          ? _value.originalAmount
-          : originalAmount // ignore: cast_nullable_to_non_nullable
-              as Decimal?,
-      syncStatus: null == syncStatus
-          ? _value.syncStatus
-          : syncStatus // ignore: cast_nullable_to_non_nullable
-              as SyncStatus,
-      serverUpdatedAt: freezed == serverUpdatedAt
-          ? _value.serverUpdatedAt
-          : serverUpdatedAt // ignore: cast_nullable_to_non_nullable
-              as DateTime?,
-      isDeleted: null == isDeleted
-          ? _value.isDeleted
-          : isDeleted // ignore: cast_nullable_to_non_nullable
-              as bool,
-    ));
+    return _then(
+      _$FinancialVoucherImpl(
+        id: null == id
+            ? _value.id
+            : id // ignore: cast_nullable_to_non_nullable
+                  as String,
+        referenceNumber: null == referenceNumber
+            ? _value.referenceNumber
+            : referenceNumber // ignore: cast_nullable_to_non_nullable
+                  as String,
+        date: null == date
+            ? _value.date
+            : date // ignore: cast_nullable_to_non_nullable
+                  as DateTime,
+        type: null == type
+            ? _value.type
+            : type // ignore: cast_nullable_to_non_nullable
+                  as VoucherType,
+        paymentMethod: null == paymentMethod
+            ? _value.paymentMethod
+            : paymentMethod // ignore: cast_nullable_to_non_nullable
+                  as PaymentMethod,
+        amount: null == amount
+            ? _value.amount
+            : amount // ignore: cast_nullable_to_non_nullable
+                  as Decimal,
+        accountId: null == accountId
+            ? _value.accountId
+            : accountId // ignore: cast_nullable_to_non_nullable
+                  as String,
+        treasuryAccountId: null == treasuryAccountId
+            ? _value.treasuryAccountId
+            : treasuryAccountId // ignore: cast_nullable_to_non_nullable
+                  as String,
+        description: null == description
+            ? _value.description
+            : description // ignore: cast_nullable_to_non_nullable
+                  as String,
+        createdAt: null == createdAt
+            ? _value.createdAt
+            : createdAt // ignore: cast_nullable_to_non_nullable
+                  as DateTime,
+        personName: freezed == personName
+            ? _value.personName
+            : personName // ignore: cast_nullable_to_non_nullable
+                  as String?,
+        isPosted: null == isPosted
+            ? _value.isPosted
+            : isPosted // ignore: cast_nullable_to_non_nullable
+                  as bool,
+        journalEntryId: freezed == journalEntryId
+            ? _value.journalEntryId
+            : journalEntryId // ignore: cast_nullable_to_non_nullable
+                  as String?,
+        userId: freezed == userId
+            ? _value.userId
+            : userId // ignore: cast_nullable_to_non_nullable
+                  as String?,
+        originalCurrency: freezed == originalCurrency
+            ? _value.originalCurrency
+            : originalCurrency // ignore: cast_nullable_to_non_nullable
+                  as String?,
+        exchangeRate: freezed == exchangeRate
+            ? _value.exchangeRate
+            : exchangeRate // ignore: cast_nullable_to_non_nullable
+                  as Decimal?,
+        originalAmount: freezed == originalAmount
+            ? _value.originalAmount
+            : originalAmount // ignore: cast_nullable_to_non_nullable
+                  as Decimal?,
+        syncStatus: null == syncStatus
+            ? _value.syncStatus
+            : syncStatus // ignore: cast_nullable_to_non_nullable
+                  as SyncStatus,
+        serverUpdatedAt: freezed == serverUpdatedAt
+            ? _value.serverUpdatedAt
+            : serverUpdatedAt // ignore: cast_nullable_to_non_nullable
+                  as DateTime?,
+        isDeleted: null == isDeleted
+            ? _value.isDeleted
+            : isDeleted // ignore: cast_nullable_to_non_nullable
+                  as bool,
+      ),
+    );
   }
 }
 
 /// @nodoc
 @JsonSerializable()
 class _$FinancialVoucherImpl implements _FinancialVoucher {
-  const _$FinancialVoucherImpl(
-      {required this.id,
-      required this.referenceNumber,
-      required this.date,
-      required this.type,
-      required this.paymentMethod,
-      required this.amount,
-      required this.accountId,
-      required this.treasuryAccountId,
-      required this.description,
-      required this.createdAt,
-      this.personName,
-      this.isPosted = false,
-      this.journalEntryId,
-      this.userId,
-      this.originalCurrency,
-      this.exchangeRate,
-      this.originalAmount,
-      this.syncStatus = SyncStatus.synced,
-      this.serverUpdatedAt,
-      this.isDeleted = false});
+  const _$FinancialVoucherImpl({
+    required this.id,
+    required this.referenceNumber,
+    required this.date,
+    required this.type,
+    required this.paymentMethod,
+    required this.amount,
+    required this.accountId,
+    required this.treasuryAccountId,
+    required this.description,
+    required this.createdAt,
+    this.personName,
+    this.isPosted = false,
+    this.journalEntryId,
+    this.userId,
+    this.originalCurrency,
+    this.exchangeRate,
+    this.originalAmount,
+    this.syncStatus = SyncStatus.synced,
+    this.serverUpdatedAt,
+    this.isDeleted = false,
+  });
 
   factory _$FinancialVoucherImpl.fromJson(Map<String, dynamic> json) =>
       _$$FinancialVoucherImplFromJson(json);
@@ -545,149 +557,130 @@ class _$FinancialVoucherImpl implements _FinancialVoucher {
   @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hashAll([
-        runtimeType,
-        id,
-        referenceNumber,
-        date,
-        type,
-        paymentMethod,
-        amount,
-        accountId,
-        treasuryAccountId,
-        description,
-        createdAt,
-        personName,
-        isPosted,
-        journalEntryId,
-        userId,
-        originalCurrency,
-        exchangeRate,
-        originalAmount,
-        syncStatus,
-        serverUpdatedAt,
-        isDeleted
-      ]);
+    runtimeType,
+    id,
+    referenceNumber,
+    date,
+    type,
+    paymentMethod,
+    amount,
+    accountId,
+    treasuryAccountId,
+    description,
+    createdAt,
+    personName,
+    isPosted,
+    journalEntryId,
+    userId,
+    originalCurrency,
+    exchangeRate,
+    originalAmount,
+    syncStatus,
+    serverUpdatedAt,
+    isDeleted,
+  ]);
 
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
   _$$FinancialVoucherImplCopyWith<_$FinancialVoucherImpl> get copyWith =>
       __$$FinancialVoucherImplCopyWithImpl<_$FinancialVoucherImpl>(
-          this, _$identity);
+        this,
+        _$identity,
+      );
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$FinancialVoucherImplToJson(
-      this,
-    );
+    return _$$FinancialVoucherImplToJson(this);
   }
 }
 
 abstract class _FinancialVoucher implements FinancialVoucher {
-  const factory _FinancialVoucher(
-      {required final String id,
-      required final String referenceNumber,
-      required final DateTime date,
-      required final VoucherType type,
-      required final PaymentMethod paymentMethod,
-      required final Decimal amount,
-      required final String accountId,
-      required final String treasuryAccountId,
-      required final String description,
-      required final DateTime createdAt,
-      final String? personName,
-      final bool isPosted,
-      final String? journalEntryId,
-      final String? userId,
-      final String? originalCurrency,
-      final Decimal? exchangeRate,
-      final Decimal? originalAmount,
-      final SyncStatus syncStatus,
-      final DateTime? serverUpdatedAt,
-      final bool isDeleted}) = _$FinancialVoucherImpl;
+  const factory _FinancialVoucher({
+    required final String id,
+    required final String referenceNumber,
+    required final DateTime date,
+    required final VoucherType type,
+    required final PaymentMethod paymentMethod,
+    required final Decimal amount,
+    required final String accountId,
+    required final String treasuryAccountId,
+    required final String description,
+    required final DateTime createdAt,
+    final String? personName,
+    final bool isPosted,
+    final String? journalEntryId,
+    final String? userId,
+    final String? originalCurrency,
+    final Decimal? exchangeRate,
+    final Decimal? originalAmount,
+    final SyncStatus syncStatus,
+    final DateTime? serverUpdatedAt,
+    final bool isDeleted,
+  }) = _$FinancialVoucherImpl;
 
   factory _FinancialVoucher.fromJson(Map<String, dynamic> json) =
       _$FinancialVoucherImpl.fromJson;
 
   @override
-
   /// Unique internal identifier.
   String get id;
   @override
-
   /// External reference number (e.g., "PV-2024-001").
   String get referenceNumber;
   @override
-
   /// Date the payment or receipt was executed.
   DateTime get date;
   @override
-
   /// Direction of fund flow (Receipt/Payment).
   VoucherType get type;
   @override
-
   /// Settlement instrument (Cash/Bank/Check).
   PaymentMethod get paymentMethod;
   @override
-
   /// Face value of the transaction as [Decimal].
   Decimal get amount;
   @override
-
   /// The offset account ID (e.g., Customer AR or Vendor AP).
   String get accountId;
   @override
-
   /// The liquid asset account ID (e.g., Cash Office or Bank Account).
   String get treasuryAccountId;
   @override
-
   /// Detailed description or memo of the transaction purpose.
   String get description;
   @override
-
   /// Initial system recording timestamp.
   DateTime get createdAt;
   @override
-
   /// Name of the paying person or receiving entity (Manual/Denormalized).
   String? get personName;
   @override
-
   /// Migration status: if true, the voucher has been posted to the General
   /// Ledger.
   bool get isPosted;
   @override
-
   /// Link to the resulting [JournalEntry] ID after posting.
   String? get journalEntryId;
   @override
-
   /// Tenant/Owner identifier.
   String? get userId;
   @override
-
   /// Original transaction currency (ISO code).
   String? get originalCurrency;
   @override
-
   /// Conversion rate used for local currency recording.
   Decimal? get exchangeRate;
   @override
-
   /// Face value in [originalCurrency].
   Decimal? get originalAmount;
   @override
-
   /// Local-to-Remote synchronization state.
   SyncStatus get syncStatus;
   @override
-
   /// Most recent synchronization timestamp from the server.
   DateTime? get serverUpdatedAt;
   @override
-
   /// Soft-deletion flag.
   bool get isDeleted;
   @override

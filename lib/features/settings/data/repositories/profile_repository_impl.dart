@@ -16,8 +16,10 @@ class ProfileRepositoryImpl implements ProfileRepository {
 
   @override
   Future<Profile?> getProfile() async {
-    final model =
-        await isar.profileModels.filter().userIdEqualTo(userId).findFirst();
+    final model = await isar.profileModels
+        .filter()
+        .userIdEqualTo(userId)
+        .findFirst();
     return model?.toEntity();
   }
 

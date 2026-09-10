@@ -22,82 +22,76 @@ class AgingReportsScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) => DefaultTabController(
-        length: 2,
-        child: Scaffold(
-          extendBodyBehindAppBar: true,
-          extendBody: true,
-          backgroundColor: Colors.transparent,
-          appBar: AppBar(
-            title: Text(
-              context.l10n.agingReportsTitle,
-              style: const TextStyle(fontWeight: FontWeight.bold),
-            ),
-            centerTitle: true,
-            elevation: 0,
-            flexibleSpace: ClipRRect(
-              child: BackdropFilter(
-                filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
-                child: Container(
-                  color: Colors.white.withValues(alpha: 0.5),
-                ),
-              ),
-            ),
-            bottom: TabBar(
-              tabs: [
-                Tab(text: context.l10n.receivablesAgingLabel),
-                Tab(text: context.l10n.payablesAgingLabel),
-              ],
-            ),
-            actions: [
-              IconButton(
-                icon: const Icon(Icons.share),
-                onPressed: () => _showExportOptions(context, ref),
-                tooltip: context.l10n.btnExport,
-              ),
-            ],
-          ),
-          body: Stack(
-            children: [
-              Container(
-                decoration: BoxDecoration(
-                  gradient: RadialGradient(
-                    center: const Alignment(-0.8, -0.8),
-                    radius: 1.5,
-                    colors: [
-                      Theme.of(context)
-                          .colorScheme
-                          .primary
-                          .withValues(alpha: 0.15),
-                      Theme.of(context).scaffoldBackgroundColor,
-                    ],
-                  ),
-                ),
-              ),
-              Container(
-                decoration: BoxDecoration(
-                  gradient: RadialGradient(
-                    center: const Alignment(0.8, 0.8),
-                    radius: 1.5,
-                    colors: [
-                      Theme.of(context)
-                          .colorScheme
-                          .secondary
-                          .withValues(alpha: 0.1),
-                      Colors.transparent,
-                    ],
-                  ),
-                ),
-              ),
-              const SafeArea(
-                bottom: false,
-                child: TabBarView(
-                  children: [_ReceivableAgingTab(), _PayableAgingTab()],
-                ),
-              ),
-            ],
+    length: 2,
+    child: Scaffold(
+      extendBodyBehindAppBar: true,
+      extendBody: true,
+      backgroundColor: Colors.transparent,
+      appBar: AppBar(
+        title: Text(
+          context.l10n.agingReportsTitle,
+          style: const TextStyle(fontWeight: FontWeight.bold),
+        ),
+        centerTitle: true,
+        elevation: 0,
+        flexibleSpace: ClipRRect(
+          child: BackdropFilter(
+            filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+            child: Container(color: Colors.white.withValues(alpha: 0.5)),
           ),
         ),
-      );
+        bottom: TabBar(
+          tabs: [
+            Tab(text: context.l10n.receivablesAgingLabel),
+            Tab(text: context.l10n.payablesAgingLabel),
+          ],
+        ),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.share),
+            onPressed: () => _showExportOptions(context, ref),
+            tooltip: context.l10n.btnExport,
+          ),
+        ],
+      ),
+      body: Stack(
+        children: [
+          Container(
+            decoration: BoxDecoration(
+              gradient: RadialGradient(
+                center: const Alignment(-0.8, -0.8),
+                radius: 1.5,
+                colors: [
+                  Theme.of(context).colorScheme.primary.withValues(alpha: 0.15),
+                  Theme.of(context).scaffoldBackgroundColor,
+                ],
+              ),
+            ),
+          ),
+          Container(
+            decoration: BoxDecoration(
+              gradient: RadialGradient(
+                center: const Alignment(0.8, 0.8),
+                radius: 1.5,
+                colors: [
+                  Theme.of(
+                    context,
+                  ).colorScheme.secondary.withValues(alpha: 0.1),
+                  Colors.transparent,
+                ],
+              ),
+            ),
+          ),
+          const SafeArea(
+            bottom: false,
+            child: TabBarView(
+              children: [_ReceivableAgingTab(), _PayableAgingTab()],
+            ),
+          ),
+        ],
+      ),
+    ),
+  );
 
   /// Displays a modal with data export format options (PDF, CSV).
   Future<void> _showExportOptions(BuildContext context, WidgetRef ref) async {
@@ -294,25 +288,22 @@ class _ReceivableAgingTab extends ConsumerWidget {
     String label,
     dynamic value, {
     bool isTotal = false,
-  }) =>
-      Padding(
-        padding: const EdgeInsets.symmetric(vertical: 2),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text(
-              label,
-              style:
-                  isTotal ? const TextStyle(fontWeight: FontWeight.bold) : null,
-            ),
-            Text(
-              '$value ر.س',
-              style:
-                  isTotal ? const TextStyle(fontWeight: FontWeight.bold) : null,
-            ),
-          ],
+  }) => Padding(
+    padding: const EdgeInsets.symmetric(vertical: 2),
+    child: Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Text(
+          label,
+          style: isTotal ? const TextStyle(fontWeight: FontWeight.bold) : null,
         ),
-      );
+        Text(
+          '$value ر.س',
+          style: isTotal ? const TextStyle(fontWeight: FontWeight.bold) : null,
+        ),
+      ],
+    ),
+  );
 }
 
 /// Tab view for Accounts Payable (AP) aging analysis.
@@ -321,8 +312,9 @@ class _PayableAgingTab extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final agingAsync =
-        ref.watch(accountsPayableServiceProvider.notifier).getPayablesAging();
+    final agingAsync = ref
+        .watch(accountsPayableServiceProvider.notifier)
+        .getPayablesAging();
 
     return FutureBuilder<List<SupplierAging>>(
       future: agingAsync,
@@ -400,23 +392,20 @@ class _PayableAgingTab extends ConsumerWidget {
     String label,
     dynamic value, {
     bool isTotal = false,
-  }) =>
-      Padding(
-        padding: const EdgeInsets.symmetric(vertical: 2),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text(
-              label,
-              style:
-                  isTotal ? const TextStyle(fontWeight: FontWeight.bold) : null,
-            ),
-            Text(
-              '$value ر.س',
-              style:
-                  isTotal ? const TextStyle(fontWeight: FontWeight.bold) : null,
-            ),
-          ],
+  }) => Padding(
+    padding: const EdgeInsets.symmetric(vertical: 2),
+    child: Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Text(
+          label,
+          style: isTotal ? const TextStyle(fontWeight: FontWeight.bold) : null,
         ),
-      );
+        Text(
+          '$value ر.س',
+          style: isTotal ? const TextStyle(fontWeight: FontWeight.bold) : null,
+        ),
+      ],
+    ),
+  );
 }

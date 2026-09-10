@@ -95,19 +95,18 @@ class FinancialSummaryCard extends ConsumerWidget {
     String label,
     double amount,
     Color color,
-  ) =>
-      Column(
-        children: [
-          Text(label, style: Theme.of(context).textTheme.bodySmall),
-          const SizedBox(height: Spacing.xs),
-          Text(
-            amount.toStringAsFixed(0),
-            style: TextStyle(
-              fontSize: 16,
-              fontWeight: FontWeight.bold,
-              color: color,
-            ),
-          ),
-        ],
-      );
+  ) => Column(
+    children: [
+      Text(label, style: Theme.of(context).textTheme.bodySmall),
+      const SizedBox(height: Spacing.xs),
+      Text(
+        amount.toStringAsFixed(0),
+        style: TextStyle(
+          fontSize: 16,
+          fontWeight: FontWeight.bold,
+          color: color,
+        ),
+      ),
+    ],
+  );
 }

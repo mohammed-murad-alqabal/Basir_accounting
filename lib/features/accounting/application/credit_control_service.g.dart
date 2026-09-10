@@ -13,14 +13,14 @@ String _$creditControlServiceHash() =>
 @ProviderFor(CreditControlService)
 final creditControlServiceProvider =
     AutoDisposeAsyncNotifierProvider<CreditControlService, void>.internal(
-  CreditControlService.new,
-  name: r'creditControlServiceProvider',
-  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-      ? null
-      : _$creditControlServiceHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
+      CreditControlService.new,
+      name: r'creditControlServiceProvider',
+      debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+          ? null
+          : _$creditControlServiceHash,
+      dependencies: null,
+      allTransitiveDependencies: null,
+    );
 
 typedef _$CreditControlService = AutoDisposeAsyncNotifier<void>;
 // ignore_for_file: type=lint

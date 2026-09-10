@@ -74,8 +74,8 @@ class SalesInvoicePostingService {
   SalesInvoicePostingService({
     required SalesInvoicePostingGateway gateway,
     DateTime Function()? now,
-  })  : _gateway = gateway,
-        _now = now ?? DateTime.now;
+  }) : _gateway = gateway,
+       _now = now ?? DateTime.now;
 
   static const unauthorizedCode = 'invoice_posting_unauthorized';
   static const confirmationRequiredCode =
@@ -98,9 +98,7 @@ class SalesInvoicePostingService {
     }
 
     if (!request.hasExplicitConfirmation) {
-      return const OperationResult.failure(
-        message: confirmationRequiredCode,
-      );
+      return const OperationResult.failure(message: confirmationRequiredCode);
     }
 
     if (request.invoice.status != InvoiceStatus.draft) {
@@ -174,10 +172,7 @@ class SalesInvoicePostingService {
         auditTrail: [approvalEvent, postedEvent],
       );
     } on Object catch (error) {
-      return OperationResult.failure(
-        message: commitFailedCode,
-        cause: error,
-      );
+      return OperationResult.failure(message: commitFailedCode, cause: error);
     }
   }
 

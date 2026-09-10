@@ -78,8 +78,9 @@ class FiscalControlCenterScreen extends ConsumerWidget {
               const SizedBox(width: Spacing.md),
               Text(
                 'Operational Period',
-                style: AppTextStyles.titleLarge
-                    .copyWith(fontWeight: FontWeight.bold),
+                style: AppTextStyles.titleLarge.copyWith(
+                  fontWeight: FontWeight.bold,
+                ),
               ),
             ],
           ),
@@ -87,15 +88,17 @@ class FiscalControlCenterScreen extends ConsumerWidget {
           if (activeYear != null) ...[
             Text(
               activeYear.name,
-              style: AppTextStyles.headlineMedium
-                  .copyWith(color: AppColors.primary),
+              style: AppTextStyles.headlineMedium.copyWith(
+                color: AppColors.primary,
+              ),
             ),
             const SizedBox(height: Spacing.xs),
             Text(
               '${DateFormat('MMMM dd, yyyy').format(activeYear.startDate)} - '
               '${DateFormat('MMMM dd, yyyy').format(activeYear.endDate)}',
-              style: AppTextStyles.bodyMedium
-                  .copyWith(color: AppColors.textSecondary),
+              style: AppTextStyles.bodyMedium.copyWith(
+                color: AppColors.textSecondary,
+              ),
             ),
           ] else
             const Text(
@@ -111,90 +114,84 @@ class FiscalControlCenterScreen extends ConsumerWidget {
     BuildContext context,
     WidgetRef ref,
     FinancialYear year,
-  ) =>
-      Padding(
-        padding: const EdgeInsets.only(bottom: Spacing.md),
-        child: GlassCard(
-          padding: const EdgeInsets.all(Spacing.lg),
-          child: Column(
+  ) => Padding(
+    padding: const EdgeInsets.only(bottom: Spacing.md),
+    child: GlassCard(
+      padding: const EdgeInsets.all(Spacing.lg),
+      child: Column(
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        year.name,
-                        style: AppTextStyles.titleMedium
-                            .copyWith(fontWeight: FontWeight.bold),
-                      ),
-                      Text(
-                        year.isClosed ? 'Status: Closed' : 'Status: Open',
-                        style: AppTextStyles.labelSmall.copyWith(
-                          color: year.isClosed
-                              ? AppColors.error
-                              : AppColors.success,
-                        ),
-                      ),
-                    ],
-                  ),
-                  if (!year.isClosed)
-                    Row(
-                      children: [
-                        IconButton(
-                          icon: const Icon(Icons.edit_outlined),
-                          onPressed: () => Navigator.pushNamed(
-                            context,
-                            '/financial-year-form',
-                            arguments: {'financialYear': year},
-                          ),
-                          tooltip: 'Edit Year Details',
-                        ),
-                        const SizedBox(width: Spacing.sm),
-                        ElevatedButton.icon(
-                          onPressed: () =>
-                              _showCloseYearDialog(context, ref, year),
-                          icon: const Icon(Icons.lock_clock),
-                          label: const Text('Year-End Close'),
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: AppColors.error,
-                            foregroundColor: Colors.white,
-                          ),
-                        ),
-                      ],
+                  Text(
+                    year.name,
+                    style: AppTextStyles.titleMedium.copyWith(
+                      fontWeight: FontWeight.bold,
                     ),
+                  ),
+                  Text(
+                    year.isClosed ? 'Status: Closed' : 'Status: Open',
+                    style: AppTextStyles.labelSmall.copyWith(
+                      color: year.isClosed
+                          ? AppColors.error
+                          : AppColors.success,
+                    ),
+                  ),
                 ],
               ),
-              const Divider(height: Spacing.xl),
-              _buildPeriodGrid(context, ref, year),
+              if (!year.isClosed)
+                Row(
+                  children: [
+                    IconButton(
+                      icon: const Icon(Icons.edit_outlined),
+                      onPressed: () => Navigator.pushNamed(
+                        context,
+                        '/financial-year-form',
+                        arguments: {'financialYear': year},
+                      ),
+                      tooltip: 'Edit Year Details',
+                    ),
+                    const SizedBox(width: Spacing.sm),
+                    ElevatedButton.icon(
+                      onPressed: () => _showCloseYearDialog(context, ref, year),
+                      icon: const Icon(Icons.lock_clock),
+                      label: const Text('Year-End Close'),
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: AppColors.error,
+                        foregroundColor: Colors.white,
+                      ),
+                    ),
+                  ],
+                ),
             ],
           ),
-        ),
-      );
+          const Divider(height: Spacing.xl),
+          _buildPeriodGrid(context, ref, year),
+        ],
+      ),
+    ),
+  );
 
   Widget _buildPeriodGrid(
     BuildContext context,
     WidgetRef ref,
     FinancialYear year,
-  ) =>
-      GridView.builder(
-        shrinkWrap: true,
-        physics: const NeverScrollableScrollPhysics(),
-        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 4,
-          crossAxisSpacing: Spacing.sm,
-          mainAxisSpacing: Spacing.sm,
-          childAspectRatio: 2.5,
-        ),
-        itemCount: 12,
-        itemBuilder: (context, index) => _buildPeriodGridItem(
-          context,
-          ref,
-          year,
-          index,
-        ),
-      );
+  ) => GridView.builder(
+    shrinkWrap: true,
+    physics: const NeverScrollableScrollPhysics(),
+    gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+      crossAxisCount: 4,
+      crossAxisSpacing: Spacing.sm,
+      mainAxisSpacing: Spacing.sm,
+      childAspectRatio: 2.5,
+    ),
+    itemCount: 12,
+    itemBuilder: (context, index) =>
+        _buildPeriodGridItem(context, ref, year, index),
+  );
 
   Future<void> _togglePeriodLock(
     WidgetRef ref,
@@ -243,8 +240,9 @@ class FiscalControlCenterScreen extends ConsumerWidget {
       // Find next year
       final repo = ref.read(financialYearRepositoryProvider);
       final years = await repo.getAllFinancialYears();
-      final nextYear =
-          years.where((y) => y.startDate.isAfter(year.endDate)).firstOrNull;
+      final nextYear = years
+          .where((y) => y.startDate.isAfter(year.endDate))
+          .firstOrNull;
 
       if (nextYear == null) {
         if (context.mounted) {
@@ -274,9 +272,9 @@ class FiscalControlCenterScreen extends ConsumerWidget {
         }
       } on Exception catch (e) {
         if (context.mounted) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text('Rollover failed: $e')),
-          );
+          ScaffoldMessenger.of(
+            context,
+          ).showSnackBar(SnackBar(content: Text('Rollover failed: $e')));
         }
       }
     }

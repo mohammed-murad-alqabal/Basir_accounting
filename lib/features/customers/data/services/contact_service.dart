@@ -12,7 +12,7 @@ class ContactService {
   /// الحصول على قائمة جهات الاتصال
   Future<List<Contact>> getContacts() async {
     if (await requestPermission()) {
-      return FlutterContacts.getContacts(withProperties: true);
+      return await FlutterContacts.getContacts(withProperties: true);
     }
     return [];
   }
@@ -23,8 +23,8 @@ class ContactService {
     if (query.isEmpty) return contacts;
 
     return contacts.where((contact) {
-      final firstName = contact.name.first;
-      final lastName = contact.name.last;
+      final firstName = contact.name.first ?? '';
+      final lastName = contact.name.last ?? '';
       final fullName = '$firstName $lastName'.toLowerCase();
       return fullName.contains(query.toLowerCase()) ||
           contact.phones.any((phone) => phone.number.contains(query));

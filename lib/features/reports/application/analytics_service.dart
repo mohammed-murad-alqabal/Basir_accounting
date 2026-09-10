@@ -98,10 +98,7 @@ class AnalyticsService extends _$AnalyticsService {
     ];
   }
 
-  Decimal _sumBalances(
-    List<Account> accounts,
-    bool Function(Account) filter,
-  ) =>
+  Decimal _sumBalances(List<Account> accounts, bool Function(Account) filter) =>
       accounts
           .where((a) => !a.isParent && filter(a))
           .fold(Decimal.zero, (sum, a) => sum + a.balance);
@@ -166,29 +163,29 @@ class AnalyticsService extends _$AnalyticsService {
   }
 
   List<FinancialKpi> _getEmptyKpis() => [
-        const FinancialKpi(
-          name: 'Current Ratio',
-          value: 0,
-          unit: 'x',
-          trend: 0,
-          health: KpiHealth.critical,
-          description: 'No data available. Add accounts to start.',
-        ),
-        const FinancialKpi(
-          name: 'Burn Rate',
-          value: 0,
-          unit: 'SAR/mo',
-          trend: 0,
-          health: KpiHealth.healthy,
-          description: 'No transactions recorded.',
-        ),
-        const FinancialKpi(
-          name: 'Profit Margin',
-          value: 0,
-          unit: '%',
-          trend: 0,
-          health: KpiHealth.critical,
-          description: 'No revenue or expenses found.',
-        ),
-      ];
+    const FinancialKpi(
+      name: 'Current Ratio',
+      value: 0,
+      unit: 'x',
+      trend: 0,
+      health: KpiHealth.critical,
+      description: 'No data available. Add accounts to start.',
+    ),
+    const FinancialKpi(
+      name: 'Burn Rate',
+      value: 0,
+      unit: 'SAR/mo',
+      trend: 0,
+      health: KpiHealth.healthy,
+      description: 'No transactions recorded.',
+    ),
+    const FinancialKpi(
+      name: 'Profit Margin',
+      value: 0,
+      unit: '%',
+      trend: 0,
+      health: KpiHealth.critical,
+      description: 'No revenue or expenses found.',
+    ),
+  ];
 }

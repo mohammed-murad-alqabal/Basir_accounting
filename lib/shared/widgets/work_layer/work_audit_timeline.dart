@@ -75,8 +75,9 @@ class WorkAuditTimeline extends StatelessWidget {
             ),
             child: Text(
               title!,
-              style: AppTextStyles.titleSmall
-                  .copyWith(fontWeight: FontWeights.semiBold),
+              style: AppTextStyles.titleSmall.copyWith(
+                fontWeight: FontWeights.semiBold,
+              ),
             ),
           ),
         if (sorted.isEmpty)
@@ -86,19 +87,20 @@ class WorkAuditTimeline extends StatelessWidget {
               label: emptyLabel ?? AppLocalizations.of(context).workAuditEmpty,
               child: Text(
                 emptyLabel ?? AppLocalizations.of(context).workAuditEmpty,
-                style: AppTextStyles.bodyMedium
-                    .copyWith(color: AppColors.textHint),
+                style: AppTextStyles.bodyMedium.copyWith(
+                  color: AppColors.textHint,
+                ),
               ),
             ),
           )
         else
           ...sorted.asMap().entries.map(
-                (entry) => _buildTimelineItem(
-                  entry.value,
-                  entry.key == sorted.length - 1,
-                  context,
-                ),
-              ),
+            (entry) => _buildTimelineItem(
+              entry.value,
+              entry.key == sorted.length - 1,
+              context,
+            ),
+          ),
       ],
     );
   }
@@ -129,36 +131,41 @@ class WorkAuditTimeline extends StatelessWidget {
                       Expanded(
                         child: Text(
                           item.title ?? entry.type.localizedLabelOf(ctx),
-                          style: AppTextStyles.labelLarge
-                              .copyWith(fontWeight: FontWeights.semiBold),
+                          style: AppTextStyles.labelLarge.copyWith(
+                            fontWeight: FontWeights.semiBold,
+                          ),
                         ),
                       ),
                       Text(
                         dateFormatter.format(entry.occurredAt),
-                        style: AppTextStyles.labelSmall
-                            .copyWith(color: AppColors.textHint),
+                        style: AppTextStyles.labelSmall.copyWith(
+                          color: AppColors.textHint,
+                        ),
                       ),
                     ],
                   ),
                   const SizedBox(height: Spacing.xs),
                   Text(
                     entry.operatorName,
-                    style: AppTextStyles.bodyMedium
-                        .copyWith(color: AppColors.textSecondary),
+                    style: AppTextStyles.bodyMedium.copyWith(
+                      color: AppColors.textSecondary,
+                    ),
                   ),
                   if (entry.reason != null) ...[
                     const SizedBox(height: Spacing.xs),
                     Text(
                       entry.reason!,
-                      style: AppTextStyles.bodySmall
-                          .copyWith(color: AppColors.textSecondary),
+                      style: AppTextStyles.bodySmall.copyWith(
+                        color: AppColors.textSecondary,
+                      ),
                     ),
                   ],
                   if (entry.referenceId != null) ...[
                     const SizedBox(height: Spacing.xs),
                     Semantics(
-                      label: AppLocalizations.of(ctx)
-                          .workAuditOpenLinked(entry.referenceId!),
+                      label: AppLocalizations.of(
+                        ctx,
+                      ).workAuditOpenLinked(entry.referenceId!),
                       button: true,
                       child: GestureDetector(
                         onTap: item.onReferenceTap,
@@ -172,10 +179,12 @@ class WorkAuditTimeline extends StatelessWidget {
                             ),
                             const SizedBox(width: Spacing.xs),
                             Text(
-                              AppLocalizations.of(ctx)
-                                  .workAuditLinkedDoc(entry.referenceId!),
-                              style: AppTextStyles.bodySmall
-                                  .copyWith(color: AppColors.primary),
+                              AppLocalizations.of(
+                                ctx,
+                              ).workAuditLinkedDoc(entry.referenceId!),
+                              style: AppTextStyles.bodySmall.copyWith(
+                                color: AppColors.primary,
+                              ),
                             ),
                           ],
                         ),
@@ -192,30 +201,30 @@ class WorkAuditTimeline extends StatelessWidget {
   }
 
   Widget _buildTrack(bool isLast, AuditEntry entry) => Column(
-        children: [
-          const SizedBox(height: Spacing.sm),
-          Container(
-            width: 32,
-            height: 32,
-            decoration: BoxDecoration(
-              color: entry.type.semanticColor,
-              shape: BoxShape.circle,
-            ),
-            child: Icon(
-              entry.type.icon,
-              size: IconSizes.xs,
-              color: AppColors.textOnDark,
-            ),
+    children: [
+      const SizedBox(height: Spacing.sm),
+      Container(
+        width: 32,
+        height: 32,
+        decoration: BoxDecoration(
+          color: entry.type.semanticColor,
+          shape: BoxShape.circle,
+        ),
+        child: Icon(
+          entry.type.icon,
+          size: IconSizes.xs,
+          color: AppColors.textOnDark,
+        ),
+      ),
+      if (!isLast)
+        Expanded(
+          child: Container(
+            width: BorderWidths.normal,
+            color: AppColors.borderLight,
           ),
-          if (!isLast)
-            Expanded(
-              child: Container(
-                width: BorderWidths.normal,
-                color: AppColors.borderLight,
-              ),
-            )
-          else
-            const SizedBox(height: Spacing.sm),
-        ],
-      );
+        )
+      else
+        const SizedBox(height: Spacing.sm),
+    ],
+  );
 }

@@ -193,8 +193,8 @@ void main() {
         ),
       );
 
-      await tester.tap(find.text('Disabled'));
-      await tester.pumpAndSettle();
+      await tester.tap(find.text('Disabled'), warnIfMissed: false);
+      await tester.pump();
 
       expect(pressed, isFalse);
     });

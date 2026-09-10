@@ -84,82 +84,80 @@ class PdfInvoiceService extends _$PdfInvoiceService {
   }
 
   pw.Widget _buildHeader(Invoice invoice, PdfColor themeColor) => pw.Row(
-        mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
+    mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
+    children: [
+      pw.Column(
+        crossAxisAlignment: pw.CrossAxisAlignment.start,
         children: [
-          pw.Column(
-            crossAxisAlignment: pw.CrossAxisAlignment.start,
-            children: [
-              pw.Text(
-                'فاتورة ضريبية',
-                style: pw.TextStyle(
-                  fontSize: 24,
-                  fontWeight: pw.FontWeight.bold,
-                  color: themeColor,
-                ),
-              ),
-              pw.Text('Tax Invoice', style: const pw.TextStyle(fontSize: 14)),
-            ],
+          pw.Text(
+            'فاتورة ضريبية',
+            style: pw.TextStyle(
+              fontSize: 24,
+              fontWeight: pw.FontWeight.bold,
+              color: themeColor,
+            ),
           ),
-          pw.Column(
-            crossAxisAlignment: pw.CrossAxisAlignment.end,
-            children: [
-              pw.Text('رقم الفاتورة: ${invoice.invoiceNumber}'),
-              pw.Text(
-                'تاريخ الإصدار: '
-                '${FormatHelpers.formatDate(invoice.issuedDate.toLocal())}',
-              ),
-              pw.Text(
-                'تاريخ الاستحقاق: '
-                '${FormatHelpers.formatDate(invoice.dueDate.toLocal())}',
-              ),
-            ],
+          pw.Text('Tax Invoice', style: const pw.TextStyle(fontSize: 14)),
+        ],
+      ),
+      pw.Column(
+        crossAxisAlignment: pw.CrossAxisAlignment.end,
+        children: [
+          pw.Text('رقم الفاتورة: ${invoice.invoiceNumber}'),
+          pw.Text(
+            'تاريخ الإصدار: '
+            '${FormatHelpers.formatDate(invoice.issuedDate.toLocal())}',
+          ),
+          pw.Text(
+            'تاريخ الاستحقاق: '
+            '${FormatHelpers.formatDate(invoice.dueDate.toLocal())}',
           ),
         ],
-      );
+      ),
+    ],
+  );
 
   pw.Widget _buildCustomerAndVendorDetails(
     Invoice invoice,
     Customer customer,
     Map<String, String?> settings,
-  ) =>
-      pw.Row(
-        mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
-        children: [
-          // تفاصيل البائع (Company)
-          pw.Expanded(
-            child: pw.Column(
-              crossAxisAlignment: pw.CrossAxisAlignment.start,
-              children: [
-                pw.Text(
-                  'من (البائع):',
-                  style: pw.TextStyle(fontWeight: pw.FontWeight.bold),
-                ),
-                pw.Text(settings['companyName'] ?? 'بصير MVP'),
-                if (settings['taxNumber'] != null)
-                  pw.Text('الرقم الضريبي: ${settings['taxNumber']}'),
-                // Add address if available in settings
-              ],
+  ) => pw.Row(
+    mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
+    children: [
+      // تفاصيل البائع (Company)
+      pw.Expanded(
+        child: pw.Column(
+          crossAxisAlignment: pw.CrossAxisAlignment.start,
+          children: [
+            pw.Text(
+              'من (البائع):',
+              style: pw.TextStyle(fontWeight: pw.FontWeight.bold),
             ),
-          ),
-          // تفاصيل العميل
-          pw.Expanded(
-            child: pw.Column(
-              crossAxisAlignment: pw.CrossAxisAlignment.start,
-              children: [
-                pw.Text(
-                  'إلى (العميل):',
-                  style: pw.TextStyle(fontWeight: pw.FontWeight.bold),
-                ),
-                pw.Text(customer.nameAr),
-                if (customer.address != null)
-                  pw.Text('العنوان: ${customer.address}'),
-                if (customer.phone != null)
-                  pw.Text('الهاتف: ${customer.phone}'),
-              ],
+            pw.Text(settings['companyName'] ?? 'بصير MVP'),
+            if (settings['taxNumber'] != null)
+              pw.Text('الرقم الضريبي: ${settings['taxNumber']}'),
+            // Add address if available in settings
+          ],
+        ),
+      ),
+      // تفاصيل العميل
+      pw.Expanded(
+        child: pw.Column(
+          crossAxisAlignment: pw.CrossAxisAlignment.start,
+          children: [
+            pw.Text(
+              'إلى (العميل):',
+              style: pw.TextStyle(fontWeight: pw.FontWeight.bold),
             ),
-          ),
-        ],
-      );
+            pw.Text(customer.nameAr),
+            if (customer.address != null)
+              pw.Text('العنوان: ${customer.address}'),
+            if (customer.phone != null) pw.Text('الهاتف: ${customer.phone}'),
+          ],
+        ),
+      ),
+    ],
+  );
 
   pw.Widget _buildItemsTable(
     Invoice invoice,
@@ -205,35 +203,31 @@ class PdfInvoiceService extends _$PdfInvoiceService {
   }
 
   pw.Widget _buildTotals(Invoice invoice, String currency) => pw.Row(
-        mainAxisAlignment: pw.MainAxisAlignment.end,
-        children: [
-          pw.Container(
-            width: 200,
-            child: pw.Column(
-              crossAxisAlignment: pw.CrossAxisAlignment.start,
-              children: [
-                _buildTotalRow(
-                  'المجموع الفرعي:',
-                  invoice.subtotalAmount,
-                  currency,
-                ),
-                _buildTotalRow(
-                  'الضريبة (${invoice.taxRate * Decimal.fromInt(100)}%):',
-                  invoice.taxAmount,
-                  currency,
-                ),
-                pw.Divider(),
-                _buildTotalRow(
-                  'الإجمالي المستحق:',
-                  invoice.totalAmount,
-                  currency,
-                  isBold: true,
-                ),
-              ],
+    mainAxisAlignment: pw.MainAxisAlignment.end,
+    children: [
+      pw.Container(
+        width: 200,
+        child: pw.Column(
+          crossAxisAlignment: pw.CrossAxisAlignment.start,
+          children: [
+            _buildTotalRow('المجموع الفرعي:', invoice.subtotalAmount, currency),
+            _buildTotalRow(
+              'الضريبة (${invoice.taxRate * Decimal.fromInt(100)}%):',
+              invoice.taxAmount,
+              currency,
             ),
-          ),
-        ],
-      );
+            pw.Divider(),
+            _buildTotalRow(
+              'الإجمالي المستحق:',
+              invoice.totalAmount,
+              currency,
+              isBold: true,
+            ),
+          ],
+        ),
+      ),
+    ],
+  );
 
   pw.Widget _buildTotalRow(
     String label,
@@ -254,17 +248,17 @@ class PdfInvoiceService extends _$PdfInvoiceService {
   }
 
   pw.Widget _buildFooter(Invoice invoice) => pw.Column(
-        crossAxisAlignment: pw.CrossAxisAlignment.start,
-        children: [
-          if (invoice.notes != null && invoice.notes!.isNotEmpty)
-            pw.Text('ملاحظات: ${invoice.notes}'),
-          pw.SizedBox(height: 20),
-          pw.Center(
-            child: pw.Text(
-              'شكرًا لتعاملكم معنا',
-              style: const pw.TextStyle(color: PdfColors.grey),
-            ),
-          ),
-        ],
-      );
+    crossAxisAlignment: pw.CrossAxisAlignment.start,
+    children: [
+      if (invoice.notes != null && invoice.notes!.isNotEmpty)
+        pw.Text('ملاحظات: ${invoice.notes}'),
+      pw.SizedBox(height: 20),
+      pw.Center(
+        child: pw.Text(
+          'شكرًا لتعاملكم معنا',
+          style: const pw.TextStyle(color: PdfColors.grey),
+        ),
+      ),
+    ],
+  );
 }

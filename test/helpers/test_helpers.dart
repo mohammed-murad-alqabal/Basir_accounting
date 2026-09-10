@@ -48,7 +48,7 @@ class TestHelpers {
       final dbName =
           customName ?? 'test_${DateTime.now().millisecondsSinceEpoch}';
 
-      return Isar.open(
+      return await Isar.open(
         [
           CustomerModelSchema,
           InvoiceModelSchema,

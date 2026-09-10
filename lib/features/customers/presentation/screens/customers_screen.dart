@@ -107,7 +107,8 @@ class _CustomersScreenState extends ConsumerState<CustomersScreen> {
       itemBuilder: (context, index) {
         final customer = customers[index];
         return Semantics(
-          label: '${customer.name(isArabic: context.isArabic)}, '
+          label:
+              '${customer.name(isArabic: context.isArabic)}, '
               '${customer.email ?? ""}, '
               '${customer.phone ?? ""}',
           button: true,
@@ -137,7 +138,7 @@ class _CustomersScreenState extends ConsumerState<CustomersScreen> {
   Future<void> _addCustomer() async {
     final result = await Navigator.push<bool>(
       context,
-      MaterialPageRoute(builder: (context) => const CustomerFormScreen()),
+      MaterialPageRoute<bool>(builder: (context) => const CustomerFormScreen()),
     );
 
     if (result ?? false) {
@@ -148,7 +149,7 @@ class _CustomersScreenState extends ConsumerState<CustomersScreen> {
   Future<void> _viewCustomerDetails(Customer customer) async {
     final result = await Navigator.push<bool>(
       context,
-      MaterialPageRoute(
+      MaterialPageRoute<bool>(
         builder: (context) => CustomerDetailsScreen(customer: customer),
       ),
     );

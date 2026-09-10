@@ -122,10 +122,7 @@ class InvoiceDetailScreen extends ConsumerWidget {
                 if (isPaid && invoice.paidDate != null)
                   Text(
                     '${ctx.l10n.labelPaidDate}: '
-                    '${FormatHelpers.formatDate(
-                      invoice.paidDate!,
-                      locale: ctx.l10n.localeName,
-                    )}',
+                    '${FormatHelpers.formatDate(invoice.paidDate!, locale: ctx.l10n.localeName)}',
                     textDirection: TextDirection.ltr,
                     style: AppTextStyles.bodySmall,
                     maxLines: 1,
@@ -171,31 +168,31 @@ class InvoiceDetailScreen extends ConsumerWidget {
   }
 
   Widget _buildCustomerCard(BuildContext ctx, AppIconsBase icons) => AppCard(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+    child: Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Row(
           children: [
-            Row(
-              children: [
-                Icon(icons.person, color: AppColors.primary, size: 20),
-                const SizedBox(width: Spacing.sm),
-                Text(
-                  ctx.l10n.labelCustomer,
-                  style: AppTextStyles.labelMedium.copyWith(
-                    color: AppColors.textSecondary,
-                  ),
-                ),
-              ],
-            ),
-            const SizedBox(height: Spacing.sm),
+            Icon(icons.person, color: AppColors.primary, size: 20),
+            const SizedBox(width: Spacing.sm),
             Text(
-              invoice.customerName,
-              style: AppTextStyles.headlineSmall.copyWith(
-                fontWeight: FontWeights.bold,
+              ctx.l10n.labelCustomer,
+              style: AppTextStyles.labelMedium.copyWith(
+                color: AppColors.textSecondary,
               ),
             ),
           ],
         ),
-      );
+        const SizedBox(height: Spacing.sm),
+        Text(
+          invoice.customerName,
+          style: AppTextStyles.headlineSmall.copyWith(
+            fontWeight: FontWeights.bold,
+          ),
+        ),
+      ],
+    ),
+  );
 
   Widget _buildInfoCard(
     BuildContext ctx,
@@ -320,10 +317,7 @@ class InvoiceDetailScreen extends ConsumerWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  ctx.l10n.labelIssuedDate,
-                  style: AppTextStyles.labelSmall,
-                ),
+                Text(ctx.l10n.labelIssuedDate, style: AppTextStyles.labelSmall),
                 const SizedBox(height: Spacing.xs),
                 Text(
                   FormatHelpers.formatDate(
@@ -346,10 +340,7 @@ class InvoiceDetailScreen extends ConsumerWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  ctx.l10n.labelDueDate,
-                  style: AppTextStyles.labelSmall,
-                ),
+                Text(ctx.l10n.labelDueDate, style: AppTextStyles.labelSmall),
                 const SizedBox(height: Spacing.xs),
                 Text(
                   FormatHelpers.formatDate(
@@ -371,139 +362,131 @@ class InvoiceDetailScreen extends ConsumerWidget {
   }
 
   Widget _buildItemsCard(BuildContext ctx) => AppCard(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              ctx.l10n.labelInvoiceItems,
-              style: AppTextStyles.titleSmall.copyWith(
-                fontWeight: FontWeights.bold,
-              ),
-            ),
-            const Divider(height: Spacing.lg),
-            ListView.separated(
-              shrinkWrap: true,
-              physics: const NeverScrollableScrollPhysics(),
-              itemCount: invoice.items.length,
-              separatorBuilder: (_, __) => const Divider(height: Spacing.md),
-              itemBuilder: (context, index) {
-                final item = invoice.items[index];
-                return Row(
-                  children: [
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            item.name,
-                            style: AppTextStyles.bodyMedium.copyWith(
-                              fontWeight: FontWeights.medium,
-                            ),
-                          ),
-                          Text(
-                            '${FormatHelpers.formatNumber(item.quantity)} × '
-                            '${FormatHelpers.formatCurrency(item.price)} '
-                            '(${ctx.l10n.labelVatRate}: ${FormatHelpers.formatNumber(item.taxRate * Decimal.fromInt(100))}%)',
-                            style: AppTextStyles.bodySmall.copyWith(
-                              color: AppColors.textSecondary,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    Text(
-                      FormatHelpers.formatCurrency(item.total),
-                      style: AppTextStyles.bodyMedium.copyWith(
-                        fontWeight: FontWeights.bold,
-                      ),
-                    ),
-                  ],
-                );
-              },
-            ),
-          ],
+    child: Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          ctx.l10n.labelInvoiceItems,
+          style: AppTextStyles.titleSmall.copyWith(
+            fontWeight: FontWeights.bold,
+          ),
         ),
-      );
-
-  Widget _buildTotalsCard(BuildContext ctx) => AppCard(
-        backgroundColor: AppColors.surfaceVariant.withValues(alpha: 0.5),
-        child: Column(
-          children: [
-            _buildTotalRow(ctx.l10n.labelSubtotal, invoice.subtotalAmount),
-            _buildTotalRow(
-              ctx.l10n.labelTaxTotal,
-              invoice.taxAmount,
-            ),
-            if (invoice.discountAmount > Decimal.zero)
-              _buildTotalRow(
-                ctx.l10n.labelDiscountAmount,
-                -invoice.discountAmount,
-              ),
-            const Divider(height: Spacing.lg),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        const Divider(height: Spacing.lg),
+        ListView.separated(
+          shrinkWrap: true,
+          physics: const NeverScrollableScrollPhysics(),
+          itemCount: invoice.items.length,
+          separatorBuilder: (_, _) => const Divider(height: Spacing.md),
+          itemBuilder: (context, index) {
+            final item = invoice.items[index];
+            return Row(
               children: [
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        item.name,
+                        style: AppTextStyles.bodyMedium.copyWith(
+                          fontWeight: FontWeights.medium,
+                        ),
+                      ),
+                      Text(
+                        '${FormatHelpers.formatNumber(item.quantity)} × '
+                        '${FormatHelpers.formatCurrency(item.price)} '
+                        '(${ctx.l10n.labelVatRate}: ${FormatHelpers.formatNumber(item.taxRate * Decimal.fromInt(100))}%)',
+                        style: AppTextStyles.bodySmall.copyWith(
+                          color: AppColors.textSecondary,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
                 Text(
-                  ctx.l10n.labelGrandTotal,
-                  style: AppTextStyles.titleMedium.copyWith(
+                  FormatHelpers.formatCurrency(item.total),
+                  style: AppTextStyles.bodyMedium.copyWith(
                     fontWeight: FontWeights.bold,
                   ),
                 ),
-                Text(
-                  FormatHelpers.formatCurrency(
-                    invoice.totalAmount,
-                    currencyCode: invoice.currency,
-                  ),
-                  style: AppTextStyles.titleLarge.copyWith(
-                    fontWeight: FontWeights.extraBold,
-                    color: AppColors.primary,
-                  ),
-                ),
               ],
-            ),
-            if (invoice.currency != 'SAR') ...[
-              const SizedBox(height: Spacing.md),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    ctx.l10n.labelBaseCurrencyEquivalent,
-                    style: AppTextStyles.bodyMedium.copyWith(
-                      fontWeight: FontWeights.medium,
-                      color: AppColors.textSecondary,
-                    ),
-                  ),
-                  Text(
-                    FormatHelpers.formatCurrency(
-                      invoice.totalAmountBaseCurrency,
-                    ),
-                    style: AppTextStyles.titleMedium.copyWith(
-                      fontWeight: FontWeights.bold,
-                      color: AppColors.textSecondary,
-                    ),
-                  ),
-                ],
-              ),
-            ],
-          ],
+            );
+          },
         ),
-      );
+      ],
+    ),
+  );
 
-  Widget _buildTotalRow(String label, Decimal amount) => Padding(
-        padding: const EdgeInsets.symmetric(vertical: Spacing.xs),
-        child: Row(
+  Widget _buildTotalsCard(BuildContext ctx) => AppCard(
+    backgroundColor: AppColors.surfaceVariant.withValues(alpha: 0.5),
+    child: Column(
+      children: [
+        _buildTotalRow(ctx.l10n.labelSubtotal, invoice.subtotalAmount),
+        _buildTotalRow(ctx.l10n.labelTaxTotal, invoice.taxAmount),
+        if (invoice.discountAmount > Decimal.zero)
+          _buildTotalRow(ctx.l10n.labelDiscountAmount, -invoice.discountAmount),
+        const Divider(height: Spacing.lg),
+        Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Text(label, style: AppTextStyles.bodyMedium),
             Text(
-              FormatHelpers.formatCurrency(amount),
-              style: AppTextStyles.bodyMedium.copyWith(
-                fontWeight: FontWeights.medium,
+              ctx.l10n.labelGrandTotal,
+              style: AppTextStyles.titleMedium.copyWith(
+                fontWeight: FontWeights.bold,
+              ),
+            ),
+            Text(
+              FormatHelpers.formatCurrency(
+                invoice.totalAmount,
+                currencyCode: invoice.currency,
+              ),
+              style: AppTextStyles.titleLarge.copyWith(
+                fontWeight: FontWeights.extraBold,
+                color: AppColors.primary,
               ),
             ),
           ],
         ),
-      );
+        if (invoice.currency != 'SAR') ...[
+          const SizedBox(height: Spacing.md),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                ctx.l10n.labelBaseCurrencyEquivalent,
+                style: AppTextStyles.bodyMedium.copyWith(
+                  fontWeight: FontWeights.medium,
+                  color: AppColors.textSecondary,
+                ),
+              ),
+              Text(
+                FormatHelpers.formatCurrency(invoice.totalAmountBaseCurrency),
+                style: AppTextStyles.titleMedium.copyWith(
+                  fontWeight: FontWeights.bold,
+                  color: AppColors.textSecondary,
+                ),
+              ),
+            ],
+          ),
+        ],
+      ],
+    ),
+  );
+
+  Widget _buildTotalRow(String label, Decimal amount) => Padding(
+    padding: const EdgeInsets.symmetric(vertical: Spacing.xs),
+    child: Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Text(label, style: AppTextStyles.bodyMedium),
+        Text(
+          FormatHelpers.formatCurrency(amount),
+          style: AppTextStyles.bodyMedium.copyWith(
+            fontWeight: FontWeights.medium,
+          ),
+        ),
+      ],
+    ),
+  );
 
   Widget _buildQrCodeSection(BuildContext ctx) {
     if (invoice.qrCode == null || invoice.qrCode!.isEmpty) {
@@ -558,17 +541,9 @@ class InvoiceDetailScreen extends ConsumerWidget {
           ),
           const Divider(height: Spacing.lg),
           if (invoice.zatcaUuid != null)
-            _buildMetadataRow(
-              ctx,
-              ctx.l10n.labelZatcaUuid,
-              invoice.zatcaUuid!,
-            ),
+            _buildMetadataRow(ctx, ctx.l10n.labelZatcaUuid, invoice.zatcaUuid!),
           if (invoice.zatcaHash != null)
-            _buildMetadataRow(
-              ctx,
-              ctx.l10n.labelZatcaHash,
-              invoice.zatcaHash!,
-            ),
+            _buildMetadataRow(ctx, ctx.l10n.labelZatcaHash, invoice.zatcaHash!),
         ],
       ),
     );
@@ -652,9 +627,9 @@ class InvoiceDetailScreen extends ConsumerWidget {
         }
       } on Exception catch (e) {
         if (context.mounted) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text('Error: $e')),
-          );
+          ScaffoldMessenger.of(
+            context,
+          ).showSnackBar(SnackBar(content: Text('Error: $e')));
         }
       }
     }

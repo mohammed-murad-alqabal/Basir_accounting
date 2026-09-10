@@ -7,36 +7,36 @@ part of 'journal_entry.dart';
 // **************************************************************************
 
 _$TemporalJustificationImpl _$$TemporalJustificationImplFromJson(
-        Map<String, dynamic> json) =>
-    _$TemporalJustificationImpl(
-      transactionDate: DateTime.parse(json['transactionDate'] as String),
-      effectiveDate: DateTime.parse(json['effectiveDate'] as String),
-      recordingDate: DateTime.parse(json['recordingDate'] as String),
-    );
+  Map<String, dynamic> json,
+) => _$TemporalJustificationImpl(
+  transactionDate: DateTime.parse(json['transactionDate'] as String),
+  effectiveDate: DateTime.parse(json['effectiveDate'] as String),
+  recordingDate: DateTime.parse(json['recordingDate'] as String),
+);
 
 Map<String, dynamic> _$$TemporalJustificationImplToJson(
-        _$TemporalJustificationImpl instance) =>
-    <String, dynamic>{
-      'transactionDate': instance.transactionDate.toIso8601String(),
-      'effectiveDate': instance.effectiveDate.toIso8601String(),
-      'recordingDate': instance.recordingDate.toIso8601String(),
-    };
+  _$TemporalJustificationImpl instance,
+) => <String, dynamic>{
+  'transactionDate': instance.transactionDate.toIso8601String(),
+  'effectiveDate': instance.effectiveDate.toIso8601String(),
+  'recordingDate': instance.recordingDate.toIso8601String(),
+};
 
 _$StandardsJustificationImpl _$$StandardsJustificationImplFromJson(
-        Map<String, dynamic> json) =>
-    _$StandardsJustificationImpl(
-      standardReference: json['standardReference'] as String,
-      recognitionBasis: json['recognitionBasis'] as String?,
-      measurementBasis: json['measurementBasis'] as String?,
-    );
+  Map<String, dynamic> json,
+) => _$StandardsJustificationImpl(
+  standardReference: json['standardReference'] as String,
+  recognitionBasis: json['recognitionBasis'] as String?,
+  measurementBasis: json['measurementBasis'] as String?,
+);
 
 Map<String, dynamic> _$$StandardsJustificationImplToJson(
-        _$StandardsJustificationImpl instance) =>
-    <String, dynamic>{
-      'standardReference': instance.standardReference,
-      'recognitionBasis': instance.recognitionBasis,
-      'measurementBasis': instance.measurementBasis,
-    };
+  _$StandardsJustificationImpl instance,
+) => <String, dynamic>{
+  'standardReference': instance.standardReference,
+  'recognitionBasis': instance.recognitionBasis,
+  'measurementBasis': instance.measurementBasis,
+};
 
 _$AuditLogEntryImpl _$$AuditLogEntryImplFromJson(Map<String, dynamic> json) =>
     _$AuditLogEntryImpl(
@@ -55,50 +55,56 @@ Map<String, dynamic> _$$AuditLogEntryImplToJson(_$AuditLogEntryImpl instance) =>
     };
 
 _$JournalEntryLineImpl _$$JournalEntryLineImplFromJson(
-        Map<String, dynamic> json) =>
-    _$JournalEntryLineImpl(
-      accountId: json['accountId'] as String,
-      accountName: json['accountName'] as String,
-      debit: const DecimalJsonConverter().fromJson(json['debit'] as String),
-      credit: const DecimalJsonConverter().fromJson(json['credit'] as String),
-      description: json['description'] as String?,
-      sourceDocumentRef: json['sourceDocumentRef'] as String?,
-      costCenterId: json['costCenterId'] as String?,
-      originalCurrency: json['originalCurrency'] as String?,
-      exchangeRate: _$JsonConverterFromJson<String, Decimal>(
-          json['exchangeRate'], const DecimalJsonConverter().fromJson),
-      originalAmount: _$JsonConverterFromJson<String, Decimal>(
-          json['originalAmount'], const DecimalJsonConverter().fromJson),
-    );
+  Map<String, dynamic> json,
+) => _$JournalEntryLineImpl(
+  accountId: json['accountId'] as String,
+  accountName: json['accountName'] as String,
+  debit: const DecimalJsonConverter().fromJson(json['debit'] as String),
+  credit: const DecimalJsonConverter().fromJson(json['credit'] as String),
+  description: json['description'] as String?,
+  sourceDocumentRef: json['sourceDocumentRef'] as String?,
+  costCenterId: json['costCenterId'] as String?,
+  originalCurrency: json['originalCurrency'] as String?,
+  exchangeRate: _$JsonConverterFromJson<String, Decimal>(
+    json['exchangeRate'],
+    const DecimalJsonConverter().fromJson,
+  ),
+  originalAmount: _$JsonConverterFromJson<String, Decimal>(
+    json['originalAmount'],
+    const DecimalJsonConverter().fromJson,
+  ),
+);
 
 Map<String, dynamic> _$$JournalEntryLineImplToJson(
-        _$JournalEntryLineImpl instance) =>
-    <String, dynamic>{
-      'accountId': instance.accountId,
-      'accountName': instance.accountName,
-      'debit': const DecimalJsonConverter().toJson(instance.debit),
-      'credit': const DecimalJsonConverter().toJson(instance.credit),
-      'description': instance.description,
-      'sourceDocumentRef': instance.sourceDocumentRef,
-      'costCenterId': instance.costCenterId,
-      'originalCurrency': instance.originalCurrency,
-      'exchangeRate': _$JsonConverterToJson<String, Decimal>(
-          instance.exchangeRate, const DecimalJsonConverter().toJson),
-      'originalAmount': _$JsonConverterToJson<String, Decimal>(
-          instance.originalAmount, const DecimalJsonConverter().toJson),
-    };
+  _$JournalEntryLineImpl instance,
+) => <String, dynamic>{
+  'accountId': instance.accountId,
+  'accountName': instance.accountName,
+  'debit': const DecimalJsonConverter().toJson(instance.debit),
+  'credit': const DecimalJsonConverter().toJson(instance.credit),
+  'description': instance.description,
+  'sourceDocumentRef': instance.sourceDocumentRef,
+  'costCenterId': instance.costCenterId,
+  'originalCurrency': instance.originalCurrency,
+  'exchangeRate': _$JsonConverterToJson<String, Decimal>(
+    instance.exchangeRate,
+    const DecimalJsonConverter().toJson,
+  ),
+  'originalAmount': _$JsonConverterToJson<String, Decimal>(
+    instance.originalAmount,
+    const DecimalJsonConverter().toJson,
+  ),
+};
 
 Value? _$JsonConverterFromJson<Json, Value>(
   Object? json,
   Value? Function(Json json) fromJson,
-) =>
-    json == null ? null : fromJson(json as Json);
+) => json == null ? null : fromJson(json as Json);
 
 Json? _$JsonConverterToJson<Json, Value>(
   Value? value,
   Json? Function(Value value) toJson,
-) =>
-    value == null ? null : toJson(value);
+) => value == null ? null : toJson(value);
 
 _$JournalEntryImpl _$$JournalEntryImplFromJson(Map<String, dynamic> json) =>
     _$JournalEntryImpl(
@@ -106,9 +112,11 @@ _$JournalEntryImpl _$$JournalEntryImplFromJson(Map<String, dynamic> json) =>
       referenceNumber: json['referenceNumber'] as String,
       date: DateTime.parse(json['date'] as String),
       temporal: TemporalJustification.fromJson(
-          json['temporal'] as Map<String, dynamic>),
+        json['temporal'] as Map<String, dynamic>,
+      ),
       standards: StandardsJustification.fromJson(
-          json['standards'] as Map<String, dynamic>),
+        json['standards'] as Map<String, dynamic>,
+      ),
       description: json['description'] as String,
       status: $enumDecode(_$JournalEntryStatusEnumMap, json['status']),
       lines: (json['lines'] as List<dynamic>)
@@ -126,16 +134,18 @@ _$JournalEntryImpl _$$JournalEntryImplFromJson(Map<String, dynamic> json) =>
           : DateTime.parse(json['postedAt'] as String),
       userId: json['userId'] as String?,
       warehouseId: json['warehouseId'] as String?,
-      auditLogs: (json['auditLogs'] as List<dynamic>?)
+      auditLogs:
+          (json['auditLogs'] as List<dynamic>?)
               ?.map((e) => AuditLogEntry.fromJson(e as Map<String, dynamic>))
               .toList() ??
           const [],
       syncStatus:
           $enumDecodeNullable(_$SyncStatusEnumMap, json['syncStatus']) ??
-              SyncStatus.synced,
+          SyncStatus.synced,
       serverUpdatedAt: json['serverUpdatedAt'] == null
           ? null
           : DateTime.parse(json['serverUpdatedAt'] as String),
+      authoritativeEntryId: json['authoritativeEntryId'] as String?,
       isDeleted: json['isDeleted'] as bool? ?? false,
     );
 
@@ -162,6 +172,7 @@ Map<String, dynamic> _$$JournalEntryImplToJson(_$JournalEntryImpl instance) =>
       'auditLogs': instance.auditLogs.map((e) => e.toJson()).toList(),
       'syncStatus': _$SyncStatusEnumMap[instance.syncStatus]!,
       'serverUpdatedAt': instance.serverUpdatedAt?.toIso8601String(),
+      'authoritativeEntryId': instance.authoritativeEntryId,
       'isDeleted': instance.isDeleted,
     };
 

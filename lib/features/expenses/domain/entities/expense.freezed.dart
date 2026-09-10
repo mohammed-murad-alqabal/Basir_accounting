@@ -12,7 +12,8 @@ part of 'expense.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
+  'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models',
+);
 
 Expense _$ExpenseFromJson(Map<String, dynamic> json) {
   return _Expense.fromJson(json);
@@ -81,24 +82,25 @@ abstract class $ExpenseCopyWith<$Res> {
   factory $ExpenseCopyWith(Expense value, $Res Function(Expense) then) =
       _$ExpenseCopyWithImpl<$Res, Expense>;
   @useResult
-  $Res call(
-      {String id,
-      String description,
-      Decimal amount,
-      String currencyCode,
-      DateTime expenseDate,
-      String categoryId,
-      String? vendorId,
-      String? vendorName,
-      String? receiptUrl,
-      String? notes,
-      bool isRecurring,
-      DateTime? recurringEndDate,
-      String status,
-      String? journalEntryId,
-      String? createdBy,
-      DateTime? createdAt,
-      DateTime? updatedAt});
+  $Res call({
+    String id,
+    String description,
+    Decimal amount,
+    String currencyCode,
+    DateTime expenseDate,
+    String categoryId,
+    String? vendorId,
+    String? vendorName,
+    String? receiptUrl,
+    String? notes,
+    bool isRecurring,
+    DateTime? recurringEndDate,
+    String status,
+    String? journalEntryId,
+    String? createdBy,
+    DateTime? createdAt,
+    DateTime? updatedAt,
+  });
 }
 
 /// @nodoc
@@ -132,104 +134,109 @@ class _$ExpenseCopyWithImpl<$Res, $Val extends Expense>
     Object? createdAt = freezed,
     Object? updatedAt = freezed,
   }) {
-    return _then(_value.copyWith(
-      id: null == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as String,
-      description: null == description
-          ? _value.description
-          : description // ignore: cast_nullable_to_non_nullable
-              as String,
-      amount: null == amount
-          ? _value.amount
-          : amount // ignore: cast_nullable_to_non_nullable
-              as Decimal,
-      currencyCode: null == currencyCode
-          ? _value.currencyCode
-          : currencyCode // ignore: cast_nullable_to_non_nullable
-              as String,
-      expenseDate: null == expenseDate
-          ? _value.expenseDate
-          : expenseDate // ignore: cast_nullable_to_non_nullable
-              as DateTime,
-      categoryId: null == categoryId
-          ? _value.categoryId
-          : categoryId // ignore: cast_nullable_to_non_nullable
-              as String,
-      vendorId: freezed == vendorId
-          ? _value.vendorId
-          : vendorId // ignore: cast_nullable_to_non_nullable
-              as String?,
-      vendorName: freezed == vendorName
-          ? _value.vendorName
-          : vendorName // ignore: cast_nullable_to_non_nullable
-              as String?,
-      receiptUrl: freezed == receiptUrl
-          ? _value.receiptUrl
-          : receiptUrl // ignore: cast_nullable_to_non_nullable
-              as String?,
-      notes: freezed == notes
-          ? _value.notes
-          : notes // ignore: cast_nullable_to_non_nullable
-              as String?,
-      isRecurring: null == isRecurring
-          ? _value.isRecurring
-          : isRecurring // ignore: cast_nullable_to_non_nullable
-              as bool,
-      recurringEndDate: freezed == recurringEndDate
-          ? _value.recurringEndDate
-          : recurringEndDate // ignore: cast_nullable_to_non_nullable
-              as DateTime?,
-      status: null == status
-          ? _value.status
-          : status // ignore: cast_nullable_to_non_nullable
-              as String,
-      journalEntryId: freezed == journalEntryId
-          ? _value.journalEntryId
-          : journalEntryId // ignore: cast_nullable_to_non_nullable
-              as String?,
-      createdBy: freezed == createdBy
-          ? _value.createdBy
-          : createdBy // ignore: cast_nullable_to_non_nullable
-              as String?,
-      createdAt: freezed == createdAt
-          ? _value.createdAt
-          : createdAt // ignore: cast_nullable_to_non_nullable
-              as DateTime?,
-      updatedAt: freezed == updatedAt
-          ? _value.updatedAt
-          : updatedAt // ignore: cast_nullable_to_non_nullable
-              as DateTime?,
-    ) as $Val);
+    return _then(
+      _value.copyWith(
+            id: null == id
+                ? _value.id
+                : id // ignore: cast_nullable_to_non_nullable
+                      as String,
+            description: null == description
+                ? _value.description
+                : description // ignore: cast_nullable_to_non_nullable
+                      as String,
+            amount: null == amount
+                ? _value.amount
+                : amount // ignore: cast_nullable_to_non_nullable
+                      as Decimal,
+            currencyCode: null == currencyCode
+                ? _value.currencyCode
+                : currencyCode // ignore: cast_nullable_to_non_nullable
+                      as String,
+            expenseDate: null == expenseDate
+                ? _value.expenseDate
+                : expenseDate // ignore: cast_nullable_to_non_nullable
+                      as DateTime,
+            categoryId: null == categoryId
+                ? _value.categoryId
+                : categoryId // ignore: cast_nullable_to_non_nullable
+                      as String,
+            vendorId: freezed == vendorId
+                ? _value.vendorId
+                : vendorId // ignore: cast_nullable_to_non_nullable
+                      as String?,
+            vendorName: freezed == vendorName
+                ? _value.vendorName
+                : vendorName // ignore: cast_nullable_to_non_nullable
+                      as String?,
+            receiptUrl: freezed == receiptUrl
+                ? _value.receiptUrl
+                : receiptUrl // ignore: cast_nullable_to_non_nullable
+                      as String?,
+            notes: freezed == notes
+                ? _value.notes
+                : notes // ignore: cast_nullable_to_non_nullable
+                      as String?,
+            isRecurring: null == isRecurring
+                ? _value.isRecurring
+                : isRecurring // ignore: cast_nullable_to_non_nullable
+                      as bool,
+            recurringEndDate: freezed == recurringEndDate
+                ? _value.recurringEndDate
+                : recurringEndDate // ignore: cast_nullable_to_non_nullable
+                      as DateTime?,
+            status: null == status
+                ? _value.status
+                : status // ignore: cast_nullable_to_non_nullable
+                      as String,
+            journalEntryId: freezed == journalEntryId
+                ? _value.journalEntryId
+                : journalEntryId // ignore: cast_nullable_to_non_nullable
+                      as String?,
+            createdBy: freezed == createdBy
+                ? _value.createdBy
+                : createdBy // ignore: cast_nullable_to_non_nullable
+                      as String?,
+            createdAt: freezed == createdAt
+                ? _value.createdAt
+                : createdAt // ignore: cast_nullable_to_non_nullable
+                      as DateTime?,
+            updatedAt: freezed == updatedAt
+                ? _value.updatedAt
+                : updatedAt // ignore: cast_nullable_to_non_nullable
+                      as DateTime?,
+          )
+          as $Val,
+    );
   }
 }
 
 /// @nodoc
 abstract class _$$ExpenseImplCopyWith<$Res> implements $ExpenseCopyWith<$Res> {
   factory _$$ExpenseImplCopyWith(
-          _$ExpenseImpl value, $Res Function(_$ExpenseImpl) then) =
-      __$$ExpenseImplCopyWithImpl<$Res>;
+    _$ExpenseImpl value,
+    $Res Function(_$ExpenseImpl) then,
+  ) = __$$ExpenseImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call(
-      {String id,
-      String description,
-      Decimal amount,
-      String currencyCode,
-      DateTime expenseDate,
-      String categoryId,
-      String? vendorId,
-      String? vendorName,
-      String? receiptUrl,
-      String? notes,
-      bool isRecurring,
-      DateTime? recurringEndDate,
-      String status,
-      String? journalEntryId,
-      String? createdBy,
-      DateTime? createdAt,
-      DateTime? updatedAt});
+  $Res call({
+    String id,
+    String description,
+    Decimal amount,
+    String currencyCode,
+    DateTime expenseDate,
+    String categoryId,
+    String? vendorId,
+    String? vendorName,
+    String? receiptUrl,
+    String? notes,
+    bool isRecurring,
+    DateTime? recurringEndDate,
+    String status,
+    String? journalEntryId,
+    String? createdBy,
+    DateTime? createdAt,
+    DateTime? updatedAt,
+  });
 }
 
 /// @nodoc
@@ -237,8 +244,9 @@ class __$$ExpenseImplCopyWithImpl<$Res>
     extends _$ExpenseCopyWithImpl<$Res, _$ExpenseImpl>
     implements _$$ExpenseImplCopyWith<$Res> {
   __$$ExpenseImplCopyWithImpl(
-      _$ExpenseImpl _value, $Res Function(_$ExpenseImpl) _then)
-      : super(_value, _then);
+    _$ExpenseImpl _value,
+    $Res Function(_$ExpenseImpl) _then,
+  ) : super(_value, _then);
 
   @pragma('vm:prefer-inline')
   @override
@@ -261,101 +269,103 @@ class __$$ExpenseImplCopyWithImpl<$Res>
     Object? createdAt = freezed,
     Object? updatedAt = freezed,
   }) {
-    return _then(_$ExpenseImpl(
-      id: null == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as String,
-      description: null == description
-          ? _value.description
-          : description // ignore: cast_nullable_to_non_nullable
-              as String,
-      amount: null == amount
-          ? _value.amount
-          : amount // ignore: cast_nullable_to_non_nullable
-              as Decimal,
-      currencyCode: null == currencyCode
-          ? _value.currencyCode
-          : currencyCode // ignore: cast_nullable_to_non_nullable
-              as String,
-      expenseDate: null == expenseDate
-          ? _value.expenseDate
-          : expenseDate // ignore: cast_nullable_to_non_nullable
-              as DateTime,
-      categoryId: null == categoryId
-          ? _value.categoryId
-          : categoryId // ignore: cast_nullable_to_non_nullable
-              as String,
-      vendorId: freezed == vendorId
-          ? _value.vendorId
-          : vendorId // ignore: cast_nullable_to_non_nullable
-              as String?,
-      vendorName: freezed == vendorName
-          ? _value.vendorName
-          : vendorName // ignore: cast_nullable_to_non_nullable
-              as String?,
-      receiptUrl: freezed == receiptUrl
-          ? _value.receiptUrl
-          : receiptUrl // ignore: cast_nullable_to_non_nullable
-              as String?,
-      notes: freezed == notes
-          ? _value.notes
-          : notes // ignore: cast_nullable_to_non_nullable
-              as String?,
-      isRecurring: null == isRecurring
-          ? _value.isRecurring
-          : isRecurring // ignore: cast_nullable_to_non_nullable
-              as bool,
-      recurringEndDate: freezed == recurringEndDate
-          ? _value.recurringEndDate
-          : recurringEndDate // ignore: cast_nullable_to_non_nullable
-              as DateTime?,
-      status: null == status
-          ? _value.status
-          : status // ignore: cast_nullable_to_non_nullable
-              as String,
-      journalEntryId: freezed == journalEntryId
-          ? _value.journalEntryId
-          : journalEntryId // ignore: cast_nullable_to_non_nullable
-              as String?,
-      createdBy: freezed == createdBy
-          ? _value.createdBy
-          : createdBy // ignore: cast_nullable_to_non_nullable
-              as String?,
-      createdAt: freezed == createdAt
-          ? _value.createdAt
-          : createdAt // ignore: cast_nullable_to_non_nullable
-              as DateTime?,
-      updatedAt: freezed == updatedAt
-          ? _value.updatedAt
-          : updatedAt // ignore: cast_nullable_to_non_nullable
-              as DateTime?,
-    ));
+    return _then(
+      _$ExpenseImpl(
+        id: null == id
+            ? _value.id
+            : id // ignore: cast_nullable_to_non_nullable
+                  as String,
+        description: null == description
+            ? _value.description
+            : description // ignore: cast_nullable_to_non_nullable
+                  as String,
+        amount: null == amount
+            ? _value.amount
+            : amount // ignore: cast_nullable_to_non_nullable
+                  as Decimal,
+        currencyCode: null == currencyCode
+            ? _value.currencyCode
+            : currencyCode // ignore: cast_nullable_to_non_nullable
+                  as String,
+        expenseDate: null == expenseDate
+            ? _value.expenseDate
+            : expenseDate // ignore: cast_nullable_to_non_nullable
+                  as DateTime,
+        categoryId: null == categoryId
+            ? _value.categoryId
+            : categoryId // ignore: cast_nullable_to_non_nullable
+                  as String,
+        vendorId: freezed == vendorId
+            ? _value.vendorId
+            : vendorId // ignore: cast_nullable_to_non_nullable
+                  as String?,
+        vendorName: freezed == vendorName
+            ? _value.vendorName
+            : vendorName // ignore: cast_nullable_to_non_nullable
+                  as String?,
+        receiptUrl: freezed == receiptUrl
+            ? _value.receiptUrl
+            : receiptUrl // ignore: cast_nullable_to_non_nullable
+                  as String?,
+        notes: freezed == notes
+            ? _value.notes
+            : notes // ignore: cast_nullable_to_non_nullable
+                  as String?,
+        isRecurring: null == isRecurring
+            ? _value.isRecurring
+            : isRecurring // ignore: cast_nullable_to_non_nullable
+                  as bool,
+        recurringEndDate: freezed == recurringEndDate
+            ? _value.recurringEndDate
+            : recurringEndDate // ignore: cast_nullable_to_non_nullable
+                  as DateTime?,
+        status: null == status
+            ? _value.status
+            : status // ignore: cast_nullable_to_non_nullable
+                  as String,
+        journalEntryId: freezed == journalEntryId
+            ? _value.journalEntryId
+            : journalEntryId // ignore: cast_nullable_to_non_nullable
+                  as String?,
+        createdBy: freezed == createdBy
+            ? _value.createdBy
+            : createdBy // ignore: cast_nullable_to_non_nullable
+                  as String?,
+        createdAt: freezed == createdAt
+            ? _value.createdAt
+            : createdAt // ignore: cast_nullable_to_non_nullable
+                  as DateTime?,
+        updatedAt: freezed == updatedAt
+            ? _value.updatedAt
+            : updatedAt // ignore: cast_nullable_to_non_nullable
+                  as DateTime?,
+      ),
+    );
   }
 }
 
 /// @nodoc
 @JsonSerializable()
 class _$ExpenseImpl extends _Expense {
-  const _$ExpenseImpl(
-      {required this.id,
-      required this.description,
-      required this.amount,
-      required this.currencyCode,
-      required this.expenseDate,
-      required this.categoryId,
-      this.vendorId,
-      this.vendorName,
-      this.receiptUrl,
-      this.notes,
-      this.isRecurring = false,
-      this.recurringEndDate,
-      this.status = 'pending',
-      this.journalEntryId,
-      this.createdBy,
-      this.createdAt,
-      this.updatedAt})
-      : super._();
+  const _$ExpenseImpl({
+    required this.id,
+    required this.description,
+    required this.amount,
+    required this.currencyCode,
+    required this.expenseDate,
+    required this.categoryId,
+    this.vendorId,
+    this.vendorName,
+    this.receiptUrl,
+    this.notes,
+    this.isRecurring = false,
+    this.recurringEndDate,
+    this.status = 'pending',
+    this.journalEntryId,
+    this.createdBy,
+    this.createdAt,
+    this.updatedAt,
+  }) : super._();
 
   factory _$ExpenseImpl.fromJson(Map<String, dynamic> json) =>
       _$$ExpenseImplFromJson(json);
@@ -413,11 +423,11 @@ class _$ExpenseImpl extends _Expense {
   @override
   @JsonKey()
   final String status;
-// pending, approved, rejected, posted
+  // pending, approved, rejected, posted
   /// The ID of the associated GL journal entry when posted.
   @override
   final String? journalEntryId;
-// Link to GL when posted
+  // Link to GL when posted
   /// The ID of the user who created this record.
   @override
   final String? createdBy;
@@ -475,24 +485,25 @@ class _$ExpenseImpl extends _Expense {
   @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(
-      runtimeType,
-      id,
-      description,
-      amount,
-      currencyCode,
-      expenseDate,
-      categoryId,
-      vendorId,
-      vendorName,
-      receiptUrl,
-      notes,
-      isRecurring,
-      recurringEndDate,
-      status,
-      journalEntryId,
-      createdBy,
-      createdAt,
-      updatedAt);
+    runtimeType,
+    id,
+    description,
+    amount,
+    currencyCode,
+    expenseDate,
+    categoryId,
+    vendorId,
+    vendorName,
+    receiptUrl,
+    notes,
+    isRecurring,
+    recurringEndDate,
+    status,
+    journalEntryId,
+    createdBy,
+    createdAt,
+    updatedAt,
+  );
 
   @JsonKey(ignore: true)
   @override
@@ -502,85 +513,71 @@ class _$ExpenseImpl extends _Expense {
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$ExpenseImplToJson(
-      this,
-    );
+    return _$$ExpenseImplToJson(this);
   }
 }
 
 abstract class _Expense extends Expense {
-  const factory _Expense(
-      {required final String id,
-      required final String description,
-      required final Decimal amount,
-      required final String currencyCode,
-      required final DateTime expenseDate,
-      required final String categoryId,
-      final String? vendorId,
-      final String? vendorName,
-      final String? receiptUrl,
-      final String? notes,
-      final bool isRecurring,
-      final DateTime? recurringEndDate,
-      final String status,
-      final String? journalEntryId,
-      final String? createdBy,
-      final DateTime? createdAt,
-      final DateTime? updatedAt}) = _$ExpenseImpl;
+  const factory _Expense({
+    required final String id,
+    required final String description,
+    required final Decimal amount,
+    required final String currencyCode,
+    required final DateTime expenseDate,
+    required final String categoryId,
+    final String? vendorId,
+    final String? vendorName,
+    final String? receiptUrl,
+    final String? notes,
+    final bool isRecurring,
+    final DateTime? recurringEndDate,
+    final String status,
+    final String? journalEntryId,
+    final String? createdBy,
+    final DateTime? createdAt,
+    final DateTime? updatedAt,
+  }) = _$ExpenseImpl;
   const _Expense._() : super._();
 
   factory _Expense.fromJson(Map<String, dynamic> json) = _$ExpenseImpl.fromJson;
 
   @override
-
   /// The unique identifier of the expense.
   String get id;
   @override
-
   /// A brief description of the expense.
   String get description;
   @override
-
   /// The monetary amount of the expense.
   Decimal get amount;
   @override
-
   /// The currency code (e.g., 'SAR').
   String get currencyCode;
   @override
-
   /// The date the expense was incurred.
   DateTime get expenseDate;
   @override
-
   /// The ID of the category this expense belongs to.
   String get categoryId;
   @override
-
   /// The optional ID of the vendor.
   String? get vendorId;
   @override
-
   /// The optional name of the vendor.
   String? get vendorName;
   @override
-
   /// The URL or path to the receipt image.
   String? get receiptUrl;
   @override
-
   /// Additional notes or remarks.
   String? get notes;
   @override
-
   /// Whether this is a recurring expense.
   bool get isRecurring;
   @override
-
   /// The date when the recurrence ends, if applicable.
   DateTime? get recurringEndDate;
   @override
-
   /// The current status of the expense (e.g., pending, approved).
   String get status;
   @override // pending, approved, rejected, posted
@@ -590,11 +587,9 @@ abstract class _Expense extends Expense {
   /// The ID of the user who created this record.
   String? get createdBy;
   @override
-
   /// The timestamp when this record was created.
   DateTime? get createdAt;
   @override
-
   /// The timestamp when this record was last updated.
   DateTime? get updatedAt;
   @override
@@ -639,17 +634,19 @@ mixin _$ExpenseCategory {
 /// @nodoc
 abstract class $ExpenseCategoryCopyWith<$Res> {
   factory $ExpenseCategoryCopyWith(
-          ExpenseCategory value, $Res Function(ExpenseCategory) then) =
-      _$ExpenseCategoryCopyWithImpl<$Res, ExpenseCategory>;
+    ExpenseCategory value,
+    $Res Function(ExpenseCategory) then,
+  ) = _$ExpenseCategoryCopyWithImpl<$Res, ExpenseCategory>;
   @useResult
-  $Res call(
-      {String id,
-      String name,
-      String nameAr,
-      String? icon,
-      String? color,
-      String? accountId,
-      bool isActive});
+  $Res call({
+    String id,
+    String name,
+    String nameAr,
+    String? icon,
+    String? color,
+    String? accountId,
+    bool isActive,
+  });
 }
 
 /// @nodoc
@@ -673,55 +670,60 @@ class _$ExpenseCategoryCopyWithImpl<$Res, $Val extends ExpenseCategory>
     Object? accountId = freezed,
     Object? isActive = null,
   }) {
-    return _then(_value.copyWith(
-      id: null == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as String,
-      name: null == name
-          ? _value.name
-          : name // ignore: cast_nullable_to_non_nullable
-              as String,
-      nameAr: null == nameAr
-          ? _value.nameAr
-          : nameAr // ignore: cast_nullable_to_non_nullable
-              as String,
-      icon: freezed == icon
-          ? _value.icon
-          : icon // ignore: cast_nullable_to_non_nullable
-              as String?,
-      color: freezed == color
-          ? _value.color
-          : color // ignore: cast_nullable_to_non_nullable
-              as String?,
-      accountId: freezed == accountId
-          ? _value.accountId
-          : accountId // ignore: cast_nullable_to_non_nullable
-              as String?,
-      isActive: null == isActive
-          ? _value.isActive
-          : isActive // ignore: cast_nullable_to_non_nullable
-              as bool,
-    ) as $Val);
+    return _then(
+      _value.copyWith(
+            id: null == id
+                ? _value.id
+                : id // ignore: cast_nullable_to_non_nullable
+                      as String,
+            name: null == name
+                ? _value.name
+                : name // ignore: cast_nullable_to_non_nullable
+                      as String,
+            nameAr: null == nameAr
+                ? _value.nameAr
+                : nameAr // ignore: cast_nullable_to_non_nullable
+                      as String,
+            icon: freezed == icon
+                ? _value.icon
+                : icon // ignore: cast_nullable_to_non_nullable
+                      as String?,
+            color: freezed == color
+                ? _value.color
+                : color // ignore: cast_nullable_to_non_nullable
+                      as String?,
+            accountId: freezed == accountId
+                ? _value.accountId
+                : accountId // ignore: cast_nullable_to_non_nullable
+                      as String?,
+            isActive: null == isActive
+                ? _value.isActive
+                : isActive // ignore: cast_nullable_to_non_nullable
+                      as bool,
+          )
+          as $Val,
+    );
   }
 }
 
 /// @nodoc
 abstract class _$$ExpenseCategoryImplCopyWith<$Res>
     implements $ExpenseCategoryCopyWith<$Res> {
-  factory _$$ExpenseCategoryImplCopyWith(_$ExpenseCategoryImpl value,
-          $Res Function(_$ExpenseCategoryImpl) then) =
-      __$$ExpenseCategoryImplCopyWithImpl<$Res>;
+  factory _$$ExpenseCategoryImplCopyWith(
+    _$ExpenseCategoryImpl value,
+    $Res Function(_$ExpenseCategoryImpl) then,
+  ) = __$$ExpenseCategoryImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call(
-      {String id,
-      String name,
-      String nameAr,
-      String? icon,
-      String? color,
-      String? accountId,
-      bool isActive});
+  $Res call({
+    String id,
+    String name,
+    String nameAr,
+    String? icon,
+    String? color,
+    String? accountId,
+    bool isActive,
+  });
 }
 
 /// @nodoc
@@ -729,8 +731,9 @@ class __$$ExpenseCategoryImplCopyWithImpl<$Res>
     extends _$ExpenseCategoryCopyWithImpl<$Res, _$ExpenseCategoryImpl>
     implements _$$ExpenseCategoryImplCopyWith<$Res> {
   __$$ExpenseCategoryImplCopyWithImpl(
-      _$ExpenseCategoryImpl _value, $Res Function(_$ExpenseCategoryImpl) _then)
-      : super(_value, _then);
+    _$ExpenseCategoryImpl _value,
+    $Res Function(_$ExpenseCategoryImpl) _then,
+  ) : super(_value, _then);
 
   @pragma('vm:prefer-inline')
   @override
@@ -743,50 +746,53 @@ class __$$ExpenseCategoryImplCopyWithImpl<$Res>
     Object? accountId = freezed,
     Object? isActive = null,
   }) {
-    return _then(_$ExpenseCategoryImpl(
-      id: null == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as String,
-      name: null == name
-          ? _value.name
-          : name // ignore: cast_nullable_to_non_nullable
-              as String,
-      nameAr: null == nameAr
-          ? _value.nameAr
-          : nameAr // ignore: cast_nullable_to_non_nullable
-              as String,
-      icon: freezed == icon
-          ? _value.icon
-          : icon // ignore: cast_nullable_to_non_nullable
-              as String?,
-      color: freezed == color
-          ? _value.color
-          : color // ignore: cast_nullable_to_non_nullable
-              as String?,
-      accountId: freezed == accountId
-          ? _value.accountId
-          : accountId // ignore: cast_nullable_to_non_nullable
-              as String?,
-      isActive: null == isActive
-          ? _value.isActive
-          : isActive // ignore: cast_nullable_to_non_nullable
-              as bool,
-    ));
+    return _then(
+      _$ExpenseCategoryImpl(
+        id: null == id
+            ? _value.id
+            : id // ignore: cast_nullable_to_non_nullable
+                  as String,
+        name: null == name
+            ? _value.name
+            : name // ignore: cast_nullable_to_non_nullable
+                  as String,
+        nameAr: null == nameAr
+            ? _value.nameAr
+            : nameAr // ignore: cast_nullable_to_non_nullable
+                  as String,
+        icon: freezed == icon
+            ? _value.icon
+            : icon // ignore: cast_nullable_to_non_nullable
+                  as String?,
+        color: freezed == color
+            ? _value.color
+            : color // ignore: cast_nullable_to_non_nullable
+                  as String?,
+        accountId: freezed == accountId
+            ? _value.accountId
+            : accountId // ignore: cast_nullable_to_non_nullable
+                  as String?,
+        isActive: null == isActive
+            ? _value.isActive
+            : isActive // ignore: cast_nullable_to_non_nullable
+                  as bool,
+      ),
+    );
   }
 }
 
 /// @nodoc
 @JsonSerializable()
 class _$ExpenseCategoryImpl implements _ExpenseCategory {
-  const _$ExpenseCategoryImpl(
-      {required this.id,
-      required this.name,
-      required this.nameAr,
-      this.icon,
-      this.color,
-      this.accountId,
-      this.isActive = true});
+  const _$ExpenseCategoryImpl({
+    required this.id,
+    required this.name,
+    required this.nameAr,
+    this.icon,
+    this.color,
+    this.accountId,
+    this.isActive = true,
+  });
 
   factory _$ExpenseCategoryImpl.fromJson(Map<String, dynamic> json) =>
       _$$ExpenseCategoryImplFromJson(json);
@@ -814,7 +820,7 @@ class _$ExpenseCategoryImpl implements _ExpenseCategory {
   /// Linked GL account ID.
   @override
   final String? accountId;
-// GL account for posting
+  // GL account for posting
   /// Whether category is active.
   @override
   @JsonKey()
@@ -844,58 +850,61 @@ class _$ExpenseCategoryImpl implements _ExpenseCategory {
   @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(
-      runtimeType, id, name, nameAr, icon, color, accountId, isActive);
+    runtimeType,
+    id,
+    name,
+    nameAr,
+    icon,
+    color,
+    accountId,
+    isActive,
+  );
 
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
   _$$ExpenseCategoryImplCopyWith<_$ExpenseCategoryImpl> get copyWith =>
       __$$ExpenseCategoryImplCopyWithImpl<_$ExpenseCategoryImpl>(
-          this, _$identity);
+        this,
+        _$identity,
+      );
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$ExpenseCategoryImplToJson(
-      this,
-    );
+    return _$$ExpenseCategoryImplToJson(this);
   }
 }
 
 abstract class _ExpenseCategory implements ExpenseCategory {
-  const factory _ExpenseCategory(
-      {required final String id,
-      required final String name,
-      required final String nameAr,
-      final String? icon,
-      final String? color,
-      final String? accountId,
-      final bool isActive}) = _$ExpenseCategoryImpl;
+  const factory _ExpenseCategory({
+    required final String id,
+    required final String name,
+    required final String nameAr,
+    final String? icon,
+    final String? color,
+    final String? accountId,
+    final bool isActive,
+  }) = _$ExpenseCategoryImpl;
 
   factory _ExpenseCategory.fromJson(Map<String, dynamic> json) =
       _$ExpenseCategoryImpl.fromJson;
 
   @override
-
   /// Unique identifier.
   String get id;
   @override
-
   /// English name.
   String get name;
   @override
-
   /// Arabic name.
   String get nameAr;
   @override
-
   /// Icon code point or name.
   String? get icon;
   @override
-
   /// Hex color code.
   String? get color;
   @override
-
   /// Linked GL account ID.
   String? get accountId;
   @override // GL account for posting

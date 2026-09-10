@@ -23,9 +23,7 @@ class ZatcaSimulationService extends _$ZatcaSimulationService {
   /// Simulates onboarding a device (CSR Generation -> CSID).
   ///
   /// Returns a success message and mock credentials (implicitly).
-  Future<ZatcaSubmissionResult> onboardDevice({
-    required String otp,
-  }) async {
+  Future<ZatcaSubmissionResult> onboardDevice({required String otp}) async {
     // Simulate network delay
     await Future<void>.delayed(const Duration(seconds: 2));
 

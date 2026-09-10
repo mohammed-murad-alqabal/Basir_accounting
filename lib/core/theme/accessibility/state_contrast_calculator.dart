@@ -87,11 +87,7 @@ class StateContrastCalculator {
     y = y > 0.008856 ? pow(y, 1 / 3).toDouble() : (7.787 * y) + (16 / 116);
     z = z > 0.008856 ? pow(z, 1 / 3).toDouble() : (7.787 * z) + (16 / 116);
 
-    return _LabColor(
-      116 * y - 16,
-      500 * (x - y),
-      200 * (y - z),
-    );
+    return _LabColor(116 * y - 16, 500 * (x - y), 200 * (y - z));
   }
 
   /// Check if two colors have a minimum visual difference
@@ -99,8 +95,7 @@ class StateContrastCalculator {
     Color color1,
     Color color2, {
     double threshold = 10.0,
-  }) =>
-      calculateDeltaE(color1, color2) >= threshold;
+  }) => calculateDeltaE(color1, color2) >= threshold;
 }
 
 class _LabColor {

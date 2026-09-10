@@ -43,12 +43,12 @@ class AnalyticsService {
       _isar.analyticsEvents.where().filter().typeEqualTo(type).count();
 
   /// الحصول على قائمة بأحدث الأحداث
-  Future<List<AnalyticsEvent>> getRecentEvents({int limit = 10}) async =>
-      _isar.analyticsEvents
-          .where()
-          .sortByTimestampDesc()
-          .limit(limit)
-          .findAll();
+  Future<List<AnalyticsEvent>> getRecentEvents({int limit = 10}) async => _isar
+      .analyticsEvents
+      .where()
+      .sortByTimestampDesc()
+      .limit(limit)
+      .findAll();
 
   /// حذف جميع بيانات التحليلات
   Future<void> clearAllData() async {

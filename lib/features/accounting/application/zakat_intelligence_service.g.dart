@@ -18,14 +18,14 @@ String _$zakatIntelligenceServiceHash() =>
 @ProviderFor(ZakatIntelligenceService)
 final zakatIntelligenceServiceProvider =
     AutoDisposeAsyncNotifierProvider<ZakatIntelligenceService, void>.internal(
-  ZakatIntelligenceService.new,
-  name: r'zakatIntelligenceServiceProvider',
-  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-      ? null
-      : _$zakatIntelligenceServiceHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
+      ZakatIntelligenceService.new,
+      name: r'zakatIntelligenceServiceProvider',
+      debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+          ? null
+          : _$zakatIntelligenceServiceHash,
+      dependencies: null,
+      allTransitiveDependencies: null,
+    );
 
 typedef _$ZakatIntelligenceService = AutoDisposeAsyncNotifier<void>;
 // ignore_for_file: type=lint

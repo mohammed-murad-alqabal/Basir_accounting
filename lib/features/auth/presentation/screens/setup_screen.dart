@@ -58,7 +58,7 @@ class _SetupScreenState extends ConsumerState<SetupScreen> {
 
       // الانتقال إلى شاشة الإعدادات الإضافية أو لوحة التحكم
       if (!mounted) return;
-      await Navigator.of(context).pushReplacementNamed('/dashboard');
+      await Navigator.of(context).pushReplacementNamed('/mfa-gate');
     } on Exception catch (e) {
       if (!mounted) return;
 
@@ -120,7 +120,10 @@ class _SetupScreenState extends ConsumerState<SetupScreen> {
                       if (value == null || value.isEmpty) {
                         return context.l10n.errEmptyField;
                       }
-                      if (value.length < 6) {
+                      final passwordPolicy = RegExp(
+                        r'^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%^&*(),.?":{}|<>]).{12,}$',
+                      );
+                      if (!passwordPolicy.hasMatch(value)) {
                         return context.l10n.errPasswordShort;
                       }
                       return null;
@@ -164,44 +167,44 @@ class _SetupScreenState extends ConsumerState<SetupScreen> {
   }
 
   Widget _buildHeader() => Column(
-        children: [
-          Container(
-            width: 80,
-            height: 80,
-            decoration: BoxDecoration(
-              color: AppColors.primary,
-              borderRadius: BorderRadius.circular(Radii.lg),
-              boxShadow: [
-                BoxShadow(
-                  color: AppColors.primary.withValues(alpha: 0.2),
-                  blurRadius: 8,
-                  offset: const Offset(0, 4),
-                ),
-              ],
+    children: [
+      Container(
+        width: 80,
+        height: 80,
+        decoration: BoxDecoration(
+          color: AppColors.primary,
+          borderRadius: BorderRadius.circular(Radii.lg),
+          boxShadow: [
+            BoxShadow(
+              color: AppColors.primary.withValues(alpha: 0.2),
+              blurRadius: 8,
+              offset: const Offset(0, 4),
             ),
-            child: Center(
-              child: Semantics(
-                label: context.l10n.dashboardBasirSystemTitle,
-                image: true,
-                child: const BasirLogo(size: 60),
-              ),
-            ),
+          ],
+        ),
+        child: Center(
+          child: Semantics(
+            label: context.l10n.dashboardBasirSystemTitle,
+            image: true,
+            child: const BasirLogo(size: 60),
           ),
-          const SizedBox(height: Spacing.lg),
-          Text(
-            context.l10n.setupTitle,
-            style: AppTextStyles.headlineSmall.copyWith(
-              fontWeight: FontWeight.bold,
-              color: AppColors.textPrimary,
-            ),
-          ),
-          const SizedBox(height: Spacing.sm),
-          Text(
-            context.l10n.setupSubtitle,
-            style: AppTextStyles.bodyMedium.copyWith(
-              color: AppColors.textSecondary,
-            ),
-          ),
-        ],
-      );
+        ),
+      ),
+      const SizedBox(height: Spacing.lg),
+      Text(
+        context.l10n.setupTitle,
+        style: AppTextStyles.headlineSmall.copyWith(
+          fontWeight: FontWeight.bold,
+          color: AppColors.textPrimary,
+        ),
+      ),
+      const SizedBox(height: Spacing.sm),
+      Text(
+        context.l10n.setupSubtitle,
+        style: AppTextStyles.bodyMedium.copyWith(
+          color: AppColors.textSecondary,
+        ),
+      ),
+    ],
+  );
 }

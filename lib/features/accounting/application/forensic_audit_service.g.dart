@@ -18,14 +18,14 @@ String _$forensicAuditServiceHash() =>
 @ProviderFor(ForensicAuditService)
 final forensicAuditServiceProvider =
     NotifierProvider<ForensicAuditService, void>.internal(
-  ForensicAuditService.new,
-  name: r'forensicAuditServiceProvider',
-  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-      ? null
-      : _$forensicAuditServiceHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
+      ForensicAuditService.new,
+      name: r'forensicAuditServiceProvider',
+      debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+          ? null
+          : _$forensicAuditServiceHash,
+      dependencies: null,
+      allTransitiveDependencies: null,
+    );
 
 typedef _$ForensicAuditService = Notifier<void>;
 // ignore_for_file: type=lint

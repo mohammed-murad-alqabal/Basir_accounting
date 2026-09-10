@@ -12,7 +12,8 @@ part of 'budget.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
+  'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models',
+);
 
 Budget _$BudgetFromJson(Map<String, dynamic> json) {
   return _Budget.fromJson(json);
@@ -63,18 +64,19 @@ abstract class $BudgetCopyWith<$Res> {
   factory $BudgetCopyWith(Budget value, $Res Function(Budget) then) =
       _$BudgetCopyWithImpl<$Res, Budget>;
   @useResult
-  $Res call(
-      {String id,
-      String name,
-      BudgetCategory category,
-      Decimal limitAmount,
-      DateTime startDate,
-      DateTime endDate,
-      Decimal spentAmount,
-      double alertThreshold,
-      bool isRollover,
-      bool isActive,
-      String? userId});
+  $Res call({
+    String id,
+    String name,
+    BudgetCategory category,
+    Decimal limitAmount,
+    DateTime startDate,
+    DateTime endDate,
+    Decimal spentAmount,
+    double alertThreshold,
+    bool isRollover,
+    bool isActive,
+    String? userId,
+  });
 }
 
 /// @nodoc
@@ -102,74 +104,79 @@ class _$BudgetCopyWithImpl<$Res, $Val extends Budget>
     Object? isActive = null,
     Object? userId = freezed,
   }) {
-    return _then(_value.copyWith(
-      id: null == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as String,
-      name: null == name
-          ? _value.name
-          : name // ignore: cast_nullable_to_non_nullable
-              as String,
-      category: null == category
-          ? _value.category
-          : category // ignore: cast_nullable_to_non_nullable
-              as BudgetCategory,
-      limitAmount: null == limitAmount
-          ? _value.limitAmount
-          : limitAmount // ignore: cast_nullable_to_non_nullable
-              as Decimal,
-      startDate: null == startDate
-          ? _value.startDate
-          : startDate // ignore: cast_nullable_to_non_nullable
-              as DateTime,
-      endDate: null == endDate
-          ? _value.endDate
-          : endDate // ignore: cast_nullable_to_non_nullable
-              as DateTime,
-      spentAmount: null == spentAmount
-          ? _value.spentAmount
-          : spentAmount // ignore: cast_nullable_to_non_nullable
-              as Decimal,
-      alertThreshold: null == alertThreshold
-          ? _value.alertThreshold
-          : alertThreshold // ignore: cast_nullable_to_non_nullable
-              as double,
-      isRollover: null == isRollover
-          ? _value.isRollover
-          : isRollover // ignore: cast_nullable_to_non_nullable
-              as bool,
-      isActive: null == isActive
-          ? _value.isActive
-          : isActive // ignore: cast_nullable_to_non_nullable
-              as bool,
-      userId: freezed == userId
-          ? _value.userId
-          : userId // ignore: cast_nullable_to_non_nullable
-              as String?,
-    ) as $Val);
+    return _then(
+      _value.copyWith(
+            id: null == id
+                ? _value.id
+                : id // ignore: cast_nullable_to_non_nullable
+                      as String,
+            name: null == name
+                ? _value.name
+                : name // ignore: cast_nullable_to_non_nullable
+                      as String,
+            category: null == category
+                ? _value.category
+                : category // ignore: cast_nullable_to_non_nullable
+                      as BudgetCategory,
+            limitAmount: null == limitAmount
+                ? _value.limitAmount
+                : limitAmount // ignore: cast_nullable_to_non_nullable
+                      as Decimal,
+            startDate: null == startDate
+                ? _value.startDate
+                : startDate // ignore: cast_nullable_to_non_nullable
+                      as DateTime,
+            endDate: null == endDate
+                ? _value.endDate
+                : endDate // ignore: cast_nullable_to_non_nullable
+                      as DateTime,
+            spentAmount: null == spentAmount
+                ? _value.spentAmount
+                : spentAmount // ignore: cast_nullable_to_non_nullable
+                      as Decimal,
+            alertThreshold: null == alertThreshold
+                ? _value.alertThreshold
+                : alertThreshold // ignore: cast_nullable_to_non_nullable
+                      as double,
+            isRollover: null == isRollover
+                ? _value.isRollover
+                : isRollover // ignore: cast_nullable_to_non_nullable
+                      as bool,
+            isActive: null == isActive
+                ? _value.isActive
+                : isActive // ignore: cast_nullable_to_non_nullable
+                      as bool,
+            userId: freezed == userId
+                ? _value.userId
+                : userId // ignore: cast_nullable_to_non_nullable
+                      as String?,
+          )
+          as $Val,
+    );
   }
 }
 
 /// @nodoc
 abstract class _$$BudgetImplCopyWith<$Res> implements $BudgetCopyWith<$Res> {
   factory _$$BudgetImplCopyWith(
-          _$BudgetImpl value, $Res Function(_$BudgetImpl) then) =
-      __$$BudgetImplCopyWithImpl<$Res>;
+    _$BudgetImpl value,
+    $Res Function(_$BudgetImpl) then,
+  ) = __$$BudgetImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call(
-      {String id,
-      String name,
-      BudgetCategory category,
-      Decimal limitAmount,
-      DateTime startDate,
-      DateTime endDate,
-      Decimal spentAmount,
-      double alertThreshold,
-      bool isRollover,
-      bool isActive,
-      String? userId});
+  $Res call({
+    String id,
+    String name,
+    BudgetCategory category,
+    Decimal limitAmount,
+    DateTime startDate,
+    DateTime endDate,
+    Decimal spentAmount,
+    double alertThreshold,
+    bool isRollover,
+    bool isActive,
+    String? userId,
+  });
 }
 
 /// @nodoc
@@ -177,8 +184,9 @@ class __$$BudgetImplCopyWithImpl<$Res>
     extends _$BudgetCopyWithImpl<$Res, _$BudgetImpl>
     implements _$$BudgetImplCopyWith<$Res> {
   __$$BudgetImplCopyWithImpl(
-      _$BudgetImpl _value, $Res Function(_$BudgetImpl) _then)
-      : super(_value, _then);
+    _$BudgetImpl _value,
+    $Res Function(_$BudgetImpl) _then,
+  ) : super(_value, _then);
 
   @pragma('vm:prefer-inline')
   @override
@@ -195,70 +203,73 @@ class __$$BudgetImplCopyWithImpl<$Res>
     Object? isActive = null,
     Object? userId = freezed,
   }) {
-    return _then(_$BudgetImpl(
-      id: null == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as String,
-      name: null == name
-          ? _value.name
-          : name // ignore: cast_nullable_to_non_nullable
-              as String,
-      category: null == category
-          ? _value.category
-          : category // ignore: cast_nullable_to_non_nullable
-              as BudgetCategory,
-      limitAmount: null == limitAmount
-          ? _value.limitAmount
-          : limitAmount // ignore: cast_nullable_to_non_nullable
-              as Decimal,
-      startDate: null == startDate
-          ? _value.startDate
-          : startDate // ignore: cast_nullable_to_non_nullable
-              as DateTime,
-      endDate: null == endDate
-          ? _value.endDate
-          : endDate // ignore: cast_nullable_to_non_nullable
-              as DateTime,
-      spentAmount: null == spentAmount
-          ? _value.spentAmount
-          : spentAmount // ignore: cast_nullable_to_non_nullable
-              as Decimal,
-      alertThreshold: null == alertThreshold
-          ? _value.alertThreshold
-          : alertThreshold // ignore: cast_nullable_to_non_nullable
-              as double,
-      isRollover: null == isRollover
-          ? _value.isRollover
-          : isRollover // ignore: cast_nullable_to_non_nullable
-              as bool,
-      isActive: null == isActive
-          ? _value.isActive
-          : isActive // ignore: cast_nullable_to_non_nullable
-              as bool,
-      userId: freezed == userId
-          ? _value.userId
-          : userId // ignore: cast_nullable_to_non_nullable
-              as String?,
-    ));
+    return _then(
+      _$BudgetImpl(
+        id: null == id
+            ? _value.id
+            : id // ignore: cast_nullable_to_non_nullable
+                  as String,
+        name: null == name
+            ? _value.name
+            : name // ignore: cast_nullable_to_non_nullable
+                  as String,
+        category: null == category
+            ? _value.category
+            : category // ignore: cast_nullable_to_non_nullable
+                  as BudgetCategory,
+        limitAmount: null == limitAmount
+            ? _value.limitAmount
+            : limitAmount // ignore: cast_nullable_to_non_nullable
+                  as Decimal,
+        startDate: null == startDate
+            ? _value.startDate
+            : startDate // ignore: cast_nullable_to_non_nullable
+                  as DateTime,
+        endDate: null == endDate
+            ? _value.endDate
+            : endDate // ignore: cast_nullable_to_non_nullable
+                  as DateTime,
+        spentAmount: null == spentAmount
+            ? _value.spentAmount
+            : spentAmount // ignore: cast_nullable_to_non_nullable
+                  as Decimal,
+        alertThreshold: null == alertThreshold
+            ? _value.alertThreshold
+            : alertThreshold // ignore: cast_nullable_to_non_nullable
+                  as double,
+        isRollover: null == isRollover
+            ? _value.isRollover
+            : isRollover // ignore: cast_nullable_to_non_nullable
+                  as bool,
+        isActive: null == isActive
+            ? _value.isActive
+            : isActive // ignore: cast_nullable_to_non_nullable
+                  as bool,
+        userId: freezed == userId
+            ? _value.userId
+            : userId // ignore: cast_nullable_to_non_nullable
+                  as String?,
+      ),
+    );
   }
 }
 
 /// @nodoc
 @JsonSerializable()
 class _$BudgetImpl implements _Budget {
-  const _$BudgetImpl(
-      {required this.id,
-      required this.name,
-      required this.category,
-      required this.limitAmount,
-      required this.startDate,
-      required this.endDate,
-      required this.spentAmount,
-      this.alertThreshold = 0.8,
-      this.isRollover = false,
-      this.isActive = true,
-      this.userId});
+  const _$BudgetImpl({
+    required this.id,
+    required this.name,
+    required this.category,
+    required this.limitAmount,
+    required this.startDate,
+    required this.endDate,
+    required this.spentAmount,
+    this.alertThreshold = 0.8,
+    this.isRollover = false,
+    this.isActive = true,
+    this.userId,
+  });
 
   factory _$BudgetImpl.fromJson(Map<String, dynamic> json) =>
       _$$BudgetImplFromJson(json);
@@ -343,18 +354,19 @@ class _$BudgetImpl implements _Budget {
   @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(
-      runtimeType,
-      id,
-      name,
-      category,
-      limitAmount,
-      startDate,
-      endDate,
-      spentAmount,
-      alertThreshold,
-      isRollover,
-      isActive,
-      userId);
+    runtimeType,
+    id,
+    name,
+    category,
+    limitAmount,
+    startDate,
+    endDate,
+    spentAmount,
+    alertThreshold,
+    isRollover,
+    isActive,
+    userId,
+  );
 
   @JsonKey(ignore: true)
   @override
@@ -364,70 +376,58 @@ class _$BudgetImpl implements _Budget {
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$BudgetImplToJson(
-      this,
-    );
+    return _$$BudgetImplToJson(this);
   }
 }
 
 abstract class _Budget implements Budget {
-  const factory _Budget(
-      {required final String id,
-      required final String name,
-      required final BudgetCategory category,
-      required final Decimal limitAmount,
-      required final DateTime startDate,
-      required final DateTime endDate,
-      required final Decimal spentAmount,
-      final double alertThreshold,
-      final bool isRollover,
-      final bool isActive,
-      final String? userId}) = _$BudgetImpl;
+  const factory _Budget({
+    required final String id,
+    required final String name,
+    required final BudgetCategory category,
+    required final Decimal limitAmount,
+    required final DateTime startDate,
+    required final DateTime endDate,
+    required final Decimal spentAmount,
+    final double alertThreshold,
+    final bool isRollover,
+    final bool isActive,
+    final String? userId,
+  }) = _$BudgetImpl;
 
   factory _Budget.fromJson(Map<String, dynamic> json) = _$BudgetImpl.fromJson;
 
   @override
-
   /// المعرف الفريد للميزانية
   String get id;
   @override
-
   /// اسم الميزانية (مثلاً: "ميزانية يناير")
   String get name;
   @override
-
   /// التصنيف المخصص لهذه الميزانية
   BudgetCategory get category;
   @override
-
   /// الحد الأقصى للميزانية (Decimal لدقة عالية)
   Decimal get limitAmount;
   @override
-
   /// تاريخ البدء
   DateTime get startDate;
   @override
-
   /// تاريخ الانتهاء
   DateTime get endDate;
   @override
-
   /// المبلغ المصروف فعلياً
   Decimal get spentAmount;
   @override
-
   /// عتبة التنبيه (مثلاً 0.8 تعني 80%)
   double get alertThreshold;
   @override
-
   /// هل يتم ترحيل الفائض للشهر التالي (Rollover)
   bool get isRollover;
   @override
-
   /// حالة تفعيل الميزانية
   bool get isActive;
   @override
-
   /// معرف المستخدم صاحب الميزانية
   String? get userId;
   @override

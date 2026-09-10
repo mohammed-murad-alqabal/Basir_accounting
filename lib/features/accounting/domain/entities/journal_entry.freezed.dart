@@ -12,10 +12,12 @@ part of 'journal_entry.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
+  'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models',
+);
 
 TemporalJustification _$TemporalJustificationFromJson(
-    Map<String, dynamic> json) {
+  Map<String, dynamic> json,
+) {
   return _TemporalJustification.fromJson(json);
 }
 
@@ -38,19 +40,23 @@ mixin _$TemporalJustification {
 
 /// @nodoc
 abstract class $TemporalJustificationCopyWith<$Res> {
-  factory $TemporalJustificationCopyWith(TemporalJustification value,
-          $Res Function(TemporalJustification) then) =
-      _$TemporalJustificationCopyWithImpl<$Res, TemporalJustification>;
+  factory $TemporalJustificationCopyWith(
+    TemporalJustification value,
+    $Res Function(TemporalJustification) then,
+  ) = _$TemporalJustificationCopyWithImpl<$Res, TemporalJustification>;
   @useResult
-  $Res call(
-      {DateTime transactionDate,
-      DateTime effectiveDate,
-      DateTime recordingDate});
+  $Res call({
+    DateTime transactionDate,
+    DateTime effectiveDate,
+    DateTime recordingDate,
+  });
 }
 
 /// @nodoc
-class _$TemporalJustificationCopyWithImpl<$Res,
-        $Val extends TemporalJustification>
+class _$TemporalJustificationCopyWithImpl<
+  $Res,
+  $Val extends TemporalJustification
+>
     implements $TemporalJustificationCopyWith<$Res> {
   _$TemporalJustificationCopyWithImpl(this._value, this._then);
 
@@ -66,20 +72,23 @@ class _$TemporalJustificationCopyWithImpl<$Res,
     Object? effectiveDate = null,
     Object? recordingDate = null,
   }) {
-    return _then(_value.copyWith(
-      transactionDate: null == transactionDate
-          ? _value.transactionDate
-          : transactionDate // ignore: cast_nullable_to_non_nullable
-              as DateTime,
-      effectiveDate: null == effectiveDate
-          ? _value.effectiveDate
-          : effectiveDate // ignore: cast_nullable_to_non_nullable
-              as DateTime,
-      recordingDate: null == recordingDate
-          ? _value.recordingDate
-          : recordingDate // ignore: cast_nullable_to_non_nullable
-              as DateTime,
-    ) as $Val);
+    return _then(
+      _value.copyWith(
+            transactionDate: null == transactionDate
+                ? _value.transactionDate
+                : transactionDate // ignore: cast_nullable_to_non_nullable
+                      as DateTime,
+            effectiveDate: null == effectiveDate
+                ? _value.effectiveDate
+                : effectiveDate // ignore: cast_nullable_to_non_nullable
+                      as DateTime,
+            recordingDate: null == recordingDate
+                ? _value.recordingDate
+                : recordingDate // ignore: cast_nullable_to_non_nullable
+                      as DateTime,
+          )
+          as $Val,
+    );
   }
 }
 
@@ -87,25 +96,27 @@ class _$TemporalJustificationCopyWithImpl<$Res,
 abstract class _$$TemporalJustificationImplCopyWith<$Res>
     implements $TemporalJustificationCopyWith<$Res> {
   factory _$$TemporalJustificationImplCopyWith(
-          _$TemporalJustificationImpl value,
-          $Res Function(_$TemporalJustificationImpl) then) =
-      __$$TemporalJustificationImplCopyWithImpl<$Res>;
+    _$TemporalJustificationImpl value,
+    $Res Function(_$TemporalJustificationImpl) then,
+  ) = __$$TemporalJustificationImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call(
-      {DateTime transactionDate,
-      DateTime effectiveDate,
-      DateTime recordingDate});
+  $Res call({
+    DateTime transactionDate,
+    DateTime effectiveDate,
+    DateTime recordingDate,
+  });
 }
 
 /// @nodoc
 class __$$TemporalJustificationImplCopyWithImpl<$Res>
-    extends _$TemporalJustificationCopyWithImpl<$Res,
-        _$TemporalJustificationImpl>
+    extends
+        _$TemporalJustificationCopyWithImpl<$Res, _$TemporalJustificationImpl>
     implements _$$TemporalJustificationImplCopyWith<$Res> {
-  __$$TemporalJustificationImplCopyWithImpl(_$TemporalJustificationImpl _value,
-      $Res Function(_$TemporalJustificationImpl) _then)
-      : super(_value, _then);
+  __$$TemporalJustificationImplCopyWithImpl(
+    _$TemporalJustificationImpl _value,
+    $Res Function(_$TemporalJustificationImpl) _then,
+  ) : super(_value, _then);
 
   @pragma('vm:prefer-inline')
   @override
@@ -114,30 +125,33 @@ class __$$TemporalJustificationImplCopyWithImpl<$Res>
     Object? effectiveDate = null,
     Object? recordingDate = null,
   }) {
-    return _then(_$TemporalJustificationImpl(
-      transactionDate: null == transactionDate
-          ? _value.transactionDate
-          : transactionDate // ignore: cast_nullable_to_non_nullable
-              as DateTime,
-      effectiveDate: null == effectiveDate
-          ? _value.effectiveDate
-          : effectiveDate // ignore: cast_nullable_to_non_nullable
-              as DateTime,
-      recordingDate: null == recordingDate
-          ? _value.recordingDate
-          : recordingDate // ignore: cast_nullable_to_non_nullable
-              as DateTime,
-    ));
+    return _then(
+      _$TemporalJustificationImpl(
+        transactionDate: null == transactionDate
+            ? _value.transactionDate
+            : transactionDate // ignore: cast_nullable_to_non_nullable
+                  as DateTime,
+        effectiveDate: null == effectiveDate
+            ? _value.effectiveDate
+            : effectiveDate // ignore: cast_nullable_to_non_nullable
+                  as DateTime,
+        recordingDate: null == recordingDate
+            ? _value.recordingDate
+            : recordingDate // ignore: cast_nullable_to_non_nullable
+                  as DateTime,
+      ),
+    );
   }
 }
 
 /// @nodoc
 @JsonSerializable()
 class _$TemporalJustificationImpl implements _TemporalJustification {
-  const _$TemporalJustificationImpl(
-      {required this.transactionDate,
-      required this.effectiveDate,
-      required this.recordingDate});
+  const _$TemporalJustificationImpl({
+    required this.transactionDate,
+    required this.effectiveDate,
+    required this.recordingDate,
+  });
 
   factory _$TemporalJustificationImpl.fromJson(Map<String, dynamic> json) =>
       _$$TemporalJustificationImplFromJson(json);
@@ -181,46 +195,46 @@ class _$TemporalJustificationImpl implements _TemporalJustification {
   @override
   @pragma('vm:prefer-inline')
   _$$TemporalJustificationImplCopyWith<_$TemporalJustificationImpl>
-      get copyWith => __$$TemporalJustificationImplCopyWithImpl<
-          _$TemporalJustificationImpl>(this, _$identity);
+  get copyWith =>
+      __$$TemporalJustificationImplCopyWithImpl<_$TemporalJustificationImpl>(
+        this,
+        _$identity,
+      );
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$TemporalJustificationImplToJson(
-      this,
-    );
+    return _$$TemporalJustificationImplToJson(this);
   }
 }
 
 abstract class _TemporalJustification implements TemporalJustification {
-  const factory _TemporalJustification(
-      {required final DateTime transactionDate,
-      required final DateTime effectiveDate,
-      required final DateTime recordingDate}) = _$TemporalJustificationImpl;
+  const factory _TemporalJustification({
+    required final DateTime transactionDate,
+    required final DateTime effectiveDate,
+    required final DateTime recordingDate,
+  }) = _$TemporalJustificationImpl;
 
   factory _TemporalJustification.fromJson(Map<String, dynamic> json) =
       _$TemporalJustificationImpl.fromJson;
 
   @override
-
   /// The actual date the business transaction occurred.
   DateTime get transactionDate;
   @override
-
   /// The date the entry influences the financial statements (Posting Date).
   DateTime get effectiveDate;
   @override
-
   /// The system-generated timestamp of the entry creation.
   DateTime get recordingDate;
   @override
   @JsonKey(ignore: true)
   _$$TemporalJustificationImplCopyWith<_$TemporalJustificationImpl>
-      get copyWith => throw _privateConstructorUsedError;
+  get copyWith => throw _privateConstructorUsedError;
 }
 
 StandardsJustification _$StandardsJustificationFromJson(
-    Map<String, dynamic> json) {
+  Map<String, dynamic> json,
+) {
   return _StandardsJustification.fromJson(json);
 }
 
@@ -243,19 +257,23 @@ mixin _$StandardsJustification {
 
 /// @nodoc
 abstract class $StandardsJustificationCopyWith<$Res> {
-  factory $StandardsJustificationCopyWith(StandardsJustification value,
-          $Res Function(StandardsJustification) then) =
-      _$StandardsJustificationCopyWithImpl<$Res, StandardsJustification>;
+  factory $StandardsJustificationCopyWith(
+    StandardsJustification value,
+    $Res Function(StandardsJustification) then,
+  ) = _$StandardsJustificationCopyWithImpl<$Res, StandardsJustification>;
   @useResult
-  $Res call(
-      {String standardReference,
-      String? recognitionBasis,
-      String? measurementBasis});
+  $Res call({
+    String standardReference,
+    String? recognitionBasis,
+    String? measurementBasis,
+  });
 }
 
 /// @nodoc
-class _$StandardsJustificationCopyWithImpl<$Res,
-        $Val extends StandardsJustification>
+class _$StandardsJustificationCopyWithImpl<
+  $Res,
+  $Val extends StandardsJustification
+>
     implements $StandardsJustificationCopyWith<$Res> {
   _$StandardsJustificationCopyWithImpl(this._value, this._then);
 
@@ -271,20 +289,23 @@ class _$StandardsJustificationCopyWithImpl<$Res,
     Object? recognitionBasis = freezed,
     Object? measurementBasis = freezed,
   }) {
-    return _then(_value.copyWith(
-      standardReference: null == standardReference
-          ? _value.standardReference
-          : standardReference // ignore: cast_nullable_to_non_nullable
-              as String,
-      recognitionBasis: freezed == recognitionBasis
-          ? _value.recognitionBasis
-          : recognitionBasis // ignore: cast_nullable_to_non_nullable
-              as String?,
-      measurementBasis: freezed == measurementBasis
-          ? _value.measurementBasis
-          : measurementBasis // ignore: cast_nullable_to_non_nullable
-              as String?,
-    ) as $Val);
+    return _then(
+      _value.copyWith(
+            standardReference: null == standardReference
+                ? _value.standardReference
+                : standardReference // ignore: cast_nullable_to_non_nullable
+                      as String,
+            recognitionBasis: freezed == recognitionBasis
+                ? _value.recognitionBasis
+                : recognitionBasis // ignore: cast_nullable_to_non_nullable
+                      as String?,
+            measurementBasis: freezed == measurementBasis
+                ? _value.measurementBasis
+                : measurementBasis // ignore: cast_nullable_to_non_nullable
+                      as String?,
+          )
+          as $Val,
+    );
   }
 }
 
@@ -292,26 +313,27 @@ class _$StandardsJustificationCopyWithImpl<$Res,
 abstract class _$$StandardsJustificationImplCopyWith<$Res>
     implements $StandardsJustificationCopyWith<$Res> {
   factory _$$StandardsJustificationImplCopyWith(
-          _$StandardsJustificationImpl value,
-          $Res Function(_$StandardsJustificationImpl) then) =
-      __$$StandardsJustificationImplCopyWithImpl<$Res>;
+    _$StandardsJustificationImpl value,
+    $Res Function(_$StandardsJustificationImpl) then,
+  ) = __$$StandardsJustificationImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call(
-      {String standardReference,
-      String? recognitionBasis,
-      String? measurementBasis});
+  $Res call({
+    String standardReference,
+    String? recognitionBasis,
+    String? measurementBasis,
+  });
 }
 
 /// @nodoc
 class __$$StandardsJustificationImplCopyWithImpl<$Res>
-    extends _$StandardsJustificationCopyWithImpl<$Res,
-        _$StandardsJustificationImpl>
+    extends
+        _$StandardsJustificationCopyWithImpl<$Res, _$StandardsJustificationImpl>
     implements _$$StandardsJustificationImplCopyWith<$Res> {
   __$$StandardsJustificationImplCopyWithImpl(
-      _$StandardsJustificationImpl _value,
-      $Res Function(_$StandardsJustificationImpl) _then)
-      : super(_value, _then);
+    _$StandardsJustificationImpl _value,
+    $Res Function(_$StandardsJustificationImpl) _then,
+  ) : super(_value, _then);
 
   @pragma('vm:prefer-inline')
   @override
@@ -320,30 +342,33 @@ class __$$StandardsJustificationImplCopyWithImpl<$Res>
     Object? recognitionBasis = freezed,
     Object? measurementBasis = freezed,
   }) {
-    return _then(_$StandardsJustificationImpl(
-      standardReference: null == standardReference
-          ? _value.standardReference
-          : standardReference // ignore: cast_nullable_to_non_nullable
-              as String,
-      recognitionBasis: freezed == recognitionBasis
-          ? _value.recognitionBasis
-          : recognitionBasis // ignore: cast_nullable_to_non_nullable
-              as String?,
-      measurementBasis: freezed == measurementBasis
-          ? _value.measurementBasis
-          : measurementBasis // ignore: cast_nullable_to_non_nullable
-              as String?,
-    ));
+    return _then(
+      _$StandardsJustificationImpl(
+        standardReference: null == standardReference
+            ? _value.standardReference
+            : standardReference // ignore: cast_nullable_to_non_nullable
+                  as String,
+        recognitionBasis: freezed == recognitionBasis
+            ? _value.recognitionBasis
+            : recognitionBasis // ignore: cast_nullable_to_non_nullable
+                  as String?,
+        measurementBasis: freezed == measurementBasis
+            ? _value.measurementBasis
+            : measurementBasis // ignore: cast_nullable_to_non_nullable
+                  as String?,
+      ),
+    );
   }
 }
 
 /// @nodoc
 @JsonSerializable()
 class _$StandardsJustificationImpl implements _StandardsJustification {
-  const _$StandardsJustificationImpl(
-      {required this.standardReference,
-      this.recognitionBasis,
-      this.measurementBasis});
+  const _$StandardsJustificationImpl({
+    required this.standardReference,
+    this.recognitionBasis,
+    this.measurementBasis,
+  });
 
   factory _$StandardsJustificationImpl.fromJson(Map<String, dynamic> json) =>
       _$$StandardsJustificationImplFromJson(json);
@@ -381,48 +406,51 @@ class _$StandardsJustificationImpl implements _StandardsJustification {
   @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(
-      runtimeType, standardReference, recognitionBasis, measurementBasis);
+    runtimeType,
+    standardReference,
+    recognitionBasis,
+    measurementBasis,
+  );
 
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
   _$$StandardsJustificationImplCopyWith<_$StandardsJustificationImpl>
-      get copyWith => __$$StandardsJustificationImplCopyWithImpl<
-          _$StandardsJustificationImpl>(this, _$identity);
+  get copyWith =>
+      __$$StandardsJustificationImplCopyWithImpl<_$StandardsJustificationImpl>(
+        this,
+        _$identity,
+      );
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$StandardsJustificationImplToJson(
-      this,
-    );
+    return _$$StandardsJustificationImplToJson(this);
   }
 }
 
 abstract class _StandardsJustification implements StandardsJustification {
-  const factory _StandardsJustification(
-      {required final String standardReference,
-      final String? recognitionBasis,
-      final String? measurementBasis}) = _$StandardsJustificationImpl;
+  const factory _StandardsJustification({
+    required final String standardReference,
+    final String? recognitionBasis,
+    final String? measurementBasis,
+  }) = _$StandardsJustificationImpl;
 
   factory _StandardsJustification.fromJson(Map<String, dynamic> json) =
       _$StandardsJustificationImpl.fromJson;
 
   @override
-
   /// Specific standard clause reference (e.g., "IFRS 15.35").
   String get standardReference;
   @override
-
   /// Logic for recognizing the transaction (e.g., "Cash Receipt", "Accrual").
   String? get recognitionBasis;
   @override
-
   /// Value determination method (e.g., "Amortized Cost", "Fair Value").
   String? get measurementBasis;
   @override
   @JsonKey(ignore: true)
   _$$StandardsJustificationImplCopyWith<_$StandardsJustificationImpl>
-      get copyWith => throw _privateConstructorUsedError;
+  get copyWith => throw _privateConstructorUsedError;
 }
 
 AuditLogEntry _$AuditLogEntryFromJson(Map<String, dynamic> json) {
@@ -452,11 +480,16 @@ mixin _$AuditLogEntry {
 /// @nodoc
 abstract class $AuditLogEntryCopyWith<$Res> {
   factory $AuditLogEntryCopyWith(
-          AuditLogEntry value, $Res Function(AuditLogEntry) then) =
-      _$AuditLogEntryCopyWithImpl<$Res, AuditLogEntry>;
+    AuditLogEntry value,
+    $Res Function(AuditLogEntry) then,
+  ) = _$AuditLogEntryCopyWithImpl<$Res, AuditLogEntry>;
   @useResult
-  $Res call(
-      {DateTime timestamp, String action, String rationale, String actor});
+  $Res call({
+    DateTime timestamp,
+    String action,
+    String rationale,
+    String actor,
+  });
 }
 
 /// @nodoc
@@ -477,24 +510,27 @@ class _$AuditLogEntryCopyWithImpl<$Res, $Val extends AuditLogEntry>
     Object? rationale = null,
     Object? actor = null,
   }) {
-    return _then(_value.copyWith(
-      timestamp: null == timestamp
-          ? _value.timestamp
-          : timestamp // ignore: cast_nullable_to_non_nullable
-              as DateTime,
-      action: null == action
-          ? _value.action
-          : action // ignore: cast_nullable_to_non_nullable
-              as String,
-      rationale: null == rationale
-          ? _value.rationale
-          : rationale // ignore: cast_nullable_to_non_nullable
-              as String,
-      actor: null == actor
-          ? _value.actor
-          : actor // ignore: cast_nullable_to_non_nullable
-              as String,
-    ) as $Val);
+    return _then(
+      _value.copyWith(
+            timestamp: null == timestamp
+                ? _value.timestamp
+                : timestamp // ignore: cast_nullable_to_non_nullable
+                      as DateTime,
+            action: null == action
+                ? _value.action
+                : action // ignore: cast_nullable_to_non_nullable
+                      as String,
+            rationale: null == rationale
+                ? _value.rationale
+                : rationale // ignore: cast_nullable_to_non_nullable
+                      as String,
+            actor: null == actor
+                ? _value.actor
+                : actor // ignore: cast_nullable_to_non_nullable
+                      as String,
+          )
+          as $Val,
+    );
   }
 }
 
@@ -502,12 +538,17 @@ class _$AuditLogEntryCopyWithImpl<$Res, $Val extends AuditLogEntry>
 abstract class _$$AuditLogEntryImplCopyWith<$Res>
     implements $AuditLogEntryCopyWith<$Res> {
   factory _$$AuditLogEntryImplCopyWith(
-          _$AuditLogEntryImpl value, $Res Function(_$AuditLogEntryImpl) then) =
-      __$$AuditLogEntryImplCopyWithImpl<$Res>;
+    _$AuditLogEntryImpl value,
+    $Res Function(_$AuditLogEntryImpl) then,
+  ) = __$$AuditLogEntryImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call(
-      {DateTime timestamp, String action, String rationale, String actor});
+  $Res call({
+    DateTime timestamp,
+    String action,
+    String rationale,
+    String actor,
+  });
 }
 
 /// @nodoc
@@ -515,8 +556,9 @@ class __$$AuditLogEntryImplCopyWithImpl<$Res>
     extends _$AuditLogEntryCopyWithImpl<$Res, _$AuditLogEntryImpl>
     implements _$$AuditLogEntryImplCopyWith<$Res> {
   __$$AuditLogEntryImplCopyWithImpl(
-      _$AuditLogEntryImpl _value, $Res Function(_$AuditLogEntryImpl) _then)
-      : super(_value, _then);
+    _$AuditLogEntryImpl _value,
+    $Res Function(_$AuditLogEntryImpl) _then,
+  ) : super(_value, _then);
 
   @pragma('vm:prefer-inline')
   @override
@@ -526,35 +568,38 @@ class __$$AuditLogEntryImplCopyWithImpl<$Res>
     Object? rationale = null,
     Object? actor = null,
   }) {
-    return _then(_$AuditLogEntryImpl(
-      timestamp: null == timestamp
-          ? _value.timestamp
-          : timestamp // ignore: cast_nullable_to_non_nullable
-              as DateTime,
-      action: null == action
-          ? _value.action
-          : action // ignore: cast_nullable_to_non_nullable
-              as String,
-      rationale: null == rationale
-          ? _value.rationale
-          : rationale // ignore: cast_nullable_to_non_nullable
-              as String,
-      actor: null == actor
-          ? _value.actor
-          : actor // ignore: cast_nullable_to_non_nullable
-              as String,
-    ));
+    return _then(
+      _$AuditLogEntryImpl(
+        timestamp: null == timestamp
+            ? _value.timestamp
+            : timestamp // ignore: cast_nullable_to_non_nullable
+                  as DateTime,
+        action: null == action
+            ? _value.action
+            : action // ignore: cast_nullable_to_non_nullable
+                  as String,
+        rationale: null == rationale
+            ? _value.rationale
+            : rationale // ignore: cast_nullable_to_non_nullable
+                  as String,
+        actor: null == actor
+            ? _value.actor
+            : actor // ignore: cast_nullable_to_non_nullable
+                  as String,
+      ),
+    );
   }
 }
 
 /// @nodoc
 @JsonSerializable()
 class _$AuditLogEntryImpl implements _AuditLogEntry {
-  const _$AuditLogEntryImpl(
-      {required this.timestamp,
-      required this.action,
-      required this.rationale,
-      required this.actor});
+  const _$AuditLogEntryImpl({
+    required this.timestamp,
+    required this.action,
+    required this.rationale,
+    required this.actor,
+  });
 
   factory _$AuditLogEntryImpl.fromJson(Map<String, dynamic> json) =>
       _$$AuditLogEntryImplFromJson(json);
@@ -606,36 +651,31 @@ class _$AuditLogEntryImpl implements _AuditLogEntry {
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$AuditLogEntryImplToJson(
-      this,
-    );
+    return _$$AuditLogEntryImplToJson(this);
   }
 }
 
 abstract class _AuditLogEntry implements AuditLogEntry {
-  const factory _AuditLogEntry(
-      {required final DateTime timestamp,
-      required final String action,
-      required final String rationale,
-      required final String actor}) = _$AuditLogEntryImpl;
+  const factory _AuditLogEntry({
+    required final DateTime timestamp,
+    required final String action,
+    required final String rationale,
+    required final String actor,
+  }) = _$AuditLogEntryImpl;
 
   factory _AuditLogEntry.fromJson(Map<String, dynamic> json) =
       _$AuditLogEntryImpl.fromJson;
 
   @override
-
   /// Systematic timestamp of the event.
   DateTime get timestamp;
   @override
-
   /// Descriptive name of the action performed.
   String get action;
   @override
-
   /// Contextual explanation or justification for the recorded action.
   String get rationale;
   @override
-
   /// Entity responsible for the action (e.g., 'system', 'agent-ID', 'user-ID').
   String get actor;
   @override
@@ -694,20 +734,22 @@ mixin _$JournalEntryLine {
 /// @nodoc
 abstract class $JournalEntryLineCopyWith<$Res> {
   factory $JournalEntryLineCopyWith(
-          JournalEntryLine value, $Res Function(JournalEntryLine) then) =
-      _$JournalEntryLineCopyWithImpl<$Res, JournalEntryLine>;
+    JournalEntryLine value,
+    $Res Function(JournalEntryLine) then,
+  ) = _$JournalEntryLineCopyWithImpl<$Res, JournalEntryLine>;
   @useResult
-  $Res call(
-      {String accountId,
-      String accountName,
-      @DecimalJsonConverter() Decimal debit,
-      @DecimalJsonConverter() Decimal credit,
-      String? description,
-      String? sourceDocumentRef,
-      String? costCenterId,
-      String? originalCurrency,
-      @DecimalJsonConverter() Decimal? exchangeRate,
-      @DecimalJsonConverter() Decimal? originalAmount});
+  $Res call({
+    String accountId,
+    String accountName,
+    @DecimalJsonConverter() Decimal debit,
+    @DecimalJsonConverter() Decimal credit,
+    String? description,
+    String? sourceDocumentRef,
+    String? costCenterId,
+    String? originalCurrency,
+    @DecimalJsonConverter() Decimal? exchangeRate,
+    @DecimalJsonConverter() Decimal? originalAmount,
+  });
 }
 
 /// @nodoc
@@ -734,79 +776,85 @@ class _$JournalEntryLineCopyWithImpl<$Res, $Val extends JournalEntryLine>
     Object? exchangeRate = freezed,
     Object? originalAmount = freezed,
   }) {
-    return _then(_value.copyWith(
-      accountId: null == accountId
-          ? _value.accountId
-          : accountId // ignore: cast_nullable_to_non_nullable
-              as String,
-      accountName: null == accountName
-          ? _value.accountName
-          : accountName // ignore: cast_nullable_to_non_nullable
-              as String,
-      debit: null == debit
-          ? _value.debit
-          : debit // ignore: cast_nullable_to_non_nullable
-              as Decimal,
-      credit: null == credit
-          ? _value.credit
-          : credit // ignore: cast_nullable_to_non_nullable
-              as Decimal,
-      description: freezed == description
-          ? _value.description
-          : description // ignore: cast_nullable_to_non_nullable
-              as String?,
-      sourceDocumentRef: freezed == sourceDocumentRef
-          ? _value.sourceDocumentRef
-          : sourceDocumentRef // ignore: cast_nullable_to_non_nullable
-              as String?,
-      costCenterId: freezed == costCenterId
-          ? _value.costCenterId
-          : costCenterId // ignore: cast_nullable_to_non_nullable
-              as String?,
-      originalCurrency: freezed == originalCurrency
-          ? _value.originalCurrency
-          : originalCurrency // ignore: cast_nullable_to_non_nullable
-              as String?,
-      exchangeRate: freezed == exchangeRate
-          ? _value.exchangeRate
-          : exchangeRate // ignore: cast_nullable_to_non_nullable
-              as Decimal?,
-      originalAmount: freezed == originalAmount
-          ? _value.originalAmount
-          : originalAmount // ignore: cast_nullable_to_non_nullable
-              as Decimal?,
-    ) as $Val);
+    return _then(
+      _value.copyWith(
+            accountId: null == accountId
+                ? _value.accountId
+                : accountId // ignore: cast_nullable_to_non_nullable
+                      as String,
+            accountName: null == accountName
+                ? _value.accountName
+                : accountName // ignore: cast_nullable_to_non_nullable
+                      as String,
+            debit: null == debit
+                ? _value.debit
+                : debit // ignore: cast_nullable_to_non_nullable
+                      as Decimal,
+            credit: null == credit
+                ? _value.credit
+                : credit // ignore: cast_nullable_to_non_nullable
+                      as Decimal,
+            description: freezed == description
+                ? _value.description
+                : description // ignore: cast_nullable_to_non_nullable
+                      as String?,
+            sourceDocumentRef: freezed == sourceDocumentRef
+                ? _value.sourceDocumentRef
+                : sourceDocumentRef // ignore: cast_nullable_to_non_nullable
+                      as String?,
+            costCenterId: freezed == costCenterId
+                ? _value.costCenterId
+                : costCenterId // ignore: cast_nullable_to_non_nullable
+                      as String?,
+            originalCurrency: freezed == originalCurrency
+                ? _value.originalCurrency
+                : originalCurrency // ignore: cast_nullable_to_non_nullable
+                      as String?,
+            exchangeRate: freezed == exchangeRate
+                ? _value.exchangeRate
+                : exchangeRate // ignore: cast_nullable_to_non_nullable
+                      as Decimal?,
+            originalAmount: freezed == originalAmount
+                ? _value.originalAmount
+                : originalAmount // ignore: cast_nullable_to_non_nullable
+                      as Decimal?,
+          )
+          as $Val,
+    );
   }
 }
 
 /// @nodoc
 abstract class _$$JournalEntryLineImplCopyWith<$Res>
     implements $JournalEntryLineCopyWith<$Res> {
-  factory _$$JournalEntryLineImplCopyWith(_$JournalEntryLineImpl value,
-          $Res Function(_$JournalEntryLineImpl) then) =
-      __$$JournalEntryLineImplCopyWithImpl<$Res>;
+  factory _$$JournalEntryLineImplCopyWith(
+    _$JournalEntryLineImpl value,
+    $Res Function(_$JournalEntryLineImpl) then,
+  ) = __$$JournalEntryLineImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call(
-      {String accountId,
-      String accountName,
-      @DecimalJsonConverter() Decimal debit,
-      @DecimalJsonConverter() Decimal credit,
-      String? description,
-      String? sourceDocumentRef,
-      String? costCenterId,
-      String? originalCurrency,
-      @DecimalJsonConverter() Decimal? exchangeRate,
-      @DecimalJsonConverter() Decimal? originalAmount});
+  $Res call({
+    String accountId,
+    String accountName,
+    @DecimalJsonConverter() Decimal debit,
+    @DecimalJsonConverter() Decimal credit,
+    String? description,
+    String? sourceDocumentRef,
+    String? costCenterId,
+    String? originalCurrency,
+    @DecimalJsonConverter() Decimal? exchangeRate,
+    @DecimalJsonConverter() Decimal? originalAmount,
+  });
 }
 
 /// @nodoc
 class __$$JournalEntryLineImplCopyWithImpl<$Res>
     extends _$JournalEntryLineCopyWithImpl<$Res, _$JournalEntryLineImpl>
     implements _$$JournalEntryLineImplCopyWith<$Res> {
-  __$$JournalEntryLineImplCopyWithImpl(_$JournalEntryLineImpl _value,
-      $Res Function(_$JournalEntryLineImpl) _then)
-      : super(_value, _then);
+  __$$JournalEntryLineImplCopyWithImpl(
+    _$JournalEntryLineImpl _value,
+    $Res Function(_$JournalEntryLineImpl) _then,
+  ) : super(_value, _then);
 
   @pragma('vm:prefer-inline')
   @override
@@ -822,48 +870,50 @@ class __$$JournalEntryLineImplCopyWithImpl<$Res>
     Object? exchangeRate = freezed,
     Object? originalAmount = freezed,
   }) {
-    return _then(_$JournalEntryLineImpl(
-      accountId: null == accountId
-          ? _value.accountId
-          : accountId // ignore: cast_nullable_to_non_nullable
-              as String,
-      accountName: null == accountName
-          ? _value.accountName
-          : accountName // ignore: cast_nullable_to_non_nullable
-              as String,
-      debit: null == debit
-          ? _value.debit
-          : debit // ignore: cast_nullable_to_non_nullable
-              as Decimal,
-      credit: null == credit
-          ? _value.credit
-          : credit // ignore: cast_nullable_to_non_nullable
-              as Decimal,
-      description: freezed == description
-          ? _value.description
-          : description // ignore: cast_nullable_to_non_nullable
-              as String?,
-      sourceDocumentRef: freezed == sourceDocumentRef
-          ? _value.sourceDocumentRef
-          : sourceDocumentRef // ignore: cast_nullable_to_non_nullable
-              as String?,
-      costCenterId: freezed == costCenterId
-          ? _value.costCenterId
-          : costCenterId // ignore: cast_nullable_to_non_nullable
-              as String?,
-      originalCurrency: freezed == originalCurrency
-          ? _value.originalCurrency
-          : originalCurrency // ignore: cast_nullable_to_non_nullable
-              as String?,
-      exchangeRate: freezed == exchangeRate
-          ? _value.exchangeRate
-          : exchangeRate // ignore: cast_nullable_to_non_nullable
-              as Decimal?,
-      originalAmount: freezed == originalAmount
-          ? _value.originalAmount
-          : originalAmount // ignore: cast_nullable_to_non_nullable
-              as Decimal?,
-    ));
+    return _then(
+      _$JournalEntryLineImpl(
+        accountId: null == accountId
+            ? _value.accountId
+            : accountId // ignore: cast_nullable_to_non_nullable
+                  as String,
+        accountName: null == accountName
+            ? _value.accountName
+            : accountName // ignore: cast_nullable_to_non_nullable
+                  as String,
+        debit: null == debit
+            ? _value.debit
+            : debit // ignore: cast_nullable_to_non_nullable
+                  as Decimal,
+        credit: null == credit
+            ? _value.credit
+            : credit // ignore: cast_nullable_to_non_nullable
+                  as Decimal,
+        description: freezed == description
+            ? _value.description
+            : description // ignore: cast_nullable_to_non_nullable
+                  as String?,
+        sourceDocumentRef: freezed == sourceDocumentRef
+            ? _value.sourceDocumentRef
+            : sourceDocumentRef // ignore: cast_nullable_to_non_nullable
+                  as String?,
+        costCenterId: freezed == costCenterId
+            ? _value.costCenterId
+            : costCenterId // ignore: cast_nullable_to_non_nullable
+                  as String?,
+        originalCurrency: freezed == originalCurrency
+            ? _value.originalCurrency
+            : originalCurrency // ignore: cast_nullable_to_non_nullable
+                  as String?,
+        exchangeRate: freezed == exchangeRate
+            ? _value.exchangeRate
+            : exchangeRate // ignore: cast_nullable_to_non_nullable
+                  as Decimal?,
+        originalAmount: freezed == originalAmount
+            ? _value.originalAmount
+            : originalAmount // ignore: cast_nullable_to_non_nullable
+                  as Decimal?,
+      ),
+    );
   }
 }
 
@@ -871,17 +921,18 @@ class __$$JournalEntryLineImplCopyWithImpl<$Res>
 
 @JsonSerializable(explicitToJson: true)
 class _$JournalEntryLineImpl implements _JournalEntryLine {
-  const _$JournalEntryLineImpl(
-      {required this.accountId,
-      required this.accountName,
-      @DecimalJsonConverter() required this.debit,
-      @DecimalJsonConverter() required this.credit,
-      this.description,
-      this.sourceDocumentRef,
-      this.costCenterId,
-      this.originalCurrency,
-      @DecimalJsonConverter() this.exchangeRate,
-      @DecimalJsonConverter() this.originalAmount});
+  const _$JournalEntryLineImpl({
+    required this.accountId,
+    required this.accountName,
+    @DecimalJsonConverter() required this.debit,
+    @DecimalJsonConverter() required this.credit,
+    this.description,
+    this.sourceDocumentRef,
+    this.costCenterId,
+    this.originalCurrency,
+    @DecimalJsonConverter() this.exchangeRate,
+    @DecimalJsonConverter() this.originalAmount,
+  });
 
   factory _$JournalEntryLineImpl.fromJson(Map<String, dynamic> json) =>
       _$$JournalEntryLineImplFromJson(json);
@@ -964,92 +1015,83 @@ class _$JournalEntryLineImpl implements _JournalEntryLine {
   @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(
-      runtimeType,
-      accountId,
-      accountName,
-      debit,
-      credit,
-      description,
-      sourceDocumentRef,
-      costCenterId,
-      originalCurrency,
-      exchangeRate,
-      originalAmount);
+    runtimeType,
+    accountId,
+    accountName,
+    debit,
+    credit,
+    description,
+    sourceDocumentRef,
+    costCenterId,
+    originalCurrency,
+    exchangeRate,
+    originalAmount,
+  );
 
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
   _$$JournalEntryLineImplCopyWith<_$JournalEntryLineImpl> get copyWith =>
       __$$JournalEntryLineImplCopyWithImpl<_$JournalEntryLineImpl>(
-          this, _$identity);
+        this,
+        _$identity,
+      );
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$JournalEntryLineImplToJson(
-      this,
-    );
+    return _$$JournalEntryLineImplToJson(this);
   }
 }
 
 abstract class _JournalEntryLine implements JournalEntryLine {
-  const factory _JournalEntryLine(
-          {required final String accountId,
-          required final String accountName,
-          @DecimalJsonConverter() required final Decimal debit,
-          @DecimalJsonConverter() required final Decimal credit,
-          final String? description,
-          final String? sourceDocumentRef,
-          final String? costCenterId,
-          final String? originalCurrency,
-          @DecimalJsonConverter() final Decimal? exchangeRate,
-          @DecimalJsonConverter() final Decimal? originalAmount}) =
-      _$JournalEntryLineImpl;
+  const factory _JournalEntryLine({
+    required final String accountId,
+    required final String accountName,
+    @DecimalJsonConverter() required final Decimal debit,
+    @DecimalJsonConverter() required final Decimal credit,
+    final String? description,
+    final String? sourceDocumentRef,
+    final String? costCenterId,
+    final String? originalCurrency,
+    @DecimalJsonConverter() final Decimal? exchangeRate,
+    @DecimalJsonConverter() final Decimal? originalAmount,
+  }) = _$JournalEntryLineImpl;
 
   factory _JournalEntryLine.fromJson(Map<String, dynamic> json) =
       _$JournalEntryLineImpl.fromJson;
 
   @override
-
   /// Identifier of the target account.
   String get accountId;
   @override
-
   /// Denormalized account name for high-performance listing and audit.
   String get accountName;
   @override
-
   /// Positive increase for Debit-nature accounts.
   @DecimalJsonConverter()
   Decimal get debit;
   @override
-
   /// Positive increase for Credit-nature accounts.
   @DecimalJsonConverter()
   Decimal get credit;
   @override
-
   /// Line-specific memo or explanation.
   String? get description;
   @override
-
   /// Direct link to source documentation (e.g., Invoice #, Receipt ID).
   /// (Standard Reference: CP-009: Traceability)
   String? get sourceDocumentRef;
   @override
-
   /// Cost center identifier for management accounting attribution.
   String? get costCenterId;
   @override
-
   /// ISO currency code for multi-currency transactions.
   String? get originalCurrency;
   @override
-
   /// Spot exchange rate at the time of recording.
   @DecimalJsonConverter()
   Decimal? get exchangeRate;
   @override
-
   /// Original amount in the source currency before conversion.
   @DecimalJsonConverter()
   Decimal? get originalAmount;
@@ -1129,6 +1171,10 @@ mixin _$JournalEntry {
   /// Most recent synchronization timestamp from the server.
   DateTime? get serverUpdatedAt => throw _privateConstructorUsedError;
 
+  /// Internal authoritative ledger entry ID for cross-reference.
+  /// (Standard Reference: CP-003: Immutability - Authority Chain)
+  String? get authoritativeEntryId => throw _privateConstructorUsedError;
+
   /// Soft-deletion flag.
   bool get isDeleted => throw _privateConstructorUsedError;
 
@@ -1141,32 +1187,35 @@ mixin _$JournalEntry {
 /// @nodoc
 abstract class $JournalEntryCopyWith<$Res> {
   factory $JournalEntryCopyWith(
-          JournalEntry value, $Res Function(JournalEntry) then) =
-      _$JournalEntryCopyWithImpl<$Res, JournalEntry>;
+    JournalEntry value,
+    $Res Function(JournalEntry) then,
+  ) = _$JournalEntryCopyWithImpl<$Res, JournalEntry>;
   @useResult
-  $Res call(
-      {String id,
-      String referenceNumber,
-      DateTime date,
-      TemporalJustification temporal,
-      StandardsJustification standards,
-      String description,
-      JournalEntryStatus status,
-      List<JournalEntryLine> lines,
-      String sourceDocument,
-      String sourceId,
-      String createdBy,
-      DateTime createdAt,
-      DateTime updatedAt,
-      String? hash,
-      String? previousHash,
-      DateTime? postedAt,
-      String? userId,
-      String? warehouseId,
-      List<AuditLogEntry> auditLogs,
-      SyncStatus syncStatus,
-      DateTime? serverUpdatedAt,
-      bool isDeleted});
+  $Res call({
+    String id,
+    String referenceNumber,
+    DateTime date,
+    TemporalJustification temporal,
+    StandardsJustification standards,
+    String description,
+    JournalEntryStatus status,
+    List<JournalEntryLine> lines,
+    String sourceDocument,
+    String sourceId,
+    String createdBy,
+    DateTime createdAt,
+    DateTime updatedAt,
+    String? hash,
+    String? previousHash,
+    DateTime? postedAt,
+    String? userId,
+    String? warehouseId,
+    List<AuditLogEntry> auditLogs,
+    SyncStatus syncStatus,
+    DateTime? serverUpdatedAt,
+    String? authoritativeEntryId,
+    bool isDeleted,
+  });
 
   $TemporalJustificationCopyWith<$Res> get temporal;
   $StandardsJustificationCopyWith<$Res> get standards;
@@ -1206,98 +1255,106 @@ class _$JournalEntryCopyWithImpl<$Res, $Val extends JournalEntry>
     Object? auditLogs = null,
     Object? syncStatus = null,
     Object? serverUpdatedAt = freezed,
+    Object? authoritativeEntryId = freezed,
     Object? isDeleted = null,
   }) {
-    return _then(_value.copyWith(
-      id: null == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as String,
-      referenceNumber: null == referenceNumber
-          ? _value.referenceNumber
-          : referenceNumber // ignore: cast_nullable_to_non_nullable
-              as String,
-      date: null == date
-          ? _value.date
-          : date // ignore: cast_nullable_to_non_nullable
-              as DateTime,
-      temporal: null == temporal
-          ? _value.temporal
-          : temporal // ignore: cast_nullable_to_non_nullable
-              as TemporalJustification,
-      standards: null == standards
-          ? _value.standards
-          : standards // ignore: cast_nullable_to_non_nullable
-              as StandardsJustification,
-      description: null == description
-          ? _value.description
-          : description // ignore: cast_nullable_to_non_nullable
-              as String,
-      status: null == status
-          ? _value.status
-          : status // ignore: cast_nullable_to_non_nullable
-              as JournalEntryStatus,
-      lines: null == lines
-          ? _value.lines
-          : lines // ignore: cast_nullable_to_non_nullable
-              as List<JournalEntryLine>,
-      sourceDocument: null == sourceDocument
-          ? _value.sourceDocument
-          : sourceDocument // ignore: cast_nullable_to_non_nullable
-              as String,
-      sourceId: null == sourceId
-          ? _value.sourceId
-          : sourceId // ignore: cast_nullable_to_non_nullable
-              as String,
-      createdBy: null == createdBy
-          ? _value.createdBy
-          : createdBy // ignore: cast_nullable_to_non_nullable
-              as String,
-      createdAt: null == createdAt
-          ? _value.createdAt
-          : createdAt // ignore: cast_nullable_to_non_nullable
-              as DateTime,
-      updatedAt: null == updatedAt
-          ? _value.updatedAt
-          : updatedAt // ignore: cast_nullable_to_non_nullable
-              as DateTime,
-      hash: freezed == hash
-          ? _value.hash
-          : hash // ignore: cast_nullable_to_non_nullable
-              as String?,
-      previousHash: freezed == previousHash
-          ? _value.previousHash
-          : previousHash // ignore: cast_nullable_to_non_nullable
-              as String?,
-      postedAt: freezed == postedAt
-          ? _value.postedAt
-          : postedAt // ignore: cast_nullable_to_non_nullable
-              as DateTime?,
-      userId: freezed == userId
-          ? _value.userId
-          : userId // ignore: cast_nullable_to_non_nullable
-              as String?,
-      warehouseId: freezed == warehouseId
-          ? _value.warehouseId
-          : warehouseId // ignore: cast_nullable_to_non_nullable
-              as String?,
-      auditLogs: null == auditLogs
-          ? _value.auditLogs
-          : auditLogs // ignore: cast_nullable_to_non_nullable
-              as List<AuditLogEntry>,
-      syncStatus: null == syncStatus
-          ? _value.syncStatus
-          : syncStatus // ignore: cast_nullable_to_non_nullable
-              as SyncStatus,
-      serverUpdatedAt: freezed == serverUpdatedAt
-          ? _value.serverUpdatedAt
-          : serverUpdatedAt // ignore: cast_nullable_to_non_nullable
-              as DateTime?,
-      isDeleted: null == isDeleted
-          ? _value.isDeleted
-          : isDeleted // ignore: cast_nullable_to_non_nullable
-              as bool,
-    ) as $Val);
+    return _then(
+      _value.copyWith(
+            id: null == id
+                ? _value.id
+                : id // ignore: cast_nullable_to_non_nullable
+                      as String,
+            referenceNumber: null == referenceNumber
+                ? _value.referenceNumber
+                : referenceNumber // ignore: cast_nullable_to_non_nullable
+                      as String,
+            date: null == date
+                ? _value.date
+                : date // ignore: cast_nullable_to_non_nullable
+                      as DateTime,
+            temporal: null == temporal
+                ? _value.temporal
+                : temporal // ignore: cast_nullable_to_non_nullable
+                      as TemporalJustification,
+            standards: null == standards
+                ? _value.standards
+                : standards // ignore: cast_nullable_to_non_nullable
+                      as StandardsJustification,
+            description: null == description
+                ? _value.description
+                : description // ignore: cast_nullable_to_non_nullable
+                      as String,
+            status: null == status
+                ? _value.status
+                : status // ignore: cast_nullable_to_non_nullable
+                      as JournalEntryStatus,
+            lines: null == lines
+                ? _value.lines
+                : lines // ignore: cast_nullable_to_non_nullable
+                      as List<JournalEntryLine>,
+            sourceDocument: null == sourceDocument
+                ? _value.sourceDocument
+                : sourceDocument // ignore: cast_nullable_to_non_nullable
+                      as String,
+            sourceId: null == sourceId
+                ? _value.sourceId
+                : sourceId // ignore: cast_nullable_to_non_nullable
+                      as String,
+            createdBy: null == createdBy
+                ? _value.createdBy
+                : createdBy // ignore: cast_nullable_to_non_nullable
+                      as String,
+            createdAt: null == createdAt
+                ? _value.createdAt
+                : createdAt // ignore: cast_nullable_to_non_nullable
+                      as DateTime,
+            updatedAt: null == updatedAt
+                ? _value.updatedAt
+                : updatedAt // ignore: cast_nullable_to_non_nullable
+                      as DateTime,
+            hash: freezed == hash
+                ? _value.hash
+                : hash // ignore: cast_nullable_to_non_nullable
+                      as String?,
+            previousHash: freezed == previousHash
+                ? _value.previousHash
+                : previousHash // ignore: cast_nullable_to_non_nullable
+                      as String?,
+            postedAt: freezed == postedAt
+                ? _value.postedAt
+                : postedAt // ignore: cast_nullable_to_non_nullable
+                      as DateTime?,
+            userId: freezed == userId
+                ? _value.userId
+                : userId // ignore: cast_nullable_to_non_nullable
+                      as String?,
+            warehouseId: freezed == warehouseId
+                ? _value.warehouseId
+                : warehouseId // ignore: cast_nullable_to_non_nullable
+                      as String?,
+            auditLogs: null == auditLogs
+                ? _value.auditLogs
+                : auditLogs // ignore: cast_nullable_to_non_nullable
+                      as List<AuditLogEntry>,
+            syncStatus: null == syncStatus
+                ? _value.syncStatus
+                : syncStatus // ignore: cast_nullable_to_non_nullable
+                      as SyncStatus,
+            serverUpdatedAt: freezed == serverUpdatedAt
+                ? _value.serverUpdatedAt
+                : serverUpdatedAt // ignore: cast_nullable_to_non_nullable
+                      as DateTime?,
+            authoritativeEntryId: freezed == authoritativeEntryId
+                ? _value.authoritativeEntryId
+                : authoritativeEntryId // ignore: cast_nullable_to_non_nullable
+                      as String?,
+            isDeleted: null == isDeleted
+                ? _value.isDeleted
+                : isDeleted // ignore: cast_nullable_to_non_nullable
+                      as bool,
+          )
+          as $Val,
+    );
   }
 
   @override
@@ -1321,33 +1378,36 @@ class _$JournalEntryCopyWithImpl<$Res, $Val extends JournalEntry>
 abstract class _$$JournalEntryImplCopyWith<$Res>
     implements $JournalEntryCopyWith<$Res> {
   factory _$$JournalEntryImplCopyWith(
-          _$JournalEntryImpl value, $Res Function(_$JournalEntryImpl) then) =
-      __$$JournalEntryImplCopyWithImpl<$Res>;
+    _$JournalEntryImpl value,
+    $Res Function(_$JournalEntryImpl) then,
+  ) = __$$JournalEntryImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call(
-      {String id,
-      String referenceNumber,
-      DateTime date,
-      TemporalJustification temporal,
-      StandardsJustification standards,
-      String description,
-      JournalEntryStatus status,
-      List<JournalEntryLine> lines,
-      String sourceDocument,
-      String sourceId,
-      String createdBy,
-      DateTime createdAt,
-      DateTime updatedAt,
-      String? hash,
-      String? previousHash,
-      DateTime? postedAt,
-      String? userId,
-      String? warehouseId,
-      List<AuditLogEntry> auditLogs,
-      SyncStatus syncStatus,
-      DateTime? serverUpdatedAt,
-      bool isDeleted});
+  $Res call({
+    String id,
+    String referenceNumber,
+    DateTime date,
+    TemporalJustification temporal,
+    StandardsJustification standards,
+    String description,
+    JournalEntryStatus status,
+    List<JournalEntryLine> lines,
+    String sourceDocument,
+    String sourceId,
+    String createdBy,
+    DateTime createdAt,
+    DateTime updatedAt,
+    String? hash,
+    String? previousHash,
+    DateTime? postedAt,
+    String? userId,
+    String? warehouseId,
+    List<AuditLogEntry> auditLogs,
+    SyncStatus syncStatus,
+    DateTime? serverUpdatedAt,
+    String? authoritativeEntryId,
+    bool isDeleted,
+  });
 
   @override
   $TemporalJustificationCopyWith<$Res> get temporal;
@@ -1360,8 +1420,9 @@ class __$$JournalEntryImplCopyWithImpl<$Res>
     extends _$JournalEntryCopyWithImpl<$Res, _$JournalEntryImpl>
     implements _$$JournalEntryImplCopyWith<$Res> {
   __$$JournalEntryImplCopyWithImpl(
-      _$JournalEntryImpl _value, $Res Function(_$JournalEntryImpl) _then)
-      : super(_value, _then);
+    _$JournalEntryImpl _value,
+    $Res Function(_$JournalEntryImpl) _then,
+  ) : super(_value, _then);
 
   @pragma('vm:prefer-inline')
   @override
@@ -1387,98 +1448,105 @@ class __$$JournalEntryImplCopyWithImpl<$Res>
     Object? auditLogs = null,
     Object? syncStatus = null,
     Object? serverUpdatedAt = freezed,
+    Object? authoritativeEntryId = freezed,
     Object? isDeleted = null,
   }) {
-    return _then(_$JournalEntryImpl(
-      id: null == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as String,
-      referenceNumber: null == referenceNumber
-          ? _value.referenceNumber
-          : referenceNumber // ignore: cast_nullable_to_non_nullable
-              as String,
-      date: null == date
-          ? _value.date
-          : date // ignore: cast_nullable_to_non_nullable
-              as DateTime,
-      temporal: null == temporal
-          ? _value.temporal
-          : temporal // ignore: cast_nullable_to_non_nullable
-              as TemporalJustification,
-      standards: null == standards
-          ? _value.standards
-          : standards // ignore: cast_nullable_to_non_nullable
-              as StandardsJustification,
-      description: null == description
-          ? _value.description
-          : description // ignore: cast_nullable_to_non_nullable
-              as String,
-      status: null == status
-          ? _value.status
-          : status // ignore: cast_nullable_to_non_nullable
-              as JournalEntryStatus,
-      lines: null == lines
-          ? _value._lines
-          : lines // ignore: cast_nullable_to_non_nullable
-              as List<JournalEntryLine>,
-      sourceDocument: null == sourceDocument
-          ? _value.sourceDocument
-          : sourceDocument // ignore: cast_nullable_to_non_nullable
-              as String,
-      sourceId: null == sourceId
-          ? _value.sourceId
-          : sourceId // ignore: cast_nullable_to_non_nullable
-              as String,
-      createdBy: null == createdBy
-          ? _value.createdBy
-          : createdBy // ignore: cast_nullable_to_non_nullable
-              as String,
-      createdAt: null == createdAt
-          ? _value.createdAt
-          : createdAt // ignore: cast_nullable_to_non_nullable
-              as DateTime,
-      updatedAt: null == updatedAt
-          ? _value.updatedAt
-          : updatedAt // ignore: cast_nullable_to_non_nullable
-              as DateTime,
-      hash: freezed == hash
-          ? _value.hash
-          : hash // ignore: cast_nullable_to_non_nullable
-              as String?,
-      previousHash: freezed == previousHash
-          ? _value.previousHash
-          : previousHash // ignore: cast_nullable_to_non_nullable
-              as String?,
-      postedAt: freezed == postedAt
-          ? _value.postedAt
-          : postedAt // ignore: cast_nullable_to_non_nullable
-              as DateTime?,
-      userId: freezed == userId
-          ? _value.userId
-          : userId // ignore: cast_nullable_to_non_nullable
-              as String?,
-      warehouseId: freezed == warehouseId
-          ? _value.warehouseId
-          : warehouseId // ignore: cast_nullable_to_non_nullable
-              as String?,
-      auditLogs: null == auditLogs
-          ? _value._auditLogs
-          : auditLogs // ignore: cast_nullable_to_non_nullable
-              as List<AuditLogEntry>,
-      syncStatus: null == syncStatus
-          ? _value.syncStatus
-          : syncStatus // ignore: cast_nullable_to_non_nullable
-              as SyncStatus,
-      serverUpdatedAt: freezed == serverUpdatedAt
-          ? _value.serverUpdatedAt
-          : serverUpdatedAt // ignore: cast_nullable_to_non_nullable
-              as DateTime?,
-      isDeleted: null == isDeleted
-          ? _value.isDeleted
-          : isDeleted // ignore: cast_nullable_to_non_nullable
-              as bool,
-    ));
+    return _then(
+      _$JournalEntryImpl(
+        id: null == id
+            ? _value.id
+            : id // ignore: cast_nullable_to_non_nullable
+                  as String,
+        referenceNumber: null == referenceNumber
+            ? _value.referenceNumber
+            : referenceNumber // ignore: cast_nullable_to_non_nullable
+                  as String,
+        date: null == date
+            ? _value.date
+            : date // ignore: cast_nullable_to_non_nullable
+                  as DateTime,
+        temporal: null == temporal
+            ? _value.temporal
+            : temporal // ignore: cast_nullable_to_non_nullable
+                  as TemporalJustification,
+        standards: null == standards
+            ? _value.standards
+            : standards // ignore: cast_nullable_to_non_nullable
+                  as StandardsJustification,
+        description: null == description
+            ? _value.description
+            : description // ignore: cast_nullable_to_non_nullable
+                  as String,
+        status: null == status
+            ? _value.status
+            : status // ignore: cast_nullable_to_non_nullable
+                  as JournalEntryStatus,
+        lines: null == lines
+            ? _value._lines
+            : lines // ignore: cast_nullable_to_non_nullable
+                  as List<JournalEntryLine>,
+        sourceDocument: null == sourceDocument
+            ? _value.sourceDocument
+            : sourceDocument // ignore: cast_nullable_to_non_nullable
+                  as String,
+        sourceId: null == sourceId
+            ? _value.sourceId
+            : sourceId // ignore: cast_nullable_to_non_nullable
+                  as String,
+        createdBy: null == createdBy
+            ? _value.createdBy
+            : createdBy // ignore: cast_nullable_to_non_nullable
+                  as String,
+        createdAt: null == createdAt
+            ? _value.createdAt
+            : createdAt // ignore: cast_nullable_to_non_nullable
+                  as DateTime,
+        updatedAt: null == updatedAt
+            ? _value.updatedAt
+            : updatedAt // ignore: cast_nullable_to_non_nullable
+                  as DateTime,
+        hash: freezed == hash
+            ? _value.hash
+            : hash // ignore: cast_nullable_to_non_nullable
+                  as String?,
+        previousHash: freezed == previousHash
+            ? _value.previousHash
+            : previousHash // ignore: cast_nullable_to_non_nullable
+                  as String?,
+        postedAt: freezed == postedAt
+            ? _value.postedAt
+            : postedAt // ignore: cast_nullable_to_non_nullable
+                  as DateTime?,
+        userId: freezed == userId
+            ? _value.userId
+            : userId // ignore: cast_nullable_to_non_nullable
+                  as String?,
+        warehouseId: freezed == warehouseId
+            ? _value.warehouseId
+            : warehouseId // ignore: cast_nullable_to_non_nullable
+                  as String?,
+        auditLogs: null == auditLogs
+            ? _value._auditLogs
+            : auditLogs // ignore: cast_nullable_to_non_nullable
+                  as List<AuditLogEntry>,
+        syncStatus: null == syncStatus
+            ? _value.syncStatus
+            : syncStatus // ignore: cast_nullable_to_non_nullable
+                  as SyncStatus,
+        serverUpdatedAt: freezed == serverUpdatedAt
+            ? _value.serverUpdatedAt
+            : serverUpdatedAt // ignore: cast_nullable_to_non_nullable
+                  as DateTime?,
+        authoritativeEntryId: freezed == authoritativeEntryId
+            ? _value.authoritativeEntryId
+            : authoritativeEntryId // ignore: cast_nullable_to_non_nullable
+                  as String?,
+        isDeleted: null == isDeleted
+            ? _value.isDeleted
+            : isDeleted // ignore: cast_nullable_to_non_nullable
+                  as bool,
+      ),
+    );
   }
 }
 
@@ -1486,32 +1554,33 @@ class __$$JournalEntryImplCopyWithImpl<$Res>
 
 @JsonSerializable(explicitToJson: true)
 class _$JournalEntryImpl extends _JournalEntry {
-  const _$JournalEntryImpl(
-      {required this.id,
-      required this.referenceNumber,
-      required this.date,
-      required this.temporal,
-      required this.standards,
-      required this.description,
-      required this.status,
-      required final List<JournalEntryLine> lines,
-      required this.sourceDocument,
-      required this.sourceId,
-      required this.createdBy,
-      required this.createdAt,
-      required this.updatedAt,
-      this.hash,
-      this.previousHash,
-      this.postedAt,
-      this.userId,
-      this.warehouseId,
-      final List<AuditLogEntry> auditLogs = const [],
-      this.syncStatus = SyncStatus.synced,
-      this.serverUpdatedAt,
-      this.isDeleted = false})
-      : _lines = lines,
-        _auditLogs = auditLogs,
-        super._();
+  const _$JournalEntryImpl({
+    required this.id,
+    required this.referenceNumber,
+    required this.date,
+    required this.temporal,
+    required this.standards,
+    required this.description,
+    required this.status,
+    required final List<JournalEntryLine> lines,
+    required this.sourceDocument,
+    required this.sourceId,
+    required this.createdBy,
+    required this.createdAt,
+    required this.updatedAt,
+    this.hash,
+    this.previousHash,
+    this.postedAt,
+    this.userId,
+    this.warehouseId,
+    final List<AuditLogEntry> auditLogs = const [],
+    this.syncStatus = SyncStatus.synced,
+    this.serverUpdatedAt,
+    this.authoritativeEntryId,
+    this.isDeleted = false,
+  }) : _lines = lines,
+       _auditLogs = auditLogs,
+       super._();
 
   factory _$JournalEntryImpl.fromJson(Map<String, dynamic> json) =>
       _$$JournalEntryImplFromJson(json);
@@ -1617,6 +1686,11 @@ class _$JournalEntryImpl extends _JournalEntry {
   @override
   final DateTime? serverUpdatedAt;
 
+  /// Internal authoritative ledger entry ID for cross-reference.
+  /// (Standard Reference: CP-003: Immutability - Authority Chain)
+  @override
+  final String? authoritativeEntryId;
+
   /// Soft-deletion flag.
   @override
   @JsonKey()
@@ -1624,7 +1698,7 @@ class _$JournalEntryImpl extends _JournalEntry {
 
   @override
   String toString() {
-    return 'JournalEntry(id: $id, referenceNumber: $referenceNumber, date: $date, temporal: $temporal, standards: $standards, description: $description, status: $status, lines: $lines, sourceDocument: $sourceDocument, sourceId: $sourceId, createdBy: $createdBy, createdAt: $createdAt, updatedAt: $updatedAt, hash: $hash, previousHash: $previousHash, postedAt: $postedAt, userId: $userId, warehouseId: $warehouseId, auditLogs: $auditLogs, syncStatus: $syncStatus, serverUpdatedAt: $serverUpdatedAt, isDeleted: $isDeleted)';
+    return 'JournalEntry(id: $id, referenceNumber: $referenceNumber, date: $date, temporal: $temporal, standards: $standards, description: $description, status: $status, lines: $lines, sourceDocument: $sourceDocument, sourceId: $sourceId, createdBy: $createdBy, createdAt: $createdAt, updatedAt: $updatedAt, hash: $hash, previousHash: $previousHash, postedAt: $postedAt, userId: $userId, warehouseId: $warehouseId, auditLogs: $auditLogs, syncStatus: $syncStatus, serverUpdatedAt: $serverUpdatedAt, authoritativeEntryId: $authoritativeEntryId, isDeleted: $isDeleted)';
   }
 
   @override
@@ -1662,12 +1736,16 @@ class _$JournalEntryImpl extends _JournalEntry {
             (identical(other.userId, userId) || other.userId == userId) &&
             (identical(other.warehouseId, warehouseId) ||
                 other.warehouseId == warehouseId) &&
-            const DeepCollectionEquality()
-                .equals(other._auditLogs, _auditLogs) &&
+            const DeepCollectionEquality().equals(
+              other._auditLogs,
+              _auditLogs,
+            ) &&
             (identical(other.syncStatus, syncStatus) ||
                 other.syncStatus == syncStatus) &&
             (identical(other.serverUpdatedAt, serverUpdatedAt) ||
                 other.serverUpdatedAt == serverUpdatedAt) &&
+            (identical(other.authoritativeEntryId, authoritativeEntryId) ||
+                other.authoritativeEntryId == authoritativeEntryId) &&
             (identical(other.isDeleted, isDeleted) ||
                 other.isDeleted == isDeleted));
   }
@@ -1675,30 +1753,31 @@ class _$JournalEntryImpl extends _JournalEntry {
   @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hashAll([
-        runtimeType,
-        id,
-        referenceNumber,
-        date,
-        temporal,
-        standards,
-        description,
-        status,
-        const DeepCollectionEquality().hash(_lines),
-        sourceDocument,
-        sourceId,
-        createdBy,
-        createdAt,
-        updatedAt,
-        hash,
-        previousHash,
-        postedAt,
-        userId,
-        warehouseId,
-        const DeepCollectionEquality().hash(_auditLogs),
-        syncStatus,
-        serverUpdatedAt,
-        isDeleted
-      ]);
+    runtimeType,
+    id,
+    referenceNumber,
+    date,
+    temporal,
+    standards,
+    description,
+    status,
+    const DeepCollectionEquality().hash(_lines),
+    sourceDocument,
+    sourceId,
+    createdBy,
+    createdAt,
+    updatedAt,
+    hash,
+    previousHash,
+    postedAt,
+    userId,
+    warehouseId,
+    const DeepCollectionEquality().hash(_auditLogs),
+    syncStatus,
+    serverUpdatedAt,
+    authoritativeEntryId,
+    isDeleted,
+  ]);
 
   @JsonKey(ignore: true)
   @override
@@ -1708,128 +1787,110 @@ class _$JournalEntryImpl extends _JournalEntry {
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$JournalEntryImplToJson(
-      this,
-    );
+    return _$$JournalEntryImplToJson(this);
   }
 }
 
 abstract class _JournalEntry extends JournalEntry {
-  const factory _JournalEntry(
-      {required final String id,
-      required final String referenceNumber,
-      required final DateTime date,
-      required final TemporalJustification temporal,
-      required final StandardsJustification standards,
-      required final String description,
-      required final JournalEntryStatus status,
-      required final List<JournalEntryLine> lines,
-      required final String sourceDocument,
-      required final String sourceId,
-      required final String createdBy,
-      required final DateTime createdAt,
-      required final DateTime updatedAt,
-      final String? hash,
-      final String? previousHash,
-      final DateTime? postedAt,
-      final String? userId,
-      final String? warehouseId,
-      final List<AuditLogEntry> auditLogs,
-      final SyncStatus syncStatus,
-      final DateTime? serverUpdatedAt,
-      final bool isDeleted}) = _$JournalEntryImpl;
+  const factory _JournalEntry({
+    required final String id,
+    required final String referenceNumber,
+    required final DateTime date,
+    required final TemporalJustification temporal,
+    required final StandardsJustification standards,
+    required final String description,
+    required final JournalEntryStatus status,
+    required final List<JournalEntryLine> lines,
+    required final String sourceDocument,
+    required final String sourceId,
+    required final String createdBy,
+    required final DateTime createdAt,
+    required final DateTime updatedAt,
+    final String? hash,
+    final String? previousHash,
+    final DateTime? postedAt,
+    final String? userId,
+    final String? warehouseId,
+    final List<AuditLogEntry> auditLogs,
+    final SyncStatus syncStatus,
+    final DateTime? serverUpdatedAt,
+    final String? authoritativeEntryId,
+    final bool isDeleted,
+  }) = _$JournalEntryImpl;
   const _JournalEntry._() : super._();
 
   factory _JournalEntry.fromJson(Map<String, dynamic> json) =
       _$JournalEntryImpl.fromJson;
 
   @override
-
   /// Unique internal UUID for the entry.
   String get id;
   @override
-
   /// Human-readable unique serial number (e.g., "JE-2024-001").
   String get referenceNumber;
   @override
-
   /// Primary chronological date for the entry report.
   DateTime get date;
   @override
-
   /// Multi-dimensional temporal audit metadata.
   TemporalJustification get temporal;
   @override
-
   /// Explicit regulatory compliance references and justifications.
   StandardsJustification get standards;
   @override
-
   /// Concise summary of the transaction purpose.
   String get description;
   @override
-
   /// Active state of the entry (Draft/Posted/Voided).
   JournalEntryStatus get status;
   @override
-
   /// Immutable list of balanced [JournalEntryLine]s.
   List<JournalEntryLine> get lines;
   @override
-
   /// Categorization of the spawning source (e.g., "sales_invoice", "pos").
   String get sourceDocument;
   @override
-
   /// Unique identifier within the source module.
   String get sourceId;
   @override
-
   /// User ID of the originator.
   String get createdBy;
   @override
-
   /// Creation timestamp in UTC.
   DateTime get createdAt;
   @override
-
   /// Last modification timestamp in UTC.
   DateTime get updatedAt;
   @override
-
   /// Integrity verification fingerprint (Merkle-style link).
   /// (Standard Reference: CP-003: Immutability)
   String? get hash;
   @override
-
   /// Fingerprint of the chronologically preceding entry in the ledger.
   String? get previousHash;
   @override
-
   /// Final posting timestamp marking the end of the draft lifecycle.
   DateTime? get postedAt;
   @override
-
   /// Tenant isolation identifier.
   String? get userId;
   @override
-
   /// Warehouse scope identifier.
   String? get warehouseId;
   @override
-
   /// Internal audit path for system and security tracking.
   List<AuditLogEntry> get auditLogs;
   @override
-
   /// Local-to-Remote synchronization state.
   SyncStatus get syncStatus;
   @override
-
   /// Most recent synchronization timestamp from the server.
   DateTime? get serverUpdatedAt;
   @override
-
+  /// Internal authoritative ledger entry ID for cross-reference.
+  /// (Standard Reference: CP-003: Immutability - Authority Chain)
+  String? get authoritativeEntryId;
+  @override
   /// Soft-deletion flag.
   bool get isDeleted;
   @override

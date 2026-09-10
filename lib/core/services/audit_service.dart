@@ -104,13 +104,8 @@ class AuditService {
         deviceId: _deviceId,
         appVersion: _appVersion,
       ),
-      why: WhyDto(
-        reasonCode: reason,
-        justification: justification,
-      ),
-      how: HowDto(
-        method: action,
-      ),
+      why: WhyDto(reasonCode: reason, justification: justification),
+      how: HowDto(method: action),
     );
   }
 }

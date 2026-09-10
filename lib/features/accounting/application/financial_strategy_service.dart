@@ -11,9 +11,10 @@ part 'financial_strategy_service.g.dart';
 /// Responsible for assessing the strategic impact of transactions on
 /// cash flow, investment capacity, and overall financial health.
 @Riverpod(keepAlive: true)
-class FinancialStrategyService extends _$FinancialStrategyService //
-    implements
-        AccountingAgent {
+class FinancialStrategyService
+    extends
+        _$FinancialStrategyService //
+    implements AccountingAgent {
   @override
   FutureOr<void> build() {}
 
@@ -72,7 +73,9 @@ class FinancialStrategyService extends _$FinancialStrategyService //
       isAllowed: true, // Strategy agent usually advises rather than blocks
       rationale: rationale.join('\n'),
       confidenceScore: 0.88,
-      suggestedAdjustments: suggestedAdjustments.isNotEmpty //
+      suggestedAdjustments:
+          suggestedAdjustments
+              .isNotEmpty //
           ? suggestedAdjustments
           : null,
     );

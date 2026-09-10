@@ -26,7 +26,8 @@ class BasirInsightsEngine extends _$BasirInsightsEngine {
             source: AgentSource.strategist,
             riskLevel: InsightRiskLevel.high,
             title: 'انخفاض السيولة النقدية',
-            description: 'نسبة التداول الحالية (${kpi.value}) '
+            description:
+                'نسبة التداول الحالية (${kpi.value}) '
                 'أقل من المعدل الآمن (1.5). '
                 'يوصى بتأجيل المدفوعات غير الضرورية.',
             timestamp: now,
@@ -43,7 +44,8 @@ class BasirInsightsEngine extends _$BasirInsightsEngine {
             source: AgentSource.strategist,
             riskLevel: InsightRiskLevel.medium,
             title: 'تسارع في معدل الاستنزاف',
-            description: 'معدل الاستنزاف النقدي زاد بنسبة '
+            description:
+                'معدل الاستنزاف النقدي زاد بنسبة '
                 '${(kpi.trend * 100).toStringAsFixed(0)}%. '
                 'يجب مراجعة المصاريف التشغيلية فوراً.',
             timestamp: now,
@@ -74,7 +76,8 @@ class BasirInsightsEngine extends _$BasirInsightsEngine {
             source: AgentSource.tax,
             riskLevel: InsightRiskLevel.medium,
             title: 'زيادة التزامات الضريبة',
-            description: 'ارتفعت مستحقات الزكاة والضريبة بشكل ملحوظ. '
+            description:
+                'ارتفعت مستحقات الزكاة والضريبة بشكل ملحوظ. '
                 'تأكد من توفر السيولة لسداد الإقرار القادم.',
             timestamp: now,
             actionLabel: 'تقرير الضريبة الذكي',

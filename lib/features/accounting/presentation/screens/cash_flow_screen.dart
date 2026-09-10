@@ -22,8 +22,9 @@ class CashFlowScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final cashFlowAsync =
-        ref.watch(reportingServiceProvider.notifier).getCashFlowStatement();
+    final cashFlowAsync = ref
+        .watch(reportingServiceProvider.notifier)
+        .getCashFlowStatement();
 
     return GlassScaffold(
       title: context.l10n.cashFlowTitle,
@@ -165,35 +166,35 @@ class CashFlowScreen extends ConsumerWidget {
 
   /// Renders a thematic section for a specific cash flow activity category.
   Widget _buildSection(String title, List<Widget> children) => Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            title,
-            style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-          ),
-          const SizedBox(height: Spacing.sm),
-          AppCard(
-            padding: const EdgeInsets.all(Spacing.md),
-            child: Column(children: children),
-          ),
-        ],
-      );
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: [
+      Text(
+        title,
+        style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+      ),
+      const SizedBox(height: Spacing.sm),
+      AppCard(
+        padding: const EdgeInsets.all(Spacing.md),
+        child: Column(children: children),
+      ),
+    ],
+  );
 
   Widget _buildRow(String label, Decimal value) => Padding(
-        padding: const EdgeInsets.symmetric(vertical: 4),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text(label),
-            Text(
-              '$value',
-              style: TextStyle(
-                color: value < Decimal.zero ? AppColors.error : null,
-              ),
-            ),
-          ],
+    padding: const EdgeInsets.symmetric(vertical: 4),
+    child: Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Text(label),
+        Text(
+          '$value',
+          style: TextStyle(
+            color: value < Decimal.zero ? AppColors.error : null,
+          ),
         ),
-      );
+      ],
+    ),
+  );
 
   Widget _buildTotalRow(String label, Decimal value, {bool isMain = false}) =>
       Padding(
@@ -213,8 +214,9 @@ class CashFlowScreen extends ConsumerWidget {
               style: TextStyle(
                 fontWeight: FontWeight.bold,
                 fontSize: isMain ? 18 : null,
-                color:
-                    value < Decimal.zero ? AppColors.error : AppColors.success,
+                color: value < Decimal.zero
+                    ? AppColors.error
+                    : AppColors.success,
               ),
             ),
           ],

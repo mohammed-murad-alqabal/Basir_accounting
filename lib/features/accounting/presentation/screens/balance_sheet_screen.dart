@@ -233,8 +233,9 @@ class BalanceSheetScreen extends ConsumerWidget {
         await Share.shareXFiles(
           [XFile(ioFile.path)],
           text: 'Balance Sheet (Forensic Export)',
-          sharePositionOrigin:
-              box != null ? box.localToGlobal(Offset.zero) & box.size : null,
+          sharePositionOrigin: box != null
+              ? box.localToGlobal(Offset.zero) & box.size
+              : null,
         );
       }
     } on Exception catch (_) {
@@ -245,20 +246,20 @@ class BalanceSheetScreen extends ConsumerWidget {
   }
 
   ReportData _mapReportToExportData(FinancialReport report) => ReportData(
-        title: report.title,
-        subtitle: 'As of ${intl.DateFormat.yMMMd().format(report.toDate)}',
-        headers: ['Account / Line Item', 'Amount'],
-        rows: report.lines
-            .map(
-              (line) => [
-                '  ' * line.indentLevel + line.label,
-                line.amount.toStringAsFixed(2),
-              ],
-            )
-            .toList(),
-        metadata: {
-          'Report Type': 'Statement of Financial Position (Balance Sheet)',
-          'Currency': 'SAR',
-        },
-      );
+    title: report.title,
+    subtitle: 'As of ${intl.DateFormat.yMMMd().format(report.toDate)}',
+    headers: ['Account / Line Item', 'Amount'],
+    rows: report.lines
+        .map(
+          (line) => [
+            '  ' * line.indentLevel + line.label,
+            line.amount.toStringAsFixed(2),
+          ],
+        )
+        .toList(),
+    metadata: {
+      'Report Type': 'Statement of Financial Position (Balance Sheet)',
+      'Currency': 'SAR',
+    },
+  );
 }

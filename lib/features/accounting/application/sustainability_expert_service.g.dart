@@ -19,14 +19,14 @@ String _$sustainabilityExpertServiceHash() =>
 @ProviderFor(SustainabilityExpertService)
 final sustainabilityExpertServiceProvider =
     AsyncNotifierProvider<SustainabilityExpertService, void>.internal(
-  SustainabilityExpertService.new,
-  name: r'sustainabilityExpertServiceProvider',
-  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-      ? null
-      : _$sustainabilityExpertServiceHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
+      SustainabilityExpertService.new,
+      name: r'sustainabilityExpertServiceProvider',
+      debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+          ? null
+          : _$sustainabilityExpertServiceHash,
+      dependencies: null,
+      allTransitiveDependencies: null,
+    );
 
 typedef _$SustainabilityExpertService = AsyncNotifier<void>;
 // ignore_for_file: type=lint

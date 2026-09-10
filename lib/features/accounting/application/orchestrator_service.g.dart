@@ -19,14 +19,14 @@ String _$orchestratorServiceHash() =>
 @ProviderFor(OrchestratorService)
 final orchestratorServiceProvider =
     AsyncNotifierProvider<OrchestratorService, void>.internal(
-  OrchestratorService.new,
-  name: r'orchestratorServiceProvider',
-  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-      ? null
-      : _$orchestratorServiceHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
+      OrchestratorService.new,
+      name: r'orchestratorServiceProvider',
+      debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+          ? null
+          : _$orchestratorServiceHash,
+      dependencies: null,
+      allTransitiveDependencies: null,
+    );
 
 typedef _$OrchestratorService = AsyncNotifier<void>;
 // ignore_for_file: type=lint

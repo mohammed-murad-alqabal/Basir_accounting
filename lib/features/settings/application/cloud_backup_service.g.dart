@@ -15,14 +15,14 @@ String _$cloudBackupServiceHash() =>
 @ProviderFor(CloudBackupService)
 final cloudBackupServiceProvider =
     AutoDisposeAsyncNotifierProvider<CloudBackupService, void>.internal(
-  CloudBackupService.new,
-  name: r'cloudBackupServiceProvider',
-  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-      ? null
-      : _$cloudBackupServiceHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
+      CloudBackupService.new,
+      name: r'cloudBackupServiceProvider',
+      debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+          ? null
+          : _$cloudBackupServiceHash,
+      dependencies: null,
+      allTransitiveDependencies: null,
+    );
 
 typedef _$CloudBackupService = AutoDisposeAsyncNotifier<void>;
 // ignore_for_file: type=lint

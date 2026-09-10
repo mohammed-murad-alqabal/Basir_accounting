@@ -45,23 +45,23 @@ class _WarehouseTransferScreenState
     if (!_formKey.currentState!.validate()) return;
 
     if (_sourceWarehouse == null || _destinationWarehouse == null) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text(context.l10n.errFormFill)),
-      );
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text(context.l10n.errFormFill)));
       return;
     }
 
     if (_sourceWarehouse!.id == _destinationWarehouse!.id) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text(context.l10n.errSameWarehouse)),
-      );
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text(context.l10n.errSameWarehouse)));
       return;
     }
 
     if (_items.isEmpty) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text(context.l10n.errNoItems)),
-      );
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text(context.l10n.errNoItems)));
       return;
     }
 
@@ -89,9 +89,9 @@ class _WarehouseTransferScreenState
         Navigator.pop(context);
       } else {
         final error = ref.read(transferActionProvider).error;
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text(error.toString())),
-        );
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text(error.toString())));
       }
     }
   }
@@ -165,86 +165,81 @@ class _WarehouseTransferScreenState
     required Warehouse? value,
     required ValueChanged<Warehouse?> onChanged,
     required List<Warehouse> items,
-  }) =>
-      Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            label,
-            style: AppTextStyles.bodyMedium.copyWith(
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-          const SizedBox(height: Spacing.xs),
-          DropdownButtonFormField<Warehouse>(
-            initialValue: value,
-            items: items
-                .map(
-                  (w) => DropdownMenuItem(
-                    value: w,
-                    child: Text(
-                      w.name(isArabic: context.l10n.localeName == 'ar'),
-                    ),
-                  ),
-                )
-                .toList(),
-            onChanged: onChanged,
-            decoration: const InputDecoration(border: OutlineInputBorder()),
-          ),
-        ],
-      );
+  }) => Column(
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: [
+      Text(
+        label,
+        style: AppTextStyles.bodyMedium.copyWith(fontWeight: FontWeight.bold),
+      ),
+      const SizedBox(height: Spacing.xs),
+      DropdownButtonFormField<Warehouse>(
+        initialValue: value,
+        items: items
+            .map(
+              (w) => DropdownMenuItem(
+                value: w,
+                child: Text(w.name(isArabic: context.l10n.localeName == 'ar')),
+              ),
+            )
+            .toList(),
+        onChanged: onChanged,
+        decoration: const InputDecoration(border: OutlineInputBorder()),
+      ),
+    ],
+  );
 
   Widget _buildItemsSection(AppIconsBase appIcons) => AppCard(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+    child: Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  context.l10n.labelInvoiceItems,
-                  style: AppTextStyles.headlineSmall.copyWith(
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                IconButton(
-                  icon: Icon(appIcons.addCircle, color: AppColors.primary),
-                  padding: EdgeInsets.zero,
-                  constraints: const BoxConstraints(),
-                  onPressed: _addItem,
-                ),
-              ],
-            ),
-            const Divider(),
-            if (_items.isEmpty)
-              Padding(
-                padding: const EdgeInsets.all(Spacing.md),
-                child: Center(child: Text(context.l10n.msgNoItems)),
-              )
-            else
-              ListView.builder(
-                shrinkWrap: true,
-                physics: const NeverScrollableScrollPhysics(),
-                itemCount: _items.length,
-                itemBuilder: (context, index) {
-                  final item = _items[index];
-                  return ListTile(
-                    title: Text(item.itemName),
-                    subtitle: Text(
-                      '${context.l10n.labelQuantity}: ${item.quantity}',
-                    ),
-                    trailing: IconButton(
-                      icon: Icon(appIcons.delete, color: AppColors.error),
-                      padding: EdgeInsets.zero,
-                      constraints: const BoxConstraints(),
-                      onPressed: () => setState(() => _items.removeAt(index)),
-                    ),
-                  );
-                },
+            Text(
+              context.l10n.labelInvoiceItems,
+              style: AppTextStyles.headlineSmall.copyWith(
+                fontWeight: FontWeight.bold,
               ),
+            ),
+            IconButton(
+              icon: Icon(appIcons.addCircle, color: AppColors.primary),
+              padding: EdgeInsets.zero,
+              constraints: const BoxConstraints(),
+              onPressed: _addItem,
+            ),
           ],
         ),
-      );
+        const Divider(),
+        if (_items.isEmpty)
+          Padding(
+            padding: const EdgeInsets.all(Spacing.md),
+            child: Center(child: Text(context.l10n.msgNoItems)),
+          )
+        else
+          ListView.builder(
+            shrinkWrap: true,
+            physics: const NeverScrollableScrollPhysics(),
+            itemCount: _items.length,
+            itemBuilder: (context, index) {
+              final item = _items[index];
+              return ListTile(
+                title: Text(item.itemName),
+                subtitle: Text(
+                  '${context.l10n.labelQuantity}: ${item.quantity}',
+                ),
+                trailing: IconButton(
+                  icon: Icon(appIcons.delete, color: AppColors.error),
+                  padding: EdgeInsets.zero,
+                  constraints: const BoxConstraints(),
+                  onPressed: () => setState(() => _items.removeAt(index)),
+                ),
+              );
+            },
+          ),
+      ],
+    ),
+  );
 
   Future<void> _addItem() async {
     final inventoryItemsAsync = ref.read(inventoryItemsProvider);
@@ -279,8 +274,9 @@ class _WarehouseTransferScreenState
                     if (i != null) {
                       setDialogState(() {
                         selectedItem = i;
-                        nameController.text =
-                            i.name(isArabic: context.l10n.localeName == 'ar');
+                        nameController.text = i.name(
+                          isArabic: context.l10n.localeName == 'ar',
+                        );
                       });
                     }
                   },

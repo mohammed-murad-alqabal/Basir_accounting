@@ -17,13 +17,12 @@ class CompanySettingsSheet extends ConsumerStatefulWidget {
   static Future<void> show(
     BuildContext context,
     Map<String, String?> settings,
-  ) =>
-      showModalBottomSheet<void>(
-        context: context,
-        isScrollControlled: true,
-        backgroundColor: Colors.transparent,
-        builder: (context) => CompanySettingsSheet(initialSettings: settings),
-      );
+  ) => showModalBottomSheet<void>(
+    context: context,
+    isScrollControlled: true,
+    backgroundColor: Colors.transparent,
+    builder: (context) => CompanySettingsSheet(initialSettings: settings),
+  );
 
   @override
   ConsumerState<CompanySettingsSheet> createState() =>

@@ -39,8 +39,9 @@ class _VendorFormScreenState extends ConsumerState<VendorFormScreen> {
     );
     _emailController = TextEditingController(text: widget.vendor?.email ?? '');
     _phoneController = TextEditingController(text: widget.vendor?.phone ?? '');
-    _vatController =
-        TextEditingController(text: widget.vendor?.vatNumber ?? '');
+    _vatController = TextEditingController(
+      text: widget.vendor?.vatNumber ?? '',
+    );
     _registrationController = TextEditingController(
       text: widget.vendor?.registrationNumber ?? '',
     );
@@ -62,8 +63,9 @@ class _VendorFormScreenState extends ConsumerState<VendorFormScreen> {
     final isEdit = widget.vendor != null;
 
     return GlassScaffold(
-      title:
-          isEdit ? context.l10n.titleEditVendor : context.l10n.titleAddVendor,
+      title: isEdit
+          ? context.l10n.titleEditVendor
+          : context.l10n.titleAddVendor,
       actions: const [],
       body: Form(
         key: _formKey,
@@ -143,7 +145,8 @@ class _VendorFormScreenState extends ConsumerState<VendorFormScreen> {
   Future<void> _save() async {
     if (!_formKey.currentState!.validate()) return;
 
-    final vendor = widget.vendor?.copyWith(
+    final vendor =
+        widget.vendor?.copyWith(
           nameAr: _nameArController.text,
           nameEn: _nameEnController.text,
           email: _emailController.text,

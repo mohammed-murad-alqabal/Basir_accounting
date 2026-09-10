@@ -235,8 +235,9 @@ class CustomerLedgerService extends _$CustomerLedgerService {
 
     // Filter by source document
     if (sourceDocument != null && sourceDocument.isNotEmpty) {
-      entries =
-          entries.where((e) => e.sourceDocument == sourceDocument).toList();
+      entries = entries
+          .where((e) => e.sourceDocument == sourceDocument)
+          .toList();
     }
 
     // Filter by amount range

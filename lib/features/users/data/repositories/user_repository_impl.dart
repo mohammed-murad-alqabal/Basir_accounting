@@ -95,16 +95,16 @@ class UserRepositoryImpl implements UserRepository {
   }
 
   User _toEntity(UserModel model) => User(
-        id: model.userId,
-        username: model.username,
-        fullName: model.fullName,
-        email: model.email,
-        role: model.role,
-        isActive: model.isActive,
-        lastLoginAt: model.lastLoginAt,
-        createdAt: model.createdAt,
-        updatedAt: model.updatedAt,
-      );
+    id: model.userId,
+    username: model.username,
+    fullName: model.fullName,
+    email: model.email,
+    role: model.role,
+    isActive: model.isActive,
+    lastLoginAt: model.lastLoginAt,
+    createdAt: model.createdAt,
+    updatedAt: model.updatedAt,
+  );
 
   UserModel _toModel(User entity, String passwordHash) => UserModel()
     ..userId = entity.id

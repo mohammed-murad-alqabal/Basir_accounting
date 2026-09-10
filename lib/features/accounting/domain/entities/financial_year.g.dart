@@ -17,14 +17,15 @@ _$FinancialYearImpl _$$FinancialYearImplFromJson(Map<String, dynamic> json) =>
           ? null
           : DateTime.parse(json['closedAt'] as String),
       closedBy: json['closedBy'] as String?,
-      lockedPeriodIds: (json['lockedPeriodIds'] as List<dynamic>?)
+      lockedPeriodIds:
+          (json['lockedPeriodIds'] as List<dynamic>?)
               ?.map((e) => e as String)
               .toList() ??
           const [],
       userId: json['userId'] as String?,
       syncStatus:
           $enumDecodeNullable(_$SyncStatusEnumMap, json['syncStatus']) ??
-              SyncStatus.synced,
+          SyncStatus.synced,
       serverUpdatedAt: json['serverUpdatedAt'] == null
           ? null
           : DateTime.parse(json['serverUpdatedAt'] as String),

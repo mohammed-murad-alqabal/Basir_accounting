@@ -204,8 +204,9 @@ class CreditControlService extends _$CreditControlService {
     }
 
     final avgMonthlySalesDouble = totalSales.toDouble() / monthsActive;
-    final suggestedLimit =
-        Decimal.parse((avgMonthlySalesDouble * 1.5).toString());
+    final suggestedLimit = Decimal.parse(
+      (avgMonthlySalesDouble * 1.5).toString(),
+    );
 
     final minLimit = Decimal.parse('5000');
     final maxLimit = Decimal.parse('500000');

@@ -11,9 +11,7 @@ class InventoryItemModel {
   InventoryItemModel();
 
   /// إنشاء نموذج صنف مخزون من كيان
-  factory InventoryItemModel.fromEntity(
-    InventoryItem item,
-  ) =>
+  factory InventoryItemModel.fromEntity(InventoryItem item) =>
       InventoryItemModel()
         ..id = item.id
         ..nameAr = item.nameAr
@@ -124,29 +122,29 @@ class InventoryItemModel {
 
   /// تحويل النموذج إلى كيان
   InventoryItem toEntity() => InventoryItem(
-        id: id ?? '',
-        nameAr: nameAr,
-        nameEn: nameEn,
-        sku: sku,
-        barcode: barcode,
-        description: description,
-        purchasePrice: purchasePrice,
-        salePrice: salePrice,
-        currentQuantity: currentQuantity ?? 0,
-        unit: unit,
-        categoryId: categoryId,
-        valuationMethod: valuationMethod,
-        assetAccountId: assetAccountId,
-        cogsAccountId: cogsAccountId,
-        revenueAccountId: revenueAccountId,
-        primaryAccountId: primaryAccountId,
-        syncStatus: syncStatus,
-        serverUpdatedAt: serverUpdatedAt,
-        isDeleted: isDeleted,
-        createdAt: createdAt,
-        updatedAt: updatedAt,
-        userId: userId,
-        warehouseId: warehouseId,
-        taxCategory: taxCategory,
-      );
+    id: id ?? '',
+    nameAr: nameAr,
+    nameEn: nameEn,
+    sku: sku,
+    barcode: barcode,
+    description: description,
+    purchasePrice: purchasePrice,
+    salePrice: salePrice,
+    currentQuantity: currentQuantity ?? 0,
+    unit: unit,
+    categoryId: categoryId,
+    valuationMethod: valuationMethod,
+    assetAccountId: assetAccountId,
+    cogsAccountId: cogsAccountId,
+    revenueAccountId: revenueAccountId,
+    primaryAccountId: primaryAccountId,
+    syncStatus: syncStatus,
+    serverUpdatedAt: serverUpdatedAt,
+    isDeleted: isDeleted,
+    createdAt: createdAt,
+    updatedAt: updatedAt,
+    userId: userId,
+    warehouseId: warehouseId,
+    taxCategory: taxCategory,
+  );
 }

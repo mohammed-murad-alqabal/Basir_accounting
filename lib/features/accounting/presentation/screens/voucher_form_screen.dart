@@ -109,116 +109,111 @@ class _VoucherFormScreenState extends ConsumerState<VoucherFormScreen> {
 
   /// Amount field with integrated currency conversion support.
   Widget _buildAmountField() => GlassCard(
-        child: Padding(
-          padding: const EdgeInsets.all(8),
-          child: Column(
-            children: [
-              TextFormField(
-                controller: _amountController,
-                decoration: InputDecoration(
-                  labelText:
-                      (_selectedCurrency != null && _selectedCurrency != 'SAR')
-                          ? '${context.l10n.labelAmount} (SAR)'
-                          : context.l10n.labelAmount,
-                  border: InputBorder.none,
-                  prefixIcon: const Icon(Icons.money),
-                ),
-                keyboardType: const TextInputType.numberWithOptions(
-                  decimal: true,
-                ),
-                onChanged: (v) {
-                  if (_selectedCurrency != null &&
-                      _selectedCurrency != 'SAR' &&
-                      _exchangeRate != null) {
-                    final sarAmount = Decimal.tryParse(v);
-                    if (sarAmount != null) {
-                      setState(() {
-                        _originalAmount =
-                            (sarAmount / (_exchangeRate ?? Decimal.one))
-                                .toDecimal();
-                      });
-                    }
-                  }
-                },
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return context.l10n.errAmountRequired;
-                  }
-                  if (Decimal.tryParse(value) == null) {
-                    return context.l10n.errInvalidAmount;
-                  }
-                  return null;
-                },
-              ),
-              if (_selectedCurrency != null && _selectedCurrency != 'SAR') ...[
-                const Divider(),
-                Row(
-                  children: [
-                    Expanded(
-                      child: TextFormField(
-                        initialValue: _originalAmount?.toString() ?? '',
-                        decoration: InputDecoration(
-                          labelText: '${context.l10n.labelAmount} '
-                              '($_selectedCurrency)',
-                          border: InputBorder.none,
-                        ),
-                        keyboardType: const TextInputType.numberWithOptions(
-                          decimal: true,
-                        ),
-                        onChanged: (v) {
-                          _originalAmount = Decimal.tryParse(v);
-                          if (_originalAmount != null &&
-                              _exchangeRate != null) {
-                            setState(() {
-                              _amountController.text =
-                                  (_originalAmount! * _exchangeRate!)
-                                      .toString();
-                            });
-                          }
-                        },
-                      ),
+    child: Padding(
+      padding: const EdgeInsets.all(8),
+      child: Column(
+        children: [
+          TextFormField(
+            controller: _amountController,
+            decoration: InputDecoration(
+              labelText:
+                  (_selectedCurrency != null && _selectedCurrency != 'SAR')
+                  ? '${context.l10n.labelAmount} (SAR)'
+                  : context.l10n.labelAmount,
+              border: InputBorder.none,
+              prefixIcon: const Icon(Icons.money),
+            ),
+            keyboardType: const TextInputType.numberWithOptions(decimal: true),
+            onChanged: (v) {
+              if (_selectedCurrency != null &&
+                  _selectedCurrency != 'SAR' &&
+                  _exchangeRate != null) {
+                final sarAmount = Decimal.tryParse(v);
+                if (sarAmount != null) {
+                  setState(() {
+                    _originalAmount =
+                        (sarAmount / (_exchangeRate ?? Decimal.one))
+                            .toDecimal();
+                  });
+                }
+              }
+            },
+            validator: (value) {
+              if (value == null || value.isEmpty) {
+                return context.l10n.errAmountRequired;
+              }
+              if (Decimal.tryParse(value) == null) {
+                return context.l10n.errInvalidAmount;
+              }
+              return null;
+            },
+          ),
+          if (_selectedCurrency != null && _selectedCurrency != 'SAR') ...[
+            const Divider(),
+            Row(
+              children: [
+                Expanded(
+                  child: TextFormField(
+                    initialValue: _originalAmount?.toString() ?? '',
+                    decoration: InputDecoration(
+                      labelText:
+                          '${context.l10n.labelAmount} '
+                          '($_selectedCurrency)',
+                      border: InputBorder.none,
                     ),
-                    const SizedBox(width: 8),
-                    Expanded(
-                      child: TextFormField(
-                        initialValue: _exchangeRate?.toString() ?? '',
-                        decoration: InputDecoration(
-                          labelText: context.l10n.labelExchangeRate,
-                          border: InputBorder.none,
-                        ),
-                        keyboardType: const TextInputType.numberWithOptions(
-                          decimal: true,
-                        ),
-                        onChanged: (v) {
-                          _exchangeRate = Decimal.tryParse(v);
-                          if (_originalAmount != null &&
-                              _exchangeRate != null) {
-                            setState(() {
-                              _amountController.text =
-                                  (_originalAmount! * _exchangeRate!)
-                                      .toString();
-                            });
-                          }
-                        },
-                      ),
+                    keyboardType: const TextInputType.numberWithOptions(
+                      decimal: true,
                     ),
-                  ],
+                    onChanged: (v) {
+                      _originalAmount = Decimal.tryParse(v);
+                      if (_originalAmount != null && _exchangeRate != null) {
+                        setState(() {
+                          _amountController.text =
+                              (_originalAmount! * _exchangeRate!).toString();
+                        });
+                      }
+                    },
+                  ),
+                ),
+                const SizedBox(width: 8),
+                Expanded(
+                  child: TextFormField(
+                    initialValue: _exchangeRate?.toString() ?? '',
+                    decoration: InputDecoration(
+                      labelText: context.l10n.labelExchangeRate,
+                      border: InputBorder.none,
+                    ),
+                    keyboardType: const TextInputType.numberWithOptions(
+                      decimal: true,
+                    ),
+                    onChanged: (v) {
+                      _exchangeRate = Decimal.tryParse(v);
+                      if (_originalAmount != null && _exchangeRate != null) {
+                        setState(() {
+                          _amountController.text =
+                              (_originalAmount! * _exchangeRate!).toString();
+                        });
+                      }
+                    },
+                  ),
                 ),
               ],
-            ],
-          ),
-        ),
-      );
+            ),
+          ],
+        ],
+      ),
+    ),
+  );
 
   /// Integrated currency picker and exchange rate manager.
   Widget _buildCurrencySelector() => GlassCard(
-        child: ListTile(
-          leading: const Icon(Icons.language),
-          title: Text(context.l10n.labelCurrency),
-          subtitle: Text(_selectedCurrency ?? 'SAR'),
-          onTap: _showCurrencyPicker,
-        ),
-      );
+    child: ListTile(
+      leading: const Icon(Icons.language),
+      title: Text(context.l10n.labelCurrency),
+      subtitle: Text(_selectedCurrency ?? 'SAR'),
+      onTap: _showCurrencyPicker,
+    ),
+  );
 
   Future<void> _showCurrencyPicker() async {
     final result = await showDialog<String>(
@@ -259,8 +254,8 @@ class _VoucherFormScreenState extends ConsumerState<VoucherFormScreen> {
           final currentAmount =
               Decimal.tryParse(_amountController.text) ?? Decimal.zero;
           if (currentAmount > Decimal.zero) {
-            _originalAmount =
-                (currentAmount / (_exchangeRate ?? Decimal.one)).toDecimal();
+            _originalAmount = (currentAmount / (_exchangeRate ?? Decimal.one))
+                .toDecimal();
           }
         } else {
           _exchangeRate = null;
@@ -271,82 +266,82 @@ class _VoucherFormScreenState extends ConsumerState<VoucherFormScreen> {
   }
 
   Widget _buildDescriptionField() => GlassCard(
-        child: Padding(
-          padding: const EdgeInsets.all(8),
-          child: TextFormField(
-            controller: _descriptionController,
-            decoration: InputDecoration(
-              labelText: context.l10n.labelDescription,
-              border: InputBorder.none,
-              prefixIcon: const Icon(Icons.description),
-            ),
-            maxLines: 3,
-            validator: (value) {
-              if (value == null || value.isEmpty) {
-                return context.l10n.errDescriptionRequired;
-              }
-              return null;
-            },
-          ),
+    child: Padding(
+      padding: const EdgeInsets.all(8),
+      child: TextFormField(
+        controller: _descriptionController,
+        decoration: InputDecoration(
+          labelText: context.l10n.labelDescription,
+          border: InputBorder.none,
+          prefixIcon: const Icon(Icons.description),
         ),
-      );
+        maxLines: 3,
+        validator: (value) {
+          if (value == null || value.isEmpty) {
+            return context.l10n.errDescriptionRequired;
+          }
+          return null;
+        },
+      ),
+    ),
+  );
 
   Widget _buildDatePicker() => GlassCard(
-        onTap: () async {
-          final val = await showDatePicker(
-            context: context,
-            initialDate: _selectedDate,
-            firstDate: DateTime(2020),
-            lastDate: DateTime(2030),
-          );
-          if (val != null) {
-            setState(() => _selectedDate = val);
-          }
-        },
-        child: ListTile(
-          leading: const Icon(Icons.calendar_today),
-          title: Text(context.l10n.labelDate),
-          trailing: Text(intl.DateFormat('yyyy/MM/dd').format(_selectedDate)),
-        ),
+    onTap: () async {
+      final val = await showDatePicker(
+        context: context,
+        initialDate: _selectedDate,
+        firstDate: DateTime(2020),
+        lastDate: DateTime(2030),
       );
+      if (val != null) {
+        setState(() => _selectedDate = val);
+      }
+    },
+    child: ListTile(
+      leading: const Icon(Icons.calendar_today),
+      title: Text(context.l10n.labelDate),
+      trailing: Text(intl.DateFormat('yyyy/MM/dd').format(_selectedDate)),
+    ),
+  );
 
   /// Selects the payment instrument (Cash/Bank/Check) which filters treasury accounts.
   Widget _buildPaymentMethodSelector() => Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            context.l10n.labelPaymentMethod,
-            style: const TextStyle(fontWeight: FontWeight.bold),
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: [
+      Text(
+        context.l10n.labelPaymentMethod,
+        style: const TextStyle(fontWeight: FontWeight.bold),
+      ),
+      const SizedBox(height: 8),
+      SegmentedButton<PaymentMethod>(
+        segments: [
+          ButtonSegment(
+            value: PaymentMethod.cash,
+            label: Text(context.l10n.methodCash),
+            icon: const Icon(Icons.payments),
           ),
-          const SizedBox(height: 8),
-          SegmentedButton<PaymentMethod>(
-            segments: [
-              ButtonSegment(
-                value: PaymentMethod.cash,
-                label: Text(context.l10n.methodCash),
-                icon: const Icon(Icons.payments),
-              ),
-              ButtonSegment(
-                value: PaymentMethod.bank,
-                label: Text(context.l10n.methodBank),
-                icon: const Icon(Icons.account_balance),
-              ),
-              ButtonSegment(
-                value: PaymentMethod.check,
-                label: Text(context.l10n.methodCheck),
-                icon: const Icon(Icons.document_scanner),
-              ),
-            ],
-            selected: {_paymentMethod},
-            onSelectionChanged: (set) {
-              setState(() {
-                _paymentMethod = set.first;
-                _selectedTreasuryAccountId = null;
-              });
-            },
+          ButtonSegment(
+            value: PaymentMethod.bank,
+            label: Text(context.l10n.methodBank),
+            icon: const Icon(Icons.account_balance),
+          ),
+          ButtonSegment(
+            value: PaymentMethod.check,
+            label: Text(context.l10n.methodCheck),
+            icon: const Icon(Icons.document_scanner),
           ),
         ],
-      );
+        selected: {_paymentMethod},
+        onSelectionChanged: (set) {
+          setState(() {
+            _paymentMethod = set.first;
+            _selectedTreasuryAccountId = null;
+          });
+        },
+      ),
+    ],
+  );
 
   /// Context-aware selector for Treasury and Bank accounts.
   Widget _buildTreasuryAccountSelector() {
@@ -358,8 +353,9 @@ class _VoucherFormScreenState extends ConsumerState<VoucherFormScreen> {
         builder: (context, snapshot) {
           if (!snapshot.hasData) return const SizedBox();
 
-          final filterCode =
-              (_paymentMethod == PaymentMethod.cash) ? '1101' : '1102';
+          final filterCode = (_paymentMethod == PaymentMethod.cash)
+              ? '1101'
+              : '1102';
           final treasuryAccounts = snapshot.data!
               .where(
                 (a) =>
@@ -414,9 +410,7 @@ class _VoucherFormScreenState extends ConsumerState<VoucherFormScreen> {
             setState(() {
               _selectedEntityId = val;
               _selectedOppositeAccountId = c.receivableAccountId ?? 'acc-1201';
-              _personNameController.text = c.name(
-                isArabic: context.isArabic,
-              );
+              _personNameController.text = c.name(isArabic: context.isArabic);
             });
           },
           validator: (val) => val == null ? context.l10n.errFormFill : null,
@@ -445,9 +439,7 @@ class _VoucherFormScreenState extends ConsumerState<VoucherFormScreen> {
             setState(() {
               _selectedEntityId = val;
               _selectedOppositeAccountId = v.payableAccountId ?? 'acc-2101';
-              _personNameController.text = v.name(
-                isArabic: context.isArabic,
-              );
+              _personNameController.text = v.name(isArabic: context.isArabic);
             });
           },
           validator: (val) => val == null ? context.l10n.errFormFill : null,

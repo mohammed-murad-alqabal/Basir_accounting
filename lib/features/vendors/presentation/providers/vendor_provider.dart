@@ -69,6 +69,6 @@ final totalVendorsBalanceProvider = Provider<double>((ref) {
   return vendorsAsync.when(
     data: (vendors) => vendors.fold(0, (sum, v) => sum + v.balance),
     loading: () => 0.0,
-    error: (_, __) => 0.0,
+    error: (_, _) => 0.0,
   );
 });

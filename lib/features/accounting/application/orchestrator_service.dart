@@ -82,8 +82,9 @@ class OrchestratorService extends _$OrchestratorService {
       isApproved: overallAllowed,
       explanation: aggregateRationale.toString(),
       agentResults: results,
-      suggestedAdjustments:
-          aggregatedAdjustments.isNotEmpty ? aggregatedAdjustments : null,
+      suggestedAdjustments: aggregatedAdjustments.isNotEmpty
+          ? aggregatedAdjustments
+          : null,
       orchestrationTimestamp: DateTime.now(),
     );
   }

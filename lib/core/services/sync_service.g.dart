@@ -6,7 +6,7 @@ part of 'sync_service.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$syncServiceHash() => r'eb1b94de2f3569b4880f7cddeee0e844c2d5b326';
+String _$syncServiceHash() => r'fee6ac25b4635bdbfc01f9d8420a407f73f66fc8';
 
 /// Bidirectional data synchronization service.
 ///
@@ -36,13 +36,14 @@ String _$syncServiceHash() => r'eb1b94de2f3569b4880f7cddeee0e844c2d5b326';
 @ProviderFor(SyncService)
 final syncServiceProvider =
     AutoDisposeAsyncNotifierProvider<SyncService, void>.internal(
-  SyncService.new,
-  name: r'syncServiceProvider',
-  debugGetCreateSourceHash:
-      const bool.fromEnvironment('dart.vm.product') ? null : _$syncServiceHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
+      SyncService.new,
+      name: r'syncServiceProvider',
+      debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+          ? null
+          : _$syncServiceHash,
+      dependencies: null,
+      allTransitiveDependencies: null,
+    );
 
 typedef _$SyncService = AutoDisposeAsyncNotifier<void>;
 // ignore_for_file: type=lint

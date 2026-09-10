@@ -27,12 +27,11 @@ class SupabaseAuthService {
     required String email,
     required String password,
     String? displayName,
-  }) async =>
-      supabaseClient.auth.signUp(
-        email: email,
-        password: password,
-        data: {'display_name': displayName},
-      );
+  }) async => supabaseClient.auth.signUp(
+    email: email,
+    password: password,
+    data: {'display_name': displayName},
+  );
 
   /// تسجيل الدخول
   Future<AuthResponse> login({
@@ -55,8 +54,7 @@ class SupabaseAuthService {
   Future<UserResponse> updateUser({
     String? password,
     Map<String, dynamic>? data,
-  }) async =>
-      supabaseClient.auth.updateUser(
-        UserAttributes(password: password, data: data),
-      );
+  }) async => supabaseClient.auth.updateUser(
+    UserAttributes(password: password, data: data),
+  );
 }

@@ -183,16 +183,12 @@ class Invoice with _$Invoice {
   // ─────────────────────────────────────────────────────────────────────────
 
   /// Calculates the expected subtotal from line items.
-  Decimal get calculatedSubtotal => items.fold<Decimal>(
-        Decimal.zero,
-        (sum, item) => sum + item.total,
-      );
+  Decimal get calculatedSubtotal =>
+      items.fold<Decimal>(Decimal.zero, (sum, item) => sum + item.total);
 
   /// Calculates the expected tax from line items.
-  Decimal get calculatedTax => items.fold<Decimal>(
-        Decimal.zero,
-        (sum, item) => sum + item.taxAmount,
-      );
+  Decimal get calculatedTax =>
+      items.fold<Decimal>(Decimal.zero, (sum, item) => sum + item.taxAmount);
 
   /// Calculates the expected grand total.
   Decimal get calculatedTotal =>
@@ -213,9 +209,9 @@ class Invoice with _$Invoice {
   /// Returns a corrected copy of this invoice with recalculated totals.
   /// This is the "Self-Healing" mechanism.
   Invoice get healedCopy => copyWith(
-        subtotalAmount: calculatedSubtotal,
-        taxAmount: calculatedTax,
-        totalAmount: calculatedTotal,
-        updatedAt: DateTime.now(),
-      );
+    subtotalAmount: calculatedSubtotal,
+    taxAmount: calculatedTax,
+    totalAmount: calculatedTotal,
+    updatedAt: DateTime.now(),
+  );
 }

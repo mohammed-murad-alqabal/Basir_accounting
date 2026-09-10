@@ -59,37 +59,25 @@ class BranchNamingConvention {
       pattern: r'^release/v([0-9]+)\.([0-9]+)\.([0-9]+)(-[a-z0-9-]+)?$',
       description: 'Release preparation',
       requiresModule: false,
-      examples: [
-        'release/v1.2.0',
-        'release/v1.2.0-beta',
-      ],
+      examples: ['release/v1.2.0', 'release/v1.2.0-beta'],
     ),
     'docs': BranchTypeInfo(
       pattern: r'^docs/([a-z0-9-]+)$',
       description: 'Documentation updates',
       requiresModule: false,
-      examples: [
-        'docs/api-documentation',
-        'docs/user-guide-update',
-      ],
+      examples: ['docs/api-documentation', 'docs/user-guide-update'],
     ),
     'chore': BranchTypeInfo(
       pattern: r'^chore/([a-z0-9-]+)$',
       description: 'Maintenance and housekeeping',
       requiresModule: false,
-      examples: [
-        'chore/dependency-updates',
-        'chore/code-cleanup',
-      ],
+      examples: ['chore/dependency-updates', 'chore/code-cleanup'],
     ),
     'refactor': BranchTypeInfo(
       pattern: r'^refactor/([a-z0-9-]+)$',
       description: 'Code refactoring',
       requiresModule: false,
-      examples: [
-        'refactor/database-layer',
-        'refactor/ui-components',
-      ],
+      examples: ['refactor/database-layer', 'refactor/ui-components'],
     ),
     'experiment': BranchTypeInfo(
       pattern: r'^experiment/([a-z0-9-]+)$',
@@ -103,10 +91,7 @@ class BranchNamingConvention {
   };
 
   /// Protected branch names that should never be deleted or force-pushed
-  static const Set<String> protectedBranches = {
-    'main',
-    'development',
-  };
+  static const Set<String> protectedBranches = {'main', 'development'};
 
   /// Validates a branch name against ERP naming conventions
   static BranchValidationResult validateBranchName(String branchName) {
@@ -134,7 +119,8 @@ class BranchNamingConvention {
             return BranchValidationResult(
               isValid: false,
               branchType: branchType,
-              message: 'Invalid ERP module: $module. '
+              message:
+                  'Invalid ERP module: $module. '
                   'Valid modules: ${erpModules.keys.join(', ')}',
             );
           }
@@ -269,7 +255,8 @@ class BranchValidationResult {
   final String? module;
 
   @override
-  String toString() => 'BranchValidationResult('
+  String toString() =>
+      'BranchValidationResult('
       'isValid: $isValid, '
       'branchType: $branchType, '
       'message: $message'

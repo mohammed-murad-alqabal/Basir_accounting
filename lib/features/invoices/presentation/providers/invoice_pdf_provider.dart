@@ -55,16 +55,17 @@ final emailInvoiceProvider = FutureProvider.family<void, Invoice>((
   invoice,
 ) async {
   final pdfService = ref.read(invoicePdfServiceProvider);
+  final settings = await ref.read(settingsServiceProvider).getCompanySettings();
   final pdfBytes = await pdfService.generateInvoicePdf(invoice);
 
-  // TODO(basir): Get company name from settings
-  const companyName = 'Basir Accounting';
+  final companyName = settings['companyName'] ?? 'Basir Accounting';
 
   await Printing.sharePdf(
     bytes: pdfBytes,
     filename: 'invoice_${invoice.invoiceNumber}.pdf',
     subject: 'Invoice #${invoice.invoiceNumber} from $companyName',
-    body: 'Dear Customer,\n\n'
+    body:
+        'Dear Customer,\n\n'
         'Please find attached invoice #${invoice.invoiceNumber}.\n\n'
         'Best regards,\n$companyName',
   );
@@ -73,18 +74,18 @@ final emailInvoiceProvider = FutureProvider.family<void, Invoice>((
 /// Provider لطباعة إيصال حراري (POS Receipt)
 final printReceiptProvider =
     FutureProvider.family<void, ({Invoice invoice, AppLocalizations l10n})>((
-  ref,
-  args,
-) async {
-  final printService = ref.read(invoicePrintServiceProvider);
-  final pdfBytes = await printService.generateReceiptPdf(
-    args.invoice,
-    args.l10n,
-  );
+      ref,
+      args,
+    ) async {
+      final printService = ref.read(invoicePrintServiceProvider);
+      final pdfBytes = await printService.generateReceiptPdf(
+        args.invoice,
+        args.l10n,
+      );
 
-  await Printing.layoutPdf(
-    onLayout: (format) async => pdfBytes,
-    name: 'receipt_${args.invoice.invoiceNumber}.pdf',
-    format: PdfPageFormat.roll80,
-  );
-});
+      await Printing.layoutPdf(
+        onLayout: (format) async => pdfBytes,
+        name: 'receipt_${args.invoice.invoiceNumber}.pdf',
+        format: PdfPageFormat.roll80,
+      );
+    });

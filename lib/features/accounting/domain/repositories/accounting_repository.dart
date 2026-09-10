@@ -24,6 +24,12 @@ abstract class AccountingRepository {
   /// Implementations must enforce mathematical balance before commitment.
   Future<void> addJournalEntry(JournalEntry entry);
 
+  /// Caches a `Posted` entry only after it has been committed by Postgres.
+  ///
+  /// Implementations must validate the authoritative receipt fields on [entry]
+  /// and must treat the stored record as a read cache, not a source of truth.
+  Future<void> cacheAuthoritativeJournalEntry(JournalEntry entry);
+
   /// Computes the net balance for a specific account.
   /// Usually aggregates debit minus credit totals (or vice versa based on\n  /// nature).
   Future<Decimal> getAccountBalance(String accountId);

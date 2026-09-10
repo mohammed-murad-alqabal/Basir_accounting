@@ -323,10 +323,7 @@ class BackupService {
     await Directory(dbBackupPath).create(recursive: true);
 
     // Backup Isar database files
-    final isarFiles = [
-      'basir.isar',
-      'basir.isar.lock',
-    ];
+    final isarFiles = ['basir.isar', 'basir.isar.lock'];
 
     for (final fileName in isarFiles) {
       final sourceFile = File(fileName);
@@ -502,8 +499,9 @@ class BackupService {
       final backupsDir = Directory('.backups');
       if (!backupsDir.existsSync()) return;
 
-      final cutoffDate =
-          DateTime.now().subtract(Duration(days: maxRetentionDays));
+      final cutoffDate = DateTime.now().subtract(
+        Duration(days: maxRetentionDays),
+      );
 
       await for (final entity in backupsDir.list()) {
         if (entity is Directory) {
@@ -551,16 +549,16 @@ class BackupConfig {
 
   /// Creates a [BackupConfig] from a JSON map
   factory BackupConfig.fromJson(Map<String, dynamic> json) => BackupConfig(
-        enableAutomaticBackups: json['enableAutomaticBackups'] as bool? ?? true,
-        backupIntervalHours: json['backupIntervalHours'] as int? ?? 24,
-        maxBackupRetentionDays: json['maxBackupRetentionDays'] as int? ?? 30,
-        backupBranches: List<String>.from(
-          json['backupBranches'] as Iterable? ?? ['main', 'development'],
-        ),
-        backupDatabase: json['backupDatabase'] as bool? ?? true,
-        backupConfigurations: json['backupConfigurations'] as bool? ?? true,
-        compressionEnabled: json['compressionEnabled'] as bool? ?? true,
-      );
+    enableAutomaticBackups: json['enableAutomaticBackups'] as bool? ?? true,
+    backupIntervalHours: json['backupIntervalHours'] as int? ?? 24,
+    maxBackupRetentionDays: json['maxBackupRetentionDays'] as int? ?? 30,
+    backupBranches: List<String>.from(
+      json['backupBranches'] as Iterable? ?? ['main', 'development'],
+    ),
+    backupDatabase: json['backupDatabase'] as bool? ?? true,
+    backupConfigurations: json['backupConfigurations'] as bool? ?? true,
+    compressionEnabled: json['compressionEnabled'] as bool? ?? true,
+  );
 
   /// Whether to backup Git branches
   final bool enableAutomaticBackups;
@@ -585,14 +583,14 @@ class BackupConfig {
 
   /// Converts the [BackupConfig] to a JSON map
   Map<String, dynamic> toJson() => {
-        'enableAutomaticBackups': enableAutomaticBackups,
-        'backupIntervalHours': backupIntervalHours,
-        'maxBackupRetentionDays': maxBackupRetentionDays,
-        'backupBranches': backupBranches,
-        'backupDatabase': backupDatabase,
-        'backupConfigurations': backupConfigurations,
-        'compressionEnabled': compressionEnabled,
-      };
+    'enableAutomaticBackups': enableAutomaticBackups,
+    'backupIntervalHours': backupIntervalHours,
+    'maxBackupRetentionDays': maxBackupRetentionDays,
+    'backupBranches': backupBranches,
+    'backupDatabase': backupDatabase,
+    'backupConfigurations': backupConfigurations,
+    'compressionEnabled': compressionEnabled,
+  };
 }
 
 /// Information about a backup
@@ -634,13 +632,13 @@ class BackupManifest {
 
   /// Creates a [BackupManifest] from a JSON map
   factory BackupManifest.fromJson(Map<String, dynamic> json) => BackupManifest(
-        name: json['name'] as String,
-        timestamp: DateTime.parse(json['timestamp'] as String),
-        config: BackupConfig.fromJson(json['config'] as Map<String, dynamic>),
-        items: (json['items'] as List<dynamic>)
-            .map((item) => BackupItem.fromJson(item as Map<String, dynamic>))
-            .toList(),
-      );
+    name: json['name'] as String,
+    timestamp: DateTime.parse(json['timestamp'] as String),
+    config: BackupConfig.fromJson(json['config'] as Map<String, dynamic>),
+    items: (json['items'] as List<dynamic>)
+        .map((item) => BackupItem.fromJson(item as Map<String, dynamic>))
+        .toList(),
+  );
 
   /// The name of the backup
   final String name;
@@ -656,11 +654,11 @@ class BackupManifest {
 
   /// Converts the [BackupManifest] to a JSON map
   Map<String, dynamic> toJson() => {
-        'name': name,
-        'timestamp': timestamp.toIso8601String(),
-        'config': config.toJson(),
-        'items': items.map((item) => item.toJson()).toList(),
-      };
+    'name': name,
+    'timestamp': timestamp.toIso8601String(),
+    'config': config.toJson(),
+    'items': items.map((item) => item.toJson()).toList(),
+  };
 }
 
 /// Individual backup item
@@ -675,11 +673,11 @@ class BackupItem {
 
   /// Creates a [BackupItem] from a JSON map
   factory BackupItem.fromJson(Map<String, dynamic> json) => BackupItem(
-        name: json['name'] as String,
-        type: json['type'] as String,
-        path: json['path'] as String,
-        size: json['size'] as int,
-      );
+    name: json['name'] as String,
+    type: json['type'] as String,
+    path: json['path'] as String,
+    size: json['size'] as int,
+  );
 
   /// The name of the item
   final String name;
@@ -695,11 +693,11 @@ class BackupItem {
 
   /// Converts the [BackupItem] to a JSON map
   Map<String, dynamic> toJson() => {
-        'name': name,
-        'type': type,
-        'path': path,
-        'size': size,
-      };
+    'name': name,
+    'type': type,
+    'path': path,
+    'size': size,
+  };
 }
 
 /// Result of backup operations
@@ -719,20 +717,17 @@ class BackupResult {
     String? backupName,
     String? backupPath,
     int? itemCount,
-  }) =>
-      BackupResult(
-        success: true,
-        message: message,
-        backupName: backupName,
-        backupPath: backupPath,
-        itemCount: itemCount,
-      );
+  }) => BackupResult(
+    success: true,
+    message: message,
+    backupName: backupName,
+    backupPath: backupPath,
+    itemCount: itemCount,
+  );
 
   /// Creates an error result
-  factory BackupResult.error(String message) => BackupResult(
-        success: false,
-        message: message,
-      );
+  factory BackupResult.error(String message) =>
+      BackupResult(success: false, message: message);
 
   /// Whether the operation was successful
   final bool success;

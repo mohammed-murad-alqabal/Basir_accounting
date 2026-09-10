@@ -1,6 +1,7 @@
 // ignore_for_file: lines_longer_than_80_chars
 import 'package:basir_accounting_system/core/extensions/context_extensions.dart';
 import 'package:basir_accounting_system/core/theme/tokens/index.dart';
+import 'package:basir_accounting_system/features/expenses/application/expense_service.dart';
 import 'package:basir_accounting_system/features/expenses/presentation/providers/expense_provider.dart';
 import 'package:basir_accounting_system/shared/widgets/index.dart';
 import 'package:decimal/decimal.dart';
@@ -49,7 +50,34 @@ class _ExpenseFormScreenState extends ConsumerState<ExpenseFormScreen> {
   }
 
   Future<void> _loadExpense() async {
-    // TODO(basir): Load expense for editing.
+    setState(() => _isLoading = true);
+    try {
+      final service = ref.read(expenseServiceProvider);
+      final expense = await service.getExpenseById(widget.expenseId!);
+      if (expense != null && mounted) {
+        setState(() {
+          _descriptionController.text = expense.description;
+          _amountController.text = expense.amount.toString();
+          _vendorController.text = expense.vendorName ?? '';
+          _notesController.text = expense.notes ?? '';
+          _selectedDate = expense.expenseDate;
+          _selectedCategoryId = expense.categoryId;
+        });
+      }
+    } on Exception catch (e) {
+      if (mounted) {
+        AppSnackbar.showError(
+          context,
+          context.isArabic
+              ? 'تعذر تحميل بيانات المصروف: $e'
+              : 'Failed to load expense: $e',
+        );
+      }
+    } finally {
+      if (mounted) {
+        setState(() => _isLoading = false);
+      }
+    }
   }
 
   @override
@@ -94,13 +122,11 @@ class _ExpenseFormScreenState extends ConsumerState<ExpenseFormScreen> {
               prefixIcon: const Icon(Icons.attach_money),
               suffixIcon: Padding(
                 padding: const EdgeInsetsDirectional.only(end: Spacing.md),
-                child: Center(
-                  widthFactor: 1,
-                  child: Text(_currencyCode),
-                ),
+                child: Center(widthFactor: 1, child: Text(_currencyCode)),
               ),
-              keyboardType:
-                  const TextInputType.numberWithOptions(decimal: true),
+              keyboardType: const TextInputType.numberWithOptions(
+                decimal: true,
+              ),
               validator: (value) {
                 if (value == null || value.isEmpty) {
                   return l10n ? 'مطلوب' : 'Required';
@@ -146,9 +172,9 @@ class _ExpenseFormScreenState extends ConsumerState<ExpenseFormScreen> {
                               width: 24,
                               height: 24,
                               decoration: BoxDecoration(
-                                color: _getCategoryColor(cat.color).withValues(
-                                  alpha: 0.2,
-                                ),
+                                color: _getCategoryColor(
+                                  cat.color,
+                                ).withValues(alpha: 0.2),
                                 borderRadius: BorderRadius.circular(4),
                               ),
                               child: Icon(
@@ -228,14 +254,17 @@ class _ExpenseFormScreenState extends ConsumerState<ExpenseFormScreen> {
     setState(() => _isLoading = true);
 
     try {
-      await ref.read(expensesNotifierProvider.notifier).addExpense(
+      await ref
+          .read(expensesNotifierProvider.notifier)
+          .addExpense(
             description: _descriptionController.text,
             amount: Decimal.parse(_amountController.text),
             currencyCode: _currencyCode,
             expenseDate: _selectedDate,
             categoryId: _selectedCategoryId,
-            vendorName:
-                _vendorController.text.isEmpty ? null : _vendorController.text,
+            vendorName: _vendorController.text.isEmpty
+                ? null
+                : _vendorController.text,
             notes: _notesController.text.isEmpty ? null : _notesController.text,
           );
 

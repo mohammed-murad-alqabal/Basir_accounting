@@ -12,7 +12,8 @@ part of 'warehouse_transfer.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
+  'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models',
+);
 
 TransferItem _$TransferItemFromJson(Map<String, dynamic> json) {
   return _TransferItem.fromJson(json);
@@ -44,15 +45,17 @@ mixin _$TransferItem {
 /// @nodoc
 abstract class $TransferItemCopyWith<$Res> {
   factory $TransferItemCopyWith(
-          TransferItem value, $Res Function(TransferItem) then) =
-      _$TransferItemCopyWithImpl<$Res, TransferItem>;
+    TransferItem value,
+    $Res Function(TransferItem) then,
+  ) = _$TransferItemCopyWithImpl<$Res, TransferItem>;
   @useResult
-  $Res call(
-      {String itemId,
-      String itemName,
-      double quantity,
-      String? unit,
-      String? note});
+  $Res call({
+    String itemId,
+    String itemName,
+    double quantity,
+    String? unit,
+    String? note,
+  });
 }
 
 /// @nodoc
@@ -74,28 +77,31 @@ class _$TransferItemCopyWithImpl<$Res, $Val extends TransferItem>
     Object? unit = freezed,
     Object? note = freezed,
   }) {
-    return _then(_value.copyWith(
-      itemId: null == itemId
-          ? _value.itemId
-          : itemId // ignore: cast_nullable_to_non_nullable
-              as String,
-      itemName: null == itemName
-          ? _value.itemName
-          : itemName // ignore: cast_nullable_to_non_nullable
-              as String,
-      quantity: null == quantity
-          ? _value.quantity
-          : quantity // ignore: cast_nullable_to_non_nullable
-              as double,
-      unit: freezed == unit
-          ? _value.unit
-          : unit // ignore: cast_nullable_to_non_nullable
-              as String?,
-      note: freezed == note
-          ? _value.note
-          : note // ignore: cast_nullable_to_non_nullable
-              as String?,
-    ) as $Val);
+    return _then(
+      _value.copyWith(
+            itemId: null == itemId
+                ? _value.itemId
+                : itemId // ignore: cast_nullable_to_non_nullable
+                      as String,
+            itemName: null == itemName
+                ? _value.itemName
+                : itemName // ignore: cast_nullable_to_non_nullable
+                      as String,
+            quantity: null == quantity
+                ? _value.quantity
+                : quantity // ignore: cast_nullable_to_non_nullable
+                      as double,
+            unit: freezed == unit
+                ? _value.unit
+                : unit // ignore: cast_nullable_to_non_nullable
+                      as String?,
+            note: freezed == note
+                ? _value.note
+                : note // ignore: cast_nullable_to_non_nullable
+                      as String?,
+          )
+          as $Val,
+    );
   }
 }
 
@@ -103,16 +109,18 @@ class _$TransferItemCopyWithImpl<$Res, $Val extends TransferItem>
 abstract class _$$TransferItemImplCopyWith<$Res>
     implements $TransferItemCopyWith<$Res> {
   factory _$$TransferItemImplCopyWith(
-          _$TransferItemImpl value, $Res Function(_$TransferItemImpl) then) =
-      __$$TransferItemImplCopyWithImpl<$Res>;
+    _$TransferItemImpl value,
+    $Res Function(_$TransferItemImpl) then,
+  ) = __$$TransferItemImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call(
-      {String itemId,
-      String itemName,
-      double quantity,
-      String? unit,
-      String? note});
+  $Res call({
+    String itemId,
+    String itemName,
+    double quantity,
+    String? unit,
+    String? note,
+  });
 }
 
 /// @nodoc
@@ -120,8 +128,9 @@ class __$$TransferItemImplCopyWithImpl<$Res>
     extends _$TransferItemCopyWithImpl<$Res, _$TransferItemImpl>
     implements _$$TransferItemImplCopyWith<$Res> {
   __$$TransferItemImplCopyWithImpl(
-      _$TransferItemImpl _value, $Res Function(_$TransferItemImpl) _then)
-      : super(_value, _then);
+    _$TransferItemImpl _value,
+    $Res Function(_$TransferItemImpl) _then,
+  ) : super(_value, _then);
 
   @pragma('vm:prefer-inline')
   @override
@@ -132,40 +141,43 @@ class __$$TransferItemImplCopyWithImpl<$Res>
     Object? unit = freezed,
     Object? note = freezed,
   }) {
-    return _then(_$TransferItemImpl(
-      itemId: null == itemId
-          ? _value.itemId
-          : itemId // ignore: cast_nullable_to_non_nullable
-              as String,
-      itemName: null == itemName
-          ? _value.itemName
-          : itemName // ignore: cast_nullable_to_non_nullable
-              as String,
-      quantity: null == quantity
-          ? _value.quantity
-          : quantity // ignore: cast_nullable_to_non_nullable
-              as double,
-      unit: freezed == unit
-          ? _value.unit
-          : unit // ignore: cast_nullable_to_non_nullable
-              as String?,
-      note: freezed == note
-          ? _value.note
-          : note // ignore: cast_nullable_to_non_nullable
-              as String?,
-    ));
+    return _then(
+      _$TransferItemImpl(
+        itemId: null == itemId
+            ? _value.itemId
+            : itemId // ignore: cast_nullable_to_non_nullable
+                  as String,
+        itemName: null == itemName
+            ? _value.itemName
+            : itemName // ignore: cast_nullable_to_non_nullable
+                  as String,
+        quantity: null == quantity
+            ? _value.quantity
+            : quantity // ignore: cast_nullable_to_non_nullable
+                  as double,
+        unit: freezed == unit
+            ? _value.unit
+            : unit // ignore: cast_nullable_to_non_nullable
+                  as String?,
+        note: freezed == note
+            ? _value.note
+            : note // ignore: cast_nullable_to_non_nullable
+                  as String?,
+      ),
+    );
   }
 }
 
 /// @nodoc
 @JsonSerializable()
 class _$TransferItemImpl implements _TransferItem {
-  const _$TransferItemImpl(
-      {required this.itemId,
-      required this.itemName,
-      required this.quantity,
-      this.unit,
-      this.note});
+  const _$TransferItemImpl({
+    required this.itemId,
+    required this.itemName,
+    required this.quantity,
+    this.unit,
+    this.note,
+  });
 
   factory _$TransferItemImpl.fromJson(Map<String, dynamic> json) =>
       _$$TransferItemImplFromJson(json);
@@ -222,41 +234,35 @@ class _$TransferItemImpl implements _TransferItem {
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$TransferItemImplToJson(
-      this,
-    );
+    return _$$TransferItemImplToJson(this);
   }
 }
 
 abstract class _TransferItem implements TransferItem {
-  const factory _TransferItem(
-      {required final String itemId,
-      required final String itemName,
-      required final double quantity,
-      final String? unit,
-      final String? note}) = _$TransferItemImpl;
+  const factory _TransferItem({
+    required final String itemId,
+    required final String itemName,
+    required final double quantity,
+    final String? unit,
+    final String? note,
+  }) = _$TransferItemImpl;
 
   factory _TransferItem.fromJson(Map<String, dynamic> json) =
       _$TransferItemImpl.fromJson;
 
   @override
-
   /// معرف الصنف
   String get itemId;
   @override
-
   /// اسم الصنف
   String get itemName;
   @override
-
   /// الكمية
   double get quantity;
   @override
-
   /// الوحدة (اختياري)
   String? get unit;
   @override
-
   /// ملاحظة (اختياري)
   String? get note;
   @override
@@ -316,22 +322,24 @@ mixin _$WarehouseTransfer {
 /// @nodoc
 abstract class $WarehouseTransferCopyWith<$Res> {
   factory $WarehouseTransferCopyWith(
-          WarehouseTransfer value, $Res Function(WarehouseTransfer) then) =
-      _$WarehouseTransferCopyWithImpl<$Res, WarehouseTransfer>;
+    WarehouseTransfer value,
+    $Res Function(WarehouseTransfer) then,
+  ) = _$WarehouseTransferCopyWithImpl<$Res, WarehouseTransfer>;
   @useResult
-  $Res call(
-      {String id,
-      String transferNumber,
-      String sourceWarehouseId,
-      String destinationWarehouseId,
-      DateTime date,
-      List<TransferItem> items,
-      DateTime createdAt,
-      DateTime updatedAt,
-      TransferStatus status,
-      String? remarks,
-      String? userId,
-      SyncStatus syncStatus});
+  $Res call({
+    String id,
+    String transferNumber,
+    String sourceWarehouseId,
+    String destinationWarehouseId,
+    DateTime date,
+    List<TransferItem> items,
+    DateTime createdAt,
+    DateTime updatedAt,
+    TransferStatus status,
+    String? remarks,
+    String? userId,
+    SyncStatus syncStatus,
+  });
 }
 
 /// @nodoc
@@ -360,89 +368,95 @@ class _$WarehouseTransferCopyWithImpl<$Res, $Val extends WarehouseTransfer>
     Object? userId = freezed,
     Object? syncStatus = null,
   }) {
-    return _then(_value.copyWith(
-      id: null == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as String,
-      transferNumber: null == transferNumber
-          ? _value.transferNumber
-          : transferNumber // ignore: cast_nullable_to_non_nullable
-              as String,
-      sourceWarehouseId: null == sourceWarehouseId
-          ? _value.sourceWarehouseId
-          : sourceWarehouseId // ignore: cast_nullable_to_non_nullable
-              as String,
-      destinationWarehouseId: null == destinationWarehouseId
-          ? _value.destinationWarehouseId
-          : destinationWarehouseId // ignore: cast_nullable_to_non_nullable
-              as String,
-      date: null == date
-          ? _value.date
-          : date // ignore: cast_nullable_to_non_nullable
-              as DateTime,
-      items: null == items
-          ? _value.items
-          : items // ignore: cast_nullable_to_non_nullable
-              as List<TransferItem>,
-      createdAt: null == createdAt
-          ? _value.createdAt
-          : createdAt // ignore: cast_nullable_to_non_nullable
-              as DateTime,
-      updatedAt: null == updatedAt
-          ? _value.updatedAt
-          : updatedAt // ignore: cast_nullable_to_non_nullable
-              as DateTime,
-      status: null == status
-          ? _value.status
-          : status // ignore: cast_nullable_to_non_nullable
-              as TransferStatus,
-      remarks: freezed == remarks
-          ? _value.remarks
-          : remarks // ignore: cast_nullable_to_non_nullable
-              as String?,
-      userId: freezed == userId
-          ? _value.userId
-          : userId // ignore: cast_nullable_to_non_nullable
-              as String?,
-      syncStatus: null == syncStatus
-          ? _value.syncStatus
-          : syncStatus // ignore: cast_nullable_to_non_nullable
-              as SyncStatus,
-    ) as $Val);
+    return _then(
+      _value.copyWith(
+            id: null == id
+                ? _value.id
+                : id // ignore: cast_nullable_to_non_nullable
+                      as String,
+            transferNumber: null == transferNumber
+                ? _value.transferNumber
+                : transferNumber // ignore: cast_nullable_to_non_nullable
+                      as String,
+            sourceWarehouseId: null == sourceWarehouseId
+                ? _value.sourceWarehouseId
+                : sourceWarehouseId // ignore: cast_nullable_to_non_nullable
+                      as String,
+            destinationWarehouseId: null == destinationWarehouseId
+                ? _value.destinationWarehouseId
+                : destinationWarehouseId // ignore: cast_nullable_to_non_nullable
+                      as String,
+            date: null == date
+                ? _value.date
+                : date // ignore: cast_nullable_to_non_nullable
+                      as DateTime,
+            items: null == items
+                ? _value.items
+                : items // ignore: cast_nullable_to_non_nullable
+                      as List<TransferItem>,
+            createdAt: null == createdAt
+                ? _value.createdAt
+                : createdAt // ignore: cast_nullable_to_non_nullable
+                      as DateTime,
+            updatedAt: null == updatedAt
+                ? _value.updatedAt
+                : updatedAt // ignore: cast_nullable_to_non_nullable
+                      as DateTime,
+            status: null == status
+                ? _value.status
+                : status // ignore: cast_nullable_to_non_nullable
+                      as TransferStatus,
+            remarks: freezed == remarks
+                ? _value.remarks
+                : remarks // ignore: cast_nullable_to_non_nullable
+                      as String?,
+            userId: freezed == userId
+                ? _value.userId
+                : userId // ignore: cast_nullable_to_non_nullable
+                      as String?,
+            syncStatus: null == syncStatus
+                ? _value.syncStatus
+                : syncStatus // ignore: cast_nullable_to_non_nullable
+                      as SyncStatus,
+          )
+          as $Val,
+    );
   }
 }
 
 /// @nodoc
 abstract class _$$WarehouseTransferImplCopyWith<$Res>
     implements $WarehouseTransferCopyWith<$Res> {
-  factory _$$WarehouseTransferImplCopyWith(_$WarehouseTransferImpl value,
-          $Res Function(_$WarehouseTransferImpl) then) =
-      __$$WarehouseTransferImplCopyWithImpl<$Res>;
+  factory _$$WarehouseTransferImplCopyWith(
+    _$WarehouseTransferImpl value,
+    $Res Function(_$WarehouseTransferImpl) then,
+  ) = __$$WarehouseTransferImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call(
-      {String id,
-      String transferNumber,
-      String sourceWarehouseId,
-      String destinationWarehouseId,
-      DateTime date,
-      List<TransferItem> items,
-      DateTime createdAt,
-      DateTime updatedAt,
-      TransferStatus status,
-      String? remarks,
-      String? userId,
-      SyncStatus syncStatus});
+  $Res call({
+    String id,
+    String transferNumber,
+    String sourceWarehouseId,
+    String destinationWarehouseId,
+    DateTime date,
+    List<TransferItem> items,
+    DateTime createdAt,
+    DateTime updatedAt,
+    TransferStatus status,
+    String? remarks,
+    String? userId,
+    SyncStatus syncStatus,
+  });
 }
 
 /// @nodoc
 class __$$WarehouseTransferImplCopyWithImpl<$Res>
     extends _$WarehouseTransferCopyWithImpl<$Res, _$WarehouseTransferImpl>
     implements _$$WarehouseTransferImplCopyWith<$Res> {
-  __$$WarehouseTransferImplCopyWithImpl(_$WarehouseTransferImpl _value,
-      $Res Function(_$WarehouseTransferImpl) _then)
-      : super(_value, _then);
+  __$$WarehouseTransferImplCopyWithImpl(
+    _$WarehouseTransferImpl _value,
+    $Res Function(_$WarehouseTransferImpl) _then,
+  ) : super(_value, _then);
 
   @pragma('vm:prefer-inline')
   @override
@@ -460,76 +474,78 @@ class __$$WarehouseTransferImplCopyWithImpl<$Res>
     Object? userId = freezed,
     Object? syncStatus = null,
   }) {
-    return _then(_$WarehouseTransferImpl(
-      id: null == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as String,
-      transferNumber: null == transferNumber
-          ? _value.transferNumber
-          : transferNumber // ignore: cast_nullable_to_non_nullable
-              as String,
-      sourceWarehouseId: null == sourceWarehouseId
-          ? _value.sourceWarehouseId
-          : sourceWarehouseId // ignore: cast_nullable_to_non_nullable
-              as String,
-      destinationWarehouseId: null == destinationWarehouseId
-          ? _value.destinationWarehouseId
-          : destinationWarehouseId // ignore: cast_nullable_to_non_nullable
-              as String,
-      date: null == date
-          ? _value.date
-          : date // ignore: cast_nullable_to_non_nullable
-              as DateTime,
-      items: null == items
-          ? _value._items
-          : items // ignore: cast_nullable_to_non_nullable
-              as List<TransferItem>,
-      createdAt: null == createdAt
-          ? _value.createdAt
-          : createdAt // ignore: cast_nullable_to_non_nullable
-              as DateTime,
-      updatedAt: null == updatedAt
-          ? _value.updatedAt
-          : updatedAt // ignore: cast_nullable_to_non_nullable
-              as DateTime,
-      status: null == status
-          ? _value.status
-          : status // ignore: cast_nullable_to_non_nullable
-              as TransferStatus,
-      remarks: freezed == remarks
-          ? _value.remarks
-          : remarks // ignore: cast_nullable_to_non_nullable
-              as String?,
-      userId: freezed == userId
-          ? _value.userId
-          : userId // ignore: cast_nullable_to_non_nullable
-              as String?,
-      syncStatus: null == syncStatus
-          ? _value.syncStatus
-          : syncStatus // ignore: cast_nullable_to_non_nullable
-              as SyncStatus,
-    ));
+    return _then(
+      _$WarehouseTransferImpl(
+        id: null == id
+            ? _value.id
+            : id // ignore: cast_nullable_to_non_nullable
+                  as String,
+        transferNumber: null == transferNumber
+            ? _value.transferNumber
+            : transferNumber // ignore: cast_nullable_to_non_nullable
+                  as String,
+        sourceWarehouseId: null == sourceWarehouseId
+            ? _value.sourceWarehouseId
+            : sourceWarehouseId // ignore: cast_nullable_to_non_nullable
+                  as String,
+        destinationWarehouseId: null == destinationWarehouseId
+            ? _value.destinationWarehouseId
+            : destinationWarehouseId // ignore: cast_nullable_to_non_nullable
+                  as String,
+        date: null == date
+            ? _value.date
+            : date // ignore: cast_nullable_to_non_nullable
+                  as DateTime,
+        items: null == items
+            ? _value._items
+            : items // ignore: cast_nullable_to_non_nullable
+                  as List<TransferItem>,
+        createdAt: null == createdAt
+            ? _value.createdAt
+            : createdAt // ignore: cast_nullable_to_non_nullable
+                  as DateTime,
+        updatedAt: null == updatedAt
+            ? _value.updatedAt
+            : updatedAt // ignore: cast_nullable_to_non_nullable
+                  as DateTime,
+        status: null == status
+            ? _value.status
+            : status // ignore: cast_nullable_to_non_nullable
+                  as TransferStatus,
+        remarks: freezed == remarks
+            ? _value.remarks
+            : remarks // ignore: cast_nullable_to_non_nullable
+                  as String?,
+        userId: freezed == userId
+            ? _value.userId
+            : userId // ignore: cast_nullable_to_non_nullable
+                  as String?,
+        syncStatus: null == syncStatus
+            ? _value.syncStatus
+            : syncStatus // ignore: cast_nullable_to_non_nullable
+                  as SyncStatus,
+      ),
+    );
   }
 }
 
 /// @nodoc
 @JsonSerializable()
 class _$WarehouseTransferImpl implements _WarehouseTransfer {
-  const _$WarehouseTransferImpl(
-      {required this.id,
-      required this.transferNumber,
-      required this.sourceWarehouseId,
-      required this.destinationWarehouseId,
-      required this.date,
-      required final List<TransferItem> items,
-      required this.createdAt,
-      required this.updatedAt,
-      this.status = TransferStatus.completed,
-      this.remarks,
-      this.userId,
-      this.syncStatus = SyncStatus.synced})
-      : _items = items;
+  const _$WarehouseTransferImpl({
+    required this.id,
+    required this.transferNumber,
+    required this.sourceWarehouseId,
+    required this.destinationWarehouseId,
+    required this.date,
+    required final List<TransferItem> items,
+    required this.createdAt,
+    required this.updatedAt,
+    this.status = TransferStatus.completed,
+    this.remarks,
+    this.userId,
+    this.syncStatus = SyncStatus.synced,
+  }) : _items = items;
 
   factory _$WarehouseTransferImpl.fromJson(Map<String, dynamic> json) =>
       _$$WarehouseTransferImplFromJson(json);
@@ -624,99 +640,89 @@ class _$WarehouseTransferImpl implements _WarehouseTransfer {
   @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(
-      runtimeType,
-      id,
-      transferNumber,
-      sourceWarehouseId,
-      destinationWarehouseId,
-      date,
-      const DeepCollectionEquality().hash(_items),
-      createdAt,
-      updatedAt,
-      status,
-      remarks,
-      userId,
-      syncStatus);
+    runtimeType,
+    id,
+    transferNumber,
+    sourceWarehouseId,
+    destinationWarehouseId,
+    date,
+    const DeepCollectionEquality().hash(_items),
+    createdAt,
+    updatedAt,
+    status,
+    remarks,
+    userId,
+    syncStatus,
+  );
 
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
   _$$WarehouseTransferImplCopyWith<_$WarehouseTransferImpl> get copyWith =>
       __$$WarehouseTransferImplCopyWithImpl<_$WarehouseTransferImpl>(
-          this, _$identity);
+        this,
+        _$identity,
+      );
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$WarehouseTransferImplToJson(
-      this,
-    );
+    return _$$WarehouseTransferImplToJson(this);
   }
 }
 
 abstract class _WarehouseTransfer implements WarehouseTransfer {
-  const factory _WarehouseTransfer(
-      {required final String id,
-      required final String transferNumber,
-      required final String sourceWarehouseId,
-      required final String destinationWarehouseId,
-      required final DateTime date,
-      required final List<TransferItem> items,
-      required final DateTime createdAt,
-      required final DateTime updatedAt,
-      final TransferStatus status,
-      final String? remarks,
-      final String? userId,
-      final SyncStatus syncStatus}) = _$WarehouseTransferImpl;
+  const factory _WarehouseTransfer({
+    required final String id,
+    required final String transferNumber,
+    required final String sourceWarehouseId,
+    required final String destinationWarehouseId,
+    required final DateTime date,
+    required final List<TransferItem> items,
+    required final DateTime createdAt,
+    required final DateTime updatedAt,
+    final TransferStatus status,
+    final String? remarks,
+    final String? userId,
+    final SyncStatus syncStatus,
+  }) = _$WarehouseTransferImpl;
 
   factory _WarehouseTransfer.fromJson(Map<String, dynamic> json) =
       _$WarehouseTransferImpl.fromJson;
 
   @override
-
   /// المعرف الفريد
   String get id;
   @override
-
   /// رقم أمر التحويل
   String get transferNumber;
   @override
-
   /// مستودع المصدر
   String get sourceWarehouseId;
   @override
-
   /// مستودع الوجهة
   String get destinationWarehouseId;
   @override
-
   /// تاريخ التحويل
   DateTime get date;
   @override
-
   /// قائمة الأصناف المحولة
   List<TransferItem> get items;
   @override
-
   /// تاريخ الإنشاء
   DateTime get createdAt;
   @override
-
   /// تاريخ التحديث
   DateTime get updatedAt;
   @override
-
   /// حالة التحويل
   TransferStatus get status;
   @override
-
   /// ملاحظات
   String? get remarks;
   @override
-
   /// معرف المستخدم
   String? get userId;
   @override
-
   /// حالة المزامنة
   SyncStatus get syncStatus;
   @override

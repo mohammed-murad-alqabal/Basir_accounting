@@ -104,128 +104,130 @@ class _WorkFilterBarState extends State<WorkFilterBar> {
 
   @override
   Widget build(BuildContext context) => Container(
-        height: TouchTargets.buttonHeightSm,
-        padding: const EdgeInsets.symmetric(horizontal: Spacing.md),
-        decoration: const BoxDecoration(
-          color: AppColors.surface,
-          border: Border(
-            bottom: BorderSide(
-              color: AppColors.borderLight,
-              width: BorderWidths.normal,
-            ),
-          ),
+    height: TouchTargets.buttonHeightSm,
+    padding: const EdgeInsets.symmetric(horizontal: Spacing.md),
+    decoration: const BoxDecoration(
+      color: AppColors.surface,
+      border: Border(
+        bottom: BorderSide(
+          color: AppColors.borderLight,
+          width: BorderWidths.normal,
         ),
-        child: Row(
-          children: [
-            if (widget.options.isNotEmpty) ...[
-              _buildFilterChips(),
-              const SizedBox(width: Spacing.md),
-            ],
-            Expanded(child: _buildSearchField()),
-            if (widget.onExportRequested != null) ...[
-              const SizedBox(width: Spacing.sm),
-              _buildExportButton(),
-            ],
-          ],
-        ),
-      );
+      ),
+    ),
+    child: Row(
+      children: [
+        if (widget.options.isNotEmpty) ...[
+          _buildFilterChips(),
+          const SizedBox(width: Spacing.md),
+        ],
+        Expanded(child: _buildSearchField()),
+        if (widget.onExportRequested != null) ...[
+          const SizedBox(width: Spacing.sm),
+          _buildExportButton(),
+        ],
+      ],
+    ),
+  );
 
   Widget _buildFilterChips() => SingleChildScrollView(
-        scrollDirection: Axis.horizontal,
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: widget.options.asMap().entries.map((entry) {
-            final option = entry.value;
-            final isSelected = option.id == widget.selectedOptionId;
-            return Padding(
-              padding: EdgeInsets.only(left: entry.key == 0 ? 0 : Spacing.sm),
-              child: Semantics(
-                label: option.status.localizedLabelOf(context),
-                selected: isSelected,
-                button: true,
-                child: FilterChip(
-                  selected: isSelected,
-                  onSelected: (_) => widget.onSelectOption?.call(option.id),
-                  label: _isNarrow
-                      ? Icon(
-                          option.status.semanticIcon,
-                          size: IconSizes.xs,
-                          color: AppColors.textPrimary,
-                        )
-                      : Text(
-                          option.status.localizedLabelOf(context),
-                          style: AppTextStyles.labelMedium
-                              .copyWith(fontWeight: FontWeights.medium),
-                        ),
-                  backgroundColor: AppColors.surfaceVariant,
-                  selectedColor:
-                      option.status.semanticColor.withValues(alpha: 0.15),
-                  checkmarkColor: AppColors.textPrimary,
-                  showCheckmark: isSelected,
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: Spacing.sm,
-                    vertical: Spacing.xs,
-                  ),
-                  visualDensity: VisualDensity.compact,
-                  materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                ),
+    scrollDirection: Axis.horizontal,
+    child: Row(
+      mainAxisSize: MainAxisSize.min,
+      children: widget.options.asMap().entries.map((entry) {
+        final option = entry.value;
+        final isSelected = option.id == widget.selectedOptionId;
+        return Padding(
+          padding: EdgeInsets.only(left: entry.key == 0 ? 0 : Spacing.sm),
+          child: Semantics(
+            label: option.status.localizedLabelOf(context),
+            selected: isSelected,
+            button: true,
+            child: FilterChip(
+              selected: isSelected,
+              onSelected: (_) => widget.onSelectOption?.call(option.id),
+              label: _isNarrow
+                  ? Icon(
+                      option.status.semanticIcon,
+                      size: IconSizes.xs,
+                      color: AppColors.textPrimary,
+                    )
+                  : Text(
+                      option.status.localizedLabelOf(context),
+                      style: AppTextStyles.labelMedium.copyWith(
+                        fontWeight: FontWeights.medium,
+                      ),
+                    ),
+              backgroundColor: AppColors.surfaceVariant,
+              selectedColor: option.status.semanticColor.withValues(
+                alpha: 0.15,
               ),
-            );
-          }).toList(),
-        ),
-      );
+              checkmarkColor: AppColors.textPrimary,
+              showCheckmark: isSelected,
+              padding: const EdgeInsets.symmetric(
+                horizontal: Spacing.sm,
+                vertical: Spacing.xs,
+              ),
+              visualDensity: VisualDensity.compact,
+              materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+            ),
+          ),
+        );
+      }).toList(),
+    ),
+  );
 
   Widget _buildSearchField() => TextField(
-        controller: _searchController,
-        focusNode: _searchFocus,
-        onChanged: widget.onSearchChanged,
-        decoration: InputDecoration(
-          hintText: widget.searchHint ??
-              AppLocalizations.of(context).workFilterSearchHint,
-          hintStyle:
-              AppTextStyles.bodyMedium.copyWith(color: AppColors.textHint),
-          prefixIcon: const Icon(
-            Icons.search_rounded,
-            size: IconSizes.sm,
-            color: AppColors.textHint,
-          ),
-          isDense: true,
-          filled: true,
-          fillColor: AppColors.surfaceVariant,
-          contentPadding: const EdgeInsets.symmetric(
-            horizontal: Spacing.md,
-            vertical: Spacing.xs,
-          ),
-          border: const OutlineInputBorder(
-            borderRadius: Radii.borderRadiusMd,
-            borderSide: BorderSide(
-              color: AppColors.borderLight,
-              width: BorderWidths.normal,
-            ),
-          ),
-          enabledBorder: const OutlineInputBorder(
-            borderRadius: Radii.borderRadiusMd,
-            borderSide: BorderSide(
-              color: AppColors.borderLight,
-              width: BorderWidths.normal,
-            ),
-          ),
+    controller: _searchController,
+    focusNode: _searchFocus,
+    onChanged: widget.onSearchChanged,
+    decoration: InputDecoration(
+      hintText:
+          widget.searchHint ??
+          AppLocalizations.of(context).workFilterSearchHint,
+      hintStyle: AppTextStyles.bodyMedium.copyWith(color: AppColors.textHint),
+      prefixIcon: const Icon(
+        Icons.search_rounded,
+        size: IconSizes.sm,
+        color: AppColors.textHint,
+      ),
+      isDense: true,
+      filled: true,
+      fillColor: AppColors.surfaceVariant,
+      contentPadding: const EdgeInsets.symmetric(
+        horizontal: Spacing.md,
+        vertical: Spacing.xs,
+      ),
+      border: const OutlineInputBorder(
+        borderRadius: Radii.borderRadiusMd,
+        borderSide: BorderSide(
+          color: AppColors.borderLight,
+          width: BorderWidths.normal,
         ),
-        style: AppTextStyles.bodyMedium,
-      );
+      ),
+      enabledBorder: const OutlineInputBorder(
+        borderRadius: Radii.borderRadiusMd,
+        borderSide: BorderSide(
+          color: AppColors.borderLight,
+          width: BorderWidths.normal,
+        ),
+      ),
+    ),
+    style: AppTextStyles.bodyMedium,
+  );
 
   Widget _buildExportButton() => Semantics(
-        label: AppLocalizations.of(context).workFilterExport,
-        button: true,
-        child: IconButton(
-          onPressed: widget.onExportRequested,
-          icon: const Icon(
-            Icons.download_rounded,
-            size: IconSizes.sm,
-            color: AppColors.textPrimary,
-          ),
-          tooltip: AppLocalizations.of(context).workFilterExport,
-          padding: const EdgeInsets.all(Spacing.xs),
-        ),
-      );
+    label: AppLocalizations.of(context).workFilterExport,
+    button: true,
+    child: IconButton(
+      onPressed: widget.onExportRequested,
+      icon: const Icon(
+        Icons.download_rounded,
+        size: IconSizes.sm,
+        color: AppColors.textPrimary,
+      ),
+      tooltip: AppLocalizations.of(context).workFilterExport,
+      padding: const EdgeInsets.all(Spacing.xs),
+    ),
+  );
 }

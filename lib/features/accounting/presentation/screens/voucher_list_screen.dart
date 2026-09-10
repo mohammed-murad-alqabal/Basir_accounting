@@ -54,7 +54,7 @@ class _VoucherListScreenState extends ConsumerState<VoucherListScreen> {
                 return ListView.separated(
                   padding: const EdgeInsets.all(Spacing.md),
                   itemCount: filtered.length,
-                  separatorBuilder: (_, __) =>
+                  separatorBuilder: (_, _) =>
                       const SizedBox(height: Spacing.sm),
                   itemBuilder: (context, index) {
                     final voucher = filtered[index];
@@ -72,23 +72,23 @@ class _VoucherListScreenState extends ConsumerState<VoucherListScreen> {
   }
 
   Widget _buildSearchBar() => Padding(
-        padding: const EdgeInsets.all(Spacing.md),
-        child: GlassCard(
-          padding: EdgeInsets.zero,
-          child: TextField(
-            onChanged: (val) => setState(() => _searchQuery = val),
-            decoration: const InputDecoration(
-              hintText: 'بحث برقم المرجع أو الاسم...',
-              prefixIcon: Icon(Icons.search),
-              border: InputBorder.none,
-              contentPadding: EdgeInsets.symmetric(
-                horizontal: Spacing.md,
-                vertical: Spacing.sm,
-              ),
-            ),
+    padding: const EdgeInsets.all(Spacing.md),
+    child: GlassCard(
+      padding: EdgeInsets.zero,
+      child: TextField(
+        onChanged: (val) => setState(() => _searchQuery = val),
+        decoration: const InputDecoration(
+          hintText: 'بحث برقم المرجع أو الاسم...',
+          prefixIcon: Icon(Icons.search),
+          border: InputBorder.none,
+          contentPadding: EdgeInsets.symmetric(
+            horizontal: Spacing.md,
+            vertical: Spacing.sm,
           ),
         ),
-      );
+      ),
+    ),
+  );
 
   Widget _buildVoucherCard(BuildContext context, FinancialVoucher voucher) {
     final color = voucher.type == VoucherType.receipt
@@ -155,20 +155,21 @@ class _VoucherListScreenState extends ConsumerState<VoucherListScreen> {
   List<FinancialVoucher> _applyFilters(List<FinancialVoucher> vouchers) =>
       vouchers.where((v) {
         final matchesType = _filterType == null || v.type == _filterType;
-        final matchesDate = _dateRange == null ||
+        final matchesDate =
+            _dateRange == null ||
             (v.date.isAfter(_dateRange!.start) &&
                 v.date.isBefore(_dateRange!.end.add(const Duration(days: 1))));
-        final matchesSearch = _searchQuery.isEmpty ||
-            v.referenceNumber
-                .toLowerCase()
-                .contains(_searchQuery.toLowerCase()) ||
+        final matchesSearch =
+            _searchQuery.isEmpty ||
+            v.referenceNumber.toLowerCase().contains(
+              _searchQuery.toLowerCase(),
+            ) ||
             (v.personName?.toLowerCase().contains(_searchQuery.toLowerCase()) ??
                 false) ||
             v.description.toLowerCase().contains(_searchQuery.toLowerCase());
 
         return matchesType && matchesDate && matchesSearch;
-      }).toList()
-        ..sort((a, b) => b.date.compareTo(a.date));
+      }).toList()..sort((a, b) => b.date.compareTo(a.date));
 
   Future<void> _showFilterDialog() async {
     await showDialog<void>(

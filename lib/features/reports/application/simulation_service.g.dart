@@ -7,7 +7,7 @@ part of 'simulation_service.dart';
 // **************************************************************************
 
 String _$financialSimulationServiceHash() =>
-    r'9e9b0dee3e0b723bf0a11ed5cf927108657a0cf0';
+    r'e3d36c6df7c9481d763aba2ba361992ce7344298';
 
 /// ***
 /// Cognitive Foundation: FinancialSimulationService
@@ -23,14 +23,14 @@ String _$financialSimulationServiceHash() =>
 @ProviderFor(FinancialSimulationService)
 final financialSimulationServiceProvider =
     AutoDisposeNotifierProvider<FinancialSimulationService, void>.internal(
-  FinancialSimulationService.new,
-  name: r'financialSimulationServiceProvider',
-  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-      ? null
-      : _$financialSimulationServiceHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
+      FinancialSimulationService.new,
+      name: r'financialSimulationServiceProvider',
+      debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+          ? null
+          : _$financialSimulationServiceHash,
+      dependencies: null,
+      allTransitiveDependencies: null,
+    );
 
 typedef _$FinancialSimulationService = AutoDisposeNotifier<void>;
 // ignore_for_file: type=lint

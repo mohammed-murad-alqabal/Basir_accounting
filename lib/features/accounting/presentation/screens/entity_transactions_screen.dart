@@ -57,7 +57,7 @@ class EntityTransactionsScreen extends ConsumerWidget {
                 return ListView.separated(
                   padding: const EdgeInsets.all(16),
                   itemCount: entries.length,
-                  separatorBuilder: (_, __) => const SizedBox(height: 8),
+                  separatorBuilder: (_, _) => const SizedBox(height: 8),
                   itemBuilder: (context, index) {
                     final entry = entries[index];
                     return _buildTransactionItem(context, entry);
@@ -72,40 +72,40 @@ class EntityTransactionsScreen extends ConsumerWidget {
   }
 
   Widget _buildHeader(BuildContext context) => Padding(
+    padding: const EdgeInsets.all(16),
+    child: GlassCard(
+      child: Padding(
         padding: const EdgeInsets.all(16),
-        child: GlassCard(
-          child: Padding(
-            padding: const EdgeInsets.all(16),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      isCustomer
-                          ? context.l10n.labelCustomer
-                          : context.l10n.navVendors,
-                      style: Theme.of(context).textTheme.labelSmall,
-                    ),
-                    Text(
-                      entityName,
-                      style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                            fontWeight: FontWeight.bold,
-                          ),
-                    ),
-                  ],
+                Text(
+                  isCustomer
+                      ? context.l10n.labelCustomer
+                      : context.l10n.navVendors,
+                  style: Theme.of(context).textTheme.labelSmall,
                 ),
-                Icon(
-                  isCustomer ? Icons.person_outline : Icons.business_outlined,
-                  color: AppColors.primary,
-                  size: 32,
+                Text(
+                  entityName,
+                  style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
               ],
             ),
-          ),
+            Icon(
+              isCustomer ? Icons.person_outline : Icons.business_outlined,
+              color: AppColors.primary,
+              size: 32,
+            ),
+          ],
         ),
-      );
+      ),
+    ),
+  );
 
   Widget _buildTransactionItem(BuildContext context, JournalEntry entry) {
     // Determine if this entry is a net debit or credit for the entity
@@ -123,8 +123,9 @@ class EntityTransactionsScreen extends ConsumerWidget {
     );
 
     final amount = line.debit > line.credit ? line.debit : line.credit;
-    final isPositiveImpact =
-        isCustomer ? line.debit > line.credit : line.credit > line.debit;
+    final isPositiveImpact = isCustomer
+        ? line.debit > line.credit
+        : line.credit > line.debit;
 
     return GlassCard(
       onTap: () async {
@@ -147,8 +148,9 @@ class EntityTransactionsScreen extends ConsumerWidget {
         ),
         title: Text(entry.description),
         subtitle: Text(
-          DateFormat.yMMMd(Localizations.localeOf(context).languageCode)
-              .format(entry.date),
+          DateFormat.yMMMd(
+            Localizations.localeOf(context).languageCode,
+          ).format(entry.date),
         ),
         trailing: Text(
           amount.toStringAsFixed(2),

@@ -112,14 +112,17 @@ class AccountingService extends _$AccountingService {
       if (effectiveDate.isAfter(endDate)) continue;
 
       // 4. Aggregate
-      final isReceivable = invoice.type == InvoiceType.sales ||
+      final isReceivable =
+          invoice.type == InvoiceType.sales ||
           invoice.type == InvoiceType.purchaseReturn; // We get money
 
-      final isPayable = invoice.type == InvoiceType.purchase ||
+      final isPayable =
+          invoice.type == InvoiceType.purchase ||
           invoice.type == InvoiceType.salesReturn; // We pay money
 
       // Get existing daily flow or create (if mapped to startDate due to overdue)
-      var daily = dailyMap[effectiveDate] ??
+      var daily =
+          dailyMap[effectiveDate] ??
           DailyCashFlow(
             date: effectiveDate,
             inflow: Decimal.zero,
@@ -242,8 +245,9 @@ class AccountingService extends _$AccountingService {
     domain_inv.Invoice invoice, {
     bool bypassCognitive = false,
   }) async {
-    final isPeriodOpen =
-        await _financialYearService.canPostToDate(invoice.issuedDate);
+    final isPeriodOpen = await _financialYearService.canPostToDate(
+      invoice.issuedDate,
+    );
     if (!isPeriodOpen) {
       throw Exception('Cannot post to a closed or undefined financial period');
     }
@@ -259,8 +263,9 @@ class AccountingService extends _$AccountingService {
     // Debit: Accounts Receivable
     var receivableAccountId = 'acc-1201'; // Default AR
 
-    final customer =
-        await _customerRepository.getCustomerById(invoice.customerId);
+    final customer = await _customerRepository.getCustomerById(
+      invoice.customerId,
+    );
     if (customer != null && customer.receivableAccountId != null) {
       receivableAccountId = customer.receivableAccountId!;
     }
@@ -370,8 +375,9 @@ class AccountingService extends _$AccountingService {
     try {
       final salesBridge = ref.read(salesBridgeServiceProvider);
 
-      final updatedInvoice =
-          await salesBridge.finalizeInvoiceWithZatca(invoice);
+      final updatedInvoice = await salesBridge.finalizeInvoiceWithZatca(
+        invoice,
+      );
 
       if (updatedInvoice.qrCode != null) {
         final invoiceRepo = ref.read(invoiceRepositoryProvider);
@@ -394,8 +400,9 @@ class AccountingService extends _$AccountingService {
     required String createdBy,
     required DateTime recordedAt,
   }) async {
-    final isPeriodOpen =
-        await _financialYearService.canPostToDate(invoice.issuedDate);
+    final isPeriodOpen = await _financialYearService.canPostToDate(
+      invoice.issuedDate,
+    );
     if (!isPeriodOpen) {
       throw Exception('Cannot post to a closed or undefined financial period');
     }
@@ -408,8 +415,9 @@ class AccountingService extends _$AccountingService {
 
     final lines = <JournalEntryLine>[];
     var receivableAccountId = 'acc-1201';
-    final customer =
-        await _customerRepository.getCustomerById(invoice.customerId);
+    final customer = await _customerRepository.getCustomerById(
+      invoice.customerId,
+    );
     if (customer?.receivableAccountId != null) {
       receivableAccountId = customer!.receivableAccountId!;
     }
@@ -430,8 +438,9 @@ class AccountingService extends _$AccountingService {
     final allAccounts = await _repository.getAccounts();
     final revenueAccount = allAccounts.firstWhere(
       (account) => account.code == '4101' || account.subType == 'revenue',
-      orElse: () => allAccounts
-          .firstWhere((account) => account.type == AccountType.revenue),
+      orElse: () => allAccounts.firstWhere(
+        (account) => account.type == AccountType.revenue,
+      ),
     );
     lines.add(
       JournalEntryLine(
@@ -441,8 +450,9 @@ class AccountingService extends _$AccountingService {
         accountName: revenueAccount.nameEn,
         description: 'Revenue for Invoice #${invoice.invoiceNumber}',
         originalCurrency: invoice.currency != 'SAR' ? invoice.currency : null,
-        originalAmount:
-            invoice.currency != 'SAR' ? invoice.subtotalAmount : null,
+        originalAmount: invoice.currency != 'SAR'
+            ? invoice.subtotalAmount
+            : null,
         exchangeRate: invoice.currency != 'SAR' ? invoice.exchangeRate : null,
       ),
     );
@@ -512,8 +522,9 @@ class AccountingService extends _$AccountingService {
     domain_inv.Invoice invoice, {
     bool bypassCognitive = false,
   }) async {
-    final isPeriodOpen =
-        await _financialYearService.canPostToDate(invoice.issuedDate);
+    final isPeriodOpen = await _financialYearService.canPostToDate(
+      invoice.issuedDate,
+    );
     if (!isPeriodOpen) {
       throw Exception('Financial period is closed or locked');
     }
@@ -556,8 +567,9 @@ class AccountingService extends _$AccountingService {
         debit: invoice.subtotalAmountBaseCurrency,
         credit: Decimal.zero,
         originalCurrency: invoice.currency != 'SAR' ? invoice.currency : null,
-        originalAmount:
-            invoice.currency != 'SAR' ? invoice.subtotalAmount : null,
+        originalAmount: invoice.currency != 'SAR'
+            ? invoice.subtotalAmount
+            : null,
         exchangeRate: invoice.currency != 'SAR' ? invoice.exchangeRate : null,
       ),
     );
@@ -597,8 +609,9 @@ class AccountingService extends _$AccountingService {
     domain_inv.Invoice invoice, {
     bool bypassCognitive = false,
   }) async {
-    final isPeriodOpen =
-        await _financialYearService.canPostToDate(invoice.issuedDate);
+    final isPeriodOpen = await _financialYearService.canPostToDate(
+      invoice.issuedDate,
+    );
     if (!isPeriodOpen) {
       throw Exception('Financial period is closed or locked');
     }
@@ -620,8 +633,9 @@ class AccountingService extends _$AccountingService {
         debit: invoice.subtotalAmountBaseCurrency,
         credit: Decimal.zero,
         originalCurrency: invoice.currency != 'SAR' ? invoice.currency : null,
-        originalAmount:
-            invoice.currency != 'SAR' ? invoice.subtotalAmount : null,
+        originalAmount: invoice.currency != 'SAR'
+            ? invoice.subtotalAmount
+            : null,
         exchangeRate: invoice.currency != 'SAR' ? invoice.exchangeRate : null,
       ),
     );
@@ -646,8 +660,9 @@ class AccountingService extends _$AccountingService {
     }
 
     var receivableAccountId = 'acc-1201';
-    final customer =
-        await _customerRepository.getCustomerById(invoice.customerId);
+    final customer = await _customerRepository.getCustomerById(
+      invoice.customerId,
+    );
     if (customer != null && customer.receivableAccountId != null) {
       receivableAccountId = customer.receivableAccountId!;
     }
@@ -677,8 +692,9 @@ class AccountingService extends _$AccountingService {
     domain_inv.Invoice invoice, {
     bool bypassCognitive = false,
   }) async {
-    final isPeriodOpen =
-        await _financialYearService.canPostToDate(invoice.issuedDate);
+    final isPeriodOpen = await _financialYearService.canPostToDate(
+      invoice.issuedDate,
+    );
     if (!isPeriodOpen) {
       throw Exception('Financial period is closed or locked');
     }
@@ -719,8 +735,9 @@ class AccountingService extends _$AccountingService {
         credit: invoice.subtotalAmountBaseCurrency,
         debit: Decimal.zero,
         originalCurrency: invoice.currency != 'SAR' ? invoice.currency : null,
-        originalAmount:
-            invoice.currency != 'SAR' ? invoice.subtotalAmount : null,
+        originalAmount: invoice.currency != 'SAR'
+            ? invoice.subtotalAmount
+            : null,
         exchangeRate: invoice.currency != 'SAR' ? invoice.exchangeRate : null,
       ),
     );
@@ -760,8 +777,9 @@ class AccountingService extends _$AccountingService {
     domain_inv.Invoice invoice, {
     bool bypassCognitive = false,
   }) async {
-    final isPeriodOpen =
-        await _financialYearService.canPostToDate(invoice.issuedDate);
+    final isPeriodOpen = await _financialYearService.canPostToDate(
+      invoice.issuedDate,
+    );
     if (!isPeriodOpen) {
       throw Exception('Financial period is closed or locked');
     }
@@ -783,8 +801,9 @@ class AccountingService extends _$AccountingService {
         debit: invoice.subtotalAmountBaseCurrency,
         credit: Decimal.zero,
         originalCurrency: invoice.currency != 'SAR' ? invoice.currency : null,
-        originalAmount:
-            invoice.currency != 'SAR' ? invoice.subtotalAmount : null,
+        originalAmount: invoice.currency != 'SAR'
+            ? invoice.subtotalAmount
+            : null,
         exchangeRate: invoice.currency != 'SAR' ? invoice.exchangeRate : null,
       ),
     );
@@ -803,8 +822,9 @@ class AccountingService extends _$AccountingService {
         credit: invoice.subtotalAmountBaseCurrency,
         debit: Decimal.zero,
         originalCurrency: invoice.currency != 'SAR' ? invoice.currency : null,
-        originalAmount:
-            invoice.currency != 'SAR' ? invoice.subtotalAmount : null,
+        originalAmount: invoice.currency != 'SAR'
+            ? invoice.subtotalAmount
+            : null,
         exchangeRate: invoice.currency != 'SAR' ? invoice.exchangeRate : null,
       ),
     );
@@ -842,8 +862,9 @@ class AccountingService extends _$AccountingService {
         recordingDate: now,
       ),
       standards: StandardsJustification(
-        standardReference:
-            sourceDocument == 'purchase_invoice' ? 'IAS 2' : 'IFRS 15',
+        standardReference: sourceDocument == 'purchase_invoice'
+            ? 'IAS 2'
+            : 'IFRS 15',
         recognitionBasis: 'Accrual',
         measurementBasis: 'Transaction Price',
       ),
@@ -908,6 +929,16 @@ class AccountingService extends _$AccountingService {
   Future<List<JournalEntry>> getJournalEntries() async =>
       _repository.getJournalEntries();
 
+  /// Saves a journal entry as a draft without posting to the ledger.
+  ///
+  /// Draft entries are stored for later review and posting.
+  /// They do not affect account balances or financial statements.
+  Future<void> saveJournalEntryDraft(JournalEntry entry) async {
+    final draftEntry = entry.copyWith(status: JournalEntryStatus.draft);
+    await _repository.addJournalEntry(draftEntry);
+    ref.invalidateSelf();
+  }
+
   /// Posts a manual journal entry to the ledger.
   ///
   /// Performs balance verification and financial year validation.
@@ -964,9 +995,7 @@ class AccountingService extends _$AccountingService {
             'Consensus bypassed by specialized service or system override.',
         actor: 'system',
       );
-      finalEntry = entry.copyWith(
-        auditLogs: [...entry.auditLogs, log],
-      );
+      finalEntry = entry.copyWith(auditLogs: [...entry.auditLogs, log]);
     }
 
     await _repository.addJournalEntry(finalEntry);

@@ -95,5 +95,5 @@ class AppearanceService extends AsyncNotifier<AppearanceState> {
 // ignore: lines_longer_than_80_chars
 final appearanceServiceProvider =
     AsyncNotifierProvider<AppearanceService, AppearanceState>(
-  AppearanceService.new,
-);
+      AppearanceService.new,
+    );

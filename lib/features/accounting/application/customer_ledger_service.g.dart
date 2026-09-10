@@ -25,14 +25,14 @@ String _$customerLedgerServiceHash() =>
 @ProviderFor(CustomerLedgerService)
 final customerLedgerServiceProvider =
     AutoDisposeAsyncNotifierProvider<CustomerLedgerService, void>.internal(
-  CustomerLedgerService.new,
-  name: r'customerLedgerServiceProvider',
-  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-      ? null
-      : _$customerLedgerServiceHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
+      CustomerLedgerService.new,
+      name: r'customerLedgerServiceProvider',
+      debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+          ? null
+          : _$customerLedgerServiceHash,
+      dependencies: null,
+      allTransitiveDependencies: null,
+    );
 
 typedef _$CustomerLedgerService = AutoDisposeAsyncNotifier<void>;
 // ignore_for_file: type=lint

@@ -101,9 +101,7 @@ class SalesBridgeService {
       // 3. Retrieve updated invoice with compliance data (QR Code, Hash, etc.)
       final updatedDto = await rust_sales.getInvoiceById(id: invoice.id);
       if (updatedDto != null) {
-        return invoice.copyWith(
-          qrCode: updatedDto.qrCodeData,
-        );
+        return invoice.copyWith(qrCode: updatedDto.qrCodeData);
       }
     }
 

@@ -19,7 +19,7 @@ migrate_working_dir/
 # The .vscode folder contains launch configuration and tasks you configure in
 # VS Code which you may wish to be included in version control, so this line
 # is commented out by default.
-#.vscode/
+.vscode/
 
 # Flutter/Dart/Pub related
 **/doc/api/
@@ -65,14 +65,21 @@ coverage/
 
 # Secrets & Sensitive Files
 .env
+.env.*
 .env.local
 .env.*.local
+.env.production
+.env.development
 secrets.json
 *.key
 *.jks
 *.keystore
 *.p12
+*.pfx
 *.pem
+*.crt
+*.cer
+*.der
 google-services.json
 GoogleService-Info.plist
 key.properties
@@ -94,6 +101,8 @@ firebase_options.dart
 !lib/core/theme/tokens/*
 **/*secret*
 **/*credentials*
+**/config.local
+!test/security/test_secret_patterns.sh
 **/.aws/
 **/.ssh/
 **/private_key*
@@ -124,6 +133,9 @@ logs/archive_*.zip
 # Kiro (optional - keep local only)
 # .kiro/
 
+# Generated steering compatibility cache
+scripts/.cache/
+
 # Test outputs
 test_output.txt
 test_full_output.txt
@@ -151,6 +163,9 @@ logs/.processing_*
 *.log.lock
 *.log.swp
 *.log~
+*.backup
+*.old
+logs/
 
 # Temporary reports (keep in docs/ instead)
 # Note: Root level temporary reports only, not in .kiro/docs/reports/
@@ -179,6 +194,10 @@ logs/.processing_*
 .kiro/docs/reports/*_FINAL.md
 
 # Platform specific
+Thumbs.db
+desktop.ini
+node_modules/
+vendor/
 .fvm/
 .flutter-plugins-dependencies
 libisar.so
@@ -188,7 +207,10 @@ libisar.so
 
 # Database files
 *.db
+*.sqlite
 *.db-shm
+*.sql
+!rust/migrations/*.sql
 *.db-wal
 *.isar
 *.isar-shm
@@ -218,6 +240,9 @@ backups/
 # Dart API documentation (auto-generated)
 docs/api/html/
 .env
+
+# Supabase local state and generated runtime artifacts
+.supabase/
 
 # Professional Cleanliness - Digital Noise
 analysis_output.txt

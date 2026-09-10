@@ -59,12 +59,12 @@ class ExpenseSummary {
 
   /// Creates an empty [ExpenseSummary].
   factory ExpenseSummary.empty() => const ExpenseSummary(
-        totalAmount: 0,
-        count: 0,
-        averageAmount: 0,
-        byCategory: {},
-        byMonth: {},
-      );
+    totalAmount: 0,
+    count: 0,
+    averageAmount: 0,
+    byCategory: {},
+    byMonth: {},
+  );
 
   /// Total amount of expenses.
   final double totalAmount;

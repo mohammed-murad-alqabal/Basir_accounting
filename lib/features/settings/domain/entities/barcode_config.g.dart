@@ -11,7 +11,7 @@ _$BarcodeConfigImpl _$$BarcodeConfigImplFromJson(Map<String, dynamic> json) =>
       id: json['id'] as String? ?? 'default',
       printerType:
           $enumDecodeNullable(_$PrinterTypeEnumMap, json['printerType']) ??
-              PrinterType.thermal,
+          PrinterType.thermal,
       columnsPerRow: (json['columnsPerRow'] as num?)?.toInt() ?? 1,
       height: (json['height'] as num?)?.toDouble() ?? 30.0,
       width: (json['width'] as num?)?.toDouble() ?? 50.0,

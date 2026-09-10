@@ -28,7 +28,7 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
 
       - name: Initialize CodeQL
         uses: github/codeql-action/init@afb54ba388a7dca6ecae48f608c4ff05ff4cc77a # v3.25.15
@@ -40,7 +40,7 @@ jobs:
         uses: github/codeql-action/autobuild@afb54ba388a7dca6ecae48f608c4ff05ff4cc77a # v3.25.15
 
       - name: Perform CodeQL Analysis
-        uses: github/codeql-action/analyze@afb54ba388a7dca6ecae48f608c4ff05ff4cc77a # v3.25.15
+        uses: github/codeql-action/analyze@cdf488f595d80d6e07e03d4674febd5ab45fa938 # v4.37.9
         with:
           category: "/language:${{ matrix.language }}"
 
@@ -50,7 +50,7 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
 
       - name: Setup Flutter
         uses: ./.github/actions/setup-flutter
@@ -68,6 +68,7 @@ jobs:
         run: |
           echo "🔒 Running security audit..."
 
+<<<<<<< HEAD
           # يسرد مخرَج JSON الاعتمادات المتقادمة في Dart 3 من دون خيار
           # null-safety المحذوف، ولا يمنع فشل الشبكة التحليل الأمني اللاحق.
           flutter pub outdated --json > outdated.json || true
@@ -75,6 +76,14 @@ jobs:
           # Run static analysis with security focus
           # يركز الفحص الأمني على الأخطاء والتحذيرات؛ لا تحجب ملاحظات الأسلوب.
           flutter analyze --no-pub --no-fatal-infos
+=======
+          # Check for known vulnerabilities
+          flutter pub outdated
+
+          # Run static analysis with security focus
+          # Keep compilation and analyzer errors blocking; report style infos separately.
+          flutter analyze --no-pub --no-fatal-infos --no-fatal-warnings
+>>>>>>> origin/audit/baseline-main-current-20260814
 
           echo "✅ Security audit completed"
 

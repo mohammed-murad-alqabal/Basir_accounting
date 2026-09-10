@@ -14,14 +14,14 @@ String _$barcodeServiceHash() => r'81c2a6206922c53780249290cf38e8cfa82b68e9';
 @ProviderFor(BarcodeService)
 final barcodeServiceProvider =
     AutoDisposeNotifierProvider<BarcodeService, void>.internal(
-  BarcodeService.new,
-  name: r'barcodeServiceProvider',
-  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-      ? null
-      : _$barcodeServiceHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
+      BarcodeService.new,
+      name: r'barcodeServiceProvider',
+      debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+          ? null
+          : _$barcodeServiceHash,
+      dependencies: null,
+      allTransitiveDependencies: null,
+    );
 
 typedef _$BarcodeService = AutoDisposeNotifier<void>;
 // ignore_for_file: type=lint

@@ -36,16 +36,10 @@ class PdfGenerationService extends _$PdfGenerationService {
     pdf.addPage(
       pw.MultiPage(
         pageFormat: PdfPageFormat.a4,
-        theme: pw.ThemeData.withFont(
-          base: ttf,
-          bold: ttfBold,
-        ),
+        theme: pw.ThemeData.withFont(base: ttf, bold: ttfBold),
         textDirection: pw.TextDirection.rtl,
-        header: (context) => _buildInvoiceHeader(
-          invoice,
-          companyName,
-          taxNumber,
-        ),
+        header: (context) =>
+            _buildInvoiceHeader(invoice, companyName, taxNumber),
         footer: (context) => _buildInvoiceFooter(invoice, companyName),
         build: (context) => [
           _buildCustomerSection(invoice),
@@ -78,10 +72,7 @@ class PdfGenerationService extends _$PdfGenerationService {
     pdf.addPage(
       pw.MultiPage(
         pageFormat: PdfPageFormat.a4,
-        theme: pw.ThemeData.withFont(
-          base: ttf,
-          bold: ttfBold,
-        ),
+        theme: pw.ThemeData.withFont(base: ttf, bold: ttfBold),
         textDirection: pw.TextDirection.rtl,
         header: (context) => _buildJeHeader(entry, companyName, taxNumber),
         footer: (context) => _buildJeFooter(entry),
@@ -102,90 +93,89 @@ class PdfGenerationService extends _$PdfGenerationService {
     JournalEntry entry,
     String companyName,
     String taxNumber,
-  ) =>
-      pw.Column(
-        children: [
-          pw.Row(
-            mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
-            children: [
-              pw.Column(
-                crossAxisAlignment: pw.CrossAxisAlignment.start,
-                children: [
-                  pw.Text(
-                    companyName,
-                    style: pw.TextStyle(
-                      fontSize: 18,
-                      fontWeight: pw.FontWeight.bold,
-                      color: PdfColors.blue900,
-                    ),
-                  ),
-                  if (taxNumber.isNotEmpty)
-                    pw.Text(
-                      'الرقم الضريبي: $taxNumber',
-                      style: const pw.TextStyle(fontSize: 9),
-                    ),
-                ],
-              ),
-              pw.Column(
-                crossAxisAlignment: pw.CrossAxisAlignment.end,
-                children: [
-                  pw.Text(
-                    'قيد يومية / JOURNAL ENTRY',
-                    style: pw.TextStyle(
-                      fontSize: 16,
-                      fontWeight: pw.FontWeight.bold,
-                      color: PdfColors.blue800,
-                    ),
-                  ),
-                  pw.Text(
-                    'المرجع: ${entry.referenceNumber}',
-                    style: const pw.TextStyle(fontSize: 12),
-                  ),
-                ],
-              ),
-            ],
-          ),
-          pw.Divider(thickness: 1, color: PdfColors.grey400),
-        ],
-      );
-
-  pw.Widget _buildJeInfoSection(JournalEntry entry) => pw.Row(
+  ) => pw.Column(
+    children: [
+      pw.Row(
         mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
         children: [
           pw.Column(
             crossAxisAlignment: pw.CrossAxisAlignment.start,
             children: [
               pw.Text(
-                'التاريخ: ${entry.date.toString().split(' ')[0]}',
-                style: const pw.TextStyle(fontSize: 10),
+                companyName,
+                style: pw.TextStyle(
+                  fontSize: 18,
+                  fontWeight: pw.FontWeight.bold,
+                  color: PdfColors.blue900,
+                ),
               ),
-              pw.Text(
-                'البيان: ${entry.description}',
-                style: const pw.TextStyle(fontSize: 11),
-              ),
+              if (taxNumber.isNotEmpty)
+                pw.Text(
+                  'الرقم الضريبي: $taxNumber',
+                  style: const pw.TextStyle(fontSize: 9),
+                ),
             ],
           ),
           pw.Column(
             crossAxisAlignment: pw.CrossAxisAlignment.end,
             children: [
               pw.Text(
-                'الحالة: ${entry.status.name.toUpperCase()}',
+                'قيد يومية / JOURNAL ENTRY',
                 style: pw.TextStyle(
-                  fontSize: 10,
+                  fontSize: 16,
                   fontWeight: pw.FontWeight.bold,
-                  color: entry.status == JournalEntryStatus.posted
-                      ? PdfColors.green800
-                      : PdfColors.orange800,
+                  color: PdfColors.blue800,
                 ),
               ),
               pw.Text(
-                'المصدر: ${entry.sourceDocument}',
-                style: const pw.TextStyle(fontSize: 10),
+                'المرجع: ${entry.referenceNumber}',
+                style: const pw.TextStyle(fontSize: 12),
               ),
             ],
           ),
         ],
-      );
+      ),
+      pw.Divider(thickness: 1, color: PdfColors.grey400),
+    ],
+  );
+
+  pw.Widget _buildJeInfoSection(JournalEntry entry) => pw.Row(
+    mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
+    children: [
+      pw.Column(
+        crossAxisAlignment: pw.CrossAxisAlignment.start,
+        children: [
+          pw.Text(
+            'التاريخ: ${entry.date.toString().split(' ')[0]}',
+            style: const pw.TextStyle(fontSize: 10),
+          ),
+          pw.Text(
+            'البيان: ${entry.description}',
+            style: const pw.TextStyle(fontSize: 11),
+          ),
+        ],
+      ),
+      pw.Column(
+        crossAxisAlignment: pw.CrossAxisAlignment.end,
+        children: [
+          pw.Text(
+            'الحالة: ${entry.status.name.toUpperCase()}',
+            style: pw.TextStyle(
+              fontSize: 10,
+              fontWeight: pw.FontWeight.bold,
+              color: entry.status == JournalEntryStatus.posted
+                  ? PdfColors.green800
+                  : PdfColors.orange800,
+            ),
+          ),
+          pw.Text(
+            'المصدر: ${entry.sourceDocument}',
+            style: const pw.TextStyle(fontSize: 10),
+          ),
+        ],
+      ),
+    ],
+  );
 
   pw.Widget _buildJeLinesTable(JournalEntry entry) =>
       pw.TableHelper.fromTextArray(
@@ -226,151 +216,144 @@ class PdfGenerationService extends _$PdfGenerationService {
       );
 
   pw.Widget _buildJeTotalsSection(JournalEntry entry) => pw.Row(
-        mainAxisAlignment: pw.MainAxisAlignment.end,
+    mainAxisAlignment: pw.MainAxisAlignment.end,
+    children: [
+      pw.Column(
+        crossAxisAlignment: pw.CrossAxisAlignment.end,
         children: [
-          pw.Column(
-            crossAxisAlignment: pw.CrossAxisAlignment.end,
+          pw.Row(
             children: [
-              pw.Row(
-                children: [
-                  pw.Text(
-                    'إجمالي المدين:',
-                    style: const pw.TextStyle(fontSize: 10),
-                  ),
-                  pw.SizedBox(width: 10),
-                  pw.Text(
-                    entry.totalDebit.toStringAsFixed(2),
-                    style: pw.TextStyle(fontWeight: pw.FontWeight.bold),
-                  ),
-                ],
+              pw.Text(
+                'إجمالي المدين:',
+                style: const pw.TextStyle(fontSize: 10),
               ),
-              pw.Row(
-                children: [
-                  pw.Text(
-                    'إجمالي الدائن:',
-                    style: const pw.TextStyle(fontSize: 10),
-                  ),
-                  pw.SizedBox(width: 10),
-                  pw.Text(
-                    entry.totalCredit.toStringAsFixed(2),
-                    style: pw.TextStyle(fontWeight: pw.FontWeight.bold),
-                  ),
-                ],
+              pw.SizedBox(width: 10),
+              pw.Text(
+                entry.totalDebit.toStringAsFixed(2),
+                style: pw.TextStyle(fontWeight: pw.FontWeight.bold),
+              ),
+            ],
+          ),
+          pw.Row(
+            children: [
+              pw.Text(
+                'إجمالي الدائن:',
+                style: const pw.TextStyle(fontSize: 10),
+              ),
+              pw.SizedBox(width: 10),
+              pw.Text(
+                entry.totalCredit.toStringAsFixed(2),
+                style: pw.TextStyle(fontWeight: pw.FontWeight.bold),
               ),
             ],
           ),
         ],
-      );
+      ),
+    ],
+  );
 
   pw.Widget _buildJeFooter(JournalEntry entry) => pw.Column(
+    children: [
+      pw.Divider(thickness: 0.5),
+      pw.Row(
+        mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
         children: [
-          pw.Divider(thickness: 0.5),
-          pw.Row(
-            mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
-            children: [
-              pw.Text(
-                'مدخل القيد: ${entry.createdBy}',
-                style: const pw.TextStyle(
-                  fontSize: 8,
-                  color: PdfColors.grey700,
-                ),
-              ),
-              pw.Text(
-                'Basir Accounting | Diamond Purity Certified',
-                style: const pw.TextStyle(
-                  fontSize: 8,
-                  color: PdfColors.grey600,
-                ),
-              ),
-            ],
+          pw.Text(
+            'مدخل القيد: ${entry.createdBy}',
+            style: const pw.TextStyle(fontSize: 8, color: PdfColors.grey700),
+          ),
+          pw.Text(
+            'Basir Accounting | Diamond Purity Certified',
+            style: const pw.TextStyle(fontSize: 8, color: PdfColors.grey600),
           ),
         ],
-      );
+      ),
+    ],
+  );
 
   pw.Widget _buildInvoiceHeader(
     domain_inv.Invoice invoice,
     String companyName,
     String taxNumber,
-  ) =>
-      pw.Column(
-        children: [
-          pw.Row(
-            mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
-            children: [
-              pw.Column(
-                crossAxisAlignment: pw.CrossAxisAlignment.start,
-                children: [
-                  pw.Text(
-                    companyName,
-                    style: pw.TextStyle(
-                      fontSize: 20,
-                      fontWeight: pw.FontWeight.bold,
-                      color: PdfColors.blue900,
-                    ),
-                  ),
-                  if (taxNumber.isNotEmpty)
-                    pw.Text(
-                      'الرقم الضريبي / VAT No: $taxNumber',
-                      style: const pw.TextStyle(fontSize: 10),
-                    ),
-                ],
-              ),
-              pw.Column(
-                crossAxisAlignment: pw.CrossAxisAlignment.end,
-                children: [
-                  pw.Text(
-                    invoice.type == InvoiceType.sales
-                        ? 'فاتورة ضريبية / TAX INVOICE'
-                        : 'إشعار دائن / CREDIT NOTE',
-                    style: pw.TextStyle(
-                      fontSize: 18,
-                      fontWeight: pw.FontWeight.bold,
-                      color: PdfColors.blue800,
-                    ),
-                  ),
-                  pw.Text(
-                    'رقم الفاتورة / Invoice #: ${invoice.invoiceNumber}',
-                    style: const pw.TextStyle(fontSize: 12),
-                  ),
-                ],
-              ),
-            ],
-          ),
-          pw.Divider(thickness: 2, color: PdfColors.blue900),
-        ],
-      );
-
-  pw.Widget _buildCustomerSection(domain_inv.Invoice invoice) => pw.Row(
+  ) => pw.Column(
+    children: [
+      pw.Row(
         mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
         children: [
           pw.Column(
             crossAxisAlignment: pw.CrossAxisAlignment.start,
             children: [
               pw.Text(
-                'فاتورة إلى / Bill To:',
-                style: pw.TextStyle(fontWeight: pw.FontWeight.bold),
+                companyName,
+                style: pw.TextStyle(
+                  fontSize: 20,
+                  fontWeight: pw.FontWeight.bold,
+                  color: PdfColors.blue900,
+                ),
               ),
-              pw.Text(
-                invoice.customerName,
-                style: const pw.TextStyle(fontSize: 14),
-              ),
+              if (taxNumber.isNotEmpty)
+                pw.Text(
+                  'الرقم الضريبي / VAT No: $taxNumber',
+                  style: const pw.TextStyle(fontSize: 10),
+                ),
             ],
           ),
           pw.Column(
             crossAxisAlignment: pw.CrossAxisAlignment.end,
             children: [
               pw.Text(
-                'تاريخ الإصدار / Date:',
-                style: pw.TextStyle(fontWeight: pw.FontWeight.bold),
+                invoice.type == InvoiceType.sales
+                    ? 'فاتورة ضريبية / TAX INVOICE'
+                    : 'إشعار دائن / CREDIT NOTE',
+                style: pw.TextStyle(
+                  fontSize: 18,
+                  fontWeight: pw.FontWeight.bold,
+                  color: PdfColors.blue800,
+                ),
               ),
               pw.Text(
-                invoice.issuedDate.toString().split(' ')[0],
+                'رقم الفاتورة / Invoice #: ${invoice.invoiceNumber}',
                 style: const pw.TextStyle(fontSize: 12),
               ),
             ],
           ),
         ],
-      );
+      ),
+      pw.Divider(thickness: 2, color: PdfColors.blue900),
+    ],
+  );
+
+  pw.Widget _buildCustomerSection(domain_inv.Invoice invoice) => pw.Row(
+    mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
+    children: [
+      pw.Column(
+        crossAxisAlignment: pw.CrossAxisAlignment.start,
+        children: [
+          pw.Text(
+            'فاتورة إلى / Bill To:',
+            style: pw.TextStyle(fontWeight: pw.FontWeight.bold),
+          ),
+          pw.Text(
+            invoice.customerName,
+            style: const pw.TextStyle(fontSize: 14),
+          ),
+        ],
+      ),
+      pw.Column(
+        crossAxisAlignment: pw.CrossAxisAlignment.end,
+        children: [
+          pw.Text(
+            'تاريخ الإصدار / Date:',
+            style: pw.TextStyle(fontWeight: pw.FontWeight.bold),
+          ),
+          pw.Text(
+            invoice.issuedDate.toString().split(' ')[0],
+            style: const pw.TextStyle(fontSize: 12),
+          ),
+        ],
+      ),
+    ],
+  );
 
   pw.Widget _buildInvoiceItemsTable(domain_inv.Invoice invoice) =>
       pw.TableHelper.fromTextArray(
@@ -411,83 +394,73 @@ class PdfGenerationService extends _$PdfGenerationService {
     domain_inv.Invoice invoice,
     String companyName,
     String taxNumber,
-  ) =>
-      pw.Row(
-        crossAxisAlignment: pw.CrossAxisAlignment.start,
+  ) => pw.Row(
+    crossAxisAlignment: pw.CrossAxisAlignment.start,
+    children: [
+      pw.Container(
+        width: 100,
+        height: 100,
+        child: pw.BarcodeWidget(
+          barcode: pw.Barcode.qrCode(),
+          data:
+              invoice.qrCode ??
+              'ZATCA:$companyName:$taxNumber:${invoice.totalAmount}',
+        ),
+      ),
+      pw.Spacer(),
+      pw.Column(
+        crossAxisAlignment: pw.CrossAxisAlignment.end,
         children: [
-          pw.Container(
-            width: 100,
-            height: 100,
-            child: pw.BarcodeWidget(
-              barcode: pw.Barcode.qrCode(),
-              data: invoice.qrCode ??
-                  'ZATCA:$companyName:$taxNumber:${invoice.totalAmount}',
+          _buildTotalLine('المجموع الفرعي / Subtotal:', invoice.subtotalAmount),
+          _buildTotalLine('مجموع الضريبة (15%) / VAT:', invoice.taxAmount),
+          pw.Divider(),
+          pw.Text(
+            'الإجمالي / GRAND TOTAL:',
+            style: pw.TextStyle(fontSize: 14, fontWeight: pw.FontWeight.bold),
+          ),
+          pw.Text(
+            '${invoice.totalAmount.toStringAsFixed(2)} ${invoice.currency}',
+            style: pw.TextStyle(
+              fontSize: 20,
+              fontWeight: pw.FontWeight.bold,
+              color: PdfColors.blue900,
             ),
           ),
-          pw.Spacer(),
-          pw.Column(
-            crossAxisAlignment: pw.CrossAxisAlignment.end,
-            children: [
-              _buildTotalLine(
-                'المجموع الفرعي / Subtotal:',
-                invoice.subtotalAmount,
-              ),
-              _buildTotalLine('مجموع الضريبة (15%) / VAT:', invoice.taxAmount),
-              pw.Divider(),
-              pw.Text(
-                'الإجمالي / GRAND TOTAL:',
-                style: pw.TextStyle(
-                  fontSize: 14,
-                  fontWeight: pw.FontWeight.bold,
-                ),
-              ),
-              pw.Text(
-                '${invoice.totalAmount.toStringAsFixed(2)} ${invoice.currency}',
-                style: pw.TextStyle(
-                  fontSize: 20,
-                  fontWeight: pw.FontWeight.bold,
-                  color: PdfColors.blue900,
-                ),
-              ),
-            ],
-          ),
         ],
-      );
+      ),
+    ],
+  );
 
   pw.Widget _buildTotalLine(String label, Decimal amount) => pw.Row(
-        mainAxisSize: pw.MainAxisSize.min,
-        children: [
-          pw.Text(label, style: const pw.TextStyle(fontSize: 10)),
-          pw.SizedBox(width: 20),
-          pw.Text(
-            amount.toStringAsFixed(2),
-            style: pw.TextStyle(fontSize: 12, fontWeight: pw.FontWeight.bold),
-          ),
-        ],
-      );
+    mainAxisSize: pw.MainAxisSize.min,
+    children: [
+      pw.Text(label, style: const pw.TextStyle(fontSize: 10)),
+      pw.SizedBox(width: 20),
+      pw.Text(
+        amount.toStringAsFixed(2),
+        style: pw.TextStyle(fontSize: 12, fontWeight: pw.FontWeight.bold),
+      ),
+    ],
+  );
 
   pw.Widget _buildInvoiceFooter(
     domain_inv.Invoice invoice,
     String companyName,
-  ) =>
-      pw.Column(
+  ) => pw.Column(
+    children: [
+      pw.Divider(),
+      pw.Row(
+        mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
         children: [
-          pw.Divider(),
-          pw.Row(
-            mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
-            children: [
-              pw.Text(
-                'Generated by Basir Intelligent Systems'
-                ' | Diamond Purity Certified',
-                style: const pw.TextStyle(
-                  fontSize: 8,
-                  color: PdfColors.grey600,
-                ),
-              ),
-            ],
+          pw.Text(
+            'Generated by Basir Intelligent Systems'
+            ' | Diamond Purity Certified',
+            style: const pw.TextStyle(fontSize: 8, color: PdfColors.grey600),
           ),
         ],
-      );
+      ),
+    ],
+  );
 
   /// Generates a branded PDF for the given financial report.
   Future<Uint8List> generateReportPdf(FinancialReportDto report) async {
@@ -501,10 +474,7 @@ class PdfGenerationService extends _$PdfGenerationService {
     pdf.addPage(
       pw.MultiPage(
         pageFormat: PdfPageFormat.a4,
-        theme: pw.ThemeData.withFont(
-          base: ttf,
-          bold: ttfBold,
-        ),
+        theme: pw.ThemeData.withFont(base: ttf, bold: ttfBold),
         textDirection: pw.TextDirection.rtl,
         build: (context) => [
           _buildHeader(report),
@@ -538,10 +508,7 @@ class PdfGenerationService extends _$PdfGenerationService {
       pw.Page(
         pageFormat: PdfPageFormat.roll80,
         margin: const pw.EdgeInsets.all(5 * PdfPageFormat.mm),
-        theme: pw.ThemeData.withFont(
-          base: ttf,
-          bold: ttfBold,
-        ),
+        theme: pw.ThemeData.withFont(base: ttf, bold: ttfBold),
         textDirection: pw.TextDirection.rtl,
         build: (context) => pw.Column(
           children: [
@@ -567,9 +534,7 @@ class PdfGenerationService extends _$PdfGenerationService {
                 vertical: 2,
                 horizontal: 4,
               ),
-              decoration: pw.BoxDecoration(
-                border: pw.Border.all(width: 0.5),
-              ),
+              decoration: pw.BoxDecoration(border: pw.Border.all(width: 0.5)),
               child: pw.Text(
                 invoice.type == InvoiceType.sales
                     ? 'فاتورة ضريبية مبسطة\nSimplified Tax Invoice'
@@ -737,29 +702,28 @@ class PdfGenerationService extends _$PdfGenerationService {
     String label,
     String value, {
     bool isBold = false,
-  }) =>
-      pw.Padding(
-        padding: const pw.EdgeInsets.symmetric(vertical: 2),
-        child: pw.Row(
-          mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
-          children: [
-            pw.Text(
-              label,
-              style: pw.TextStyle(
-                fontSize: 8,
-                fontWeight: isBold ? pw.FontWeight.bold : pw.FontWeight.normal,
-              ),
-            ),
-            pw.Text(
-              value,
-              style: pw.TextStyle(
-                fontSize: 9,
-                fontWeight: isBold ? pw.FontWeight.bold : pw.FontWeight.normal,
-              ),
-            ),
-          ],
+  }) => pw.Padding(
+    padding: const pw.EdgeInsets.symmetric(vertical: 2),
+    child: pw.Row(
+      mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
+      children: [
+        pw.Text(
+          label,
+          style: pw.TextStyle(
+            fontSize: 8,
+            fontWeight: isBold ? pw.FontWeight.bold : pw.FontWeight.normal,
+          ),
         ),
-      );
+        pw.Text(
+          value,
+          style: pw.TextStyle(
+            fontSize: 9,
+            fontWeight: isBold ? pw.FontWeight.bold : pw.FontWeight.normal,
+          ),
+        ),
+      ],
+    ),
+  );
 
   /// Generates an "Intelligence Report" summarizing agent consensus for
   /// a period.
@@ -778,10 +742,7 @@ class PdfGenerationService extends _$PdfGenerationService {
     pdf.addPage(
       pw.MultiPage(
         pageFormat: PdfPageFormat.a4,
-        theme: pw.ThemeData.withFont(
-          base: ttf,
-          bold: ttfBold,
-        ),
+        theme: pw.ThemeData.withFont(base: ttf, bold: ttfBold),
         textDirection: pw.TextDirection.rtl,
         build: (context) => [
           pw.Header(
@@ -883,34 +844,31 @@ class PdfGenerationService extends _$PdfGenerationService {
 
   /// Internal helper to build the header for financial reports.
   pw.Widget _buildHeader(FinancialReportDto report) => pw.Column(
-        children: [
-          pw.Text(
-            'Basir Accounting System',
-            style: pw.TextStyle(
-              fontSize: 24,
-              fontWeight: pw.FontWeight.bold,
-              color: PdfColors.blue900,
-            ),
-          ),
-          pw.SizedBox(height: 10),
-          pw.Text(
-            report.title,
-            style: pw.TextStyle(
-              fontSize: 18,
-              fontWeight: pw.FontWeight.bold,
-              decoration: pw.TextDecoration.underline,
-            ),
-          ),
-          pw.Text(
-            'From: ${report.fromDate} '
-            'To: ${report.toDate}',
-            style: const pw.TextStyle(
-              fontSize: 12,
-              color: PdfColors.grey700,
-            ),
-          ),
-        ],
-      );
+    children: [
+      pw.Text(
+        'Basir Accounting System',
+        style: pw.TextStyle(
+          fontSize: 24,
+          fontWeight: pw.FontWeight.bold,
+          color: PdfColors.blue900,
+        ),
+      ),
+      pw.SizedBox(height: 10),
+      pw.Text(
+        report.title,
+        style: pw.TextStyle(
+          fontSize: 18,
+          fontWeight: pw.FontWeight.bold,
+          decoration: pw.TextDecoration.underline,
+        ),
+      ),
+      pw.Text(
+        'From: ${report.fromDate} '
+        'To: ${report.toDate}',
+        style: const pw.TextStyle(fontSize: 12, color: PdfColors.grey700),
+      ),
+    ],
+  );
 
   /// Internal helper to build the table for financial reports.
   pw.Widget _buildReportTable(FinancialReportDto report) =>
@@ -923,33 +881,22 @@ class PdfGenerationService extends _$PdfGenerationService {
         cellAlignment: pw.Alignment.centerLeft,
         data: <List<String>>[
           <String>['البند', 'المبلغ'],
-          ...report.lines.map(
-            (line) => [
-              line.label,
-              line.amount,
-            ],
-          ),
+          ...report.lines.map((line) => [line.label, line.amount]),
         ],
       );
 
   /// Internal helper to build the footer for financial reports.
   pw.Widget _buildFooter(FinancialReportDto report) => pw.Column(
-        children: [
-          pw.Divider(),
-          pw.Text(
-            'Generated by Basir Intelligent Accounting System',
-            style: const pw.TextStyle(
-              fontSize: 10,
-              color: PdfColors.grey500,
-            ),
-          ),
-          pw.Text(
-            'Diamond Purity Certified',
-            style: const pw.TextStyle(
-              fontSize: 8,
-              color: PdfColors.blueGrey,
-            ),
-          ),
-        ],
-      );
+    children: [
+      pw.Divider(),
+      pw.Text(
+        'Generated by Basir Intelligent Accounting System',
+        style: const pw.TextStyle(fontSize: 10, color: PdfColors.grey500),
+      ),
+      pw.Text(
+        'Diamond Purity Certified',
+        style: const pw.TextStyle(fontSize: 8, color: PdfColors.blueGrey),
+      ),
+    ],
+  );
 }

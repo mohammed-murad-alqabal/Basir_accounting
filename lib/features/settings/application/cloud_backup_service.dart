@@ -52,10 +52,12 @@ class CloudBackupService extends _$CloudBackupService {
       final driveApi = drive.DriveApi(client);
 
       debugPrint('📥 [BACKUP] Downloading $fileId from Google Drive...');
-      final media = await driveApi.files.get(
-        fileId,
-        downloadOptions: drive.DownloadOptions.fullMedia,
-      ) as drive.Media;
+      final media =
+          await driveApi.files.get(
+                fileId,
+                downloadOptions: drive.DownloadOptions.fullMedia,
+              )
+              as drive.Media;
 
       final file = File(destinationPath);
       final iosSink = file.openWrite();
@@ -278,7 +280,8 @@ class CloudBackupService extends _$CloudBackupService {
 
   Future<String?> _findBackupFolder(drive.DriveApi api) async {
     final list = await api.files.list(
-      q: "name = 'Basir Backups' and "
+      q:
+          "name = 'Basir Backups' and "
           "mimeType = 'application/vnd.google-apps.folder' and "
           'trashed = false',
     );

@@ -84,30 +84,29 @@ class _DateSelector extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => InkWell(
-        onTap: () async {
-          final result = await showDatePicker(
-            context: context,
-            initialDate: value,
-            firstDate: DateTime(2000),
-            lastDate: DateTime(2100),
-          );
-          if (result != null) {
-            onChanged(result);
-          }
-        },
-        borderRadius: BorderRadius.circular(8),
-        child: InputDecorator(
-          decoration: InputDecoration(
-            labelText: label,
-            border: const OutlineInputBorder(),
-            contentPadding:
-                const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-            suffixIcon: const Icon(Icons.calendar_today, size: 20),
-          ),
-          child: Text(
-            FormatHelpers.formatDate(value),
-            style: Theme.of(context).textTheme.bodyMedium,
-          ),
-        ),
+    onTap: () async {
+      final result = await showDatePicker(
+        context: context,
+        initialDate: value,
+        firstDate: DateTime(2000),
+        lastDate: DateTime(2100),
       );
+      if (result != null) {
+        onChanged(result);
+      }
+    },
+    borderRadius: BorderRadius.circular(8),
+    child: InputDecorator(
+      decoration: InputDecoration(
+        labelText: label,
+        border: const OutlineInputBorder(),
+        contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+        suffixIcon: const Icon(Icons.calendar_today, size: 20),
+      ),
+      child: Text(
+        FormatHelpers.formatDate(value),
+        style: Theme.of(context).textTheme.bodyMedium,
+      ),
+    ),
+  );
 }

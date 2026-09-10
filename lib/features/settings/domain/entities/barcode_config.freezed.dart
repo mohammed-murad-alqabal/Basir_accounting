@@ -12,7 +12,8 @@ part of 'barcode_config.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
+  'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models',
+);
 
 BarcodeConfig _$BarcodeConfigFromJson(Map<String, dynamic> json) {
   return _BarcodeConfig.fromJson(json);
@@ -53,18 +54,20 @@ mixin _$BarcodeConfig {
 /// @nodoc
 abstract class $BarcodeConfigCopyWith<$Res> {
   factory $BarcodeConfigCopyWith(
-          BarcodeConfig value, $Res Function(BarcodeConfig) then) =
-      _$BarcodeConfigCopyWithImpl<$Res, BarcodeConfig>;
+    BarcodeConfig value,
+    $Res Function(BarcodeConfig) then,
+  ) = _$BarcodeConfigCopyWithImpl<$Res, BarcodeConfig>;
   @useResult
-  $Res call(
-      {String id,
-      PrinterType printerType,
-      int columnsPerRow,
-      double height,
-      double width,
-      double margin,
-      bool showItemName,
-      bool showPrice});
+  $Res call({
+    String id,
+    PrinterType printerType,
+    int columnsPerRow,
+    double height,
+    double width,
+    double margin,
+    bool showItemName,
+    bool showPrice,
+  });
 }
 
 /// @nodoc
@@ -89,40 +92,43 @@ class _$BarcodeConfigCopyWithImpl<$Res, $Val extends BarcodeConfig>
     Object? showItemName = null,
     Object? showPrice = null,
   }) {
-    return _then(_value.copyWith(
-      id: null == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as String,
-      printerType: null == printerType
-          ? _value.printerType
-          : printerType // ignore: cast_nullable_to_non_nullable
-              as PrinterType,
-      columnsPerRow: null == columnsPerRow
-          ? _value.columnsPerRow
-          : columnsPerRow // ignore: cast_nullable_to_non_nullable
-              as int,
-      height: null == height
-          ? _value.height
-          : height // ignore: cast_nullable_to_non_nullable
-              as double,
-      width: null == width
-          ? _value.width
-          : width // ignore: cast_nullable_to_non_nullable
-              as double,
-      margin: null == margin
-          ? _value.margin
-          : margin // ignore: cast_nullable_to_non_nullable
-              as double,
-      showItemName: null == showItemName
-          ? _value.showItemName
-          : showItemName // ignore: cast_nullable_to_non_nullable
-              as bool,
-      showPrice: null == showPrice
-          ? _value.showPrice
-          : showPrice // ignore: cast_nullable_to_non_nullable
-              as bool,
-    ) as $Val);
+    return _then(
+      _value.copyWith(
+            id: null == id
+                ? _value.id
+                : id // ignore: cast_nullable_to_non_nullable
+                      as String,
+            printerType: null == printerType
+                ? _value.printerType
+                : printerType // ignore: cast_nullable_to_non_nullable
+                      as PrinterType,
+            columnsPerRow: null == columnsPerRow
+                ? _value.columnsPerRow
+                : columnsPerRow // ignore: cast_nullable_to_non_nullable
+                      as int,
+            height: null == height
+                ? _value.height
+                : height // ignore: cast_nullable_to_non_nullable
+                      as double,
+            width: null == width
+                ? _value.width
+                : width // ignore: cast_nullable_to_non_nullable
+                      as double,
+            margin: null == margin
+                ? _value.margin
+                : margin // ignore: cast_nullable_to_non_nullable
+                      as double,
+            showItemName: null == showItemName
+                ? _value.showItemName
+                : showItemName // ignore: cast_nullable_to_non_nullable
+                      as bool,
+            showPrice: null == showPrice
+                ? _value.showPrice
+                : showPrice // ignore: cast_nullable_to_non_nullable
+                      as bool,
+          )
+          as $Val,
+    );
   }
 }
 
@@ -130,19 +136,21 @@ class _$BarcodeConfigCopyWithImpl<$Res, $Val extends BarcodeConfig>
 abstract class _$$BarcodeConfigImplCopyWith<$Res>
     implements $BarcodeConfigCopyWith<$Res> {
   factory _$$BarcodeConfigImplCopyWith(
-          _$BarcodeConfigImpl value, $Res Function(_$BarcodeConfigImpl) then) =
-      __$$BarcodeConfigImplCopyWithImpl<$Res>;
+    _$BarcodeConfigImpl value,
+    $Res Function(_$BarcodeConfigImpl) then,
+  ) = __$$BarcodeConfigImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call(
-      {String id,
-      PrinterType printerType,
-      int columnsPerRow,
-      double height,
-      double width,
-      double margin,
-      bool showItemName,
-      bool showPrice});
+  $Res call({
+    String id,
+    PrinterType printerType,
+    int columnsPerRow,
+    double height,
+    double width,
+    double margin,
+    bool showItemName,
+    bool showPrice,
+  });
 }
 
 /// @nodoc
@@ -150,8 +158,9 @@ class __$$BarcodeConfigImplCopyWithImpl<$Res>
     extends _$BarcodeConfigCopyWithImpl<$Res, _$BarcodeConfigImpl>
     implements _$$BarcodeConfigImplCopyWith<$Res> {
   __$$BarcodeConfigImplCopyWithImpl(
-      _$BarcodeConfigImpl _value, $Res Function(_$BarcodeConfigImpl) _then)
-      : super(_value, _then);
+    _$BarcodeConfigImpl _value,
+    $Res Function(_$BarcodeConfigImpl) _then,
+  ) : super(_value, _then);
 
   @pragma('vm:prefer-inline')
   @override
@@ -165,55 +174,58 @@ class __$$BarcodeConfigImplCopyWithImpl<$Res>
     Object? showItemName = null,
     Object? showPrice = null,
   }) {
-    return _then(_$BarcodeConfigImpl(
-      id: null == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as String,
-      printerType: null == printerType
-          ? _value.printerType
-          : printerType // ignore: cast_nullable_to_non_nullable
-              as PrinterType,
-      columnsPerRow: null == columnsPerRow
-          ? _value.columnsPerRow
-          : columnsPerRow // ignore: cast_nullable_to_non_nullable
-              as int,
-      height: null == height
-          ? _value.height
-          : height // ignore: cast_nullable_to_non_nullable
-              as double,
-      width: null == width
-          ? _value.width
-          : width // ignore: cast_nullable_to_non_nullable
-              as double,
-      margin: null == margin
-          ? _value.margin
-          : margin // ignore: cast_nullable_to_non_nullable
-              as double,
-      showItemName: null == showItemName
-          ? _value.showItemName
-          : showItemName // ignore: cast_nullable_to_non_nullable
-              as bool,
-      showPrice: null == showPrice
-          ? _value.showPrice
-          : showPrice // ignore: cast_nullable_to_non_nullable
-              as bool,
-    ));
+    return _then(
+      _$BarcodeConfigImpl(
+        id: null == id
+            ? _value.id
+            : id // ignore: cast_nullable_to_non_nullable
+                  as String,
+        printerType: null == printerType
+            ? _value.printerType
+            : printerType // ignore: cast_nullable_to_non_nullable
+                  as PrinterType,
+        columnsPerRow: null == columnsPerRow
+            ? _value.columnsPerRow
+            : columnsPerRow // ignore: cast_nullable_to_non_nullable
+                  as int,
+        height: null == height
+            ? _value.height
+            : height // ignore: cast_nullable_to_non_nullable
+                  as double,
+        width: null == width
+            ? _value.width
+            : width // ignore: cast_nullable_to_non_nullable
+                  as double,
+        margin: null == margin
+            ? _value.margin
+            : margin // ignore: cast_nullable_to_non_nullable
+                  as double,
+        showItemName: null == showItemName
+            ? _value.showItemName
+            : showItemName // ignore: cast_nullable_to_non_nullable
+                  as bool,
+        showPrice: null == showPrice
+            ? _value.showPrice
+            : showPrice // ignore: cast_nullable_to_non_nullable
+                  as bool,
+      ),
+    );
   }
 }
 
 /// @nodoc
 @JsonSerializable()
 class _$BarcodeConfigImpl implements _BarcodeConfig {
-  const _$BarcodeConfigImpl(
-      {this.id = 'default',
-      this.printerType = PrinterType.thermal,
-      this.columnsPerRow = 1,
-      this.height = 30.0,
-      this.width = 50.0,
-      this.margin = 2.0,
-      this.showItemName = true,
-      this.showPrice = true});
+  const _$BarcodeConfigImpl({
+    this.id = 'default',
+    this.printerType = PrinterType.thermal,
+    this.columnsPerRow = 1,
+    this.height = 30.0,
+    this.width = 50.0,
+    this.margin = 2.0,
+    this.showItemName = true,
+    this.showPrice = true,
+  });
 
   factory _$BarcodeConfigImpl.fromJson(Map<String, dynamic> json) =>
       _$$BarcodeConfigImplFromJson(json);
@@ -284,8 +296,17 @@ class _$BarcodeConfigImpl implements _BarcodeConfig {
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, id, printerType, columnsPerRow,
-      height, width, margin, showItemName, showPrice);
+  int get hashCode => Object.hash(
+    runtimeType,
+    id,
+    printerType,
+    columnsPerRow,
+    height,
+    width,
+    margin,
+    showItemName,
+    showPrice,
+  );
 
   @JsonKey(ignore: true)
   @override
@@ -295,56 +316,47 @@ class _$BarcodeConfigImpl implements _BarcodeConfig {
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$BarcodeConfigImplToJson(
-      this,
-    );
+    return _$$BarcodeConfigImplToJson(this);
   }
 }
 
 abstract class _BarcodeConfig implements BarcodeConfig {
-  const factory _BarcodeConfig(
-      {final String id,
-      final PrinterType printerType,
-      final int columnsPerRow,
-      final double height,
-      final double width,
-      final double margin,
-      final bool showItemName,
-      final bool showPrice}) = _$BarcodeConfigImpl;
+  const factory _BarcodeConfig({
+    final String id,
+    final PrinterType printerType,
+    final int columnsPerRow,
+    final double height,
+    final double width,
+    final double margin,
+    final bool showItemName,
+    final bool showPrice,
+  }) = _$BarcodeConfigImpl;
 
   factory _BarcodeConfig.fromJson(Map<String, dynamic> json) =
       _$BarcodeConfigImpl.fromJson;
 
   @override
-
   /// المعرف الفريد للإعداد
   String get id;
   @override
-
   /// نوع الطابعة
   PrinterType get printerType;
   @override
-
   /// عدد الأعمدة في الصف الواحد (خاص بـ A4)
   int get columnsPerRow;
   @override
-
   /// طول الملصق بالمليمتر
   double get height;
   @override
-
   /// عرض الملصق بالمليمتر
   double get width;
   @override
-
   /// الهامش بالمليمتر
   double get margin;
   @override
-
   /// هل يتم طباعة اسم الصنف
   bool get showItemName;
   @override
-
   /// هل يتم طباعة السعر
   bool get showPrice;
   @override

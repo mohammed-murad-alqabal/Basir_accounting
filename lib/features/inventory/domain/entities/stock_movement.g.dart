@@ -21,7 +21,7 @@ _$StockMovementImpl _$$StockMovementImplFromJson(Map<String, dynamic> json) =>
       userId: json['userId'] as String?,
       syncStatus:
           $enumDecodeNullable(_$SyncStatusEnumMap, json['syncStatus']) ??
-              SyncStatus.synced,
+          SyncStatus.synced,
     );
 
 Map<String, dynamic> _$$StockMovementImplToJson(_$StockMovementImpl instance) =>

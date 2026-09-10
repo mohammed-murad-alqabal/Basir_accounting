@@ -11,8 +11,9 @@ final warehousesProvider = FutureProvider<List<Warehouse>>((ref) async {
 });
 
 /// مزود قائمة التحويلات
-final warehouseTransfersProvider =
-    FutureProvider<List<WarehouseTransfer>>((ref) async {
+final warehouseTransfersProvider = FutureProvider<List<WarehouseTransfer>>((
+  ref,
+) async {
   final repository = ref.watch(warehouseTransferRepositoryProvider);
   return repository.getAllTransfers();
 });
@@ -45,5 +46,5 @@ class TransferNotifier extends StateNotifier<AsyncValue<void>> {
 /// مزود إجراءات التحويل
 final transferActionProvider =
     StateNotifierProvider<TransferNotifier, AsyncValue<void>>(
-  (ref) => TransferNotifier(ref: ref),
-);
+      (ref) => TransferNotifier(ref: ref),
+    );

@@ -88,8 +88,9 @@ class FinancialYearService extends _$FinancialYearService {
     if (!targetYear.lockedPeriodIds.contains(periodId)) return;
 
     final updatedYear = targetYear.copyWith(
-      lockedPeriodIds:
-          targetYear.lockedPeriodIds.where((id) => id != periodId).toList(),
+      lockedPeriodIds: targetYear.lockedPeriodIds
+          .where((id) => id != periodId)
+          .toList(),
     );
 
     await _repository.saveFinancialYear(updatedYear);
@@ -148,10 +149,12 @@ class FinancialYearService extends _$FinancialYearService {
           JournalEntryLine(
             accountId: account.id,
             accountName: account.nameEn,
-            debit:
-                account.nature == AccountNature.debit ? balance : Decimal.zero,
-            credit:
-                account.nature == AccountNature.credit ? balance : Decimal.zero,
+            debit: account.nature == AccountNature.debit
+                ? balance
+                : Decimal.zero,
+            credit: account.nature == AccountNature.credit
+                ? balance
+                : Decimal.zero,
             description:
                 'Opening Balance: Fiscal Year ${nextYear.startDate.year}',
           ),

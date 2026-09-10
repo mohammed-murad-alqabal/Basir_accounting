@@ -96,23 +96,24 @@ class AccountModel {
 
   /// تحويل النموذج إلى كيان.
   Account toEntity() => Account(
-        id: id,
-        code: code,
-        nameAr: nameAr,
-        nameEn: nameEn,
-        type: type,
-        nature: nature,
-        balance: Decimal.parse(balance),
-        subType: subType,
-        ifrs18Category:
-            ifrs18Category == Ifrs18Category.none ? null : ifrs18Category,
-        isParent: isParent,
-        parentId: parentId,
-        isActive: isActive,
-        isSystem: isSystem,
-        userId: userId,
-        syncStatus: syncStatus,
-        serverUpdatedAt: serverUpdatedAt,
-        isDeleted: isDeleted,
-      );
+    id: id,
+    code: code,
+    nameAr: nameAr,
+    nameEn: nameEn,
+    type: type,
+    nature: nature,
+    balance: Decimal.parse(balance),
+    subType: subType,
+    ifrs18Category: ifrs18Category == Ifrs18Category.none
+        ? null
+        : ifrs18Category,
+    isParent: isParent,
+    parentId: parentId,
+    isActive: isActive,
+    isSystem: isSystem,
+    userId: userId,
+    syncStatus: syncStatus,
+    serverUpdatedAt: serverUpdatedAt,
+    isDeleted: isDeleted,
+  );
 }

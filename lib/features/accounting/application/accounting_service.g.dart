@@ -6,7 +6,7 @@ part of 'accounting_service.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$accountingServiceHash() => r'207e69b7654adc3cd599c94c70c703c98fe3e974';
+String _$accountingServiceHash() => r'ec2ebf36a5dcbc8347d5af42cd212607c312f330';
 
 /// Central Accounting Service managing the Chart of Accounts and core ledger
 /// operations.
@@ -29,14 +29,14 @@ String _$accountingServiceHash() => r'207e69b7654adc3cd599c94c70c703c98fe3e974';
 @ProviderFor(AccountingService)
 final accountingServiceProvider =
     AsyncNotifierProvider<AccountingService, List<JournalEntry>>.internal(
-  AccountingService.new,
-  name: r'accountingServiceProvider',
-  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-      ? null
-      : _$accountingServiceHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
+      AccountingService.new,
+      name: r'accountingServiceProvider',
+      debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+          ? null
+          : _$accountingServiceHash,
+      dependencies: null,
+      allTransitiveDependencies: null,
+    );
 
 typedef _$AccountingService = AsyncNotifier<List<JournalEntry>>;
 // ignore_for_file: type=lint

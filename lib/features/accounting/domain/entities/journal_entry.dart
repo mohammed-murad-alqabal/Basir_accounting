@@ -212,6 +212,10 @@ class JournalEntry with _$JournalEntry {
     /// Most recent synchronization timestamp from the server.
     DateTime? serverUpdatedAt,
 
+    /// Internal authoritative ledger entry ID for cross-reference.
+    /// (Standard Reference: CP-003: Immutability - Authority Chain)
+    String? authoritativeEntryId,
+
     /// Soft-deletion flag.
     @Default(false) bool isDeleted,
   }) = _JournalEntry;

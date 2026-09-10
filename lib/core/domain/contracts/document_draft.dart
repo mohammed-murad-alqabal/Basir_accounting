@@ -81,15 +81,14 @@ class DocumentDraft {
     List<DraftLineItem> lines = const <DraftLineItem>[],
     String? headerNote,
     DateTime? updatedAt,
-  }) =>
-      DocumentDraft._(
-        id: id,
-        documentType: documentType,
-        currencyCode: currencyCode,
-        lines: lines,
-        headerNote: headerNote,
-        updatedAt: updatedAt ?? DateTime.now(),
-      );
+  }) => DocumentDraft._(
+    id: id,
+    documentType: documentType,
+    currencyCode: currencyCode,
+    lines: lines,
+    headerNote: headerNote,
+    updatedAt: updatedAt ?? DateTime.now(),
+  );
 
   /// يبني مسودة بإلزامية المعرّف والنوع والعملة.
   const DocumentDraft._({
@@ -141,13 +140,13 @@ class DocumentDraft {
 
   /// نسخة محدثة من المسودة ببنود جديدة وزمن تعديل جديد.
   DocumentDraft copyWithLines(List<DraftLineItem> lines) => DocumentDraft._(
-        id: id,
-        documentType: documentType,
-        currencyCode: currencyCode,
-        lines: lines,
-        headerNote: headerNote,
-        updatedAt: DateTime.now(),
-      );
+    id: id,
+    documentType: documentType,
+    currencyCode: currencyCode,
+    lines: lines,
+    headerNote: headerNote,
+    updatedAt: DateTime.now(),
+  );
 
   @override
   String toString() =>

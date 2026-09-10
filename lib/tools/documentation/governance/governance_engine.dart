@@ -26,12 +26,12 @@ class GovernanceIssue {
   final int? line;
 
   Map<String, Object?> toJson() => <String, Object?>{
-        'rule': rule,
-        'severity': severity.name,
-        'path': path,
-        'line': line,
-        'message': message,
-      };
+    'rule': rule,
+    'severity': severity.name,
+    'path': path,
+    'line': line,
+    'message': message,
+  };
 }
 
 /// ملخص قابل للحفظ والقراءة الآلية لفحص الحوكمة.
@@ -47,26 +47,27 @@ class GovernanceReport {
   final List<GovernanceIssue> issues;
 
   int get warnings => issues
-      .where((GovernanceIssue issue) =>
-          issue.severity == GovernanceSeverity.warning)
+      .where(
+        (GovernanceIssue issue) => issue.severity == GovernanceSeverity.warning,
+      )
       .length;
 
   int get errors => issues
       .where(
-          (GovernanceIssue issue) => issue.severity == GovernanceSeverity.error)
+        (GovernanceIssue issue) => issue.severity == GovernanceSeverity.error,
+      )
       .length;
 
   Map<String, Object?> toJson() => <String, Object?>{
-        'mode': mode,
-        'changed_files': changedFiles,
-        'summary': <String, int>{
-          'warnings': warnings,
-          'errors': errors,
-          'total_issues': issues.length,
-        },
-        'issues':
-            issues.map((GovernanceIssue issue) => issue.toJson()).toList(),
-      };
+    'mode': mode,
+    'changed_files': changedFiles,
+    'summary': <String, int>{
+      'warnings': warnings,
+      'errors': errors,
+      'total_issues': issues.length,
+    },
+    'issues': issues.map((GovernanceIssue issue) => issue.toJson()).toList(),
+  };
 
   String toMarkdown() {
     final buffer = StringBuffer()
@@ -87,18 +88,22 @@ class GovernanceReport {
       ..writeln('| Severity | Rule | Path | Observation |')
       ..writeln('| --- | --- | --- | --- |');
     for (final issue in issues) {
-      final location =
-          issue.line == null ? issue.path : '${issue.path}:${issue.line}';
-      final message =
-          issue.message.replaceAll('|', r'\|').replaceAll('\n', ' ');
+      final location = issue.line == null
+          ? issue.path
+          : '${issue.path}:${issue.line}';
+      final message = issue.message
+          .replaceAll('|', r'\|')
+          .replaceAll('\n', ' ');
       buffer.writeln(
-          '| ${issue.severity.name} | `${issue.rule}` | `$location` | $message |');
+        '| ${issue.severity.name} | `${issue.rule}` | `$location` | $message |',
+      );
     }
     buffer
       ..writeln()
       ..writeln('> Advisory observations do not block merging in this phase. ')
       ..writeln(
-          '> A reviewer must either resolve each observation or record a time-bound exception.');
+        '> A reviewer must either resolve each observation or record a time-bound exception.',
+      );
     return buffer.toString();
   }
 }
@@ -138,7 +143,8 @@ class _GovernancePolicy {
 
   static Future<_GovernancePolicy> load(Directory root) async {
     final file = File(
-        p.join(root.path, '.github', 'governance', 'documentation-policy.yml'));
+      p.join(root.path, '.github', 'governance', 'documentation-policy.yml'),
+    );
     if (!await file.exists()) {
       throw StateError('Governance policy not found: ${file.path}');
     }
@@ -159,12 +165,14 @@ class _GovernancePolicy {
     if (rawDomains is YamlMap) {
       rawDomains.forEach((Object? key, Object? value) {
         if (value is! YamlMap) return;
-        domains.add(_ImpactDomain(
-          name: key.toString(),
-          paths: stringList(value['paths']),
-          requirementPrefixes: stringList(value['requirement_prefixes']),
-          requiresAdr: value['requires_adr'] == true,
-        ));
+        domains.add(
+          _ImpactDomain(
+            name: key.toString(),
+            paths: stringList(value['paths']),
+            requirementPrefixes: stringList(value['requirement_prefixes']),
+            requiresAdr: value['requires_adr'] == true,
+          ),
+        );
       });
     }
 
@@ -172,8 +180,9 @@ class _GovernancePolicy {
       mode: parsed['mode']?.toString() ?? 'advisory',
       metadataPaths: stringList(parsed['metadata_paths']),
       requiredMetadata: stringList(parsed['required_metadata']),
-      excludedDocumentationPaths:
-          stringList(parsed['excluded_documentation_paths']),
+      excludedDocumentationPaths: stringList(
+        parsed['excluded_documentation_paths'],
+      ),
       domains: domains,
       governedClaims: stringList(parsed['governed_claims']),
       exceptionMarker:
@@ -189,27 +198,28 @@ class GovernanceEngine {
     required String base,
     required String head,
   }) async {
-    final result = await Process.run(
-      'git',
-      <String>['diff', '--name-only', base, head],
-      workingDirectory: root.path,
-    );
+    final result = await Process.run('git', <String>[
+      'diff',
+      '--name-only',
+      base,
+      head,
+    ], workingDirectory: root.path);
     if (result.exitCode != 0) {
-      final currentHead = await Process.run(
-        'git',
-        <String>['rev-parse', 'HEAD'],
-        workingDirectory: root.path,
-      );
+      final currentHead = await Process.run('git', <String>[
+        'rev-parse',
+        'HEAD',
+      ], workingDirectory: root.path);
       final checkedOutHead = currentHead.stdout.toString().trim();
       final stderr = result.stderr.toString();
       final baseRefUnavailable =
           stderr.contains('bad object') || stderr.contains('unknown revision');
       if (baseRefUnavailable && checkedOutHead == head) {
-        final fallback = await Process.run(
-          'git',
-          <String>['diff', '--name-only', 'HEAD~1', 'HEAD'],
-          workingDirectory: root.path,
-        );
+        final fallback = await Process.run('git', <String>[
+          'diff',
+          '--name-only',
+          'HEAD~1',
+          'HEAD',
+        ], workingDirectory: root.path);
         if (fallback.exitCode == 0) {
           return LineSplitter.split(fallback.stdout.toString())
               .map((String item) => item.trim())
@@ -261,7 +271,11 @@ class GovernanceEngine {
         );
       }
       _checkLocalLinks(
-          root: root, path: normalized, content: content, issues: issues);
+        root: root,
+        path: normalized,
+        content: content,
+        issues: issues,
+      );
       _checkGovernedClaims(
         path: normalized,
         content: content,
@@ -295,23 +309,27 @@ class GovernanceEngine {
             RegExp('${RegExp.escape(prefix)}[0-9]{3}').hasMatch(prBody),
       );
       if (!hasRequirement) {
-        issues.add(GovernanceIssue(
-          rule: 'traceability.requirement',
-          severity: GovernanceSeverity.warning,
-          path: path,
-          message:
-              'High-impact ${domain.name} change has no ${domain.requirementPrefixes.join(' or ')} reference in the PR body.',
-        ));
+        issues.add(
+          GovernanceIssue(
+            rule: 'traceability.requirement',
+            severity: GovernanceSeverity.warning,
+            path: path,
+            message:
+                'High-impact ${domain.name} change has no ${domain.requirementPrefixes.join(' or ')} reference in the PR body.',
+          ),
+        );
       }
       if (domain.requiresAdr &&
           !RegExp(r'ADR-[A-Z]+-[0-9]{3}|ADR-[0-9]{3}').hasMatch(prBody)) {
-        issues.add(GovernanceIssue(
-          rule: 'traceability.adr',
-          severity: GovernanceSeverity.warning,
-          path: path,
-          message:
-              'High-impact ${domain.name} change has no ADR reference in the PR body.',
-        ));
+        issues.add(
+          GovernanceIssue(
+            rule: 'traceability.adr',
+            severity: GovernanceSeverity.warning,
+            path: path,
+            message:
+                'High-impact ${domain.name} change has no ADR reference in the PR body.',
+          ),
+        );
       }
     }
   }
@@ -329,12 +347,14 @@ class GovernanceEngine {
     }
     for (final required in requiredMetadata) {
       if (!metadata.contains(required)) {
-        issues.add(GovernanceIssue(
-          rule: 'metadata.required',
-          severity: GovernanceSeverity.warning,
-          path: path,
-          message: 'Missing required metadata field `$required`.',
-        ));
+        issues.add(
+          GovernanceIssue(
+            rule: 'metadata.required',
+            severity: GovernanceSeverity.warning,
+            path: path,
+            message: 'Missing required metadata field `$required`.',
+          ),
+        );
       }
     }
   }
@@ -362,13 +382,15 @@ class GovernanceEngine {
       if (FileSystemEntity.typeSync(targetPath) ==
               FileSystemEntityType.notFound &&
           reported.add(rawTarget)) {
-        issues.add(GovernanceIssue(
-          rule: 'links.local',
-          severity: GovernanceSeverity.warning,
-          path: path,
-          message: 'Broken local link `$rawTarget`.',
-          line: _lineNumber(content, match.start),
-        ));
+        issues.add(
+          GovernanceIssue(
+            rule: 'links.local',
+            severity: GovernanceSeverity.warning,
+            path: path,
+            message: 'Broken local link `$rawTarget`.',
+            line: _lineNumber(content, match.start),
+          ),
+        );
       }
     }
   }
@@ -385,7 +407,8 @@ class GovernanceEngine {
     for (var index = 0; index < lines.length; index++) {
       final source = lines[index];
       final line = source.toLowerCase();
-      final negated = line.contains('not ') ||
+      final negated =
+          line.contains('not ') ||
           line.contains('must not') ||
           source.contains('لا ') ||
           source.contains('لا يجوز') ||
@@ -393,14 +416,16 @@ class GovernanceEngine {
       if (negated) continue;
       for (final claim in claims) {
         if (!line.contains(claim.toLowerCase())) continue;
-        issues.add(GovernanceIssue(
-          rule: 'claims.governed',
-          severity: GovernanceSeverity.warning,
-          path: path,
-          line: index + 1,
-          message:
-              'Governed claim `$claim` requires an evidence package or a time-bound exception.',
-        ));
+        issues.add(
+          GovernanceIssue(
+            rule: 'claims.governed',
+            severity: GovernanceSeverity.warning,
+            path: path,
+            line: index + 1,
+            message:
+                'Governed claim `$claim` requires an evidence package or a time-bound exception.',
+          ),
+        );
       }
     }
   }

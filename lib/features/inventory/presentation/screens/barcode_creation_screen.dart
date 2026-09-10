@@ -49,15 +49,12 @@ class _BarcodeCreationScreenState extends ConsumerState<BarcodeCreationScreen> {
     setState(() => _isLoading = true);
     try {
       final service = ref.read(barcodeServiceProvider.notifier);
-      await service.printLabels(
-        item: _selectedItem!,
-        count: count,
-      );
+      await service.printLabels(item: _selectedItem!, count: count);
     } on Exception catch (e) {
       if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('خطأ في الطباعة: $e')),
-        );
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text('خطأ في الطباعة: $e')));
       }
     } finally {
       if (mounted) setState(() => _isLoading = false);
@@ -74,7 +71,9 @@ class _BarcodeCreationScreenState extends ConsumerState<BarcodeCreationScreen> {
     }
 
     setState(() => _isLoading = true);
-    final result = await ref.read(inventoryActionProvider.notifier).updateItem(
+    final result = await ref
+        .read(inventoryActionProvider.notifier)
+        .updateItem(
           _selectedItem!.copyWith(barcode: _barcodeController.text.trim()),
         );
 
@@ -175,14 +174,17 @@ class _BarcodeCreationScreenState extends ConsumerState<BarcodeCreationScreen> {
                               style: ElevatedButton.styleFrom(
                                 backgroundColor: theme.colorScheme.primary,
                                 foregroundColor: Colors.white,
-                                padding:
-                                    const EdgeInsets.symmetric(vertical: 12),
+                                padding: const EdgeInsets.symmetric(
+                                  vertical: 12,
+                                ),
                                 shape: RoundedRectangleBorder(
-                                  borderRadius:
-                                      BorderRadius.circular(Spacing.sm),
+                                  borderRadius: BorderRadius.circular(
+                                    Spacing.sm,
+                                  ),
                                 ),
                               ),
-                              child: _isLoading &&
+                              child:
+                                  _isLoading &&
                                       _barcodeController.text.isNotEmpty
                                   ? const SizedBox(
                                       height: 20,
@@ -204,11 +206,13 @@ class _BarcodeCreationScreenState extends ConsumerState<BarcodeCreationScreen> {
                               icon: const Icon(Icons.print_outlined),
                               label: const Text('طباعة'),
                               style: OutlinedButton.styleFrom(
-                                padding:
-                                    const EdgeInsets.symmetric(vertical: 12),
+                                padding: const EdgeInsets.symmetric(
+                                  vertical: 12,
+                                ),
                                 shape: RoundedRectangleBorder(
-                                  borderRadius:
-                                      BorderRadius.circular(Spacing.sm),
+                                  borderRadius: BorderRadius.circular(
+                                    Spacing.sm,
+                                  ),
                                 ),
                               ),
                             ),
@@ -244,10 +248,8 @@ class _BarcodeCreationScreenState extends ConsumerState<BarcodeCreationScreen> {
             ),
             items: snapshot.data!
                 .map(
-                  (item) => DropdownMenuItem(
-                    value: item,
-                    child: Text(item.nameAr),
-                  ),
+                  (item) =>
+                      DropdownMenuItem(value: item, child: Text(item.nameAr)),
                 )
                 .toList(),
             onChanged: (val) {

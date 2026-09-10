@@ -57,40 +57,39 @@ class StrategicOutlookScreen extends ConsumerWidget {
       );
 
   Widget _buildConfidenceBar(BuildContext context, double score) => GlassCard(
-        child: Padding(
-          padding: Spacing.paddingMd,
-          child: Column(
+    child: Padding(
+      padding: Spacing.paddingMd,
+      child: Column(
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    context.l10n.labelConfidenceScore,
-                    style: AppTextStyles.labelMedium.copyWith(
-                      color: AppColors.textSecondary,
-                    ),
-                  ),
-                  Text(
-                    '${(score * 100).toStringAsFixed(0)}%',
-                    style: AppTextStyles.bodyLarge.copyWith(
-                      color: AppColors.primary,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ],
+              Text(
+                context.l10n.labelConfidenceScore,
+                style: AppTextStyles.labelMedium.copyWith(
+                  color: AppColors.textSecondary,
+                ),
               ),
-              const SizedBox(height: Spacing.xs),
-              LinearProgressIndicator(
-                value: score,
-                backgroundColor: AppColors.surface,
-                valueColor:
-                    const AlwaysStoppedAnimation<Color>(AppColors.primary),
-                borderRadius: BorderRadius.circular(4),
+              Text(
+                '${(score * 100).toStringAsFixed(0)}%',
+                style: AppTextStyles.bodyLarge.copyWith(
+                  color: AppColors.primary,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
             ],
           ),
-        ),
-      );
+          const SizedBox(height: Spacing.xs),
+          LinearProgressIndicator(
+            value: score,
+            backgroundColor: AppColors.surface,
+            valueColor: const AlwaysStoppedAnimation<Color>(AppColors.primary),
+            borderRadius: BorderRadius.circular(4),
+          ),
+        ],
+      ),
+    ),
+  );
 
   Widget _buildChartSection(BuildContext context, String title, Widget chart) =>
       Column(
@@ -161,11 +160,7 @@ class StrategicOutlookScreen extends ConsumerWidget {
             (m) => m.revenue.toDouble(),
             AppColors.success,
           ),
-          _generateLine(
-            forecast,
-            (m) => m.expense.toDouble(),
-            AppColors.error,
-          ),
+          _generateLine(forecast, (m) => m.expense.toDouble(), AppColors.error),
         ],
       ),
     );
@@ -228,80 +223,73 @@ class StrategicOutlookScreen extends ConsumerWidget {
   }
 
   Widget _buildCompactEmptyChartState(BuildContext context) => Center(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            const Icon(
-              Icons.insights_outlined,
-              color: AppColors.textHint,
-              size: IconSizes.lg,
-            ),
-            const SizedBox(height: Spacing.sm),
-            Text(
-              context.l10n.msgNoStrategicData,
-              style: AppTextStyles.bodyMedium.copyWith(
-                color: AppColors.textSecondary,
-              ),
-              textAlign: TextAlign.center,
-            ),
-          ],
+    child: Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        const Icon(
+          Icons.insights_outlined,
+          color: AppColors.textHint,
+          size: IconSizes.lg,
         ),
-      );
+        const SizedBox(height: Spacing.sm),
+        Text(
+          context.l10n.msgNoStrategicData,
+          style: AppTextStyles.bodyMedium.copyWith(
+            color: AppColors.textSecondary,
+          ),
+          textAlign: TextAlign.center,
+        ),
+      ],
+    ),
+  );
 
   LineChartBarData _generateLine(
     List<PredictiveMetric> forecast,
     double Function(PredictiveMetric) selector,
     Color color,
-  ) =>
-      LineChartBarData(
-        spots: List.generate(
-          forecast.length,
-          (i) => FlSpot(i.toDouble(), selector(forecast[i])),
-        ),
-        isCurved: true,
-        color: color,
-        barWidth: 3,
-        isStrokeCapRound: true,
-        dotData: const FlDotData(show: false),
-        belowBarData: BarAreaData(
-          show: true,
-          color: color.withValues(alpha: 0.1),
-        ),
-      );
+  ) => LineChartBarData(
+    spots: List.generate(
+      forecast.length,
+      (i) => FlSpot(i.toDouble(), selector(forecast[i])),
+    ),
+    isCurved: true,
+    color: color,
+    barWidth: 3,
+    isStrokeCapRound: true,
+    dotData: const FlDotData(show: false),
+    belowBarData: BarAreaData(show: true, color: color.withValues(alpha: 0.1)),
+  );
 
   Widget _buildInsightsSection(
     BuildContext context,
     List<StrategicInsight> insights,
-  ) =>
-      Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: Spacing.xs),
-            child: Text(
-              context.l10n.labelStrategicInsights,
-              style: AppTextStyles.titleMedium.copyWith(
-                fontWeight: FontWeight.bold,
-                color: AppColors.textPrimary,
-              ),
-            ),
+  ) => Column(
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: [
+      Padding(
+        padding: const EdgeInsets.symmetric(horizontal: Spacing.xs),
+        child: Text(
+          context.l10n.labelStrategicInsights,
+          style: AppTextStyles.titleMedium.copyWith(
+            fontWeight: FontWeight.bold,
+            color: AppColors.textPrimary,
           ),
-          const SizedBox(height: Spacing.md),
-          if (insights.isEmpty)
-            AppEmptyState(
-              title: context.l10n.msgNoStrategicData,
-            )
-          else
-            ...insights.map((insight) => _buildInsightCard(context, insight)),
-        ],
-      );
+        ),
+      ),
+      const SizedBox(height: Spacing.md),
+      if (insights.isEmpty)
+        AppEmptyState(title: context.l10n.msgNoStrategicData)
+      else
+        ...insights.map((insight) => _buildInsightCard(context, insight)),
+    ],
+  );
 
   Widget _buildInsightCard(BuildContext context, StrategicInsight insight) {
     final color = insight.impact == InsightImpact.positive
         ? AppColors.success
         : insight.impact == InsightImpact.negative
-            ? AppColors.error
-            : AppColors.primary;
+        ? AppColors.error
+        : AppColors.primary;
 
     return Padding(
       padding: const EdgeInsets.only(bottom: Spacing.md),

@@ -12,7 +12,8 @@ part of 'business_settings.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
+  'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models',
+);
 
 BusinessSettings _$BusinessSettingsFromJson(Map<String, dynamic> json) {
   return _BusinessSettings.fromJson(json);
@@ -50,22 +51,24 @@ mixin _$BusinessSettings {
 /// @nodoc
 abstract class $BusinessSettingsCopyWith<$Res> {
   factory $BusinessSettingsCopyWith(
-          BusinessSettings value, $Res Function(BusinessSettings) then) =
-      _$BusinessSettingsCopyWithImpl<$Res, BusinessSettings>;
+    BusinessSettings value,
+    $Res Function(BusinessSettings) then,
+  ) = _$BusinessSettingsCopyWithImpl<$Res, BusinessSettings>;
   @useResult
-  $Res call(
-      {String id,
-      String companyName,
-      String? taxNumber,
-      String? address,
-      String? logoUrl,
-      double defaultTaxRate,
-      String currencyCode,
-      String currencySymbol,
-      String? userId,
-      SyncStatus syncStatus,
-      DateTime? serverUpdatedAt,
-      bool isDeleted});
+  $Res call({
+    String id,
+    String companyName,
+    String? taxNumber,
+    String? address,
+    String? logoUrl,
+    double defaultTaxRate,
+    String currencyCode,
+    String currencySymbol,
+    String? userId,
+    SyncStatus syncStatus,
+    DateTime? serverUpdatedAt,
+    bool isDeleted,
+  });
 }
 
 /// @nodoc
@@ -94,89 +97,95 @@ class _$BusinessSettingsCopyWithImpl<$Res, $Val extends BusinessSettings>
     Object? serverUpdatedAt = freezed,
     Object? isDeleted = null,
   }) {
-    return _then(_value.copyWith(
-      id: null == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as String,
-      companyName: null == companyName
-          ? _value.companyName
-          : companyName // ignore: cast_nullable_to_non_nullable
-              as String,
-      taxNumber: freezed == taxNumber
-          ? _value.taxNumber
-          : taxNumber // ignore: cast_nullable_to_non_nullable
-              as String?,
-      address: freezed == address
-          ? _value.address
-          : address // ignore: cast_nullable_to_non_nullable
-              as String?,
-      logoUrl: freezed == logoUrl
-          ? _value.logoUrl
-          : logoUrl // ignore: cast_nullable_to_non_nullable
-              as String?,
-      defaultTaxRate: null == defaultTaxRate
-          ? _value.defaultTaxRate
-          : defaultTaxRate // ignore: cast_nullable_to_non_nullable
-              as double,
-      currencyCode: null == currencyCode
-          ? _value.currencyCode
-          : currencyCode // ignore: cast_nullable_to_non_nullable
-              as String,
-      currencySymbol: null == currencySymbol
-          ? _value.currencySymbol
-          : currencySymbol // ignore: cast_nullable_to_non_nullable
-              as String,
-      userId: freezed == userId
-          ? _value.userId
-          : userId // ignore: cast_nullable_to_non_nullable
-              as String?,
-      syncStatus: null == syncStatus
-          ? _value.syncStatus
-          : syncStatus // ignore: cast_nullable_to_non_nullable
-              as SyncStatus,
-      serverUpdatedAt: freezed == serverUpdatedAt
-          ? _value.serverUpdatedAt
-          : serverUpdatedAt // ignore: cast_nullable_to_non_nullable
-              as DateTime?,
-      isDeleted: null == isDeleted
-          ? _value.isDeleted
-          : isDeleted // ignore: cast_nullable_to_non_nullable
-              as bool,
-    ) as $Val);
+    return _then(
+      _value.copyWith(
+            id: null == id
+                ? _value.id
+                : id // ignore: cast_nullable_to_non_nullable
+                      as String,
+            companyName: null == companyName
+                ? _value.companyName
+                : companyName // ignore: cast_nullable_to_non_nullable
+                      as String,
+            taxNumber: freezed == taxNumber
+                ? _value.taxNumber
+                : taxNumber // ignore: cast_nullable_to_non_nullable
+                      as String?,
+            address: freezed == address
+                ? _value.address
+                : address // ignore: cast_nullable_to_non_nullable
+                      as String?,
+            logoUrl: freezed == logoUrl
+                ? _value.logoUrl
+                : logoUrl // ignore: cast_nullable_to_non_nullable
+                      as String?,
+            defaultTaxRate: null == defaultTaxRate
+                ? _value.defaultTaxRate
+                : defaultTaxRate // ignore: cast_nullable_to_non_nullable
+                      as double,
+            currencyCode: null == currencyCode
+                ? _value.currencyCode
+                : currencyCode // ignore: cast_nullable_to_non_nullable
+                      as String,
+            currencySymbol: null == currencySymbol
+                ? _value.currencySymbol
+                : currencySymbol // ignore: cast_nullable_to_non_nullable
+                      as String,
+            userId: freezed == userId
+                ? _value.userId
+                : userId // ignore: cast_nullable_to_non_nullable
+                      as String?,
+            syncStatus: null == syncStatus
+                ? _value.syncStatus
+                : syncStatus // ignore: cast_nullable_to_non_nullable
+                      as SyncStatus,
+            serverUpdatedAt: freezed == serverUpdatedAt
+                ? _value.serverUpdatedAt
+                : serverUpdatedAt // ignore: cast_nullable_to_non_nullable
+                      as DateTime?,
+            isDeleted: null == isDeleted
+                ? _value.isDeleted
+                : isDeleted // ignore: cast_nullable_to_non_nullable
+                      as bool,
+          )
+          as $Val,
+    );
   }
 }
 
 /// @nodoc
 abstract class _$$BusinessSettingsImplCopyWith<$Res>
     implements $BusinessSettingsCopyWith<$Res> {
-  factory _$$BusinessSettingsImplCopyWith(_$BusinessSettingsImpl value,
-          $Res Function(_$BusinessSettingsImpl) then) =
-      __$$BusinessSettingsImplCopyWithImpl<$Res>;
+  factory _$$BusinessSettingsImplCopyWith(
+    _$BusinessSettingsImpl value,
+    $Res Function(_$BusinessSettingsImpl) then,
+  ) = __$$BusinessSettingsImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call(
-      {String id,
-      String companyName,
-      String? taxNumber,
-      String? address,
-      String? logoUrl,
-      double defaultTaxRate,
-      String currencyCode,
-      String currencySymbol,
-      String? userId,
-      SyncStatus syncStatus,
-      DateTime? serverUpdatedAt,
-      bool isDeleted});
+  $Res call({
+    String id,
+    String companyName,
+    String? taxNumber,
+    String? address,
+    String? logoUrl,
+    double defaultTaxRate,
+    String currencyCode,
+    String currencySymbol,
+    String? userId,
+    SyncStatus syncStatus,
+    DateTime? serverUpdatedAt,
+    bool isDeleted,
+  });
 }
 
 /// @nodoc
 class __$$BusinessSettingsImplCopyWithImpl<$Res>
     extends _$BusinessSettingsCopyWithImpl<$Res, _$BusinessSettingsImpl>
     implements _$$BusinessSettingsImplCopyWith<$Res> {
-  __$$BusinessSettingsImplCopyWithImpl(_$BusinessSettingsImpl _value,
-      $Res Function(_$BusinessSettingsImpl) _then)
-      : super(_value, _then);
+  __$$BusinessSettingsImplCopyWithImpl(
+    _$BusinessSettingsImpl _value,
+    $Res Function(_$BusinessSettingsImpl) _then,
+  ) : super(_value, _then);
 
   @pragma('vm:prefer-inline')
   @override
@@ -194,75 +203,78 @@ class __$$BusinessSettingsImplCopyWithImpl<$Res>
     Object? serverUpdatedAt = freezed,
     Object? isDeleted = null,
   }) {
-    return _then(_$BusinessSettingsImpl(
-      id: null == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as String,
-      companyName: null == companyName
-          ? _value.companyName
-          : companyName // ignore: cast_nullable_to_non_nullable
-              as String,
-      taxNumber: freezed == taxNumber
-          ? _value.taxNumber
-          : taxNumber // ignore: cast_nullable_to_non_nullable
-              as String?,
-      address: freezed == address
-          ? _value.address
-          : address // ignore: cast_nullable_to_non_nullable
-              as String?,
-      logoUrl: freezed == logoUrl
-          ? _value.logoUrl
-          : logoUrl // ignore: cast_nullable_to_non_nullable
-              as String?,
-      defaultTaxRate: null == defaultTaxRate
-          ? _value.defaultTaxRate
-          : defaultTaxRate // ignore: cast_nullable_to_non_nullable
-              as double,
-      currencyCode: null == currencyCode
-          ? _value.currencyCode
-          : currencyCode // ignore: cast_nullable_to_non_nullable
-              as String,
-      currencySymbol: null == currencySymbol
-          ? _value.currencySymbol
-          : currencySymbol // ignore: cast_nullable_to_non_nullable
-              as String,
-      userId: freezed == userId
-          ? _value.userId
-          : userId // ignore: cast_nullable_to_non_nullable
-              as String?,
-      syncStatus: null == syncStatus
-          ? _value.syncStatus
-          : syncStatus // ignore: cast_nullable_to_non_nullable
-              as SyncStatus,
-      serverUpdatedAt: freezed == serverUpdatedAt
-          ? _value.serverUpdatedAt
-          : serverUpdatedAt // ignore: cast_nullable_to_non_nullable
-              as DateTime?,
-      isDeleted: null == isDeleted
-          ? _value.isDeleted
-          : isDeleted // ignore: cast_nullable_to_non_nullable
-              as bool,
-    ));
+    return _then(
+      _$BusinessSettingsImpl(
+        id: null == id
+            ? _value.id
+            : id // ignore: cast_nullable_to_non_nullable
+                  as String,
+        companyName: null == companyName
+            ? _value.companyName
+            : companyName // ignore: cast_nullable_to_non_nullable
+                  as String,
+        taxNumber: freezed == taxNumber
+            ? _value.taxNumber
+            : taxNumber // ignore: cast_nullable_to_non_nullable
+                  as String?,
+        address: freezed == address
+            ? _value.address
+            : address // ignore: cast_nullable_to_non_nullable
+                  as String?,
+        logoUrl: freezed == logoUrl
+            ? _value.logoUrl
+            : logoUrl // ignore: cast_nullable_to_non_nullable
+                  as String?,
+        defaultTaxRate: null == defaultTaxRate
+            ? _value.defaultTaxRate
+            : defaultTaxRate // ignore: cast_nullable_to_non_nullable
+                  as double,
+        currencyCode: null == currencyCode
+            ? _value.currencyCode
+            : currencyCode // ignore: cast_nullable_to_non_nullable
+                  as String,
+        currencySymbol: null == currencySymbol
+            ? _value.currencySymbol
+            : currencySymbol // ignore: cast_nullable_to_non_nullable
+                  as String,
+        userId: freezed == userId
+            ? _value.userId
+            : userId // ignore: cast_nullable_to_non_nullable
+                  as String?,
+        syncStatus: null == syncStatus
+            ? _value.syncStatus
+            : syncStatus // ignore: cast_nullable_to_non_nullable
+                  as SyncStatus,
+        serverUpdatedAt: freezed == serverUpdatedAt
+            ? _value.serverUpdatedAt
+            : serverUpdatedAt // ignore: cast_nullable_to_non_nullable
+                  as DateTime?,
+        isDeleted: null == isDeleted
+            ? _value.isDeleted
+            : isDeleted // ignore: cast_nullable_to_non_nullable
+                  as bool,
+      ),
+    );
   }
 }
 
 /// @nodoc
 @JsonSerializable()
 class _$BusinessSettingsImpl implements _BusinessSettings {
-  const _$BusinessSettingsImpl(
-      {required this.id,
-      required this.companyName,
-      this.taxNumber,
-      this.address,
-      this.logoUrl,
-      this.defaultTaxRate = 15.0,
-      this.currencyCode = 'SAR',
-      this.currencySymbol = 'ر.س',
-      this.userId,
-      this.syncStatus = SyncStatus.synced,
-      this.serverUpdatedAt,
-      this.isDeleted = false});
+  const _$BusinessSettingsImpl({
+    required this.id,
+    required this.companyName,
+    this.taxNumber,
+    this.address,
+    this.logoUrl,
+    this.defaultTaxRate = 15.0,
+    this.currencyCode = 'SAR',
+    this.currencySymbol = 'ر.س',
+    this.userId,
+    this.syncStatus = SyncStatus.synced,
+    this.serverUpdatedAt,
+    this.isDeleted = false,
+  });
 
   factory _$BusinessSettingsImpl.fromJson(Map<String, dynamic> json) =>
       _$$BusinessSettingsImplFromJson(json);
@@ -340,49 +352,51 @@ class _$BusinessSettingsImpl implements _BusinessSettings {
   @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(
-      runtimeType,
-      id,
-      companyName,
-      taxNumber,
-      address,
-      logoUrl,
-      defaultTaxRate,
-      currencyCode,
-      currencySymbol,
-      userId,
-      syncStatus,
-      serverUpdatedAt,
-      isDeleted);
+    runtimeType,
+    id,
+    companyName,
+    taxNumber,
+    address,
+    logoUrl,
+    defaultTaxRate,
+    currencyCode,
+    currencySymbol,
+    userId,
+    syncStatus,
+    serverUpdatedAt,
+    isDeleted,
+  );
 
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
   _$$BusinessSettingsImplCopyWith<_$BusinessSettingsImpl> get copyWith =>
       __$$BusinessSettingsImplCopyWithImpl<_$BusinessSettingsImpl>(
-          this, _$identity);
+        this,
+        _$identity,
+      );
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$BusinessSettingsImplToJson(
-      this,
-    );
+    return _$$BusinessSettingsImplToJson(this);
   }
 }
 
 abstract class _BusinessSettings implements BusinessSettings {
-  const factory _BusinessSettings(
-      {required final String id,
-      required final String companyName,
-      final String? taxNumber,
-      final String? address,
-      final String? logoUrl,
-      final double defaultTaxRate,
-      final String currencyCode,
-      final String currencySymbol,
-      final String? userId,
-      final SyncStatus syncStatus,
-      final DateTime? serverUpdatedAt,
-      final bool isDeleted}) = _$BusinessSettingsImpl;
+  const factory _BusinessSettings({
+    required final String id,
+    required final String companyName,
+    final String? taxNumber,
+    final String? address,
+    final String? logoUrl,
+    final double defaultTaxRate,
+    final String currencyCode,
+    final String currencySymbol,
+    final String? userId,
+    final SyncStatus syncStatus,
+    final DateTime? serverUpdatedAt,
+    final bool isDeleted,
+  }) = _$BusinessSettingsImpl;
 
   factory _BusinessSettings.fromJson(Map<String, dynamic> json) =
       _$BusinessSettingsImpl.fromJson;
@@ -404,19 +418,15 @@ abstract class _BusinessSettings implements BusinessSettings {
   @override
   String get currencySymbol;
   @override
-
   /// معرف المستخدم لغرض عزل البيانات
   String? get userId;
   @override
-
   /// حالة المزامنة
   SyncStatus get syncStatus;
   @override
-
   /// تاريخ آخر تحديث من السيرفر
   DateTime? get serverUpdatedAt;
   @override
-
   /// هل السجل محذوف (حذف ناعم)
   bool get isDeleted;
   @override

@@ -96,9 +96,7 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
           ),
           padding: EdgeInsets.zero,
           onPressed: () {
-            unawaited(
-              ref.read(dashboardControllerProvider.notifier).refresh(),
-            );
+            unawaited(ref.read(dashboardControllerProvider.notifier).refresh());
           },
         ),
       ],
@@ -443,10 +441,9 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
                 color: invoice.getStatusColor(Theme.of(context).colorScheme),
                 size: IconSizes.md,
               ),
-              onTap: () => Navigator.of(context).pushNamed(
-                '/invoice-detail',
-                arguments: invoice,
-              ),
+              onTap: () => Navigator.of(
+                context,
+              ).pushNamed('/invoice-detail', arguments: invoice),
             ),
           ),
         const SizedBox(height: Spacing.md),
@@ -486,52 +483,48 @@ class _DashboardSkeleton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Shimmer.fromColors(
-        baseColor: Colors.grey[300]!,
-        highlightColor: Colors.grey[100]!,
-        child: SingleChildScrollView(
-          padding: const EdgeInsets.all(Spacing.lg),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              // Header Skeleton
-              Container(
-                width: 200,
-                height: 24,
-                color: Colors.white,
-              ),
-              const SizedBox(height: Spacing.xl),
+    baseColor: Colors.grey[300]!,
+    highlightColor: Colors.grey[100]!,
+    child: SingleChildScrollView(
+      padding: const EdgeInsets.all(Spacing.lg),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          // Header Skeleton
+          Container(width: 200, height: 24, color: Colors.white),
+          const SizedBox(height: Spacing.xl),
 
-              // Financial Summary Skeleton
-              Container(
-                width: double.infinity,
-                height: 120,
+          // Financial Summary Skeleton
+          Container(
+            width: double.infinity,
+            height: 120,
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(Radii.md),
+            ),
+          ),
+          const SizedBox(height: Spacing.md),
+
+          // Stats Grid Skeleton
+          GridView.count(
+            crossAxisCount: 2,
+            shrinkWrap: true,
+            physics: const NeverScrollableScrollPhysics(),
+            crossAxisSpacing: Spacing.md,
+            mainAxisSpacing: Spacing.md,
+            childAspectRatio: 1.2,
+            children: List.generate(
+              4,
+              (index) => Container(
                 decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(Radii.md),
                 ),
               ),
-              const SizedBox(height: Spacing.md),
-
-              // Stats Grid Skeleton
-              GridView.count(
-                crossAxisCount: 2,
-                shrinkWrap: true,
-                physics: const NeverScrollableScrollPhysics(),
-                crossAxisSpacing: Spacing.md,
-                mainAxisSpacing: Spacing.md,
-                childAspectRatio: 1.2,
-                children: List.generate(
-                  4,
-                  (index) => Container(
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(Radii.md),
-                    ),
-                  ),
-                ),
-              ),
-            ],
+            ),
           ),
-        ),
-      );
+        ],
+      ),
+    ),
+  );
 }

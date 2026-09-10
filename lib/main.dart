@@ -18,6 +18,7 @@ import 'package:basir_accounting_system/l10n/app_localizations.dart';
 import 'package:basir_accounting_system/shared/widgets/error_widget.dart'
     as basir;
 import 'package:basir_accounting_system/shared/widgets/index.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -49,12 +50,18 @@ void main() {
 
         // إعداد شاشة الأخطاء العالمية
 
-        ErrorWidget.builder =
-            (details) => basir.GlobalErrorWidget(errorDetails: details);
+        ErrorWidget.builder = (details) =>
+            basir.GlobalErrorWidget(errorDetails: details);
 
         // تهيئة الخدمات الأساسية قبل البدء
         final container = ProviderContainer(
           observers: [BasirProviderObserver()],
+          overrides: [
+            if (kDebugMode)
+              externalErrorLoggerProvider.overrideWithValue(
+                TraeDebugHttpErrorLogger(),
+              ),
+          ],
         );
 
         // AuthService initialization is handled in SplashScreen for better TTI
@@ -260,88 +267,88 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
 
   @override
   Widget build(BuildContext context) => Scaffold(
-        body: DecoratedBox(
-          decoration: const BoxDecoration(color: Colors.white),
-          child: Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                // الشعار المطور Basir 2.0
-                const BasirLogo(size: 140),
-                const SizedBox(height: Spacing.xl),
-                Text(
-                  context.l10n.appTitle,
-                  style: const TextStyle(
-                    fontSize: 42,
-                    fontWeight: FontWeight.bold,
-                    color: AppColors.primaryDark,
-                    fontFamily: 'Cairo',
-                    letterSpacing: 4,
-                  ),
-                ),
-                Text(
-                  AppConfig.appDescription,
-                  style: AppTextStyles.bodyMedium.copyWith(
-                    color: AppColors.primaryDark.withValues(alpha: 0.6),
-                    fontFamily: 'Cairo',
-                  ),
-                  textAlign: TextAlign.center,
-                ),
-                const SizedBox(height: 60),
-                if (_error == null)
-                  Column(
-                    children: [
-                      const SizedBox(
-                        width: 40,
-                        height: 40,
-                        child: CircularProgressIndicator(
-                          valueColor: AlwaysStoppedAnimation<Color>(
-                            AppColors.primaryDark,
-                          ),
-                          strokeWidth: 2,
-                        ),
-                      ),
-                      const SizedBox(height: Spacing.md),
-                      Text(
-                        _status,
-                        style: AppTextStyles.bodySmall.copyWith(
-                          color: AppColors.primaryDark.withValues(alpha: 0.5),
-                        ),
-                      ),
-                    ],
-                  )
-                else
-                  Column(
-                    children: [
-                      const Icon(
-                        Icons.error_outline,
-                        size: 60,
-                        color: AppColors.error,
-                      ),
-                      const SizedBox(height: Spacing.md),
-                      Text(
-                        _error ?? context.l10n.splashCriticalError,
-                        textAlign: TextAlign.center,
-                        style: const TextStyle(color: Colors.white70),
-                      ),
-                      const SizedBox(height: Spacing.xl),
-                      AppEnhancedButton(
-                        label: context.l10n.retryLabel,
-                        onPressed: () {
-                          setState(() {
-                            _error = null;
-                            _status = context.l10n.splashInitializing;
-                          });
-                          unawaited(_initializeApp());
-                        },
-                        type: AppEnhancedButtonType.outlined,
-                        foregroundColor: Colors.white,
-                      ),
-                    ],
-                  ),
-              ],
+    body: DecoratedBox(
+      decoration: const BoxDecoration(color: Colors.white),
+      child: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            // الشعار المطور Basir 2.0
+            const BasirLogo(size: 140),
+            const SizedBox(height: Spacing.xl),
+            Text(
+              context.l10n.appTitle,
+              style: const TextStyle(
+                fontSize: 42,
+                fontWeight: FontWeight.bold,
+                color: AppColors.primaryDark,
+                fontFamily: 'Cairo',
+                letterSpacing: 4,
+              ),
             ),
-          ),
+            Text(
+              AppConfig.appDescription,
+              style: AppTextStyles.bodyMedium.copyWith(
+                color: AppColors.primaryDark.withValues(alpha: 0.6),
+                fontFamily: 'Cairo',
+              ),
+              textAlign: TextAlign.center,
+            ),
+            const SizedBox(height: 60),
+            if (_error == null)
+              Column(
+                children: [
+                  const SizedBox(
+                    width: 40,
+                    height: 40,
+                    child: CircularProgressIndicator(
+                      valueColor: AlwaysStoppedAnimation<Color>(
+                        AppColors.primaryDark,
+                      ),
+                      strokeWidth: 2,
+                    ),
+                  ),
+                  const SizedBox(height: Spacing.md),
+                  Text(
+                    _status,
+                    style: AppTextStyles.bodySmall.copyWith(
+                      color: AppColors.primaryDark.withValues(alpha: 0.5),
+                    ),
+                  ),
+                ],
+              )
+            else
+              Column(
+                children: [
+                  const Icon(
+                    Icons.error_outline,
+                    size: 60,
+                    color: AppColors.error,
+                  ),
+                  const SizedBox(height: Spacing.md),
+                  Text(
+                    _error ?? context.l10n.splashCriticalError,
+                    textAlign: TextAlign.center,
+                    style: const TextStyle(color: Colors.white70),
+                  ),
+                  const SizedBox(height: Spacing.xl),
+                  AppEnhancedButton(
+                    label: context.l10n.retryLabel,
+                    onPressed: () {
+                      setState(() {
+                        _error = null;
+                        _status = context.l10n.splashInitializing;
+                      });
+                      unawaited(_initializeApp());
+                    },
+                    type: AppEnhancedButtonType.outlined,
+                    foregroundColor: Colors.white,
+                  ),
+                ],
+              ),
+          ],
         ),
-      );
+      ),
+    ),
+  );
 }

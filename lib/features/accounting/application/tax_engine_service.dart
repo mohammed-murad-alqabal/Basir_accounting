@@ -52,9 +52,7 @@ class TaxEngineService extends _$TaxEngineService implements AccountingAgent {
 
     if (vatLines.isNotEmpty) {
       for (final line in vatLines) {
-        rationale.add(
-          l10n.agentRationaleTaxAnalyzing(line.accountName),
-        );
+        rationale.add(l10n.agentRationaleTaxAnalyzing(line.accountName));
         // Verify standard VAT rate (e.g., 15% for KSA)
         final totalBase = context.proposedJournalEntry.totalDebit - line.credit;
         if (totalBase > Decimal.zero) {
@@ -101,8 +99,9 @@ class TaxEngineService extends _$TaxEngineService implements AccountingAgent {
       isAllowed: isAllowed,
       rationale: rationale.join('\n'),
       confidenceScore: 0.95,
-      suggestedAdjustments:
-          suggestedAdjustments.isNotEmpty ? suggestedAdjustments : null,
+      suggestedAdjustments: suggestedAdjustments.isNotEmpty
+          ? suggestedAdjustments
+          : null,
     );
   }
 

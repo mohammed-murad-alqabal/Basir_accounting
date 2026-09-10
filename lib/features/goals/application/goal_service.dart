@@ -37,7 +37,8 @@ class GoalService {
     final now = DateTime.now();
     if (goal.targetDate.isBefore(now)) return goal.remainingAmount;
 
-    final monthsRemaining = (goal.targetDate.year - now.year) * 12 +
+    final monthsRemaining =
+        (goal.targetDate.year - now.year) * 12 +
         (goal.targetDate.month - now.month);
     if (monthsRemaining <= 0) return goal.remainingAmount;
 

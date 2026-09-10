@@ -15,13 +15,14 @@ String _$getVouchersHash() => r'f58e90bbba0bcbcfbe9935e1ba49e8fa73dc8084';
 @ProviderFor(getVouchers)
 final getVouchersProvider =
     AutoDisposeFutureProvider<List<FinancialVoucher>>.internal(
-  getVouchers,
-  name: r'getVouchersProvider',
-  debugGetCreateSourceHash:
-      const bool.fromEnvironment('dart.vm.product') ? null : _$getVouchersHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
+      getVouchers,
+      name: r'getVouchersProvider',
+      debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+          ? null
+          : _$getVouchersHash,
+      dependencies: null,
+      allTransitiveDependencies: null,
+    );
 
 typedef GetVouchersRef = AutoDisposeFutureProviderRef<List<FinancialVoucher>>;
 String _$treasuryServiceHash() => r'f794533fa3cc7838635d203799abf62aa2dcc4bf';
@@ -43,14 +44,14 @@ String _$treasuryServiceHash() => r'f794533fa3cc7838635d203799abf62aa2dcc4bf';
 @ProviderFor(TreasuryService)
 final treasuryServiceProvider =
     AutoDisposeAsyncNotifierProvider<TreasuryService, void>.internal(
-  TreasuryService.new,
-  name: r'treasuryServiceProvider',
-  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-      ? null
-      : _$treasuryServiceHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
+      TreasuryService.new,
+      name: r'treasuryServiceProvider',
+      debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+          ? null
+          : _$treasuryServiceHash,
+      dependencies: null,
+      allTransitiveDependencies: null,
+    );
 
 typedef _$TreasuryService = AutoDisposeAsyncNotifier<void>;
 // ignore_for_file: type=lint
