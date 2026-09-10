@@ -1,0 +1,10 @@
+Analyzing basir_accounting_system...                            
+
+   info • The line length exceeds the 80-character limit • lib/core/theme/app_icons.dart:419:81 • lines_longer_than_80_chars
+   info • The line length exceeds the 80-character limit • lib/core/theme/app_icons.dart:433:81 • lines_longer_than_80_chars
+   info • The line length exceeds the 80-character limit • lib/core/theme/app_icons.dart:446:81 • lines_longer_than_80_chars
+   info • The line length exceeds the 80-character limit • lib/features/accounting/application/financial_strategy_service.dart:14:81 • lines_longer_than_80_chars
+   info • The line length exceeds the 80-character limit • lib/features/accounting/application/financial_strategy_service.dart:73:81 • lines_longer_than_80_chars
+   info • The line length exceeds the 80-character limit • lib/features/inventory/domain/entities/inventory_item.dart:115:81 • lines_longer_than_80_chars
+   info • The line length exceeds the 80-character limit • lib/features/settings/application/cloud_backup_service.dart:46:81 • lines_longer_than_80_chars
+

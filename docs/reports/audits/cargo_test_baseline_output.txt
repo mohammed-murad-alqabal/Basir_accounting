@@ -1,0 +1,250 @@
+== cargo test accounting_core + accounting_zatca ==
+[1m[92m    Finished[0m `test` profile [unoptimized + debuginfo] target(s) in 0.30s
+[1m[92m     Running[0m unittests src/lib.rs (target/debug/deps/accounting_core-448f63ad534c0e9a)
+
+running 73 tests
+test accounts::hierarchy::tests::test_kind_mismatch ... ok
+test accounts::hierarchy::tests::test_cycle_detection ... ok
+test accounts::hierarchy::tests::test_missing_parent ... ok
+test accounts::hierarchy::tests::test_valid_hierarchy ... ok
+test accounts::models::tests::test_account_kind_normal_balances ... ok
+test accounts::models::tests::test_create_account ... ok
+test accounts::taxonomy::tests::test_duplicate_code_detection ... ok
+test accounts::taxonomy::tests::test_validate_account_code_valid ... ok
+test accounts::taxonomy::tests::test_validate_account_code_range_mismatch ... ok
+test accounts::taxonomy::tests::test_validate_tag_format_invalid ... ok
+test accounts::taxonomy::tests::test_validate_tag_kind_match ... ok
+test accounts::taxonomy::tests::test_validate_tag_kind_mismatch ... ok
+test accounts::taxonomy::tests::test_validate_tag_format_valid ... ok
+test audit::chain::tests::test_hash_deterministic ... ok
+test audit::chain::tests::test_verify_chain_broken ... ok
+test audit::models::tests::test_audit_action_serialization ... ok
+test audit::chain::tests::test_verify_record_hash ... ok
+test audit::chain::tests::test_verify_chain_valid ... ok
+test inventory::transfer_service::tests::test_generate_stock_movements ... ok
+test inventory::transfer_service::tests::test_generate_transfer_entry ... ok
+test inventory::transfer_service::tests::test_transfer_validation_no_lines ... ok
+test audit::service::tests::test_record_creation_chaining ... ok
+test inventory::warehouse::tests::test_multiple_lines ... ok
+test inventory::transfer_service::tests::test_transfer_validation_same_warehouse ... ok
+test ledger::models::tests::test_balanced_entry ... ok
+test inventory::warehouse::tests::test_warehouse_transfer_creation ... ok
+test ledger::models::tests::test_unbalanced_entry ... ok
+test ledger::models::tests::test_total_calculations ... ok
+test ledger::models::tests::test_status_modifiable ... ok
+test ledger::models::tests::test_multi_currency_line ... ok
+test ledger::validation::tests::test_validate_accounts_rejects_unknown_and_non_leaf_accounts ... ok
+test ledger::validation::tests::test_validate_balanced ... ok
+test ledger::validation::tests::test_validate_currency_mismatch ... ok
+test ledger::validation::tests::test_validate_currency_rejects_partial_metadata ... ok
+test ledger::validation::tests::test_validate_currency_success ... ok
+test ledger::validation::tests::test_validate_traceability_adjusting_missing_link ... ok
+test ledger::validation::tests::test_validate_line_amounts_rejects_negative_and_ambiguous_lines ... ok
+test ledger::validation::tests::test_validate_unbalanced ... ok
+test ledger::service::tests::test_post_entry_hashing ... ok
+test ledger::validation::tests::test_validate_traceability_standard_missing_doc ... ok
+test reporting::generator::tests::test_synthesize_balance_sheet_fair_value ... ok
+test reporting::generator::tests::test_synthesize_cash_flow_statement ... ok
+test ledger::validation::tests::test_validate_for_posting_bad_reference ... ok
+test reporting::generator::tests::test_synthesize_zakah_statement ... ok
+test reporting::generator::tests::test_sythesize_ifrs18_income_statement ... ok
+test reporting::models::tests::test_account_balance_credit_normal ... ok
+test reporting::models::tests::test_account_balance_debit_normal ... ok
+test reporting::models::tests::test_trial_balance_imbalance_detection ... ok
+test ledger::validation::tests::test_validate_for_posting_success ... ok
+test reporting::trial_balance::tests::test_empty_trial_balance ... ok
+test reporting::trial_balance::tests::test_generate_trial_balance_with_period_filter ... ok
+test reporting::models::tests::test_trial_balance_verification ... ok
+test reporting::trial_balance::tests::test_generate_trial_balance_balanced ... ok
+test self_healing::tests::test_scan_sequence_gaps ... ok
+test self_healing::tests::test_suggest_repair_mismatch ... ok
+test standards::data::tests::test_all_standards_count ... ok
+test standards::data::tests::test_ifrs_15_five_step_model ... ok
+test standards::data::tests::test_ias_1_coverage ... ok
+test standards::data::tests::test_conceptual_framework_coverage ... ok
+test standards::models::tests::test_canonical_format ... ok
+test standards::models::tests::test_invalid_reference_rejected ... ok
+test standards::models::tests::test_parse_ifrs_reference ... ok
+test standards::recognition::tests::test_ifrs15_helper_incomplete_warning ... ok
+test standards::recognition::tests::test_ifrs_15_step_model_completeness ... ok
+test standards::models::tests::test_parse_ias_reference ... ok
+test standards::registry::tests::test_is_valid ... ok
+test standards::validator::tests::test_validate_format_invalid ... ok
+test standards::validator::tests::test_validate_format_valid ... ok
+test standards::validator::tests::test_validate_complete ... ok
+test standards::registry::tests::test_load_defaults ... ok
+test standards::registry::tests::test_lookup_invalid_ref ... ok
+test standards::registry::tests::test_lookup_ifrs_15 ... ok
+test standards::validator::tests::test_validate_exists ... ok
+
+test result: ok. 73 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+[1m[92m     Running[0m tests/assets_test.rs (target/debug/deps/assets_test-31763551b04830c5)
+
+running 3 tests
+test test_create_acquisition_entry ... ok
+test test_create_depreciation_entry ... ok
+test test_straight_line_depreciation ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+[1m[92m     Running[0m tests/audit_properties.rs (target/debug/deps/audit_properties-0b593255ccba9e1e)
+
+running 2 tests
+test prop_temporal_justification_validity ... ok
+test prop_tamper_detection ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.07s
+
+[1m[92m     Running[0m tests/closing_properties.rs (target/debug/deps/closing_properties-06c2e1d7f939e069)
+
+running 2 tests
+test prop_opening_balance_integrity ... ok
+test prop_closing_integrity ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+
+[1m[92m     Running[0m tests/e2e_workflow.rs (target/debug/deps/e2e_workflow-7d6e937d79c009e4)
+
+running 1 test
+test test_e2e_accounting_workflow ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+[1m[92m     Running[0m tests/hierarchy_properties.rs (target/debug/deps/hierarchy_properties-cc536fc366cd1ff3)
+
+running 3 tests
+test prop_detects_circular_reference ... ok
+test prop_enforces_taxonomy_alignment ... ok
+test prop_dag_hierarchy_passes ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+
+[1m[92m     Running[0m tests/inventory_test.rs (target/debug/deps/inventory_test-a92dce83a40b7cba)
+
+running 3 tests
+test test_weighted_average_valuation ... ok
+test test_fifo_valuation ... ok
+test test_min_stock_validation ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+[1m[92m     Running[0m tests/ledger_properties.rs (target/debug/deps/ledger_properties-50f0a6bee037d010)
+
+running 2 tests
+test prop_double_entry_balance_enforcement ... ok
+test prop_temporal_justification_completeness ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+[1m[92m     Running[0m tests/prop_accounts.rs (target/debug/deps/prop_accounts-90cebe1db2055112)
+
+running 2 tests
+test prop_cp_006_simple_cycle_detection ... ok
+test prop_cp_006_valid_tree_structure ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.06s
+
+[1m[92m     Running[0m tests/prop_assets.rs (target/debug/deps/prop_assets-d4a7e5f13a8126f1)
+
+running 1 test
+test prop_straight_line_depreciation_convergence ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+
+[1m[92m     Running[0m tests/prop_audit.rs (target/debug/deps/prop_audit-cc6eb0b3bba6bc3e)
+
+running 2 tests
+test prop_cp_003_tamper_evidence ... ok
+test prop_cp_003_hash_chain_integrity ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.11s
+
+[1m[92m     Running[0m tests/prop_balance.rs (target/debug/deps/prop_balance-74eef57887be0e40)
+
+running 2 tests
+test prop_cp_001_unbalanced_entries_are_rejected ... ok
+test prop_cp_001_balanced_entries_are_valid ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+
+[1m[92m     Running[0m tests/prop_closing.rs (target/debug/deps/prop_closing-2749e3c5d2c472a9)
+
+running 1 test
+test prop_period_closing_integrity ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.06s
+
+[1m[92m     Running[0m tests/prop_currency.rs (target/debug/deps/prop_currency-c4520f547667ab2d)
+
+running 3 tests
+test prop_cp_005_currency_zero_rate_rejected ... ok
+test prop_cp_005_currency_arithmetic_valid ... ok
+test prop_cp_005_currency_arithmetic_invalid ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+
+[1m[92m     Running[0m tests/prop_partners.rs (target/debug/deps/prop_partners-940cbc56e317daaf)
+
+running 2 tests
+test prop_cp_010_partner_required_enforced ... ok
+test prop_cp_010_mixed_lines_validation ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+
+[1m[92m     Running[0m tests/prop_standards.rs (target/debug/deps/prop_standards-f321506ead7bf9b9)
+
+running 2 tests
+test prop_cp_002_known_refs_always_valid ... ok
+test prop_cp_002_invalid_formats_always_rejected ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.07s
+
+[1m[92m     Running[0m tests/prop_temporal.rs (target/debug/deps/prop_temporal-64ec3e0f78ca5d41)
+
+running 1 test
+test prop_cp_008_temporal_justification_enforcement ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+[1m[92m     Running[0m tests/prop_traceability.rs (target/debug/deps/prop_traceability-224b9ebdab925eca)
+
+running 1 test
+test prop_cp_009_traceability_completeness ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.05s
+
+[1m[92m     Running[0m tests/prop_zakah.rs (target/debug/deps/prop_zakah-19dbc411c670cd64)
+
+running 1 test
+test test_zakah_mathematical_invariants ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+[1m[92m     Running[0m tests/reporting_properties.rs (target/debug/deps/reporting_properties-09f9b7e5f48d864a)
+
+running 1 test
+test prop_trial_balance_integral ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+
+[1m[92m     Running[0m tests/sales_test.rs (target/debug/deps/sales_test-ed9c2e3257a8715f)
+
+running 1 test
+test test_finalize_invoice_with_zatca ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+
+[1m[92m     Running[0m unittests src/lib.rs (target/debug/deps/accounting_zatca-7bcc80de91473644)
+
+running 3 tests
+test xades::tests::test_xades_signature_xml_generation ... ok
+test tests::test_zatca_csr_generation ... ok
+test tests::test_zatca_invoice_generation_multi_rate ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+
+
+real	0m0.881s
+user	0m0.795s
+sys	0m0.129s
