@@ -24,7 +24,7 @@ dependencies:
   flex_color_picker: ^4.0.0
   flutter:
     sdk: flutter
-  flutter_contacts: ^2.4.1
+  flutter_contacts: ^2.5.0
   flutter_dotenv: ^6.0.1
   flutter_local_notifications: ^22.3.0
   flutter_localizations:
