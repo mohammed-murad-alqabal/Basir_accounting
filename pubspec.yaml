@@ -19,7 +19,7 @@ dependencies:
   drift: ^2.31.0
   excel: ^4.0.6
   extension_google_sign_in_as_googleapis_auth: ^3.0.0
-  file_picker: ^12.2.0
+  file_picker: ^12.3.0
   fl_chart: ^1.1.1
   flex_color_picker: ^4.0.0
   flutter:
