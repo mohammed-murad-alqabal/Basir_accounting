@@ -75,6 +75,8 @@
 | [ENGINEERING_AUDIT_REPORT.md](./reports/audits/ENGINEERING_AUDIT_REPORT.md) | تقرير التدقيق الهندسي |
 | [SECURITY_HISTORY_REMEDIATION.md](./reports/audits/SECURITY_HISTORY_REMEDIATION.md) | سجل معالجة الأمان |
 | [AUDIT_LOG_20251229.md](./reports/audits/AUDIT_LOG_20251229.md) | سجل التدقيق |
+| [تقرير_مراجعة_شامل_2026-09-18.md](./reports/audits/تقرير_مراجعة_شامل_2026-09-18.md) | التقرير الشامل لمراجعة المستودع |
+| [خطة_إصلاح_شاملة_2026-09-18.md](./reports/audits/خطة_إصلاح_شاملة_2026-09-18.md) | خطة الإصلاح المرتبة والقابلة للتنفيذ |
 
 ### Project Status
 | Document | Description |
