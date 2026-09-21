@@ -45,10 +45,10 @@ class AppLocalizationsAr extends AppLocalizations {
   String get labelTotalAmount => 'الإجمالي';
 
   @override
-  String get msgBalanceBalancedTB => 'الميزان متزن (Balanced)';
+  String get msgBalanceBalancedTB => 'الميزان متطابق (Balanced)';
 
   @override
-  String get msgBalanceUnbalancedTB => 'الميزان غير متزن! يرجى المراجعة.';
+  String get msgBalanceUnbalancedTB => 'الميزان غير متطابق! يرجى المراجعة.';
 
   @override
   String get sectionBasicReports => 'التقارير الأساسية';
@@ -515,7 +515,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get navInventory => 'المخزون';
 
   @override
-  String get navAssets => 'الأصول الثابتة';
+  String get navAssets => 'الممتلكات والأرصدة الثابتة';
 
   @override
   String get labelNameAr => 'الاسم بالعربية';
@@ -549,10 +549,10 @@ class AppLocalizationsAr extends AppLocalizations {
   String get inventoryItemsScreenTitle => 'المخزون';
 
   @override
-  String get assetsScreenTitle => 'الأصول الثابتة';
+  String get assetsScreenTitle => 'الممتلكات والأرصدة الثابتة';
 
   @override
-  String get assetsSearchHint => 'ابحث في الأصول...';
+  String get assetsSearchHint => 'ابحث في الممتلكات والأرصدة...';
 
   @override
   String get actionAddAsset => 'إضافة أصل';
@@ -591,7 +591,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get labelAccumDepreciationAccountId => 'حساب مجمع الإهلاك';
 
   @override
-  String get labelAssetAccountId => 'حساب المخزون (الأصول)';
+  String get labelAssetAccountId => 'حساب المخزون (الممتلكات والأرصدة)';
 
   @override
   String get inventoryItemsSearchHint =>
@@ -1236,10 +1236,10 @@ class AppLocalizationsAr extends AppLocalizations {
   String get financialSummaryTitle => 'ملخص مالي (تجريبي)';
 
   @override
-  String get statAssets => 'الأصول';
+  String get statAssets => 'الممتلكات والأرصدة';
 
   @override
-  String get statLiabilities => 'الخصوم';
+  String get statLiabilities => 'الالتزامات والديون';
 
   @override
   String get statNetIncome => 'صافي الدخل';
@@ -1270,10 +1270,10 @@ class AppLocalizationsAr extends AppLocalizations {
   String get emptyJournalEntriesMessage => 'لا توجد قيود مسجلة.';
 
   @override
-  String get labelDebit => 'مدين';
+  String get labelDebit => 'عليه';
 
   @override
-  String get labelCredit => 'دائن';
+  String get labelCredit => 'له';
 
   @override
   String get labelReference => 'المرجع / الرقم';
@@ -1282,29 +1282,29 @@ class AppLocalizationsAr extends AppLocalizations {
   String get msgColorPickerHint => 'اختر لوناً أساسياً مخصصاً للتطبيق';
 
   @override
-  String get msgJournalEntryAdded => 'تم حفظ القيد المحاسبي بنجاح';
+  String get msgJournalEntryAdded => 'تم حفظ العملية المالية بنجاح';
 
   @override
   String get errUnbalancedEntry =>
-      'القيد غير متزن! يجب أن يتساوى المدين والدائن';
+      'العملية غير متطابق! يجب أن يتساوى العليه والله';
 
   @override
   String get btnSaveEntry => 'حفظ كمسودة';
 
   @override
-  String get btnPostEntry => 'ترحيل القيد';
+  String get btnPostEntry => 'اعتماد العملية نهائياً';
 
   @override
-  String get msgJournalEntryPosted => 'تم ترحيل القيد بنجاح';
+  String get msgJournalEntryPosted => 'تم اعتماد العملية نهائياً بنجاح';
 
   @override
-  String get msgJournalEntryDrafted => 'تم حفظ القيد كمسودة';
+  String get msgJournalEntryDrafted => 'تم حفظ العملية كمسودة';
 
   @override
   String get hintJournalDescription => 'أدخل وصف العملية المالية';
 
   @override
-  String get labelJournalEntryLines => 'بنود القيد';
+  String get labelJournalEntryLines => 'بنود العملية';
 
   @override
   String get expenseDistributionTitle => 'توزيع المصروفات';
@@ -1334,10 +1334,10 @@ class AppLocalizationsAr extends AppLocalizations {
   String get cashFlowTitle => 'قائمة التدفقات النقدية';
 
   @override
-  String get incomeStatementTitle => 'قائمة الدخل';
+  String get incomeStatementTitle => 'الأرباح والخسائر';
 
   @override
-  String get balanceSheetTitle => 'الميزانية العمومية';
+  String get balanceSheetTitle => 'ملخص الوضع المالي';
 
   @override
   String get labelOperating => 'العمليات التشغيلية';
@@ -1355,14 +1355,15 @@ class AppLocalizationsAr extends AppLocalizations {
   String get reportingOverviewTitle => 'التقارير المالية';
 
   @override
-  String get trialBalanceSubtitle => 'تحقق من توازن الحسابات المدينة والدائنة';
+  String get trialBalanceSubtitle => 'تحقق من تطابق الحسابات العليهة واللهة';
 
   @override
-  String get incomeStatementSubtitle => 'قائمة الدخل: الأداء المالي والربحية';
+  String get incomeStatementSubtitle =>
+      'الأرباح والخسائر: الأداء المالي والربحية';
 
   @override
   String get balanceSheetSubtitle =>
-      'المركز المالي: الأصول، الالتزامات، وحقوق الملكية';
+      'المركز المالي: الممتلكات والأرصدة، الالتزامات، ورأس المال';
 
   @override
   String get cashFlowSubtitle => 'حركة النقدية (تشغيلي، استثماري، تمويلي)';
@@ -1374,10 +1375,10 @@ class AppLocalizationsAr extends AppLocalizations {
   String get agingReportsTitle => 'تقارير تعمير الديون';
 
   @override
-  String get receivablesAgingLabel => 'ذمم مدينة (عملاء)';
+  String get receivablesAgingLabel => 'ذمم عليهة (عملاء)';
 
   @override
-  String get payablesAgingLabel => 'ذمم دائنة (موردون)';
+  String get payablesAgingLabel => 'ذمم لهة (موردون)';
 
   @override
   String get noDataMessage => 'لا توجد بيانات';
@@ -1398,28 +1399,27 @@ class AppLocalizationsAr extends AppLocalizations {
   String get periodOver90 => 'أكثر من 90 يوم';
 
   @override
-  String get labelAssets => 'الأصول';
+  String get labelAssets => 'الممتلكات والأرصدة';
 
   @override
   String get labelLiabilities => 'الالتزامات';
 
   @override
-  String get labelEquity => 'حقوق الملكية';
+  String get labelEquity => 'رأس المال';
 
   @override
-  String get labelTotalAssets => 'إجمالي الأصول';
+  String get labelTotalAssets => 'إجمالي الممتلكات والأرصدة';
 
   @override
-  String get labelTotalLiabilitiesAndEquity =>
-      'إجمالي الالتزامات وحقوق الملكية';
+  String get labelTotalLiabilitiesAndEquity => 'إجمالي الالتزامات ورأس المال';
 
   @override
   String get msgBalanceBalanced =>
-      'الميزانية متزنة: الأصول تساوي الالتزامات وحقوق الملكية.';
+      'الالحسابات متطابقة: الممتلكات والأرصدة تساوي الالتزامات ورأس المال.';
 
   @override
   String msgBalanceUnbalanced(String diff) {
-    return 'تنبيه: الميزانية غير متزنة! الفرق: $diff';
+    return 'تنبيه: الحسابات غير متطابقة! الفرق: $diff';
   }
 
   @override
@@ -1432,13 +1432,13 @@ class AppLocalizationsAr extends AppLocalizations {
   String get recentVouchersTitle => 'أحدث السندات';
 
   @override
-  String get receiptVoucherAction => 'سند قبض';
+  String get receiptVoucherAction => 'استلام نقدية (سند قبض)';
 
   @override
-  String get paymentVoucherAction => 'سند صرف';
+  String get paymentVoucherAction => 'دفع نقدية (سند صرف)';
 
   @override
-  String get newVoucherLabel => 'سند جديد';
+  String get newVoucherLabel => 'عملية جديدة';
 
   @override
   String get noVouchersMessage => 'لا توجد سندات مسجلة';
@@ -1447,38 +1447,38 @@ class AppLocalizationsAr extends AppLocalizations {
   String get anonymousPerson => 'بدون اسم';
 
   @override
-  String get actionReverse => 'عكس القيد';
+  String get actionReverse => 'عكس العملية';
 
   @override
   String get actionEdit => 'تعديل';
 
   @override
-  String get actionPostNow => 'ترحيل الآن';
+  String get actionPostNow => 'اعتماد الآن';
 
   @override
   String get msgConfirmReverse =>
-      'هل أنت متأكد من رغبتك في عكس هذا القيد؟ سيؤدي ذلك إلى إنشاء قيد عكسي تلقائي.';
+      'هل أنت متأكد من رغبتك في عكس هذا العملية؟ سيؤدي ذلك إلى إنشاء قيد عكسي تلقائي.';
 
   @override
-  String get msgReverseSuccess => 'تم عكس القيد بنجاح';
+  String get msgReverseSuccess => 'تم عكس العملية بنجاح';
 
   @override
-  String get labelBalanced => 'متزن';
+  String get labelBalanced => 'متطابق';
 
   @override
-  String get labelUnbalanced => 'غير متزن';
+  String get labelUnbalanced => 'غير متطابق';
 
   @override
   String get labelDiff => 'الفرق';
 
   @override
-  String get voucherReceiptTitle => 'سند قبض جديد';
+  String get voucherReceiptTitle => 'استلام نقدية (سند قبض) جديد';
 
   @override
-  String get voucherPaymentTitle => 'سند صرف جديد';
+  String get voucherPaymentTitle => 'دفع نقدية (سند صرف) جديد';
 
   @override
-  String get btnSaveAndPostVoucher => 'حفظ السند وترحيله';
+  String get btnSaveAndPostVoucher => 'حفظ السند واعتماده';
 
   @override
   String get errInvalidAmount => 'مبلغ غير صالح';
@@ -1511,7 +1511,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get labelBeneficiaryVendor => 'المورد (المستفيد)';
 
   @override
-  String get msgVoucherSavedSuccess => 'تم حفظ السند وترحيله بنجاح';
+  String get msgVoucherSavedSuccess => 'تم حفظ السند واعتماده بنجاح';
 
   @override
   String get errFormFill => 'يرجى إكمال البيانات';
@@ -1618,7 +1618,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get msgNoActivity => 'لا يوجد نشاط حديث حتى الآن.';
 
   @override
-  String get labelJournalEntries => 'القيود اليومية';
+  String get labelJournalEntries => 'العمليات اليومية';
 
   @override
   String get labelExchangeRate => 'سعر الصرف';
@@ -1727,7 +1727,7 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get agentRationaleStandardsPassed =>
-      'تحقق الامتثال: القيد يوافق معايير (IFRS/SOCPA).';
+      'تحقق الامتثال: العملية يوافق معايير (IFRS/SOCPA).';
 
   @override
   String agentRationaleStandardsManualReview(String type) {
@@ -1766,11 +1766,12 @@ class AppLocalizationsAr extends AppLocalizations {
       'تنبيه: تم رصد عملية تجارية بدون بنود ضريبة القيمة المضافة.';
 
   @override
-  String get agentRationaleForensicBalanced => 'فحص ناجح: القيد المحاسبي متزن.';
+  String get agentRationaleForensicBalanced =>
+      'فحص ناجح: العملية المالية متطابق.';
 
   @override
   String get agentRationaleForensicUnbalanced =>
-      'رفض: القيد المحاسبي المقترح غير متزن.';
+      'رفض: العملية المالية المقترح غير متطابق.';
 
   @override
   String agentRationaleForensicHighValue(String amount) {
@@ -1794,7 +1795,7 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String agentRationaleStrategyOutflow(String amount) {
-    return 'تحليل استراتيجي: يمثل هذا القيد تدفقاً نقدياً خارجاً بقيمة $amount.';
+    return 'تحليل استراتيجي: يمثل هذا العملية تدفقاً نقدياً خارجاً بقيمة $amount.';
   }
 
   @override
@@ -1808,7 +1809,7 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get agentRationaleStrategyProfitability =>
-      'رؤية استراتيجية: زيادة حجم المبيعات تؤثر إيجابياً على العائد على الأصول (ROA) وأهداف الهامش الصافي.';
+      'رؤية استراتيجية: زيادة حجم المبيعات تؤثر إيجابياً على العائد على الممتلكات والأرصدة (ROA) وأهداف الهامش الصافي.';
 
   @override
   String get agentRationaleSustainabilityFlagged =>
@@ -2076,25 +2077,25 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get msgForensicLedgerAnomalies =>
-      'تم الكشف عن حالات جنائية شاذة في السجل التاريخي.';
+      'تم الكشف عن أخطاء أو تعديلات غير طبيعية شاذة في السجل التاريخي.';
 
   @override
   String errForensicImbalance(Object id) {
-    return 'تم اكتشاف عدم اتزان: القيد رقم $id غير متزن.';
+    return 'تم اكتشاف عدم اتزان: العملية رقم $id غير متطابق.';
   }
 
   @override
   String errForensicDiscrepancy(Object id) {
-    return 'تفاوت في السلامة: يوجد تعارض في إجمالي المدين/المجموع للقيد رقم $id.';
+    return 'تفاوت في السلامة: يوجد تعارض في إجمالي العليه/المجموع للقيد رقم $id.';
   }
 
   @override
   String errForensicHashBreach(Object curr, Object prev) {
-    return 'خرق للسلامة: سلسلة التجزئة (Hash) مكسورة بين القيد رقم $prev والقيد رقم $curr';
+    return 'خرق للسلامة: سلسلة التجزئة (Hash) مكسورة بين العملية رقم $prev والعملية رقم $curr';
   }
 
   @override
-  String get titleForensicPortal => 'بوابة النزاهة الجنائية';
+  String get titleForensicPortal => 'بوابة الرقابة والمراجعة';
 
   @override
   String get labelIntegrityPulse => 'نبض النزاهة';
@@ -2143,7 +2144,7 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get msgNoStrategicData =>
-      'بيانات تاريخية غير كافية للتنبؤ الدقيق. يرجى ترحيل المزيد من المعاملات.';
+      'بيانات تاريخية غير كافية للتنبؤ الدقيق. يرجى اعتماد المزيد من المعاملات.';
 
   @override
   String get actionEmailInvoice => 'إرسال الفاتورة بالبريد';
@@ -2290,7 +2291,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get workAuditEventReturned => 'إرجاع للمراجعة';
 
   @override
-  String get workAuditEventPosted => 'ترحيل';
+  String get workAuditEventPosted => 'اعتماد';
 
   @override
   String get workAuditEventCancelled => 'إلغاء';
@@ -2337,10 +2338,10 @@ class AppLocalizationsAr extends AppLocalizations {
   String get workDocumentSaveDraft => 'حفظ كمسودة';
 
   @override
-  String get workDocumentPost => 'تأكيد الترحيل';
+  String get workDocumentPost => 'تأكيد الاعتماد';
 
   @override
-  String get workDocumentPreviewRequired => 'اطلب معاينة الأثر قبل الترحيل.';
+  String get workDocumentPreviewRequired => 'اطلب معاينة الأثر قبل الاعتماد.';
 
   @override
   String get workDocumentApprovalRequired => 'يتطلب اعتمادًا إضافيًا';

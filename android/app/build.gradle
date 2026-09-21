@@ -26,7 +26,7 @@ boolean releaseSigningReady = keystorePropertiesFile.exists()
 
 android {
     namespace = "com.basir.accounting"
-    compileSdk = 36
+    compileSdk = 37
     ndkVersion = flutter.ndkVersion
 
     compileOptions {

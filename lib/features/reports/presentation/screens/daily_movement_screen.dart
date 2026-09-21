@@ -60,22 +60,22 @@ class _DailyMovementScreenState extends ConsumerState<DailyMovementScreen> with 
   Widget _buildMovementView({bool isCustom = false}) {
     // TODO(m): Use ref.watch(accountingServiceProvider) when available
     // Placeholder data
-    const receipts = 0;
-    const payments = 0;
+    const receipts = 0.0;
+    const payments = 0.0;
     const netCash = receipts - payments;
 
-    const cashSales = 0;
-    const creditSales = 0;
-    const cashPurchases = 0;
-    const creditPurchases = 0;
-    const cashSalesReturn = 0;
-    const creditSalesReturn = 0;
-    const cashPurchaseReturn = 0;
-    const creditPurchaseReturn = 0;
+    const cashSales = 0.0;
+    const creditSales = 0.0;
+    const cashPurchases = 0.0;
+    const creditPurchases = 0.0;
+    const cashSalesReturn = 0.0;
+    const creditSalesReturn = 0.0;
+    const cashPurchaseReturn = 0.0;
+    const creditPurchaseReturn = 0.0;
 
     const totalSales = cashSales + creditSales;
     const totalPurchases = cashPurchases + creditPurchases;
-    const expenses = 0;
+    const expenses = 0.0;
     const netProfit = totalSales - totalPurchases - expenses;
 
     return SingleChildScrollView(
@@ -217,15 +217,15 @@ class _DailyMovementScreenState extends ConsumerState<DailyMovementScreen> with 
         ),
         Padding(
           padding: const EdgeInsets.all(8),
-          child: Text(cash.toStringAsFixed(2), textAlign: TextAlign.center),
+          child: Text(cash.toDouble().toStringAsFixed(2), textAlign: TextAlign.center),
         ),
         Padding(
           padding: const EdgeInsets.all(8),
-          child: Text(credit.toStringAsFixed(2), textAlign: TextAlign.center),
+          child: Text(credit.toDouble().toStringAsFixed(2), textAlign: TextAlign.center),
         ),
         Padding(
           padding: const EdgeInsets.all(8),
-          child: Text((cash + credit).toStringAsFixed(2), textAlign: TextAlign.center, style: const TextStyle(fontWeight: FontWeight.bold)),
+          child: Text((cash.toDouble() + credit.toDouble()).toStringAsFixed(2), textAlign: TextAlign.center, style: const TextStyle(fontWeight: FontWeight.bold)),
         ),
       ],
     );

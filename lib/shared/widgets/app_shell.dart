@@ -197,49 +197,11 @@ class _MobileLayout extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final brightness = Theme.of(context).brightness;
-
     return Column(
       children: [
         BasirTopBar(appIcons: appIcons, l10n: l10n, collapsed: false),
         Expanded(
           child: IndexedStack(index: selectedIndex, children: screens),
-        ),
-        DecoratedBox(
-          decoration: BoxDecoration(
-            color: AppColors.surface,
-            boxShadow: const [
-              BoxShadow(
-                color: AppColors.shadow,
-                blurRadius: Elevation.md,
-                offset: Offset(0, -Elevation.sm / 2),
-              ),
-            ],
-            border: Border(
-              top: BorderSide(
-                color: BorderContrastDesign.getBorderNormal(brightness),
-              ),
-            ),
-          ),
-          child: SafeArea(
-            top: false,
-            child: SizedBox(
-              height: kBottomNavigationBarHeight,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: List.generate(
-                  screens.length,
-                  (index) => _MobileNavItem(
-                    index: index,
-                    isSelected: index == selectedIndex,
-                    appIcons: appIcons,
-                    l10n: l10n,
-                    onTap: () => onItemSelected(index),
-                  ),
-                ),
-              ),
-            ),
-          ),
         ),
       ],
     );

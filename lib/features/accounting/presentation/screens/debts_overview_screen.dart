@@ -35,7 +35,7 @@ class _DebtsOverviewScreenState extends ConsumerState<DebtsOverviewScreen> {
     return Scaffold(
       appBar: AppBar(title: const Text('الديون والذمم')),
       body: FutureBuilder(
-        future: Future.wait([customerRepoAsync.getAll(), vendorRepoAsync.getAll()]),
+        future: Future.wait([customerRepoAsync.getAllCustomers(), vendorRepoAsync.getAllVendors()]),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(child: CircularProgressIndicator());
