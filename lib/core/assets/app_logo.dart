@@ -20,7 +20,7 @@ class BasirLogo extends StatelessWidget {
   Widget build(BuildContext context) {
     // استخدام الصورة المعتمدة بدلاً من الرسم اليدوي
     final logoImage = Image.asset(
-      'assets/images/basir_logo.png',
+      'assets/icons/basir_logo.jpg',
       width: size,
       height: size,
       fit: BoxFit.contain,
@@ -59,7 +59,7 @@ class BasirIcon extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Image.asset(
-    'assets/icons/app_icon.png',
+    'assets/icons/basir_logo.jpg',
     width: size,
     height: size,
     fit: BoxFit.contain,

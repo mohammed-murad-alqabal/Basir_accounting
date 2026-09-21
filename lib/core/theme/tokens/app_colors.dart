@@ -15,23 +15,23 @@ class AppColors {
 
   /// اللون الأساسي للتطبيق (أزرق داكن)
   /// نسبة التباين على الأبيض: 8.59:1 ✅
-  static const Color primary = Color(0xFF0056B3);
+  static const Color primary = Color(0xFF154360);
 
   /// اللون الأساسي الفاتح (للخلفيات)
-  static const Color primaryLight = Color(0xFFE3F2FD);
+  static const Color primaryLight = Color(0xFFE6EEF2);
 
   /// اللون الأساسي الداكن (للنصوص)
-  static const Color primaryDark = Color(0xFF003D82);
+  static const Color primaryDark = Color(0xFF0A2231);
 
   /// اللون الثانوي (أخضر داكن)
   /// نسبة التباين على الأبيض: 6.98:1 ✅
-  static const Color secondary = Color(0xFF1E7E34);
+  static const Color secondary = Color(0xFFD4AF37);
 
   /// اللون الثانوي الفاتح
-  static const Color secondaryLight = Color(0xFFE8F5E9);
+  static const Color secondaryLight = Color(0xFFF8F3E5);
 
   /// اللون الثانوي الداكن
-  static const Color secondaryDark = Color(0xFF155724);
+  static const Color secondaryDark = Color(0xFF8F7523);
 
   // ===== ألوان 'على' (On Colors) =====
 
@@ -72,7 +72,7 @@ class AppColors {
   static const Color success = Color(0xFF2E7D32);
 
   /// لون النجاح الفاتح
-  static const Color successLight = Color(0xFFE8F5E9);
+  static const Color successLight = Color(0xFFF8F3E5);
 
   /// لون الحالة قيد الانتظار
   static const Color statusPending = Color(0xFFD73502);

@@ -105,14 +105,14 @@ flutter:
 flutter_launcher_icons:
   android: true
   ios: true
-  image_path: assets/icons/app_icon.png
+  image_path: assets/icons/basir_logo.jpg
   adaptive_icon_background: '#FFFFFF'
-  adaptive_icon_foreground: assets/icons/app_icon_foreground.png
+  adaptive_icon_foreground: assets/icons/basir_logo.jpg
   remove_alpha_ios: true
 flutter_native_splash:
   color: '#FFFFFF'
-  image: assets/icons/splash_logo_transparent.png
+  image: assets/icons/basir_logo.jpg
   android_12:
     color: '#FFFFFF'
-    image: assets/icons/splash_logo_transparent.png
+    image: assets/icons/basir_logo.jpg
     icon_background_color: '#FFFFFF'

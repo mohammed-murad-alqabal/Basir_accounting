@@ -6,15 +6,15 @@ import 'package:flutter/material.dart';
 /// Professional color palette for Basir
 abstract final class AppPalette {
   // Primary Colors (Blues)
-  static const Color blueCorporate = Color(0xFF2563EB);
-  static const Color navyDeep = Color(0xFF1E3A8A);
-  static const Color blueSky = Color(0xFF3B82F6);
-  static const Color blueLight = Color(0xFFBFDBFE);
+  static const Color blueCorporate = Color(0xFF154360);
+  static const Color navyDeep = Color(0xFF0A2231);
+  static const Color blueSky = Color(0xFF2980B9);
+  static const Color blueLight = Color(0xFFE6EEF2);
 
   // Secondary Colors (Greens)
-  static const Color greenEmerald = Color(0xFF10B981);
-  static const Color greenForest = Color(0xFF065F46);
-  static const Color greenLight = Color(0xFFA7F3D0);
+  static const Color greenEmerald = Color(0xFFD4AF37);
+  static const Color greenForest = Color(0xFF8F7523);
+  static const Color greenLight = Color(0xFFF8F3E5);
 
   // Neutral Colors
   static const Color white = Color(0xFFFFFFFF);
