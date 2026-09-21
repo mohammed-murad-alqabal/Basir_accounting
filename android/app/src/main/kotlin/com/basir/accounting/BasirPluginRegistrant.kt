@@ -88,11 +88,12 @@ object BasirPluginRegistrant {
         } catch (e: Exception) {
             Log.e(TAG, "Error registering plugin package_info_plus", e)
         }
-        try {
-            plugins.add(io.flutter.plugins.pathprovider.PathProviderPlugin())
-        } catch (e: Exception) {
-            Log.e(TAG, "Error registering plugin path_provider_android", e)
-        }
+        // PathProviderPlugin is auto-registered via FlutterJNI in newer Flutter versions
+        // try {
+        //     plugins.add(io.flutter.plugins.pathprovider.PathProviderPlugin())
+        // } catch (e: Exception) {
+        //     Log.e(TAG, "Error registering plugin path_provider_android", e)
+        // }
         try {
             plugins.add(com.baseflow.permissionhandler.PermissionHandlerPlugin())
         } catch (e: Exception) {

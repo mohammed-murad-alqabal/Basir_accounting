@@ -61,15 +61,21 @@ class FilteredJournalEntriesFamily
   /// in the Balance Sheet or Income Statement to see the underlying transactions.
   ///
   /// Copied from [filteredJournalEntries].
-  FilteredJournalEntriesProvider call({String? accountId}) {
-    return FilteredJournalEntriesProvider(accountId: accountId);
+  FilteredJournalEntriesProvider call({
+    String? accountId,
+  }) {
+    return FilteredJournalEntriesProvider(
+      accountId: accountId,
+    );
   }
 
   @override
   FilteredJournalEntriesProvider getProviderOverride(
     covariant FilteredJournalEntriesProvider provider,
   ) {
-    return call(accountId: provider.accountId);
+    return call(
+      accountId: provider.accountId,
+    );
   }
 
   static const Iterable<ProviderOrFamily>? _dependencies = null;
@@ -101,22 +107,24 @@ class FilteredJournalEntriesProvider
   /// in the Balance Sheet or Income Statement to see the underlying transactions.
   ///
   /// Copied from [filteredJournalEntries].
-  FilteredJournalEntriesProvider({String? accountId})
-    : this._internal(
-        (ref) => filteredJournalEntries(
-          ref as FilteredJournalEntriesRef,
+  FilteredJournalEntriesProvider({
+    String? accountId,
+  }) : this._internal(
+          (ref) => filteredJournalEntries(
+            ref as FilteredJournalEntriesRef,
+            accountId: accountId,
+          ),
+          from: filteredJournalEntriesProvider,
+          name: r'filteredJournalEntriesProvider',
+          debugGetCreateSourceHash:
+              const bool.fromEnvironment('dart.vm.product')
+                  ? null
+                  : _$filteredJournalEntriesHash,
+          dependencies: FilteredJournalEntriesFamily._dependencies,
+          allTransitiveDependencies:
+              FilteredJournalEntriesFamily._allTransitiveDependencies,
           accountId: accountId,
-        ),
-        from: filteredJournalEntriesProvider,
-        name: r'filteredJournalEntriesProvider',
-        debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-            ? null
-            : _$filteredJournalEntriesHash,
-        dependencies: FilteredJournalEntriesFamily._dependencies,
-        allTransitiveDependencies:
-            FilteredJournalEntriesFamily._allTransitiveDependencies,
-        accountId: accountId,
-      );
+        );
 
   FilteredJournalEntriesProvider._internal(
     super._createNotifier, {
@@ -133,7 +141,7 @@ class FilteredJournalEntriesProvider
   @override
   Override overrideWith(
     FutureOr<List<JournalEntry>> Function(FilteredJournalEntriesRef provider)
-    create,
+        create,
   ) {
     return ProviderOverride(
       origin: this,
@@ -220,7 +228,10 @@ class SubLedgerJournalEntriesFamily
   SubLedgerJournalEntriesProvider getProviderOverride(
     covariant SubLedgerJournalEntriesProvider provider,
   ) {
-    return call(entityId: provider.entityId, isCustomer: provider.isCustomer);
+    return call(
+      entityId: provider.entityId,
+      isCustomer: provider.isCustomer,
+    );
   }
 
   static const Iterable<ProviderOrFamily>? _dependencies = null;
@@ -250,22 +261,23 @@ class SubLedgerJournalEntriesProvider
     required String entityId,
     required bool isCustomer,
   }) : this._internal(
-         (ref) => subLedgerJournalEntries(
-           ref as SubLedgerJournalEntriesRef,
-           entityId: entityId,
-           isCustomer: isCustomer,
-         ),
-         from: subLedgerJournalEntriesProvider,
-         name: r'subLedgerJournalEntriesProvider',
-         debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-             ? null
-             : _$subLedgerJournalEntriesHash,
-         dependencies: SubLedgerJournalEntriesFamily._dependencies,
-         allTransitiveDependencies:
-             SubLedgerJournalEntriesFamily._allTransitiveDependencies,
-         entityId: entityId,
-         isCustomer: isCustomer,
-       );
+          (ref) => subLedgerJournalEntries(
+            ref as SubLedgerJournalEntriesRef,
+            entityId: entityId,
+            isCustomer: isCustomer,
+          ),
+          from: subLedgerJournalEntriesProvider,
+          name: r'subLedgerJournalEntriesProvider',
+          debugGetCreateSourceHash:
+              const bool.fromEnvironment('dart.vm.product')
+                  ? null
+                  : _$subLedgerJournalEntriesHash,
+          dependencies: SubLedgerJournalEntriesFamily._dependencies,
+          allTransitiveDependencies:
+              SubLedgerJournalEntriesFamily._allTransitiveDependencies,
+          entityId: entityId,
+          isCustomer: isCustomer,
+        );
 
   SubLedgerJournalEntriesProvider._internal(
     super._createNotifier, {
@@ -284,7 +296,7 @@ class SubLedgerJournalEntriesProvider
   @override
   Override overrideWith(
     FutureOr<List<JournalEntry>> Function(SubLedgerJournalEntriesRef provider)
-    create,
+        create,
   ) {
     return ProviderOverride(
       origin: this,

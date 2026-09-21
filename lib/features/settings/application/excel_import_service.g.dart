@@ -7,25 +7,22 @@ part of 'excel_import_service.dart';
 // **************************************************************************
 
 String _$excelImportServiceHash() =>
-    r'11f8f9060e572a011f43b49e9f57fa0b49bbafb6';
+    r'4cb5ab75e936319e8cb0c27e13960391784d0140';
 
 /// خدمة استيراد البيانات من ملفات Excel إلى النظام.
 ///
 /// Copied from [ExcelImportService].
 @ProviderFor(ExcelImportService)
-final excelImportServiceProvider =
-    AutoDisposeAsyncNotifierProvider<
-      ExcelImportService,
-      List<ImportRow>
-    >.internal(
-      ExcelImportService.new,
-      name: r'excelImportServiceProvider',
-      debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-          ? null
-          : _$excelImportServiceHash,
-      dependencies: null,
-      allTransitiveDependencies: null,
-    );
+final excelImportServiceProvider = AutoDisposeAsyncNotifierProvider<
+    ExcelImportService, List<ImportRow>>.internal(
+  ExcelImportService.new,
+  name: r'excelImportServiceProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$excelImportServiceHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
 
 typedef _$ExcelImportService = AutoDisposeAsyncNotifier<List<ImportRow>>;
 // ignore_for_file: type=lint

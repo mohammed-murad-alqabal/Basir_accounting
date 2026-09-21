@@ -16,10 +16,8 @@ _$AccountImpl _$$AccountImplFromJson(Map<String, dynamic> json) =>
       nature: $enumDecode(_$AccountNatureEnumMap, json['nature']),
       balance: Decimal.fromJson(json['balance'] as String),
       subType: json['subType'] as String? ?? '',
-      ifrs18Category: $enumDecodeNullable(
-        _$Ifrs18CategoryEnumMap,
-        json['ifrs18Category'],
-      ),
+      ifrs18Category:
+          $enumDecodeNullable(_$Ifrs18CategoryEnumMap, json['ifrs18Category']),
       isParent: json['isParent'] as bool? ?? false,
       parentId: json['parentId'] as String?,
       isActive: json['isActive'] as bool? ?? true,
@@ -27,7 +25,7 @@ _$AccountImpl _$$AccountImplFromJson(Map<String, dynamic> json) =>
       userId: json['userId'] as String?,
       syncStatus:
           $enumDecodeNullable(_$SyncStatusEnumMap, json['syncStatus']) ??
-          SyncStatus.synced,
+              SyncStatus.synced,
       serverUpdatedAt: json['serverUpdatedAt'] == null
           ? null
           : DateTime.parse(json['serverUpdatedAt'] as String),

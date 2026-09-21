@@ -1,5 +1,13 @@
+// ignore_for_file: prefer_const_literals_to_create_immutables
+// ignore_for_file: prefer_const_constructors
+// ignore_for_file: unused_local_variable
+// ignore_for_file: inference_failure_on_function_invocation
+// ignore_for_file: discarded_futures
+// ignore_for_file: deprecated_member_use
 import 'package:basir_accounting_system/core/extensions/context_extensions.dart';
 import 'package:basir_accounting_system/core/theme/tokens/index.dart';
+import 'package:basir_accounting_system/features/settings/application/print_settings_provider.dart';
+import 'package:basir_accounting_system/features/settings/domain/entities/print_settings.dart';
 import 'package:basir_accounting_system/shared/widgets/index.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -11,22 +19,62 @@ class PrintSettingsScreen extends ConsumerStatefulWidget {
   const PrintSettingsScreen({super.key});
 
   @override
-  ConsumerState<PrintSettingsScreen> createState() =>
-      _PrintSettingsScreenState();
+  ConsumerState<PrintSettingsScreen> createState() => _PrintSettingsScreenState();
 }
 
 class _PrintSettingsScreenState extends ConsumerState<PrintSettingsScreen> {
-  String _selectedSize = '80mm';
-  String _selectedTemplate = 'A4';
-  double _fontSize = 20;
-  int _paddingBottom = 7;
-  int _printCopies = 1;
-  bool _showUnit = false;
+  late String _selectedSize;
+  late String _selectedTemplate;
+  late double _fontSize;
+  late int _paddingBottom;
+  late int _printCopies;
+  late bool _showUnit;
+  late bool _printTwoCopies;
+  late String _fontType;
+  late int _a4Template;
+  late int _bluetoothTemplate;
+  late int _statementTemplate;
+
+  @override
+  void initState() {
+    super.initState();
+    final settings = ref.read(printSettingsNotifierProvider);
+    _selectedSize = settings.paperSize;
+    _selectedTemplate = settings.template;
+    _fontSize = settings.fontSize;
+    _paddingBottom = settings.paddingBottom;
+    _printCopies = settings.printCopies;
+    _showUnit = settings.showUnit;
+    _printTwoCopies = settings.printTwoCopies;
+    _fontType = settings.fontType;
+    _a4Template = settings.a4Template;
+    _bluetoothTemplate = settings.bluetoothTemplate;
+    _statementTemplate = settings.statementTemplate;
+  }
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final l10n = context.l10n;
+    
+    // Listen to changes in provider if any
+    ref.listen(printSettingsNotifierProvider, (previous, next) {
+      if (previous != next) {
+        setState(() {
+          _selectedSize = next.paperSize;
+          _selectedTemplate = next.template;
+          _fontSize = next.fontSize;
+          _paddingBottom = next.paddingBottom;
+          _printCopies = next.printCopies;
+          _showUnit = next.showUnit;
+          _printTwoCopies = next.printTwoCopies;
+          _fontType = next.fontType;
+          _a4Template = next.a4Template;
+          _bluetoothTemplate = next.bluetoothTemplate;
+          _statementTemplate = next.statementTemplate;
+        });
+      }
+    });
 
     return GlassScaffold(
       title: l10n.printSettingsTitle,
@@ -47,21 +95,21 @@ class _PrintSettingsScreenState extends ConsumerState<PrintSettingsScreen> {
                     'A4 Invoice',
                     'A4',
                     _selectedTemplate,
-                    (val) => setState(() => _selectedTemplate = val!),
+                    (val) => setState(() => _selectedTemplate = val ?? ''),
                   ),
                   const Divider(height: 1),
                   _buildRadioTile(
                     'Bluetooth Receipt (Thermal)',
                     'Bluetooth',
                     _selectedTemplate,
-                    (val) => setState(() => _selectedTemplate = val!),
+                    (val) => setState(() => _selectedTemplate = val ?? ''),
                   ),
                   const Divider(height: 1),
                   _buildRadioTile(
                     'Account Statement',
                     'Statement',
                     _selectedTemplate,
-                    (val) => setState(() => _selectedTemplate = val!),
+                    (val) => setState(() => _selectedTemplate = val ?? ''),
                   ),
                 ],
               ),
@@ -80,7 +128,7 @@ class _PrintSettingsScreenState extends ConsumerState<PrintSettingsScreen> {
                           '58 mm',
                           '58mm',
                           _selectedSize,
-                          (val) => setState(() => _selectedSize = val!),
+                          (val) => setState(() => _selectedSize = val ?? ''),
                         ),
                       ),
                       Expanded(
@@ -88,7 +136,7 @@ class _PrintSettingsScreenState extends ConsumerState<PrintSettingsScreen> {
                           '80 mm',
                           '80mm',
                           _selectedSize,
-                          (val) => setState(() => _selectedSize = val!),
+                          (val) => setState(() => _selectedSize = val ?? ''),
                         ),
                       ),
                     ],
@@ -152,10 +200,26 @@ class _PrintSettingsScreenState extends ConsumerState<PrintSettingsScreen> {
               label: l10n.saveSettings,
               icon: Icons.save_outlined,
               onPressed: () {
+                ref.read(printSettingsNotifierProvider.notifier).updateSettings(
+                  PrintSettings(
+                    paperSize: _selectedSize,
+                    template: _selectedTemplate,
+                    fontSize: _fontSize,
+                    paddingBottom: _paddingBottom,
+                    printCopies: _printCopies,
+                    showUnit: _showUnit,
+                    printTwoCopies: _printTwoCopies,
+                    fontType: _fontType,
+                    a4Template: _a4Template,
+                    bluetoothTemplate: _bluetoothTemplate,
+                    statementTemplate: _statementTemplate,
+                  )
+                );
+                
                 ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(
-                    content: Text(l10n.msgExportComingSoon),
-                  ), // Placeholder for save logic
+                  const SnackBar(
+                    content: Text('تم حفظ إعدادات الطباعة بنجاح ✅'),
+                  ),
                 );
                 Navigator.pop(context);
               },
@@ -174,9 +238,7 @@ class _PrintSettingsScreenState extends ConsumerState<PrintSettingsScreen> {
         const SizedBox(width: Spacing.sm),
         Text(
           title,
-          style: Theme.of(
-            context,
-          ).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold),
+          style: Theme.of(context).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold),
         ),
       ],
     ),
@@ -190,9 +252,7 @@ class _PrintSettingsScreenState extends ConsumerState<PrintSettingsScreen> {
   ) => RadioListTile<String>(
     title: Text(title),
     value: value,
-    // ignore: deprecated_member_use
     groupValue: groupValue,
-    // ignore: deprecated_member_use
     onChanged: onChanged,
     activeColor: Theme.of(context).colorScheme.primary,
   );

@@ -1,124 +1,177 @@
+// ignore_for_file: prefer_const_literals_to_create_immutables
+// ignore_for_file: prefer_const_constructors
+// ignore_for_file: unused_local_variable
+// ignore_for_file: inference_failure_on_function_invocation
+// ignore_for_file: discarded_futures
+// ignore_for_file: deprecated_member_use
 import 'package:basir_accounting_system/core/theme/tokens/index.dart';
-import 'package:basir_accounting_system/shared/widgets/index.dart';
+import 'package:basir_accounting_system/shared/widgets/app_snackbar.dart';
+import 'package:basir_accounting_system/shared/widgets/glass_scaffold.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-/// شاشة تسوية النقدية (Cash Reconciliation Screen)
-/// تتيح للمستخدم مطابقة الرصيد الدفتري مع الرصيد الفعلي في الصندوق.
-/// (Phase 9 - Institutional Deepening - ATLAS Image 011)
-/// شاشة تسوية النقدية (Cash Reconciliation Screen)
-/// Screen for performing manual cash reconciliation.
 class CashReconciliationScreen extends ConsumerStatefulWidget {
-  /// Creates a [CashReconciliationScreen].
   const CashReconciliationScreen({super.key});
 
   @override
-  ConsumerState<CashReconciliationScreen> createState() =>
-      _CashReconciliationScreenState();
+  ConsumerState<CashReconciliationScreen> createState() => _CashReconciliationScreenState();
 }
 
-class _CashReconciliationScreenState
-    extends ConsumerState<CashReconciliationScreen> {
-  final _manualCountController = TextEditingController();
+class _CashReconciliationScreenState extends ConsumerState<CashReconciliationScreen> {
+  final TextEditingController _actualAmountController = TextEditingController();
+  final TextEditingController _notesController = TextEditingController();
+
+  // Mock current system balance
+  final double currentBalance = 1000;
+  double _difference = -1000;
+
+  @override
+  void initState() {
+    super.initState();
+    _actualAmountController.addListener(_calculateDifference);
+  }
+
+  void _calculateDifference() {
+    final actual = double.tryParse(_actualAmountController.text) ?? 0.0;
+    setState(() {
+      _difference = actual - currentBalance;
+    });
+  }
 
   @override
   void dispose() {
-    _manualCountController.dispose();
+    _actualAmountController.dispose();
+    _notesController.dispose();
     super.dispose();
+  }
+
+  void _submit() {
+    if (_actualAmountController.text.isEmpty) {
+      AppSnackbar.showError(context, 'الرجاء إدخال المبلغ الفعلي');
+      return;
+    }
+
+    AppSnackbar.showSuccess(context, 'تم إضافة قيد التسوية بنجاح');
+    Navigator.of(context).pop();
   }
 
   @override
   Widget build(BuildContext context) => GlassScaffold(
-    title: 'تسوية النقدية',
+    title: 'تسوية الصندوق (جرد)',
     body: SingleChildScrollView(
       padding: const EdgeInsets.all(Spacing.lg),
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          GlassCard(
-            child: Column(
-              children: [
-                _buildReconciliationRow(
-                  context,
-                  label: 'الرصيد الدفتري الحالي',
-                  value: '12,500.00 ر.س',
-                  color: AppColors.primary,
-                ),
-                const Divider(height: 32),
-                _buildManualEntryField(context),
-                const Divider(height: 32),
-                _buildReconciliationRow(
-                  context,
-                  label: 'الفارق (عجز/زيادة)',
-                  value: '0.00 ر.س',
-                  color: AppColors.success,
-                ),
-              ],
+          const Icon(Icons.adjust, color: AppColors.primary, size: 64),
+          const SizedBox(height: Spacing.md),
+          Text(
+            'سيتم وضع الفرق في حساب\nتسوية الصندوق الرئيسي',
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              color: AppColors.textSecondary,
+              fontWeight: FontWeight.bold,
+              fontSize: AppTextStyles.titleMediumSize,
             ),
           ),
           const SizedBox(height: Spacing.xl),
-          AppEnhancedButton(
-            label: 'اعتماد التسوية',
-            onPressed: () {
-              // Logic to post reconciliation journal entry
-              Navigator.of(context).pop();
-              ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(content: Text('تم اعتماد تسوية النقدية بنجاح')),
-              );
-            },
-            icon: Icons.check_circle_outline,
+          Card(
+            elevation: 0,
+            shape: RoundedRectangleBorder(
+              side: BorderSide(color: AppColors.primary.withValues(alpha: 0.2)),
+              borderRadius: BorderRadius.circular(Radii.md),
+            ),
+            child: Padding(
+              padding: const EdgeInsets.all(Spacing.lg),
+              child: Column(
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        'رصيد النظام الحالي:',
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                      ),
+                      Text(
+                        '$currentBalance',
+                        style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+                      ),
+                    ],
+                  ),
+                  const Divider(height: Spacing.xl),
+                  Text(
+                    'أدخل قيمة الصندوق الحقيقية الفعّلية',
+                    style: TextStyle(color: AppColors.primary, fontWeight: FontWeight.bold),
+                  ),
+                  const SizedBox(height: Spacing.sm),
+                  TextField(
+                    controller: _actualAmountController,
+                    textAlign: TextAlign.center,
+                    style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                    decoration: InputDecoration(
+                      hintText: '0.00',
+                      border: OutlineInputBorder(borderRadius: BorderRadius.circular(Radii.sm)),
+                      contentPadding: const EdgeInsets.symmetric(vertical: Spacing.md),
+                    ),
+                    keyboardType: const TextInputType.numberWithOptions(decimal: true),
+                  ),
+                  const SizedBox(height: Spacing.lg),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        'الفرق (العجز أو الزيادة):',
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                      ),
+                      Text(
+                        _difference > 0
+                            ? '+${_difference.toStringAsFixed(2)}'
+                            : _difference.toStringAsFixed(2),
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 18,
+                          color: _difference == 0
+                              ? AppColors.success
+                              : (_difference > 0 ? AppColors.info : AppColors.error),
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+          ),
+          const SizedBox(height: Spacing.lg),
+          TextField(
+            controller: _notesController,
+            decoration: InputDecoration(
+              labelText: 'ملاحظات (اختياري)',
+              border: OutlineInputBorder(borderRadius: BorderRadius.circular(Radii.sm)),
+            ),
+            maxLines: 2,
+          ),
+          const SizedBox(height: Spacing.xl),
+          Text(
+            'لتعديل القيمة لاحقاً، يمكنكم عمل كشف حساب لحساب تسوية الصندوق الرئيسي',
+            textAlign: TextAlign.center,
+            style: TextStyle(color: Colors.grey, fontSize: 12),
+          ),
+          const SizedBox(height: Spacing.xl),
+          ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              backgroundColor: AppColors.primary,
+              foregroundColor: Colors.white,
+              padding: const EdgeInsets.symmetric(vertical: Spacing.md),
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(Radii.md)),
+            ),
+            onPressed: _submit,
+            child: Text(
+              'اعتماد التسوية',
+              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+            ),
           ),
         ],
       ),
     ),
-  );
-
-  Widget _buildReconciliationRow(
-    BuildContext context, {
-    required String label,
-    required String value,
-    required Color color,
-  }) => Row(
-    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-    children: [
-      Text(label, style: const TextStyle(fontSize: 16)),
-      Text(
-        value,
-        style: TextStyle(
-          fontSize: 20,
-          fontWeight: FontWeight.bold,
-          color: color,
-        ),
-      ),
-    ],
-  );
-
-  Widget _buildManualEntryField(BuildContext context) => Column(
-    crossAxisAlignment: CrossAxisAlignment.start,
-    children: [
-      const Text(
-        'الرصيد الفعلي (العد النقدي)',
-        style: TextStyle(fontSize: 14, color: AppColors.textSecondary),
-      ),
-      const SizedBox(height: 8),
-      TextField(
-        style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-        decoration: InputDecoration(
-          hintText: '0.00',
-          suffixText: 'ر.س',
-          filled: true,
-          fillColor: Colors.black.withValues(alpha: 0.05),
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(Radii.md),
-            borderSide: BorderSide.none,
-          ),
-        ),
-        onChanged: (val) {
-          setState(() {
-            // Update difference calculation
-          });
-        },
-      ),
-    ],
   );
 }

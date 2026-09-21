@@ -62,82 +62,109 @@ class BalanceSheetScreen extends ConsumerWidget {
           final report = snapshot.data;
           final lines = report?.lines ?? [];
 
-          return ListView.builder(
-            padding: const EdgeInsets.all(Spacing.md),
-            itemCount: lines.length,
-            itemBuilder: (context, index) {
-              final line = lines[index];
-
-              if (line.isTitle) {
-                return Padding(
-                  padding: const EdgeInsets.only(
-                    top: Spacing.md,
-                    bottom: Spacing.sm,
-                  ),
-                  child: Text(
-                    line.label,
-                    style: AppTextStyles.titleMedium.copyWith(
-                      fontWeight: FontWeight.bold,
-                      color: AppColors.primary,
-                    ),
-                  ),
-                );
-              }
-
-              return Padding(
-                padding: EdgeInsets.only(
-                  left: line.indentLevel * Spacing.md,
-                  right: Spacing.sm,
-                  top: Spacing.xs,
-                  bottom: Spacing.xs,
-                ),
-                child: InkWell(
-                  onTap: line.accountId != null
-                      ? () async {
-                          await Navigator.push(
-                            context,
-                            MaterialPageRoute<void>(
-                              builder: (context) => JournalEntriesScreen(
-                                accountId: line.accountId,
-                              ),
-                            ),
-                          );
-                        }
-                      : null,
-                  borderRadius: Radii.borderRadiusSm,
+          return Column(
+            children: [
+              Card(
+                margin: const EdgeInsets.all(Spacing.md),
+                color: AppColors.primary.withValues(alpha: 0.1),
+                child: const Padding(
+                  padding: EdgeInsets.all(Spacing.md),
                   child: Column(
                     children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            line.label,
-                            style: AppTextStyles.bodyLarge.copyWith(
-                              fontWeight: line.isTotal
-                                  ? FontWeight.bold
-                                  : FontWeight.normal,
-                              color: line.accountId != null
-                                  ? AppColors.primary
-                                  : null,
-                            ),
-                          ),
-                          Text(
-                            currencyFormatter.format(line.amount.toDouble()),
-                            style: AppTextStyles.bodyLarge.copyWith(
-                              fontWeight: FontWeight.bold,
-                              color: line.amount >= Decimal.zero
-                                  ? AppColors.success
-                                  : AppColors.error,
-                            ),
-                          ),
-                        ],
+                      Text(
+                        'معادلة رأس المال العامل:',
+                        style: TextStyle(fontWeight: FontWeight.bold),
                       ),
-                      if (line.isTotal) const Divider(height: 16),
+                      SizedBox(height: Spacing.sm),
+                      Text(
+                        '(بضاعة + صندوق + ديون لنا - ديون علينا) = رأس المال العامل',
+                        style: TextStyle(color: AppColors.primary),
+                        textAlign: TextAlign.center,
+                      ),
                     ],
                   ),
                 ),
-              );
-            },
+              ),
+              Expanded(
+                child: ListView.builder(
+                  padding: const EdgeInsets.all(Spacing.md),
+                  itemCount: lines.length,
+                  itemBuilder: (context, index) {
+                    final line = lines[index];
+
+                    if (line.isTitle) {
+                      return Padding(
+                        padding: const EdgeInsets.only(
+                          top: Spacing.md,
+                          bottom: Spacing.sm,
+                        ),
+                        child: Text(
+                          line.label,
+                          style: AppTextStyles.titleMedium.copyWith(
+                            fontWeight: FontWeight.bold,
+                            color: AppColors.primary,
+                          ),
+                        ),
+                      );
+                    }
+
+                    return Padding(
+                      padding: EdgeInsets.only(
+                        left: line.indentLevel * Spacing.md,
+                        right: Spacing.sm,
+                        top: Spacing.xs,
+                        bottom: Spacing.xs,
+                      ),
+                      child: InkWell(
+                        onTap: line.accountId != null
+                            ? () async {
+                                await Navigator.push(
+                                  context,
+                                  MaterialPageRoute<void>(
+                                    builder: (context) => JournalEntriesScreen(
+                                      accountId: line.accountId,
+                                    ),
+                                  ),
+                                );
+                              }
+                            : null,
+                        borderRadius: Radii.borderRadiusSm,
+                        child: Column(
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  line.label,
+                                  style: AppTextStyles.bodyLarge.copyWith(
+                                    fontWeight: line.isTotal
+                                        ? FontWeight.bold
+                                        : FontWeight.normal,
+                                    color: line.accountId != null
+                                        ? AppColors.primary
+                                        : null,
+                                  ),
+                                ),
+                                Text(
+                                  currencyFormatter.format(line.amount.toDouble()),
+                                  style: AppTextStyles.bodyLarge.copyWith(
+                                    fontWeight: FontWeight.bold,
+                                    color: line.amount >= Decimal.zero
+                                        ? AppColors.success
+                                        : AppColors.error,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            if (line.isTotal) const Divider(height: 16),
+                          ],
+                        ),
+                      ),
+                    );
+                  },
+                ),
+              ),
+            ],
           );
         },
       ),

@@ -16,6 +16,7 @@ import 'package:basir_accounting_system/shared/widgets/index.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+
 /// 💎 شاشة الإعدادات المتقدمة (Settings Screen Platinum)
 /// واجهة عصرية وسهلة الاستخدام لإدارة كافة جوانب التطبيق
 class SettingsScreen extends ConsumerWidget {
@@ -44,26 +45,18 @@ class SettingsScreen extends ConsumerWidget {
             SettingsGroupCard(
               children: [
                 ListTile(
-                  leading: Icon(
-                    Icons.account_balance_outlined,
-                    color: theme.colorScheme.primary,
-                  ),
+                  leading: Icon(Icons.account_balance_outlined, color: theme.colorScheme.primary),
                   title: Text(context.l10n.taxConfigTitle),
                   subtitle: Text(context.l10n.zatcaPhase2Title),
                   trailing: Icon(appIcons.chevronRight),
                   onTap: () => Navigator.push(
                     context,
-                    MaterialPageRoute<void>(
-                      builder: (context) => const TaxConfigScreen(),
-                    ),
+                    MaterialPageRoute<void>(builder: (context) => const TaxConfigScreen()),
                   ),
                 ),
                 const Divider(height: 1),
                 ListTile(
-                  leading: Icon(
-                    Icons.import_export_outlined,
-                    color: theme.colorScheme.primary,
-                  ),
+                  leading: Icon(Icons.import_export_outlined, color: theme.colorScheme.primary),
                   title: const Text('استيراد من Excel'),
                   subtitle: const Text('ترحيل الأرصدة الافتتاحية'),
                   trailing: Icon(appIcons.chevronRight),
@@ -71,10 +64,7 @@ class SettingsScreen extends ConsumerWidget {
                 ),
                 const Divider(height: 1),
                 ListTile(
-                  leading: Icon(
-                    Icons.cloud_sync_outlined,
-                    color: theme.colorScheme.primary,
-                  ),
+                  leading: Icon(Icons.cloud_sync_outlined, color: theme.colorScheme.primary),
                   title: const Text('النسخ الاحتياطي السحابي'),
                   subtitle: const Text('مزامنة مع Google Drive'),
                   trailing: Icon(appIcons.chevronRight),
@@ -82,34 +72,24 @@ class SettingsScreen extends ConsumerWidget {
                 ),
                 const Divider(height: 1),
                 ListTile(
-                  leading: Icon(
-                    appIcons.barcodeReader,
-                    color: theme.colorScheme.primary,
-                  ),
+                  leading: Icon(appIcons.barcodeReader, color: theme.colorScheme.primary),
                   title: const Text('إعدادات الباركود'),
                   subtitle: const Text('تكوين قياسات وطباعة الملصقات'),
                   trailing: Icon(appIcons.chevronRight),
-                  onTap: () =>
-                      Navigator.pushNamed(context, '/barcode-settings'),
+                  onTap: () => Navigator.pushNamed(context, '/barcode-settings'),
                 ),
               ],
             ),
             const SizedBox(height: Spacing.xl),
 
             // 👤 قسم الحساب والأمن
-            SettingsSectionHeader(
-              title: context.l10n.accountTitle,
-              icon: appIcons.security,
-            ),
+            SettingsSectionHeader(title: context.l10n.accountTitle, icon: appIcons.security),
             SettingsGroupCard(
               children: [
                 const AccountSettingsTile(),
                 const Divider(height: 1),
                 ListTile(
-                  leading: Icon(
-                    appIcons.security,
-                    color: theme.colorScheme.primary,
-                  ),
+                  leading: Icon(appIcons.security, color: theme.colorScheme.primary),
                   title: const Text('مركز الأمان'),
                   subtitle: const Text('قفل التطبيق وربط الجوال'),
                   trailing: Icon(appIcons.chevronRight),
@@ -130,10 +110,7 @@ class SettingsScreen extends ConsumerWidget {
             const SizedBox(height: Spacing.xl),
 
             // 🎨 قسم المظهر والتخصيص
-            SettingsSectionHeader(
-              title: context.l10n.appearanceTitle,
-              icon: appIcons.theme,
-            ),
+            SettingsSectionHeader(title: context.l10n.appearanceTitle, icon: appIcons.theme),
             SettingsGroupCard(
               children: [
                 const LanguageSettingsTile(),
@@ -144,10 +121,7 @@ class SettingsScreen extends ConsumerWidget {
                   label: context.l10n.appearanceSettingsTitle,
                   button: true,
                   child: ListTile(
-                    leading: Icon(
-                      appIcons.style,
-                      color: theme.colorScheme.primary,
-                    ),
+                    leading: Icon(appIcons.style, color: theme.colorScheme.primary),
                     title: Text(context.l10n.appearanceSettingsTitle),
                     subtitle: Text(context.l10n.appearanceSettingsSubtitle),
                     trailing: Icon(appIcons.chevronRight),
@@ -161,26 +135,42 @@ class SettingsScreen extends ConsumerWidget {
                 ),
                 const Divider(height: 1),
                 ListTile(
-                  leading: Icon(
-                    Icons.print_outlined,
-                    color: theme.colorScheme.primary,
-                  ),
+                  leading: Icon(Icons.print_outlined, color: theme.colorScheme.primary),
                   title: Text(context.l10n.printSettingsTitle),
                   subtitle: Text(context.l10n.printSettingsSubtitle),
                   trailing: Icon(appIcons.chevronRight),
                   onTap: () => Navigator.push(
                     context,
-                    MaterialPageRoute<void>(
-                      builder: (context) => const PrintSettingsScreen(),
-                    ),
+                    MaterialPageRoute<void>(builder: (context) => const PrintSettingsScreen()),
                   ),
                 ),
                 const Divider(height: 1),
                 ListTile(
-                  leading: Icon(
-                    Icons.calculate_outlined,
-                    color: theme.colorScheme.primary,
-                  ),
+                  leading: const Icon(Icons.receipt_long_outlined),
+                  title: const Text('قوالب الطباعة'),
+                  subtitle: const Text('A4، حراري، كشف حساب'),
+                  trailing: const Icon(Icons.chevron_right),
+                  onTap: () => Navigator.pushNamed(context, '/settings/print-templates'),
+                ),
+                const Divider(height: 1),
+                ListTile(
+                  leading: const Icon(Icons.label_outline),
+                  title: const Text('تخصيص التسميات'),
+                  subtitle: const Text('تعديل مصطلحات التقارير والفواتير'),
+                  trailing: const Icon(Icons.chevron_right),
+                  onTap: () => Navigator.pushNamed(context, '/settings/label-customization'),
+                ),
+                const Divider(height: 1),
+                ListTile(
+                  leading: const Icon(Icons.thermostat_outlined),
+                  title: const Text('إعدادات الطباعة الحرارية'),
+                  subtitle: const Text('مقاسات الخطوط والورق الحراري'),
+                  trailing: const Icon(Icons.chevron_right),
+                  onTap: () => Navigator.pushNamed(context, '/settings/thermal-print'),
+                ),
+                const Divider(height: 1),
+                ListTile(
+                  leading: Icon(Icons.calculate_outlined, color: theme.colorScheme.primary),
                   title: Text(context.l10n.calculatorTitle),
                   subtitle: Text(context.l10n.convertToCurrencies),
                   trailing: Icon(appIcons.chevronRight),
@@ -193,18 +183,13 @@ class SettingsScreen extends ConsumerWidget {
                 ),
                 const Divider(height: 1),
                 ListTile(
-                  leading: Icon(
-                    appIcons.security,
-                    color: theme.colorScheme.primary,
-                  ),
+                  leading: Icon(appIcons.security, color: theme.colorScheme.primary),
                   title: Text(context.l10n.privacyAnalyticsTitle),
                   subtitle: Text(context.l10n.privacyAnalyticsSubtitle),
                   trailing: Icon(appIcons.chevronRight),
                   onTap: () => Navigator.push(
                     context,
-                    MaterialPageRoute<void>(
-                      builder: (context) => const PrivacyAnalyticsScreen(),
-                    ),
+                    MaterialPageRoute<void>(builder: (context) => const PrivacyAnalyticsScreen()),
                   ),
                 ),
               ],
@@ -227,9 +212,7 @@ class SettingsScreen extends ConsumerWidget {
             // نسخة التطبيق
             Text(
               '${context.l10n.appVersion} 1.0.0 (Platinum)',
-              style: theme.textTheme.bodySmall?.copyWith(
-                color: theme.colorScheme.outline,
-              ),
+              style: theme.textTheme.bodySmall?.copyWith(color: theme.colorScheme.outline),
             ),
           ],
         ),
@@ -237,10 +220,7 @@ class SettingsScreen extends ConsumerWidget {
     );
   }
 
-  Future<void> _showLogoutDialog(
-    BuildContext context,
-    SettingsController controller,
-  ) async {
+  Future<void> _showLogoutDialog(BuildContext context, SettingsController controller) async {
     final confirmed = await AppDialog.showConfirmation(
       context,
       title: context.l10n.logoutLabel,
@@ -252,9 +232,7 @@ class SettingsScreen extends ConsumerWidget {
     if (confirmed) {
       await controller.logout();
       if (context.mounted) {
-        await Navigator.of(
-          context,
-        ).pushNamedAndRemoveUntil('/login', (route) => false);
+        await Navigator.of(context).pushNamedAndRemoveUntil('/login', (route) => false);
       }
     }
   }
@@ -265,10 +243,7 @@ class _UsersSettingsTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => ListTile(
-    leading: Icon(
-      Icons.group_outlined,
-      color: Theme.of(context).colorScheme.primary,
-    ),
+    leading: Icon(Icons.group_outlined, color: Theme.of(context).colorScheme.primary),
     title: const Text('إدارة المستخدمين'),
     subtitle: const Text('الصلاحيات والحسابات'),
     trailing: const Icon(Icons.chevron_right),

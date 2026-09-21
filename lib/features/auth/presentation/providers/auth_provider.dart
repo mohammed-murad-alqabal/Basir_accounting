@@ -1,4 +1,4 @@
-import 'package:basir_accounting_system/core/providers/secure_storage_provider.dart';
+import 'package:basir_accounting_system/core/providers.dart';
 import 'package:basir_accounting_system/core/providers/supabase_auth_provider.dart';
 import 'package:basir_accounting_system/features/auth/application/auth_service.dart';
 import 'package:basir_accounting_system/features/auth/domain/models/auth_models.dart';
@@ -17,18 +17,14 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 /// Provides the singleton instance of the [AuthService].
 /// Optimized with precise selection of dependencies to minimize rebuilds.
 final authServiceProvider = Provider((ref) {
-  final secureStorage = ref.watch(
-    secureStorageProvider.select((storage) => storage),
-  );
+  final secureStorage = ref.watch(secureStorageProvider.select((storage) => storage));
   return AuthService(secureStorage: secureStorage);
 });
 
 /// مزود التحقق من وجود حساب
 final hasAccountProvider = FutureProvider<bool>((ref) async {
   // استخدام select() لتحسين الأداء - مراقبة الخدمة فقط
-  final authService = ref.watch(
-    authServiceProvider.select((service) => service),
-  );
+  final authService = ref.watch(authServiceProvider.select((service) => service));
   return authService.hasAccount();
 });
 
@@ -44,14 +40,9 @@ final currentUserProfileProvider = StateProvider<BasirUser?>((ref) => null);
 /// مزود عملية تسجيل الدخول
 ///
 /// يدير عملية تسجيل الدخول ويحدث الحالة عند النجاح
-final loginProvider = FutureProvider.family<bool, (String, String)>((
-  ref,
-  credentials,
-) async {
+final loginProvider = FutureProvider.family<bool, (String, String)>((ref, credentials) async {
   // استخدام select() لتحسين الأداء
-  final authService = ref.watch(
-    authServiceProvider.select((service) => service),
-  );
+  final authService = ref.watch(authServiceProvider.select((service) => service));
   final (username, password) = credentials;
 
   try {
@@ -71,14 +62,9 @@ final loginProvider = FutureProvider.family<bool, (String, String)>((
 });
 
 /// مزود عملية الإعداد الأولي
-final setupProvider = FutureProvider.family<bool, (String, String)>((
-  ref,
-  credentials,
-) async {
+final setupProvider = FutureProvider.family<bool, (String, String)>((ref, credentials) async {
   // استخدام select() لتحسين الأداء - مراقبة الخدمة فقط
-  final authService = ref.watch(
-    authServiceProvider.select((service) => service),
-  );
+  final authService = ref.watch(authServiceProvider.select((service) => service));
   final (username, password) = credentials;
 
   try {
@@ -99,12 +85,15 @@ final setupProvider = FutureProvider.family<bool, (String, String)>((
 /// مزود عملية تسجيل الخروج
 final logoutProvider = FutureProvider<bool>((ref) async {
   // استخدام select() لتحسين الأداء - مراقبة الخدمة فقط
-  final authService = ref.watch(
-    authServiceProvider.select((service) => service),
-  );
+  final authService = ref.watch(authServiceProvider.select((service) => service));
 
   try {
     await authService.logout();
+
+    // ✅ M0.3: تنظيف كامل لحالة جميع مزودات الميزات عند تسجيل الخروج
+    // يمنع تسرب بيانات الجلسة السابقة إلى الجلسة الجديدة
+    _invalidateAllFeatureProviders(ref);
+
     ref.read(isLoggedInProvider.notifier).state = false;
     ref.read(currentUsernameProvider.notifier).state = null;
     ref.read(currentUserProfileProvider.notifier).state = null;
@@ -114,15 +103,44 @@ final logoutProvider = FutureProvider<bool>((ref) async {
   }
 });
 
+/// تنظيف حالة جميع مزودات الميزات عند تسجيل الخروج أو تبديل الحساب.
+///
+/// يضمن عدم تسرب بيانات المستخدم السابق إلى الجلسة الجديدة.
+/// يجب استدعاؤه في أي مكان يتم فيه تغيير هوية المستخدم.
+void _invalidateAllFeatureProviders(Ref ref) {
+  // مزودات الحسابات والمعاملات المالية
+  ref.invalidate(getAccountsProvider);
+
+  // مزودات المستودعات (تُعاد تهيئتها تلقائياً عند أول استخدام)
+  ref.invalidate(customerRepositoryProvider);
+  ref.invalidate(invoiceRepositoryProvider);
+  ref.invalidate(vendorRepositoryProvider);
+  ref.invalidate(financialVoucherRepositoryProvider);
+  ref.invalidate(profileRepositoryProvider);
+  ref.invalidate(businessSettingsRepositoryProvider);
+  ref.invalidate(inventoryRepositoryProvider);
+  ref.invalidate(assetRepositoryProvider);
+  ref.invalidate(stockMovementRepositoryProvider);
+  ref.invalidate(warehouseTransferRepositoryProvider);
+  ref.invalidate(budgetRepositoryProvider);
+  ref.invalidate(goalRepositoryProvider);
+  ref.invalidate(bulkChangeExecutionStorageProvider);
+
+  // مزودات الخدمات المشتقة
+  ref.invalidate(inventoryServiceProvider);
+  ref.invalidate(bulkPriceChangeServiceProvider);
+  ref.invalidate(settingsServiceProvider);
+  ref.invalidate(companySettingsProvider);
+  ref.invalidate(fairValuationServiceProvider);
+}
+
 /// مزود عملية تغيير كلمة المرور
 final changePasswordProvider = FutureProvider.family<bool, (String, String)>((
   ref,
   passwords,
 ) async {
   // استخدام select() لتحسين الأداء - مراقبة الخدمة فقط
-  final authService = ref.watch(
-    authServiceProvider.select((service) => service),
-  );
+  final authService = ref.watch(authServiceProvider.select((service) => service));
   final (oldPassword, newPassword) = passwords;
 
   try {
@@ -158,9 +176,7 @@ final basirUserProvider = Provider<BasirUser?>((ref) {
   }
 
   // 2. التحقق من وضع الضيف (المصدر الثانوي)
-  final isGuest = ref
-      .watch(isGuestProvider)
-      .maybeWhen(data: (v) => v, orElse: () => false);
+  final isGuest = ref.watch(isGuestProvider).maybeWhen(data: (v) => v, orElse: () => false);
 
   if (isGuest) {
     return const BasirUser(

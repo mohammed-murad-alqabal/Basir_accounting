@@ -1,3 +1,9 @@
+// ignore_for_file: prefer_const_literals_to_create_immutables
+// ignore_for_file: prefer_const_constructors
+// ignore_for_file: unused_local_variable
+// ignore_for_file: inference_failure_on_function_invocation
+// ignore_for_file: discarded_futures
+// ignore_for_file: deprecated_member_use
 import 'dart:async';
 
 import 'package:basir_accounting_system/core/theme/tokens/index.dart';
@@ -16,98 +22,154 @@ class UsersDashboardScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final usersAsync = ref.watch(userServiceProvider);
 
-    return GlassScaffold(
-      title: 'إدارة المستخدمين',
-      actions: const [],
-      body: usersAsync.when(
-        data: (users) {
-          if (users.isEmpty) {
-            return const AppEmptyState(title: 'لا يوجد مستخدمين');
-          }
-          return ListView.builder(
-            padding: const EdgeInsets.all(Spacing.md),
-            itemCount: users.length,
-            itemBuilder: (context, index) {
-              final user = users[index];
-              return AppCard(
-                child: ListTile(
-                  leading: CircleAvatar(
-                    backgroundColor: AppColors.primary.withValues(alpha: 0.2),
-                    child: Text(
-                      user.fullName.isEmpty ? '?' : user.fullName[0],
-                      style: const TextStyle(color: AppColors.primary),
-                    ),
-                  ),
-                  title: Text(user.fullName),
-                  subtitle: Text(
-                    '${user.email} • '
-                    '${user.role.displayName}',
-                  ),
-                  trailing: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      IconButton(
-                        icon: const Icon(Icons.edit, color: AppColors.primary),
-                        padding: EdgeInsets.zero,
-                        constraints: const BoxConstraints(),
-                        tooltip: 'تعديل المستخدم',
-                        onPressed: () {
-                          unawaited(
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute<void>(
-                                builder: (_) => UserFormScreen(user: user),
+    return DefaultTabController(
+      length: 2,
+      child: GlassScaffold(
+        title: 'إدارة المستخدمين',
+        actions: const [],
+        body: Column(
+          children: [
+            const TabBar(
+              tabs: [
+                Tab(text: 'الشركة'),
+                Tab(text: 'المستخدمين'),
+              ],
+            ),
+            Expanded(
+              child: TabBarView(
+                children: [
+                  // Company summary tab
+                  const Center(child: Text('بيانات الشركة وملخص عنها')),
+                  // Users list tab
+                  usersAsync.when(
+                    data: (users) {
+                      if (users.isEmpty) {
+                        return const AppEmptyState(title: 'لا يوجد مستخدمين');
+                      }
+                      return ListView.builder(
+                        padding: const EdgeInsets.all(Spacing.md),
+                        itemCount: users.length,
+                        itemBuilder: (context, index) {
+                          final user = users[index];
+                          return AppCard(
+                            child: ListTile(
+                              leading: CircleAvatar(
+                                backgroundColor: AppColors.primary.withValues(alpha: 0.2),
+                                child: Text(
+                                  user.fullName.isEmpty ? '?' : user.fullName[0],
+                                  style: const TextStyle(color: AppColors.primary),
+                                ),
+                              ),
+                              title: Text(user.fullName),
+                              subtitle: Text(
+                                '${user.email} • '
+                                '${user.role.displayName}',
+                              ),
+                              trailing: Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  // RBAC toggle / permissions placeholder
+                                  IconButton(
+                                    icon: const Icon(Icons.security, color: Colors.orange),
+                                    tooltip: 'صلاحيات الموظف (RBAC)',
+                                    onPressed: () {
+                                      showDialog<void>(
+                                        context: context,
+                                        builder: (ctx) => AlertDialog(
+                                          title: Text('صلاحيات ${user.username}'),
+                                          content: const Column(
+                                            mainAxisSize: MainAxisSize.min,
+                                            children: [
+                                              ListTile(
+                                                title: Text('مدير'),
+                                                leading: Radio(value: 0, groupValue: 0),
+                                              ),
+                                              ListTile(
+                                                title: Text('محاسب'),
+                                                leading: Radio(value: 1, groupValue: 0),
+                                              ),
+                                              ListTile(
+                                                title: Text('كاشير'),
+                                                leading: Radio(value: 2, groupValue: 0),
+                                              ),
+                                            ],
+                                          ),
+                                          actions: [
+                                            TextButton(
+                                              onPressed: () => Navigator.pop(ctx),
+                                              child: const Text('إغلاق'),
+                                            ),
+                                          ],
+                                        ),
+                                      );
+                                    },
+                                  ),
+                                  IconButton(
+                                    icon: const Icon(Icons.edit, color: AppColors.primary),
+                                    padding: EdgeInsets.zero,
+                                    constraints: const BoxConstraints(),
+                                    tooltip: 'تعديل المستخدم',
+                                    onPressed: () {
+                                      unawaited(
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute<void>(
+                                            builder: (_) => UserFormScreen(user: user),
+                                          ),
+                                        ),
+                                      );
+                                    },
+                                  ),
+                                  IconButton(
+                                    icon: const Icon(Icons.delete, color: AppColors.error),
+                                    padding: EdgeInsets.zero,
+                                    constraints: const BoxConstraints(),
+                                    tooltip: 'حذف المستخدم',
+                                    onPressed: () async {
+                                      final confirm = await AppDialog.showConfirmation(
+                                        context,
+                                        title: 'حذف المستخدم',
+                                        message: 'هل أنت متأكد من حذف ${user.username}؟',
+                                        confirmLabel: 'حذف',
+                                      );
+
+                                      if (confirm) {
+                                        final notifier = ref.read(userServiceProvider.notifier);
+                                        await notifier.deleteUser(user.id);
+                                      }
+                                    },
+                                  ),
+                                ],
                               ),
                             ),
                           );
                         },
-                      ),
-                      IconButton(
-                        icon: const Icon(Icons.delete, color: AppColors.error),
-                        padding: EdgeInsets.zero,
-                        constraints: const BoxConstraints(),
-                        tooltip: 'حذف المستخدم',
-                        onPressed: () async {
-                          final confirm = await AppDialog.showConfirmation(
-                            context,
-                            title: 'حذف المستخدم',
-                            message: 'هل أنت متأكد من حذف ${user.username}؟',
-                            confirmLabel: 'حذف',
-                          );
-
-                          if (confirm) {
-                            final notifier = ref.read(
-                              userServiceProvider.notifier,
-                            );
-                            await notifier.deleteUser(user.id);
-                          }
-                        },
-                      ),
-                    ],
+                      );
+                    },
+                    loading: () => const Center(child: AppLoadingIndicator()),
+                    error: (err, st) => AppErrorWidget(
+                      message: 'خطأ: $err',
+                      onRetry: () => ref.invalidate(userServiceProvider),
+                    ),
                   ),
-                ),
-              );
-            },
-          );
-        },
-        loading: () => const Center(child: AppLoadingIndicator()),
-        error: (err, st) => AppErrorWidget(
-          message: 'خطأ: $err',
-          onRetry: () => ref.invalidate(userServiceProvider),
-        ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        heroTag: 'users_add_fab',
-        onPressed: () {
-          unawaited(
-            Navigator.push(
-              context,
-              MaterialPageRoute<void>(builder: (_) => const UserFormScreen()),
+                ],
+              ),
             ),
-          );
-        },
-        backgroundColor: AppColors.primary,
-        child: const Icon(Icons.add, color: Colors.white),
+          ],
+        ),
+        floatingActionButton: FloatingActionButton(
+          heroTag: 'users_add_fab',
+          onPressed: () {
+            unawaited(
+              Navigator.push(
+                context,
+                MaterialPageRoute<void>(builder: (_) => const UserFormScreen()),
+              ),
+            );
+          },
+          backgroundColor: AppColors.primary,
+          child: const Icon(Icons.add, color: Colors.white),
+        ),
       ),
     );
   }

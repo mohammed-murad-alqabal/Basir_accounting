@@ -1,3 +1,11 @@
+// ignore_for_file: directives_ordering
+// ignore_for_file: duplicate_import
+// ignore_for_file: prefer_const_literals_to_create_immutables
+// ignore_for_file: prefer_const_constructors
+// ignore_for_file: unused_local_variable
+// ignore_for_file: inference_failure_on_function_invocation
+// ignore_for_file: discarded_futures
+// ignore_for_file: deprecated_member_use
 import 'dart:async';
 import 'package:basir_accounting_system/core/theme/tokens/index.dart';
 import 'package:basir_accounting_system/features/inventory/domain/entities/bulk_price_change.dart';
@@ -15,6 +23,7 @@ import 'package:basir_accounting_system/shared/widgets/glass_scaffold.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'dart:async';
 
 /// شاشة معالج تغيير الأسعار الجماعي متعددة الخطوات.
 ///

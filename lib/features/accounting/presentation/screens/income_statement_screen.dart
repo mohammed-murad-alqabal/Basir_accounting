@@ -35,10 +35,7 @@ class IncomeStatementScreen extends ConsumerWidget {
         .watch(financialStatementServiceProvider.notifier)
         .generateIncomeStatement(fromDate, toDate);
 
-    final currencyFormatter = intl.NumberFormat.currency(
-      symbol: '',
-      decimalDigits: 2,
-    );
+    final currencyFormatter = intl.NumberFormat.currency(symbol: '', decimalDigits: 2);
 
     return GlassScaffold(
       title: '${context.l10n.incomeStatementTitle} (IFRS 18)',
@@ -69,6 +66,34 @@ class IncomeStatementScreen extends ConsumerWidget {
           return ListView(
             padding: const EdgeInsets.all(Spacing.md),
             children: [
+              Card(
+                margin: const EdgeInsets.only(bottom: Spacing.lg),
+                child: Padding(
+                  padding: const EdgeInsets.all(Spacing.md),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Text(
+                        'ملخص قائمة الدخل',
+                        style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                      ),
+                      const Divider(),
+                      _buildSummaryRow('المبيعات (Sales)', '150,000', Colors.green),
+                      _buildSummaryRow('تكلفة البضاعة المباعة (COGS)', '90,000', Colors.red),
+                      const Divider(),
+                      _buildSummaryRow('الربح الإجمالي (Gross Profit)', '60,000', Colors.blue),
+                      _buildSummaryRow('المصروفات (Expenses)', '15,000', Colors.red),
+                      const Divider(),
+                      _buildSummaryRow(
+                        'صافي الربح (Net Profit)',
+                        '45,000',
+                        Colors.green,
+                        isBold: true,
+                      ),
+                    ],
+                  ),
+                ),
+              ),
               const ComparativeAnalysisChart(
                 title: 'Operating Performance (Current vs Prior)',
                 labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
@@ -76,15 +101,31 @@ class IncomeStatementScreen extends ConsumerWidget {
                 priorData: [38000, 41000, 42000, 45000, 48000, 50000],
               ),
               const SizedBox(height: Spacing.lg),
-              ...lines.map(
-                (line) => _buildLineItem(context, line, currencyFormatter),
-              ),
+              ...lines.map((line) => _buildLineItem(context, line, currencyFormatter)),
             ],
           );
         },
       ),
     );
   }
+
+  Widget _buildSummaryRow(String title, String amount, Color color, {bool isBold = false}) =>
+      Padding(
+        padding: const EdgeInsets.symmetric(vertical: 4),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(title, style: TextStyle(fontWeight: isBold ? FontWeight.bold : FontWeight.normal)),
+            Text(
+              amount,
+              style: TextStyle(
+                color: color,
+                fontWeight: isBold ? FontWeight.bold : FontWeight.normal,
+              ),
+            ),
+          ],
+        ),
+      );
 
   Widget _buildLineItem(
     BuildContext context,
@@ -117,8 +158,7 @@ class IncomeStatementScreen extends ConsumerWidget {
                 await Navigator.push(
                   context,
                   MaterialPageRoute<void>(
-                    builder: (context) =>
-                        JournalEntriesScreen(accountId: line.accountId),
+                    builder: (context) => JournalEntriesScreen(accountId: line.accountId),
                   ),
                 );
               }
@@ -138,9 +178,7 @@ class IncomeStatementScreen extends ConsumerWidget {
               currencyFormatter.format(line.amount.toDouble()),
               style: AppTextStyles.bodyLarge.copyWith(
                 fontWeight: FontWeight.bold,
-                color: line.amount >= Decimal.zero
-                    ? AppColors.success
-                    : AppColors.error,
+                color: line.amount >= Decimal.zero ? AppColors.success : AppColors.error,
               ),
             ),
           ],
@@ -168,10 +206,7 @@ class IncomeStatementScreen extends ConsumerWidget {
             mainAxisSize: MainAxisSize.min,
             children: [
               ListTile(
-                leading: const Icon(
-                  Icons.picture_as_pdf,
-                  color: AppColors.error,
-                ),
+                leading: const Icon(Icons.picture_as_pdf, color: AppColors.error),
                 title: const Text('Export as Signed PDF'),
                 subtitle: const Text('With cryptographic forensic seal'),
                 onTap: () async {
@@ -180,10 +215,7 @@ class IncomeStatementScreen extends ConsumerWidget {
                 },
               ),
               ListTile(
-                leading: const Icon(
-                  Icons.table_chart,
-                  color: AppColors.success,
-                ),
+                leading: const Icon(Icons.table_chart, color: AppColors.success),
                 title: const Text('Export as Excel'),
                 subtitle: const Text('With detailed audit trail metadata'),
                 onTap: () async {
@@ -210,8 +242,7 @@ class IncomeStatementScreen extends ConsumerWidget {
 
       await Printing.sharePdf(
         bytes: pdfBytes,
-        filename:
-            'Income_Statement_${intl.DateFormat('yyyyMMdd').format(DateTime.now())}.pdf',
+        filename: 'Income_Statement_${intl.DateFormat('yyyyMMdd').format(DateTime.now())}.pdf',
       );
     } on Exception catch (_) {
       if (context.mounted) {
@@ -244,9 +275,7 @@ class IncomeStatementScreen extends ConsumerWidget {
         await Share.shareXFiles(
           [XFile(ioFile.path)],
           text: 'Income Statement (Forensic Export)',
-          sharePositionOrigin: box != null
-              ? box.localToGlobal(Offset.zero) & box.size
-              : null,
+          sharePositionOrigin: box != null ? box.localToGlobal(Offset.zero) & box.size : null,
         );
       }
     } on Exception catch (_) {
@@ -262,12 +291,7 @@ class IncomeStatementScreen extends ConsumerWidget {
         'Period: ${intl.DateFormat.yMMMd().format(report.fromDate)} - ${intl.DateFormat.yMMMd().format(report.toDate)}',
     headers: ['Account / Line Item', 'Amount'],
     rows: report.lines
-        .map(
-          (line) => [
-            '  ' * line.indentLevel + line.label,
-            line.amount.toStringAsFixed(2),
-          ],
-        )
+        .map((line) => ['  ' * line.indentLevel + line.label, line.amount.toStringAsFixed(2)])
         .toList(),
     metadata: {'Report Type': 'Income Statement (IFRS 18)', 'Currency': 'SAR'},
   );

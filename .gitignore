@@ -268,3 +268,8 @@ rust_builder/windows/flutter/
 
 
 
+
+# Ignored assets from legacy project
+docs/ui-reference/screenshots/
+test/fixtures/legacy_db/
+

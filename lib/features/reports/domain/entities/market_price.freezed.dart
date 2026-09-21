@@ -12,8 +12,7 @@ part of 'market_price.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-  'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models',
-);
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 MarketPrice _$MarketPriceFromJson(Map<String, dynamic> json) {
   return _MarketPrice.fromJson(json);
@@ -45,17 +44,15 @@ mixin _$MarketPrice {
 /// @nodoc
 abstract class $MarketPriceCopyWith<$Res> {
   factory $MarketPriceCopyWith(
-    MarketPrice value,
-    $Res Function(MarketPrice) then,
-  ) = _$MarketPriceCopyWithImpl<$Res, MarketPrice>;
+          MarketPrice value, $Res Function(MarketPrice) then) =
+      _$MarketPriceCopyWithImpl<$Res, MarketPrice>;
   @useResult
-  $Res call({
-    String id,
-    String itemId,
-    double price,
-    DateTime asOfDate,
-    DateTime createdAt,
-  });
+  $Res call(
+      {String id,
+      String itemId,
+      double price,
+      DateTime asOfDate,
+      DateTime createdAt});
 }
 
 /// @nodoc
@@ -77,31 +74,28 @@ class _$MarketPriceCopyWithImpl<$Res, $Val extends MarketPrice>
     Object? asOfDate = null,
     Object? createdAt = null,
   }) {
-    return _then(
-      _value.copyWith(
-            id: null == id
-                ? _value.id
-                : id // ignore: cast_nullable_to_non_nullable
-                      as String,
-            itemId: null == itemId
-                ? _value.itemId
-                : itemId // ignore: cast_nullable_to_non_nullable
-                      as String,
-            price: null == price
-                ? _value.price
-                : price // ignore: cast_nullable_to_non_nullable
-                      as double,
-            asOfDate: null == asOfDate
-                ? _value.asOfDate
-                : asOfDate // ignore: cast_nullable_to_non_nullable
-                      as DateTime,
-            createdAt: null == createdAt
-                ? _value.createdAt
-                : createdAt // ignore: cast_nullable_to_non_nullable
-                      as DateTime,
-          )
-          as $Val,
-    );
+    return _then(_value.copyWith(
+      id: null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String,
+      itemId: null == itemId
+          ? _value.itemId
+          : itemId // ignore: cast_nullable_to_non_nullable
+              as String,
+      price: null == price
+          ? _value.price
+          : price // ignore: cast_nullable_to_non_nullable
+              as double,
+      asOfDate: null == asOfDate
+          ? _value.asOfDate
+          : asOfDate // ignore: cast_nullable_to_non_nullable
+              as DateTime,
+      createdAt: null == createdAt
+          ? _value.createdAt
+          : createdAt // ignore: cast_nullable_to_non_nullable
+              as DateTime,
+    ) as $Val);
   }
 }
 
@@ -109,18 +103,16 @@ class _$MarketPriceCopyWithImpl<$Res, $Val extends MarketPrice>
 abstract class _$$MarketPriceImplCopyWith<$Res>
     implements $MarketPriceCopyWith<$Res> {
   factory _$$MarketPriceImplCopyWith(
-    _$MarketPriceImpl value,
-    $Res Function(_$MarketPriceImpl) then,
-  ) = __$$MarketPriceImplCopyWithImpl<$Res>;
+          _$MarketPriceImpl value, $Res Function(_$MarketPriceImpl) then) =
+      __$$MarketPriceImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({
-    String id,
-    String itemId,
-    double price,
-    DateTime asOfDate,
-    DateTime createdAt,
-  });
+  $Res call(
+      {String id,
+      String itemId,
+      double price,
+      DateTime asOfDate,
+      DateTime createdAt});
 }
 
 /// @nodoc
@@ -128,9 +120,8 @@ class __$$MarketPriceImplCopyWithImpl<$Res>
     extends _$MarketPriceCopyWithImpl<$Res, _$MarketPriceImpl>
     implements _$$MarketPriceImplCopyWith<$Res> {
   __$$MarketPriceImplCopyWithImpl(
-    _$MarketPriceImpl _value,
-    $Res Function(_$MarketPriceImpl) _then,
-  ) : super(_value, _then);
+      _$MarketPriceImpl _value, $Res Function(_$MarketPriceImpl) _then)
+      : super(_value, _then);
 
   @pragma('vm:prefer-inline')
   @override
@@ -141,43 +132,40 @@ class __$$MarketPriceImplCopyWithImpl<$Res>
     Object? asOfDate = null,
     Object? createdAt = null,
   }) {
-    return _then(
-      _$MarketPriceImpl(
-        id: null == id
-            ? _value.id
-            : id // ignore: cast_nullable_to_non_nullable
-                  as String,
-        itemId: null == itemId
-            ? _value.itemId
-            : itemId // ignore: cast_nullable_to_non_nullable
-                  as String,
-        price: null == price
-            ? _value.price
-            : price // ignore: cast_nullable_to_non_nullable
-                  as double,
-        asOfDate: null == asOfDate
-            ? _value.asOfDate
-            : asOfDate // ignore: cast_nullable_to_non_nullable
-                  as DateTime,
-        createdAt: null == createdAt
-            ? _value.createdAt
-            : createdAt // ignore: cast_nullable_to_non_nullable
-                  as DateTime,
-      ),
-    );
+    return _then(_$MarketPriceImpl(
+      id: null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String,
+      itemId: null == itemId
+          ? _value.itemId
+          : itemId // ignore: cast_nullable_to_non_nullable
+              as String,
+      price: null == price
+          ? _value.price
+          : price // ignore: cast_nullable_to_non_nullable
+              as double,
+      asOfDate: null == asOfDate
+          ? _value.asOfDate
+          : asOfDate // ignore: cast_nullable_to_non_nullable
+              as DateTime,
+      createdAt: null == createdAt
+          ? _value.createdAt
+          : createdAt // ignore: cast_nullable_to_non_nullable
+              as DateTime,
+    ));
   }
 }
 
 /// @nodoc
 @JsonSerializable()
 class _$MarketPriceImpl implements _MarketPrice {
-  const _$MarketPriceImpl({
-    required this.id,
-    required this.itemId,
-    required this.price,
-    required this.asOfDate,
-    required this.createdAt,
-  });
+  const _$MarketPriceImpl(
+      {required this.id,
+      required this.itemId,
+      required this.price,
+      required this.asOfDate,
+      required this.createdAt});
 
   factory _$MarketPriceImpl.fromJson(Map<String, dynamic> json) =>
       _$$MarketPriceImplFromJson(json);
@@ -234,35 +222,41 @@ class _$MarketPriceImpl implements _MarketPrice {
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$MarketPriceImplToJson(this);
+    return _$$MarketPriceImplToJson(
+      this,
+    );
   }
 }
 
 abstract class _MarketPrice implements MarketPrice {
-  const factory _MarketPrice({
-    required final String id,
-    required final String itemId,
-    required final double price,
-    required final DateTime asOfDate,
-    required final DateTime createdAt,
-  }) = _$MarketPriceImpl;
+  const factory _MarketPrice(
+      {required final String id,
+      required final String itemId,
+      required final double price,
+      required final DateTime asOfDate,
+      required final DateTime createdAt}) = _$MarketPriceImpl;
 
   factory _MarketPrice.fromJson(Map<String, dynamic> json) =
       _$MarketPriceImpl.fromJson;
 
   @override
+
   /// المعرف الفريد
   String get id;
   @override
+
   /// معرف صنف المخزون
   String get itemId;
   @override
+
   /// سعر السوق (القيمة العادلة)
   double get price;
   @override
+
   /// تاريخ التقييم
   DateTime get asOfDate;
   @override
+
   /// تاريخ الإنشاء
   DateTime get createdAt;
   @override

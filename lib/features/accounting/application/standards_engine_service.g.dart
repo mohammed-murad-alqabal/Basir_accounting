@@ -7,7 +7,7 @@ part of 'standards_engine_service.dart';
 // **************************************************************************
 
 String _$standardsEngineServiceHash() =>
-    r'021713874c79e35f5cefcefc65882536e6e31d46';
+    r'd18f8221c113f047cf4825c71ea532f4343e8bda';
 
 /// Standards Compliance Engine (Agent 1) for international auditing.
 ///
@@ -18,14 +18,14 @@ String _$standardsEngineServiceHash() =>
 @ProviderFor(StandardsEngineService)
 final standardsEngineServiceProvider =
     AsyncNotifierProvider<StandardsEngineService, void>.internal(
-      StandardsEngineService.new,
-      name: r'standardsEngineServiceProvider',
-      debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-          ? null
-          : _$standardsEngineServiceHash,
-      dependencies: null,
-      allTransitiveDependencies: null,
-    );
+  StandardsEngineService.new,
+  name: r'standardsEngineServiceProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$standardsEngineServiceHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
 
 typedef _$StandardsEngineService = AsyncNotifier<void>;
 // ignore_for_file: type=lint

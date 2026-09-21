@@ -7,15 +7,9 @@ import 'package:basir_accounting_system/shared/widgets/index.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-/// ***
-/// Cognitive Foundation: SetupScreen
-///
-/// The orchestration interface for initial institutional identity creation.
-/// Enforces high-entropy credential standards and validates cryptographic
-/// consistency before establishing the local security context.
-/// ***
+/// Setup Screen
+/// Create your account to start using Basir Accounting
 class SetupScreen extends ConsumerStatefulWidget {
-  /// إنشاء شاشة الإعداد الأولي
   const SetupScreen({super.key});
 
   @override
@@ -52,19 +46,15 @@ class _SetupScreenState extends ConsumerState<SetupScreen> {
 
       if (!mounted) return;
 
-      await ScaffoldMessenger.of(context)
-          .showSnackBar(SnackBar(content: Text(context.l10n.msgAccountCreated)))
-          .closed;
+      AppSnackbar.showSuccess(context, context.l10n.msgAccountCreated);
 
-      // الانتقال إلى شاشة الإعدادات الإضافية أو لوحة التحكم
+      // الانتقال إلى لوحة التحكم
       if (!mounted) return;
-      await Navigator.of(context).pushReplacementNamed('/mfa-gate');
+      await Navigator.of(context).pushReplacementNamed('/dashboard');
     } on Exception catch (e) {
       if (!mounted) return;
 
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text(context.l10n.errGeneric(e.toString()))),
-      );
+      AppSnackbar.showError(context, context.l10n.errGeneric(e.toString()));
     } finally {
       if (mounted) {
         setState(() => _isLoading = false);
@@ -74,24 +64,45 @@ class _SetupScreenState extends ConsumerState<SetupScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
     final appIcons = ref.watch(appIconsProvider);
 
-    return GlassScaffold(
+    return Scaffold(
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(Spacing.lg),
         child: Column(
           children: [
-            // رأس الشاشة
-            _buildHeader(),
             const SizedBox(height: Spacing.xl),
 
-            // نموذج الإعداد
+            // Logo
+            Semantics(
+              label: context.l10n.dashboardBasirSystemTitle,
+              image: true,
+              child: const BasirLogo(size: 100),
+            ),
+            const SizedBox(height: Spacing.lg),
+
+            // Title
+            Text(
+              context.l10n.setupTitle,
+              style: AppTextStyles.headlineSmall.copyWith(
+                fontWeight: FontWeights.bold,
+                color: colorScheme.onSurface,
+              ),
+            ),
+            const SizedBox(height: Spacing.xs),
+            Text(
+              context.l10n.setupSubtitle,
+              textAlign: TextAlign.center,
+              style: AppTextStyles.bodyMedium.copyWith(color: colorScheme.onSurfaceVariant),
+            ),
+            const SizedBox(height: Spacing.xl),
+
+            // Setup Form
             Form(
               key: _formKey,
               child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  // حقل اسم المستخدم
                   AppTextField(
                     label: context.l10n.labelUsername,
                     hint: context.l10n.hintEnterUsername,
@@ -109,7 +120,6 @@ class _SetupScreenState extends ConsumerState<SetupScreen> {
                   ),
                   const SizedBox(height: Spacing.lg),
 
-                  // حقل كلمة المرور
                   AppTextField(
                     label: context.l10n.labelPassword,
                     hint: context.l10n.hintEnterPassword,
@@ -120,10 +130,7 @@ class _SetupScreenState extends ConsumerState<SetupScreen> {
                       if (value == null || value.isEmpty) {
                         return context.l10n.errEmptyField;
                       }
-                      final passwordPolicy = RegExp(
-                        r'^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%^&*(),.?":{}|<>]).{12,}$',
-                      );
-                      if (!passwordPolicy.hasMatch(value)) {
+                      if (value.length < 6) {
                         return context.l10n.errPasswordShort;
                       }
                       return null;
@@ -131,27 +138,8 @@ class _SetupScreenState extends ConsumerState<SetupScreen> {
                   ),
                   const SizedBox(height: Spacing.lg),
 
-                  // حقل تأكيد كلمة المرور
-                  AppTextField(
-                    label: context.l10n.labelConfirmPassword,
-                    hint: context.l10n.hintConfirmPassword,
-                    controller: _confirmPasswordController,
-                    obscureText: true,
-                    prefixIcon: Icon(appIcons.lock, size: IconSizes.sm),
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return context.l10n.errEmptyField;
-                      }
-                      if (value != _passwordController.text) {
-                        return context.l10n.errPasswordsDoNotMatch;
-                      }
-                      return null;
-                    },
-                  ),
-                  const SizedBox(height: Spacing.xl),
-
-                  // زر الإنشاء
                   AppEnhancedButton(
+                    width: double.infinity,
                     label: context.l10n.btnCreateAccount,
                     onPressed: _handleSetup,
                     isLoading: _isLoading,
@@ -165,46 +153,4 @@ class _SetupScreenState extends ConsumerState<SetupScreen> {
       ),
     );
   }
-
-  Widget _buildHeader() => Column(
-    children: [
-      Container(
-        width: 80,
-        height: 80,
-        decoration: BoxDecoration(
-          color: AppColors.primary,
-          borderRadius: BorderRadius.circular(Radii.lg),
-          boxShadow: [
-            BoxShadow(
-              color: AppColors.primary.withValues(alpha: 0.2),
-              blurRadius: 8,
-              offset: const Offset(0, 4),
-            ),
-          ],
-        ),
-        child: Center(
-          child: Semantics(
-            label: context.l10n.dashboardBasirSystemTitle,
-            image: true,
-            child: const BasirLogo(size: 60),
-          ),
-        ),
-      ),
-      const SizedBox(height: Spacing.lg),
-      Text(
-        context.l10n.setupTitle,
-        style: AppTextStyles.headlineSmall.copyWith(
-          fontWeight: FontWeight.bold,
-          color: AppColors.textPrimary,
-        ),
-      ),
-      const SizedBox(height: Spacing.sm),
-      Text(
-        context.l10n.setupSubtitle,
-        style: AppTextStyles.bodyMedium.copyWith(
-          color: AppColors.textSecondary,
-        ),
-      ),
-    ],
-  );
 }
