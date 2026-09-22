@@ -4,11 +4,11 @@
 flutter_launcher_icons:
   android: true
   ios: true
-  image_path: "assets/icons/app_icon.png"
+  image_path: "assets/icons/basir_logo.png"
 
   # Android
-  adaptive_icon_background: "#1976D2"
-  adaptive_icon_foreground: "assets/icons/app_icon_foreground.png"
+  adaptive_icon_background: "#154360"
+  adaptive_icon_foreground: "assets/icons/basir_logo.png"
 
   # iOS
   remove_alpha_ios: true
@@ -16,17 +16,17 @@ flutter_launcher_icons:
   # Web
   web:
     generate: true
-    image_path: "assets/icons/app_icon.png"
-    background_color: "#1976D2"
-    theme_color: "#1976D2"
+    image_path: "assets/icons/basir_logo.png"
+    background_color: "#154360"
+    theme_color: "#154360"
 
   # Windows
   windows:
     generate: true
-    image_path: "assets/icons/app_icon.png"
+    image_path: "assets/icons/basir_logo.png"
     icon_size: 48
 
   # macOS
   macos:
     generate: true
-    image_path: "assets/icons/app_icon.png"
+    image_path: "assets/icons/basir_logo.png"
