@@ -12,7 +12,7 @@ dependencies:
     path: packages/basir_drift_storage
   bcrypt: ^1.2.0
   crypto: ^3.0.7
-  cupertino_icons: ^1.0.8
+  cupertino_icons: ^2.0.0
   decimal: ^3.2.4
   device_info_plus: ^13.2.0
   dio: ^5.9.0
