@@ -21,16 +21,16 @@ class LoginScreen extends ConsumerStatefulWidget {
 
 class _LoginScreenState extends ConsumerState<LoginScreen> {
   final _formKey = GlobalKey<FormState>();
-  
+
   // وحدات التحكم
   final _phoneController = TextEditingController();
   final _passwordController = TextEditingController();
-  
+
   // المتغيرات لحالة القوائم المنسدلة
   String _selectedCountry = 'Yemen';
   String _selectedLanguage = 'ar';
   String? _selectedCompany;
-  
+
   bool _isLoading = false;
   AutovalidateMode _autovalidateMode = AutovalidateMode.disabled;
 
@@ -42,10 +42,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
     'UAE': 'الإمارات (+971)',
   };
 
-  final Map<String, String> _languages = {
-    'ar': 'العربية',
-    'en': 'English',
-  };
+  final Map<String, String> _languages = {'ar': 'العربية', 'en': 'English'};
 
   final List<String> _companies = [
     'الشركة الرئيسية (المركز الإداري)',
@@ -113,7 +110,10 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
     return Scaffold(
       body: Center(
         child: SingleChildScrollView(
-          padding: const EdgeInsets.symmetric(horizontal: Spacing.lg, vertical: Spacing.xxl),
+          padding: const EdgeInsets.symmetric(
+            horizontal: Spacing.lg,
+            vertical: Spacing.xxl,
+          ),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -137,7 +137,9 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
               Text(
                 'تسجيل الدخول إلى حسابك',
                 textAlign: TextAlign.center,
-                style: AppTextStyles.bodyMedium.copyWith(color: colorScheme.onSurfaceVariant),
+                style: AppTextStyles.bodyMedium.copyWith(
+                  color: colorScheme.onSurfaceVariant,
+                ),
               ),
               const SizedBox(height: Spacing.xl),
 
@@ -154,56 +156,68 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                       children: [
                         // قائمة الدولة
                         DropdownButtonFormField<String>(
-isExpanded: true,
-                            value: _selectedCountry,
-                            decoration: InputDecoration(
-                              labelText: 'الدولة',
-                              prefixIcon: const Icon(Icons.public_outlined),
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(8.0),
-                              ),
-                              contentPadding: const EdgeInsets.symmetric(horizontal: Spacing.sm),
+                          isExpanded: true,
+                          value: _selectedCountry,
+                          decoration: InputDecoration(
+                            labelText: 'الدولة',
+                            prefixIcon: const Icon(Icons.public_outlined),
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(8.0),
                             ),
-                            items: _countries.entries.map((e) {
-                              return DropdownMenuItem(
-                                value: e.key,
-                                child: Text(e.value, style: const TextStyle(fontSize: 13)),
-                              );
-                            }).toList(),
-                            onChanged: (val) {
-                              if (val != null) setState(() => _selectedCountry = val);
-                            },
+                            contentPadding: const EdgeInsets.symmetric(
+                              horizontal: Spacing.sm,
+                            ),
                           ),
+                          items: _countries.entries.map((e) {
+                            return DropdownMenuItem(
+                              value: e.key,
+                              child: Text(
+                                e.value,
+                                style: const TextStyle(fontSize: 13),
+                              ),
+                            );
+                          }).toList(),
+                          onChanged: (val) {
+                            if (val != null)
+                              setState(() => _selectedCountry = val);
+                          },
+                        ),
                         const SizedBox(height: Spacing.lg),
                         // قائمة اللغة
                         DropdownButtonFormField<String>(
-isExpanded: true,
-                            value: _selectedLanguage,
-                            decoration: InputDecoration(
-                              labelText: 'اللغة',
-                              prefixIcon: const Icon(Icons.language_outlined),
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(8.0),
-                              ),
-                              contentPadding: const EdgeInsets.symmetric(horizontal: Spacing.sm),
+                          isExpanded: true,
+                          value: _selectedLanguage,
+                          decoration: InputDecoration(
+                            labelText: 'اللغة',
+                            prefixIcon: const Icon(Icons.language_outlined),
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(8.0),
                             ),
-                            items: _languages.entries.map((e) {
-                              return DropdownMenuItem(
-                                value: e.key,
-                                child: Text(e.value, style: const TextStyle(fontSize: 13)),
-                              );
-                            }).toList(),
-                            onChanged: (val) {
-                              if (val != null) setState(() => _selectedLanguage = val);
-                            },
+                            contentPadding: const EdgeInsets.symmetric(
+                              horizontal: Spacing.sm,
+                            ),
                           ),
+                          items: _languages.entries.map((e) {
+                            return DropdownMenuItem(
+                              value: e.key,
+                              child: Text(
+                                e.value,
+                                style: const TextStyle(fontSize: 13),
+                              ),
+                            );
+                          }).toList(),
+                          onChanged: (val) {
+                            if (val != null)
+                              setState(() => _selectedLanguage = val);
+                          },
+                        ),
                       ],
                     ),
                     const SizedBox(height: Spacing.lg),
 
                     // 2. قائمة اختيار الشركة/قاعدة البيانات
                     DropdownButtonFormField<String>(
-isExpanded: true,
+                      isExpanded: true,
                       value: _selectedCompany,
                       decoration: InputDecoration(
                         labelText: 'الشركة / قاعدة البيانات',
@@ -215,7 +229,10 @@ isExpanded: true,
                       items: _companies.map((company) {
                         return DropdownMenuItem(
                           value: company,
-                          child: Text(company, style: const TextStyle(fontSize: 14)),
+                          child: Text(
+                            company,
+                            style: const TextStyle(fontSize: 14),
+                          ),
                         );
                       }).toList(),
                       onChanged: (val) {
@@ -266,7 +283,10 @@ isExpanded: true,
                           Navigator.of(context).pushNamed('/forgot-password');
                         },
                         style: TextButton.styleFrom(
-                          padding: const EdgeInsets.symmetric(horizontal: 0, vertical: Spacing.md),
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 0,
+                            vertical: Spacing.md,
+                          ),
                         ),
                         child: Text(
                           'نسيت كلمة المرور؟',

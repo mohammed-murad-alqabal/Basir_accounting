@@ -288,9 +288,7 @@ void main() {
         ];
 
         for (final routeName in routeNames) {
-          final route = AppRouter.generateRoute(
-            RouteSettings(name: routeName),
-          );
+          final route = AppRouter.generateRoute(RouteSettings(name: routeName));
           expect(
             route.settings.name,
             routeName,
@@ -383,9 +381,7 @@ void main() {
         ];
 
         for (final routeName in routes) {
-          final route = AppRouter.generateRoute(
-            RouteSettings(name: routeName),
-          );
+          final route = AppRouter.generateRoute(RouteSettings(name: routeName));
           expect(
             route,
             isA<MaterialPageRoute<dynamic>>(),

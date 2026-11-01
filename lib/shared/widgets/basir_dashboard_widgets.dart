@@ -30,19 +30,61 @@ class DashboardBasirHeader extends StatelessWidget {
           crossAxisSpacing: 16,
           childAspectRatio: 0.9,
           children: [
-            _buildGridItem(context, 'العملاء', Icons.people_alt_outlined, Colors.blue, '/customers'),
-            _buildGridItem(context, 'الموردون', Icons.storefront_outlined, Colors.orange, '/vendors'),
-            _buildGridItem(context, 'الفواتير', Icons.receipt_long_outlined, Colors.green, '/invoices'),
-            _buildGridItem(context, 'المخزون', Icons.inventory_2_outlined, Colors.purple, '/inventory'),
-            _buildGridItem(context, 'التقارير', Icons.analytics_outlined, Colors.red, '/reports'),
-            _buildGridItem(context, 'الإعدادات', Icons.settings_outlined, Colors.blueGrey, '/settings'),
+            _buildGridItem(
+              context,
+              'العملاء',
+              Icons.people_alt_outlined,
+              Colors.blue,
+              '/customers',
+            ),
+            _buildGridItem(
+              context,
+              'الموردون',
+              Icons.storefront_outlined,
+              Colors.orange,
+              '/vendors',
+            ),
+            _buildGridItem(
+              context,
+              'الفواتير',
+              Icons.receipt_long_outlined,
+              Colors.green,
+              '/invoices',
+            ),
+            _buildGridItem(
+              context,
+              'المخزون',
+              Icons.inventory_2_outlined,
+              Colors.purple,
+              '/inventory',
+            ),
+            _buildGridItem(
+              context,
+              'التقارير',
+              Icons.analytics_outlined,
+              Colors.red,
+              '/reports',
+            ),
+            _buildGridItem(
+              context,
+              'الإعدادات',
+              Icons.settings_outlined,
+              Colors.blueGrey,
+              '/settings',
+            ),
           ],
         ),
       ],
     );
   }
 
-  Widget _buildGridItem(BuildContext context, String title, IconData icon, Color color, String route) {
+  Widget _buildGridItem(
+    BuildContext context,
+    String title,
+    IconData icon,
+    Color color,
+    String route,
+  ) {
     return InkWell(
       onTap: () {
         // We use push replacement or push based on architecture, we'll use pushNamed
@@ -88,7 +130,6 @@ class DashboardBasirHeader extends StatelessWidget {
     );
   }
 }
-
 
 /// بطاقة إحصائية زجاجية (Glassmorphic Stat Card)
 class GlassStatCard extends StatelessWidget {

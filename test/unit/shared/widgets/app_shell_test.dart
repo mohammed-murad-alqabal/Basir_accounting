@@ -21,33 +21,31 @@ Widget buildShell({
   /// مفتاح فريد لإجبار Riverpod على إعادة إنشاء ProviderContainer عند إعادة
   /// البناء (pumpWidget جديد بقيم overrides مختلفة)
   Key? providerKey,
-}) =>
-    MaterialApp(
-      locale: Locale(locale),
-      localizationsDelegates: const [
-        AppLocalizations.delegate,
-        GlobalMaterialLocalizations.delegate,
-        GlobalWidgetsLocalizations.delegate,
-        GlobalCupertinoLocalizations.delegate,
+}) => MaterialApp(
+  locale: Locale(locale),
+  localizationsDelegates: const [
+    AppLocalizations.delegate,
+    GlobalMaterialLocalizations.delegate,
+    GlobalWidgetsLocalizations.delegate,
+    GlobalCupertinoLocalizations.delegate,
+  ],
+  supportedLocales: const [Locale('ar'), Locale('en')],
+  home: Directionality(
+    textDirection: rtl ? TextDirection.rtl : TextDirection.ltr,
+    child: ProviderScope(
+      key: providerKey ?? UniqueKey(),
+      overrides: [
+        appIconsProvider.overrideWith((ref) => const MaterialAppIcons()),
+        // يجب إبقاء نفس عدد الـ overrides في كل إعادة بناء (riverpod لا يسمح بتغيير العدد)
+        sidebarCollapsedProvider.overrideWith((ref) => sidebarCollapsedDefault),
       ],
-      supportedLocales: const [Locale('ar'), Locale('en')],
-      home: Directionality(
-        textDirection: rtl ? TextDirection.rtl : TextDirection.ltr,
-        child: ProviderScope(
-          key: providerKey ?? UniqueKey(),
-          overrides: [
-            appIconsProvider.overrideWith((ref) => const MaterialAppIcons()),
-            // يجب إبقاء نفس عدد الـ overrides في كل إعادة بناء (riverpod لا يسمح بتغيير العدد)
-            sidebarCollapsedProvider
-                .overrideWith((ref) => sidebarCollapsedDefault),
-          ],
-          child: MediaQuery(
-            data: MediaQueryData(size: Size(width, 800)),
-            child: Scaffold(body: child ?? const BasirAppShell()),
-          ),
-        ),
+      child: MediaQuery(
+        data: MediaQueryData(size: Size(width, 800)),
+        child: Scaffold(body: child ?? const BasirAppShell()),
       ),
-    );
+    ),
+  ),
+);
 
 /// يضبط حجم سطح الاختبار الفعلي قبل pumpWidget (MediaQueryData وحده لا يحدد قيود السطح)
 void setTestSurfaceSize(WidgetTester tester, double width) {
@@ -120,8 +118,9 @@ void main() {
       await tester.pumpAndSettle();
 
       // العرض الموسّع: الشريط الجانبي يشغل kSidebarExpandedWidth من إجمالي الصف
-      final sidebarRenderBoxBefore =
-          tester.renderObject<RenderBox>(find.byType(BasirSidebar)).size;
+      final sidebarRenderBoxBefore = tester
+          .renderObject<RenderBox>(find.byType(BasirSidebar))
+          .size;
       expect(sidebarRenderBoxBefore.width, kSidebarExpandedWidth);
 
       await tester.pumpWidget(
@@ -133,8 +132,9 @@ void main() {
       await tester.pumpAndSettle();
 
       // العرض المطوي: أيقونات فقط
-      final sidebarRenderBoxAfter =
-          tester.renderObject<RenderBox>(find.byType(BasirSidebar)).size;
+      final sidebarRenderBoxAfter = tester
+          .renderObject<RenderBox>(find.byType(BasirSidebar))
+          .size;
       expect(sidebarRenderBoxAfter.width, kSidebarCollapsedWidth);
     });
 
@@ -398,9 +398,7 @@ void main() {
       tester,
     ) async {
       setTestSurfaceSize(tester, kChipLabelBreakpoint - 1);
-      await tester.pumpWidget(
-        buildShell(width: kChipLabelBreakpoint - 1),
-      );
+      await tester.pumpWidget(buildShell(width: kChipLabelBreakpoint - 1));
       await tester.pumpAndSettle();
 
       expect(find.text('المؤسسة الافتراضية'), findsNothing);
@@ -417,8 +415,9 @@ void main() {
       );
     });
 
-    testWidgets('notification action provides visible feedback',
-        (tester) async {
+    testWidgets('notification action provides visible feedback', (
+      tester,
+    ) async {
       setTestSurfaceSize(tester, 1280);
       await tester.pumpWidget(buildShell());
       await tester.pumpAndSettle();
