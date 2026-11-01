@@ -21,16 +21,19 @@ class LedgerPostQueuedException implements Exception {
   String toString() => 'LEDGER_POST_QUEUED: $operationId; cause=$cause';
 }
 
-/// Persists and flushes ledger commands for transport-only failures.
-///
-/// Server validation, authorization and accounting failures propagate to the
-/// caller and are never queued, because retrying them would conceal a rejected
-/// business event.
+/// Application port for submitting a final ledger entry through the authority
+/// boundary. The narrow interface keeps service tests independent of Isar.
+// ignore: one_member_abstracts
 abstract interface class LedgerPostingService {
   /// Commits a final entry remotely, or queues it only for transport failures.
   Future<void> postOrEnqueue(JournalEntry entry);
 }
 
+/// Persists and flushes ledger commands for transport-only failures.
+///
+/// Server validation, authorization and accounting failures propagate to the
+/// caller and are never queued, because retrying them would conceal a rejected
+/// business event.
 class LedgerOutboxService implements LedgerPostingService {
   LedgerOutboxService({
     required Isar isar,
