@@ -86,6 +86,22 @@ void main() {
       // Act & Assert
       expect(engine.generateDocumentation(element), isA<String>());
     });
+
+    test('uses the template fallback when details are disabled', () {
+      const element = UndocumentedElement(
+        name: 'TestClass',
+        type: ElementType.classType,
+        signature: 'class TestClass',
+        lineNumber: 5,
+      );
+
+      final documentation = engine.generateDocumentation(
+        element,
+        options: const GenerationOptions(includeDetails: false),
+      );
+
+      expect(documentation, contains('No additional details available.'));
+    });
   });
 
   group('GenerationEngine - Generate File Documentation', () {
