@@ -6,7 +6,7 @@ part of 'pdf_invoice_service.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$pdfInvoiceServiceHash() => r'92f8cee62bdbcc79f0fdc4b19b19fa9577a22d2b';
+String _$pdfInvoiceServiceHash() => r'd67e7b11cf075309c592f264fd63a4fe80a70acd';
 
 /// خدمة توليد فواتير PDF
 ///

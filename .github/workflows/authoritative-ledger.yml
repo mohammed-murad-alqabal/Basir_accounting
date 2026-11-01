@@ -88,7 +88,7 @@ jobs:
             lib/features/accounting/domain/entities/journal_entry.dart \
             lib/features/accounting/domain/repositories/accounting_repository.dart
           ./scripts/ci_prepare_env.sh
-          flutter test \
+          flutter test --concurrency=1 \
             test/integration/invoice_posting_test.dart \
             test/unit/features/accounting/treasury_service_test.dart \
             test/unit/features/accounting/accounting_service_bypass_test.dart \

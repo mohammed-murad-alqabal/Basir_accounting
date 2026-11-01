@@ -6,23 +6,27 @@ plugins {
 }
 
 // ===== إعدادات توقيع إصدار Basir Accounting =====
-// تحميل ملف key.properties إذا وجد، وإلا يعود لوضع التوقيع الافتراضي (Debug)
-// لتجنب كسر البناء لأولئك الذين لم يقوموا بإعداد Keystore بعد.
+// لا يُستخدم توقيع debug مطلقاً لنسخة release. إن لم يوجد مفتاح إصدار،
+// ينتج البناء غير موقّع ويجب على workflow الإنتاج رفض نشره.
 def keystorePropertiesFile = rootProject.file("key.properties")
 def keystoreProperties = new Properties()
 if (keystorePropertiesFile.exists()) {
     keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
 }
 
-// اختبار سريع لتوفر Keystore حقيقي للتوقيع.
-// نستخدم متغير boolean بسيطاً (لا دالة def لتجنب مشاكل النطاق داخل الكلوزرات)
+def releaseKeystorePath = keystoreProperties['storeFile']
+def releaseKeystoreFile = releaseKeystorePath ? project.file(releaseKeystorePath) : null
+
+// اختبار وجود keystore حقيقي. يحل المسار النسبي من مجلد android/app،
+// وهو المجلد الذي يكتب إليه مسار الإصدار في GitHub Actions.
 boolean releaseSigningReady = keystorePropertiesFile.exists()
     && keystoreProperties['storePassword'] != null
     && keystoreProperties['storePassword'] != 'CHANGE_ME_STORE_PASSWORD'
     && keystoreProperties['keyPassword'] != null
+    && keystoreProperties['keyPassword'] != 'CHANGE_ME_KEY_PASSWORD'
     && keystoreProperties['keyAlias'] != null
-    && keystoreProperties['storeFile'] != null
-    && new File(keystoreProperties['storeFile']).exists()
+    && releaseKeystorePath != null
+    && releaseKeystoreFile.isFile()
 
 android {
     namespace = "com.basir.accounting"
@@ -50,12 +54,10 @@ android {
     }
 
     // ===== إعدادات توقيع الإصدار =====
-    // - إذا كان ملف key.properties موجود وصالحاً → يُعرَّف signingConfigs.release بالحقائق الفعلية
-    // - وإلا → نغني عن تعريفه منفصل ونستخدم مباشرة signingConfigs.debug في buildTypes
     signingConfigs {
         if (releaseSigningReady) {
             release {
-                storeFile = file(keystoreProperties['storeFile'])
+                storeFile = releaseKeystoreFile
                 storePassword = keystoreProperties['storePassword']
                 keyAlias = keystoreProperties['keyAlias']
                 keyPassword = keystoreProperties['keyPassword']
@@ -63,18 +65,16 @@ android {
             }
         } else {
             println "⚠️  [Basir] key.properties غير مكتمل أو مفتاح Keystore غير موجود."
-            println "   ➜  سيستخدم signingConfigs.debug للتوقيع — استكمل android/key.properties لتوقيع إصدارات حقيقية."
+            println "   ➜  لن تستخدم نسخة release توقيع debug؛ إعداد التوقيع الإنتاجي مطلوب قبل النشر."
         }
     }
 
     buildTypes {
         release {
-            // ===== اختيار ديناميكي لإعدادات التوقيع =====
-            // إذا تم تعريف signingConfigs.release (توجد Keystore صالحة) نستخدمها
-            // وإلا نعود إلى signingConfigs.debug بدون كسر الـ ABI Split packaging tasks.
-            signingConfig = releaseSigningReady
-                ? signingConfigs.release
-                : signingConfigs.debug
+            // عند غياب keystore تبقى نسخة release غير موقعة، ولا تُوقّع بمفتاح debug.
+            if (releaseSigningReady) {
+                signingConfig = signingConfigs.release
+            }
 
             // ===== إعدادات الضغط والتجريد =====
             // تم ضبط قواعد ProGuard لحماية جميع فئات Pigeon والإضافات Flutter

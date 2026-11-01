@@ -109,12 +109,11 @@ async fn test_persistence_flow() -> Result<(), anyhow::Error> {
     // A retry of the same operation UUID must be exactly-once: no duplicate
     // lines and no additional audit event may be appended.
     ledger_repo.post_entry(&entry, &metadata).await?;
-    let replay_line_count: i64 = sqlx::query_scalar(
-        "SELECT COUNT(*) FROM journal_entry_lines WHERE entry_id = $1",
-    )
-    .bind(entry_id)
-    .fetch_one(&pool)
-    .await?;
+    let replay_line_count: i64 =
+        sqlx::query_scalar("SELECT COUNT(*) FROM journal_entry_lines WHERE entry_id = $1")
+            .bind(entry_id)
+            .fetch_one(&pool)
+            .await?;
     let replay_audit_count: i64 =
         sqlx::query_scalar("SELECT COUNT(*) FROM audit_log WHERE entity_id = $1")
             .bind(entry_id)

@@ -1,5 +1,6 @@
 import 'package:basir_accounting_system/core/providers.dart';
 import 'package:basir_accounting_system/features/accounting/application/accounting_service.dart';
+import 'package:basir_accounting_system/features/accounting/application/ledger_outbox_service.dart';
 import 'package:basir_accounting_system/features/accounting/application/multi_standard_coa_engine.dart';
 import 'package:basir_accounting_system/features/accounting/application/orchestrator_service.dart';
 import 'package:basir_accounting_system/features/accounting/domain/entities/account.dart';
@@ -46,6 +47,7 @@ void main() {
     late MockVendorRepository mockVendorRepo;
     late MockSalesBridgeService mockSalesBridge;
     late MockInvoiceRepository mockInvoiceRepo;
+    late TestLedgerPostingService testLedgerPostingService;
 
     setUp(() {
       // Initialize mock RustLib to prevent initialization errors
@@ -57,6 +59,10 @@ void main() {
       mockVendorRepo = MockVendorRepository();
       mockSalesBridge = MockSalesBridgeService();
       mockInvoiceRepo = MockInvoiceRepository();
+      testLedgerPostingService = TestLedgerPostingService(
+        gateway: const TestAuthoritativeLedgerGateway(),
+        repository: mockAccountingRepo,
+      );
 
       setUpAccountingMocks(); // Register fallback values if any
       setUpInvoiceMocks();
@@ -117,6 +123,9 @@ void main() {
       container = ProviderContainer(
         overrides: [
           accountingRepositoryProvider.overrideWithValue(mockAccountingRepo),
+          ledgerPostingServiceProvider.overrideWithValue(
+            testLedgerPostingService,
+          ),
           financialYearRepositoryProvider.overrideWithValue(mockFyRepo),
           customerRepositoryProvider.overrideWithValue(mockCustomerRepo),
           vendorRepositoryProvider.overrideWithValue(mockVendorRepo),
@@ -190,7 +199,7 @@ void main() {
       ).thenAnswer((_) async => []);
 
       when(
-        () => mockAccountingRepo.addJournalEntry(any()),
+        () => mockAccountingRepo.cacheAuthoritativeJournalEntry(any()),
       ).thenAnswer((_) async {});
     });
 
@@ -248,7 +257,7 @@ void main() {
 
       // Verify Journal Entry
       final captured = verify(
-        () => mockAccountingRepo.addJournalEntry(captureAny()),
+        () => mockAccountingRepo.cacheAuthoritativeJournalEntry(captureAny()),
       ).captured;
 
       final entry = captured.first as JournalEntry;
@@ -365,7 +374,7 @@ void main() {
           .read(accountingServiceProvider.notifier)
           .postSalesInvoice(invoice);
 
-      verifyNever(() => mockAccountingRepo.addJournalEntry(any()));
+      verifyNever(() => mockAccountingRepo.cacheAuthoritativeJournalEntry(any()));
     });
 
     test('postSalesInvoice يرفض الفاتورة غير القابلة للترحيل', () async {
@@ -402,7 +411,7 @@ void main() {
           ),
         ),
       );
-      verifyNever(() => mockAccountingRepo.addJournalEntry(any()));
+      verifyNever(() => mockAccountingRepo.cacheAuthoritativeJournalEntry(any()));
     });
 
     test('postJournalEntry يسجل تجاوز الإجماع للقيد اليدوي المتوازن', () async {
@@ -447,7 +456,7 @@ void main() {
           .postJournalEntry(entry, bypassCognitive: true);
 
       final captured = verify(
-        () => mockAccountingRepo.addJournalEntry(captureAny()),
+        () => mockAccountingRepo.cacheAuthoritativeJournalEntry(captureAny()),
       ).captured.single as JournalEntry;
       expect(captured.isBalanced, isTrue);
       expect(captured.auditLogs, hasLength(1));
@@ -498,7 +507,7 @@ void main() {
             .postJournalEntry(entry, bypassCognitive: true),
         throwsA(isA<Exception>()),
       );
-      verifyNever(() => mockAccountingRepo.addJournalEntry(any()));
+      verifyNever(() => mockAccountingRepo.cacheAuthoritativeJournalEntry(any()));
     });
 
     test('reverseJournalEntry ينشئ قيداً معاكساً متوازناً للقيد المرحّل',
@@ -556,7 +565,7 @@ void main() {
           .reverseJournalEntry(original.id);
 
       final reversal = verify(
-        () => mockAccountingRepo.addJournalEntry(captureAny()),
+        () => mockAccountingRepo.cacheAuthoritativeJournalEntry(captureAny()),
       ).captured.single as JournalEntry;
       expect(reversal.referenceNumber, 'RV-${original.referenceNumber}');
       expect(reversal.status, JournalEntryStatus.posted);
@@ -646,7 +655,7 @@ void main() {
       expect(cancelled.status, InvoiceStatus.cancelled);
       expect(cancelled.notes, contains('Cancelled on'));
       final reversal = verify(
-        () => mockAccountingRepo.addJournalEntry(captureAny()),
+        () => mockAccountingRepo.cacheAuthoritativeJournalEntry(captureAny()),
       ).captured.single as JournalEntry;
       expect(reversal.referenceNumber, 'RV-${original.referenceNumber}');
       expect(reversal.isBalanced, isTrue);
@@ -742,7 +751,7 @@ void main() {
           .postInvoice(invoice, bypassCognitive: true);
 
       final entry = verify(
-        () => mockAccountingRepo.addJournalEntry(captureAny()),
+        () => mockAccountingRepo.cacheAuthoritativeJournalEntry(captureAny()),
       ).captured.single as JournalEntry;
       expect(entry.sourceDocument, 'purchase_invoice');
       expect(entry.isBalanced, isTrue);
@@ -789,7 +798,7 @@ void main() {
           .postInvoice(invoice, bypassCognitive: true);
 
       final entry = verify(
-        () => mockAccountingRepo.addJournalEntry(captureAny()),
+        () => mockAccountingRepo.cacheAuthoritativeJournalEntry(captureAny()),
       ).captured.single as JournalEntry;
       expect(entry.sourceDocument, 'purchase_return');
       expect(entry.isBalanced, isTrue);
@@ -835,7 +844,7 @@ void main() {
           .postInvoice(invoice, bypassCognitive: true);
 
       final entry = verify(
-        () => mockAccountingRepo.addJournalEntry(captureAny()),
+        () => mockAccountingRepo.cacheAuthoritativeJournalEntry(captureAny()),
       ).captured.single as JournalEntry;
       expect(entry.sourceDocument, 'damage_invoice');
       expect(entry.isBalanced, isTrue);

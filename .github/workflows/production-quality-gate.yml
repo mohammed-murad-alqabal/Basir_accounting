@@ -88,13 +88,11 @@ jobs:
           git diff --exit-code -- . ':!build' ':!.dart_tool'
 
       - name: Verify Dart formatting
-        run: |
-          set -euo pipefail
-          targets=(lib test)
-          if [ -d integration_test ]; then
-            targets+=(integration_test)
-          fi
-          dart format --set-exit-if-changed "${targets[@]}"
+        env:
+          PR_BASE_SHA: ${{ github.event.pull_request.base.sha }}
+          PUSH_BEFORE_SHA: ${{ github.event.before }}
+          DEFAULT_BRANCH: ${{ github.event.repository.default_branch }}
+        run: ./.github/scripts/check-changed-dart-format.sh
 
       - name: Run static analysis
         run: |
@@ -274,13 +272,22 @@ jobs:
         with:
           fail-on-severity: high
           deny-licenses: GPL-2.0, GPL-3.0, AGPL-3.0
-          # These package revisions lack SPDX-normalized metadata in GitHub's dependency graph.
-          # The exception only skips license metadata validation; vulnerability checks remain required.
+          # Each exact-version PURL below has an independently verified license text on Pub.
+          # Exceptions skip license metadata validation only; vulnerability checks remain required.
           allow-dependencies-licenses: >-
             pkg:pub/material_color_utilities@0.13.0,
             pkg:pub/matcher@0.12.19,
             pkg:pub/test_api@0.7.11,
-            pkg:pub/sqlite3@2.9.4
+            pkg:pub/sqlite3@2.9.4,
+            pkg:pub/flex_color_picker@3.8.0,
+            pkg:pub/flex_seed_scheme@4.0.0,
+            pkg:pub/clock@1.1.2,
+            pkg:pub/code_assets@1.2.1,
+            pkg:pub/hooks@2.0.2,
+            pkg:pub/objective_c@9.5.0,
+            pkg:pub/record_use@0.6.0,
+            pkg:pub/stack_trace@1.12.1,
+            pkg:pub/vector_math@2.2.0
 
       - name: Record non-PR dependency-review policy
         if: github.event_name != 'pull_request'
@@ -388,6 +395,28 @@ jobs:
           git -C "$flutter_root" checkout --detach "$FLUTTER_GIT_SHA"
           echo "$flutter_root/bin" >> "$GITHUB_PATH"
 
+      - name: Create production environment asset
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY }}
+        run: |
+          set -euo pipefail
+          if [ -z "$SUPABASE_URL" ] || [ -z "$SUPABASE_ANON_KEY" ]; then
+            echo "Production release requires SUPABASE_URL and SUPABASE_ANON_KEY environment secrets." >&2
+            exit 1
+          fi
+          case "$SUPABASE_URL" in
+            https://*) ;;
+            *) echo "SUPABASE_URL must use HTTPS." >&2; exit 1 ;;
+          esac
+          umask 077
+          printf '%s\n' \
+            "SUPABASE_URL=$SUPABASE_URL" \
+            "SUPABASE_ANON_KEY=$SUPABASE_ANON_KEY" \
+            'ENVIRONMENT=production' \
+            'DEBUG_MODE=false' \
+            'LOG_LEVEL=error' > .env
+
       - name: Restore Dart packages without changing locked dependencies
         run: |
           set -euo pipefail
@@ -462,7 +491,7 @@ jobs:
       - name: Remove ephemeral signing materials
         if: always()
         run: |
-          rm -f android/app/upload-keystore.jks android/key.properties
+          rm -f .env android/app/upload-keystore.jks android/key.properties
 
 # Repository administrators must additionally configure branch protection for main:
 # require the "Required production quality gate" status check, require pull-request

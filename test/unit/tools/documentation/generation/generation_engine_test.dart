@@ -86,6 +86,22 @@ void main() {
       // Act & Assert
       expect(engine.generateDocumentation(element), isA<String>());
     });
+
+    test('uses the template fallback when details are disabled', () {
+      const element = UndocumentedElement(
+        name: 'TestClass',
+        type: ElementType.classType,
+        signature: 'class TestClass',
+        lineNumber: 5,
+      );
+
+      final documentation = engine.generateDocumentation(
+        element,
+        options: const GenerationOptions(includeDetails: false),
+      );
+
+      expect(documentation, contains('No additional details available.'));
+    });
   });
 
   group('GenerationEngine - Generate File Documentation', () {
@@ -380,10 +396,12 @@ void main() {
           lineNumber: 0,
         ),
         const UndocumentedElement(
-          name: 'very_long_name_that_exceeds_normal_limits_and_contains_'
+          name:
+              'very_long_name_that_exceeds_normal_limits_and_contains_'
               'many_underscores_and_numbers_123456789',
           type: ElementType.classType,
-          signature: 'class VeryLongClassName extends '
+          signature:
+              'class VeryLongClassName extends '
               'SuperLongBaseClassName implements MultipleInterfaces',
           lineNumber: 999999,
         ),

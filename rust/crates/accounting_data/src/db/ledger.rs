@@ -64,7 +64,7 @@ impl PgLedgerRepository {
         // 1. Insert Header
         let adjustment_reason_str = entry.adjustment_reason.map(|r| format!("{:?}", r));
 
-        let header_insert = sqlx::query!(
+        let header_insert = sqlx::query(
             r#"
             INSERT INTO journal_entries (
                 id, entry_number, entry_type, status, 
@@ -75,19 +75,19 @@ impl PgLedgerRepository {
             VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12)
             ON CONFLICT (id) DO NOTHING
             "#,
-            entry.entry_id,
-            entry.entry_number,
-            format!("{:?}", entry.entry_type),
-            format!("{:?}", entry.status),
-            entry.temporal.transaction_date,
-            entry.temporal.effective_date,
-            entry.temporal.recording_date.naive_utc(),
-            entry.standards.standard_reference,
-            entry.description.clone(),
-            entry.hash,
-            entry.linked_entry_id,
-            adjustment_reason_str
         )
+        .bind(entry.entry_id)
+        .bind(entry.entry_number.clone())
+        .bind(format!("{:?}", entry.entry_type))
+        .bind(format!("{:?}", entry.status))
+        .bind(entry.temporal.transaction_date)
+        .bind(entry.temporal.effective_date)
+        .bind(entry.temporal.recording_date.naive_utc())
+        .bind(entry.standards.standard_reference.clone())
+        .bind(entry.description.clone())
+        .bind(entry.hash.clone())
+        .bind(entry.linked_entry_id)
+        .bind(adjustment_reason_str)
         .execute(&mut *tx)
         .await?;
 

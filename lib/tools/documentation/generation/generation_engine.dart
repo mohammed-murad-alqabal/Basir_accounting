@@ -22,7 +22,7 @@ class GenerationEngine {
     final context = <String, dynamic>{
       'useArabic': options.useArabic,
       'description': description,
-      'details': ?details,
+      if (details != null) 'details': details,
     };
 
     try {
