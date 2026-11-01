@@ -154,6 +154,8 @@ jobs:
     steps:
       - name: 📥 Checkout code
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          fetch-depth: 0
 
       - name: 🔧 Setup Flutter
         uses: ./.github/actions/setup-flutter
@@ -169,22 +171,11 @@ jobs:
         run: dart run build_runner build --delete-conflicting-outputs
 
       - name: 🎨 Check formatting
-        run: |
-          echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
-          echo "🎨 Code Formatting Check"
-          echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
-          echo ""
-
-          if dart format --set-exit-if-changed lib/ test/; then
-            echo "✅ Code is properly formatted"
-          else
-            echo "❌ Code formatting issues found"
-            echo "💡 Run: dart format ."
-            exit 1
-          fi
-
-          echo ""
-          echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+        env:
+          PR_BASE_SHA: ${{ github.event.pull_request.base.sha }}
+          PUSH_BEFORE_SHA: ${{ github.event.before }}
+          DEFAULT_BRANCH: ${{ github.event.repository.default_branch }}
+        run: ./.github/scripts/check-changed-dart-format.sh
 
       - name: 🔬 Analyze code
         run: |
