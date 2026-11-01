@@ -564,10 +564,10 @@ mod tests {
 
 #[cfg(test)]
 mod tests {
-    use crate::ledger::models::{JournalEntry, JournalItem, EntryStatus};
+    use crate::ledger::models::{EntryStatus, JournalEntry, JournalItem};
     use crate::ledger::validation::{validate_entry, EntryValidationError};
-    use rust_decimal_macros::dec;
     use chrono::Utc;
+    use rust_decimal_macros::dec;
     use uuid::Uuid;
 
     #[test]
@@ -576,38 +576,38 @@ mod tests {
             id: Uuid::new_v4(),
             status: EntryStatus::Draft,
             items: vec![
-                JournalItem { 
+                JournalItem {
                     account_id: Uuid::new_v4(),
-                    debit: dec!(1500.00), 
-                    credit: dec!(0.00), 
-                    ..Default::default() 
+                    debit: dec!(1500.00),
+                    credit: dec!(0.00),
+                    ..Default::default()
                 },
-                JournalItem { 
+                JournalItem {
                     account_id: Uuid::new_v4(),
-                    debit: dec!(0.00), 
-                    credit: dec!(1500.00), 
-                    ..Default::default() 
+                    debit: dec!(0.00),
+                    credit: dec!(1500.00),
+                    ..Default::default()
                 },
             ],
             ..Default::default()
         };
         assert!(balanced_entry.is_balanced());
-        
+
         let unbalanced_entry = JournalEntry {
             id: Uuid::new_v4(),
             status: EntryStatus::Draft,
             items: vec![
-                JournalItem { 
+                JournalItem {
                     account_id: Uuid::new_v4(),
-                    debit: dec!(1500.00), 
-                    credit: dec!(0.00), 
-                    ..Default::default() 
+                    debit: dec!(1500.00),
+                    credit: dec!(0.00),
+                    ..Default::default()
                 },
-                JournalItem { 
+                JournalItem {
                     account_id: Uuid::new_v4(),
-                    debit: dec!(0.00), 
-                    credit: dec!(1400.00), 
-                    ..Default::default() 
+                    debit: dec!(0.00),
+                    credit: dec!(1400.00),
+                    ..Default::default()
                 },
             ],
             ..Default::default()

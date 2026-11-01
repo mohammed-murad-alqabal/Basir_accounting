@@ -10,10 +10,7 @@ on:
     - cron: "0 2 * * *"
   workflow_dispatch:
 
-<<<<<<< HEAD
 # تتيح الصلاحيات للتقارير حيث تسمح سياسة المستودع؛ فشل النشر يبقى استشاريًا.
-=======
->>>>>>> origin/audit/baseline-main-current-20260814
 permissions:
   contents: read
   issues: write
@@ -53,11 +50,7 @@ jobs:
           set -e
           echo "analyze_exit_code=$ANALYZE_EXIT_CODE" >> $GITHUB_OUTPUT
 
-<<<<<<< HEAD
           # استخراج الإحصائيات بقيم أحادية السطر صالحة لمخرجات GitHub Actions.
-=======
-          # استخراج الإحصائيات
->>>>>>> origin/audit/baseline-main-current-20260814
           ISSUES_COUNT=$(grep -c "issue" analyze_output.txt || true)
           ERRORS_COUNT=$(grep -c "error •" analyze_output.txt || true)
           WARNINGS_COUNT=$(grep -c "warning •" analyze_output.txt || true)
@@ -83,7 +76,6 @@ jobs:
           set -e
           echo "test_exit_code=$TEST_EXIT_CODE" >> $GITHUB_OUTPUT
 
-<<<<<<< HEAD
           # يمثل التقرير نتيجة مجموعة الاختبارات بصورة حتمية بدل تحليل صيغة المخرجات.
           if [ "$TEST_EXIT_CODE" -eq 0 ]; then
             PASSED=1
@@ -93,15 +85,6 @@ jobs:
             FAILED=1
           fi
           SKIPPED=0
-=======
-          # استخراج نتائج الاختبارات
-          PASSED=$(grep -oP '\+\K[0-9]+' test_output.txt | tail -1 || true)
-          FAILED=$(grep -oP '\-\K[0-9]+' test_output.txt | tail -1 || true)
-          SKIPPED=$(grep -oP '~\K[0-9]+' test_output.txt | tail -1 || true)
-          PASSED=${PASSED:-0}
-          FAILED=${FAILED:-0}
-          SKIPPED=${SKIPPED:-0}
->>>>>>> origin/audit/baseline-main-current-20260814
 
           echo "tests_passed=$PASSED" >> $GITHUB_OUTPUT
           echo "tests_failed=$FAILED" >> $GITHUB_OUTPUT
