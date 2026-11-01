@@ -90,7 +90,6 @@ flutter:
   - .env
   - assets/fonts/
   - assets/icons/
-  - assets/images/
   fonts:
   - family: Cairo
     fonts:

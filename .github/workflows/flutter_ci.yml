@@ -177,13 +177,13 @@ jobs:
       - name: 🧬 Generate code
         run: dart run build_runner build --delete-conflicting-outputs
 
-      - name: 🏗️ Build APK
+      - name: 🏗️ Build unsigned release smoke APK
         run: flutter build apk --release
 
-      - name: 📤 Upload APK
+      - name: 📤 Upload unsigned smoke APK
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
         with:
-          name: app-release-apk
+          name: app-unsigned-smoke-apk
           path: build/app/outputs/flutter-apk/app-release.apk
           retention-days: 7
 

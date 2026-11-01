@@ -41,8 +41,10 @@ import 'package:basir_accounting_system/features/expenses/presentation/screens/e
 import 'package:basir_accounting_system/features/expenses/presentation/screens/expenses_dashboard_screen.dart';
 import 'package:basir_accounting_system/features/forensics/presentation/screens/forensic_portal_screen.dart';
 import 'package:basir_accounting_system/features/inventory/presentation/screens/barcode_creation_screen.dart';
+import 'package:basir_accounting_system/features/inventory/presentation/screens/bulk_price_change_screen.dart';
 import 'package:basir_accounting_system/features/inventory/presentation/screens/inventory_item_form_screen.dart';
 import 'package:basir_accounting_system/features/inventory/presentation/screens/inventory_items_screen.dart';
+import 'package:basir_accounting_system/features/mfa/presentation/mfa_routes.dart';
 import 'package:basir_accounting_system/features/invoices/domain/entities/invoice.dart';
 import 'package:basir_accounting_system/features/invoices/presentation/screens/invoice_detail_screen.dart';
 import 'package:basir_accounting_system/features/invoices/presentation/screens/invoice_form_screen.dart';
@@ -160,8 +162,19 @@ class AppRouter {
         return MaterialPageRoute(builder: (_) => const ThermalPrintSettingsScreen());
       case '/settings':
         return MaterialPageRoute(builder: (_) => const SettingsScreen());
+      case MfaRoutes.mfaGate:
+      case MfaRoutes.mfaSecurityCenter:
+      case MfaRoutes.mfaChallenge:
+      case MfaRoutes.phoneVerification:
+      case MfaRoutes.phoneOtp:
+        return MfaRoutes.onGenerateRoute(settings);
       case '/inventory':
         return MaterialPageRoute(builder: (_) => const InventoryItemsScreen());
+      case '/inventory/bulk-price-change':
+        return MaterialPageRoute(
+          builder: (_) => const BulkPriceChangeScreen(),
+          settings: settings,
+        );
       case '/inventory-form':
         return MaterialPageRoute(builder: (_) => const InventoryItemFormScreen());
       case '/assets':

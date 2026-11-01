@@ -75,8 +75,23 @@ void main() {
       await tester.pumpAndSettle();
 
       expect(find.byType(BasirTopBar), findsOneWidget);
-      // التصفح السفلي يُبنى يدويًا من بنود _MobileNavItem (8 بنود)
       expect(find.byType(BasirSidebar), findsNothing);
+      expect(find.byKey(const Key('mobile-navigation')), findsOneWidget);
+      expect(find.bySemanticsLabel('الإعدادات'), findsOneWidget);
+    });
+
+    testWidgets('mobile navigation changes the selected unit', (tester) async {
+      setTestSurfaceSize(tester, 600);
+      await tester.pumpWidget(buildShell(width: 600));
+      await tester.pumpAndSettle();
+
+      await tester.tap(find.text('الفواتير').last);
+      await tester.pumpAndSettle();
+
+      final selectedInvoiceItem = tester.widget<Semantics>(
+        find.byKey(const ValueKey('mobile-nav-1')),
+      );
+      expect(selectedInvoiceItem.properties.selected, isTrue);
     });
 
     testWidgets('displays all 8 unit screens in desktop layout', (
@@ -374,7 +389,7 @@ void main() {
       // في الشاشات الضيقة (<1048px) تُطوى نصوص الشرائح إلى الأيقونات فقط،
       // لذا نتحقق من الإعلان الصوتي (Semantics) بدلًا من النص المرئي
       expect(find.bySemanticsLabel('Branch: Main Branch'), findsWidgets);
-      expect(find.byType(BottomNavigationBar), findsNothing);
+      expect(find.byKey(const Key('mobile-navigation')), findsOneWidget);
     });
   });
 

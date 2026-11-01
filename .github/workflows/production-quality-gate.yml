@@ -388,6 +388,28 @@ jobs:
           git -C "$flutter_root" checkout --detach "$FLUTTER_GIT_SHA"
           echo "$flutter_root/bin" >> "$GITHUB_PATH"
 
+      - name: Create production environment asset
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY }}
+        run: |
+          set -euo pipefail
+          if [ -z "$SUPABASE_URL" ] || [ -z "$SUPABASE_ANON_KEY" ]; then
+            echo "Production release requires SUPABASE_URL and SUPABASE_ANON_KEY environment secrets." >&2
+            exit 1
+          fi
+          case "$SUPABASE_URL" in
+            https://*) ;;
+            *) echo "SUPABASE_URL must use HTTPS." >&2; exit 1 ;;
+          esac
+          umask 077
+          printf '%s\n' \
+            "SUPABASE_URL=$SUPABASE_URL" \
+            "SUPABASE_ANON_KEY=$SUPABASE_ANON_KEY" \
+            'ENVIRONMENT=production' \
+            'DEBUG_MODE=false' \
+            'LOG_LEVEL=error' > .env
+
       - name: Restore Dart packages without changing locked dependencies
         run: |
           set -euo pipefail
@@ -462,7 +484,7 @@ jobs:
       - name: Remove ephemeral signing materials
         if: always()
         run: |
-          rm -f android/app/upload-keystore.jks android/key.properties
+          rm -f .env android/app/upload-keystore.jks android/key.properties
 
 # Repository administrators must additionally configure branch protection for main:
 # require the "Required production quality gate" status check, require pull-request

@@ -1,27 +1,58 @@
 name: Setup verified Flutter
-description: Install a pinned Flutter SDK from the official archive with SHA-256 verification.
+description: Install the immutable Flutter 3.44.9 revision used by the repository's production quality gate.
+
+inputs:
+  flutter-version:
+    description: Flutter SDK version. This action currently supports 3.44.9 only.
+    required: false
+    default: "3.44.9"
+  channel:
+    description: Accepted for compatibility with existing workflows; the pinned revision is stable.
+    required: false
+    default: stable
+  cache:
+    description: Accepted for compatibility with existing workflows; this action does not use a mutable SDK cache.
+    required: false
+    default: "false"
 
 runs:
   using: composite
   steps:
-    - name: Install Flutter 3.35.5
+    - name: Install immutable Flutter SDK
       shell: bash
+      env:
+        FLUTTER_VERSION: ${{ inputs.flutter-version }}
+        FLUTTER_CHANNEL: ${{ inputs.channel }}
       run: |
         set -Eeuo pipefail
 
-        readonly flutter_version='3.35.5'
-        readonly archive="flutter_linux_${flutter_version}-stable.tar.xz"
-        readonly archive_sha256='8eead69e5d84131fcfbb2cfd44164c00e9a04df725f24672ea234c6bd136353d'
-        readonly archive_url="https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/${archive}"
+        if [[ "$FLUTTER_VERSION" != "3.44.9" ]]; then
+          echo "Unsupported Flutter version: $FLUTTER_VERSION. This action is pinned to 3.44.9." >&2
+          exit 1
+        fi
+        if [[ "$FLUTTER_CHANNEL" != "stable" ]]; then
+          echo "Unsupported Flutter channel: $FLUTTER_CHANNEL. The pinned revision is stable." >&2
+          exit 1
+        fi
+
+        # This is the same immutable 3.44.9 commit pinned by
+        # .github/workflows/production-quality-gate.yml.
+        readonly flutter_git_sha='6b182d2c7585eba26d4edce0f97630effd256c33'
         readonly install_root="${RUNNER_TEMP}/flutter-sdk"
-        readonly archive_path="${RUNNER_TEMP}/${archive}"
 
-        curl --fail --show-error --location --retry 3 --retry-all-errors \
-          --proto '=https' --tlsv1.2 "${archive_url}" --output "${archive_path}"
-        printf '%s  %s\n' "${archive_sha256}" "${archive_path}" | sha256sum --check --status
-
-        rm -rf "${install_root}"
-        mkdir -p "${install_root}"
-        tar -xJf "${archive_path}" -C "${install_root}" --strip-components=1
-        printf '%s\n' "${install_root}/bin" >> "${GITHUB_PATH}"
+        git clone --filter=blob:none --no-checkout \
+          https://github.com/flutter/flutter.git "$install_root"
+        git -C "$install_root" checkout --detach "$flutter_git_sha"
+        printf '%s\n' "${install_root}/bin" >> "$GITHUB_PATH"
         "${install_root}/bin/flutter" --version
+
+        # The app declares .env as a Flutter asset. For CI jobs that do not
+        # provide production configuration, create only a non-secret placeholder.
+        if [[ ! -f .env ]]; then
+          printf '%s\n' \
+            '# CI-only placeholder; never use this file for production.' \
+            'SUPABASE_URL=https://example.invalid' \
+            'SUPABASE_ANON_KEY=ci-placeholder' \
+            'ENVIRONMENT=development' \
+            'DEBUG_MODE=false' > .env
+        fi

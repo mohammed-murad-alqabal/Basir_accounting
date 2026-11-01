@@ -197,11 +197,43 @@ class _MobileLayout extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
     return Column(
       children: [
         BasirTopBar(appIcons: appIcons, l10n: l10n, collapsed: false),
         Expanded(
           child: IndexedStack(index: selectedIndex, children: screens),
+        ),
+        SafeArea(
+          key: const Key('mobile-navigation'),
+          top: false,
+          child: DecoratedBox(
+            decoration: BoxDecoration(
+              color: colorScheme.surface,
+              border: Border(
+                top: BorderSide(color: colorScheme.outlineVariant),
+              ),
+            ),
+            child: SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: List<Widget>.generate(
+                  screens.length,
+                  (index) => SizedBox(
+                    width: 72,
+                    child: _MobileNavItem(
+                      index: index,
+                      isSelected: selectedIndex == index,
+                      appIcons: appIcons,
+                      l10n: l10n,
+                      onTap: () => onItemSelected(index),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ),
         ),
       ],
     );
@@ -252,6 +284,7 @@ class _MobileNavItem extends StatelessWidget {
     };
 
     return Semantics(
+      key: ValueKey<String>('mobile-nav-$index'),
       button: true,
       selected: isSelected,
       label: label,
@@ -261,7 +294,7 @@ class _MobileNavItem extends StatelessWidget {
           onTap: onTap,
           splashColor: AppColors.primary.withValues(alpha: 0.12),
           child: SizedBox(
-            width: TouchTargets.minimum,
+            width: 72,
             height: kBottomNavigationBarHeight,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,

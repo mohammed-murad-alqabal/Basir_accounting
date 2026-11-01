@@ -277,6 +277,28 @@ void main() {
     });
 
     group('Route Coverage', () {
+      test('يسجل مسارات MFA ومعالج تغيير الأسعار في الراوتر الرئيسي', () {
+        const routeNames = [
+          '/mfa-gate',
+          '/mfa-security',
+          '/mfa-challenge',
+          '/phone-verify',
+          '/phone-otp',
+          '/inventory/bulk-price-change',
+        ];
+
+        for (final routeName in routeNames) {
+          final route = AppRouter.generateRoute(
+            RouteSettings(name: routeName),
+          );
+          expect(
+            route.settings.name,
+            routeName,
+            reason: '$routeName يجب أن يكون مسجلاً في الراوتر الرئيسي',
+          );
+        }
+      });
+
       test('should cover all defined routes', () {
         final definedRoutes = [
           '/setup',

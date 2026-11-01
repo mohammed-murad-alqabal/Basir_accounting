@@ -17,7 +17,7 @@
 
 ### 1. Android Signing Secrets
 
-#### KEYSTORE_BASE64
+#### ANDROID_KEYSTORE_BASE64
 
 **الوصف:** ملف keystore مشفر بـ base64  
 **الاستخدام:** توقيع APK/AAB للإصدارات
@@ -37,21 +37,21 @@ base64 basir-release-key.jks > keystore.base64
 cat keystore.base64
 ```
 
-#### KEYSTORE_PASSWORD
+#### ANDROID_KEYSTORE_PASSWORD
 
 **الوصف:** كلمة مرور الـ keystore  
 **الاستخدام:** فك تشفير keystore
 
 **القيمة:** كلمة المرور التي استخدمتها عند إنشاء keystore
 
-#### KEY_PASSWORD
+#### ANDROID_KEY_PASSWORD
 
 **الوصف:** كلمة مرور المفتاح  
 **الاستخدام:** الوصول للمفتاح داخل keystore
 
 **القيمة:** كلمة مرور المفتاح (عادة نفس KEYSTORE_PASSWORD)
 
-#### KEY_ALIAS
+#### ANDROID_KEY_ALIAS
 
 **الوصف:** اسم المفتاح (alias)  
 **الاستخدام:** تحديد المفتاح المستخدم
@@ -60,7 +60,19 @@ cat keystore.base64
 
 ---
 
-### 2. Code Coverage Secrets
+### 2. إعدادات بيئة الإنتاج
+
+تستخدم مهام الإصدار بيئة GitHub المسماة `production`. أضف القيم التالية كـ **Environment secrets** لهذه البيئة، ولا تضع مفاتيح الخدمة أو مفاتيح الخادم في التطبيق:
+
+- `SUPABASE_URL`: عنوان HTTPS لمشروع Supabase.
+- `SUPABASE_ANON_KEY`: مفتاح العميل العام للمشروع، مع تفعيل RLS وسياسات الوصول المناسبة.
+- أسرار توقيع Android الأربعة أعلاه.
+
+احمِ بيئة `production` بمراجعين مطلوبين، وقيّد الفروع المسموح لها بالنشر. ملف `.env` الذي يُنشأ أثناء البناء مؤقت ومضمّن في الحزمة؛ لذلك يحتوي إعدادات العميل العامة فقط ولا يجوز أن يحتوي service-role key أو سر خادمي.
+
+---
+
+### 3. Code Coverage Secrets
 
 #### CODECOV_TOKEN
 
@@ -76,7 +88,7 @@ cat keystore.base64
 
 ---
 
-### 3. Firebase Secrets (اختياري)
+### 4. Firebase Secrets (اختياري)
 
 #### FIREBASE_SERVICE_ACCOUNT
 
@@ -91,7 +103,7 @@ cat keystore.base64
 
 ---
 
-### 4. Notification Secrets (اختياري)
+### 5. Notification Secrets (اختياري)
 
 #### SLACK_WEBHOOK_URL
 
@@ -125,10 +137,10 @@ cat keystore.base64
 gh auth login
 
 # إضافة secret
-gh secret set KEYSTORE_PASSWORD
+gh secret set ANDROID_KEYSTORE_PASSWORD
 
 # إضافة من ملف
-gh secret set KEYSTORE_BASE64 < keystore.base64
+gh secret set ANDROID_KEYSTORE_BASE64 < keystore.base64
 ```
 
 ---
@@ -137,10 +149,12 @@ gh secret set KEYSTORE_BASE64 < keystore.base64
 
 ### قائمة التحقق
 
-- [ ] KEYSTORE_BASE64
-- [ ] KEYSTORE_PASSWORD
-- [ ] KEY_PASSWORD
-- [ ] KEY_ALIAS
+- [ ] ANDROID_KEYSTORE_BASE64
+- [ ] ANDROID_KEYSTORE_PASSWORD
+- [ ] ANDROID_KEY_PASSWORD
+- [ ] ANDROID_KEY_ALIAS
+- [ ] SUPABASE_URL
+- [ ] SUPABASE_ANON_KEY
 - [ ] CODECOV_TOKEN (اختياري)
 - [ ] FIREBASE_SERVICE_ACCOUNT (اختياري)
 - [ ] SLACK_WEBHOOK_URL (اختياري)
