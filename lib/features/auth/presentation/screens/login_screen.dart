@@ -95,7 +95,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
 
       if (!mounted) return;
       await Navigator.of(context).pushReplacementNamed('/dashboard');
-    } on Exception catch (e) {
+    } on Exception {
       if (!mounted) return;
       AppSnackbar.showError(context, 'رقم الموبايل أو كلمة المرور غير صحيحة');
     } finally {
