@@ -1,6 +1,7 @@
 // ignore_for_file: lines_longer_than_80_chars
 import 'package:basir_accounting_system/core/providers.dart';
 import 'package:basir_accounting_system/features/accounting/application/financial_year_service.dart';
+import 'package:basir_accounting_system/features/accounting/application/ledger_outbox_service.dart';
 import 'package:basir_accounting_system/features/accounting/application/multi_standard_coa_engine.dart';
 import 'package:basir_accounting_system/features/accounting/application/orchestrator_service.dart';
 import 'package:basir_accounting_system/features/accounting/domain/entities/account.dart';
@@ -998,7 +999,7 @@ class AccountingService extends _$AccountingService {
       finalEntry = entry.copyWith(auditLogs: [...entry.auditLogs, log]);
     }
 
-    await _repository.addJournalEntry(finalEntry);
+    await ref.read(ledgerPostingServiceProvider).postOrEnqueue(finalEntry);
     ref.invalidateSelf();
   }
 

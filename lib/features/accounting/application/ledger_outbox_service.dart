@@ -26,7 +26,12 @@ class LedgerPostQueuedException implements Exception {
 /// Server validation, authorization and accounting failures propagate to the
 /// caller and are never queued, because retrying them would conceal a rejected
 /// business event.
-class LedgerOutboxService {
+abstract interface class LedgerPostingService {
+  /// Commits a final entry remotely, or queues it only for transport failures.
+  Future<void> postOrEnqueue(JournalEntry entry);
+}
+
+class LedgerOutboxService implements LedgerPostingService {
   LedgerOutboxService({
     required Isar isar,
     required AuthoritativeLedgerGateway gateway,
@@ -40,6 +45,7 @@ class LedgerOutboxService {
   final AccountingRepository _repository;
 
   /// Posts now and caches the receipt; queues only a transport failure.
+  @override
   Future<void> postOrEnqueue(JournalEntry entry) async {
     try {
       final receipt = await _gateway.post(entry);
@@ -140,3 +146,8 @@ final ledgerOutboxServiceProvider = Provider<LedgerOutboxService>((ref) {
     repository: ref.watch(accountingRepositoryProvider),
   );
 });
+
+/// Application-facing posting boundary; tests can replace it without Isar.
+final ledgerPostingServiceProvider = Provider<LedgerPostingService>(
+  (ref) => ref.watch(ledgerOutboxServiceProvider),
+);

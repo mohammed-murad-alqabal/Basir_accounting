@@ -1,5 +1,6 @@
 import 'package:basir_accounting_system/core/providers.dart';
 import 'package:basir_accounting_system/features/accounting/application/authoritative_ledger_gateway.dart';
+import 'package:basir_accounting_system/features/accounting/application/ledger_outbox_service.dart';
 import 'package:basir_accounting_system/features/accounting/application/treasury_service.dart';
 import 'package:basir_accounting_system/features/accounting/domain/entities/account.dart';
 import 'package:basir_accounting_system/features/accounting/domain/entities/financial_voucher.dart';
@@ -19,11 +20,16 @@ void main() {
     late MockFinancialVoucherRepository mockVoucherRepo;
     late MockAccountingRepository mockAccountingRepo;
     late MockFinancialYearRepository mockFyRepo;
+    late TestLedgerPostingService testLedgerPostingService;
 
     setUp(() {
       mockVoucherRepo = MockFinancialVoucherRepository();
       mockAccountingRepo = MockAccountingRepository();
       mockFyRepo = MockFinancialYearRepository();
+      testLedgerPostingService = TestLedgerPostingService(
+        gateway: const TestAuthoritativeLedgerGateway(),
+        repository: mockAccountingRepo,
+      );
 
       setUpAccountingMocks();
       registerFallbackValue(
@@ -47,6 +53,9 @@ void main() {
           accountingRepositoryProvider.overrideWithValue(mockAccountingRepo),
           authoritativeLedgerGatewayProvider.overrideWithValue(
             const TestAuthoritativeLedgerGateway(),
+          ),
+          ledgerPostingServiceProvider.overrideWithValue(
+            testLedgerPostingService,
           ),
           financialYearRepositoryProvider.overrideWithValue(mockFyRepo),
           basirUserProvider.overrideWith((ref) => null),

@@ -2,6 +2,7 @@
 
 import 'package:basir_accounting_system/core/providers.dart';
 import 'package:basir_accounting_system/features/accounting/application/accounting_service.dart';
+import 'package:basir_accounting_system/features/accounting/application/ledger_outbox_service.dart';
 import 'package:basir_accounting_system/features/accounting/domain/entities/financial_year.dart';
 import 'package:basir_accounting_system/features/accounting/domain/entities/journal_entry.dart';
 import 'package:basir_accounting_system/features/accounting/domain/repositories/accounting_repository.dart';
@@ -11,6 +12,9 @@ import 'package:decimal/decimal.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
+
+import '../../../helpers/mock_accounting_repository.dart'
+    show TestAuthoritativeLedgerGateway, TestLedgerPostingService;
 
 class MockAccountingRepository extends Mock implements AccountingRepository {}
 
@@ -63,6 +67,7 @@ class InMemoryFinancialYearRepository implements FinancialYearRepository {
 void main() {
   late MockAccountingRepository mockRepository;
   late ProviderContainer container;
+  late TestLedgerPostingService testLedgerPostingService;
 
   setUpAll(() {
     registerFallbackValue(
@@ -93,10 +98,21 @@ void main() {
 
   setUp(() {
     mockRepository = MockAccountingRepository();
+    testLedgerPostingService = TestLedgerPostingService(
+      gateway: const TestAuthoritativeLedgerGateway(),
+      repository: mockRepository,
+    );
+    when(() => mockRepository.getJournalEntries()).thenAnswer((_) async => []);
+    when(
+      () => mockRepository.cacheAuthoritativeJournalEntry(any()),
+    ).thenAnswer((_) async {});
 
     container = ProviderContainer(
       overrides: [
         accountingRepositoryProvider.overrideWithValue(mockRepository),
+        ledgerPostingServiceProvider.overrideWithValue(
+          testLedgerPostingService,
+        ),
         financialYearRepositoryProvider.overrideWithValue(
           InMemoryFinancialYearRepository(),
         ),
@@ -147,18 +163,12 @@ void main() {
         ],
       );
 
-      when(() => mockRepository.addJournalEntry(any()))
-          .thenAnswer((_) async => {});
-
       final service = container.read(accountingServiceProvider.notifier);
 
       await service.postJournalEntry(entry, bypassCognitive: true);
 
-      // Verify repository call captured the modified entry with logs
-      final capturedEntry =
-          verify(() => mockRepository.addJournalEntry(captureAny()))
-              .captured
-              .first as JournalEntry;
+      // Verify the authoritative posting port received the audited entry.
+      final capturedEntry = testLedgerPostingService.postedEntries.single;
 
       expect(capturedEntry.auditLogs, isNotEmpty);
       expect(capturedEntry.auditLogs.first.action, equals('COGNITIVE_BYPASS'));
@@ -167,6 +177,7 @@ void main() {
         capturedEntry.auditLogs.first.rationale,
         contains('Consensus bypassed'),
       );
+      verifyNever(() => mockRepository.addJournalEntry(any()));
     });
 
     test('rejects an invalid entry before repository persistence', () async {
@@ -212,6 +223,7 @@ void main() {
         service.postJournalEntry(entry, bypassCognitive: true),
         throwsA(isA<JournalEntryValidationException>()),
       );
+      expect(testLedgerPostingService.postedEntries, isEmpty);
       verifyNever(() => mockRepository.addJournalEntry(any()));
     });
   });
